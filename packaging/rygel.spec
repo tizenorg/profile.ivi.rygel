@@ -91,7 +91,7 @@ desktop-file-install --delete-original       \
    %{buildroot}%{_datadir}/applications/*.desktop
 %find_lang rygel
 
-
+rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor || :
@@ -109,8 +109,6 @@ desktop-file-install --delete-original       \
 # >> files
 %config /etc/rygel.conf
 %{_bindir}/rygel
-%{_datadir}/applications/rygel-preferences.desktop
-%{_datadir}/applications/rygel.desktop
 %{_datadir}/dbus-1/services/org.gnome.Rygel1.service
 %{_datadir}/icons/hicolor/128x128/apps/rygel.png
 %{_datadir}/icons/hicolor/48x48/apps/rygel.png
