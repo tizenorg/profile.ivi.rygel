@@ -43,7 +43,10 @@ public class Rygel.MusicItem : AudioItem {
                       MediaContainer parent,
                       string         title,
                       string         upnp_class = MusicItem.UPNP_CLASS) {
-        base (id, parent, title, upnp_class);
+        Object (id : id,
+                parent : parent,
+                title : title,
+                upnp_class : upnp_class);
     }
 
     public void lookup_album_art () {
@@ -113,10 +116,10 @@ public class Rygel.MusicItem : AudioItem {
         //this.album_art.uri = didl_object.album_art
     }
 
-    internal override DIDLLiteObject serialize (DIDLLiteWriter writer,
-                                                HTTPServer     http_server)
-                                                throws Error {
-        var didl_item = base.serialize (writer, http_server);
+    internal override DIDLLiteObject? serialize (Serializer serializer,
+                                                 HTTPServer http_server)
+                                                 throws Error {
+        var didl_item = base.serialize (serializer, http_server);
 
         if (this.artist != null && this.artist != "") {
             var contributor = didl_item.add_artist ();
@@ -136,7 +139,7 @@ public class Rygel.MusicItem : AudioItem {
         }
 
         if (didl_item.album_art != null) {
-            didl_item.album_art = this.address_regex.replace_literal
+            didl_item.album_art = MediaItem.address_regex.replace_literal
                                         (didl_item.album_art,
                                          -1,
                                          0,
@@ -158,6 +161,7 @@ public class Rygel.MusicItem : AudioItem {
             didl_item.album_art = server.create_uri_for_item (this,
                                                               0,
                                                               -1,
+                                                              null,
                                                               null);
         }
     }

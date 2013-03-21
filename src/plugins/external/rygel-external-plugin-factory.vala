@@ -30,7 +30,7 @@ private External.PluginFactory plugin_factory;
 
 public void module_init (PluginLoader loader) {
     if (loader.plugin_disabled (External.Plugin.MODULE_NAME)) {
-        message ("Module '%s' disabled by user, igoring…",
+        message ("Module '%s' disabled by user. Ignoring…",
                  External.Plugin.MODULE_NAME);
 
         return;
@@ -39,8 +39,8 @@ public void module_init (PluginLoader loader) {
     try {
         plugin_factory = new External.PluginFactory (loader);
     } catch (Error error) {
-        critical ("Failed to fetch list of external services: %s\n",
-                error.message);
+        message (_("Module '%s' could not connect to D-Bus session bus. "+
+                   "Ignoring…"), External.Plugin.MODULE_NAME);
     }
 }
 

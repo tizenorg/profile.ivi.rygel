@@ -22,12 +22,25 @@ using Rygel;
 using Gee;
 
 /**
- * This is an empty container used to satisfy rygel if no mediadb could be
- * created
+ * This is an empty container used to satisfy Rygel if no mediadb could be
+ * created, or for light-weight hierarchies where the intermediate levels
+ * are not used.
  */
 internal class Rygel.NullContainer : MediaContainer {
-    public NullContainer () {
-        base.root ("MediaExport", 0);
+    public NullContainer (string          id,
+                          MediaContainer? parent,
+                          string          title) {
+        Object (id : id,
+                title : title,
+                parent : parent,
+                child_count : 0);
+    }
+
+    public NullContainer.root () {
+        Object (id : "0",
+                parent : null,
+                title : "MediaExport",
+                child_count : 0);
     }
 
     public override async MediaObjects? get_children (

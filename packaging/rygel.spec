@@ -7,7 +7,7 @@
 
 Name:       rygel
 Summary:    GNOME UPnP/DLNA Media Server
-Version:    0.17.1
+Version:    0.17.9
 Release:    0
 Group:      Applications/Multimedia
 License:    GPLv2
@@ -18,18 +18,15 @@ BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gupnp-1.0)
 BuildRequires:  pkgconfig(gupnp-av-1.0)
-BuildRequires:  pkgconfig(gupnp-dlna-1.0)
+BuildRequires:  pkgconfig(gupnp-dlna-2.0)
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(gstreamer-0.10)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
-BuildRequires:  pkgconfig(gee-1.0)
+BuildRequires:  pkgconfig(gee-0.8)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(uuid)
-#BuildRequires:  gst-plugins-good
-#BuildRequires:  gst-plugins-bad-free
 BuildRequires:  intltool
-BuildRequires:  desktop-file-utils
 
 
 %description
@@ -66,11 +63,8 @@ developing software on top of Rygel.
     --disable-example-plugins \
     --disable-vala \
     --disable-tests \
+    --with-media-engine=simple \
     --enable-valadoc=no
-
-mkdir -p /tmp/rygel-hack
-make %{?jobs:-j%jobs} RYGEL_GTKDOC_INSTALL_DIR=/tmp/rygel-hack
-rmdir /tmp/rygel-hack
 
 # >> build post
 # << build post
@@ -78,17 +72,10 @@ rmdir /tmp/rygel-hack
 rm -rf %{buildroot}
 # >> install pre
 # << install pre
-mkdir -p /tmp/rygel-hack
-export RYGEL_GTKDOC_INSTALL_DIR=/tmp/rygel-hack
 %make_install
-unset RYGEL_GTKDOC_INSTALL_DIR
-rm -rf /tmp/rygel-hack
 
 # >> install post
 # << install post
-desktop-file-install --delete-original       \
-  --dir %{buildroot}%{_datadir}/applications             \
-   %{buildroot}%{_datadir}/applications/*.desktop
 %find_lang rygel
 
 rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
@@ -124,14 +111,12 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %{_datadir}/rygel/presets/GstMP4Mux.prs
 %{_datadir}/rygel/presets/GstTwoLame.prs
 %{_datadir}/rygel/presets/GstX264Enc.prs
-%{_datadir}/rygel/presets/ffenc_aac.prs
-%{_datadir}/rygel/presets/ffenc_mp2.prs
-%{_datadir}/rygel/presets/ffenc_mpeg2video.prs
-%{_datadir}/rygel/presets/ffenc_wmav1.prs
-%{_datadir}/rygel/presets/ffenc_wmv1.prs
+%{_datadir}/rygel/presets/avenc_aac.prs
+%{_datadir}/rygel/presets/avenc_mp2.prs
+%{_datadir}/rygel/presets/avenc_mpeg2video.prs
+%{_datadir}/rygel/presets/avenc_wmav1.prs
+%{_datadir}/rygel/presets/avenc_wmv1.prs
 %{_datadir}/rygel/xml/ContentDirectory-NoTrack.xml
-%{_datadir}/man/man1/rygel.1.gz
-%{_datadir}/man/man5/rygel.conf.5.gz
 %{_datadir}/rygel/xml/AVTransport2.xml
 %{_datadir}/rygel/xml/ConnectionManager.xml
 %{_datadir}/rygel/xml/ContentDirectory.xml
@@ -139,10 +124,10 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %{_datadir}/rygel/xml/MediaServer3.xml
 %{_datadir}/rygel/xml/RenderingControl2.xml
 %{_datadir}/rygel/xml/X_MS_MediaReceiverRegistrar1.xml
+%{_datadir}/man/man1/rygel.1.gz
+%{_datadir}/man/man5/rygel.conf.5.gz
 # Rygel core libs
 %{_libdir}/librygel-*.so.*
-# Rygel plugins
-%{_libdir}/rygel-2.0/plugins/*.so
 # Rygel MediaEngines
 %{_libdir}/rygel-2.0/engines/*.so
 # << files
@@ -151,6 +136,9 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %files devel
 %defattr(-,root,root,-)
 # >> files devel
+%doc %{_datadir}/gtk-doc/html/librygel-core
+%doc %{_datadir}/gtk-doc/html/librygel-renderer
+%doc %{_datadir}/gtk-doc/html/librygel-server
 %{_includedir}/rygel-2.0/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/rygel-*-2.0.pc

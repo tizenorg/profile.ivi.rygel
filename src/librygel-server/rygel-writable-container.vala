@@ -26,10 +26,14 @@
 
 using Gee;
 
+public errordomain WriteableContainerError {
+    NOT_IMPLEMENTED
+}
+
 /**
  * This interface should be implemented by 'writable' containers - ones that allow
- * adding, removal and editing of items directly under them. Currently, only
- * addition and removal is supported.
+ * adding (via upload), removal and editing of items directly under them.
+ * Currently, only addition and removal are supported.
  *
  * In addition to implementing this interface, a writable container must also:
  *
@@ -72,7 +76,6 @@ public interface Rygel.WritableContainer : MediaContainer {
      * is handled by the container class.
      *
      * This method corresponds to the UPnP ContentDirectory's CreateObject action.
-     * Currently there is no way to add child containers.
      *
      * @param item The item to add to this container
      * @param cancellable optional cancellable for this operation
@@ -81,6 +84,30 @@ public interface Rygel.WritableContainer : MediaContainer {
      */
     public async abstract void add_item (MediaItem    item,
                                          Cancellable? cancellable) throws Error;
+
+
+    /**
+     * Add a new container directly under this container.
+     *
+     * @param container The container to add to this container
+     * @param cancellable optional cancellable for this operation
+     **/
+    public async abstract void add_container (MediaContainer container,
+                                              Cancellable?   cancellable)
+                                              throws Error;
+
+    /**
+     * Add a reference to an object.
+     * @param object The source object to add a reference to.
+     * @param cancellable optional cancellable for this operation
+     * @return the id of the newly created reference
+     **/
+    public async virtual string add_reference (MediaObject    object,
+                                               Cancellable? cancellable)
+                                               throws Error {
+        throw new WriteableContainerError.NOT_IMPLEMENTED
+                                        ("Cannot create references here");
+    }
 
     /**
      * Remove an item directly under this container that has the ID @id.
@@ -97,4 +124,19 @@ public interface Rygel.WritableContainer : MediaContainer {
      */
     public async abstract void remove_item (string id, Cancellable? cancellable)
                                             throws Error;
+
+    /**
+     * Remove a container directly under this container that has the ID @id.
+     *
+     * The caller should not first remove the file(s) pointed to by the item's URI(s). That
+     * is handled by the container class.
+     *
+     * This method corresponds to the UPnP ContentDirectory's DestroyObject action.
+     *
+     * @param id The ID of the item to remove from this container
+     * @param cancellable optional cancellable for this operation
+     */
+    public async abstract void remove_container (string       id,
+                                                 Cancellable? cancellable)
+                                                 throws Error;
 }

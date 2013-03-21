@@ -1,3 +1,4 @@
+RYGEL_DOCBUILD_MODULE = rygel-server
 if ENABLE_VALADOC
 
 include $(top_srcdir)/common.am
@@ -15,13 +16,11 @@ VALA_SOURCE_FILES_WITH_PATHS = $(addprefix $(top_srcdir)/src/librygel-server/, $
 
 # TODO: The need for rygel-build-config here reminds us that we shouldn't need that in librygel-server either.
 RYGEL_DOCBUILD_VALADOC_FLAGS = \
-		--vapidir $(top_srcdir)/src/librygel-core \
-		--pkg rygel-core-2.0 \
-		$(RYGEL_COMMON_VALAFLAGS_PKG) \
-		$(LIBRYGEL_SERVER_VALAFLAGS_PKG)
+		$(LIBRYGEL_SERVER_DEPS_VALAFLAGS) \
+		$(RYGEL_COMMON_LIBRYGEL_CORE_VALAFLAGS) \
+		$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS)
 
 
-RYGEL_DOCBUILD_MODULE = rygel-server
 RYGEL_DOCBUILD_EXTRA_GTKDOC_OPTIONS = -X -l -X $(top_builddir)/src/librygel-core/.libs/librygel-core-2.0.so
 
 RYGEL_GTKDOC_DOCS_XML_EXTRA = $(top_srcdir)/doc/reference/lib$(RYGEL_DOCBUILD_MODULE)/gtkdoc/implementing-servers.xml \

@@ -19,19 +19,30 @@
  */
 using Gee;
 
-internal class Rygel.MediaExport.DummyContainer : NullContainer {
+internal class Rygel.MediaExport.DummyContainer : TrackableDbContainer {
     public File file;
     public Gee.List<string> children;
 
     public DummyContainer (File           file,
                            MediaContainer parent) {
-        this.id = MediaCache.get_id (file);
-        this.title = file.get_basename ();
+        var cache = MediaCache.get_default ();
+
+        base (MediaCache.get_id (file), file.get_basename ());
+
+        uint32 object_update_id, container_update_id, total_deleted_child_count;
+        this.media_db.get_track_properties (this.id,
+                                            out object_update_id,
+                                            out container_update_id,
+                                            out total_deleted_child_count);
+        this.object_update_id = object_update_id;
+        this.update_id = container_update_id;
+        this.total_deleted_child_count = total_deleted_child_count;
+
         this.parent_ref = parent;
         this.file = file;
         this.uris.add (file.get_uri ());
         try {
-            this.children = MediaCache.get_default ().get_child_ids (this.id);
+            this.children = cache.get_child_ids (this.id);
             this.child_count = this.children.size;
         } catch (Error error) {
             this.children = new ArrayList<string> ();

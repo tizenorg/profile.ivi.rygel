@@ -254,7 +254,7 @@ public class Rygel.HTTPServer : GLib.Object {
 
     public string uri {
         owned get {
-			var item = new MediaItem (this.root_container.ITEM_ID, this.root_container);
+			var item = new MediaItem (MediaContainer.ITEM_ID, this.root_container);
 			var item_uri = new HTTPItemURI (item, this);
             return item_uri.to_string ();
         }
@@ -339,7 +339,6 @@ public class Rygel.MediaContainer : Rygel.MediaObject {
 
     public signal void container_updated (MediaContainer container);
 
-    public string id = "TesContainer";
     public MediaItem item;
     private bool vanish;
     private bool error;
@@ -352,8 +351,14 @@ public class Rygel.MediaContainer : Rygel.MediaObject {
         this.item = new MediaItem (ITEM_ID, this);
         this.vanish = false;
         this.error = false;
+        this.id = "TesContainer";
 
-        this.monitor = this.file.monitor_file (FileMonitorFlags.NONE);
+        try {
+            this.monitor = this.file.monitor_file (FileMonitorFlags.NONE);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
+
         this.monitor.changed.connect (this.on_file_changed);
     }
 
@@ -414,9 +419,6 @@ public class Rygel.MediaContainer : Rygel.MediaObject {
 public class Rygel.MediaItem : Rygel.MediaObject {
     public const string URI = "file:///tmp/rygel-upload-test.wav";
 
-    public weak MediaContainer parent;
-
-    public string id;
     public long size = 1024;
     public long duration = 1024;
     public ArrayList<string> uris = new ArrayList<string> ();
@@ -485,16 +487,16 @@ internal class Rygel.HTTPResponse : Rygel.StateMachine, GLib.Object {
     }
 }
 
-public class Rygel.ItemRemovalQueue: GLib.Object {
-    public static ItemRemovalQueue get_default () {
-       return new ItemRemovalQueue ();
+public class Rygel.ObjectRemovalQueue: GLib.Object {
+    public static ObjectRemovalQueue get_default () {
+       return new ObjectRemovalQueue ();
     }
 
-    public bool dequeue (MediaItem item) {
+    public bool dequeue (MediaObject item) {
         return true;
     }
 
-    public async void remove_now (MediaItem item, Cancellable? cancellable) {
+    public async void remove_now (MediaObject item, Cancellable? cancellable) {
         Idle.add (remove_now.callback);
 
         yield;
@@ -502,6 +504,8 @@ public class Rygel.ItemRemovalQueue: GLib.Object {
 }
 
 public class Rygel.MediaObject : GLib.Object {
+    public string id;
+    public unowned MediaContainer parent;
     public string mime_type = "";
 }
 

@@ -50,6 +50,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                                         "audio/x-flac+ogg",
                                         "audio/flac",
                                         "audio/mp4",
+                                        "audio/3gpp",
                                         "audio/vnd.dlna.adts",
                                         "audio/x-mod",
                                         "audio/x-wav",
@@ -60,6 +61,11 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                                         "audio/L16;channels=2;rate=44100",
                                         "audio/L16;channels=1;rate=44100",
                                         "audio/L16;rate=44100",
+                                        "audio/l16;rate=44100;channels=2",
+                                        "audio/l16;rate=44100;channels=1",
+                                        "audio/l16;channels=2;rate=44100",
+                                        "audio/l16;channels=1;rate=44100",
+                                        "audio/l16;rate=44100",
                                         "image/jpeg",
                                         "image/png",
                                         "video/x-theora",
@@ -76,11 +82,11 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                                         "video/x-mkv",
                                         "video/mpeg",
                                         "video/mp4",
+                                        "application/x-shockwave-flash",
                                         "video/x-ms-asf",
                                         "video/x-xvid",
                                         "video/x-ms-wmv" };
     private static Player player;
-    bool duration_hint;
 
     private bool is_live;
     private bool foreign;
@@ -131,9 +137,30 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                         this._playback_state = value;
                     }
                 break;
+                case "EOS":
+                    this._playback_state = value;
+                break;
                 default:
                 break;
             }
+        }
+    }
+
+    private string[] _allowed_playback_speeds = {"1"};
+    public string[] allowed_playback_speeds {
+        owned get {
+            return this._allowed_playback_speeds;
+        }
+    }
+
+    private string _playback_speed = "1";
+    public string playback_speed {
+        owned get {
+            return this._playback_speed;
+        }
+
+        set {
+            this._playback_speed = value;
         }
     }
 
@@ -162,6 +189,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                         this.is_live = this.playbin.set_state (State.PAUSED)
                                         == StateChangeReturn.NO_PREROLL;
                         break;
+                    case "EOS":
                     case "PLAYING":
                         // This needs a check if GStreamer and DLNA agree on
                         // the "liveness" of the source (s0/sn increase in
@@ -199,6 +227,13 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
 
         set {
             this._metadata = value;
+        }
+    }
+
+    public bool can_seek {
+        get {
+            return this.transfer_mode != TRANSFER_MODE_INTERACTIVE &&
+                   ! this.mime_type.has_prefix ("image/");
         }
     }
 
@@ -243,10 +278,9 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
 
     public int64 duration {
         get {
-            var format = Format.TIME;
             int64 dur;
 
-            if (this.playbin.query_duration (ref format, out dur)) {
+            if (this.playbin.query_duration (Format.TIME, out dur)) {
                 return dur / Gst.USECOND;
             } else {
                 return 0;
@@ -256,10 +290,9 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
 
     public int64 position {
         get {
-            var format = Format.TIME;
             int64 pos;
 
-            if (this.playbin.query_position (ref format, out pos)) {
+            if (this.playbin.query_position (Format.TIME, out pos)) {
                 return pos / Gst.USECOND;
             } else {
                 return 0;
@@ -268,7 +301,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
     }
 
     private Player () {
-        this.playbin = ElementFactory.make ("playbin2", null);
+        this.playbin = ElementFactory.make ("playbin", null);
         this.foreign = false;
         this.setup_playbin ();
     }
@@ -276,7 +309,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
     public Player.wrap (Gst.Element playbin) {
 
         return_if_fail (playbin != null);
-        return_if_fail (playbin.get_type ().name() == "GstPlayBin2");
+        return_if_fail (playbin.get_type ().name() == "GstPlayBin");
 
         this.playbin = playbin;
         this.foreign = true;
@@ -323,8 +356,10 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
     private void bus_handler (Gst.Bus bus,
                               Message message) {
         switch (message.type) {
-        case MessageType.DURATION:
-            this.duration_hint = true;
+        case MessageType.DURATION_CHANGED:
+            if (this.playbin.query_duration (Format.TIME, null)) {
+                this.notify_property ("duration");
+            }
         break;
         case MessageType.STATE_CHANGED:
             if (message.src == this.playbin) {
@@ -334,15 +369,10 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                                              out new_state,
                                              out pending);
                 if (old_state == State.READY && new_state == State.PAUSED) {
-                    if (this.duration_hint) {
-                        this.notify_property ("duration");
-                        this.duration_hint = false;
-                    }
-
                     if (this.uri_update_hint) {
                         this.uri_update_hint = false;
-                        string uri = this.playbin.uri;
-                        if (this._uri != uri) {
+                        string uri = this.playbin.current_uri;
+                        if (this._uri != uri && uri != "") {
                             // uri changed externally
                             this._uri = this.playbin.uri;
                             this.notify_property ("uri");
@@ -398,7 +428,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
         case MessageType.EOS:
             if (!this.is_rendering_image ()) {
                 debug ("EOS");
-                this.playback_state = "STOPPED";
+                this.playback_state = "EOS";
             } else {
                 debug ("Content is image, ignoring EOS");
             }
@@ -426,7 +456,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
             this.transfer_mode != null) {
             debug ("Setting transfer mode to %s", this.transfer_mode);
 
-            var structure = new Structure.empty ("Extra Headers");
+            var structure = new Structure.empty ("HTTPHeaders");
             structure.set_value ("transferMode.dlna.org", this.transfer_mode);
 
             source.extra_headers = structure;
@@ -458,7 +488,6 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
     }
 
     private void setup_playbin () {
-        this.duration_hint = false;
         // Needed to get "Stop" events from the playbin.
         // We can do this because we have a bus watch
         this.is_live = false;

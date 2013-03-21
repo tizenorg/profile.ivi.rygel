@@ -19,11 +19,14 @@
  */
 
 internal class Rygel.MediaExport.LeafQueryContainer : QueryContainer {
-    public LeafQueryContainer (MediaCache       cache,
-                               SearchExpression expression,
+    public LeafQueryContainer (SearchExpression expression,
                                string           id,
                                string           name) {
-        base (cache, expression, id, name);
+        Object (id : id,
+                title : name,
+                parent : null,
+                child_count : 0,
+                expression : expression);
     }
 
     public override async MediaObjects? get_children
@@ -40,14 +43,22 @@ internal class Rygel.MediaExport.LeafQueryContainer : QueryContainer {
                                           sort_criteria,
                                           cancellable);
         foreach (var child in children) {
+            var container_id = QueryContainer.ITEM_PREFIX +
+                               this.id.replace (QueryContainer.PREFIX, "");
+            child.ref_id = child.id;
+            child.id = container_id + ":" + child.ref_id;
             child.parent = this;
         }
 
         return children;
     }
 
-    protected override int count_children () throws Error {
-        return (int) this.media_db.get_object_count_by_search_expression
+    public override int count_children () {
+        try {
+            return (int) this.media_db.get_object_count_by_search_expression
                                         (this.expression, null);
+        } catch (Error error) {
+            return 0;
+        }
     }
 }

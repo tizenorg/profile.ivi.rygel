@@ -29,15 +29,23 @@
           <li class="abstract_method">add_child</li>
           <li class="method"><a href="Rygel.TrackableContainer.add_child_tracked.html">add_child_tracked</a></li>
           <li class="method"><a href="Rygel.TrackableContainer.clear.html">clear</a></li>
+          <li class="virtual_method"><a href="Rygel.TrackableContainer.get_service_reset_token.html">get_service_reset_token</a></li>
+          <li class="virtual_method"><a href="Rygel.TrackableContainer.get_system_update_id.html">get_system_update_id</a></li>
           <li class="abstract_method"><a href="Rygel.TrackableContainer.remove_child.html">remove_child</a></li>
           <li class="method"><a href="Rygel.TrackableContainer.remove_child_tracked.html">remove_child_tracked</a></li>
+          <li class="virtual_method"><a href="Rygel.TrackableContainer.set_service_reset_token.html">set_service_reset_token</a></li>
+          <li class="signal"><a href="Rygel.TrackableContainer.child_added.html">child_added</a></li>
+          <li class="signal"><a href="Rygel.TrackableContainer.child_removed.html">child_removed</a></li>
         </ul>
       </div>
       <div class="site_content">
         <h1 class="main_title">add_child</h1>
         <hr class="main_hr"/>
         <h2 class="main_title">Description:</h2>
-        <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_keyword">async</span> <span class="main_keyword">void</span> <b><span css="abstract_method">add_child</span></b> (<span class="main_type"><a href="Rygel.MediaObject.html" class="abstract_class">MediaObject</a></span> object)
+        <div class="main_code_definition"><span class="main_keyword">protected</span> <span class="main_keyword">abstract</span> <span class="main_keyword">async</span> <span class="main_keyword">void</span> <b><span css="abstract_method">add_child</span></b> (<span class="main_type"><a href="Rygel.MediaObject.html" class="abstract_class">MediaObject</a></span> object)
+        </div>
+        <div class="description">
+          <p>Derived classes should implement this, keeping track of the child item or child container. See the remove_child() virtual function.</p>
         </div>
       </div>
     </div><br/>

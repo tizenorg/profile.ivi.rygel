@@ -43,9 +43,9 @@ internal struct Rygel.MediaExport.ExistsCacheEntry {
 }
 
 /**
- * Persistent storage of media objects
+ * Persistent storage of media objects.
  *
- *  MediaExportDB is a sqlite3 backed persistent storage of media objects
+ * MediaExportDB is a sqlite3 backed persistent storage of media objects.
  */
 public class Rygel.MediaExport.MediaCache : Object {
     // Private members
@@ -71,12 +71,14 @@ public class Rygel.MediaExport.MediaCache : Object {
                                             file.get_uri ());
     }
 
-    public static MediaCache get_default () throws Error {
-        if (instance == null) {
-            instance = new MediaCache ();
+    public static void ensure_exists () throws Error {
+        if (MediaCache.instance == null) {
+            MediaCache.instance = new MediaCache ();
         }
+    }
 
-        return instance;
+    public static MediaCache get_default () {
+        return MediaCache.instance;
     }
 
     // Public functions
@@ -90,6 +92,10 @@ public class Rygel.MediaExport.MediaCache : Object {
         this.remove_by_id (object.id);
     }
 
+    /**
+     * Add the container to the cache, in a database transcation,
+     * rolling back the transaction if necessary.
+     */
     public void save_container (MediaContainer container) throws Error {
         try {
             db.begin ();
@@ -102,11 +108,15 @@ public class Rygel.MediaExport.MediaCache : Object {
         }
     }
 
-    public void save_item (Rygel.MediaItem item) throws Error {
+    /**
+     * Add the item to the cache.
+     */
+    public void save_item (Rygel.MediaItem item,
+                           bool override_guarded = false) throws Error {
         try {
             db.begin ();
             save_metadata (item);
-            create_object (item);
+            create_object (item, override_guarded);
             db.commit ();
         } catch (DatabaseError error) {
             warning (_("Failed to add item with ID %s: %s"),
@@ -118,6 +128,12 @@ public class Rygel.MediaExport.MediaCache : Object {
         }
     }
 
+    /**
+     * Create a new container or item instance based on the ID.
+     *
+     * The Rygel server discards the object when the browse request is finished,
+     * after serializing the result.
+     */
     public MediaObject? get_object (string object_id) throws DatabaseError {
         GLib.Value[] values = { object_id };
         MediaObject parent = null;
@@ -155,6 +171,42 @@ public class Rygel.MediaExport.MediaCache : Object {
         return this.query_value (SQLString.CHILD_COUNT, values);
     }
 
+    public uint32 get_update_id () {
+        // Return the highest object ID in the database so far.
+        try {
+            return this.query_value (SQLString.MAX_UPDATE_ID);
+        } catch (Error error) { }
+
+        return 0;
+    }
+
+    public void get_track_properties (string id,
+                                      out uint32 object_update_id,
+                                      out uint32 container_update_id,
+                                      out uint32 total_deleted_child_count) {
+        GLib.Value[] values = { id };
+
+        object_update_id = 0;
+        container_update_id = 0;
+        total_deleted_child_count = 0;
+
+        try {
+            var cursor = this.db.exec_cursor ("SELECT object_update_id, " +
+                                              "container_update_id, " +
+                                              "deleted_child_count " +
+                                              "FROM Object WHERE upnp_id = ?",
+                                              values);
+            var statement = cursor.next ();
+            object_update_id = (uint32) statement->column_int64 (0);
+            container_update_id = (uint32) statement->column_int64 (1);
+            total_deleted_child_count = (uint32) statement->column_int64 (2);
+
+            return;
+        } catch (Error error) {
+            warning ("Failed to get update ids: %s", error.message);
+        }
+
+    }
 
     public bool exists (File      file,
                         out int64 timestamp,
@@ -174,6 +226,11 @@ public class Rygel.MediaExport.MediaCache : Object {
         var cursor = this.exec_cursor (SQLString.EXISTS, values);
         var statement = cursor.next ();
         timestamp = statement->column_int64 (1);
+
+        // Placeholder item
+        if (timestamp == int64.MAX) {
+            timestamp = 0;
+        }
         size = statement->column_int64 (2);
 
         return statement->column_int (0) == 1;
@@ -191,7 +248,7 @@ public class Rygel.MediaExport.MediaCache : Object {
                                 max_count };
 
         var sql = this.sql.make (SQLString.GET_CHILDREN);
-        var sort_order = this.translate_sort_criteria (sort_criteria);
+        var sort_order = MediaCache.translate_sort_criteria (sort_criteria);
         var cursor = this.db.exec_cursor (sql.printf (sort_order), values);
 
         foreach (var statement in cursor) {
@@ -212,7 +269,7 @@ public class Rygel.MediaExport.MediaCache : Object {
                                          out uint          total_matches)
                                          throws Error {
         var args = new GLib.ValueArray (0);
-        var filter = this.translate_search_expression (expression, args);
+        var filter = MediaCache.translate_search_expression (expression, args);
 
         if (expression != null) {
             debug ("Original search: %s", expression.to_string ());
@@ -237,7 +294,7 @@ public class Rygel.MediaExport.MediaCache : Object {
                                          string?           container_id)
                                          throws Error {
         var args = new GLib.ValueArray (0);
-        var filter = this.translate_search_expression (expression, args);
+        var filter = MediaCache.translate_search_expression (expression, args);
 
         if (expression != null) {
             debug ("Original search: %s", expression.to_string ());
@@ -308,15 +365,18 @@ public class Rygel.MediaExport.MediaCache : Object {
             sql = this.sql.make (SQLString.GET_OBJECTS_BY_FILTER);
         }
 
-        var sort_order = this.translate_sort_criteria (sort_criteria);
+        var sort_order = MediaCache.translate_sort_criteria (sort_criteria);
         var cursor = this.db.exec_cursor (sql.printf (filter, sort_order),
                                           args.values);
         foreach (var statement in cursor) {
             unowned string parent_id = statement.column_text (DetailColumn.PARENT);
 
             if (parent == null || parent_id != parent.id) {
-                parent = new NullContainer ();
-                parent.id = parent_id;
+                if (parent_id == null) {
+                    parent = new NullContainer.root ();
+                } else {
+                    parent = new NullContainer (parent_id, null, "MediaExport");
+                }
             }
 
             if (parent != null) {
@@ -348,7 +408,7 @@ public class Rygel.MediaExport.MediaCache : Object {
 
     public ArrayList<string> get_child_ids (string container_id)
                                             throws DatabaseError {
-        ArrayList<string> children = new ArrayList<string> (str_equal);
+        ArrayList<string> children = new ArrayList<string> ();
         GLib.Value[] values = { container_id  };
 
         var cursor = this.exec_cursor (SQLString.CHILD_IDS, values);
@@ -383,6 +443,9 @@ public class Rygel.MediaExport.MediaCache : Object {
         return data;
     }
 
+    /**
+     * TODO
+     */
     public Gee.List<string> get_object_attribute_by_search_expression
                                         (string            attribute,
                                          SearchExpression? expression,
@@ -390,13 +453,13 @@ public class Rygel.MediaExport.MediaCache : Object {
                                          uint              max_count)
                                          throws Error {
         var args = new ValueArray (0);
-        var filter = this.translate_search_expression (expression,
-                                                       args,
-                                                       "AND");
+        var filter = MediaCache.translate_search_expression (expression,
+                                                             args,
+                                                             "AND");
 
         debug ("Parsed filter: %s", filter);
 
-        var column = this.map_operand_to_column (attribute);
+        var column = MediaCache.map_operand_to_column (attribute);
         var max_objects = modify_limit (max_count);
 
         return this.get_meta_data_column_by_filter (column,
@@ -406,26 +469,71 @@ public class Rygel.MediaExport.MediaCache : Object {
                                                     max_objects);
     }
 
-    public void flag_object (File file, string flag) throws Error {
-        GLib.Value[] args = { flag, file.get_uri () };
-        this.db.exec ("UPDATE Object SET flags = ? WHERE uri = ?", args);
+    public string get_reset_token () {
+        try {
+            var cursor = this.exec_cursor (SQLString.RESET_TOKEN);
+            var statement = cursor.next ();
+
+            return statement->column_text (0);
+        } catch (DatabaseError error) {
+            warning ("Failed to get reset token");
+
+            return UUID.get ();
+        }
     }
 
-    public Gee.List<string> get_flagged_uris (string flag) throws Error {
-        var uris = new ArrayList<string> ();
-        const string query = "SELECT uri FROM object WHERE flags = ?";
+    public void save_reset_token (string token) {
+        try {
+            GLib.Value[] args = { token };
 
-        GLib.Value[] args = { flag };
-
-        var cursor = this.db.exec_cursor (query, args);
-        foreach (var statement in cursor) {
-            uris.add (statement.column_text (0));
+            this.db.exec ("UPDATE schema_info SET reset_token = ?", args);
+        } catch (DatabaseError error) {
+            warning ("Failed to persist ServiceResetToken: %s", error.message);
         }
+    }
 
-        return uris;
+    public void drop_virtual_folders () {
+        try {
+            this.db.exec ("DELETE FROM object WHERE " +
+                          "upnp_id LIKE 'virtual-parent:%'");
+        } catch (DatabaseError error) {
+            warning ("Failed to drop virtual folders: %s", error.message);
+        }
+    }
+
+    public void make_object_guarded (MediaObject object,
+                                     bool guarded = true) {
+        var guarded_val = guarded ? 1 : 0;
+
+        try {
+            GLib.Value[] values = { guarded_val,
+                                    object.id };
+
+            this.db.exec (this.sql.make (SQLString.MAKE_GUARDED), values);
+        } catch (DatabaseError error) {
+            warning ("Failed to mark item %s as guarded (%d): %s",
+                     object.id,
+                     guarded_val,
+                     error.message);
+        }
     }
 
     // Private functions
+    private bool is_object_guarded (string id) {
+        try {
+            GLib.Value[] id_value = { id };
+
+            return this.query_value (SQLString.IS_GUARDED,
+                                     id_value) == 1;
+        } catch (DatabaseError error) {
+            warning ("Failed to get whether item %s is guarded: %s",
+                     id,
+                     error.message);
+
+            return false;
+        }
+    }
+
     private void get_exists_cache () throws DatabaseError {
         this.exists_cache = new HashMap<string, ExistsCacheEntry?> ();
         var cursor = this.exec_cursor (SQLString.EXISTS_CACHE);
@@ -546,31 +654,94 @@ public class Rygel.MediaExport.MediaCache : Object {
             }
         }
 
+        if (item is PlaylistItem) {
+            var playlist_item = item as PlaylistItem;
+
+            values[5] = playlist_item.creator;
+        }
+
         this.db.exec (this.sql.make (SQLString.SAVE_METADATA), values);
     }
 
-    private void create_object (MediaObject item) throws Error {
+    private void update_guarded_object (MediaObject object) throws Error {
         int type = ObjectType.CONTAINER;
         GLib.Value parent;
 
-        if (item is MediaItem) {
+        if (object is MediaItem) {
             type = ObjectType.ITEM;
         }
 
-        if (item.parent == null) {
+        if (object.parent == null) {
             parent = Database.@null ();
         } else {
-            parent = item.parent.id;
+            parent = object.parent.id;
         }
 
-        GLib.Value[] values = { item.id,
-                                item.title,
+        GLib.Value[] values = { object.id,
                                 type,
                                 parent,
-                                item.modified,
-                                item.uris.size == 0 ? null : item.uris[0]
+                                object.modified,
+                                object.uris.is_empty ? null : object.uris[0],
+                                object.object_update_id,
+                                -1,
+                                -1
                               };
+        if (object is MediaContainer) {
+            var container = object as MediaContainer;
+            values[7] = container.total_deleted_child_count;
+            values[8] = container.update_id;
+        }
+
+        this.db.exec (this.sql.make (SQLString.UPDATE_GUARDED_OBJECT), values);
+    }
+
+    private void create_normal_object (MediaObject object,
+                                       bool is_guarded) throws Error {
+        int type = ObjectType.CONTAINER;
+        GLib.Value parent;
+
+        if (object is MediaItem) {
+            type = ObjectType.ITEM;
+        }
+
+        if (object.parent == null) {
+            parent = Database.@null ();
+        } else {
+            parent = object.parent.id;
+        }
+
+        GLib.Value[] values = { object.id,
+                                object.title,
+                                type,
+                                parent,
+                                object.modified,
+                                object.uris.is_empty ? null : object.uris[0],
+                                object.object_update_id,
+                                -1,
+                                -1,
+                                is_guarded ? 1 : 0
+                              };
+        if (object is MediaContainer) {
+            var container = object as MediaContainer;
+            values[7] = container.total_deleted_child_count;
+            values[8] = container.update_id;
+        }
+
         this.db.exec (this.sql.make (SQLString.INSERT), values);
+    }
+
+    /**
+     * Add the container or item to the cache.
+     */
+    private void create_object (MediaObject object,
+                                bool override_guarded = false) throws Error {
+        var is_guarded = this.is_object_guarded (object.id);
+
+        if (!override_guarded && is_guarded) {
+            update_guarded_object (object);
+        } else {
+            create_normal_object (object, (is_guarded || override_guarded));
+        }
     }
 
     /**
@@ -591,6 +762,7 @@ public class Rygel.MediaExport.MediaCache : Object {
             db.exec (this.sql.make (SQLString.TRIGGER_CLOSURE));
             db.commit ();
             db.analyze ();
+            this.save_reset_token (UUID.get ());
 
             return true;
         } catch (Error err) {
@@ -601,6 +773,15 @@ public class Rygel.MediaExport.MediaCache : Object {
         return false;
    }
 
+    /**
+     * Create a new container or item based on a SQL result.
+     *
+     * The Rygel server discards the object when the browse request is finished,
+     * after serializing the result.
+     *
+     * @param parent The object's parent container.
+     * @param statement a SQLite result indicating the container's details.
+     */
     private MediaObject? get_object_from_statement (MediaContainer? parent,
                                                     Statement       statement) {
         MediaObject object = null;
@@ -611,19 +792,22 @@ public class Rygel.MediaExport.MediaCache : Object {
         switch (statement.column_int (DetailColumn.TYPE)) {
             case 0:
                 // this is a container
-                object = factory.get_container (this, object_id, title, 0, uri);
+                object = factory.get_container (object_id, title, 0, uri);
 
                 var container = object as MediaContainer;
                 if (uri != null) {
                     container.uris.add (uri);
                 }
+                container.total_deleted_child_count = (uint32) statement.column_int64
+                                        (DetailColumn.DELETED_CHILD_COUNT);
+                container.update_id = (uint) statement.column_int64
+                                        (DetailColumn.CONTAINER_UPDATE_ID);
                 break;
             case 1:
                 // this is an item
                 unowned string upnp_class = statement.column_text
                                         (DetailColumn.CLASS);
-                object = factory.get_item (this,
-                                           parent,
+                object = factory.get_item (parent,
                                            object_id,
                                            title,
                                            upnp_class);
@@ -643,6 +827,8 @@ public class Rygel.MediaExport.MediaCache : Object {
                 object.modified = 0;
                 (object as MediaItem).place_holder = true;
             }
+            object.object_update_id = (uint) statement.column_int64
+                                        (DetailColumn.OBJECT_UPDATE_ID);
         }
 
         return object;
@@ -689,7 +875,7 @@ public class Rygel.MediaExport.MediaCache : Object {
         }
     }
 
-    private string translate_search_expression
+    private static string translate_search_expression
                                         (SearchExpression? expression,
                                          ValueArray        args,
                                          string            prefix = "WHERE")
@@ -698,36 +884,40 @@ public class Rygel.MediaExport.MediaCache : Object {
             return "";
         }
 
-        var filter = this.search_expression_to_sql (expression, args);
+        var filter = MediaCache.search_expression_to_sql (expression, args);
 
         return " %s %s".printf (prefix, filter);
     }
 
-    private string? search_expression_to_sql (SearchExpression? expression,
-                                             GLib.ValueArray   args)
-                                             throws Error {
+    private static string? search_expression_to_sql
+                                        (SearchExpression? expression,
+                                         GLib.ValueArray   args)
+                                         throws Error {
         if (expression == null) {
             return "";
         }
 
         if (expression is LogicalExpression) {
-            return this.logical_expression_to_sql
+            return MediaCache.logical_expression_to_sql
                                         (expression as LogicalExpression, args);
         } else {
-            return this.relational_expression_to_sql
+            return MediaCache.relational_expression_to_sql
                                         (expression as RelationalExpression,
                                          args);
         }
     }
 
-    private string? logical_expression_to_sql (LogicalExpression? expression,
-                                               GLib.ValueArray    args)
-                                               throws Error {
-        string left_sql_string = search_expression_to_sql (expression.operand1,
-                                                           args);
-        string right_sql_string = search_expression_to_sql (expression.operand2,
-                                                            args);
-        string operator_sql_string = "OR";
+    private static string logical_expression_to_sql
+                                        (LogicalExpression expression,
+                                         GLib.ValueArray   args)
+                                         throws Error {
+        string left_sql_string = MediaCache.search_expression_to_sql
+                                        (expression.operand1,
+                                         args);
+        string right_sql_string = MediaCache.search_expression_to_sql
+                                        (expression.operand2,
+                                         args);
+        unowned string operator_sql_string = "OR";
 
         if (expression.op == LogicalOperator.AND) {
             operator_sql_string = "AND";
@@ -738,9 +928,9 @@ public class Rygel.MediaExport.MediaCache : Object {
                                     right_sql_string);
     }
 
-    private string? map_operand_to_column (string     operand,
-                                           out string? collate = null)
-                                           throws Error {
+    private static string? map_operand_to_column (string     operand,
+                                                  out string? collate = null)
+                                                  throws Error {
         string column = null;
         bool use_collation = false;
 
@@ -791,6 +981,12 @@ public class Rygel.MediaExport.MediaCache : Object {
             case "rygel:originalVolumeNumber":
                 column = "m.disc";
                 break;
+            case "upnp:objectUpdateID":
+                column = "o.object_update_id";
+                break;
+            case "upnp:containerUpdateID":
+                column = "o.container_update_id";
+                break;
             default:
                 var message = "Unsupported column %s".printf (operand);
 
@@ -806,13 +1002,15 @@ public class Rygel.MediaExport.MediaCache : Object {
         return column;
     }
 
-    private string? relational_expression_to_sql (RelationalExpression? exp,
-                                                  GLib.ValueArray       args)
-                                                  throws Error {
+    private static string? relational_expression_to_sql
+                                        (RelationalExpression exp,
+                                         GLib.ValueArray      args)
+                                         throws Error {
         GLib.Value? v = null;
         string collate = null;
 
-        string column = map_operand_to_column (exp.operand1, out collate);
+        string column = MediaCache.map_operand_to_column (exp.operand1,
+                                                          out collate);
         SqlOperator operator;
 
         switch (exp.op) {
@@ -831,9 +1029,16 @@ public class Rygel.MediaExport.MediaCache : Object {
             case SearchCriteriaOp.LEQ:
             case SearchCriteriaOp.GREATER:
             case SearchCriteriaOp.GEQ:
-                v = exp.operand2;
-                operator = new SqlOperator.from_search_criteria_op
-                                        (exp.op, column, collate);
+                if (column == "m.class" &&
+                    exp.op == SearchCriteriaOp.EQ &&
+                    exp.operand2 == "object.container") {
+                    operator = new SqlOperator ("=", "o.type_fk");
+                    v = (int) ObjectType.CONTAINER;
+                } else {
+                    v = exp.operand2;
+                    operator = new SqlOperator.from_search_criteria_op
+                                            (exp.op, column, collate);
+                }
                 break;
             case SearchCriteriaOp.CONTAINS:
                 operator = new SqlFunction ("contains", column);
@@ -844,8 +1049,14 @@ public class Rygel.MediaExport.MediaCache : Object {
                 v = exp.operand2;
                 break;
             case SearchCriteriaOp.DERIVED_FROM:
-                operator = new SqlOperator ("LIKE", column);
-                v = "%s%%".printf (exp.operand2);
+                if (column == "m.class" &&
+                    exp.operand2.has_prefix("object.container")) {
+                    operator = new SqlOperator ("=", "o.type_fk");
+                    v = (int) ObjectType.CONTAINER;
+                } else {
+                    operator = new SqlOperator ("LIKE", column);
+                    v = "%s%%".printf (exp.operand2);
+                }
                 break;
             default:
                 warning ("Unsupported op %d", exp.op);
@@ -871,14 +1082,15 @@ public class Rygel.MediaExport.MediaCache : Object {
         return this.db.query_value (this.sql.make (id), values);
     }
 
-    private string translate_sort_criteria (string sort_criteria) {
+    private static string translate_sort_criteria (string sort_criteria) {
         string? collate;
         var builder = new StringBuilder("ORDER BY ");
         var fields = sort_criteria.split (",");
-        foreach (var field in fields) {
+        foreach (unowned string field in fields) {
             try {
-                var column = this.map_operand_to_column (field[1:field.length],
-                                                         out collate);
+                var column = MediaCache.map_operand_to_column
+                                        (field[1:field.length],
+                                         out collate);
                 if (field != fields[0]) {
                     builder.append (",");
                 }
@@ -887,7 +1099,7 @@ public class Rygel.MediaExport.MediaCache : Object {
                                        collate,
                                        field[0] == '-' ? "DESC" : "ASC");
             } catch (Error error) {
-                warning ("Skipping nsupported field: %s", field);
+                warning ("Skipping unsupported field: %s", field);
             }
         }
 

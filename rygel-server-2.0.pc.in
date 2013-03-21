@@ -3,10 +3,12 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
+enginedir=@RYGEL_MEDIA_ENGINE_DIR@
+
 Name: rygel-server-2.0
 Description: GNOME (Mobile) UPnP/DLNA Media server library
 Version: @VERSION@
 Libs: -L${libdir} -lrygel-server-2.0
 Cflags: -I${includedir}/rygel-2.0
-Requires: gupnp-av-1.0 gee-1.0 gstreamer-0.10 rygel-core-2.0
+Requires: gupnp-av-1.0 gee-0.8 rygel-core-2.0
 Requires.Private: uuid gmodule-2.0

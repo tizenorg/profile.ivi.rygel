@@ -239,7 +239,7 @@ public class Rygel.HTTPClient : GLib.Object, StateMachine {
 
         if (active) {
             this.cancellable = new Cancellable ();
-            this.cancellable.cancelled += this.on_cancelled;
+            this.cancellable.cancelled.connect (this.on_cancelled);
         }
     }
 
@@ -377,7 +377,12 @@ internal class Rygel.TestDataSource : Rygel.DataSource, Object {
         }
 
         this.frozen = false;
-        this.start (null);
+
+        try {
+            this.start (null);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
     }
 
     public void stop () {

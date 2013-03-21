@@ -26,6 +26,12 @@ valadoc-gen: $(VALA_SOURCE_FILES_WITH_PATHS)
 # Avoid regeneration of the html if none of its dependencies have changed:
 gtkdoc/html/index.html: gtkdoc-gen
 
+# The use of extra .xml DocBook files, just for the gtk-doc output
+# (in RYGEL_GTKDOC_DOCS_XML_EXTRA),
+# will be unnecessary when valadoc has some way to add extra pages of
+# documentation. See https://bugzilla.gnome.org/show_bug.cgi?id=680798
+# The whole gtk-doc build might then get much simpler like it once was:
+# http://git.gnome.org/browse/rygel/commit/doc/reference/Makefile.am?id=80b68029d42fec3fbbb9c0dbdda99c065bddcb0f
 RYGEL_GTKDOC_DOCS_XML = \
 	$(top_srcdir)/doc/reference/lib$(RYGEL_DOCBUILD_MODULE)/gtkdoc/lib$(RYGEL_DOCBUILD_MODULE)-docs.xml \
 	$(top_srcdir)/doc/reference/lib$(RYGEL_DOCBUILD_MODULE)/gtkdoc/overview.xml $(RYGEL_GTKDOC_DOCS_XML_EXTRA)
@@ -55,21 +61,26 @@ clean-local:
 	rm -f gtkdoc/lib$(RYGEL_DOCBUILD_MODULE)*.txt
 	rm -f gtkdoc/lib$(RYGEL_DOCBUILD_MODULE).prerequisites
 
-RYGEL_GTKDOC_INSTALL_DIR = $(DESTDIR)$(datadir)/gtk-doc/html/lib$(RYGEL_DOCBUILD_MODULE)
-
-uninstall-hook:
-	rm -rf $(INSTALL_DIR)
-
 all: valadoc-gen gtkdoc-gen
-
-endif
 
 # The chmod corrects the directory permissions so that distcheck can remove the installed files.
 install-data-hook: gtkdoc/html/index.html
 	$(MKDIR_P) $(RYGEL_GTKDOC_INSTALL_DIR)
-	cp -d -R $(srcdir)/gtkdoc/html $(RYGEL_GTKDOC_INSTALL_DIR)
+	cp -d -R $(srcdir)/gtkdoc/html/* $(RYGEL_GTKDOC_INSTALL_DIR)
 	chmod -R u+w $(RYGEL_GTKDOC_INSTALL_DIR)
 
+else
+install-data-hook:
+	test -d $(srcdir)/gtkdoc/html && $(MKDIR_P) $(RYGEL_GTKDOC_INSTALL_DIR); true
+	test -d $(srcdir)/gtkdoc/html && cp -d -R $(srcdir)/gtkdoc/html/* $(RYGEL_GTKDOC_INSTALL_DIR); true
+	test -d $(srcdir)/gtkdoc/html && chmod -R u+w $(RYGEL_GTKDOC_INSTALL_DIR); true
+
+endif
+
+RYGEL_GTKDOC_INSTALL_DIR = $(DESTDIR)$(datadir)/gtk-doc/html/lib$(RYGEL_DOCBUILD_MODULE)
+
+uninstall-hook:
+	rm -rf $(RYGEL_GTKDOC_INSTALL_DIR)
 
 EXTRA_DIST = $(RYGEL_GTKDOC_DOCS_XML) gtkdoc/html valadoc
 

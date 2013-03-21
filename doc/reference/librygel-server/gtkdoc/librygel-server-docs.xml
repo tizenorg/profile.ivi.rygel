@@ -15,65 +15,57 @@
   </bookinfo>
 
   <!-- This is hand written: -->
-  <preface>
+  <preface id="overview">
     <title>Overview</title>
     <xi:include href="overview.xml"/>
   </preface>
 
-  <chapter>
-    <title>Implementing Servers</title>
-    <xi:include href="implementing-servers.xml"/>
-  </chapter>
-
-  <chapter>
-    <title>Implementing Rygel Server Plugins</title>
-    <xi:include href="implementing-server-plugins.xml"/>
-  </chapter>
-
-  <chapter>
-    <title>Implementing Rygel Media Engines</title>
-    <xi:include href="implementing-media-engines.xml"/>
-  </chapter>
+  <xi:include href="implementing-servers.xml"/>
+  <xi:include href="implementing-server-plugins.xml"/>
+  <xi:include href="implementing-media-engines.xml"/>
 
   <!-- These are generated: -->
-  <chapter>
+  <chapter id="api-main-list">
     <title>librygel-server API Reference</title>
-    <xi:include href="xml/rygel-image-item.xml"/>
-    <xi:include href="xml/rygel-photo-item.xml"/>
-    <xi:include href="xml/rygel-media-item.xml"/>
-    <xi:include href="xml/rygel-data-source.xml"/>
-    <xi:include href="xml/rygel-media-container.xml"/>
-    <xi:include href="xml/rygel-writable-container.xml"/>
     <xi:include href="xml/rygel-audio-item.xml"/>
-    <xi:include href="xml/rygel-relational-expression.xml"/>
-    <xi:include href="xml/rygel-media-server.xml"/>
+    <xi:include href="xml/rygel-data-source.xml"/>
     <xi:include href="xml/rygel-http-seek.xml"/>
+    <xi:include href="xml/rygel-image-item.xml"/>
+    <xi:include href="xml/rygel-logical-expression.xml"/>
     <xi:include href="xml/rygel-media-art-store.xml"/>
+    <xi:include href="xml/rygel-media-container.xml"/>
+    <xi:include href="xml/rygel-media-engine.xml"/>
+    <xi:include href="xml/rygel-media-item.xml"/>
+    <xi:include href="xml/rygel-media-object.xml"/>
+    <xi:include href="xml/rygel-media-objects.xml"/>
+    <xi:include href="xml/rygel-media-server.xml"/>
+    <xi:include href="xml/rygel-media-server-plugin.xml"/>
+    <xi:include href="xml/rygel-music-item.xml"/>
+    <xi:include href="xml/rygel-photo-item.xml"/>
+    <xi:include href="xml/rygel-relational-expression.xml"/>
+    <xi:include href="xml/rygel-search-expression.xml"/>
+    <xi:include href="xml/rygel-searchable-container.xml"/>
     <xi:include href="xml/rygel-simple-container.xml"/>
     <xi:include href="xml/rygel-subtitle.xml"/>
     <xi:include href="xml/rygel-thumbnail.xml"/>
-    <xi:include href="xml/rygel-media-engine.xml"/>
-    <xi:include href="xml/rygel-media-objects.xml"/>
-    <xi:include href="xml/rygel-video-item.xml"/>
-    <xi:include href="xml/rygel-media-object.xml"/>
-    <xi:include href="xml/rygel-search-expression.xml"/>
-    <xi:include href="xml/rygel-visual-item.xml"/>
+    <xi:include href="xml/rygel-trackable-container.xml"/>
     <xi:include href="xml/rygel-transcode-manager.xml"/>
     <xi:include href="xml/rygel-transcoder.xml"/>
-    <xi:include href="xml/rygel-logical-expression.xml"/>
-    <xi:include href="xml/rygel-music-item.xml"/>
-    <xi:include href="xml/rygel-media-server-plugin.xml"/>
-    <xi:include href="xml/rygel-searchable-container.xml"/>
-
+    <xi:include href="xml/rygel-video-item.xml"/>
+    <xi:include href="xml/rygel-visual-item.xml"/>
+    <xi:include href="xml/rygel-writable-container.xml"/>
   </chapter>
+
   <chapter id="object-tree">
     <title>Object Hierarchy</title>
      <xi:include href="xml/tree_index.sgml"/>
   </chapter>
+
   <index id="api-index-full">
     <title>API Index</title>
     <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
   </index>
+
   <index id="deprecated-api-index" role="deprecated">
     <title>Index of deprecated API</title>
     <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>

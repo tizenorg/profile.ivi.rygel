@@ -35,11 +35,11 @@ private errordomain Rygel.MediaItemError {
  * These objects correspond to items in the UPnP ContentDirectory's DIDL-Lite XML.
  */
 public abstract class Rygel.MediaItem : MediaObject {
-    public string date;
+    public string date { get; set; }
 
     // Resource info
-    public string mime_type;
-    public string dlna_profile;
+    public string mime_type { get; set; }
+    public string dlna_profile { get; set; }
 
     // Size in bytes
     private int64 _size = -1;
@@ -89,19 +89,21 @@ public abstract class Rygel.MediaItem : MediaObject {
         }
     }
 
-    protected Regex address_regex;
+    protected static Regex address_regex;
 
     public MediaItem (string         id,
                       MediaContainer parent,
                       string         title,
                       string         upnp_class) {
-        this.id = id;
-        this.parent = parent;
-        this.title = title;
-        this.upnp_class = upnp_class;
+        Object (id : id,
+                parent : parent,
+                title : title,
+                upnp_class : upnp_class);
+    }
 
+    static construct {
         try {
-            this.address_regex = new Regex (Regex.escape_string ("@ADDRESS@"));
+            address_regex = new Regex (Regex.escape_string ("@ADDRESS@"));
         } catch (GLib.RegexError err) {
             assert_not_reached ();
         }
@@ -117,7 +119,7 @@ public abstract class Rygel.MediaItem : MediaObject {
         string translated_uri = this.uris.get (0);
         if (host_ip != null) {
             try {
-                translated_uri = this.address_regex.replace_literal
+                translated_uri = MediaItem.address_regex.replace_literal
                     (this.uris.get (0), -1, 0, host_ip);
             } catch (Error error) {
                 assert_not_reached ();
@@ -143,13 +145,16 @@ public abstract class Rygel.MediaItem : MediaObject {
                (int) transcoder2.get_distance (this);
     }
 
-    internal virtual DIDLLiteResource add_resource
-                                        (DIDLLiteItem didl_item,
-                                         string?      uri,
-                                         string       protocol,
-                                         string?      import_uri = null)
+    internal override DIDLLiteResource add_resource
+                                        (DIDLLiteObject didl_object,
+                                         string?        uri,
+                                         string         protocol,
+                                         string?        import_uri = null)
                                          throws Error {
-        var res = didl_item.add_resource ();
+        var res = base.add_resource (didl_object,
+                                     uri,
+                                     protocol,
+                                     import_uri);
 
         if (uri != null && !this.place_holder) {
             res.uri = uri;
@@ -202,10 +207,10 @@ public abstract class Rygel.MediaItem : MediaObject {
         this.description = didl_object.description;
     }
 
-    internal override DIDLLiteObject serialize (DIDLLiteWriter writer,
-                                                HTTPServer     http_server)
-                                                throws Error {
-        var didl_item = writer.add_item ();
+    internal override DIDLLiteObject? serialize (Serializer serializer,
+                                                 HTTPServer http_server)
+                                                 throws Error {
+        var didl_item = serializer.add_item ();
 
         didl_item.id = this.id;
 
@@ -257,7 +262,10 @@ public abstract class Rygel.MediaItem : MediaObject {
             this.add_resources (didl_item, internal_allowed);
 
             foreach (var res in didl_item.get_resources ()) {
-                res.uri = this.address_regex.replace_literal (res.uri, -1, 0, host_ip);
+                res.uri = MediaItem.address_regex.replace_literal (res.uri,
+                                                                   -1,
+                                                                   0,
+                                                                   host_ip);
             }
         }
 

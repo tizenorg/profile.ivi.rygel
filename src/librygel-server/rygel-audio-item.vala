@@ -41,7 +41,10 @@ public class Rygel.AudioItem : MediaItem {
                       MediaContainer parent,
                       string         title,
                       string         upnp_class = AudioItem.UPNP_CLASS) {
-        base (id, parent, title, upnp_class);
+        Object (id : id,
+                parent : parent,
+                title : title,
+                upnp_class : upnp_class);
     }
 
     public override bool streamable () {
@@ -49,12 +52,12 @@ public class Rygel.AudioItem : MediaItem {
     }
 
     internal override DIDLLiteResource add_resource
-                                        (DIDLLiteItem didl_item,
-                                         string?      uri,
-                                         string       protocol,
-                                         string?      import_uri = null)
+                                        (DIDLLiteObject didl_object,
+                                         string?        uri,
+                                         string         protocol,
+                                         string?        import_uri = null)
                                          throws Error {
-        var res = base.add_resource (didl_item, uri, protocol, import_uri);
+        var res = base.add_resource (didl_object, uri, protocol, import_uri);
 
         res.duration = this.duration;
         res.bitrate = this.bitrate;

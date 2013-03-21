@@ -21,19 +21,39 @@
  */
 using Gee;
 
-internal class Rygel.MediaExport.WritableDbContainer : DBContainer,
-                                                    Rygel.WritableContainer {
+/**
+ * A DB container that is both Trackable and Writable.
+ *
+ * Clients can upload items to this container, causing
+ * the items to be saved to the filesystem to be
+ * served again subsequently.
+ */
+internal class Rygel.MediaExport.WritableDbContainer : TrackableDbContainer,
+                                                       Rygel.WritableContainer {
     public ArrayList<string> create_classes { get; set; }
 
-    public WritableDbContainer (MediaCache media_db, string id, string title) {
-        base (media_db, id, title);
+    public WritableDbContainer (string id, string title) {
+        Object (id : id,
+                title : title,
+                parent : null,
+                child_count : 0);
+    }
+
+    public override void constructed () {
+        base.constructed ();
 
         this.create_classes = new ArrayList<string> ();
+
+        // Items
         this.create_classes.add (Rygel.ImageItem.UPNP_CLASS);
         this.create_classes.add (Rygel.PhotoItem.UPNP_CLASS);
         this.create_classes.add (Rygel.VideoItem.UPNP_CLASS);
         this.create_classes.add (Rygel.AudioItem.UPNP_CLASS);
         this.create_classes.add (Rygel.MusicItem.UPNP_CLASS);
+        this.create_classes.add (Rygel.PlaylistItem.UPNP_CLASS);
+
+        // Containers
+        this.create_classes.add (Rygel.MediaContainer.STORAGE_FOLDER);
     }
 
     public async void add_item (Rygel.MediaItem item, Cancellable? cancellable)
@@ -45,11 +65,40 @@ internal class Rygel.MediaExport.WritableDbContainer : DBContainer,
             item.modified = int64.MAX;
         }
         item.id = MediaCache.get_id (file);
-        this.media_db.save_item (item);
+        yield this.add_child_tracked (item);
+        this.media_db.make_object_guarded (item);
+    }
+
+    public async void add_container (MediaContainer container,
+                                     Cancellable?   cancellable)
+                                     throws Error {
+        container.parent = this;
+        switch (container.upnp_class) {
+        case MediaContainer.STORAGE_FOLDER:
+            var file = File.new_for_uri (container.uris[0]);
+            if (file.is_native ()) {
+                file.make_directory_with_parents (cancellable);
+            }
+            break;
+        default:
+            throw new WriteableContainerError.NOT_IMPLEMENTED
+                                        ("upnp:class %s not supported",
+                                         container.upnp_class);
+        }
+
+        yield this.add_child_tracked (container);
     }
 
     public async void remove_item (string id, Cancellable? cancellable)
                                    throws Error {
-        this.media_db.remove_by_id (id);
+        var object = this.media_db.get_object (id);
+
+        yield this.remove_child_tracked (object);
     }
+
+    public async void remove_container (string id, Cancellable? cancellable)
+                                        throws Error {
+        throw new WriteableContainerError.NOT_IMPLEMENTED ("Not supported");
+    }
+
 }

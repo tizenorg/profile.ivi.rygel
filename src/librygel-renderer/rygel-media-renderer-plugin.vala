@@ -34,6 +34,10 @@ public class Rygel.MediaRendererPlugin : Rygel.Plugin {
     private static const string MEDIA_RENDERER_DESC_PATH =
                                 BuildConfig.DATA_DIR +
                                 "/xml/MediaRenderer2.xml";
+    private static const string DMR = "urn:schemas-upnp-org:device:MediaRenderer";
+
+    private string sink_protocol_info;
+    private PlayerController controller;
 
     /**
      * Create an instance of the plugin.
@@ -47,7 +51,15 @@ public class Rygel.MediaRendererPlugin : Rygel.Plugin {
                                 string? description = null,
                                 PluginCapabilities capabilities =
                                         PluginCapabilities.NONE) {
-        base (MEDIA_RENDERER_DESC_PATH, name, title, description, capabilities);
+        Object (desc_path : MEDIA_RENDERER_DESC_PATH,
+                name : name,
+                title : title,
+                description : description,
+                capabilities : capabilities);
+    }
+
+    public override void constructed () {
+        base.constructed ();
 
         var resource = new ResourceInfo (ConnectionManager.UPNP_ID,
                                          ConnectionManager.UPNP_TYPE,
@@ -70,5 +82,56 @@ public class Rygel.MediaRendererPlugin : Rygel.Plugin {
 
     public virtual MediaPlayer? get_player () {
         return null;
+    }
+
+    internal PlayerController get_controller () {
+        if (this.controller == null) {
+            this.controller = new PlayerController (this.get_player (),
+                                                    this.get_protocol_info ());
+        }
+
+        return this.controller;
+    }
+
+    public override void apply_hacks (RootDevice device,
+                                      string     description_path)
+                                      throws Error {
+        string[] services = { AVTransport.UPNP_TYPE,
+                              RenderingControl.UPNP_TYPE,
+                              ConnectionManager.UPNP_TYPE };
+        var v1_hacks = new V1Hacks (DMR, services);
+        v1_hacks.apply_on_device (device, description_path);
+    }
+
+
+    public string get_protocol_info () {
+        var player = this.get_player ();
+        if (player == null) {
+            return "";
+        }
+
+        if (this.sink_protocol_info == null) {
+            this.sink_protocol_info = "";
+            var protocols = player.get_protocols ();
+
+            this.sink_protocol_info += "http-get:*:text/xml:DLNA.ORG_PN=DIDL_S,";
+
+            var mime_types = player.get_mime_types ();
+            foreach (var protocol in protocols) {
+                if (protocols[0] != protocol) {
+                    this.sink_protocol_info += ",";
+                }
+
+                foreach (var mime_type in mime_types) {
+                    if (mime_types[0] != mime_type) {
+                        this.sink_protocol_info += ",";
+                    }
+
+                    this.sink_protocol_info += protocol + ":*:" + mime_type + ":*";
+                }
+            }
+        }
+
+        return this.sink_protocol_info;
     }
 }

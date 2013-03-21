@@ -24,10 +24,9 @@ src/plugins/media-export/rygel-media-export-database.vala
 src/plugins/media-export/rygel-media-export-db-container.vala
 src/plugins/media-export/rygel-media-export-metadata-extractor.vala
 src/plugins/media-export/rygel-media-export-media-cache.vala
-src/plugins/media-export/rygel-media-export-dbus-service.vala
 src/plugins/media-export/rygel-media-export-dummy-container.vala
 src/plugins/media-export/rygel-media-export-harvester.vala
-src/plugins/media-export/rygel-media-export-item.vala
+src/plugins/media-export/rygel-media-export-item-factory.vala
 src/plugins/media-export/rygel-media-export-null-container.vala
 src/plugins/media-export/rygel-media-export-object-factory.vala
 src/plugins/media-export/rygel-media-export-plugin.vala
@@ -38,6 +37,7 @@ src/plugins/mpris/rygel-mpris-player.vala
 src/plugins/mpris/rygel-mpris-plugin.vala
 src/plugins/mpris/rygel-mpris-plugin-factory.vala
 src/plugins/mpris/rygel-mpris-interfaces.vala
+src/plugins/playbin/rygel-playbin-plugin.vala
 src/plugins/tracker/rygel-tracker-category-all-container.vala
 src/plugins/tracker/rygel-tracker-category-container.vala
 src/plugins/tracker/rygel-tracker-insertion-query.vala
@@ -77,7 +77,6 @@ src/librygel-core/rygel-resource-info.vala
 src/librygel-core/rygel-root-device-factory.vala
 src/librygel-core/rygel-root-device.vala
 src/librygel-core/rygel-state-machine.vala
-src/librygel-renderer-gst/rygel-playbin-plugin.vala
 src/librygel-renderer-gst/rygel-playbin-renderer.vala
 src/librygel-renderer/rygel-av-transport.vala
 src/librygel-renderer/rygel-changelog.vala
@@ -101,7 +100,7 @@ src/librygel-server/rygel-http-time-seek.vala
 src/librygel-server/rygel-http-transcode-handler.vala
 src/librygel-server/rygel-image-item.vala
 src/librygel-server/rygel-import-resource.vala
-src/librygel-server/rygel-item-creator.vala
+src/librygel-server/rygel-object-creator.vala
 src/librygel-server/rygel-item-destroyer.vala
 src/librygel-server/rygel-item-updater.vala
 src/librygel-server/rygel-logical-expression.vala

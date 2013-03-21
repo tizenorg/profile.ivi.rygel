@@ -5,7 +5,7 @@
 <title>librygel-server Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="next" href="pr01.html" title="Overview">
+<link rel="next" href="overview.html" title="Overview">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
@@ -23,48 +23,79 @@
 <hr>
 </div>
 <div class="toc"><dl>
-<dt><span class="preface"><a href="pr01.html">Overview</a></span></dt>
-<dd><dl><dt><span class="section"><a href="pr01.html#overview"></a></span></dt></dl></dd>
-<dt><span class="chapter"><a href="ch01.html">Implementing Servers</a></span></dt>
-<dd><dl><dt><span class="section"><a href="ch01.html#implementing-servers"></a></span></dt></dl></dd>
-<dt><span class="chapter"><a href="ch02.html">Implementing Rygel Server Plugins</a></span></dt>
-<dd><dl><dt><span class="section"><a href="ch02.html#implementing-server-plugins"></a></span></dt></dl></dd>
-<dt><span class="chapter"><a href="ch03.html">Implementing Rygel Media Engines</a></span></dt>
-<dd><dl><dt><span class="section"><a href="ch03.html#implementing-media-engines"></a></span></dt></dl></dd>
-<dt><span class="chapter"><a href="ch04.html">librygel-server API Reference</a></span></dt>
+<dt><span class="preface"><a href="overview.html">Overview</a></span></dt>
+<dd><dl><dt><span class="section"><a href="overview.html#overview"></a></span></dt></dl></dd>
+<dt><span class="chapter"><a href="implementing-servers.html">Implementing Servers</a></span></dt>
 <dd><dl>
-<dt>
-<span class="refentrytitle"><a href="RygelImageItem.html">RygelImageItem</a></span><span class="refpurpose"> — Represents an image item.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelPhotoItem.html">RygelPhotoItem</a></span><span class="refpurpose"> — Represents a photo item.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelMediaItem.html">RygelMediaItem</a></span><span class="refpurpose"> — Represents a media item (Music, Video or Image).</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelDataSource.html">RygelDataSource</a></span><span class="refpurpose"> — Interface for all data streams provided by a <a class="link" href="RygelDLNAProfile.html#RygelMediaEngine"><span class="type">RygelMediaEngine</span></a>.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelMediaContainer.html">RygelMediaContainer</a></span><span class="refpurpose"> — This is a container (folder) for media items and child containers.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelWritableContainer.html">RygelWritableContainer</a></span><span class="refpurpose"> — This interface should be implemented by 'writable' containers - ones that allow adding, removal and editing of items directly under them. Currently, only addition and removal is supported.</span>
-</dt>
+<dt><span class="section"><a href="implementing-servers.html#implementing-servers-overview">Implementing Servers: Overview</a></span></dt>
+<dt><span class="section"><a href="implementing-servers-simple-example.html">Implementing Servers: Simple Example</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="implementing-server-plugins.html">Implementing Rygel Server Plugins</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="implementing-server-plugins.html#implementing-server-plugins-overview">Implementing Server Plugins: Overview</a></span></dt>
+<dt><span class="section"><a href="implementing-server-plugins-simple-example.html">Implementing Server Plugins: Simple Example</a></span></dt>
+<dt><span class="section"><a href="implementing-server-plugins-full-example.html">Implementing Server Plugins: Full Example</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="implementing-media-engines.html">Implementing Rygel Media Engines</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="implementing-media-engines.html#implementing-media-engines-overview">Implementing Media Engines: Overview</a></span></dt>
+<dt><span class="section"><a href="implementing-media-engines-full-example.html">Implementing Media Engines: Full Example</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="api-main-list.html">librygel-server API Reference</a></span></dt>
+<dd><dl>
 <dt>
 <span class="refentrytitle"><a href="RygelAudioItem.html">RygelAudioItem</a></span><span class="refpurpose"> — Represents an audio item.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelRelationalExpression.html">RygelRelationalExpression</a></span><span class="refpurpose"> — This is a parsed UPnP search expression consisting of two strings joined by a relational operator such as such &lt;, &lt;=, ==, !=, &gt;, &gt;=, derivedFrom or exists.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelMediaServer.html">RygelMediaServer</a></span><span class="refpurpose"> — This class may be used to implement in-process UPnP-AV media servers.</span>
+<span class="refentrytitle"><a href="RygelDataSource.html">RygelDataSource</a></span><span class="refpurpose"> — Interface for all data streams provided by a <a class="link" href="RygelMediaEngine.html" title="RygelMediaEngine"><span class="type">RygelMediaEngine</span></a>.</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="RygelHTTPSeek.html">RygelHTTPSeek</a></span><span class="refpurpose"> — HTTPSeek is an abstract representation of a ranged HTTP request.</span>
 </dt>
 <dt>
+<span class="refentrytitle"><a href="RygelImageItem.html">RygelImageItem</a></span><span class="refpurpose"> — Represents an image item.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelLogicalExpression.html">RygelLogicalExpression</a></span><span class="refpurpose"> — This is a parsed UPnP search expression consisting of two other search expressions joined by a boolean operator such as AND or OR.</span>
+</dt>
+<dt>
 <span class="refentrytitle"><a href="RygelMediaArtStore.html">RygelMediaArtStore</a></span><span class="refpurpose"> — This maps RygelMusicItem objects to their cached cover art, implementing the GNOME <a class="ulink" href="https://live.gnome.org/MediaArtStorageSpec" target="_top">MediaArt storage specification</a> and the simplified version that Banshee uses.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelMediaContainer.html">RygelMediaContainer</a></span><span class="refpurpose"> — This is a container (folder) for media items and child containers.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelMediaEngine.html">RygelMediaEngine</a></span><span class="refpurpose"> — This is the base class for media engines that contain knowledge about the streaming and (optionally) the transcoding and seeking capabilites of the media library in use. Derived classes also instantiate any transcoding objects supported by the media engine and specify the list of media formats the engine is capable of playing.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelMediaItem.html">RygelMediaItem</a></span><span class="refpurpose"> — Represents a media item (Music, Video or Image).</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelMediaObject.html">RygelMediaObject</a></span><span class="refpurpose"> — Represents a media object (container or item).</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelMediaObjects.html">RygelMediaObjects</a></span><span class="refpurpose"> — An array list that keeps media objects.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelMediaServer.html">RygelMediaServer</a></span><span class="refpurpose"> — This class may be used to implement in-process UPnP-AV media servers.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelMediaServerPlugin.html">RygelMediaServerPlugin</a></span><span class="refpurpose"> — This is the base class for every Rygel implementation of a UPnP media server. It should be used either for a real plug-in for the Rygel process or used in-process via the librygel-server API.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelMusicItem.html">RygelMusicItem</a></span><span class="refpurpose"> — Represents a music item.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelPhotoItem.html">RygelPhotoItem</a></span><span class="refpurpose"> — Represents a photo item.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelRelationalExpression.html">RygelRelationalExpression</a></span><span class="refpurpose"> — This is a parsed UPnP search expression consisting of two strings joined by a relational operator such as such &lt;, &lt;=, ==, !=, &gt;, &gt;=, derivedFrom or exists.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelSearchExpression.html">RygelSearchExpression</a></span><span class="refpurpose"> — Represents a SearchExpression tree.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="RygelSearchableContainer.html">RygelSearchableContainer</a></span><span class="refpurpose"> — The base class for searchable containers.</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="RygelSimpleContainer.html">RygelSimpleContainer</a></span><span class="refpurpose"> — A simple implementation of RygelMediaContainer that keeps all RygelMediaObjects in memory. You should add children via <a class="link" href="RygelSimpleContainer.html#rygel-simple-container-add-child-item" title="rygel_simple_container_add_child_item ()"><code class="function">rygel_simple_container_add_child_item()</code></a>.</span>
@@ -76,40 +107,22 @@
 <span class="refentrytitle"><a href="RygelThumbnail.html">RygelThumbnail</a></span><span class="refpurpose"> — Represents a picture or video thumbnail.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelDLNAProfile.html">RygelDLNAProfile</a></span><span class="refpurpose"> — Data class representing a DLNA profile. It contains the name and the corresponding DLNA mime type.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelMediaObjects.html">RygelMediaObjects</a></span><span class="refpurpose"> — An array list that keeps media objects.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelVideoItem.html">RygelVideoItem</a></span><span class="refpurpose"> — Represents a video item.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelMediaObject.html">RygelMediaObject</a></span><span class="refpurpose"> — Represents a media object (container or item).</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelSearchExpression.html">RygelSearchExpression</a></span><span class="refpurpose"> — Represents a SearchExpression tree.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelVisualItem.html">RygelVisualItem</a></span><span class="refpurpose"> — An interface that visual (video and image) items must implement.</span>
+<span class="refentrytitle"><a href="RygelTrackableContainer.html">RygelTrackableContainer</a></span><span class="refpurpose"> — The base class for containers that provide automatic change tracking.</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="RygelTranscodeManager.html">RygelTranscodeManager</a></span><span class="refpurpose"> — Responsible for management of all transcoders: # Gets the appropriate transcoder given a transcoding target. # Provide all possible transcoding resources for items.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelTranscoder.html">RygelTranscoder</a></span><span class="refpurpose"> — The base Transcoder class. Each implementation derives from it and must implement get_distance.</span>
+<span class="refentrytitle"><a href="RygelTranscoder.html">RygelTranscoder</a></span><span class="refpurpose"> — The base Transcoder class. Each implementation derives from it and must implement <code class="function">create_source()</code> and <code class="function">get_distance()</code>.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelLogicalExpression.html">RygelLogicalExpression</a></span><span class="refpurpose"> — This is a parsed UPnP search expression consisting of two other search expressions joined by a boolean operator such as AND or OR.</span>
+<span class="refentrytitle"><a href="RygelVideoItem.html">RygelVideoItem</a></span><span class="refpurpose"> — Represents a video item.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelMusicItem.html">RygelMusicItem</a></span><span class="refpurpose"> — Represents a music item.</span>
+<span class="refentrytitle"><a href="RygelVisualItem.html">RygelVisualItem</a></span><span class="refpurpose"> — An interface that visual (video and image) items must implement.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelMediaServerPlugin.html">RygelMediaServerPlugin</a></span><span class="refpurpose"> — This is the base class for every Rygel implementation of a UPnP media server. It should be used either for a real plug-in for the Rygel process or used in-process via the librygel-server API.</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="RygelSearchableContainer.html">RygelSearchableContainer</a></span><span class="refpurpose"> — The base class for searchable containers.</span>
+<span class="refentrytitle"><a href="RygelWritableContainer.html">RygelWritableContainer</a></span><span class="refpurpose"> — This interface should be implemented by 'writable' containers - ones that allow adding (via upload), removal and editing of items directly under them. Currently, only addition and removal are supported.</span>
 </dt>
 </dl></dd>
 <dt><span class="chapter"><a href="object-tree.html">Object Hierarchy</a></span></dt>

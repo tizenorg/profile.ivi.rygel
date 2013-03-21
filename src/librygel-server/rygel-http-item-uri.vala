@@ -26,11 +26,13 @@
 using Gee;
 
 internal class Rygel.HTTPItemURI : Object {
-    public string item_id;
-    public int thumbnail_index;
-    public int subtitle_index;
-    public string? transcode_target;
-    public unowned HTTPServer http_server;
+    public string item_id { get; set; }
+    public int thumbnail_index { get; set; default = -1; }
+    public int subtitle_index { get; set; default = -1; }
+    public string? transcode_target { get; set; default = null; }
+    public string? playlist_format { get; set; default = null; }
+    public unowned HTTPServer http_server { get; set; }
+
     private string real_extension;
     public string extension {
         owned get {
@@ -46,66 +48,71 @@ internal class Rygel.HTTPItemURI : Object {
 
     public static HashMap<string, string> mime_to_ext;
 
-    public HTTPItemURI (MediaItem  item,
+    public HTTPItemURI (MediaObject object,
                         HTTPServer http_server,
                         int        thumbnail_index = -1,
                         int        subtitle_index = -1,
-                        string?    transcode_target = null) {
-        this.item_id = item.id;
+                        string?    transcode_target = null,
+                        string?    playlist_format = null) {
+        this.item_id = object.id;
         this.thumbnail_index = thumbnail_index;
         this.subtitle_index = subtitle_index;
         this.transcode_target = transcode_target;
         this.http_server = http_server;
+        this.playlist_format = playlist_format;
         this.extension = "";
 
-        if (thumbnail_index > -1) {
-            if (item is VisualItem) {
-                var thumbnails = (item as VisualItem).thumbnails;
+        if (object is MediaItem) {
+            var item = object as MediaItem;
+            if (thumbnail_index > -1) {
+                if (item is VisualItem) {
+                    var thumbnails = (item as VisualItem).thumbnails;
 
-                if (thumbnails.size > thumbnail_index) {
-                    this.extension = thumbnails[thumbnail_index].file_extension;
+                    if (thumbnails.size > thumbnail_index) {
+                        this.extension = thumbnails[thumbnail_index].file_extension;
+                    }
+                } else if (item is MusicItem) {
+                    var album_art = (item as MusicItem).album_art;
+
+                    if (album_art != null) {
+                        this.extension = album_art.file_extension;
+                    }
                 }
-            } else if (item is MusicItem) {
-                var album_art = (item as MusicItem).album_art;
+            } else if (subtitle_index > -1) {
+                if (item is VideoItem) {
+                    var subtitles = (item as VideoItem).subtitles;
 
-                if (album_art != null) {
-                    this.extension = album_art.file_extension;
+                    if (subtitles.size > subtitle_index) {
+                        this.extension = subtitles[subtitle_index].caption_type;
+                    }
                 }
-            }
-        } else if (subtitle_index > -1) {
-            if (item is VideoItem) {
-                var subtitles = (item as VideoItem).subtitles;
+            } else if (transcode_target != null) {
+                try {
+                    var tc = this.http_server.get_transcoder (transcode_target);
 
-                if (subtitles.size > subtitle_index) {
-                    this.extension = subtitles[subtitle_index].caption_type;
-                }
-            }
-        } else if (transcode_target != null) {
-            try {
-                var tc = this.http_server.get_transcoder (transcode_target);
-
-                this.extension = tc.extension;
-            } catch (Error error) {}
-        }
-
-        if (this.extension == "") {
-            string uri_extension = "";
-
-            foreach (string uri_string in item.uris) {
-                string basename = Path.get_basename (uri_string);
-                int dot_index = basename.last_index_of(".");
-
-                if (dot_index > -1) {
-                    uri_extension = basename.substring (dot_index + 1);
-
-                    break;
-                }
+                    this.extension = tc.extension;
+                } catch (Error error) {}
             }
 
-            if (uri_extension == "") {
-                this.extension = this.ext_from_mime_type (item.mime_type);
-            } else {
-                this.extension = uri_extension;
+            if (this.extension == "") {
+                string uri_extension = "";
+
+                foreach (string uri_string in item.uris) {
+                    string basename = Path.get_basename (uri_string);
+                    int dot_index = basename.last_index_of(".");
+
+                    if (dot_index > -1) {
+                        uri_extension = basename.substring (dot_index + 1);
+
+                        break;
+                    }
+                }
+
+                if (uri_extension == "") {
+                    this.extension = this.ext_from_mime_type (item.mime_type);
+                } else {
+                    this.extension = uri_extension;
+                }
             }
         }
     }
@@ -157,6 +164,10 @@ internal class Rygel.HTTPItemURI : Object {
                     this.subtitle_index = int.parse (parts[i + 1]);
 
                     break;
+                case "pl":
+                    this.playlist_format = Soup.URI.decode (parts[i + 1]);
+
+                    break;
                 default:
                     break;
             }
@@ -184,8 +195,12 @@ internal class Rygel.HTTPItemURI : Object {
             path += "/th/" + this.thumbnail_index.to_string ();
         } else if (this.subtitle_index >= 0) {
             path += "/sub/" + this.subtitle_index.to_string ();
+        } else if (this.playlist_format != null) {
+            path += "/pl/" + Uri.escape_string
+                                        (this.playlist_format, "", true);
         }
         path += this.extension;
+
         return this.create_uri_for_path (path);
     }
 
@@ -220,6 +235,7 @@ internal class Rygel.HTTPItemURI : Object {
 
             // texts
             mime_to_ext.set ("text/srt", "srt");
+            mime_to_ext.set ("text/xml", "xml");
 
             // applications? (can be either video or audio?);
             mime_to_ext.set ("application/ogg", "ogg");
