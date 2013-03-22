@@ -10,6 +10,8 @@ SUBDIRS = $(EXAMPLE_PLUGINS)
 
 include ../common.am
 
+initddir = $(sysconfdir)/rc.d/init.d
+initd_SCRIPTS = service/sysv/rygel
 
 #TODO: Remove the src/rygel from here?
 noinst_PROGRAMS = standalone-server

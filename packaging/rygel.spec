@@ -95,6 +95,7 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %defattr(-,root,root,-)
 # >> files
 %config /etc/rygel.conf
+%config /etc/rc.d/init.d/rygel
 %{_bindir}/rygel
 %{_datadir}/dbus-1/services/org.gnome.Rygel1.service
 %{_datadir}/icons/hicolor/128x128/apps/rygel.png
