@@ -220,7 +220,7 @@ RygelMediaExportDummyContainer* rygel_media_export_dummy_container_construct (GT
 		_tmp22_ = rygel_media_export_media_cache_get_child_ids (cache, _tmp21_, &_inner_error_);
 		_tmp23_ = _tmp22_;
 		if (_inner_error_ != NULL) {
-			goto __catch34_g_error;
+			goto __catch36_g_error;
 		}
 		_g_object_unref0 (self->children);
 		self->children = (GeeList*) _tmp23_;
@@ -229,8 +229,8 @@ RygelMediaExportDummyContainer* rygel_media_export_dummy_container_construct (GT
 		_tmp26_ = _tmp25_;
 		rygel_media_container_set_child_count ((RygelMediaContainer*) self, _tmp26_);
 	}
-	goto __finally34;
-	__catch34_g_error:
+	goto __finally36;
+	__catch36_g_error:
 	{
 		GError* _error_ = NULL;
 		GeeArrayList* _tmp27_;
@@ -242,7 +242,7 @@ RygelMediaExportDummyContainer* rygel_media_export_dummy_container_construct (GT
 		rygel_media_container_set_child_count ((RygelMediaContainer*) self, 0);
 		_g_error_free0 (_error_);
 	}
-	__finally34:
+	__finally36:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (cache);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);

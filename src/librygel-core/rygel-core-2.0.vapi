@@ -12,6 +12,8 @@ namespace Rygel {
 		public virtual int get_int (string section, string key, int min, int max) throws GLib.Error;
 		public virtual Gee.ArrayList<int> get_int_list (string section, string key) throws GLib.Error;
 		public virtual string get_interface () throws GLib.Error;
+		[CCode (array_length = false, array_null_terminated = true)]
+		public virtual string[] get_interfaces () throws GLib.Error;
 		public virtual string get_log_levels () throws GLib.Error;
 		public virtual string get_media_engine () throws GLib.Error;
 		public virtual string get_music_upload_folder () throws GLib.Error;
@@ -41,7 +43,7 @@ namespace Rygel {
 	}
 	[CCode (cheader_filename = "rygel-core.h")]
 	public class DescriptionFile : GLib.Object {
-		public DescriptionFile (string template) throws GLib.Error;
+		public DescriptionFile (string template_file) throws GLib.Error;
 		public DescriptionFile.from_xml_document (GUPnP.XMLDoc doc);
 		public string get_friendly_name ();
 		public void modify_service_type (string old_type, string new_type);
@@ -102,6 +104,12 @@ namespace Rygel {
 		public string title { get; set construct; }
 	}
 	[CCode (cheader_filename = "rygel-core.h")]
+	public class PluginInformation : GLib.Object {
+		public static Rygel.PluginInformation new_from_file (GLib.File file) throws GLib.Error;
+		public string module_path { get; construct; }
+		public string name { get; construct; }
+	}
+	[CCode (cheader_filename = "rygel-core.h")]
 	public class PluginLoader : Rygel.RecursiveModuleLoader {
 		public PluginLoader ();
 		public void add_plugin (Rygel.Plugin plugin);
@@ -109,6 +117,7 @@ namespace Rygel {
 		public Rygel.Plugin? get_plugin_by_name (string name);
 		public Gee.Collection<Rygel.Plugin> list_plugins ();
 		protected override bool load_module_from_file (GLib.File module_file);
+		protected override bool load_module_from_info (Rygel.PluginInformation info);
 		public bool plugin_disabled (string name);
 		public signal void plugin_available (Rygel.Plugin plugin);
 	}
@@ -117,6 +126,7 @@ namespace Rygel {
 		public RecursiveModuleLoader (string path);
 		public override void constructed ();
 		protected abstract bool load_module_from_file (GLib.File file);
+		protected abstract bool load_module_from_info (Rygel.PluginInformation info);
 		public void load_modules ();
 		public void load_modules_sync (GLib.Cancellable? cancellable = null);
 		public string base_path { get; set construct; }
@@ -164,7 +174,10 @@ namespace Rygel {
 		public abstract string get_engine_path () throws GLib.Error;
 		public abstract int get_int (string section, string key, int min, int max) throws GLib.Error;
 		public abstract Gee.ArrayList<int> get_int_list (string section, string key) throws GLib.Error;
+		[Deprecated (replacement = "get_interfaces", since = "0.19.2")]
 		public abstract string get_interface () throws GLib.Error;
+		[CCode (array_length = false, array_null_terminated = true)]
+		public abstract string[] get_interfaces () throws GLib.Error;
 		public abstract string get_log_levels () throws GLib.Error;
 		public abstract string get_media_engine () throws GLib.Error;
 		public abstract string get_music_upload_folder () throws GLib.Error;

@@ -37,7 +37,6 @@ internal class Rygel.GstSink : Sink {
 
     private int priority;
 
-    private int64 chunks_buffered;
     private int64 bytes_sent;
     private int64 max_bytes;
 
@@ -58,7 +57,6 @@ internal class Rygel.GstSink : Sink {
     }
 
     public GstSink (DataSource source, HTTPSeek? offsets) {
-        this.chunks_buffered = 0;
         this.bytes_sent = 0;
         this.max_bytes = int64.MAX;
         this.source = source;
@@ -134,8 +132,9 @@ internal class Rygel.GstSink : Sink {
 
         buffer.map (out info, MapFlags.READ);
 
-        this.source.data_available (info.data[0:to_send]);
-        this.chunks_buffered++;
+        unowned uint8[] tmp = info.data[0:to_send];
+
+        this.source.data_available (tmp);
         this.bytes_sent += to_send;
         buffer.unmap (info);
 

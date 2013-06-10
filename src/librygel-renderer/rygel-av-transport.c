@@ -93,11 +93,11 @@ typedef struct _RygelMediaRendererPluginClass RygelMediaRendererPluginClass;
 #define __vala_SoupURI_free0(var) ((var == NULL) ? NULL : (var = (_vala_SoupURI_free (var), NULL)))
 #define __vala_GUPnPServiceAction_free0(var) ((var == NULL) ? NULL : (var = (_vala_GUPnPServiceAction_free (var), NULL)))
 typedef struct _Block1Data Block1Data;
+#define _g_regex_unref0(var) ((var == NULL) ? NULL : (var = (g_regex_unref (var), NULL)))
+#define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 typedef struct _Block2Data Block2Data;
 #define __g_list_free__g_object_unref0_0(var) ((var == NULL) ? NULL : (var = (_g_list_free__g_object_unref0_ (var), NULL)))
 typedef struct _RygelAvTransportHandlePlaylistData RygelAvTransportHandlePlaylistData;
-#define _g_regex_unref0(var) ((var == NULL) ? NULL : (var = (g_regex_unref (var), NULL)))
-#define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 
 struct _RygelAVTransport {
 	GUPnPService parent_instance;
@@ -295,8 +295,9 @@ static Block1Data* block1_data_ref (Block1Data* _data1_);
 static void block1_data_unref (void * _userdata_);
 void rygel_player_controller_set_playlist (RygelPlayerController* self, GUPnPMediaCollection* collection);
 static void ___lambda4_ (Block1Data* _data1_, SoupMessage* msg);
-gchar** rygel_media_player_get_mime_types (RygelMediaPlayer* self, int* result_length1);
-static gboolean _vala_string_array_contains (gchar** stack, int stack_length, gchar* needle);
+static void ___lambda5_ (RygelAVTransport* self, SoupMessage* msg);
+static void ____lambda5__soup_message_got_headers (SoupMessage* _sender, gpointer self);
+static gboolean rygel_av_transport_is_valid_mime_type (RygelAVTransport* self, const gchar* mime);
 static gboolean rygel_av_transport_is_playlist (RygelAVTransport* self, const gchar* mime, const gchar* features);
 void rygel_player_controller_set_metadata (RygelPlayerController* self, const gchar* value);
 void rygel_player_controller_set_uri (RygelPlayerController* self, const gchar* value);
@@ -309,6 +310,8 @@ void rygel_av_transport_set_track_uri (RygelAVTransport* self, const gchar* valu
 void rygel_player_controller_set_n_tracks (RygelPlayerController* self, guint value);
 void rygel_player_controller_set_track (RygelPlayerController* self, guint value);
 static void ____lambda4__soup_message_finished (SoupMessage* _sender, gpointer self);
+gchar** rygel_media_player_get_mime_types (RygelMediaPlayer* self, int* result_length1);
+static gboolean _vala_string_array_contains (gchar** stack, int stack_length, gchar* needle);
 gchar* rygel_media_player_get_position_as_str (RygelMediaPlayer* self);
 void rygel_media_player_set_playback_state (RygelMediaPlayer* self, const gchar* value);
 gchar** rygel_media_player_get_allowed_playback_speeds (RygelMediaPlayer* self, int* result_length1);
@@ -321,8 +324,8 @@ static void rygel_av_transport_handle_playlist_data_free (gpointer _data);
 static gboolean rygel_av_transport_handle_playlist_co (RygelAvTransportHandlePlaylistData* _data_);
 static Block2Data* block2_data_ref (Block2Data* _data2_);
 static void block2_data_unref (void * _userdata_);
-static void __lambda5_ (Block2Data* _data2_);
-static void ___lambda5__soup_session_callback (SoupSession* session, SoupMessage* msg, gpointer self);
+static void __lambda6_ (Block2Data* _data2_);
+static void ___lambda6__soup_session_callback (SoupSession* session, SoupMessage* msg, gpointer self);
 static void _g_object_unref0_ (gpointer var);
 static void _g_list_free__g_object_unref0_ (GList* self);
 static gchar* rygel_av_transport_unescape (RygelAVTransport* self, const gchar* input);
@@ -921,169 +924,241 @@ static void block1_data_unref (void * _userdata_) {
 }
 
 
-static gboolean _vala_string_array_contains (gchar** stack, int stack_length, gchar* needle) {
-	int i;
-	for (i = 0; i < stack_length; i++) {
-		if (g_strcmp0 (stack[i], needle) == 0) {
-			return TRUE;
-		}
-	}
-	return FALSE;
+static void ___lambda5_ (RygelAVTransport* self, SoupMessage* msg) {
+	SoupSession* _tmp0_;
+	SoupMessage* _tmp1_;
+	SoupMessage* _tmp2_;
+	guint _tmp3_ = 0U;
+	guint _tmp4_;
+	g_return_if_fail (msg != NULL);
+	_tmp0_ = self->priv->session;
+	_tmp1_ = msg;
+	_tmp2_ = msg;
+	g_object_get (_tmp2_, "status-code", &_tmp3_, NULL);
+	_tmp4_ = _tmp3_;
+	soup_session_cancel_message (_tmp0_, _tmp1_, _tmp4_);
+}
+
+
+static void ____lambda5__soup_message_got_headers (SoupMessage* _sender, gpointer self) {
+	___lambda5_ (self, _sender);
 }
 
 
 static void ___lambda4_ (Block1Data* _data1_, SoupMessage* msg) {
 	RygelAVTransport * self;
-	SoupMessage* _tmp0_;
-	guint _tmp1_ = 0U;
-	guint _tmp2_;
+	gboolean _tmp0_ = FALSE;
+	gboolean _tmp1_ = FALSE;
+	gboolean _tmp2_ = FALSE;
+	gboolean _tmp3_ = FALSE;
+	SoupMessage* _tmp4_;
+	guint _tmp5_ = 0U;
+	guint _tmp6_;
+	gboolean _tmp10_;
+	gboolean _tmp14_;
+	gboolean _tmp18_;
+	gboolean _tmp23_;
+	SoupMessage* _tmp29_;
+	guint _tmp30_ = 0U;
+	guint _tmp31_;
 	self = _data1_->self;
 	g_return_if_fail (msg != NULL);
-	_tmp0_ = msg;
-	g_object_get (_tmp0_, "status-code", &_tmp1_, NULL);
-	_tmp2_ = _tmp1_;
-	if (_tmp2_ != ((guint) SOUP_STATUS_OK)) {
-		const gchar* _tmp3_;
-		SoupMessage* _tmp4_;
-		gchar* _tmp5_ = NULL;
-		gchar* _tmp6_;
-		gchar* _tmp7_;
-		GUPnPServiceAction* _tmp8_;
-		const gchar* _tmp9_ = NULL;
-		_tmp3_ = _data1_->_uri;
-		_tmp4_ = msg;
-		g_object_get (_tmp4_, "reason-phrase", &_tmp5_, NULL);
-		_tmp6_ = _tmp5_;
-		_tmp7_ = _tmp6_;
-		g_warning ("rygel-av-transport.vala:251: Failed to access %s: %s", _tmp3_, _tmp7_);
-		_g_free0 (_tmp7_);
-		_tmp8_ = _data1_->action;
-		_tmp9_ = _ ("Resource not found");
-		gupnp_service_action_return_error (_tmp8_, (guint) 716, _tmp9_);
+	_tmp4_ = msg;
+	g_object_get (_tmp4_, "status-code", &_tmp5_, NULL);
+	_tmp6_ = _tmp5_;
+	if (_tmp6_ == ((guint) SOUP_STATUS_MALFORMED)) {
+		_tmp3_ = TRUE;
+	} else {
+		SoupMessage* _tmp7_;
+		guint _tmp8_ = 0U;
+		guint _tmp9_;
+		_tmp7_ = msg;
+		g_object_get (_tmp7_, "status-code", &_tmp8_, NULL);
+		_tmp9_ = _tmp8_;
+		_tmp3_ = _tmp9_ == ((guint) SOUP_STATUS_BAD_REQUEST);
+	}
+	_tmp10_ = _tmp3_;
+	if (_tmp10_) {
+		_tmp2_ = TRUE;
+	} else {
+		SoupMessage* _tmp11_;
+		guint _tmp12_ = 0U;
+		guint _tmp13_;
+		_tmp11_ = msg;
+		g_object_get (_tmp11_, "status-code", &_tmp12_, NULL);
+		_tmp13_ = _tmp12_;
+		_tmp2_ = _tmp13_ == ((guint) SOUP_STATUS_METHOD_NOT_ALLOWED);
+	}
+	_tmp14_ = _tmp2_;
+	if (_tmp14_) {
+		_tmp1_ = TRUE;
+	} else {
+		SoupMessage* _tmp15_;
+		guint _tmp16_ = 0U;
+		guint _tmp17_;
+		_tmp15_ = msg;
+		g_object_get (_tmp15_, "status-code", &_tmp16_, NULL);
+		_tmp17_ = _tmp16_;
+		_tmp1_ = _tmp17_ == ((guint) SOUP_STATUS_NOT_IMPLEMENTED);
+	}
+	_tmp18_ = _tmp1_;
+	if (_tmp18_) {
+		SoupMessage* _tmp19_;
+		gchar* _tmp20_ = NULL;
+		gchar* _tmp21_;
+		gchar* _tmp22_;
+		_tmp19_ = msg;
+		g_object_get (_tmp19_, "method", &_tmp20_, NULL);
+		_tmp21_ = _tmp20_;
+		_tmp22_ = _tmp21_;
+		_tmp0_ = g_strcmp0 (_tmp22_, "HEAD") == 0;
+		_g_free0 (_tmp22_);
+	} else {
+		_tmp0_ = FALSE;
+	}
+	_tmp23_ = _tmp0_;
+	if (_tmp23_) {
+		SoupMessage* _tmp24_;
+		SoupMessage* _tmp25_;
+		SoupSession* _tmp26_;
+		SoupMessage* _tmp27_;
+		SoupMessage* _tmp28_;
+		g_debug ("rygel-av-transport.vala:255: Peer does not support HEAD, trying GET");
+		_tmp24_ = msg;
+		g_object_set (_tmp24_, "method", "GET", NULL);
+		_tmp25_ = msg;
+		g_signal_connect_object (_tmp25_, "got-headers", (GCallback) ____lambda5__soup_message_got_headers, self, 0);
+		_tmp26_ = self->priv->session;
+		_tmp27_ = msg;
+		_tmp28_ = _g_object_ref0 (_tmp27_);
+		soup_session_queue_message (_tmp26_, _tmp28_, NULL, NULL);
+		return;
+	}
+	_tmp29_ = msg;
+	g_object_get (_tmp29_, "status-code", &_tmp30_, NULL);
+	_tmp31_ = _tmp30_;
+	if (_tmp31_ != ((guint) SOUP_STATUS_OK)) {
+		const gchar* _tmp32_;
+		SoupMessage* _tmp33_;
+		gchar* _tmp34_ = NULL;
+		gchar* _tmp35_;
+		gchar* _tmp36_;
+		GUPnPServiceAction* _tmp37_;
+		const gchar* _tmp38_ = NULL;
+		_tmp32_ = _data1_->_uri;
+		_tmp33_ = msg;
+		g_object_get (_tmp33_, "reason-phrase", &_tmp34_, NULL);
+		_tmp35_ = _tmp34_;
+		_tmp36_ = _tmp35_;
+		g_warning ("rygel-av-transport.vala:267: Failed to access %s: %s", _tmp32_, _tmp36_);
+		_g_free0 (_tmp36_);
+		_tmp37_ = _data1_->action;
+		_tmp38_ = _ ("Resource not found");
+		gupnp_service_action_return_error (_tmp37_, (guint) 716, _tmp38_);
 		return;
 	} else {
-		SoupMessage* _tmp10_;
-		SoupMessageHeaders* _tmp11_;
-		const gchar* _tmp12_ = NULL;
-		gchar* _tmp13_;
+		SoupMessage* _tmp39_;
+		SoupMessageHeaders* _tmp40_;
+		const gchar* _tmp41_ = NULL;
+		gchar* _tmp42_;
 		gchar* mime;
-		SoupMessage* _tmp14_;
-		SoupMessageHeaders* _tmp15_;
-		const gchar* _tmp16_ = NULL;
-		gchar* _tmp17_;
+		SoupMessage* _tmp43_;
+		SoupMessageHeaders* _tmp44_;
+		const gchar* _tmp45_ = NULL;
+		gchar* _tmp46_;
 		gchar* features;
-		gboolean _tmp18_ = FALSE;
-		const gchar* _tmp19_;
-		gboolean _tmp31_;
-		RygelPlayerController* _tmp34_;
-		const gchar* _tmp35_;
-		RygelPlayerController* _tmp36_;
-		const gchar* _tmp37_;
-		const gchar* _tmp38_;
-		const gchar* _tmp39_;
-		gboolean _tmp40_ = FALSE;
-		_tmp10_ = msg;
-		_tmp11_ = _tmp10_->response_headers;
-		_tmp12_ = soup_message_headers_get_one (_tmp11_, "Content-Type");
-		_tmp13_ = g_strdup (_tmp12_);
-		mime = _tmp13_;
-		_tmp14_ = msg;
-		_tmp15_ = _tmp14_->response_headers;
-		_tmp16_ = soup_message_headers_get_one (_tmp15_, "contentFeatures.dlna.org");
-		_tmp17_ = g_strdup (_tmp16_);
-		features = _tmp17_;
-		_tmp19_ = mime;
-		if (_tmp19_ != NULL) {
-			gboolean _tmp20_ = FALSE;
-			const gchar* _tmp21_;
-			RygelMediaPlayer* _tmp22_;
-			gint _tmp23_ = 0;
-			gchar** _tmp24_ = NULL;
-			gchar** _tmp25_;
-			gint _tmp25__length1;
-			gboolean _tmp26_;
-			gboolean _tmp30_;
-			_tmp21_ = mime;
-			_tmp22_ = self->priv->player;
-			_tmp24_ = rygel_media_player_get_mime_types (_tmp22_, &_tmp23_);
-			_tmp25_ = _tmp24_;
-			_tmp25__length1 = _tmp23_;
-			_tmp26_ = _vala_string_array_contains (_tmp25_, _tmp23_, _tmp21_);
-			_tmp25_ = (_vala_array_free (_tmp25_, _tmp25__length1, (GDestroyNotify) g_free), NULL);
-			if (_tmp26_) {
-				_tmp20_ = TRUE;
-			} else {
-				const gchar* _tmp27_;
-				const gchar* _tmp28_;
-				gboolean _tmp29_ = FALSE;
-				_tmp27_ = mime;
-				_tmp28_ = features;
-				_tmp29_ = rygel_av_transport_is_playlist (self, _tmp27_, _tmp28_);
-				_tmp20_ = _tmp29_;
-			}
-			_tmp30_ = _tmp20_;
-			_tmp18_ = !_tmp30_;
+		gboolean _tmp47_ = FALSE;
+		const gchar* _tmp48_;
+		gboolean _tmp49_ = FALSE;
+		gboolean _tmp53_;
+		RygelPlayerController* _tmp56_;
+		const gchar* _tmp57_;
+		RygelPlayerController* _tmp58_;
+		const gchar* _tmp59_;
+		const gchar* _tmp60_;
+		const gchar* _tmp61_;
+		gboolean _tmp62_ = FALSE;
+		_tmp39_ = msg;
+		_tmp40_ = _tmp39_->response_headers;
+		_tmp41_ = soup_message_headers_get_one (_tmp40_, "Content-Type");
+		_tmp42_ = g_strdup (_tmp41_);
+		mime = _tmp42_;
+		_tmp43_ = msg;
+		_tmp44_ = _tmp43_->response_headers;
+		_tmp45_ = soup_message_headers_get_one (_tmp44_, "contentFeatures.dlna.org");
+		_tmp46_ = g_strdup (_tmp45_);
+		features = _tmp46_;
+		_tmp48_ = mime;
+		_tmp49_ = rygel_av_transport_is_valid_mime_type (self, _tmp48_);
+		if (!_tmp49_) {
+			const gchar* _tmp50_;
+			const gchar* _tmp51_;
+			gboolean _tmp52_ = FALSE;
+			_tmp50_ = mime;
+			_tmp51_ = features;
+			_tmp52_ = rygel_av_transport_is_playlist (self, _tmp50_, _tmp51_);
+			_tmp47_ = !_tmp52_;
 		} else {
-			_tmp18_ = FALSE;
+			_tmp47_ = FALSE;
 		}
-		_tmp31_ = _tmp18_;
-		if (_tmp31_) {
-			GUPnPServiceAction* _tmp32_;
-			const gchar* _tmp33_ = NULL;
-			_tmp32_ = _data1_->action;
-			_tmp33_ = _ ("Illegal MIME-type");
-			gupnp_service_action_return_error (_tmp32_, (guint) 714, _tmp33_);
+		_tmp53_ = _tmp47_;
+		if (_tmp53_) {
+			GUPnPServiceAction* _tmp54_;
+			const gchar* _tmp55_ = NULL;
+			_tmp54_ = _data1_->action;
+			_tmp55_ = _ ("Illegal MIME-type");
+			gupnp_service_action_return_error (_tmp54_, (guint) 714, _tmp55_);
 			_g_free0 (features);
 			_g_free0 (mime);
 			return;
 		}
-		_tmp34_ = self->priv->controller;
-		_tmp35_ = _data1_->_metadata;
-		rygel_player_controller_set_metadata (_tmp34_, _tmp35_);
-		_tmp36_ = self->priv->controller;
-		_tmp37_ = _data1_->_uri;
-		rygel_player_controller_set_uri (_tmp36_, _tmp37_);
-		_tmp38_ = mime;
-		_tmp39_ = features;
-		_tmp40_ = rygel_av_transport_is_playlist (self, _tmp38_, _tmp39_);
-		if (_tmp40_) {
-			GUPnPServiceAction* _tmp41_;
-			_tmp41_ = _data1_->action;
-			rygel_av_transport_handle_playlist (self, _tmp41_, NULL, NULL);
+		_tmp56_ = self->priv->controller;
+		_tmp57_ = _data1_->_metadata;
+		rygel_player_controller_set_metadata (_tmp56_, _tmp57_);
+		_tmp58_ = self->priv->controller;
+		_tmp59_ = _data1_->_uri;
+		rygel_player_controller_set_uri (_tmp58_, _tmp59_);
+		_tmp60_ = mime;
+		_tmp61_ = features;
+		_tmp62_ = rygel_av_transport_is_playlist (self, _tmp60_, _tmp61_);
+		if (_tmp62_) {
+			GUPnPServiceAction* _tmp63_;
+			_tmp63_ = _data1_->action;
+			rygel_av_transport_handle_playlist (self, _tmp63_, NULL, NULL);
 		} else {
-			RygelMediaPlayer* _tmp42_;
-			const gchar* _tmp43_;
-			const gchar* _tmp44_;
-			const gchar* _tmp48_;
-			const gchar* _tmp49_;
-			RygelPlayerController* _tmp50_;
-			RygelPlayerController* _tmp51_;
-			GUPnPServiceAction* _tmp52_;
-			_tmp42_ = self->priv->player;
-			_tmp43_ = mime;
-			rygel_media_player_set_mime_type (_tmp42_, _tmp43_);
-			_tmp44_ = features;
-			if (_tmp44_ != NULL) {
-				RygelMediaPlayer* _tmp45_;
-				const gchar* _tmp46_;
-				_tmp45_ = self->priv->player;
-				_tmp46_ = features;
-				rygel_media_player_set_content_features (_tmp45_, _tmp46_);
+			RygelMediaPlayer* _tmp64_;
+			const gchar* _tmp65_;
+			const gchar* _tmp66_;
+			const gchar* _tmp70_;
+			const gchar* _tmp71_;
+			RygelPlayerController* _tmp72_;
+			RygelPlayerController* _tmp73_;
+			GUPnPServiceAction* _tmp74_;
+			_tmp64_ = self->priv->player;
+			_tmp65_ = mime;
+			rygel_media_player_set_mime_type (_tmp64_, _tmp65_);
+			_tmp66_ = features;
+			if (_tmp66_ != NULL) {
+				RygelMediaPlayer* _tmp67_;
+				const gchar* _tmp68_;
+				_tmp67_ = self->priv->player;
+				_tmp68_ = features;
+				rygel_media_player_set_content_features (_tmp67_, _tmp68_);
 			} else {
-				RygelMediaPlayer* _tmp47_;
-				_tmp47_ = self->priv->player;
-				rygel_media_player_set_content_features (_tmp47_, "*");
+				RygelMediaPlayer* _tmp69_;
+				_tmp69_ = self->priv->player;
+				rygel_media_player_set_content_features (_tmp69_, "*");
 			}
-			_tmp48_ = _data1_->_metadata;
-			rygel_av_transport_set_track_metadata (self, _tmp48_);
-			_tmp49_ = _data1_->_uri;
-			rygel_av_transport_set_track_uri (self, _tmp49_);
-			_tmp50_ = self->priv->controller;
-			rygel_player_controller_set_n_tracks (_tmp50_, (guint) 1);
-			_tmp51_ = self->priv->controller;
-			rygel_player_controller_set_track (_tmp51_, (guint) 1);
-			_tmp52_ = _data1_->action;
-			gupnp_service_action_return (_tmp52_);
+			_tmp70_ = _data1_->_metadata;
+			rygel_av_transport_set_track_metadata (self, _tmp70_);
+			_tmp71_ = _data1_->_uri;
+			rygel_av_transport_set_track_uri (self, _tmp71_);
+			_tmp72_ = self->priv->controller;
+			rygel_player_controller_set_n_tracks (_tmp72_, (guint) 1);
+			_tmp73_ = self->priv->controller;
+			rygel_player_controller_set_track (_tmp73_, (guint) 1);
+			_tmp74_ = _data1_->action;
+			gupnp_service_action_return (_tmp74_);
 		}
 		_g_free0 (features);
 		_g_free0 (mime);
@@ -1198,6 +1273,127 @@ static void rygel_av_transport_set_av_transport_uri_cb (RygelAVTransport* self, 
 	}
 	block1_data_unref (_data1_);
 	_data1_ = NULL;
+}
+
+
+static gchar* string_replace (const gchar* self, const gchar* old, const gchar* replacement) {
+	gchar* result = NULL;
+	GError * _inner_error_ = NULL;
+	g_return_val_if_fail (self != NULL, NULL);
+	g_return_val_if_fail (old != NULL, NULL);
+	g_return_val_if_fail (replacement != NULL, NULL);
+	{
+		const gchar* _tmp0_;
+		gchar* _tmp1_ = NULL;
+		gchar* _tmp2_;
+		GRegex* _tmp3_;
+		GRegex* _tmp4_;
+		GRegex* regex;
+		GRegex* _tmp5_;
+		const gchar* _tmp6_;
+		gchar* _tmp7_ = NULL;
+		gchar* _tmp8_;
+		_tmp0_ = old;
+		_tmp1_ = g_regex_escape_string (_tmp0_, -1);
+		_tmp2_ = _tmp1_;
+		_tmp3_ = g_regex_new (_tmp2_, 0, 0, &_inner_error_);
+		_tmp4_ = _tmp3_;
+		_g_free0 (_tmp2_);
+		regex = _tmp4_;
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == G_REGEX_ERROR) {
+				goto __catch0_g_regex_error;
+			}
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return NULL;
+		}
+		_tmp5_ = regex;
+		_tmp6_ = replacement;
+		_tmp7_ = g_regex_replace_literal (_tmp5_, self, (gssize) (-1), 0, _tmp6_, 0, &_inner_error_);
+		_tmp8_ = _tmp7_;
+		if (_inner_error_ != NULL) {
+			_g_regex_unref0 (regex);
+			if (_inner_error_->domain == G_REGEX_ERROR) {
+				goto __catch0_g_regex_error;
+			}
+			_g_regex_unref0 (regex);
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return NULL;
+		}
+		result = _tmp8_;
+		_g_regex_unref0 (regex);
+		return result;
+	}
+	goto __finally0;
+	__catch0_g_regex_error:
+	{
+		GError* e = NULL;
+		e = _inner_error_;
+		_inner_error_ = NULL;
+		g_assert_not_reached ();
+		_g_error_free0 (e);
+	}
+	__finally0:
+	if (_inner_error_ != NULL) {
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+		g_clear_error (&_inner_error_);
+		return NULL;
+	}
+}
+
+
+static gboolean _vala_string_array_contains (gchar** stack, int stack_length, gchar* needle) {
+	int i;
+	for (i = 0; i < stack_length; i++) {
+		if (g_strcmp0 (stack[i], needle) == 0) {
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+
+static gboolean rygel_av_transport_is_valid_mime_type (RygelAVTransport* self, const gchar* mime) {
+	gboolean result = FALSE;
+	const gchar* _tmp0_;
+	const gchar* _tmp1_;
+	gchar* _tmp2_ = NULL;
+	gchar* _tmp3_;
+	gchar* _tmp4_ = NULL;
+	gchar* _tmp5_;
+	gchar* normalized;
+	const gchar* _tmp6_;
+	RygelMediaPlayer* _tmp7_;
+	gint _tmp8_ = 0;
+	gchar** _tmp9_ = NULL;
+	gchar** _tmp10_;
+	gint _tmp10__length1;
+	gboolean _tmp11_;
+	g_return_val_if_fail (self != NULL, FALSE);
+	_tmp0_ = mime;
+	if (_tmp0_ == NULL) {
+		result = FALSE;
+		return result;
+	}
+	_tmp1_ = mime;
+	_tmp2_ = g_utf8_strdown (_tmp1_, (gssize) (-1));
+	_tmp3_ = _tmp2_;
+	_tmp4_ = string_replace (_tmp3_, " ", "");
+	_tmp5_ = _tmp4_;
+	_g_free0 (_tmp3_);
+	normalized = _tmp5_;
+	_tmp6_ = normalized;
+	_tmp7_ = self->priv->player;
+	_tmp9_ = rygel_media_player_get_mime_types (_tmp7_, &_tmp8_);
+	_tmp10_ = _tmp9_;
+	_tmp10__length1 = _tmp8_;
+	_tmp11_ = _vala_string_array_contains (_tmp10_, _tmp8_, _tmp6_);
+	_tmp10_ = (_vala_array_free (_tmp10_, _tmp10__length1, (GDestroyNotify) g_free), NULL);
+	result = _tmp11_;
+	_g_free0 (normalized);
+	return result;
 }
 
 
@@ -1671,7 +1867,7 @@ static void rygel_av_transport_seek_cb (RygelAVTransport* self, GUPnPService* se
 				gboolean _tmp11_ = FALSE;
 				GUPnPServiceAction* _tmp14_;
 				_tmp7_ = target;
-				g_debug ("rygel-av-transport.vala:571: Seeking to %s.", _tmp7_);
+				g_debug ("rygel-av-transport.vala:596: Seeking to %s.", _tmp7_);
 				_tmp8_ = self->priv->player;
 				_tmp9_ = target;
 				_tmp10_ = rygel_time_utils_time_from_string (_tmp9_);
@@ -1708,7 +1904,7 @@ static void rygel_av_transport_seek_cb (RygelAVTransport* self, GUPnPService* se
 				gint _tmp28_;
 				GUPnPServiceAction* _tmp29_;
 				_tmp15_ = target;
-				g_debug ("rygel-av-transport.vala:583: Setting track to %s.", _tmp15_);
+				g_debug ("rygel-av-transport.vala:608: Setting track to %s.", _tmp15_);
 				_tmp16_ = target;
 				_tmp17_ = atoi (_tmp16_);
 				track = _tmp17_;
@@ -2043,15 +2239,15 @@ static void block2_data_unref (void * _userdata_) {
 }
 
 
-static void __lambda5_ (Block2Data* _data2_) {
+static void __lambda6_ (Block2Data* _data2_) {
 	RygelAVTransport * self;
 	self = _data2_->self;
 	rygel_av_transport_handle_playlist_co (_data2_->_async_data_);
 }
 
 
-static void ___lambda5__soup_session_callback (SoupSession* session, SoupMessage* msg, gpointer self) {
-	__lambda5_ (self);
+static void ___lambda6__soup_session_callback (SoupSession* session, SoupMessage* msg, gpointer self) {
+	__lambda6_ (self);
 }
 
 
@@ -2088,7 +2284,7 @@ static gboolean rygel_av_transport_handle_playlist_co (RygelAvTransportHandlePla
 	_data_->_tmp4_ = _data_->self->priv->session;
 	_data_->_tmp5_ = _data_->message;
 	_data_->_tmp6_ = _g_object_ref0 (_data_->_tmp5_);
-	soup_session_queue_message (_data_->_tmp4_, _data_->_tmp6_, ___lambda5__soup_session_callback, _data_->_data2_);
+	soup_session_queue_message (_data_->_tmp4_, _data_->_tmp6_, ___lambda6__soup_session_callback, _data_->_data2_);
 	_data_->_state_ = 1;
 	return FALSE;
 	_state_1:
@@ -2162,74 +2358,6 @@ static gboolean rygel_av_transport_handle_playlist_co (RygelAvTransportHandlePla
 	}
 	g_object_unref (_data_->_async_result);
 	return FALSE;
-}
-
-
-static gchar* string_replace (const gchar* self, const gchar* old, const gchar* replacement) {
-	gchar* result = NULL;
-	GError * _inner_error_ = NULL;
-	g_return_val_if_fail (self != NULL, NULL);
-	g_return_val_if_fail (old != NULL, NULL);
-	g_return_val_if_fail (replacement != NULL, NULL);
-	{
-		const gchar* _tmp0_;
-		gchar* _tmp1_ = NULL;
-		gchar* _tmp2_;
-		GRegex* _tmp3_;
-		GRegex* _tmp4_;
-		GRegex* regex;
-		GRegex* _tmp5_;
-		const gchar* _tmp6_;
-		gchar* _tmp7_ = NULL;
-		gchar* _tmp8_;
-		_tmp0_ = old;
-		_tmp1_ = g_regex_escape_string (_tmp0_, -1);
-		_tmp2_ = _tmp1_;
-		_tmp3_ = g_regex_new (_tmp2_, 0, 0, &_inner_error_);
-		_tmp4_ = _tmp3_;
-		_g_free0 (_tmp2_);
-		regex = _tmp4_;
-		if (_inner_error_ != NULL) {
-			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch0_g_regex_error;
-			}
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-			g_clear_error (&_inner_error_);
-			return NULL;
-		}
-		_tmp5_ = regex;
-		_tmp6_ = replacement;
-		_tmp7_ = g_regex_replace_literal (_tmp5_, self, (gssize) (-1), 0, _tmp6_, 0, &_inner_error_);
-		_tmp8_ = _tmp7_;
-		if (_inner_error_ != NULL) {
-			_g_regex_unref0 (regex);
-			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch0_g_regex_error;
-			}
-			_g_regex_unref0 (regex);
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-			g_clear_error (&_inner_error_);
-			return NULL;
-		}
-		result = _tmp8_;
-		_g_regex_unref0 (regex);
-		return result;
-	}
-	goto __finally0;
-	__catch0_g_regex_error:
-	{
-		GError* e = NULL;
-		e = _inner_error_;
-		_inner_error_ = NULL;
-		g_assert_not_reached ();
-		_g_error_free0 (e);
-	}
-	__finally0:
-	if (_inner_error_ != NULL) {
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-		g_clear_error (&_inner_error_);
-		return NULL;
-	}
 }
 
 

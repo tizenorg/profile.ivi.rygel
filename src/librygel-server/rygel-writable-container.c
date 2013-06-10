@@ -77,9 +77,9 @@ typedef struct _RygelMediaItemClass RygelMediaItemClass;
 typedef struct _RygelWritableContainerAddReferenceData RygelWritableContainerAddReferenceData;
 
 typedef enum  {
-	WRITEABLE_CONTAINER_ERROR_NOT_IMPLEMENTED
-} WriteableContainerError;
-#define WRITEABLE_CONTAINER_ERROR writeable_container_error_quark ()
+	RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED
+} RygelWritableContainerError;
+#define RYGEL_WRITABLE_CONTAINER_ERROR rygel_writable_container_error_quark ()
 struct _RygelWritableContainerIface {
 	GTypeInterface parent_iface;
 	void (*add_item) (RygelWritableContainer* self, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
@@ -111,7 +111,7 @@ struct _RygelWritableContainerAddReferenceData {
 
 
 
-GQuark writeable_container_error_quark (void);
+GQuark rygel_writable_container_error_quark (void);
 GType rygel_media_object_get_type (void) G_GNUC_CONST;
 GType rygel_media_container_get_type (void) G_GNUC_CONST;
 GType rygel_media_item_get_type (void) G_GNUC_CONST;
@@ -131,11 +131,12 @@ void rygel_writable_container_remove_item (RygelWritableContainer* self, const g
 void rygel_writable_container_remove_item_finish (RygelWritableContainer* self, GAsyncResult* _res_, GError** error);
 void rygel_writable_container_remove_container (RygelWritableContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 void rygel_writable_container_remove_container_finish (RygelWritableContainer* self, GAsyncResult* _res_, GError** error);
+#define RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME "rygel-writable://"
 void rygel_writable_container_set_create_classes (RygelWritableContainer* self, GeeArrayList* value);
 
 
-GQuark writeable_container_error_quark (void) {
-	return g_quark_from_static_string ("writeable_container_error-quark");
+GQuark rygel_writable_container_error_quark (void) {
+	return g_quark_from_static_string ("rygel_writable_container_error-quark");
 }
 
 
@@ -250,7 +251,7 @@ static gboolean rygel_writable_container_real_add_reference_co (RygelWritableCon
 		g_assert_not_reached ();
 	}
 	_state_0:
-	_data_->_tmp0_ = g_error_new_literal (WRITEABLE_CONTAINER_ERROR, WRITEABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "Cannot create references here");
+	_data_->_tmp0_ = g_error_new_literal (RYGEL_WRITABLE_CONTAINER_ERROR, RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "Cannot create references here");
 	_data_->_inner_error_ = _data_->_tmp0_;
 	g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 	g_error_free (_data_->_inner_error_);

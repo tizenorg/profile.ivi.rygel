@@ -332,7 +332,7 @@ static gboolean rygel_media_export_recursive_file_monitor_add_co (RygelMediaExpo
 		_data_->_tmp4_ = g_file_query_info_finish (_data_->_tmp3_, _data_->_res_, &_data_->_inner_error_);
 		_data_->info = _data_->_tmp4_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch53_g_error;
+			goto __catch55_g_error;
 		}
 		_data_->_tmp5_ = _data_->info;
 		_data_->_tmp6_ = 0;
@@ -345,7 +345,7 @@ static gboolean rygel_media_export_recursive_file_monitor_add_co (RygelMediaExpo
 			_data_->file_monitor = _data_->_tmp9_;
 			if (_data_->_inner_error_ != NULL) {
 				_g_object_unref0 (_data_->info);
-				goto __catch53_g_error;
+				goto __catch55_g_error;
 			}
 			_data_->_tmp10_ = _data_->self->priv->monitors;
 			_data_->_tmp11_ = _data_->file;
@@ -357,8 +357,8 @@ static gboolean rygel_media_export_recursive_file_monitor_add_co (RygelMediaExpo
 		}
 		_g_object_unref0 (_data_->info);
 	}
-	goto __finally53;
-	__catch53_g_error:
+	goto __finally55;
+	__catch55_g_error:
 	{
 		_data_->err = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -372,7 +372,7 @@ static gboolean rygel_media_export_recursive_file_monitor_add_co (RygelMediaExpo
 		_g_free0 (_data_->_tmp17_);
 		_g_error_free0 (_data_->err);
 	}
-	__finally53:
+	__finally55:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);
@@ -462,19 +462,19 @@ static void rygel_media_export_recursive_file_monitor_on_config_changed (RygelMe
 		_tmp5_ = rygel_configuration_get_bool (_tmp4_, RYGEL_MEDIA_EXPORT_PLUGIN_NAME, "monitor-changes", &_inner_error_);
 		_tmp6_ = _tmp5_;
 		if (_inner_error_ != NULL) {
-			goto __catch54_g_error;
+			goto __catch56_g_error;
 		}
 		self->priv->monitor_changes = _tmp6_;
 	}
-	goto __finally54;
-	__catch54_g_error:
+	goto __finally56;
+	__catch56_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally54:
+	__finally56:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

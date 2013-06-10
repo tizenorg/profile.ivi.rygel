@@ -28,10 +28,10 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <rygel-core.h>
-#include <stdlib.h>
-#include <string.h>
 #include <gio/gio.h>
 #include <glib/gi18n-lib.h>
+#include <stdlib.h>
+#include <string.h>
 #include <float.h>
 #include <math.h>
 #include <rygel-renderer.h>
@@ -247,9 +247,9 @@ void rygel_mpris_value_take_plugin_factory (GValue* value, gpointer v_object);
 gpointer rygel_mpris_value_get_plugin_factory (const GValue* value);
 GType rygel_mpris_plugin_factory_get_type (void) G_GNUC_CONST;
 void module_init (RygelPluginLoader* loader);
-#define RYGEL_MPRIS_PLUGIN_MODULE_NAME "MPRIS"
 RygelMPRISPluginFactory* rygel_mpris_plugin_factory_new (RygelPluginLoader* loader, GError** error);
 RygelMPRISPluginFactory* rygel_mpris_plugin_factory_construct (GType object_type, RygelPluginLoader* loader, GError** error);
+#define RYGEL_MPRIS_PLUGIN_MODULE_NAME "MPRIS"
 #define RYGEL_MPRIS_PLUGIN_FACTORY_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), RYGEL_MPRIS_TYPE_PLUGIN_FACTORY, RygelMPRISPluginFactoryPrivate))
 enum  {
 	RYGEL_MPRIS_PLUGIN_FACTORY_DUMMY_PROPERTY
@@ -295,24 +295,15 @@ static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify 
 
 
 void module_init (RygelPluginLoader* loader) {
-	RygelPluginLoader* _tmp0_;
-	gboolean _tmp1_ = FALSE;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (loader != NULL);
-	_tmp0_ = loader;
-	_tmp1_ = rygel_plugin_loader_plugin_disabled (_tmp0_, RYGEL_MPRIS_PLUGIN_MODULE_NAME);
-	if (_tmp1_) {
-		g_message ("rygel-mpris-plugin-factory.vala:33: Module '%s' disabled by user. Igno" \
-"ring…", RYGEL_MPRIS_PLUGIN_MODULE_NAME);
-		return;
-	}
 	{
-		RygelPluginLoader* _tmp2_;
-		RygelMPRISPluginFactory* _tmp3_;
-		RygelMPRISPluginFactory* _tmp4_;
-		_tmp2_ = loader;
-		_tmp3_ = rygel_mpris_plugin_factory_new (_tmp2_, &_inner_error_);
-		_tmp4_ = _tmp3_;
+		RygelPluginLoader* _tmp0_;
+		RygelMPRISPluginFactory* _tmp1_;
+		RygelMPRISPluginFactory* _tmp2_;
+		_tmp0_ = loader;
+		_tmp1_ = rygel_mpris_plugin_factory_new (_tmp0_, &_inner_error_);
+		_tmp2_ = _tmp1_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_IO_ERROR) {
 				goto __catch5_g_io_error;
@@ -322,17 +313,17 @@ void module_init (RygelPluginLoader* loader) {
 			return;
 		}
 		_rygel_mpris_plugin_factory_unref0 (plugin_factory);
-		plugin_factory = _tmp4_;
+		plugin_factory = _tmp2_;
 	}
 	goto __finally5;
 	__catch5_g_io_error:
 	{
 		GError* _error_ = NULL;
-		const gchar* _tmp5_ = NULL;
+		const gchar* _tmp3_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp5_ = _ ("Module '%s' could not connect to D-Bus session bus. " "Ignoring…");
-		g_message (_tmp5_, RYGEL_MPRIS_PLUGIN_MODULE_NAME);
+		_tmp3_ = _ ("Module '%s' could not connect to D-Bus session bus. " "Ignoring…");
+		g_message (_tmp3_, RYGEL_MPRIS_PLUGIN_MODULE_NAME);
 		_g_error_free0 (_error_);
 	}
 	__finally5:
@@ -710,8 +701,8 @@ static void rygel_mpris_plugin_factory_name_owner_changed (RygelMPRISPluginFacto
 			const gchar* _tmp8_;
 			RygelPlugin* _tmp9_;
 			_tmp8_ = name;
-			g_debug ("rygel-mpris-plugin-factory.vala:102: Service '%s' going down, Deactiva" \
-"ting it", _tmp8_);
+			g_debug ("rygel-mpris-plugin-factory.vala:95: Service '%s' going down, Deactivat" \
+"ing it", _tmp8_);
 			_tmp9_ = plugin;
 			rygel_plugin_set_active (_tmp9_, FALSE);
 		} else {
@@ -731,8 +722,8 @@ static void rygel_mpris_plugin_factory_name_owner_changed (RygelMPRISPluginFacto
 				const gchar* _tmp14_;
 				RygelPlugin* _tmp15_;
 				_tmp14_ = name;
-				g_debug ("rygel-mpris-plugin-factory.vala:106: Service '%s' up again, activating" \
-" it", _tmp14_);
+				g_debug ("rygel-mpris-plugin-factory.vala:99: Service '%s' up again, activating " \
+"it", _tmp14_);
 				_tmp15_ = plugin;
 				rygel_plugin_set_active (_tmp15_, TRUE);
 			}
@@ -810,7 +801,7 @@ static gboolean rygel_mpris_plugin_factory_load_plugin_n_handle_error_co (RygelM
 	_data_->_tmp2_ = rygel_plugin_loader_plugin_disabled (_data_->_tmp0_, _data_->_tmp1_);
 	if (_data_->_tmp2_) {
 		_data_->_tmp3_ = _data_->service_name;
-		g_message ("rygel-mpris-plugin-factory.vala:117: Plugin '%s' disabled by user, ign" \
+		g_message ("rygel-mpris-plugin-factory.vala:110: Plugin '%s' disabled by user, ign" \
 "oring..", _data_->_tmp3_);
 		if (_data_->_state_ == 0) {
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
@@ -844,7 +835,7 @@ static gboolean rygel_mpris_plugin_factory_load_plugin_n_handle_error_co (RygelM
 		_data_->_tmp5_ = _data_->service_name;
 		_data_->_tmp6_ = _data_->_error_;
 		_data_->_tmp7_ = _data_->_tmp6_->message;
-		g_warning ("rygel-mpris-plugin-factory.vala:125: Failed to load MPRIS2 plugin '%s'" \
+		g_warning ("rygel-mpris-plugin-factory.vala:118: Failed to load MPRIS2 plugin '%s'" \
 ": %s", _data_->_tmp5_, _data_->_tmp7_);
 		_g_error_free0 (_data_->_error_);
 	}

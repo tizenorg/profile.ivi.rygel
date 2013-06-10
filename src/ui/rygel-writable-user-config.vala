@@ -32,7 +32,7 @@ public class Rygel.WritableUserConfig : Rygel.UserConfig {
     private const string RYGEL_PATH = "/org/gnome/Rygel1";
     private const string RYGEL_INTERFACE = "org.gnome.Rygel1";
 
-    private string user_config;
+    private File user_config;
 
     public WritableUserConfig () throws Error {
         var path = Path.build_filename (Environment.get_user_config_dir (),
@@ -40,13 +40,27 @@ public class Rygel.WritableUserConfig : Rygel.UserConfig {
 
         base (path);
 
-        this.user_config = path;
+        this.user_config = File.new_for_path (path);
+
+        // Copy contents of system config file into user config file
+        if (!this.user_config.query_exists ()) {
+            try {
+                this.key_file.load_from_data (this.sys_key_file.to_data (),
+                                              -1,
+                                              KeyFileFlags.KEEP_COMMENTS |
+                                              KeyFileFlags.KEEP_TRANSLATIONS);
+            } catch (Error error) {
+                // must not happen as we parsed sys_key_file successfully
+                // already
+                assert_not_reached ();
+            }
+        }
     }
 
     public bool is_upnp_enabled () {
         try {
-            var file = File.new_for_path (this.user_config);
-            if (file.query_exists ()) {
+            var autostart_file = this.get_autostart_file ();
+            if (this.user_config.query_exists () && autostart_file.query_exists ()) {
                 return this.get_upnp_enabled ();
             }
 
@@ -145,21 +159,32 @@ public class Rygel.WritableUserConfig : Rygel.UserConfig {
         this.key_file.set_boolean (section, key, value);
     }
 
+    private File get_autostart_file () throws Error {
+        var config_dir = Environment.get_user_config_dir ();
+        this.ensure_dir_exists (config_dir);
+        var dest_dir = Path.build_filename (config_dir, "autostart");
+        this.ensure_dir_exists (dest_dir);
+
+        var dest_path = Path.build_filename (dest_dir, "rygel.desktop");
+        var dest = File.new_for_path (dest_path);
+
+        return dest;
+    }
+
     private void enable_upnp (bool enable) {
         try {
-            var config_dir = Environment.get_user_config_dir ();
-            this.ensure_dir_exists (config_dir);
-            var dest_dir = Path.build_filename (config_dir, "autostart");
-            this.ensure_dir_exists (dest_dir);
-
-            var dest_path = Path.build_filename (dest_dir, "rygel.desktop");
-            var dest = File.new_for_path (dest_path);
+            var dest = this.get_autostart_file ();
 
             if (enable) {
+                var loop = new MainLoop (null, false);
                 // Creating the proxy starts the service
                 Bus.watch_name (BusType.SESSION,
                                 DBusInterface.SERVICE_NAME,
-                                BusNameWatcherFlags.AUTO_START);
+                                BusNameWatcherFlags.AUTO_START,
+                                () => { loop.quit (); },
+                                () => { loop.quit (); });
+
+                loop.run ();
 
                 // Then symlink the desktop file to user's autostart dir
                 var source_path = Path.build_filename (BuildConfig.DESKTOP_DIR,

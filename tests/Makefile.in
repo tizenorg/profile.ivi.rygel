@@ -50,29 +50,30 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-DIST_COMMON = $(srcdir)/../common.am $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in rygel-album-art-spec-test.c \
-	rygel-configuration.c rygel-data-sink_http-response.c \
-	rygel-data-source.c rygel-data-source_http-response.c \
-	rygel-dlna-profile.c rygel-environment-test.c \
-	rygel-http-byte-seek-test.c rygel-http-byte-seek.c \
-	rygel-http-byte-seek_http-get.c rygel-http-get-test.c \
-	rygel-http-get.c rygel-http-item-uri-test.c \
-	rygel-http-item-uri.c rygel-http-item-uri_http-get.c \
-	rygel-http-item-uri_http-post.c rygel-http-post-test.c \
-	rygel-http-post.c rygel-http-request_http-get.c \
-	rygel-http-request_http-post.c rygel-http-response-test.c \
-	rygel-http-response.c rygel-http-seek.c \
-	rygel-http-seek_http-get.c rygel-http-seek_object-creator.c \
-	rygel-http-seek_time-seek.c rygel-http-time-seek-test.c \
-	rygel-http-time-seek.c rygel-http-time-seek_http-get.c \
-	rygel-icon-info.c rygel-media-art-store.c \
-	rygel-media-engine-test.c rygel-media-engine.c \
-	rygel-object-creator-test.c rygel-object-creator.c \
-	rygel-playbin-renderer-test.c rygel-regression.c \
-	rygel-relational-expression.c rygel-search-expression.c \
-	rygel-searchable-container-test.c rygel-searchable-container.c \
-	rygel-serializer_object-creator.c \
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(top_srcdir)/common.am plugins/media-export/regression.c \
+	plugins_media_export_regression_vala.stamp \
+	rygel-album-art-spec-test.c rygel-configuration.c \
+	rygel-data-sink_http-response.c rygel-data-source.c \
+	rygel-data-source_http-response.c rygel-dlna-profile.c \
+	rygel-environment-test.c rygel-http-byte-seek-test.c \
+	rygel-http-byte-seek.c rygel-http-byte-seek_http-get.c \
+	rygel-http-get-test.c rygel-http-get.c \
+	rygel-http-item-uri-test.c rygel-http-item-uri.c \
+	rygel-http-item-uri_http-get.c rygel-http-item-uri_http-post.c \
+	rygel-http-post-test.c rygel-http-post.c \
+	rygel-http-request_http-get.c rygel-http-request_http-post.c \
+	rygel-http-response-test.c rygel-http-response.c \
+	rygel-http-seek.c rygel-http-seek_http-get.c \
+	rygel-http-seek_object-creator.c rygel-http-seek_time-seek.c \
+	rygel-http-time-seek-test.c rygel-http-time-seek.c \
+	rygel-http-time-seek_http-get.c rygel-icon-info.c \
+	rygel-media-art-store.c rygel-media-engine-test.c \
+	rygel-media-engine.c rygel-object-creator-test.c \
+	rygel-object-creator.c rygel-playbin-renderer-test.c \
+	rygel-regression.c rygel-relational-expression.c \
+	rygel-search-expression.c rygel-searchable-container-test.c \
+	rygel-searchable-container.c rygel-serializer_object-creator.c \
 	rygel-state-machine_http-get.c rygel-state-machine_http-post.c \
 	rygel-state-machine_http-response.c \
 	rygel-state-machine_object-creator.c rygel-thumbnail.c \
@@ -101,11 +102,13 @@ check_PROGRAMS = rygel-http-item-uri-test$(EXEEXT) \
 	rygel-searchable-container-test$(EXEEXT) \
 	rygel-object-creator-test$(EXEEXT) \
 	rygel-user-config-test$(EXEEXT) rygel-regression$(EXEEXT) \
-	rygel-media-engine-test$(EXEEXT) $(am__EXEEXT_1)
+	rygel-media-engine-test$(EXEEXT) $(am__EXEEXT_1) \
+	$(am__EXEEXT_2)
 @HAVE_GSTREAMER_TRUE@am__append_1 = \
 @HAVE_GSTREAMER_TRUE@	rygel-playbin-renderer-test \
 @HAVE_GSTREAMER_TRUE@	rygel-environment-test
 
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@am__append_2 = plugins/media-export/regression
 subdir = tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/intltool.m4 \
@@ -122,6 +125,30 @@ CONFIG_CLEAN_VPATH_FILES =
 @HAVE_GSTREAMER_TRUE@am__EXEEXT_1 =  \
 @HAVE_GSTREAMER_TRUE@	rygel-playbin-renderer-test$(EXEEXT) \
 @HAVE_GSTREAMER_TRUE@	rygel-environment-test$(EXEEXT)
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@am__EXEEXT_2 = plugins/media-export/regression$(EXEEXT)
+am__plugins_media_export_regression_SOURCES_DIST =  \
+	$(top_srcdir)/src/librygel-core/rygel-core-2.0.vapi \
+	$(top_srcdir)/src/librygel-server/rygel-server-2.0.vapi \
+	$(top_srcdir)/src/plugins/media-export/rygel-media-export.vapi \
+	plugins/media-export/regression.vala
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@am_plugins_media_export_regression_OBJECTS = plugins_media_export_regression-regression.$(OBJEXT)
+plugins_media_export_regression_OBJECTS =  \
+	$(am_plugins_media_export_regression_OBJECTS)
+am__DEPENDENCIES_1 =
+am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@plugins_media_export_regression_DEPENDENCIES =  \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(am__DEPENDENCIES_2) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(am__DEPENDENCIES_1) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(RYGEL_COMMON_LIBRYGEL_SERVER_LIBS) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(top_builddir)/src/plugins/media-export/librygel-media-export.la
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+plugins_media_export_regression_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(plugins_media_export_regression_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+am__dirstamp = $(am__leading_dot)dirstamp
 am_rygel_album_art_spec_test_OBJECTS =  \
 	rygel_album_art_spec_test-rygel-album-art-spec-test.$(OBJEXT) \
 	rygel_album_art_spec_test-rygel-media-art-store.$(OBJEXT) \
@@ -129,12 +156,7 @@ am_rygel_album_art_spec_test_OBJECTS =  \
 	rygel_album_art_spec_test-rygel-icon-info.$(OBJEXT)
 rygel_album_art_spec_test_OBJECTS =  \
 	$(am_rygel_album_art_spec_test_OBJECTS)
-am__DEPENDENCIES_1 =
-am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 rygel_album_art_spec_test_DEPENDENCIES = $(am__DEPENDENCIES_2)
-AM_V_lt = $(am__v_lt_@AM_V@)
-am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
-am__v_lt_0 = --silent
 rygel_album_art_spec_test_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(rygel_album_art_spec_test_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
@@ -323,7 +345,8 @@ am__v_VALAC_0 = @echo "  VALAC " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(rygel_album_art_spec_test_SOURCES) \
+SOURCES = $(plugins_media_export_regression_SOURCES) \
+	$(rygel_album_art_spec_test_SOURCES) \
 	$(rygel_environment_test_SOURCES) \
 	$(rygel_http_byte_seek_test_SOURCES) \
 	$(rygel_http_get_test_SOURCES) \
@@ -337,7 +360,8 @@ SOURCES = $(rygel_album_art_spec_test_SOURCES) \
 	$(rygel_regression_SOURCES) \
 	$(rygel_searchable_container_test_SOURCES) \
 	$(rygel_user_config_test_SOURCES)
-DIST_SOURCES = $(rygel_album_art_spec_test_SOURCES) \
+DIST_SOURCES = $(am__plugins_media_export_regression_SOURCES_DIST) \
+	$(rygel_album_art_spec_test_SOURCES) \
 	$(am__rygel_environment_test_SOURCES_DIST) \
 	$(rygel_http_byte_seek_test_SOURCES) \
 	$(rygel_http_get_test_SOURCES) \
@@ -376,8 +400,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -908,11 +930,36 @@ rygel_media_engine_test_LDADD = \
 @HAVE_GSTREAMER_TRUE@rygel_environment_test_LDADD = \
 @HAVE_GSTREAMER_TRUE@	$(test_librygel_renderer_gst_libs)
 
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@plugins_media_export_regression_SOURCES = \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(top_srcdir)/src/librygel-core/rygel-core-2.0.vapi \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(top_srcdir)/src/librygel-server/rygel-server-2.0.vapi \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(top_srcdir)/src/plugins/media-export/rygel-media-export.vapi \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	plugins/media-export/regression.vala
+
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@plugins_media_export_regression_CFLAGS = \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(test_cflags) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(COLLATION_CFLAGS) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_CFLAGS) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(RYGEL_COMMON_LIBRYGEL_SERVER_CFLAGS) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	-I$(top_srcdir)/src/plugins/media-export
+
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@plugins_media_export_regression_LDADD = \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(test_libs) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(COLLATION_LIBS) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_LIBS) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(RYGEL_COMMON_LIBRYGEL_SERVER_LIBS) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(top_builddir)/src/plugins/media-export/librygel-media-export.la
+
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@plugins_media_export_regression_VALAFLAGS = \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(test_valaflags) \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	--enable-experimental \
+@BUILD_MEDIA_EXPORT_PLUGIN_TRUE@	$(RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_VALAFLAGS)
+
 all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/../common.am $(am__configure_deps)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(top_srcdir)/common.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -933,7 +980,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
-$(srcdir)/../common.am:
+$(top_srcdir)/common.am:
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -952,6 +999,12 @@ clean-checkPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+plugins/media-export/$(am__dirstamp):
+	@$(MKDIR_P) plugins/media-export
+	@: > plugins/media-export/$(am__dirstamp)
+plugins/media-export/regression$(EXEEXT): $(plugins_media_export_regression_OBJECTS) $(plugins_media_export_regression_DEPENDENCIES) $(EXTRA_plugins_media_export_regression_DEPENDENCIES) plugins/media-export/$(am__dirstamp)
+	@rm -f plugins/media-export/regression$(EXEEXT)
+	$(AM_V_CCLD)$(plugins_media_export_regression_LINK) $(plugins_media_export_regression_OBJECTS) $(plugins_media_export_regression_LDADD) $(LIBS)
 rygel-album-art-spec-test$(EXEEXT): $(rygel_album_art_spec_test_OBJECTS) $(rygel_album_art_spec_test_DEPENDENCIES) $(EXTRA_rygel_album_art_spec_test_DEPENDENCIES) 
 	@rm -f rygel-album-art-spec-test$(EXEEXT)
 	$(AM_V_CCLD)$(rygel_album_art_spec_test_LINK) $(rygel_album_art_spec_test_OBJECTS) $(rygel_album_art_spec_test_LDADD) $(LIBS)
@@ -1001,6 +1054,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugins_media_export_regression-regression.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_album_art_spec_test-rygel-album-art-spec-test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_album_art_spec_test-rygel-icon-info.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_album_art_spec_test-rygel-media-art-store.Po@am__quote@
@@ -1071,6 +1125,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+
+plugins_media_export_regression-regression.o: plugins/media-export/regression.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(plugins_media_export_regression_CFLAGS) $(CFLAGS) -MT plugins_media_export_regression-regression.o -MD -MP -MF $(DEPDIR)/plugins_media_export_regression-regression.Tpo -c -o plugins_media_export_regression-regression.o `test -f 'plugins/media-export/regression.c' || echo '$(srcdir)/'`plugins/media-export/regression.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/plugins_media_export_regression-regression.Tpo $(DEPDIR)/plugins_media_export_regression-regression.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='plugins/media-export/regression.c' object='plugins_media_export_regression-regression.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(plugins_media_export_regression_CFLAGS) $(CFLAGS) -c -o plugins_media_export_regression-regression.o `test -f 'plugins/media-export/regression.c' || echo '$(srcdir)/'`plugins/media-export/regression.c
+
+plugins_media_export_regression-regression.obj: plugins/media-export/regression.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(plugins_media_export_regression_CFLAGS) $(CFLAGS) -MT plugins_media_export_regression-regression.obj -MD -MP -MF $(DEPDIR)/plugins_media_export_regression-regression.Tpo -c -o plugins_media_export_regression-regression.obj `if test -f 'plugins/media-export/regression.c'; then $(CYGPATH_W) 'plugins/media-export/regression.c'; else $(CYGPATH_W) '$(srcdir)/plugins/media-export/regression.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/plugins_media_export_regression-regression.Tpo $(DEPDIR)/plugins_media_export_regression-regression.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='plugins/media-export/regression.c' object='plugins_media_export_regression-regression.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(plugins_media_export_regression_CFLAGS) $(CFLAGS) -c -o plugins_media_export_regression-regression.obj `if test -f 'plugins/media-export/regression.c'; then $(CYGPATH_W) 'plugins/media-export/regression.c'; else $(CYGPATH_W) '$(srcdir)/plugins/media-export/regression.c'; fi`
 
 rygel_album_art_spec_test-rygel-album-art-spec-test.o: rygel-album-art-spec-test.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_album_art_spec_test_CFLAGS) $(CFLAGS) -MT rygel_album_art_spec_test-rygel-album-art-spec-test.o -MD -MP -MF $(DEPDIR)/rygel_album_art_spec_test-rygel-album-art-spec-test.Tpo -c -o rygel_album_art_spec_test-rygel-album-art-spec-test.o `test -f 'rygel-album-art-spec-test.c' || echo '$(srcdir)/'`rygel-album-art-spec-test.c
@@ -2015,6 +2083,15 @@ $(srcdir)/rygel_playbin_renderer_test_vala.stamp: rygel-playbin-renderer-test.va
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
 	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_playbin_renderer_test_VALAFLAGS) $(VALAFLAGS) -C rygel-playbin-renderer-test.vala
 	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/plugins/media-export/regression.c: $(srcdir)/plugins_media_export_regression_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/plugins_media_export_regression_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/plugins_media_export_regression_vala.stamp; \
+	fi
+$(srcdir)/plugins_media_export_regression_vala.stamp: $(top_srcdir)/src/librygel-core/rygel-core-2.0.vapi $(top_srcdir)/src/librygel-server/rygel-server-2.0.vapi $(top_srcdir)/src/plugins/media-export/rygel-media-export.vapi plugins/media-export/regression.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(plugins_media_export_regression_VALAFLAGS) $(VALAFLAGS) -C $(top_srcdir)/src/librygel-core/rygel-core-2.0.vapi $(top_srcdir)/src/librygel-server/rygel-server-2.0.vapi $(top_srcdir)/src/plugins/media-export/rygel-media-export.vapi plugins/media-export/regression.vala
+	$(AM_V_at)mv -f $@-t $@
 $(srcdir)/rygel-album-art-spec-test.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -2064,6 +2141,7 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf plugins/media-export/.libs plugins/media-export/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -2273,10 +2351,13 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f plugins/media-export/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-rm -f plugins/media-export/regression.c
+	-rm -f plugins_media_export_regression_vala.stamp
 	-rm -f rygel-album-art-spec-test.c
 	-rm -f rygel-configuration.c
 	-rm -f rygel-data-sink_http-response.c

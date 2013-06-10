@@ -1336,7 +1336,7 @@ static gboolean rygel_http_get_handle_item_request_co (RygelHttpGetHandleItemReq
 			_data_->_tmp20_ = _data_->_tmp19_;
 			if (_data_->_inner_error_ != NULL) {
 				if (_data_->_inner_error_->domain == RYGEL_HTTP_SEEK_ERROR) {
-					goto __catch25_rygel_http_seek_error;
+					goto __catch28_rygel_http_seek_error;
 				}
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 				g_clear_error (&_data_->_inner_error_);
@@ -1358,7 +1358,7 @@ static gboolean rygel_http_get_handle_item_request_co (RygelHttpGetHandleItemReq
 				_data_->_tmp26_ = _data_->_tmp25_;
 				if (_data_->_inner_error_ != NULL) {
 					if (_data_->_inner_error_->domain == RYGEL_HTTP_SEEK_ERROR) {
-						goto __catch25_rygel_http_seek_error;
+						goto __catch28_rygel_http_seek_error;
 					}
 					g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 					g_clear_error (&_data_->_inner_error_);
@@ -1369,8 +1369,8 @@ static gboolean rygel_http_get_handle_item_request_co (RygelHttpGetHandleItemReq
 			}
 		}
 	}
-	goto __finally25;
-	__catch25_rygel_http_seek_error:
+	goto __finally28;
+	__catch28_rygel_http_seek_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -1389,7 +1389,7 @@ static gboolean rygel_http_get_handle_item_request_co (RygelHttpGetHandleItemReq
 				_data_->_tmp32_ = _g_error_copy0 (_data_->_tmp31_);
 				_data_->_inner_error_ = _data_->_tmp32_;
 				_g_error_free0 (_data_->_error_);
-				goto __finally25;
+				goto __finally28;
 			}
 		}
 		_g_error_free0 (_data_->_error_);
@@ -1401,7 +1401,7 @@ static gboolean rygel_http_get_handle_item_request_co (RygelHttpGetHandleItemReq
 		g_object_unref (_data_->_async_result);
 		return FALSE;
 	}
-	__finally25:
+	__finally28:
 	if (_data_->_inner_error_ != NULL) {
 		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 		g_error_free (_data_->_inner_error_);

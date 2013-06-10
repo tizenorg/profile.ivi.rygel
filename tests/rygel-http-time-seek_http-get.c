@@ -155,6 +155,8 @@ typedef struct _RygelAudioItemPrivate RygelAudioItemPrivate;
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 
 #define RYGEL_TYPE_HTTP_SEEK_TYPE (rygel_http_seek_type_get_type ())
+#define _rygel_client_hacks_unref0(var) ((var == NULL) ? NULL : (var = (rygel_client_hacks_unref (var), NULL)))
+#define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 typedef struct _RygelHTTPGetPrivate RygelHTTPGetPrivate;
 
 #define RYGEL_TYPE_THUMBNAIL (rygel_thumbnail_get_type ())
@@ -339,6 +341,8 @@ RygelHTTPSeek* rygel_http_seek_construct (GType object_type, SoupMessage* msg, g
 GType rygel_http_seek_type_get_type (void) G_GNUC_CONST;
 void rygel_http_seek_set_seek_type (RygelHTTPSeek* self, RygelHTTPSeekType value);
 gboolean rygel_http_time_seek_needed (RygelHTTPGet* request);
+RygelClientHacks* rygel_client_hacks_create (SoupMessage* message, GError** error);
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self);
 gpointer rygel_thumbnail_ref (gpointer instance);
 void rygel_thumbnail_unref (gpointer instance);
 GParamSpec* rygel_param_spec_thumbnail (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
@@ -807,76 +811,120 @@ RygelHTTPTimeSeek* rygel_http_time_seek_new (RygelHTTPGet* request, GError** err
 
 gboolean rygel_http_time_seek_needed (RygelHTTPGet* request) {
 	gboolean result = FALSE;
-	gboolean _tmp0_ = FALSE;
-	gboolean _tmp1_ = FALSE;
-	RygelHTTPGet* _tmp2_;
-	RygelMediaObject* _tmp3_;
-	gboolean _tmp7_;
-	gboolean _tmp23_;
+	gboolean force_seek;
+	gboolean _tmp4_ = FALSE;
+	gboolean _tmp5_;
+	gboolean _tmp30_;
+	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (request != NULL, FALSE);
-	_tmp2_ = request;
-	_tmp3_ = ((RygelHTTPRequest*) _tmp2_)->object;
-	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp3_, RYGEL_TYPE_AUDIO_ITEM)) {
-		RygelHTTPGet* _tmp4_;
-		RygelMediaObject* _tmp5_;
-		gint64 _tmp6_;
-		_tmp4_ = request;
-		_tmp5_ = ((RygelHTTPRequest*) _tmp4_)->object;
-		_tmp6_ = (G_TYPE_CHECK_INSTANCE_TYPE (_tmp5_, RYGEL_TYPE_AUDIO_ITEM) ? ((RygelAudioItem*) _tmp5_) : NULL)->duration;
-		_tmp1_ = _tmp6_ > ((gint64) 0);
-	} else {
-		_tmp1_ = FALSE;
-	}
-	_tmp7_ = _tmp1_;
-	if (_tmp7_) {
-		gboolean _tmp8_ = FALSE;
-		RygelHTTPGet* _tmp9_;
-		RygelHTTPGetHandler* _tmp10_;
-		gboolean _tmp22_;
-		_tmp9_ = request;
-		_tmp10_ = _tmp9_->handler;
-		if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp10_, RYGEL_TYPE_HTTP_TRANSCODE_HANDLER)) {
-			_tmp8_ = TRUE;
-		} else {
-			gboolean _tmp11_ = FALSE;
-			gboolean _tmp12_ = FALSE;
-			RygelHTTPGet* _tmp13_;
-			RygelThumbnail* _tmp14_;
-			gboolean _tmp17_;
-			gboolean _tmp21_;
-			_tmp13_ = request;
-			_tmp14_ = _tmp13_->thumbnail;
-			if (_tmp14_ == NULL) {
-				RygelHTTPGet* _tmp15_;
-				RygelSubtitle* _tmp16_;
-				_tmp15_ = request;
-				_tmp16_ = _tmp15_->subtitle;
-				_tmp12_ = _tmp16_ == NULL;
-			} else {
-				_tmp12_ = FALSE;
-			}
-			_tmp17_ = _tmp12_;
-			if (_tmp17_) {
-				RygelHTTPGet* _tmp18_;
-				RygelMediaObject* _tmp19_;
-				gboolean _tmp20_ = FALSE;
-				_tmp18_ = request;
-				_tmp19_ = ((RygelHTTPRequest*) _tmp18_)->object;
-				_tmp20_ = rygel_media_item_is_live_stream (G_TYPE_CHECK_INSTANCE_TYPE (_tmp19_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp19_) : NULL);
-				_tmp11_ = _tmp20_;
-			} else {
-				_tmp11_ = FALSE;
-			}
-			_tmp21_ = _tmp11_;
-			_tmp8_ = _tmp21_;
+	force_seek = FALSE;
+	{
+		RygelHTTPGet* _tmp0_;
+		SoupMessage* _tmp1_;
+		RygelClientHacks* _tmp2_ = NULL;
+		RygelClientHacks* hack;
+		gboolean _tmp3_ = FALSE;
+		_tmp0_ = request;
+		_tmp1_ = ((RygelHTTPRequest*) _tmp0_)->msg;
+		_tmp2_ = rygel_client_hacks_create (_tmp1_, &_inner_error_);
+		hack = _tmp2_;
+		if (_inner_error_ != NULL) {
+			goto __catch8_g_error;
 		}
-		_tmp22_ = _tmp8_;
-		_tmp0_ = _tmp22_;
-	} else {
-		_tmp0_ = FALSE;
+		_tmp3_ = rygel_client_hacks_force_seek (hack);
+		force_seek = _tmp3_;
+		_rygel_client_hacks_unref0 (hack);
 	}
-	_tmp23_ = _tmp0_;
-	result = _tmp23_;
+	goto __finally8;
+	__catch8_g_error:
+	{
+		GError* _error_ = NULL;
+		_error_ = _inner_error_;
+		_inner_error_ = NULL;
+		_g_error_free0 (_error_);
+	}
+	__finally8:
+	if (_inner_error_ != NULL) {
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+		g_clear_error (&_inner_error_);
+		return FALSE;
+	}
+	_tmp5_ = force_seek;
+	if (_tmp5_) {
+		_tmp4_ = TRUE;
+	} else {
+		gboolean _tmp6_ = FALSE;
+		gboolean _tmp7_ = FALSE;
+		RygelHTTPGet* _tmp8_;
+		RygelMediaObject* _tmp9_;
+		gboolean _tmp13_;
+		gboolean _tmp29_;
+		_tmp8_ = request;
+		_tmp9_ = ((RygelHTTPRequest*) _tmp8_)->object;
+		if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp9_, RYGEL_TYPE_AUDIO_ITEM)) {
+			RygelHTTPGet* _tmp10_;
+			RygelMediaObject* _tmp11_;
+			gint64 _tmp12_;
+			_tmp10_ = request;
+			_tmp11_ = ((RygelHTTPRequest*) _tmp10_)->object;
+			_tmp12_ = (G_TYPE_CHECK_INSTANCE_TYPE (_tmp11_, RYGEL_TYPE_AUDIO_ITEM) ? ((RygelAudioItem*) _tmp11_) : NULL)->duration;
+			_tmp7_ = _tmp12_ > ((gint64) 0);
+		} else {
+			_tmp7_ = FALSE;
+		}
+		_tmp13_ = _tmp7_;
+		if (_tmp13_) {
+			gboolean _tmp14_ = FALSE;
+			RygelHTTPGet* _tmp15_;
+			RygelHTTPGetHandler* _tmp16_;
+			gboolean _tmp28_;
+			_tmp15_ = request;
+			_tmp16_ = _tmp15_->handler;
+			if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp16_, RYGEL_TYPE_HTTP_TRANSCODE_HANDLER)) {
+				_tmp14_ = TRUE;
+			} else {
+				gboolean _tmp17_ = FALSE;
+				gboolean _tmp18_ = FALSE;
+				RygelHTTPGet* _tmp19_;
+				RygelThumbnail* _tmp20_;
+				gboolean _tmp23_;
+				gboolean _tmp27_;
+				_tmp19_ = request;
+				_tmp20_ = _tmp19_->thumbnail;
+				if (_tmp20_ == NULL) {
+					RygelHTTPGet* _tmp21_;
+					RygelSubtitle* _tmp22_;
+					_tmp21_ = request;
+					_tmp22_ = _tmp21_->subtitle;
+					_tmp18_ = _tmp22_ == NULL;
+				} else {
+					_tmp18_ = FALSE;
+				}
+				_tmp23_ = _tmp18_;
+				if (_tmp23_) {
+					RygelHTTPGet* _tmp24_;
+					RygelMediaObject* _tmp25_;
+					gboolean _tmp26_ = FALSE;
+					_tmp24_ = request;
+					_tmp25_ = ((RygelHTTPRequest*) _tmp24_)->object;
+					_tmp26_ = rygel_media_item_is_live_stream (G_TYPE_CHECK_INSTANCE_TYPE (_tmp25_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp25_) : NULL);
+					_tmp17_ = _tmp26_;
+				} else {
+					_tmp17_ = FALSE;
+				}
+				_tmp27_ = _tmp17_;
+				_tmp14_ = _tmp27_;
+			}
+			_tmp28_ = _tmp14_;
+			_tmp6_ = _tmp28_;
+		} else {
+			_tmp6_ = FALSE;
+		}
+		_tmp29_ = _tmp6_;
+		_tmp4_ = _tmp29_;
+	}
+	_tmp30_ = _tmp4_;
+	result = _tmp30_;
 	return result;
 }
 

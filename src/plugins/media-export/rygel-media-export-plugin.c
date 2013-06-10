@@ -109,7 +109,6 @@ static gpointer rygel_media_export_plugin_parent_class = NULL;
 void module_init (RygelPluginLoader* loader);
 static Block1Data* block1_data_ref (Block1Data* _data1_);
 static void block1_data_unref (void * _userdata_);
-#define RYGEL_MEDIA_EXPORT_PLUGIN_NAME "MediaExport"
 GType rygel_media_export_plugin_get_type (void) G_GNUC_CONST;
 static Block2Data* block2_data_ref (Block2Data* _data2_);
 static void block2_data_unref (void * _userdata_);
@@ -120,6 +119,7 @@ void on_plugin_available (RygelPlugin* plugin, RygelPlugin* our_plugin);
 static void __lambda10_ (Block2Data* _data2_, RygelPlugin* new_plugin);
 static void ___lambda10__rygel_plugin_loader_plugin_available (RygelPluginLoader* _sender, RygelPlugin* plugin, gpointer self);
 static gboolean ____lambda8__gsource_func (gpointer self);
+#define RYGEL_MEDIA_EXPORT_PLUGIN_NAME "MediaExport"
 static Block3Data* block3_data_ref (Block3Data* _data3_);
 static void block3_data_unref (void * _userdata_);
 static void ____lambda9_ (Block3Data* _data3_);
@@ -182,12 +182,10 @@ static void block2_data_unref (void * _userdata_) {
 static void __lambda10_ (Block2Data* _data2_, RygelPlugin* new_plugin) {
 	Block1Data* _data1_;
 	RygelPlugin* _tmp0_;
-	RygelMediaExportPlugin* _tmp1_;
 	_data1_ = _data2_->_data1_;
 	g_return_if_fail (new_plugin != NULL);
 	_tmp0_ = new_plugin;
-	_tmp1_ = _data2_->plugin;
-	on_plugin_available (_tmp0_, (RygelPlugin*) _tmp1_);
+	on_plugin_available (_tmp0_, (RygelPlugin*) _data2_->plugin);
 }
 
 
@@ -199,7 +197,7 @@ static void ___lambda10__rygel_plugin_loader_plugin_available (RygelPluginLoader
 static gboolean ___lambda8_ (Block2Data* _data2_) {
 	Block1Data* _data1_;
 	gboolean result = FALSE;
-	RygelPluginLoader* _tmp11_;
+	RygelPluginLoader* _tmp10_;
 	_data1_ = _data2_->_data1_;
 	{
 		RygelPluginLoader* _tmp0_;
@@ -222,7 +220,6 @@ static gboolean ___lambda8_ (Block2Data* _data2_) {
 			gpointer _tmp8_ = NULL;
 			RygelPlugin* loaded_plugin;
 			RygelPlugin* _tmp9_;
-			RygelMediaExportPlugin* _tmp10_;
 			_tmp5_ = _loaded_plugin_it;
 			_tmp6_ = gee_iterator_next (_tmp5_);
 			if (!_tmp6_) {
@@ -232,14 +229,13 @@ static gboolean ___lambda8_ (Block2Data* _data2_) {
 			_tmp8_ = gee_iterator_get (_tmp7_);
 			loaded_plugin = (RygelPlugin*) _tmp8_;
 			_tmp9_ = loaded_plugin;
-			_tmp10_ = _data2_->plugin;
-			on_plugin_available (_tmp9_, (RygelPlugin*) _tmp10_);
+			on_plugin_available (_tmp9_, (RygelPlugin*) _data2_->plugin);
 			_g_object_unref0 (loaded_plugin);
 		}
 		_g_object_unref0 (_loaded_plugin_it);
 	}
-	_tmp11_ = _data1_->loader;
-	g_signal_connect_data (_tmp11_, "plugin-available", (GCallback) ___lambda10__rygel_plugin_loader_plugin_available, block2_data_ref (_data2_), (GClosureNotify) block2_data_unref, 0);
+	_tmp10_ = _data1_->loader;
+	g_signal_connect_data (_tmp10_, "plugin-available", (GCallback) ___lambda10__rygel_plugin_loader_plugin_available, block2_data_ref (_data2_), (GClosureNotify) block2_data_unref, 0);
 	result = FALSE;
 	return result;
 }
@@ -256,8 +252,6 @@ void module_init (RygelPluginLoader* loader) {
 	Block1Data* _data1_;
 	RygelPluginLoader* _tmp0_;
 	RygelPluginLoader* _tmp1_;
-	RygelPluginLoader* _tmp2_;
-	gboolean _tmp3_ = FALSE;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (loader != NULL);
 	_data1_ = g_slice_new0 (Block1Data);
@@ -266,34 +260,23 @@ void module_init (RygelPluginLoader* loader) {
 	_tmp1_ = _g_object_ref0 (_tmp0_);
 	_g_object_unref0 (_data1_->loader);
 	_data1_->loader = _tmp1_;
-	_tmp2_ = _data1_->loader;
-	_tmp3_ = rygel_plugin_loader_plugin_disabled (_tmp2_, RYGEL_MEDIA_EXPORT_PLUGIN_NAME);
-	if (_tmp3_) {
-		g_message ("rygel-media-export-plugin.vala:32: Plugin '%s' disabled by user, ignor" \
-"ing..", RYGEL_MEDIA_EXPORT_PLUGIN_NAME);
-		block1_data_unref (_data1_);
-		_data1_ = NULL;
-		return;
-	}
 	{
 		Block2Data* _data2_;
-		RygelMediaExportPlugin* _tmp4_;
-		RygelPluginLoader* _tmp5_;
-		RygelMediaExportPlugin* _tmp6_;
+		RygelMediaExportPlugin* _tmp2_;
+		RygelPluginLoader* _tmp3_;
 		_data2_ = g_slice_new0 (Block2Data);
 		_data2_->_ref_count_ = 1;
 		_data2_->_data1_ = block1_data_ref (_data1_);
-		_tmp4_ = rygel_media_export_plugin_new (&_inner_error_);
-		_data2_->plugin = _tmp4_;
+		_tmp2_ = rygel_media_export_plugin_new (&_inner_error_);
+		_data2_->plugin = _tmp2_;
 		if (_inner_error_ != NULL) {
 			block2_data_unref (_data2_);
 			_data2_ = NULL;
 			goto __catch0_g_error;
 		}
 		g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, ____lambda8__gsource_func, block2_data_ref (_data2_), block2_data_unref);
-		_tmp5_ = _data1_->loader;
-		_tmp6_ = _data2_->plugin;
-		rygel_plugin_loader_add_plugin (_tmp5_, (RygelPlugin*) _tmp6_);
+		_tmp3_ = _data1_->loader;
+		rygel_plugin_loader_add_plugin (_tmp3_, (RygelPlugin*) _data2_->plugin);
 		block2_data_unref (_data2_);
 		_data2_ = NULL;
 	}
@@ -301,13 +284,13 @@ void module_init (RygelPluginLoader* loader) {
 	__catch0_g_error:
 	{
 		GError* _error_ = NULL;
-		GError* _tmp7_;
-		const gchar* _tmp8_;
+		GError* _tmp4_;
+		const gchar* _tmp5_;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp7_ = _error_;
-		_tmp8_ = _tmp7_->message;
-		g_warning ("rygel-media-export-plugin.vala:59: Failed to load %s: %s", RYGEL_MEDIA_EXPORT_PLUGIN_NAME, _tmp8_);
+		_tmp4_ = _error_;
+		_tmp5_ = _tmp4_->message;
+		g_warning ("rygel-media-export-plugin.vala:52: Failed to load %s: %s", RYGEL_MEDIA_EXPORT_PLUGIN_NAME, _tmp5_);
 		_g_error_free0 (_error_);
 	}
 	__finally0:
@@ -443,7 +426,7 @@ void on_plugin_available (RygelPlugin* plugin, RygelPlugin* our_plugin) {
 				if (_tmp24_) {
 					shutdown_media_export ();
 				} else {
-					g_message ("rygel-media-export-plugin.vala:87: Plugin '%s' inactivate, activating " \
+					g_message ("rygel-media-export-plugin.vala:80: Plugin '%s' inactivate, activating " \
 "'%s' plugin", TRACKER_PLUGIN, RYGEL_MEDIA_EXPORT_PLUGIN_NAME);
 				}
 				_tmp25_ = _data3_->our_plugin;
@@ -461,7 +444,7 @@ void on_plugin_available (RygelPlugin* plugin, RygelPlugin* our_plugin) {
 
 void shutdown_media_export (void) {
 	GError * _inner_error_ = NULL;
-	g_message ("rygel-media-export-plugin.vala:97: Deactivating plugin '%s' in favor o" \
+	g_message ("rygel-media-export-plugin.vala:90: Deactivating plugin '%s' in favor o" \
 "f plugin '%s'", RYGEL_MEDIA_EXPORT_PLUGIN_NAME, TRACKER_PLUGIN);
 	{
 		RygelMetaConfig* _tmp0_ = NULL;

@@ -48,6 +48,9 @@
 <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="RygelBaseConfiguration.html#rygel-base-configuration-get-interface" title="rygel_base_configuration_get_interface ()">rygel_base_configuration_get_interface</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelBaseConfiguration.html" title="RygelBaseConfiguration"><span class="type">RygelBaseConfiguration</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            <a class="link" href="RygelBaseConfiguration.html#rygel-base-configuration-get-interfaces" title="rygel_base_configuration_get_interfaces ()">rygel_base_configuration_get_interfaces</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelBaseConfiguration.html" title="RygelBaseConfiguration"><span class="type">RygelBaseConfiguration</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelBaseConfiguration.html#rygel-base-configuration-get-port" title="rygel_base_configuration_get_port ()">rygel_base_configuration_get_port</a>   (<em class="parameter"><code><a class="link" href="RygelBaseConfiguration.html" title="RygelBaseConfiguration"><span class="type">RygelBaseConfiguration</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelBaseConfiguration.html#rygel-base-configuration-get-transcoding" title="rygel_base_configuration_get_transcoding ()">rygel_base_configuration_get_transcoding</a>
@@ -183,6 +186,31 @@ The type for <a class="link" href="RygelBaseConfiguration.html" title="RygelBase
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-base-configuration-get-interfaces"></a><h3>rygel_base_configuration_get_interfaces ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            rygel_base_configuration_get_interfaces
+                                                        (<em class="parameter"><code><a class="link" href="RygelBaseConfiguration.html" title="RygelBaseConfiguration"><span class="type">RygelBaseConfiguration</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelBaseConfiguration.html" title="RygelBaseConfiguration"><span class="type">RygelBaseConfiguration</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=result_length1]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -581,6 +609,7 @@ Base class that can be used for configuration implementations.
 	GObjectClass parent_class;
 	gboolean (*get_upnp_enabled) (RygelBaseConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelBaseConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelBaseConfiguration* self, GError** error);
 	gint (*get_port) (RygelBaseConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelBaseConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelBaseConfiguration* self, GError** error);
@@ -619,6 +648,11 @@ The class structure for <a class="link" href="RygelBaseConfiguration.html#RYGEL-
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelBaseConfigurationClass.get-interface"></a>get_interface</code></em> ()</span></p></td>
 <td>virtual method called by <a class="link" href="RygelBaseConfiguration.html#rygel-base-configuration-get-interface" title="rygel_base_configuration_get_interface ()"><code class="function"><a class="link" href="RygelBaseConfiguration.html#rygel-base-configuration-get-interface" title="rygel_base_configuration_get_interface ()"><code class="function">rygel_base_configuration_get_interface()</code></a></code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="RygelBaseConfigurationClass.get-interfaces"></a>get_interfaces</code></em> ()</span></p></td>
+<td>virtual method called by <a class="link" href="RygelBaseConfiguration.html#rygel-base-configuration-get-interfaces" title="rygel_base_configuration_get_interfaces ()"><code class="function"><a class="link" href="RygelBaseConfiguration.html#rygel-base-configuration-get-interfaces" title="rygel_base_configuration_get_interfaces ()"><code class="function">rygel_base_configuration_get_interfaces()</code></a></code></a>
 </td>
 </tr>
 <tr>

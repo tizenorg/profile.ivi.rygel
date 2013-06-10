@@ -75,6 +75,7 @@ struct _RygelConfigurationIface {
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -102,7 +103,8 @@ GType rygel_configuration_entry_get_type (void) G_GNUC_CONST;
 GType rygel_section_entry_get_type (void) G_GNUC_CONST;
 GType rygel_configuration_get_type (void) G_GNUC_CONST;
 gboolean rygel_configuration_get_upnp_enabled (RygelConfiguration* self, GError** error);
-gchar* rygel_configuration_get_interface (RygelConfiguration* self, GError** error);
+gchar* rygel_configuration_get_interface (RygelConfiguration* self, GError** error) G_GNUC_DEPRECATED;
+gchar** rygel_configuration_get_interfaces (RygelConfiguration* self, GError** error);
 gint rygel_configuration_get_port (RygelConfiguration* self, GError** error);
 gboolean rygel_configuration_get_transcoding (RygelConfiguration* self, GError** error);
 gboolean rygel_configuration_get_allow_upload (RygelConfiguration* self, GError** error);
@@ -163,6 +165,12 @@ gboolean rygel_configuration_get_upnp_enabled (RygelConfiguration* self, GError*
 gchar* rygel_configuration_get_interface (RygelConfiguration* self, GError** error) {
 	g_return_val_if_fail (self != NULL, NULL);
 	return RYGEL_CONFIGURATION_GET_INTERFACE (self)->get_interface (self, error);
+}
+
+
+gchar** rygel_configuration_get_interfaces (RygelConfiguration* self, GError** error) {
+	g_return_val_if_fail (self != NULL, NULL);
+	return RYGEL_CONFIGURATION_GET_INTERFACE (self)->get_interfaces (self, error);
 }
 
 

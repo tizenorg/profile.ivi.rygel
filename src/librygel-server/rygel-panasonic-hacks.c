@@ -167,6 +167,7 @@ struct _RygelClientHacksClass {
 	void (*translate_container_id) (RygelClientHacks* self, RygelMediaQueryAction* action, gchar** container_id);
 	void (*apply) (RygelClientHacks* self, RygelMediaItem* item);
 	void (*filter_sort_criteria) (RygelClientHacks* self, gchar** sort_criteria);
+	gboolean (*force_seek) (RygelClientHacks* self);
 	void (*search) (RygelClientHacks* self, RygelSearchableContainer* container, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 	RygelMediaObjects* (*search_finish) (RygelClientHacks* self, GAsyncResult* _res_, guint* total_matches, GError** error);
 };
@@ -345,7 +346,7 @@ static void rygel_panasonic_hacks_real_apply (RygelClientHacks* base, RygelMedia
 				_tmp18_ = _tmp17_;
 				if (_inner_error_ != NULL) {
 					if (_inner_error_->domain == G_REGEX_ERROR) {
-						goto __catch59_g_regex_error;
+						goto __catch63_g_regex_error;
 					}
 					_rygel_icon_info_unref0 (thumbnail);
 					_g_object_unref0 (_thumbnail_list);
@@ -363,7 +364,7 @@ static void rygel_panasonic_hacks_real_apply (RygelClientHacks* base, RygelMedia
 				_tmp24_ = _tmp23_;
 				if (_inner_error_ != NULL) {
 					if (_inner_error_->domain == G_REGEX_ERROR) {
-						goto __catch59_g_regex_error;
+						goto __catch63_g_regex_error;
 					}
 					_rygel_icon_info_unref0 (thumbnail);
 					_g_object_unref0 (_thumbnail_list);
@@ -375,8 +376,8 @@ static void rygel_panasonic_hacks_real_apply (RygelClientHacks* base, RygelMedia
 				_g_free0 (_tmp25_->dlna_profile);
 				_tmp25_->dlna_profile = _tmp24_;
 			}
-			goto __finally59;
-			__catch59_g_regex_error:
+			goto __finally63;
+			__catch63_g_regex_error:
 			{
 				GError* _error_ = NULL;
 				_error_ = _inner_error_;
@@ -384,7 +385,7 @@ static void rygel_panasonic_hacks_real_apply (RygelClientHacks* base, RygelMedia
 				g_assert_not_reached ();
 				_g_error_free0 (_error_);
 			}
-			__finally59:
+			__finally63:
 			if (_inner_error_ != NULL) {
 				_rygel_icon_info_unref0 (thumbnail);
 				_g_object_unref0 (_thumbnail_list);
@@ -413,7 +414,7 @@ static void rygel_panasonic_hacks_class_init (RygelPanasonicHacksClass * klass) 
 		_tmp1_ = _tmp0_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch60_g_regex_error;
+				goto __catch64_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -424,7 +425,7 @@ static void rygel_panasonic_hacks_class_init (RygelPanasonicHacksClass * klass) 
 		_tmp3_ = _tmp2_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch60_g_regex_error;
+				goto __catch64_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -432,8 +433,8 @@ static void rygel_panasonic_hacks_class_init (RygelPanasonicHacksClass * klass) 
 		_g_regex_unref0 (rygel_panasonic_hacks_dlna_regex);
 		rygel_panasonic_hacks_dlna_regex = _tmp3_;
 	}
-	goto __finally60;
-	__catch60_g_regex_error:
+	goto __finally64;
+	__catch64_g_regex_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -441,7 +442,7 @@ static void rygel_panasonic_hacks_class_init (RygelPanasonicHacksClass * klass) 
 		g_assert_not_reached ();
 		_g_error_free0 (_error_);
 	}
-	__finally60:
+	__finally64:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

@@ -83,6 +83,8 @@
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-set-child-count" title="rygel_media_container_set_child_count ()">rygel_media_container_set_child_count</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-all-child-count" title="rygel_media_container_get_all_child_count ()">rygel_media_container_get_all_child_count</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);
 const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-sort-criteria" title="rygel_media_container_get_sort_criteria ()">rygel_media_container_get_sort_criteria</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-set-sort-criteria" title="rygel_media_container_set_sort_criteria ()">rygel_media_container_set_sort_criteria</a>
@@ -115,6 +117,7 @@ RygelMediaContainer is required by
 <div class="refsect1">
 <a name="RygelMediaContainer.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
+  "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--all-child-count" title='The "all-child-count" property'>all-child-count</a>"          <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--child-count" title='The "child-count" property'>child-count</a>"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write / Construct
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--ocm-flags" title='The "ocm-flags" property'>ocm-flags</a>"                <span class="type">GUPnPOCMFlags</span>         : Read
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--sort-criteria" title='The "sort-criteria" property'>sort-criteria</a>"            <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
@@ -461,6 +464,28 @@ Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaCo
 </div>
 <hr>
 <div class="refsect2">
+<a name="rygel-media-container-get-all-child-count"></a><h3>rygel_media_container_get_all_child_count ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_media_container_get_all_child_count
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);</pre>
+<p>
+Get and return the current value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--all-child-count" title='The "all-child-count" property'><span class="type">"all-child-count"</span></a> property.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> instance to query</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--all-child-count" title='The "all-child-count" property'><span class="type">"all-child-count"</span></a> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
 <a name="rygel-media-container-get-sort-criteria"></a><h3>rygel_media_container_get_sort_criteria ()</h3>
 <pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_media_container_get_sort_criteria
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);</pre>
@@ -580,6 +605,13 @@ The class structure for <a class="link" href="RygelMediaContainer.html#RYGEL-TYP
 </div>
 <div class="refsect1">
 <a name="RygelMediaContainer.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="RygelMediaContainer--all-child-count"></a><h3>The <code class="literal">"all-child-count"</code> property</h3>
+<pre class="programlisting">  "all-child-count"          <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read</pre>
+<p>all-child-count.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
 <div class="refsect2">
 <a name="RygelMediaContainer--child-count"></a><h3>The <code class="literal">"child-count"</code> property</h3>
 <pre class="programlisting">  "child-count"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write / Construct</pre>

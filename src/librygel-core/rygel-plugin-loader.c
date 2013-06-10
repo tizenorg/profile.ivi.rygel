@@ -49,6 +49,16 @@ typedef struct _RygelRecursiveModuleLoader RygelRecursiveModuleLoader;
 typedef struct _RygelRecursiveModuleLoaderClass RygelRecursiveModuleLoaderClass;
 typedef struct _RygelRecursiveModuleLoaderPrivate RygelRecursiveModuleLoaderPrivate;
 
+#define RYGEL_TYPE_PLUGIN_INFORMATION (rygel_plugin_information_get_type ())
+#define RYGEL_PLUGIN_INFORMATION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformation))
+#define RYGEL_PLUGIN_INFORMATION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformationClass))
+#define RYGEL_IS_PLUGIN_INFORMATION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_PLUGIN_INFORMATION))
+#define RYGEL_IS_PLUGIN_INFORMATION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_PLUGIN_INFORMATION))
+#define RYGEL_PLUGIN_INFORMATION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformationClass))
+
+typedef struct _RygelPluginInformation RygelPluginInformation;
+typedef struct _RygelPluginInformationClass RygelPluginInformationClass;
+
 #define RYGEL_TYPE_PLUGIN_LOADER (rygel_plugin_loader_get_type ())
 #define RYGEL_PLUGIN_LOADER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_PLUGIN_LOADER, RygelPluginLoader))
 #define RYGEL_PLUGIN_LOADER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_PLUGIN_LOADER, RygelPluginLoaderClass))
@@ -101,6 +111,7 @@ struct _RygelRecursiveModuleLoader {
 struct _RygelRecursiveModuleLoaderClass {
 	GObjectClass parent_class;
 	gboolean (*load_module_from_file) (RygelRecursiveModuleLoader* self, GFile* file);
+	gboolean (*load_module_from_info) (RygelRecursiveModuleLoader* self, RygelPluginInformation* info);
 };
 
 struct _RygelPluginLoader {
@@ -121,6 +132,7 @@ struct _RygelConfigurationIface {
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -146,6 +158,7 @@ typedef void (*RygelPluginLoaderModuleInitFunc) (RygelPluginLoader* loader, void
 static gpointer rygel_plugin_loader_parent_class = NULL;
 
 GType rygel_recursive_module_loader_get_type (void) G_GNUC_CONST;
+GType rygel_plugin_information_get_type (void) G_GNUC_CONST;
 GType rygel_plugin_loader_get_type (void) G_GNUC_CONST;
 GType rygel_plugin_get_type (void) G_GNUC_CONST;
 #define RYGEL_PLUGIN_LOADER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), RYGEL_TYPE_PLUGIN_LOADER, RygelPluginLoaderPrivate))
@@ -168,6 +181,10 @@ const gchar* rygel_plugin_get_name (RygelPlugin* self);
 RygelPlugin* rygel_plugin_loader_get_plugin_by_name (RygelPluginLoader* self, const gchar* name);
 GeeCollection* rygel_plugin_loader_list_plugins (RygelPluginLoader* self);
 static gboolean rygel_plugin_loader_real_load_module_from_file (RygelRecursiveModuleLoader* base, GFile* module_file);
+static gboolean rygel_plugin_loader_real_load_module_from_info (RygelRecursiveModuleLoader* base, RygelPluginInformation* info);
+const gchar* rygel_plugin_information_get_name (RygelPluginInformation* self);
+const gchar* rygel_plugin_information_get_module_path (RygelPluginInformation* self);
+gboolean rygel_recursive_module_loader_load_module_from_file (RygelRecursiveModuleLoader* self, GFile* file);
 gchar* rygel_configuration_get_plugin_path (RygelConfiguration* self, GError** error);
 static void rygel_plugin_loader_finalize (GObject* obj);
 
@@ -244,20 +261,20 @@ gboolean rygel_plugin_loader_plugin_disabled (RygelPluginLoader* self, const gch
 		_tmp3_ = _tmp2_;
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (config);
-			goto __catch29_g_error;
+			goto __catch30_g_error;
 		}
 		enabled = _tmp3_;
 		_g_object_unref0 (config);
 	}
-	goto __finally29;
-	__catch29_g_error:
+	goto __finally30;
+	__catch30_g_error:
 	{
 		GError* err = NULL;
 		err = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (err);
 	}
-	__finally29:
+	__finally30:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -448,9 +465,53 @@ static gboolean rygel_plugin_loader_real_load_module_from_file (RygelRecursiveMo
 	_tmp36_ (self, _tmp36__target);
 	_tmp37_ = module;
 	_tmp38_ = g_module_name (_tmp37_);
-	g_debug ("rygel-plugin-loader.vala:137: Loaded module source: '%s'", _tmp38_);
+	g_debug ("rygel-plugin-loader.vala:132: Loaded module source: '%s'", _tmp38_);
 	result = TRUE;
 	_g_module_close0 (module);
+	return result;
+}
+
+
+static gboolean rygel_plugin_loader_real_load_module_from_info (RygelRecursiveModuleLoader* base, RygelPluginInformation* info) {
+	RygelPluginLoader * self;
+	gboolean result = FALSE;
+	RygelPluginInformation* _tmp0_;
+	const gchar* _tmp1_;
+	const gchar* _tmp2_;
+	gboolean _tmp3_ = FALSE;
+	RygelPluginInformation* _tmp7_;
+	const gchar* _tmp8_;
+	const gchar* _tmp9_;
+	GFile* _tmp10_ = NULL;
+	GFile* module_file;
+	GFile* _tmp11_;
+	gboolean _tmp12_ = FALSE;
+	self = (RygelPluginLoader*) base;
+	g_return_val_if_fail (info != NULL, FALSE);
+	_tmp0_ = info;
+	_tmp1_ = rygel_plugin_information_get_name (_tmp0_);
+	_tmp2_ = _tmp1_;
+	_tmp3_ = rygel_plugin_loader_plugin_disabled (self, _tmp2_);
+	if (_tmp3_) {
+		RygelPluginInformation* _tmp4_;
+		const gchar* _tmp5_;
+		const gchar* _tmp6_;
+		_tmp4_ = info;
+		_tmp5_ = rygel_plugin_information_get_name (_tmp4_);
+		_tmp6_ = _tmp5_;
+		g_debug ("rygel-plugin-loader.vala:139: Module '%s' disabled by user. Ignoring…", _tmp6_);
+		result = TRUE;
+		return result;
+	}
+	_tmp7_ = info;
+	_tmp8_ = rygel_plugin_information_get_module_path (_tmp7_);
+	_tmp9_ = _tmp8_;
+	_tmp10_ = g_file_new_for_path (_tmp9_);
+	module_file = _tmp10_;
+	_tmp11_ = module_file;
+	_tmp12_ = rygel_recursive_module_loader_load_module_from_file ((RygelRecursiveModuleLoader*) self, _tmp11_);
+	result = _tmp12_;
+	_g_object_unref0 (module_file);
 	return result;
 }
 
@@ -473,21 +534,21 @@ static gchar* rygel_plugin_loader_get_config_path (void) {
 		_tmp3_ = _tmp2_;
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (config);
-			goto __catch30_g_error;
+			goto __catch31_g_error;
 		}
 		_g_free0 (path);
 		path = _tmp3_;
 		_g_object_unref0 (config);
 	}
-	goto __finally30;
-	__catch30_g_error:
+	goto __finally31;
+	__catch31_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally30:
+	__finally31:
 	if (_inner_error_ != NULL) {
 		_g_free0 (path);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -504,6 +565,7 @@ static void rygel_plugin_loader_class_init (RygelPluginLoaderClass * klass) {
 	g_type_class_add_private (klass, sizeof (RygelPluginLoaderPrivate));
 	G_OBJECT_CLASS (klass)->constructed = rygel_plugin_loader_real_constructed;
 	RYGEL_RECURSIVE_MODULE_LOADER_CLASS (klass)->load_module_from_file = rygel_plugin_loader_real_load_module_from_file;
+	RYGEL_RECURSIVE_MODULE_LOADER_CLASS (klass)->load_module_from_info = rygel_plugin_loader_real_load_module_from_info;
 	G_OBJECT_CLASS (klass)->finalize = rygel_plugin_loader_finalize;
 	g_signal_new ("plugin_available", RYGEL_TYPE_PLUGIN_LOADER, G_SIGNAL_RUN_LAST, 0, NULL, NULL, g_cclosure_marshal_VOID__OBJECT, G_TYPE_NONE, 1, RYGEL_TYPE_PLUGIN);
 }
@@ -529,15 +591,10 @@ static void rygel_plugin_loader_finalize (GObject* obj) {
  * It probes for shared library files in a specific directory, tries to 
  * find a module_init() function with this signature:
  * ``void module_init (RygelPluginLoader* loader);``
- * 
+ *
  * It then calls that function, passing a pointer to itself. The loaded
  * module can then add plugins to Rygel by calling the
  * rygel_plugin_loader_add_plugin() function.
- *
- * NOTE: The module SHOULD make sure that the plugin has not been
- * disabled by the user, by using the 
- * rygel_plugin_loader_plugin_disabled() function before creating the plugin
- * instance, and before creating any resources related to that instance.
  */
 GType rygel_plugin_loader_get_type (void) {
 	static volatile gsize rygel_plugin_loader_type_id__volatile = 0;

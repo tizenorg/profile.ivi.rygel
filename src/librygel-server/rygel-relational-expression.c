@@ -252,8 +252,10 @@ struct _RygelMediaObjectClass {
 struct _RygelMediaContainer {
 	RygelMediaObject parent_instance;
 	RygelMediaContainerPrivate * priv;
+	gint empty_child_count;
 	guint32 update_id;
 	gint64 storage_used;
+	gboolean create_mode_enabled;
 	gint64 total_deleted_child_count;
 };
 

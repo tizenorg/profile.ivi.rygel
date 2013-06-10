@@ -7,7 +7,7 @@
 
 Name:       rygel
 Summary:    GNOME UPnP/DLNA Media Server
-Version:    0.17.9
+Version:    0.19.2
 Release:    0
 Group:      Applications/Multimedia
 License:    GPLv2
@@ -20,8 +20,8 @@ BuildRequires:  pkgconfig(gupnp-1.0)
 BuildRequires:  pkgconfig(gupnp-av-1.0)
 BuildRequires:  pkgconfig(gupnp-dlna-2.0)
 BuildRequires:  pkgconfig(dbus-glib-1)
-BuildRequires:  pkgconfig(gstreamer-0.10)
-BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
+BuildRequires:  pkgconfig(gstreamer-1.0)
+BuildRequires:  pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires:  pkgconfig(gee-0.8)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(sqlite3)
@@ -63,7 +63,6 @@ developing software on top of Rygel.
     --disable-example-plugins \
     --disable-vala \
     --disable-tests \
-    --with-media-engine=simple \
     --enable-valadoc=no
 
 # >> build post
@@ -129,8 +128,12 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %{_datadir}/man/man5/rygel.conf.5.gz
 # Rygel core libs
 %{_libdir}/librygel-*.so.*
+# Rygel plugins
+%{_libdir}/rygel-2.0/plugins/*.so
+%{_libdir}/rygel-2.0/plugins/*.plugin
 # Rygel MediaEngines
 %{_libdir}/rygel-2.0/engines/*.so
+%{_libdir}/rygel-2.0/engines/*.plugin
 # << files
 
 
@@ -139,6 +142,7 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 # >> files devel
 %doc %{_datadir}/gtk-doc/html/librygel-core
 %doc %{_datadir}/gtk-doc/html/librygel-renderer
+%doc %{_datadir}/gtk-doc/html/librygel-renderer-gst
 %doc %{_datadir}/gtk-doc/html/librygel-server
 %{_includedir}/rygel-2.0/*
 %{_libdir}/*.so

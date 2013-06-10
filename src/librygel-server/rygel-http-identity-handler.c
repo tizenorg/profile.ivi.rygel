@@ -526,13 +526,13 @@ static RygelHTTPResponse* rygel_http_identity_handler_real_render_body (RygelHTT
 		_tmp1_ = rygel_http_identity_handler_render_body_real (self, _tmp0_, &_inner_error_);
 		_tmp2_ = _tmp1_;
 		if (_inner_error_ != NULL) {
-			goto __catch26_g_error;
+			goto __catch29_g_error;
 		}
 		result = _tmp2_;
 		return result;
 	}
-	goto __finally26;
-	__catch26_g_error:
+	goto __finally29;
+	__catch29_g_error:
 	{
 		GError* err = NULL;
 		GError* _tmp3_;
@@ -545,9 +545,9 @@ static RygelHTTPResponse* rygel_http_identity_handler_real_render_body (RygelHTT
 		_tmp5_ = g_error_new_literal (RYGEL_HTTP_REQUEST_ERROR, RYGEL_HTTP_REQUEST_ERROR_NOT_FOUND, _tmp4_);
 		_inner_error_ = _tmp5_;
 		_g_error_free0 (err);
-		goto __finally26;
+		goto __finally29;
 	}
-	__finally26:
+	__finally29:
 	if (_inner_error_->domain == RYGEL_HTTP_REQUEST_ERROR) {
 		g_propagate_error (error, _inner_error_);
 		return NULL;

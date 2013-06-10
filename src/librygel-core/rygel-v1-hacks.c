@@ -110,6 +110,7 @@ struct _RygelConfigurationIface {
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -157,8 +158,8 @@ static void rygel_v1_hacks_real_constructed (GObject* base);
 GType rygel_root_device_get_type (void) G_GNUC_CONST;
 void rygel_v1_hacks_apply_on_device (RygelV1Hacks* self, RygelRootDevice* device, const gchar* template_path, GError** error);
 const gchar* rygel_v1_hacks_get_device_type (RygelV1Hacks* self);
-RygelDescriptionFile* rygel_description_file_new (const gchar* template, GError** error);
-RygelDescriptionFile* rygel_description_file_construct (GType object_type, const gchar* template, GError** error);
+RygelDescriptionFile* rygel_description_file_new (const gchar* template_file, GError** error);
+RygelDescriptionFile* rygel_description_file_construct (GType object_type, const gchar* template_file, GError** error);
 GType rygel_description_file_get_type (void) G_GNUC_CONST;
 void rygel_description_file_set_device_type (RygelDescriptionFile* self, const gchar* device_type);
 gchar** rygel_v1_hacks_get_service_types (RygelV1Hacks* self, int* result_length1);
@@ -246,7 +247,7 @@ static gchar* rygel_v1_hacks_generate_agent_pattern (void) {
 		_tmp6_ = rygel_configuration_get_string_list ((RygelConfiguration*) _tmp5_, "general", "force-downgrade-for", &_inner_error_);
 		_tmp7_ = _tmp6_;
 		if (_inner_error_ != NULL) {
-			goto __catch35_g_error;
+			goto __catch37_g_error;
 		}
 		_tmp8_ = _tmp7_;
 		_tmp10_ = gee_collection_to_array ((GeeCollection*) _tmp8_, &_tmp9_);
@@ -256,15 +257,15 @@ static gchar* rygel_v1_hacks_generate_agent_pattern (void) {
 		_raw_agents_size_ = raw_agents_length1;
 		_g_object_unref0 (_tmp8_);
 	}
-	goto __finally35;
-	__catch35_g_error:
+	goto __finally37;
+	__catch37_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally35:
+	__finally37:
 	if (_inner_error_ != NULL) {
 		raw_agents = (g_free (raw_agents), NULL);
 		_g_object_unref0 (config);
@@ -375,20 +376,20 @@ static void rygel_v1_hacks_real_constructed (GObject* base) {
 		_g_free0 (_tmp1_);
 		_tmp4_ = _tmp3_;
 		if (_inner_error_ != NULL) {
-			goto __catch36_g_error;
+			goto __catch38_g_error;
 		}
 		_g_regex_unref0 (self->priv->agent_regex);
 		self->priv->agent_regex = _tmp4_;
 		_tmp5_ = g_regex_new (RYGEL_V1_HACKS_SERVICE_TYPE_PATTERN, 0, 0, &_inner_error_);
 		_tmp6_ = _tmp5_;
 		if (_inner_error_ != NULL) {
-			goto __catch36_g_error;
+			goto __catch38_g_error;
 		}
 		_g_regex_unref0 (self->priv->service_type_regex);
 		self->priv->service_type_regex = _tmp6_;
 	}
-	goto __finally36;
-	__catch36_g_error:
+	goto __finally38;
+	__catch38_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -396,7 +397,7 @@ static void rygel_v1_hacks_real_constructed (GObject* base) {
 		g_assert_not_reached ();
 		_g_error_free0 (_error_);
 	}
-	__finally36:
+	__finally38:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -431,7 +432,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		regex = _tmp4_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch37_g_regex_error;
+				goto __catch39_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -444,7 +445,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		if (_inner_error_ != NULL) {
 			_g_regex_unref0 (regex);
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch37_g_regex_error;
+				goto __catch39_g_regex_error;
 			}
 			_g_regex_unref0 (regex);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -455,8 +456,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_regex_unref0 (regex);
 		return result;
 	}
-	goto __finally37;
-	__catch37_g_regex_error:
+	goto __finally39;
+	__catch39_g_regex_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -464,7 +465,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_assert_not_reached ();
 		_g_error_free0 (e);
 	}
-	__finally37:
+	__finally39:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

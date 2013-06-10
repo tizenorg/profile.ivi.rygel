@@ -148,7 +148,7 @@ static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNoti
 static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func);
 
 static const gchar* RYGEL_PLAYBIN_PLAYER_protocols[2] = {"http-get", "rtsp"};
-static const gchar* RYGEL_PLAYBIN_PLAYER_mime_types[47] = {"audio/mpeg", "application/ogg", "audio/x-vorbis", "audio/x-vorbis+ogg", "audio/ogg", "audio/x-ms-wma", "audio/x-ms-asf", "audio/x-flac", "audio/x-flac+ogg", "audio/flac", "audio/mp4", "audio/3gpp", "audio/vnd.dlna.adts", "audio/x-mod", "audio/x-wav", "audio/x-ac3", "audio/x-m4a", "audio/L16;rate=44100;channels=2", "audio/L16;rate=44100;channels=1", "audio/L16;channels=2;rate=44100", "audio/L16;channels=1;rate=44100", "audio/L16;rate=44100", "audio/l16;rate=44100;channels=2", "audio/l16;rate=44100;channels=1", "audio/l16;channels=2;rate=44100", "audio/l16;channels=1;rate=44100", "audio/l16;rate=44100", "image/jpeg", "image/png", "video/x-theora", "video/x-theora+ogg", "video/x-oggm", "video/ogg", "video/x-dirac", "video/x-wmv", "video/x-wma", "video/x-msvideo", "video/x-3ivx", "video/x-3ivx", "video/x-matroska", "video/x-mkv", "video/mpeg", "video/mp4", "application/x-shockwave-flash", "video/x-ms-asf", "video/x-xvid", "video/x-ms-wmv"};
+static const gchar* RYGEL_PLAYBIN_PLAYER_mime_types[42] = {"audio/mpeg", "application/ogg", "audio/x-vorbis", "audio/x-vorbis+ogg", "audio/ogg", "audio/x-ms-wma", "audio/x-ms-asf", "audio/x-flac", "audio/x-flac+ogg", "audio/flac", "audio/mp4", "audio/3gpp", "audio/vnd.dlna.adts", "audio/x-mod", "audio/x-wav", "audio/x-ac3", "audio/x-m4a", "audio/l16;rate=44100;channels=2", "audio/l16;rate=44100;channels=1", "audio/l16;channels=2;rate=44100", "audio/l16;channels=1;rate=44100", "audio/l16;rate=44100", "image/jpeg", "image/png", "video/x-theora", "video/x-theora+ogg", "video/x-oggm", "video/ogg", "video/x-dirac", "video/x-wmv", "video/x-wma", "video/x-msvideo", "video/x-3ivx", "video/x-3ivx", "video/x-matroska", "video/x-mkv", "video/mpeg", "video/mp4", "application/x-shockwave-flash", "video/x-ms-asf", "video/x-xvid", "video/x-ms-wmv"};
 
 static RygelPlaybinPlayer* rygel_playbin_player_construct (GType object_type) {
 	RygelPlaybinPlayer * self = NULL;
@@ -597,17 +597,17 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 			gboolean _tmp50_ = FALSE;
 			_tmp50_ = rygel_playbin_player_is_rendering_image (self);
 			if (!_tmp50_) {
-				g_debug ("rygel-playbin-player.vala:430: EOS");
+				g_debug ("rygel-playbin-player.vala:425: EOS");
 				rygel_media_player_set_playback_state ((RygelMediaPlayer*) self, "EOS");
 			} else {
-				g_debug ("rygel-playbin-player.vala:433: Content is image, ignoring EOS");
+				g_debug ("rygel-playbin-player.vala:428: Content is image, ignoring EOS");
 			}
 			break;
 		}
 		case GST_MESSAGE_ERROR:
 		{
 			GError* _error_ = NULL;
-			gchar* error_message = NULL;
+			gchar* debug_message = NULL;
 			GstMessage* _tmp51_;
 			GError* _tmp52_ = NULL;
 			gchar* _tmp53_ = NULL;
@@ -615,23 +615,28 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 			gchar* _tmp55_ = NULL;
 			gchar* _tmp56_;
 			gchar* _tmp57_;
-			const gchar* _tmp58_;
+			GError* _tmp58_;
+			const gchar* _tmp59_;
+			const gchar* _tmp60_;
 			_tmp51_ = message;
 			gst_message_parse_error (_tmp51_, &_tmp52_, &_tmp53_);
 			_g_error_free0 (_error_);
 			_error_ = _tmp52_;
-			_g_free0 (error_message);
-			error_message = _tmp53_;
+			_g_free0 (debug_message);
+			debug_message = _tmp53_;
 			_tmp54_ = self->priv->_playbin;
 			g_object_get ((GstObject*) _tmp54_, "name", &_tmp55_, NULL);
 			_tmp56_ = _tmp55_;
 			_tmp57_ = _tmp56_;
-			_tmp58_ = error_message;
-			g_warning ("rygel-playbin-player.vala:443: Error from GStreamer element %s: %s", _tmp57_, _tmp58_);
+			_tmp58_ = _error_;
+			_tmp59_ = _tmp58_->message;
+			_tmp60_ = debug_message;
+			g_warning ("rygel-playbin-player.vala:438: Error from GStreamer element %s: %s (%s" \
+")", _tmp57_, _tmp59_, _tmp60_);
 			_g_free0 (_tmp57_);
-			g_warning ("rygel-playbin-player.vala:446: Going to STOPPED state");
+			g_warning ("rygel-playbin-player.vala:442: Going to STOPPED state");
 			rygel_media_player_set_playback_state ((RygelMediaPlayer*) self, "STOPPED");
-			_g_free0 (error_message);
+			_g_free0 (debug_message);
 			_g_error_free0 (_error_);
 			break;
 		}
@@ -676,7 +681,7 @@ static void rygel_playbin_player_on_source_setup (RygelPlaybinPlayer* self, GstE
 		GstElement* _tmp11_;
 		GstStructure* _tmp12_;
 		_tmp6_ = self->priv->transfer_mode;
-		g_debug ("rygel-playbin-player.vala:457: Setting transfer mode to %s", _tmp6_);
+		g_debug ("rygel-playbin-player.vala:453: Setting transfer mode to %s", _tmp6_);
 		_tmp7_ = gst_structure_new_empty ("HTTPHeaders");
 		structure = _tmp7_;
 		_tmp8_ = structure;
@@ -865,7 +870,7 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 	state = _tmp1_;
 	pending = _tmp2_;
 	_tmp3_ = value;
-	g_debug ("rygel-playbin-player.vala:108: Changing playback state to %s.", _tmp3_);
+	g_debug ("rygel-playbin-player.vala:103: Changing playback state to %s.", _tmp3_);
 	_tmp4_ = value;
 	_tmp5_ = _tmp4_;
 	_tmp7_ = (NULL == _tmp5_) ? 0 : g_quark_from_string (_tmp5_);
@@ -1173,7 +1178,7 @@ static void rygel_playbin_player_real_set_uri (RygelMediaPlayer* base, const gch
 		g_object_notify ((GObject*) self, "playback-state");
 	}
 	_tmp16_ = value;
-	g_debug ("rygel-playbin-player.vala:207: URI set to %s.", _tmp16_);
+	g_debug ("rygel-playbin-player.vala:202: URI set to %s.", _tmp16_);
 	g_object_notify ((GObject *) self, "uri");
 }
 
@@ -1396,7 +1401,7 @@ static void rygel_playbin_player_real_set_volume (RygelMediaPlayer* base, gdoubl
 	_tmp1_ = value;
 	_dynamic_set_volume7 (_tmp0_, _tmp1_);
 	_tmp2_ = value;
-	g_debug ("rygel-playbin-player.vala:275: volume set to %f.", _tmp2_);
+	g_debug ("rygel-playbin-player.vala:270: volume set to %f.", _tmp2_);
 	g_object_notify ((GObject *) self, "volume");
 }
 

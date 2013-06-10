@@ -480,18 +480,18 @@ static void ___lambda14_ (Block5Data* _data5_) {
 		_tmp0_ = _data5_->offsets;
 		rygel_data_source_start ((RygelDataSource*) self, _tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch27_g_error;
+			goto __catch30_g_error;
 		}
 	}
-	goto __finally27;
-	__catch27_g_error:
+	goto __finally30;
+	__catch30_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally27:
+	__finally30:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -690,7 +690,7 @@ static gboolean rygel_playlist_datasource_generate_data_co (RygelPlaylistDatasou
 		_data_->children = _data_->_tmp10_;
 		if (_data_->_inner_error_ != NULL) {
 			_g_free0 (_data_->sort_criteria);
-			goto __catch28_g_error;
+			goto __catch31_g_error;
 		}
 		_data_->_tmp11_ = _data_->children;
 		if (_data_->_tmp11_ != NULL) {
@@ -705,7 +705,7 @@ static gboolean rygel_playlist_datasource_generate_data_co (RygelPlaylistDatasou
 				_g_object_unref0 (_data_->serializer);
 				_g_object_unref0 (_data_->children);
 				_g_free0 (_data_->sort_criteria);
-				goto __catch28_g_error;
+				goto __catch31_g_error;
 			}
 			_data_->_tmp17_ = _data_->serializer;
 			_data_->_tmp18_ = NULL;
@@ -735,8 +735,8 @@ static gboolean rygel_playlist_datasource_generate_data_co (RygelPlaylistDatasou
 		_g_object_unref0 (_data_->children);
 		_g_free0 (_data_->sort_criteria);
 	}
-	goto __finally28;
-	__catch28_g_error:
+	goto __finally31;
+	__catch31_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -747,7 +747,7 @@ static gboolean rygel_playlist_datasource_generate_data_co (RygelPlaylistDatasou
 		g_signal_emit_by_name ((RygelDataSource*) _data_->self, "error", _data_->_tmp28_);
 		_g_error_free0 (_data_->_error_);
 	}
-	__finally28:
+	__finally31:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);
@@ -889,14 +889,14 @@ static RygelHTTPResponse* rygel_http_playlist_handler_real_render_body (RygelHTT
 		_tmp10_ = _tmp9_;
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (source);
-			goto __catch29_g_error;
+			goto __catch32_g_error;
 		}
 		result = _tmp10_;
 		_g_object_unref0 (source);
 		return result;
 	}
-	goto __finally29;
-	__catch29_g_error:
+	goto __finally32;
+	__catch32_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp11_;
@@ -909,9 +909,9 @@ static RygelHTTPResponse* rygel_http_playlist_handler_real_render_body (RygelHTT
 		_tmp13_ = g_error_new_literal (RYGEL_HTTP_REQUEST_ERROR, RYGEL_HTTP_REQUEST_ERROR_NOT_FOUND, _tmp12_);
 		_inner_error_ = _tmp13_;
 		_g_error_free0 (_error_);
-		goto __finally29;
+		goto __finally32;
 	}
-	__finally29:
+	__finally32:
 	if (_inner_error_->domain == RYGEL_HTTP_REQUEST_ERROR) {
 		g_propagate_error (error, _inner_error_);
 		return NULL;
@@ -952,14 +952,14 @@ static GUPnPDIDLLiteResource* rygel_http_playlist_handler_real_add_resource (Ryg
 		_tmp6_ = rygel_media_object_add_resource (_tmp4_, _tmp5_, NULL, protocol, NULL, &_inner_error_);
 		_tmp7_ = _tmp6_;
 		if (_inner_error_ != NULL) {
-			goto __catch30_g_error;
+			goto __catch33_g_error;
 		}
 		result = _tmp7_;
 		_g_free0 (protocol);
 		return result;
 	}
-	goto __finally30;
-	__catch30_g_error:
+	goto __finally33;
+	__catch33_g_error:
 	{
 		GError* _error_ = NULL;
 		GUPnPDIDLLiteResource* _tmp8_;
@@ -971,7 +971,7 @@ static GUPnPDIDLLiteResource* rygel_http_playlist_handler_real_add_resource (Ryg
 		_g_free0 (protocol);
 		return result;
 	}
-	__finally30:
+	__finally33:
 	_g_free0 (protocol);
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 	g_clear_error (&_inner_error_);

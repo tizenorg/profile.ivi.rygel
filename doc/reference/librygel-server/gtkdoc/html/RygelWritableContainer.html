@@ -43,7 +43,8 @@
 </tr></table></div>
 <div class="refsynopsisdiv">
 <a name="RygelWritableContainer.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelWritableContainer.html#rygel-writable-container-can-create" title="rygel_writable_container_can_create ()">rygel_writable_container_can_create</a> (<em class="parameter"><code><a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer"><span class="type">RygelWritableContainer</span></a> *self</code></em>,
+<pre class="synopsis">enum                <a class="link" href="RygelWritableContainer.html#RygelWritableContainerError" title="enum RygelWritableContainerError">RygelWritableContainerError</a>;
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelWritableContainer.html#rygel-writable-container-can-create" title="rygel_writable_container_can_create ()">rygel_writable_container_can_create</a> (<em class="parameter"><code><a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer"><span class="type">RygelWritableContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *upnp_class</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelWritableContainer.html#rygel-writable-container-add-item" title="rygel_writable_container_add_item ()">rygel_writable_container_add_item</a>   (<em class="parameter"><code><a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer"><span class="type">RygelWritableContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
@@ -94,6 +95,7 @@
                                                         (<em class="parameter"><code><a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer"><span class="type">RygelWritableContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../gio/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *_res_</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+#define             <a class="link" href="RygelWritableContainer.html#RYGEL-WRITABLE-CONTAINER-WRITABLE-SCHEME:CAPS" title="RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME">RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME</a>
 <span class="returnvalue">GeeArrayList</span> *      <a class="link" href="RygelWritableContainer.html#rygel-writable-container-get-create-classes" title="rygel_writable_container_get_create_classes ()">rygel_writable_container_get_create_classes</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer"><span class="type">RygelWritableContainer</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelWritableContainer.html#rygel-writable-container-set-create-classes" title="rygel_writable_container_set_create_classes ()">rygel_writable_container_set_create_classes</a>
@@ -101,7 +103,6 @@
                                                          <em class="parameter"><code><span class="type">GeeArrayList</span> *value</code></em>);
                     <a class="link" href="RygelWritableContainer.html#RygelWritableContainer-struct" title="RygelWritableContainer">RygelWritableContainer</a>;
 struct              <a class="link" href="RygelWritableContainer.html#RygelWritableContainerIface" title="struct RygelWritableContainerIface">RygelWritableContainerIface</a>;
-enum                <a class="link" href="RygelWritableContainer.html#WriteableContainerError" title="enum WriteableContainerError">WriteableContainerError</a>;
 </pre>
 </div>
 <div class="refsect1">
@@ -137,6 +138,14 @@ RygelWritableContainer requires
 </div>
 <div class="refsect1">
 <a name="RygelWritableContainer.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="RygelWritableContainerError"></a><h3>enum RygelWritableContainerError</h3>
+<pre class="programlisting">typedef enum {
+	RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED
+} RygelWritableContainerError;
+</pre>
+</div>
+<hr>
 <div class="refsect2">
 <a name="rygel-writable-container-can-create"></a><h3>rygel_writable_container_can_create ()</h3>
 <pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_writable_container_can_create (<em class="parameter"><code><a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer"><span class="type">RygelWritableContainer</span></a> *self</code></em>,
@@ -597,6 +606,12 @@ Remove a container directly under this container that has the ID <em class="para
 </div>
 <hr>
 <div class="refsect2">
+<a name="RYGEL-WRITABLE-CONTAINER-WRITABLE-SCHEME:CAPS"></a><h3>RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME</h3>
+<pre class="programlisting">#define RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME "rygel-writable://"
+</pre>
+</div>
+<hr>
+<div class="refsect2">
 <a name="rygel-writable-container-get-create-classes"></a><h3>rygel_writable_container_get_create_classes ()</h3>
 <pre class="programlisting"><span class="returnvalue">GeeArrayList</span> *      rygel_writable_container_get_create_classes
                                                         (<em class="parameter"><code><a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer"><span class="type">RygelWritableContainer</span></a> *self</code></em>);</pre>
@@ -748,14 +763,6 @@ Interface for creating <a class="link" href="RygelWritableContainer.html" title=
 </tr>
 </tbody>
 </table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="WriteableContainerError"></a><h3>enum WriteableContainerError</h3>
-<pre class="programlisting">typedef enum {
-	WRITEABLE_CONTAINER_ERROR_NOT_IMPLEMENTED
-} WriteableContainerError;
-</pre>
 </div>
 </div>
 <div class="refsect1">

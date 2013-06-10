@@ -67,6 +67,7 @@ struct _RygelConfigurationIface {
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -150,7 +151,9 @@ static gboolean rygel_meta_config_real_get_upnp_enabled (RygelConfiguration* bas
 gboolean rygel_configuration_get_upnp_enabled (RygelConfiguration* self, GError** error);
 GQuark rygel_configuration_error_quark (void);
 static gchar* rygel_meta_config_real_get_interface (RygelConfiguration* base, GError** error);
-gchar* rygel_configuration_get_interface (RygelConfiguration* self, GError** error);
+gchar* rygel_configuration_get_interface (RygelConfiguration* self, GError** error) G_GNUC_DEPRECATED;
+static gchar** rygel_meta_config_real_get_interfaces (RygelConfiguration* base, GError** error);
+gchar** rygel_configuration_get_interfaces (RygelConfiguration* self, GError** error);
 static gint rygel_meta_config_real_get_port (RygelConfiguration* base, GError** error);
 gint rygel_configuration_get_port (RygelConfiguration* self, GError** error);
 static gboolean rygel_meta_config_real_get_transcoding (RygelConfiguration* base, GError** error);
@@ -190,6 +193,9 @@ gboolean rygel_configuration_get_bool (RygelConfiguration* self, const gchar* se
 static gboolean rygel_meta_config_configuration_value_available (RygelMetaConfig* self, RygelConfiguration* config, RygelConfigurationEntry entry);
 static gboolean rygel_meta_config_setting_value_available (RygelMetaConfig* self, RygelConfiguration* config, const gchar* section, RygelSectionEntry entry);
 static void rygel_meta_config_finalize (GObject* obj);
+static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNotify destroy_func);
+static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func);
+static gint _vala_array_length (gpointer array);
 
 
 static void _rygel_meta_config_on_configuration_changed_rygel_configuration_configuration_changed (RygelConfiguration* _sender, RygelConfigurationEntry entry, gpointer self) {
@@ -519,6 +525,115 @@ static gchar* rygel_meta_config_real_get_interface (RygelConfiguration* base, GE
 }
 
 
+static gchar** rygel_meta_config_real_get_interfaces (RygelConfiguration* base, GError** error) {
+	RygelMetaConfig * self;
+	gchar** result = NULL;
+	gchar** val;
+	gint val_length1;
+	gint _val_size_;
+	gboolean unavailable;
+	gboolean _tmp15_;
+	GError * _inner_error_ = NULL;
+	self = (RygelMetaConfig*) base;
+	val = NULL;
+	val_length1 = 0;
+	_val_size_ = val_length1;
+	unavailable = TRUE;
+	{
+		GeeArrayList* _tmp0_;
+		GeeArrayList* _tmp1_;
+		GeeArrayList* _config_list;
+		GeeArrayList* _tmp2_;
+		gint _tmp3_;
+		gint _tmp4_;
+		gint _config_size;
+		gint _config_index;
+		_tmp0_ = rygel_meta_config_configs;
+		_tmp1_ = _g_object_ref0 (_tmp0_);
+		_config_list = _tmp1_;
+		_tmp2_ = _config_list;
+		_tmp3_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp2_);
+		_tmp4_ = _tmp3_;
+		_config_size = _tmp4_;
+		_config_index = -1;
+		while (TRUE) {
+			gint _tmp5_;
+			gint _tmp6_;
+			gint _tmp7_;
+			GeeArrayList* _tmp8_;
+			gint _tmp9_;
+			gpointer _tmp10_ = NULL;
+			RygelConfiguration* config;
+			_tmp5_ = _config_index;
+			_config_index = _tmp5_ + 1;
+			_tmp6_ = _config_index;
+			_tmp7_ = _config_size;
+			if (!(_tmp6_ < _tmp7_)) {
+				break;
+			}
+			_tmp8_ = _config_list;
+			_tmp9_ = _config_index;
+			_tmp10_ = gee_abstract_list_get ((GeeAbstractList*) _tmp8_, _tmp9_);
+			config = (RygelConfiguration*) _tmp10_;
+			{
+				RygelConfiguration* _tmp11_;
+				gchar** _tmp12_;
+				gchar** _tmp13_ = NULL;
+				gchar** _tmp14_;
+				gint _tmp14__length1;
+				gint __tmp14__size_;
+				_tmp11_ = config;
+				_tmp13_ = _tmp12_ = rygel_configuration_get_interfaces (_tmp11_, &_inner_error_);
+				_tmp14_ = _tmp13_;
+				_tmp14__length1 = _vala_array_length (_tmp12_);
+				__tmp14__size_ = _tmp14__length1;
+				if (_inner_error_ != NULL) {
+					goto __catch8_g_error;
+				}
+				val = (_vala_array_free (val, val_length1, (GDestroyNotify) g_free), NULL);
+				val = _tmp14_;
+				val_length1 = _tmp14__length1;
+				_val_size_ = val_length1;
+				unavailable = FALSE;
+				_g_object_unref0 (config);
+				break;
+			}
+			goto __finally8;
+			__catch8_g_error:
+			{
+				GError* _error_ = NULL;
+				_error_ = _inner_error_;
+				_inner_error_ = NULL;
+				_g_error_free0 (_error_);
+			}
+			__finally8:
+			if (_inner_error_ != NULL) {
+				g_propagate_error (error, _inner_error_);
+				_g_object_unref0 (config);
+				_g_object_unref0 (_config_list);
+				val = (_vala_array_free (val, val_length1, (GDestroyNotify) g_free), NULL);
+				return NULL;
+			}
+			_g_object_unref0 (config);
+		}
+		_g_object_unref0 (_config_list);
+	}
+	_tmp15_ = unavailable;
+	if (_tmp15_) {
+		const gchar* _tmp16_ = NULL;
+		GError* _tmp17_;
+		_tmp16_ = _ ("No value available");
+		_tmp17_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp16_);
+		_inner_error_ = _tmp17_;
+		g_propagate_error (error, _inner_error_);
+		val = (_vala_array_free (val, val_length1, (GDestroyNotify) g_free), NULL);
+		return NULL;
+	}
+	result = val;
+	return result;
+}
+
+
 static gint rygel_meta_config_real_get_port (RygelConfiguration* base, GError** error) {
 	RygelMetaConfig * self;
 	gint result = 0;
@@ -573,22 +688,22 @@ static gint rygel_meta_config_real_get_port (RygelConfiguration* base, GError** 
 				_tmp12_ = rygel_configuration_get_port (_tmp11_, &_inner_error_);
 				_tmp13_ = _tmp12_;
 				if (_inner_error_ != NULL) {
-					goto __catch8_g_error;
+					goto __catch9_g_error;
 				}
 				val = _tmp13_;
 				unavailable = FALSE;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally8;
-			__catch8_g_error:
+			goto __finally9;
+			__catch9_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally8:
+			__finally9:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -668,22 +783,22 @@ static gboolean rygel_meta_config_real_get_transcoding (RygelConfiguration* base
 				_tmp12_ = rygel_configuration_get_transcoding (_tmp11_, &_inner_error_);
 				_tmp13_ = _tmp12_;
 				if (_inner_error_ != NULL) {
-					goto __catch9_g_error;
+					goto __catch10_g_error;
 				}
 				val = _tmp13_;
 				unavailable = FALSE;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally9;
-			__catch9_g_error:
+			goto __finally10;
+			__catch10_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally9:
+			__finally10:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -763,22 +878,22 @@ static gboolean rygel_meta_config_real_get_allow_upload (RygelConfiguration* bas
 				_tmp12_ = rygel_configuration_get_allow_upload (_tmp11_, &_inner_error_);
 				_tmp13_ = _tmp12_;
 				if (_inner_error_ != NULL) {
-					goto __catch10_g_error;
+					goto __catch11_g_error;
 				}
 				val = _tmp13_;
 				unavailable = FALSE;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally10;
-			__catch10_g_error:
+			goto __finally11;
+			__catch11_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally10:
+			__finally11:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -858,22 +973,22 @@ static gboolean rygel_meta_config_real_get_allow_deletion (RygelConfiguration* b
 				_tmp12_ = rygel_configuration_get_allow_deletion (_tmp11_, &_inner_error_);
 				_tmp13_ = _tmp12_;
 				if (_inner_error_ != NULL) {
-					goto __catch11_g_error;
+					goto __catch12_g_error;
 				}
 				val = _tmp13_;
 				unavailable = FALSE;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally11;
-			__catch11_g_error:
+			goto __finally12;
+			__catch12_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally11:
+			__finally12:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -953,7 +1068,7 @@ static gchar* rygel_meta_config_real_get_log_levels (RygelConfiguration* base, G
 				_tmp12_ = rygel_configuration_get_log_levels (_tmp11_, &_inner_error_);
 				_tmp13_ = _tmp12_;
 				if (_inner_error_ != NULL) {
-					goto __catch12_g_error;
+					goto __catch13_g_error;
 				}
 				_g_free0 (val);
 				val = _tmp13_;
@@ -961,15 +1076,15 @@ static gchar* rygel_meta_config_real_get_log_levels (RygelConfiguration* base, G
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally12;
-			__catch12_g_error:
+			goto __finally13;
+			__catch13_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally12:
+			__finally13:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1051,7 +1166,7 @@ static gchar* rygel_meta_config_real_get_plugin_path (RygelConfiguration* base, 
 				_tmp12_ = rygel_configuration_get_plugin_path (_tmp11_, &_inner_error_);
 				_tmp13_ = _tmp12_;
 				if (_inner_error_ != NULL) {
-					goto __catch13_g_error;
+					goto __catch14_g_error;
 				}
 				_g_free0 (val);
 				val = _tmp13_;
@@ -1059,15 +1174,15 @@ static gchar* rygel_meta_config_real_get_plugin_path (RygelConfiguration* base, 
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally13;
-			__catch13_g_error:
+			goto __finally14;
+			__catch14_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally13:
+			__finally14:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1081,9 +1196,11 @@ static gchar* rygel_meta_config_real_get_plugin_path (RygelConfiguration* base, 
 	}
 	_tmp14_ = unavailable;
 	if (_tmp14_) {
-		GError* _tmp15_;
-		_tmp15_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, "No value available");
-		_inner_error_ = _tmp15_;
+		const gchar* _tmp15_ = NULL;
+		GError* _tmp16_;
+		_tmp15_ = _ ("No value available");
+		_tmp16_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp15_);
+		_inner_error_ = _tmp16_;
 		g_propagate_error (error, _inner_error_);
 		_g_free0 (val);
 		return NULL;
@@ -1147,7 +1264,7 @@ static gchar* rygel_meta_config_real_get_media_engine (RygelConfiguration* base,
 				_tmp12_ = rygel_configuration_get_media_engine (_tmp11_, &_inner_error_);
 				_tmp13_ = _tmp12_;
 				if (_inner_error_ != NULL) {
-					goto __catch14_g_error;
+					goto __catch15_g_error;
 				}
 				_g_free0 (val);
 				val = _tmp13_;
@@ -1155,15 +1272,15 @@ static gchar* rygel_meta_config_real_get_media_engine (RygelConfiguration* base,
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally14;
-			__catch14_g_error:
+			goto __finally15;
+			__catch15_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally14:
+			__finally15:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1177,9 +1294,11 @@ static gchar* rygel_meta_config_real_get_media_engine (RygelConfiguration* base,
 	}
 	_tmp14_ = unavailable;
 	if (_tmp14_) {
-		GError* _tmp15_;
-		_tmp15_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, "No value available");
-		_inner_error_ = _tmp15_;
+		const gchar* _tmp15_ = NULL;
+		GError* _tmp16_;
+		_tmp15_ = _ ("No value available");
+		_tmp16_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp15_);
+		_inner_error_ = _tmp16_;
 		g_propagate_error (error, _inner_error_);
 		_g_free0 (val);
 		return NULL;
@@ -1243,7 +1362,7 @@ static gchar* rygel_meta_config_real_get_engine_path (RygelConfiguration* base, 
 				_tmp12_ = rygel_configuration_get_engine_path (_tmp11_, &_inner_error_);
 				_tmp13_ = _tmp12_;
 				if (_inner_error_ != NULL) {
-					goto __catch15_g_error;
+					goto __catch16_g_error;
 				}
 				_g_free0 (val);
 				val = _tmp13_;
@@ -1251,15 +1370,15 @@ static gchar* rygel_meta_config_real_get_engine_path (RygelConfiguration* base, 
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally15;
-			__catch15_g_error:
+			goto __finally16;
+			__catch16_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally15:
+			__finally16:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1273,9 +1392,11 @@ static gchar* rygel_meta_config_real_get_engine_path (RygelConfiguration* base, 
 	}
 	_tmp14_ = unavailable;
 	if (_tmp14_) {
-		GError* _tmp15_;
-		_tmp15_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, "No value available");
-		_inner_error_ = _tmp15_;
+		const gchar* _tmp15_ = NULL;
+		GError* _tmp16_;
+		_tmp15_ = _ ("No value available");
+		_tmp16_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp15_);
+		_inner_error_ = _tmp16_;
 		g_propagate_error (error, _inner_error_);
 		_g_free0 (val);
 		return NULL;
@@ -1311,7 +1432,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		regex = _tmp4_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch17_g_regex_error;
+				goto __catch18_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1324,7 +1445,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		if (_inner_error_ != NULL) {
 			_g_regex_unref0 (regex);
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch17_g_regex_error;
+				goto __catch18_g_regex_error;
 			}
 			_g_regex_unref0 (regex);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1335,8 +1456,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_regex_unref0 (regex);
 		return result;
 	}
-	goto __finally17;
-	__catch17_g_regex_error:
+	goto __finally18;
+	__catch18_g_regex_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -1344,7 +1465,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_assert_not_reached ();
 		_g_error_free0 (e);
 	}
-	__finally17:
+	__finally18:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1415,20 +1536,20 @@ static gchar* rygel_meta_config_real_get_video_upload_folder (RygelConfiguration
 				_tmp15_ = rygel_configuration_get_video_upload_folder (_tmp14_, &_inner_error_);
 				_tmp16_ = _tmp15_;
 				if (_inner_error_ != NULL) {
-					goto __catch16_g_error;
+					goto __catch17_g_error;
 				}
 				_g_free0 (value);
 				value = _tmp16_;
 			}
-			goto __finally16;
-			__catch16_g_error:
+			goto __finally17;
+			__catch17_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally16:
+			__finally17:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1511,20 +1632,20 @@ static gchar* rygel_meta_config_real_get_music_upload_folder (RygelConfiguration
 				_tmp15_ = rygel_configuration_get_music_upload_folder (_tmp14_, &_inner_error_);
 				_tmp16_ = _tmp15_;
 				if (_inner_error_ != NULL) {
-					goto __catch18_g_error;
+					goto __catch19_g_error;
 				}
 				_g_free0 (value);
 				value = _tmp16_;
 			}
-			goto __finally18;
-			__catch18_g_error:
+			goto __finally19;
+			__catch19_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally18:
+			__finally19:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1607,20 +1728,20 @@ static gchar* rygel_meta_config_real_get_picture_upload_folder (RygelConfigurati
 				_tmp15_ = rygel_configuration_get_picture_upload_folder (_tmp14_, &_inner_error_);
 				_tmp16_ = _tmp15_;
 				if (_inner_error_ != NULL) {
-					goto __catch19_g_error;
+					goto __catch20_g_error;
 				}
 				_g_free0 (value);
 				value = _tmp16_;
 			}
-			goto __finally19;
-			__catch19_g_error:
+			goto __finally20;
+			__catch20_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally19:
+			__finally20:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1698,22 +1819,22 @@ static gboolean rygel_meta_config_real_get_enabled (RygelConfiguration* base, co
 				_tmp13_ = rygel_configuration_get_enabled (_tmp11_, _tmp12_, &_inner_error_);
 				_tmp14_ = _tmp13_;
 				if (_inner_error_ != NULL) {
-					goto __catch20_g_error;
+					goto __catch21_g_error;
 				}
 				val = _tmp14_;
 				unavailable = FALSE;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally20;
-			__catch20_g_error:
+			goto __finally21;
+			__catch21_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally20:
+			__finally21:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1727,13 +1848,20 @@ static gboolean rygel_meta_config_real_get_enabled (RygelConfiguration* base, co
 	_tmp15_ = unavailable;
 	if (_tmp15_) {
 		const gchar* _tmp16_ = NULL;
-		const gchar* _tmp17_;
-		GError* _tmp18_;
+		gchar* _tmp17_;
+		gchar* msg;
+		const gchar* _tmp18_;
+		const gchar* _tmp19_;
+		GError* _tmp20_;
 		_tmp16_ = _ ("No value set for '%s/enabled'");
-		_tmp17_ = section;
-		_tmp18_ = g_error_new (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp16_, _tmp17_);
-		_inner_error_ = _tmp18_;
+		_tmp17_ = g_strdup (_tmp16_);
+		msg = _tmp17_;
+		_tmp18_ = msg;
+		_tmp19_ = section;
+		_tmp20_ = g_error_new (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp18_, _tmp19_);
+		_inner_error_ = _tmp20_;
 		g_propagate_error (error, _inner_error_);
+		_g_free0 (msg);
 		return FALSE;
 	}
 	result = val;
@@ -1796,22 +1924,22 @@ static gchar* rygel_meta_config_real_get_title (RygelConfiguration* base, const 
 				_tmp13_ = rygel_configuration_get_title (_tmp11_, _tmp12_, &_inner_error_);
 				_tmp14_ = _tmp13_;
 				if (_inner_error_ != NULL) {
-					goto __catch21_g_error;
+					goto __catch22_g_error;
 				}
 				_g_free0 (val);
 				val = _tmp14_;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally21;
-			__catch21_g_error:
+			goto __finally22;
+			__catch22_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally21:
+			__finally22:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -1826,13 +1954,20 @@ static gchar* rygel_meta_config_real_get_title (RygelConfiguration* base, const 
 	_tmp15_ = val;
 	if (_tmp15_ == NULL) {
 		const gchar* _tmp16_ = NULL;
-		const gchar* _tmp17_;
-		GError* _tmp18_;
+		gchar* _tmp17_;
+		gchar* msg;
+		const gchar* _tmp18_;
+		const gchar* _tmp19_;
+		GError* _tmp20_;
 		_tmp16_ = _ ("No value set for '%s/title'");
-		_tmp17_ = section;
-		_tmp18_ = g_error_new (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp16_, _tmp17_);
-		_inner_error_ = _tmp18_;
+		_tmp17_ = g_strdup (_tmp16_);
+		msg = _tmp17_;
+		_tmp18_ = msg;
+		_tmp19_ = section;
+		_tmp20_ = g_error_new (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp18_, _tmp19_);
+		_inner_error_ = _tmp20_;
 		g_propagate_error (error, _inner_error_);
+		_g_free0 (msg);
 		_g_free0 (val);
 		return NULL;
 	}
@@ -1899,22 +2034,22 @@ static gchar* rygel_meta_config_real_get_string (RygelConfiguration* base, const
 				_tmp14_ = rygel_configuration_get_string (_tmp11_, _tmp12_, _tmp13_, &_inner_error_);
 				_tmp15_ = _tmp14_;
 				if (_inner_error_ != NULL) {
-					goto __catch22_g_error;
+					goto __catch23_g_error;
 				}
 				_g_free0 (val);
 				val = _tmp15_;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally22;
-			__catch22_g_error:
+			goto __finally23;
+			__catch23_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally22:
+			__finally23:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -2004,22 +2139,22 @@ static GeeArrayList* rygel_meta_config_real_get_string_list (RygelConfiguration*
 				_tmp14_ = rygel_configuration_get_string_list (_tmp11_, _tmp12_, _tmp13_, &_inner_error_);
 				_tmp15_ = _tmp14_;
 				if (_inner_error_ != NULL) {
-					goto __catch23_g_error;
+					goto __catch24_g_error;
 				}
 				_g_object_unref0 (val);
 				val = _tmp15_;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally23;
-			__catch23_g_error:
+			goto __finally24;
+			__catch24_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally23:
+			__finally24:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -2115,22 +2250,22 @@ static gint rygel_meta_config_real_get_int (RygelConfiguration* base, const gcha
 				_tmp16_ = rygel_configuration_get_int (_tmp11_, _tmp12_, _tmp13_, _tmp14_, _tmp15_, &_inner_error_);
 				_tmp17_ = _tmp16_;
 				if (_inner_error_ != NULL) {
-					goto __catch24_g_error;
+					goto __catch25_g_error;
 				}
 				val = _tmp17_;
 				unavailable = FALSE;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally24;
-			__catch24_g_error:
+			goto __finally25;
+			__catch25_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally24:
+			__finally25:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -2218,22 +2353,22 @@ static GeeArrayList* rygel_meta_config_real_get_int_list (RygelConfiguration* ba
 				_tmp14_ = rygel_configuration_get_int_list (_tmp11_, _tmp12_, _tmp13_, &_inner_error_);
 				_tmp15_ = _tmp14_;
 				if (_inner_error_ != NULL) {
-					goto __catch25_g_error;
+					goto __catch26_g_error;
 				}
 				_g_object_unref0 (val);
 				val = _tmp15_;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally25;
-			__catch25_g_error:
+			goto __finally26;
+			__catch26_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally25:
+			__finally26:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -2325,22 +2460,22 @@ static gboolean rygel_meta_config_real_get_bool (RygelConfiguration* base, const
 				_tmp14_ = rygel_configuration_get_bool (_tmp11_, _tmp12_, _tmp13_, &_inner_error_);
 				_tmp15_ = _tmp14_;
 				if (_inner_error_ != NULL) {
-					goto __catch26_g_error;
+					goto __catch27_g_error;
 				}
 				val = _tmp15_;
 				unavailable = FALSE;
 				_g_object_unref0 (config);
 				break;
 			}
-			goto __finally26;
-			__catch26_g_error:
+			goto __finally27;
+			__catch27_g_error:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
 				_inner_error_ = NULL;
 				_g_error_free0 (err);
 			}
-			__finally26:
+			__finally27:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_object_unref0 (config);
@@ -2385,131 +2520,134 @@ static gboolean rygel_meta_config_configuration_value_available (RygelMetaConfig
 				_tmp1_ = config;
 				rygel_configuration_get_upnp_enabled (_tmp1_, &_inner_error_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_INTERFACE:
 			{
 				RygelConfiguration* _tmp2_;
-				gchar* _tmp3_ = NULL;
-				gchar* _tmp4_;
+				gchar** _tmp3_;
+				gchar** _tmp4_ = NULL;
+				gchar** _tmp5_;
+				gint _tmp5__length1;
 				_tmp2_ = config;
-				_tmp3_ = rygel_configuration_get_interface (_tmp2_, &_inner_error_);
-				_tmp4_ = _tmp3_;
-				_g_free0 (_tmp4_);
+				_tmp4_ = _tmp3_ = rygel_configuration_get_interfaces (_tmp2_, &_inner_error_);
+				_tmp5_ = _tmp4_;
+				_tmp5__length1 = _vala_array_length (_tmp3_);
+				_tmp5_ = (_vala_array_free (_tmp5_, _tmp5__length1, (GDestroyNotify) g_free), NULL);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_PORT:
 			{
-				RygelConfiguration* _tmp5_;
-				_tmp5_ = config;
-				rygel_configuration_get_port (_tmp5_, &_inner_error_);
+				RygelConfiguration* _tmp6_;
+				_tmp6_ = config;
+				rygel_configuration_get_port (_tmp6_, &_inner_error_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_TRANSCODING:
 			{
-				RygelConfiguration* _tmp6_;
-				_tmp6_ = config;
-				rygel_configuration_get_transcoding (_tmp6_, &_inner_error_);
+				RygelConfiguration* _tmp7_;
+				_tmp7_ = config;
+				rygel_configuration_get_transcoding (_tmp7_, &_inner_error_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_ALLOW_UPLOAD:
 			{
-				RygelConfiguration* _tmp7_;
-				_tmp7_ = config;
-				rygel_configuration_get_allow_upload (_tmp7_, &_inner_error_);
+				RygelConfiguration* _tmp8_;
+				_tmp8_ = config;
+				rygel_configuration_get_allow_upload (_tmp8_, &_inner_error_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_ALLOW_DELETION:
 			{
-				RygelConfiguration* _tmp8_;
-				_tmp8_ = config;
-				rygel_configuration_get_allow_deletion (_tmp8_, &_inner_error_);
+				RygelConfiguration* _tmp9_;
+				_tmp9_ = config;
+				rygel_configuration_get_allow_deletion (_tmp9_, &_inner_error_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_LOG_LEVELS:
 			{
-				RygelConfiguration* _tmp9_;
-				gchar* _tmp10_ = NULL;
-				gchar* _tmp11_;
-				_tmp9_ = config;
-				_tmp10_ = rygel_configuration_get_log_levels (_tmp9_, &_inner_error_);
-				_tmp11_ = _tmp10_;
-				_g_free0 (_tmp11_);
+				RygelConfiguration* _tmp10_;
+				gchar* _tmp11_ = NULL;
+				gchar* _tmp12_;
+				_tmp10_ = config;
+				_tmp11_ = rygel_configuration_get_log_levels (_tmp10_, &_inner_error_);
+				_tmp12_ = _tmp11_;
+				_g_free0 (_tmp12_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_PLUGIN_PATH:
 			{
-				RygelConfiguration* _tmp12_;
-				gchar* _tmp13_ = NULL;
-				gchar* _tmp14_;
-				_tmp12_ = config;
-				_tmp13_ = rygel_configuration_get_plugin_path (_tmp12_, &_inner_error_);
-				_tmp14_ = _tmp13_;
-				_g_free0 (_tmp14_);
+				RygelConfiguration* _tmp13_;
+				gchar* _tmp14_ = NULL;
+				gchar* _tmp15_;
+				_tmp13_ = config;
+				_tmp14_ = rygel_configuration_get_plugin_path (_tmp13_, &_inner_error_);
+				_tmp15_ = _tmp14_;
+				_g_free0 (_tmp15_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_VIDEO_UPLOAD_FOLDER:
 			{
-				RygelConfiguration* _tmp15_;
-				gchar* _tmp16_ = NULL;
-				gchar* _tmp17_;
-				_tmp15_ = config;
-				_tmp16_ = rygel_configuration_get_video_upload_folder (_tmp15_, &_inner_error_);
-				_tmp17_ = _tmp16_;
-				_g_free0 (_tmp17_);
+				RygelConfiguration* _tmp16_;
+				gchar* _tmp17_ = NULL;
+				gchar* _tmp18_;
+				_tmp16_ = config;
+				_tmp17_ = rygel_configuration_get_video_upload_folder (_tmp16_, &_inner_error_);
+				_tmp18_ = _tmp17_;
+				_g_free0 (_tmp18_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_MUSIC_UPLOAD_FOLDER:
 			{
-				RygelConfiguration* _tmp18_;
-				gchar* _tmp19_ = NULL;
-				gchar* _tmp20_;
-				_tmp18_ = config;
-				_tmp19_ = rygel_configuration_get_music_upload_folder (_tmp18_, &_inner_error_);
-				_tmp20_ = _tmp19_;
-				_g_free0 (_tmp20_);
+				RygelConfiguration* _tmp19_;
+				gchar* _tmp20_ = NULL;
+				gchar* _tmp21_;
+				_tmp19_ = config;
+				_tmp20_ = rygel_configuration_get_music_upload_folder (_tmp19_, &_inner_error_);
+				_tmp21_ = _tmp20_;
+				_g_free0 (_tmp21_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
 			case RYGEL_CONFIGURATION_ENTRY_PICTURE_UPLOAD_FOLDER:
 			{
-				RygelConfiguration* _tmp21_;
-				gchar* _tmp22_ = NULL;
-				gchar* _tmp23_;
-				_tmp21_ = config;
-				_tmp22_ = rygel_configuration_get_picture_upload_folder (_tmp21_, &_inner_error_);
-				_tmp23_ = _tmp22_;
-				_g_free0 (_tmp23_);
+				RygelConfiguration* _tmp22_;
+				gchar* _tmp23_ = NULL;
+				gchar* _tmp24_;
+				_tmp22_ = config;
+				_tmp23_ = rygel_configuration_get_picture_upload_folder (_tmp22_, &_inner_error_);
+				_tmp24_ = _tmp23_;
+				_g_free0 (_tmp24_);
 				if (_inner_error_ != NULL) {
-					goto __catch27_g_error;
+					goto __catch28_g_error;
 				}
 				break;
 			}
@@ -2519,8 +2657,8 @@ static gboolean rygel_meta_config_configuration_value_available (RygelMetaConfig
 			}
 		}
 	}
-	goto __finally27;
-	__catch27_g_error:
+	goto __finally28;
+	__catch28_g_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -2529,7 +2667,7 @@ static gboolean rygel_meta_config_configuration_value_available (RygelMetaConfig
 		_g_error_free0 (e);
 		return result;
 	}
-	__finally27:
+	__finally28:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2629,7 +2767,7 @@ static gboolean rygel_meta_config_setting_value_available (RygelMetaConfig* self
 				_tmp4_ = _tmp3_;
 				_g_free0 (_tmp4_);
 				if (_inner_error_ != NULL) {
-					goto __catch28_g_error;
+					goto __catch29_g_error;
 				}
 				break;
 			}
@@ -2641,7 +2779,7 @@ static gboolean rygel_meta_config_setting_value_available (RygelMetaConfig* self
 				_tmp6_ = section;
 				rygel_configuration_get_enabled (_tmp5_, _tmp6_, &_inner_error_);
 				if (_inner_error_ != NULL) {
-					goto __catch28_g_error;
+					goto __catch29_g_error;
 				}
 				break;
 			}
@@ -2651,8 +2789,8 @@ static gboolean rygel_meta_config_setting_value_available (RygelMetaConfig* self
 			}
 		}
 	}
-	goto __finally28;
-	__catch28_g_error:
+	goto __finally29;
+	__catch29_g_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -2661,7 +2799,7 @@ static gboolean rygel_meta_config_setting_value_available (RygelMetaConfig* self
 		_g_error_free0 (e);
 		return result;
 	}
-	__finally28:
+	__finally29:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2779,6 +2917,7 @@ static void rygel_meta_config_rygel_configuration_interface_init (RygelConfigura
 	rygel_meta_config_rygel_configuration_parent_iface = g_type_interface_peek_parent (iface);
 	iface->get_upnp_enabled = (gboolean (*)(RygelConfiguration*, GError**)) rygel_meta_config_real_get_upnp_enabled;
 	iface->get_interface = (gchar* (*)(RygelConfiguration*, GError**)) rygel_meta_config_real_get_interface;
+	iface->get_interfaces = (gchar** (*)(RygelConfiguration*, GError**)) rygel_meta_config_real_get_interfaces;
 	iface->get_port = (gint (*)(RygelConfiguration*, GError**)) rygel_meta_config_real_get_port;
 	iface->get_transcoding = (gboolean (*)(RygelConfiguration*, GError**)) rygel_meta_config_real_get_transcoding;
 	iface->get_allow_upload = (gboolean (*)(RygelConfiguration*, GError**)) rygel_meta_config_real_get_allow_upload;
@@ -2829,6 +2968,36 @@ GType rygel_meta_config_get_type (void) {
 		g_once_init_leave (&rygel_meta_config_type_id__volatile, rygel_meta_config_type_id);
 	}
 	return rygel_meta_config_type_id__volatile;
+}
+
+
+static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNotify destroy_func) {
+	if ((array != NULL) && (destroy_func != NULL)) {
+		int i;
+		for (i = 0; i < array_length; i = i + 1) {
+			if (((gpointer*) array)[i] != NULL) {
+				destroy_func (((gpointer*) array)[i]);
+			}
+		}
+	}
+}
+
+
+static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func) {
+	_vala_array_destroy (array, array_length, destroy_func);
+	g_free (array);
+}
+
+
+static gint _vala_array_length (gpointer array) {
+	int length;
+	length = 0;
+	if (array) {
+		while (((gpointer*) array)[length]) {
+			length++;
+		}
+	}
+	return length;
 }
 
 

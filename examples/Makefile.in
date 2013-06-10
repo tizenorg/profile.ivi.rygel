@@ -15,7 +15,6 @@
 
 @SET_MAKE@
 
-
 VPATH = @srcdir@
 am__make_dryrun = \
   { \
@@ -52,8 +51,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-DIST_COMMON = $(srcdir)/../common.am $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(top_srcdir)/common.am
 noinst_PROGRAMS = standalone-server$(EXEEXT) $(am__EXEEXT_1) \
 	$(am__EXEEXT_2)
 @HAVE_GSTREAMER_TRUE@am__append_1 = standalone-renderer-gst
@@ -232,8 +231,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -526,6 +523,7 @@ RYGEL_COMMON_VALAFLAGS = \
 
 initddir = $(sysconfdir)/rc.d/init.d
 initd_SCRIPTS = service/sysv/rygel
+
 standalone_server_SOURCES = standalone-server.c
 standalone_server_CFLAGS = \
 	$(EXAMPLE_DEPS_CFLAGS) \
@@ -567,7 +565,7 @@ all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/../common.am $(am__configure_deps)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(top_srcdir)/common.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -588,7 +586,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
-$(srcdir)/../common.am:
+$(top_srcdir)/common.am:
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -616,6 +614,7 @@ standalone-renderer-gst$(EXEEXT): $(standalone_renderer_gst_OBJECTS) $(standalon
 standalone-server$(EXEEXT): $(standalone_server_OBJECTS) $(standalone_server_DEPENDENCIES) $(EXTRA_standalone_server_DEPENDENCIES) 
 	@rm -f standalone-server$(EXEEXT)
 	$(AM_V_CCLD)$(standalone_server_LINK) $(standalone_server_OBJECTS) $(standalone_server_LDADD) $(LIBS)
+
 install-initdSCRIPTS: $(initd_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	@list='$(initd_SCRIPTS)'; test -n "$(initddir)" || list=; \
@@ -651,7 +650,7 @@ uninstall-initdSCRIPTS:
 	files=`for p in $$list; do echo "$$p"; done | \
 	       sed -e 's,.*/,,;$(transform)'`; \
 	dir='$(DESTDIR)$(initddir)'; $(am__uninstall_files_from_dir)
-
+	
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 

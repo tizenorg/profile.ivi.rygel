@@ -32,6 +32,7 @@
           <li class="method"><a href="Rygel.PluginLoader.get_plugin_by_name.html">get_plugin_by_name</a></li>
           <li class="method"><a href="Rygel.PluginLoader.list_plugins.html">list_plugins</a></li>
           <li class="virtual_method"><a href="Rygel.PluginLoader.load_module_from_file.html">load_module_from_file</a></li>
+          <li class="virtual_method"><a href="Rygel.PluginLoader.load_module_from_info.html">load_module_from_info</a></li>
           <li class="method"><a href="Rygel.PluginLoader.plugin_disabled.html">plugin_disabled</a></li>
           <li class="signal"><a href="Rygel.PluginLoader.plugin_available.html">plugin_available</a></li>
         </ul>
@@ -56,8 +57,6 @@
               module_init (RygelPluginLoader* loader);</code></p>
           <p>It then calls that function, passing a pointer to itself. The loaded module can then add plugins to Rygel by calling the 
             rygel_plugin_loader_add_plugin() function.</p>
-          <p>NOTE: The module SHOULD make sure that the plugin has not been disabled by the user, by using the rygel_plugin_loader_plugin_disabled() 
-            function before creating the plugin instance, and before creating any resources related to that instance.</p>
         </div><br/>
         <div class="namespace_note"><b>Namespace:</b> <a href="Rygel.html">Rygel</a>
         </div>
@@ -97,6 +96,10 @@
             </span>
             <div class="leaf_brief_description">
             </div></li>
+          <li class="virtual_method"><span class="leaf_code_definition"><span class="main_keyword">protected</span> <span class="main_keyword">override</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.PluginLoader.load_module_from_info.html" class="virtual_method">load_module_from_info</a></b> (<span class="main_type"><a href="Rygel.PluginInformation.html" class="class">PluginInformation</a></span> info)
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
         </ul>
         <h3 class="main_title">Signals:</h3>
         <ul class="navi_inline">
@@ -128,6 +131,7 @@
               <div class="column">
                 <ul class="navi_inline">
                   <li class="abstract_method"><a href="Rygel.RecursiveModuleLoader.load_module_from_file.html">load_module_from_file</a></li>
+                  <li class="abstract_method"><a href="Rygel.RecursiveModuleLoader.load_module_from_info.html">load_module_from_info</a></li>
                 </ul>
               </div>
             </div>

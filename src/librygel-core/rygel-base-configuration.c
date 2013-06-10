@@ -54,6 +54,7 @@ struct _RygelConfigurationIface {
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -83,6 +84,7 @@ struct _RygelBaseConfigurationClass {
 	GObjectClass parent_class;
 	gboolean (*get_upnp_enabled) (RygelBaseConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelBaseConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelBaseConfiguration* self, GError** error);
 	gint (*get_port) (RygelBaseConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelBaseConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelBaseConfiguration* self, GError** error);
@@ -122,6 +124,8 @@ static gboolean rygel_base_configuration_real_get_upnp_enabled (RygelBaseConfigu
 GQuark rygel_configuration_error_quark (void);
 gchar* rygel_base_configuration_get_interface (RygelBaseConfiguration* self, GError** error);
 static gchar* rygel_base_configuration_real_get_interface (RygelBaseConfiguration* self, GError** error);
+gchar** rygel_base_configuration_get_interfaces (RygelBaseConfiguration* self, GError** error);
+static gchar** rygel_base_configuration_real_get_interfaces (RygelBaseConfiguration* self, GError** error);
 gint rygel_base_configuration_get_port (RygelBaseConfiguration* self, GError** error);
 static gint rygel_base_configuration_real_get_port (RygelBaseConfiguration* self, GError** error);
 gboolean rygel_base_configuration_get_transcoding (RygelBaseConfiguration* self, GError** error);
@@ -199,6 +203,26 @@ static gchar* rygel_base_configuration_real_get_interface (RygelBaseConfiguratio
 gchar* rygel_base_configuration_get_interface (RygelBaseConfiguration* self, GError** error) {
 	g_return_val_if_fail (self != NULL, NULL);
 	return RYGEL_BASE_CONFIGURATION_GET_CLASS (self)->get_interface (self, error);
+}
+
+
+static gchar** rygel_base_configuration_real_get_interfaces (RygelBaseConfiguration* self, GError** error) {
+	gchar** result = NULL;
+	const gchar* _tmp0_ = NULL;
+	GError* _tmp1_;
+	GError * _inner_error_ = NULL;
+	_tmp0_ = _ ("Not implemented");
+	_tmp1_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp0_);
+	_inner_error_ = _tmp1_;
+	g_propagate_error (error, _inner_error_);
+	return NULL;
+	return result;
+}
+
+
+gchar** rygel_base_configuration_get_interfaces (RygelBaseConfiguration* self, GError** error) {
+	g_return_val_if_fail (self != NULL, NULL);
+	return RYGEL_BASE_CONFIGURATION_GET_CLASS (self)->get_interfaces (self, error);
 }
 
 
@@ -590,6 +614,7 @@ static void rygel_base_configuration_class_init (RygelBaseConfigurationClass * k
 	rygel_base_configuration_parent_class = g_type_class_peek_parent (klass);
 	RYGEL_BASE_CONFIGURATION_CLASS (klass)->get_upnp_enabled = rygel_base_configuration_real_get_upnp_enabled;
 	RYGEL_BASE_CONFIGURATION_CLASS (klass)->get_interface = rygel_base_configuration_real_get_interface;
+	RYGEL_BASE_CONFIGURATION_CLASS (klass)->get_interfaces = rygel_base_configuration_real_get_interfaces;
 	RYGEL_BASE_CONFIGURATION_CLASS (klass)->get_port = rygel_base_configuration_real_get_port;
 	RYGEL_BASE_CONFIGURATION_CLASS (klass)->get_transcoding = rygel_base_configuration_real_get_transcoding;
 	RYGEL_BASE_CONFIGURATION_CLASS (klass)->get_allow_upload = rygel_base_configuration_real_get_allow_upload;
@@ -615,6 +640,7 @@ static void rygel_base_configuration_rygel_configuration_interface_init (RygelCo
 	rygel_base_configuration_rygel_configuration_parent_iface = g_type_interface_peek_parent (iface);
 	iface->get_upnp_enabled = (gboolean (*)(RygelConfiguration*, GError**)) rygel_base_configuration_get_upnp_enabled;
 	iface->get_interface = (gchar* (*)(RygelConfiguration*, GError**)) rygel_base_configuration_get_interface;
+	iface->get_interfaces = (gchar** (*)(RygelConfiguration*, GError**)) rygel_base_configuration_get_interfaces;
 	iface->get_port = (gint (*)(RygelConfiguration*, GError**)) rygel_base_configuration_get_port;
 	iface->get_transcoding = (gboolean (*)(RygelConfiguration*, GError**)) rygel_base_configuration_get_transcoding;
 	iface->get_allow_upload = (gboolean (*)(RygelConfiguration*, GError**)) rygel_base_configuration_get_allow_upload;

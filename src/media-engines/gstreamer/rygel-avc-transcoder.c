@@ -142,7 +142,7 @@ enum  {
 #define RYGEL_AVC_TRANSCODER_CONTAINER "video/quicktime,variant=iso"
 #define RYGEL_AVC_TRANSCODER_AUDIO_CAPS "audio/mpeg,mpegversion=4"
 #define RYGEL_AVC_TRANSCODER_VIDEO_CAPS "video/x-h264,stream-format=avc"
-#define RYGEL_AVC_TRANSCODER_RESTRICTIONS "video/x-raw,format=I420,framerate=(fraction)15/1,width=352,height=288"
+#define RYGEL_AVC_TRANSCODER_RESTRICTIONS "video/x-raw,framerate=(fraction)15/1,width=352,height=288"
 RygelAVCTranscoder* rygel_avc_transcoder_new (void);
 RygelAVCTranscoder* rygel_avc_transcoder_construct (GType object_type);
 RygelVideoTranscoder* rygel_video_transcoder_new (const gchar* content_type, const gchar* dlna_profile, gint audio_bitrate, gint video_bitrate, const gchar* container_caps, const gchar* audio_codec_caps, const gchar* video_codec_caps, const gchar* extension, const gchar* restrictions);

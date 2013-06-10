@@ -180,13 +180,13 @@ void rygel_media_export_metadata_extractor_extract (RygelMediaExportMetadataExtr
 			_tmp9_ = gst_discoverer_new (_tmp8_, &_inner_error_);
 			_tmp10_ = _tmp9_;
 			if (_inner_error_ != NULL) {
-				goto __catch31_g_error;
+				goto __catch33_g_error;
 			}
 			_g_object_unref0 (self->priv->discoverer);
 			self->priv->discoverer = _tmp10_;
 		}
-		goto __finally31;
-		__catch31_g_error:
+		goto __finally33;
+		__catch33_g_error:
 		{
 			GError* _error_ = NULL;
 			GFile* _tmp11_;
@@ -200,7 +200,7 @@ void rygel_media_export_metadata_extractor_extract (RygelMediaExportMetadataExtr
 			_g_free0 (uri);
 			return;
 		}
-		__finally31:
+		__finally33:
 		if (_inner_error_ != NULL) {
 			_g_free0 (uri);
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -349,13 +349,13 @@ static void rygel_media_export_metadata_extractor_extract_basic_information (Ryg
 		_tmp1_ = g_file_query_info (_tmp0_, G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE "," G_FILE_ATTRIBUTE_STANDARD_SIZE "," G_FILE_ATTRIBUTE_TIME_MODIFIED "," G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME, G_FILE_QUERY_INFO_NONE, NULL, &_inner_error_);
 		_tmp2_ = _tmp1_;
 		if (_inner_error_ != NULL) {
-			goto __catch32_g_error;
+			goto __catch34_g_error;
 		}
 		_g_object_unref0 (file_info);
 		file_info = _tmp2_;
 	}
-	goto __finally32;
-	__catch32_g_error:
+	goto __finally34;
+	__catch34_g_error:
 	{
 		GError* _error_ = NULL;
 		GFile* _tmp3_;
@@ -389,7 +389,7 @@ static void rygel_media_export_metadata_extractor_extract_basic_information (Ryg
 		_g_object_unref0 (file_info);
 		return;
 	}
-	__finally32:
+	__finally34:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (file_info);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -434,12 +434,12 @@ static void rygel_media_export_metadata_extractor_on_config_changed (RygelMediaE
 		_tmp5_ = rygel_configuration_get_bool (_tmp4_, RYGEL_MEDIA_EXPORT_PLUGIN_NAME, "extract-metadata", &_inner_error_);
 		_tmp6_ = _tmp5_;
 		if (_inner_error_ != NULL) {
-			goto __catch33_g_error;
+			goto __catch35_g_error;
 		}
 		self->priv->extract_metadata = _tmp6_;
 	}
-	goto __finally33;
-	__catch33_g_error:
+	goto __finally35;
+	__catch35_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -447,7 +447,7 @@ static void rygel_media_export_metadata_extractor_on_config_changed (RygelMediaE
 		self->priv->extract_metadata = TRUE;
 		_g_error_free0 (_error_);
 	}
-	__finally33:
+	__finally35:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

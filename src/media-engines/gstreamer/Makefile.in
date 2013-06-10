@@ -15,6 +15,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 am__make_dryrun = \
   { \
@@ -52,7 +53,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(top_srcdir)/common.am \
+	$(srcdir)/media-engine-gst.plugin.in $(top_srcdir)/common.am \
 	librygel_media_engine_gst_la_vala.stamp rygel-aac-transcoder.c \
 	rygel-audio-transcoder.c rygel-avc-transcoder.c \
 	rygel-gst-data-source.c rygel-gst-media-engine.c \
@@ -71,7 +72,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/build-aux/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = media-engine-gst.plugin
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -100,7 +101,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(enginedir)"
+am__installdirs = "$(DESTDIR)$(enginedir)" "$(DESTDIR)$(enginedir)"
 LTLIBRARIES = $(engine_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 librygel_media_engine_gst_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
@@ -168,6 +169,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+DATA = $(engine_DATA)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -186,8 +188,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -473,6 +473,7 @@ RYGEL_COMMON_VALAFLAGS = \
 	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS)
 
 engine_LTLIBRARIES = librygel-media-engine-gst.la
+engine_DATA = media-engine-gst.plugin
 librygel_media_engine_gst_la_SOURCES = \
 	rygel-aac-transcoder.vala \
 	rygel-audio-transcoder.vala \
@@ -507,6 +508,7 @@ librygel_media_engine_gst_la_LIBADD = \
 librygel_media_engine_gst_la_LDFLAGS = \
 	$(RYGEL_PLUGIN_LINKER_FLAGS)
 
+EXTRA_DIST = media-engine-gst.plugin.in
 all: all-am
 
 .SUFFIXES:
@@ -542,6 +544,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+media-engine-gst.plugin: $(top_builddir)/config.status $(srcdir)/media-engine-gst.plugin.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-engineLTLIBRARIES: $(engine_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	@list='$(engine_LTLIBRARIES)'; test -n "$(enginedir)" || list=; \
@@ -783,6 +787,27 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-engineDATA: $(engine_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(engine_DATA)'; test -n "$(enginedir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(enginedir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(enginedir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(enginedir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(enginedir)" || exit $$?; \
+	done
+
+uninstall-engineDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(engine_DATA)'; test -n "$(enginedir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(enginedir)'; $(am__uninstall_files_from_dir)
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -868,9 +893,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(enginedir)"; do \
+	for dir in "$(DESTDIR)$(enginedir)" "$(DESTDIR)$(enginedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 @UNINSTALLED_FALSE@install: install-am
@@ -941,7 +966,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-engineLTLIBRARIES
+install-data-am: install-engineDATA install-engineLTLIBRARIES
 
 install-dvi: install-dvi-am
 
@@ -987,7 +1012,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-engineLTLIBRARIES
+uninstall-am: uninstall-engineDATA uninstall-engineLTLIBRARIES
 
 .MAKE: install-am install-strip
 
@@ -996,7 +1021,7 @@ uninstall-am: uninstall-engineLTLIBRARIES
 	distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
-	install-data-am install-dvi install-dvi-am \
+	install-data-am install-dvi install-dvi-am install-engineDATA \
 	install-engineLTLIBRARIES install-exec install-exec-am \
 	install-html install-html-am install-info install-info-am \
 	install-man install-pdf install-pdf-am install-ps \
@@ -1004,7 +1029,7 @@ uninstall-am: uninstall-engineLTLIBRARIES
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-engineLTLIBRARIES
+	uninstall-am uninstall-engineDATA uninstall-engineLTLIBRARIES
 
 
 @UNINSTALLED_TRUE@install: all-am

@@ -35,8 +35,8 @@
 #include <gee.h>
 #include <stdlib.h>
 #include <string.h>
-#include <config.h>
 #include <glib/gi18n-lib.h>
+#include <config.h>
 #include <gobject/gvaluecollector.h>
 
 
@@ -186,6 +186,8 @@ static GType rygel_user_config_section_pair_get_type (void) G_GNUC_CONST G_GNUC_
 #define RYGEL_USER_CONFIG_MUSIC_UPLOAD_DIR_PATH_KEY "music-" RYGEL_USER_CONFIG_UPLOAD_FOLDER_KEY
 #define RYGEL_USER_CONFIG_PICTURE_UPLOAD_DIR_PATH_KEY "picture-" RYGEL_USER_CONFIG_UPLOAD_FOLDER_KEY
 static gboolean rygel_user_config_real_get_upnp_enabled (RygelConfiguration* base, GError** error);
+static gchar** rygel_user_config_real_get_interfaces (RygelConfiguration* base, GError** error);
+static void _vala_array_add1 (gchar*** array, int* length, int* size, gchar* value);
 static gchar* rygel_user_config_real_get_interface (RygelConfiguration* base, GError** error);
 static gint rygel_user_config_real_get_port (RygelConfiguration* base, GError** error);
 static gboolean rygel_user_config_real_get_transcoding (RygelConfiguration* base, GError** error);
@@ -272,6 +274,61 @@ static gboolean rygel_user_config_real_get_upnp_enabled (RygelConfiguration* bas
 		return FALSE;
 	}
 	result = _tmp1_;
+	return result;
+}
+
+
+static void _vala_array_add1 (gchar*** array, int* length, int* size, gchar* value) {
+	if ((*length) == (*size)) {
+		*size = (*size) ? (2 * (*size)) : 4;
+		*array = g_renew (gchar*, *array, (*size) + 1);
+	}
+	(*array)[(*length)++] = value;
+	(*array)[*length] = NULL;
+}
+
+
+static gchar** rygel_user_config_real_get_interfaces (RygelConfiguration* base, GError** error) {
+	RygelUserConfig * self;
+	gchar** result = NULL;
+	GeeArrayList* _tmp0_ = NULL;
+	GeeArrayList* _tmp1_;
+	GeeArrayList* _tmp2_;
+	gint _tmp3_ = 0;
+	gpointer* _tmp4_ = NULL;
+	gchar** _tmp5_;
+	gint _tmp5__length1;
+	gchar** interfaces;
+	gint interfaces_length1;
+	gint _interfaces_size_;
+	gchar** _tmp6_;
+	gint _tmp6__length1;
+	GError * _inner_error_ = NULL;
+	self = (RygelUserConfig*) base;
+	_tmp0_ = rygel_configuration_get_string_list ((RygelConfiguration*) self, RYGEL_USER_CONFIG_GENERAL_SECTION, RYGEL_USER_CONFIG_IFACE_KEY, &_inner_error_);
+	_tmp1_ = _tmp0_;
+	if (_inner_error_ != NULL) {
+		g_propagate_error (error, _inner_error_);
+		return NULL;
+	}
+	_tmp2_ = _tmp1_;
+	_tmp4_ = gee_collection_to_array ((GeeCollection*) _tmp2_, &_tmp3_);
+	_tmp5_ = _tmp4_;
+	_tmp5__length1 = _tmp3_;
+	_g_object_unref0 (_tmp2_);
+	interfaces = _tmp5_;
+	interfaces_length1 = _tmp5__length1;
+	_interfaces_size_ = interfaces_length1;
+	_tmp6_ = interfaces;
+	_tmp6__length1 = interfaces_length1;
+	if (_tmp6_ != NULL) {
+		gchar** _tmp7_;
+		gint _tmp7__length1;
+		_tmp7_ = interfaces;
+		_tmp7__length1 = interfaces_length1;
+		_vala_array_add1 (&interfaces, &interfaces_length1, &_interfaces_size_, NULL);
+	}
+	result = interfaces;
 	return result;
 }
 
@@ -560,13 +617,13 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 	GFileMonitor* _tmp8_ = NULL;
 	GFileMonitor* _tmp9_;
 	GFileMonitor* _tmp10_;
-	const gchar* _tmp18_;
-	GFile* _tmp19_ = NULL;
+	const gchar* _tmp19_;
+	GFile* _tmp20_ = NULL;
 	GFile* key_g_file;
-	GFile* _tmp20_;
-	GFileMonitor* _tmp21_ = NULL;
-	GFileMonitor* _tmp22_;
+	GFile* _tmp21_;
+	GFileMonitor* _tmp22_ = NULL;
 	GFileMonitor* _tmp23_;
+	GFileMonitor* _tmp24_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	g_return_if_fail (local_path != NULL);
@@ -585,7 +642,7 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 		return;
 	}
 	_tmp4_ = system_path;
-	g_debug ("rygel-user-config.vala:222: Loaded system configuration from file '%s'", _tmp4_);
+	g_debug ("rygel-user-config.vala:234: Loaded system configuration from file '%s'", _tmp4_);
 	_tmp5_ = system_path;
 	_tmp6_ = g_file_new_for_path (_tmp5_);
 	sys_key_g_file = _tmp6_;
@@ -609,43 +666,44 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 		_tmp12_ = local_path;
 		g_key_file_load_from_file (_tmp11_, _tmp12_, G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch9_g_error;
+			goto __catch10_g_error;
 		}
 		_tmp13_ = local_path;
-		g_debug ("rygel-user-config.vala:237: Loaded user configuration from file '%s'", _tmp13_);
+		g_debug ("rygel-user-config.vala:249: Loaded user configuration from file '%s'", _tmp13_);
 	}
-	goto __finally9;
-	__catch9_g_error:
+	goto __finally10;
+	__catch10_g_error:
 	{
 		GError* _error_ = NULL;
-		const gchar* _tmp14_;
-		GError* _tmp15_;
-		const gchar* _tmp16_;
-		GKeyFile* _tmp17_;
+		const gchar* _tmp14_ = NULL;
+		const gchar* _tmp15_;
+		GError* _tmp16_;
+		const gchar* _tmp17_;
+		GKeyFile* _tmp18_;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp14_ = local_path;
-		_tmp15_ = _error_;
-		_tmp16_ = _tmp15_->message;
-		g_debug ("rygel-user-config.vala:239: Failed to load user configuration from fil" \
-"e '%s': %s", _tmp14_, _tmp16_);
-		_tmp17_ = g_key_file_new ();
+		_tmp14_ = _ ("Failed to load user configuration from file '%s': %s");
+		_tmp15_ = local_path;
+		_tmp16_ = _error_;
+		_tmp17_ = _tmp16_->message;
+		g_warning (_tmp14_, _tmp15_, _tmp17_);
+		_tmp18_ = g_key_file_new ();
 		_g_key_file_unref0 (self->key_file);
-		self->key_file = _tmp17_;
+		self->key_file = _tmp18_;
 		_g_error_free0 (_error_);
 	}
-	__finally9:
+	__finally10:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_object_unref0 (sys_key_g_file);
 		return;
 	}
-	_tmp18_ = local_path;
-	_tmp19_ = g_file_new_for_path (_tmp18_);
-	key_g_file = _tmp19_;
-	_tmp20_ = key_g_file;
-	_tmp21_ = g_file_monitor_file (_tmp20_, G_FILE_MONITOR_NONE, NULL, &_inner_error_);
-	_tmp22_ = _tmp21_;
+	_tmp19_ = local_path;
+	_tmp20_ = g_file_new_for_path (_tmp19_);
+	key_g_file = _tmp20_;
+	_tmp21_ = key_g_file;
+	_tmp22_ = g_file_monitor_file (_tmp21_, G_FILE_MONITOR_NONE, NULL, &_inner_error_);
+	_tmp23_ = _tmp22_;
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_object_unref0 (key_g_file);
@@ -653,9 +711,9 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 		return;
 	}
 	_g_object_unref0 (self->key_file_monitor);
-	self->key_file_monitor = _tmp22_;
-	_tmp23_ = self->key_file_monitor;
-	g_signal_connect_object (_tmp23_, "changed", (GCallback) _rygel_user_config_on_local_config_changed_g_file_monitor_changed, self, 0);
+	self->key_file_monitor = _tmp23_;
+	_tmp24_ = self->key_file_monitor;
+	g_signal_connect_object (_tmp24_, "changed", (GCallback) _rygel_user_config_on_local_config_changed_g_file_monitor_changed, self, 0);
 	_g_object_unref0 (key_g_file);
 	_g_object_unref0 (sys_key_g_file);
 }
@@ -785,7 +843,7 @@ static gchar* rygel_user_config_get_string_from_keyfiles (const gchar* section, 
 		_tmp4_ = _tmp3_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_KEY_FILE_ERROR) {
-				goto __catch10_g_key_file_error;
+				goto __catch11_g_key_file_error;
 			}
 			_g_free0 (val);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -795,8 +853,8 @@ static gchar* rygel_user_config_get_string_from_keyfiles (const gchar* section, 
 		_g_free0 (val);
 		val = _tmp4_;
 	}
-	goto __finally10;
-	__catch10_g_key_file_error:
+	goto __finally11;
+	__catch11_g_key_file_error:
 	{
 		GError* _error_ = NULL;
 		gboolean _tmp5_ = FALSE;
@@ -826,7 +884,7 @@ static gchar* rygel_user_config_get_string_from_keyfiles (const gchar* section, 
 			_tmp13_ = _tmp12_;
 			if (_inner_error_ != NULL) {
 				_g_error_free0 (_error_);
-				goto __finally10;
+				goto __finally11;
 			}
 			_g_free0 (val);
 			val = _tmp13_;
@@ -837,11 +895,11 @@ static gchar* rygel_user_config_get_string_from_keyfiles (const gchar* section, 
 			_tmp15_ = _g_error_copy0 (_tmp14_);
 			_inner_error_ = _tmp15_;
 			_g_error_free0 (_error_);
-			goto __finally10;
+			goto __finally11;
 		}
 		_g_error_free0 (_error_);
 	}
-	__finally10:
+	__finally11:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_free0 (val);
@@ -935,7 +993,7 @@ static GeeArrayList* rygel_user_config_get_string_list_from_keyfiles (const gcha
 		__tmp6__size_ = _tmp6__length1;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_KEY_FILE_ERROR) {
-				goto __catch11_g_key_file_error;
+				goto __catch12_g_key_file_error;
 			}
 			strings = (_vala_array_free (strings, strings_length1, (GDestroyNotify) g_free), NULL);
 			_g_object_unref0 (str_list);
@@ -948,8 +1006,8 @@ static GeeArrayList* rygel_user_config_get_string_list_from_keyfiles (const gcha
 		strings_length1 = _tmp6__length1;
 		_strings_size_ = strings_length1;
 	}
-	goto __finally11;
-	__catch11_g_key_file_error:
+	goto __finally12;
+	__catch12_g_key_file_error:
 	{
 		GError* _error_ = NULL;
 		gboolean _tmp7_ = FALSE;
@@ -984,7 +1042,7 @@ static GeeArrayList* rygel_user_config_get_string_list_from_keyfiles (const gcha
 			__tmp16__size_ = _tmp16__length1;
 			if (_inner_error_ != NULL) {
 				_g_error_free0 (_error_);
-				goto __finally11;
+				goto __finally12;
 			}
 			strings = (_vala_array_free (strings, strings_length1, (GDestroyNotify) g_free), NULL);
 			strings = _tmp16_;
@@ -997,11 +1055,11 @@ static GeeArrayList* rygel_user_config_get_string_list_from_keyfiles (const gcha
 			_tmp18_ = _g_error_copy0 (_tmp17_);
 			_inner_error_ = _tmp18_;
 			_g_error_free0 (_error_);
-			goto __finally11;
+			goto __finally12;
 		}
 		_g_error_free0 (_error_);
 	}
-	__finally11:
+	__finally12:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		strings = (_vala_array_free (strings, strings_length1, (GDestroyNotify) g_free), NULL);
@@ -1091,7 +1149,7 @@ static gint rygel_user_config_get_int_from_keyfiles (const gchar* section, const
 		_tmp4_ = _tmp3_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_KEY_FILE_ERROR) {
-				goto __catch12_g_key_file_error;
+				goto __catch13_g_key_file_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1099,8 +1157,8 @@ static gint rygel_user_config_get_int_from_keyfiles (const gchar* section, const
 		}
 		val = _tmp4_;
 	}
-	goto __finally12;
-	__catch12_g_key_file_error:
+	goto __finally13;
+	__catch13_g_key_file_error:
 	{
 		GError* _error_ = NULL;
 		gboolean _tmp5_ = FALSE;
@@ -1130,7 +1188,7 @@ static gint rygel_user_config_get_int_from_keyfiles (const gchar* section, const
 			_tmp13_ = _tmp12_;
 			if (_inner_error_ != NULL) {
 				_g_error_free0 (_error_);
-				goto __finally12;
+				goto __finally13;
 			}
 			val = _tmp13_;
 		} else {
@@ -1140,11 +1198,11 @@ static gint rygel_user_config_get_int_from_keyfiles (const gchar* section, const
 			_tmp15_ = _g_error_copy0 (_tmp14_);
 			_inner_error_ = _tmp15_;
 			_g_error_free0 (_error_);
-			goto __finally12;
+			goto __finally13;
 		}
 		_g_error_free0 (_error_);
 	}
-	__finally12:
+	__finally13:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		return 0;
@@ -1243,7 +1301,7 @@ static GeeArrayList* rygel_user_config_get_int_list_from_keyfiles (const gchar* 
 		__tmp6__size_ = _tmp6__length1;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_KEY_FILE_ERROR) {
-				goto __catch13_g_key_file_error;
+				goto __catch14_g_key_file_error;
 			}
 			ints = (g_free (ints), NULL);
 			_g_object_unref0 (int_list);
@@ -1256,8 +1314,8 @@ static GeeArrayList* rygel_user_config_get_int_list_from_keyfiles (const gchar* 
 		ints_length1 = _tmp6__length1;
 		_ints_size_ = ints_length1;
 	}
-	goto __finally13;
-	__catch13_g_key_file_error:
+	goto __finally14;
+	__catch14_g_key_file_error:
 	{
 		GError* _error_ = NULL;
 		gboolean _tmp7_ = FALSE;
@@ -1292,7 +1350,7 @@ static GeeArrayList* rygel_user_config_get_int_list_from_keyfiles (const gchar* 
 			__tmp16__size_ = _tmp16__length1;
 			if (_inner_error_ != NULL) {
 				_g_error_free0 (_error_);
-				goto __finally13;
+				goto __finally14;
 			}
 			ints = (g_free (ints), NULL);
 			ints = _tmp16_;
@@ -1305,11 +1363,11 @@ static GeeArrayList* rygel_user_config_get_int_list_from_keyfiles (const gchar* 
 			_tmp18_ = _g_error_copy0 (_tmp17_);
 			_inner_error_ = _tmp18_;
 			_g_error_free0 (_error_);
-			goto __finally13;
+			goto __finally14;
 		}
 		_g_error_free0 (_error_);
 	}
-	__finally13:
+	__finally14:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		ints = (g_free (ints), NULL);
@@ -1392,7 +1450,7 @@ static gboolean rygel_user_config_get_bool_from_keyfiles (const gchar* section, 
 		_tmp4_ = _tmp3_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_KEY_FILE_ERROR) {
-				goto __catch14_g_key_file_error;
+				goto __catch15_g_key_file_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1400,8 +1458,8 @@ static gboolean rygel_user_config_get_bool_from_keyfiles (const gchar* section, 
 		}
 		val = _tmp4_;
 	}
-	goto __finally14;
-	__catch14_g_key_file_error:
+	goto __finally15;
+	__catch15_g_key_file_error:
 	{
 		GError* _error_ = NULL;
 		gboolean _tmp5_ = FALSE;
@@ -1431,7 +1489,7 @@ static gboolean rygel_user_config_get_bool_from_keyfiles (const gchar* section, 
 			_tmp13_ = _tmp12_;
 			if (_inner_error_ != NULL) {
 				_g_error_free0 (_error_);
-				goto __finally14;
+				goto __finally15;
 			}
 			val = _tmp13_;
 		} else {
@@ -1441,11 +1499,11 @@ static gboolean rygel_user_config_get_bool_from_keyfiles (const gchar* section, 
 			_tmp15_ = _g_error_copy0 (_tmp14_);
 			_inner_error_ = _tmp15_;
 			_g_error_free0 (_error_);
-			goto __finally14;
+			goto __finally15;
 		}
 		_g_error_free0 (_error_);
 	}
-	__finally14:
+	__finally15:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		return FALSE;
@@ -1504,7 +1562,7 @@ static gchar* rygel_user_config_get_value_from_keyfiles (const gchar* section, c
 		_tmp4_ = _tmp3_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_KEY_FILE_ERROR) {
-				goto __catch15_g_key_file_error;
+				goto __catch16_g_key_file_error;
 			}
 			_g_free0 (val);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1514,8 +1572,8 @@ static gchar* rygel_user_config_get_value_from_keyfiles (const gchar* section, c
 		_g_free0 (val);
 		val = _tmp4_;
 	}
-	goto __finally15;
-	__catch15_g_key_file_error:
+	goto __finally16;
+	__catch16_g_key_file_error:
 	{
 		GError* _error_ = NULL;
 		gboolean _tmp5_ = FALSE;
@@ -1545,7 +1603,7 @@ static gchar* rygel_user_config_get_value_from_keyfiles (const gchar* section, c
 			_tmp13_ = _tmp12_;
 			if (_inner_error_ != NULL) {
 				_g_error_free0 (_error_);
-				goto __finally15;
+				goto __finally16;
 			}
 			_g_free0 (val);
 			val = _tmp13_;
@@ -1556,11 +1614,11 @@ static gchar* rygel_user_config_get_value_from_keyfiles (const gchar* section, c
 			_tmp15_ = _g_error_copy0 (_tmp14_);
 			_inner_error_ = _tmp15_;
 			_g_error_free0 (_error_);
-			goto __finally15;
+			goto __finally16;
 		}
 		_g_error_free0 (_error_);
 	}
-	__finally15:
+	__finally16:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_free0 (val);
@@ -1665,7 +1723,7 @@ static GeeHashSet* rygel_user_config_get_keys (const gchar* section, GKeyFile* k
 		_tmp5__length1 = _tmp3_;
 		__tmp5__size_ = _tmp5__length1;
 		if (_inner_error_ != NULL) {
-			goto __catch16_g_error;
+			goto __catch17_g_error;
 		}
 		{
 			gchar** key_collection = NULL;
@@ -1689,15 +1747,15 @@ static GeeHashSet* rygel_user_config_get_keys (const gchar* section, GKeyFile* k
 			key_collection = (_vala_array_free (key_collection, key_collection_length1, (GDestroyNotify) g_free), NULL);
 		}
 	}
-	goto __finally16;
-	__catch16_g_error:
+	goto __finally17;
+	__catch17_g_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (e);
 	}
-	__finally16:
+	__finally17:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (keys);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1719,7 +1777,7 @@ static GeeHashSet* rygel_user_config_get_keys (const gchar* section, GKeyFile* k
 		_tmp12__length1 = _tmp10_;
 		__tmp12__size_ = _tmp12__length1;
 		if (_inner_error_ != NULL) {
-			goto __catch17_g_error;
+			goto __catch18_g_error;
 		}
 		{
 			gchar** key_collection = NULL;
@@ -1743,15 +1801,15 @@ static GeeHashSet* rygel_user_config_get_keys (const gchar* section, GKeyFile* k
 			key_collection = (_vala_array_free (key_collection, key_collection_length1, (GDestroyNotify) g_free), NULL);
 		}
 	}
-	goto __finally17;
-	__catch17_g_error:
+	goto __finally18;
+	__catch18_g_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (e);
 	}
-	__finally17:
+	__finally18:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (keys);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1799,7 +1857,7 @@ static gboolean rygel_user_config_are_values_different (const gchar* section, co
 				_tmp5_ = rygel_user_config_get_string_from_keyfiles (_tmp1_, _tmp2_, _tmp3_, _tmp4_, &_inner_error_);
 				old_value = _tmp5_;
 				if (_inner_error_ != NULL) {
-					goto __catch18_g_error;
+					goto __catch19_g_error;
 				}
 				_tmp6_ = section;
 				_tmp7_ = key;
@@ -1809,7 +1867,7 @@ static gboolean rygel_user_config_are_values_different (const gchar* section, co
 				new_value = _tmp10_;
 				if (_inner_error_ != NULL) {
 					_g_free0 (old_value);
-					goto __catch18_g_error;
+					goto __catch19_g_error;
 				}
 				_tmp11_ = old_value;
 				_tmp12_ = new_value;
@@ -1841,7 +1899,7 @@ static gboolean rygel_user_config_are_values_different (const gchar* section, co
 				_tmp17_ = rygel_user_config_get_bool_from_keyfiles (_tmp13_, _tmp14_, _tmp15_, _tmp16_, &_inner_error_);
 				old_value = _tmp17_;
 				if (_inner_error_ != NULL) {
-					goto __catch18_g_error;
+					goto __catch19_g_error;
 				}
 				_tmp18_ = section;
 				_tmp19_ = key;
@@ -1850,7 +1908,7 @@ static gboolean rygel_user_config_are_values_different (const gchar* section, co
 				_tmp22_ = rygel_user_config_get_bool_from_keyfiles (_tmp18_, _tmp19_, _tmp20_, _tmp21_, &_inner_error_);
 				new_value = _tmp22_;
 				if (_inner_error_ != NULL) {
-					goto __catch18_g_error;
+					goto __catch19_g_error;
 				}
 				_tmp23_ = old_value;
 				_tmp24_ = new_value;
@@ -1886,7 +1944,7 @@ static gboolean rygel_user_config_are_values_different (const gchar* section, co
 				_tmp31_ = rygel_user_config_get_int_from_keyfiles (_tmp25_, _tmp26_, _tmp27_, _tmp28_, _tmp29_, _tmp30_, &_inner_error_);
 				old_value = _tmp31_;
 				if (_inner_error_ != NULL) {
-					goto __catch18_g_error;
+					goto __catch19_g_error;
 				}
 				_tmp32_ = section;
 				_tmp33_ = key;
@@ -1897,7 +1955,7 @@ static gboolean rygel_user_config_are_values_different (const gchar* section, co
 				_tmp38_ = rygel_user_config_get_int_from_keyfiles (_tmp32_, _tmp33_, _tmp34_, _tmp35_, _tmp36_, _tmp37_, &_inner_error_);
 				new_value = _tmp38_;
 				if (_inner_error_ != NULL) {
-					goto __catch18_g_error;
+					goto __catch19_g_error;
 				}
 				_tmp39_ = old_value;
 				_tmp40_ = new_value;
@@ -1910,8 +1968,8 @@ static gboolean rygel_user_config_are_values_different (const gchar* section, co
 			}
 		}
 	}
-	goto __finally18;
-	__catch18_g_error:
+	goto __finally19;
+	__catch19_g_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -1920,7 +1978,7 @@ static gboolean rygel_user_config_are_values_different (const gchar* section, co
 		_g_error_free0 (e);
 		return result;
 	}
-	__finally18:
+	__finally19:
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 	g_clear_error (&_inner_error_);
 	return FALSE;
@@ -2056,7 +2114,7 @@ static void rygel_user_config_emit_conditionally (RygelUserConfig* self, const g
 				_tmp41_ = rygel_user_config_get_value_from_keyfiles (_tmp37_, _tmp38_, _tmp39_, _tmp40_, &_inner_error_);
 				old_value = _tmp41_;
 				if (_inner_error_ != NULL) {
-					goto __catch19_g_error;
+					goto __catch20_g_error;
 				}
 				_tmp42_ = section;
 				_tmp43_ = key;
@@ -2066,7 +2124,7 @@ static void rygel_user_config_emit_conditionally (RygelUserConfig* self, const g
 				new_value = _tmp46_;
 				if (_inner_error_ != NULL) {
 					_g_free0 (old_value);
-					goto __catch19_g_error;
+					goto __catch20_g_error;
 				}
 				_tmp47_ = old_value;
 				_tmp48_ = new_value;
@@ -2074,8 +2132,8 @@ static void rygel_user_config_emit_conditionally (RygelUserConfig* self, const g
 				_g_free0 (new_value);
 				_g_free0 (old_value);
 			}
-			goto __finally19;
-			__catch19_g_error:
+			goto __finally20;
+			__catch20_g_error:
 			{
 				GError* e = NULL;
 				e = _inner_error_;
@@ -2083,7 +2141,7 @@ static void rygel_user_config_emit_conditionally (RygelUserConfig* self, const g
 				emit = TRUE;
 				_g_error_free0 (e);
 			}
-			__finally19:
+			__finally20:
 			if (_inner_error_ != NULL) {
 				g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 				g_clear_error (&_inner_error_);
@@ -2542,18 +2600,18 @@ static void rygel_user_config_reload_compare_and_notify_system (RygelUserConfig*
 		g_key_file_load_from_file (sys_key_file, _tmp3_, G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS, &_inner_error_);
 		_g_free0 (_tmp3_);
 		if (_inner_error_ != NULL) {
-			goto __catch20_g_error;
+			goto __catch21_g_error;
 		}
 	}
-	goto __finally20;
-	__catch20_g_error:
+	goto __finally21;
+	__catch21_g_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (e);
 	}
-	__finally20:
+	__finally21:
 	if (_inner_error_ != NULL) {
 		_g_key_file_unref0 (sys_key_file);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2585,18 +2643,18 @@ static void rygel_user_config_reload_compare_and_notify_local (RygelUserConfig* 
 		g_key_file_load_from_file (key_file, _tmp3_, G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS, &_inner_error_);
 		_g_free0 (_tmp3_);
 		if (_inner_error_ != NULL) {
-			goto __catch21_g_error;
+			goto __catch22_g_error;
 		}
 	}
-	goto __finally21;
-	__catch21_g_error:
+	goto __finally22;
+	__catch22_g_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (e);
 	}
-	__finally21:
+	__finally22:
 	if (_inner_error_ != NULL) {
 		_g_key_file_unref0 (key_file);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -3114,6 +3172,7 @@ static void rygel_user_config_class_init (RygelUserConfigClass * klass) {
 static void rygel_user_config_rygel_configuration_interface_init (RygelConfigurationIface * iface) {
 	rygel_user_config_rygel_configuration_parent_iface = g_type_interface_peek_parent (iface);
 	iface->get_upnp_enabled = (gboolean (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_upnp_enabled;
+	iface->get_interfaces = (gchar** (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_interfaces;
 	iface->get_interface = (gchar* (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_interface;
 	iface->get_port = (gint (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_port;
 	iface->get_transcoding = (gboolean (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_transcoding;

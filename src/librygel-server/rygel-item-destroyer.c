@@ -102,6 +102,14 @@ typedef struct _RygelMediaContainerClass RygelMediaContainerClass;
 #define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 typedef struct _RygelItemDestroyerRunData RygelItemDestroyerRunData;
 
+#define RYGEL_TYPE_WRITABLE_CONTAINER (rygel_writable_container_get_type ())
+#define RYGEL_WRITABLE_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_WRITABLE_CONTAINER, RygelWritableContainer))
+#define RYGEL_IS_WRITABLE_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_WRITABLE_CONTAINER))
+#define RYGEL_WRITABLE_CONTAINER_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), RYGEL_TYPE_WRITABLE_CONTAINER, RygelWritableContainerIface))
+
+typedef struct _RygelWritableContainer RygelWritableContainer;
+typedef struct _RygelWritableContainerIface RygelWritableContainerIface;
+
 #define RYGEL_TYPE_MEDIA_ITEM (rygel_media_item_get_type ())
 #define RYGEL_MEDIA_ITEM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_MEDIA_ITEM, RygelMediaItem))
 #define RYGEL_MEDIA_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_MEDIA_ITEM, RygelMediaItemClass))
@@ -111,14 +119,6 @@ typedef struct _RygelItemDestroyerRunData RygelItemDestroyerRunData;
 
 typedef struct _RygelMediaItem RygelMediaItem;
 typedef struct _RygelMediaItemClass RygelMediaItemClass;
-
-#define RYGEL_TYPE_WRITABLE_CONTAINER (rygel_writable_container_get_type ())
-#define RYGEL_WRITABLE_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_WRITABLE_CONTAINER, RygelWritableContainer))
-#define RYGEL_IS_WRITABLE_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_WRITABLE_CONTAINER))
-#define RYGEL_WRITABLE_CONTAINER_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), RYGEL_TYPE_WRITABLE_CONTAINER, RygelWritableContainerIface))
-
-typedef struct _RygelWritableContainer RygelWritableContainer;
-typedef struct _RygelWritableContainerIface RygelWritableContainerIface;
 typedef struct _RygelItemDestroyerRemoveObjectData RygelItemDestroyerRemoveObjectData;
 typedef struct _RygelItemDestroyerFetchObjectData RygelItemDestroyerFetchObjectData;
 
@@ -228,11 +228,11 @@ struct _RygelItemDestroyerRemoveObjectData {
 	RygelMediaObject* _tmp0_;
 	RygelMediaObject* media_object;
 	RygelMediaObject* _tmp1_;
-	RygelMediaObject* _tmp2_;
+	RygelMediaContainer* _tmp2_;
 	RygelMediaContainer* _tmp3_;
-	RygelMediaContainer* _tmp4_;
-	RygelWritableContainer* _tmp5_;
+	RygelWritableContainer* _tmp4_;
 	RygelWritableContainer* parent;
+	RygelMediaObject* _tmp5_;
 	RygelWritableContainer* _tmp6_;
 	const gchar* _tmp7_;
 	GCancellable* _tmp8_;
@@ -267,6 +267,10 @@ struct _RygelItemDestroyerRemoveObjectData {
 	GFile* _tmp32_;
 	GCancellable* _tmp33_;
 	GCancellable* _tmp34_;
+	RygelWritableContainer* _tmp35_;
+	const gchar* _tmp36_;
+	GCancellable* _tmp37_;
+	GCancellable* _tmp38_;
 	GError * _inner_error_;
 };
 
@@ -342,14 +346,16 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 static void rygel_item_destroyer_fetch_object (RygelItemDestroyer* self, GAsyncReadyCallback _callback_, gpointer _user_data_);
 static RygelMediaObject* rygel_item_destroyer_fetch_object_finish (RygelItemDestroyer* self, GAsyncResult* _res_, GError** error);
 static void rygel_item_destroyer_remove_object_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
-GType rygel_media_item_get_type (void) G_GNUC_CONST;
 RygelMediaContainer* rygel_media_object_get_parent (RygelMediaObject* self);
+GType rygel_media_item_get_type (void) G_GNUC_CONST;
 GType rygel_writable_container_get_type (void) G_GNUC_CONST;
 void rygel_writable_container_remove_item (RygelWritableContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 void rygel_writable_container_remove_item_finish (RygelWritableContainer* self, GAsyncResult* _res_, GError** error);
 gboolean rygel_media_item_get_place_holder (RygelMediaItem* self);
 void rygel_media_object_get_writables (RygelMediaObject* self, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 GeeArrayList* rygel_media_object_get_writables_finish (RygelMediaObject* self, GAsyncResult* _res_, GError** error);
+void rygel_writable_container_remove_container (RygelWritableContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_writable_container_remove_container_finish (RygelWritableContainer* self, GAsyncResult* _res_, GError** error);
 static void rygel_item_destroyer_fetch_object_data_free (gpointer _data);
 static gboolean rygel_item_destroyer_fetch_object_co (RygelItemDestroyerFetchObjectData* _data_);
 void rygel_media_container_find_object (RygelMediaContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
@@ -465,7 +471,7 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 			_data_->_tmp2_ = _ ("No such object");
 			_data_->_tmp3_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_OBJECT, _data_->_tmp2_);
 			_data_->_inner_error_ = _data_->_tmp3_;
-			goto __catch52_g_error;
+			goto __catch56_g_error;
 		}
 		_data_->_state_ = 1;
 		rygel_item_destroyer_remove_object (_data_->self, rygel_item_destroyer_run_ready, _data_);
@@ -473,7 +479,7 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 		_state_1:
 		rygel_item_destroyer_remove_object_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch52_g_error;
+			goto __catch56_g_error;
 		}
 		_data_->_tmp4_ = _data_->self->priv->action;
 		gupnp_service_action_return (_data_->_tmp4_);
@@ -482,8 +488,8 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 		_data_->_tmp6_ = _data_->self->priv->object_id;
 		g_debug (_data_->_tmp5_, _data_->_tmp6_);
 	}
-	goto __finally52;
-	__catch52_g_error:
+	goto __finally56;
+	__catch56_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -509,7 +515,7 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 		g_warning (_data_->_tmp16_, _data_->_tmp17_, _data_->_tmp19_);
 		_g_error_free0 (_data_->_error_);
 	}
-	__finally52:
+	__finally56:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);
@@ -574,6 +580,8 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 		goto _state_2;
 		case 3:
 		goto _state_3;
+		case 4:
+		goto _state_4;
 		default:
 		g_assert_not_reached ();
 	}
@@ -597,12 +605,12 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 		return FALSE;
 	}
 	_data_->_tmp1_ = _data_->media_object;
-	if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp1_, RYGEL_TYPE_MEDIA_ITEM)) {
-		_data_->_tmp2_ = _data_->media_object;
-		_data_->_tmp3_ = rygel_media_object_get_parent (_data_->_tmp2_);
-		_data_->_tmp4_ = _data_->_tmp3_;
-		_data_->_tmp5_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp4_, RYGEL_TYPE_WRITABLE_CONTAINER) ? ((RygelWritableContainer*) _data_->_tmp4_) : NULL);
-		_data_->parent = _data_->_tmp5_;
+	_data_->_tmp2_ = rygel_media_object_get_parent (_data_->_tmp1_);
+	_data_->_tmp3_ = _data_->_tmp2_;
+	_data_->_tmp4_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp3_, RYGEL_TYPE_WRITABLE_CONTAINER) ? ((RygelWritableContainer*) _data_->_tmp3_) : NULL);
+	_data_->parent = _data_->_tmp4_;
+	_data_->_tmp5_ = _data_->media_object;
+	if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp5_, RYGEL_TYPE_MEDIA_ITEM)) {
 		_data_->_tmp6_ = _data_->parent;
 		_data_->_tmp7_ = _data_->self->priv->object_id;
 		_data_->_tmp8_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
@@ -707,8 +715,31 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 			}
 			_g_object_unref0 (_data_->writables);
 		}
-		_g_object_unref0 (_data_->parent);
+	} else {
+		_data_->_tmp35_ = _data_->parent;
+		_data_->_tmp36_ = _data_->self->priv->object_id;
+		_data_->_tmp37_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
+		_data_->_tmp38_ = _data_->_tmp37_;
+		_data_->_state_ = 4;
+		rygel_writable_container_remove_container (_data_->_tmp35_, _data_->_tmp36_, _data_->_tmp38_, rygel_item_destroyer_remove_object_ready, _data_);
+		return FALSE;
+		_state_4:
+		rygel_writable_container_remove_container_finish (_data_->_tmp35_, _data_->_res_, &_data_->_inner_error_);
+		if (_data_->_inner_error_ != NULL) {
+			g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+			g_error_free (_data_->_inner_error_);
+			_g_object_unref0 (_data_->parent);
+			_g_object_unref0 (_data_->media_object);
+			if (_data_->_state_ == 0) {
+				g_simple_async_result_complete_in_idle (_data_->_async_result);
+			} else {
+				g_simple_async_result_complete (_data_->_async_result);
+			}
+			g_object_unref (_data_->_async_result);
+			return FALSE;
+		}
 	}
+	_g_object_unref0 (_data_->parent);
 	_g_object_unref0 (_data_->media_object);
 	if (_data_->_state_ == 0) {
 		g_simple_async_result_complete_in_idle (_data_->_async_result);

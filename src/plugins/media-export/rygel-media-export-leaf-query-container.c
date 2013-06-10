@@ -308,7 +308,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		regex = _tmp4_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch51_g_regex_error;
+				goto __catch53_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -321,7 +321,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		if (_inner_error_ != NULL) {
 			_g_regex_unref0 (regex);
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch51_g_regex_error;
+				goto __catch53_g_regex_error;
 			}
 			_g_regex_unref0 (regex);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -332,8 +332,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_regex_unref0 (regex);
 		return result;
 	}
-	goto __finally51;
-	__catch51_g_regex_error:
+	goto __finally53;
+	__catch53_g_regex_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -341,7 +341,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_assert_not_reached ();
 		_g_error_free0 (e);
 	}
-	__finally51:
+	__finally53:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -474,13 +474,13 @@ static gint rygel_media_export_leaf_query_container_real_count_children (RygelMe
 		_tmp3_ = rygel_media_export_media_cache_get_object_count_by_search_expression (_tmp0_, _tmp2_, NULL, &_inner_error_);
 		_tmp4_ = _tmp3_;
 		if (_inner_error_ != NULL) {
-			goto __catch52_g_error;
+			goto __catch54_g_error;
 		}
 		result = (gint) _tmp4_;
 		return result;
 	}
-	goto __finally52;
-	__catch52_g_error:
+	goto __finally54;
+	__catch54_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -489,7 +489,7 @@ static gint rygel_media_export_leaf_query_container_real_count_children (RygelMe
 		_g_error_free0 (_error_);
 		return result;
 	}
-	__finally52:
+	__finally54:
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 	g_clear_error (&_inner_error_);
 	return 0;

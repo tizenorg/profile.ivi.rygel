@@ -25,7 +25,6 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <rygel-core.h>
-#include <glib/gi18n-lib.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -148,13 +147,11 @@ static void _vala_rygel_media_server_set_property (GObject * object, guint prope
 Plugin* plugin_construct (GType object_type, RygelMediaContainer* root_container, RygelPluginCapabilities capabilities) {
 	Plugin * self = NULL;
 	RygelMediaContainer* _tmp0_;
-	const gchar* _tmp1_ = NULL;
-	RygelPluginCapabilities _tmp2_;
+	RygelPluginCapabilities _tmp1_;
 	g_return_val_if_fail (root_container != NULL, NULL);
 	_tmp0_ = root_container;
-	_tmp1_ = _ ("LibRygelServer");
-	_tmp2_ = capabilities;
-	self = (Plugin*) rygel_media_server_plugin_construct (object_type, _tmp0_, _tmp1_, NULL, _tmp2_);
+	_tmp1_ = capabilities;
+	self = (Plugin*) rygel_media_server_plugin_construct (object_type, _tmp0_, "LibRygelServer", NULL, _tmp1_);
 	return self;
 }
 

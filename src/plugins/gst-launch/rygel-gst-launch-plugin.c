@@ -26,9 +26,9 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <rygel-core.h>
+#include <rygel-server.h>
 #include <stdlib.h>
 #include <string.h>
-#include <rygel-server.h>
 
 
 #define RYGEL_GST_LAUNCH_TYPE_PLUGIN (rygel_gst_launch_plugin_get_type ())
@@ -66,38 +66,27 @@ struct _RygelGstLaunchPluginClass {
 static gpointer rygel_gst_launch_plugin_parent_class = NULL;
 
 void module_init (RygelPluginLoader* loader);
-#define RYGEL_GST_LAUNCH_PLUGIN_NAME "GstLaunch"
 RygelGstLaunchPlugin* rygel_gst_launch_plugin_new (void);
 RygelGstLaunchPlugin* rygel_gst_launch_plugin_construct (GType object_type);
 GType rygel_gst_launch_plugin_get_type (void) G_GNUC_CONST;
 enum  {
 	RYGEL_GST_LAUNCH_PLUGIN_DUMMY_PROPERTY
 };
+#define RYGEL_GST_LAUNCH_PLUGIN_NAME "GstLaunch"
 RygelGstLaunchRootContainer* rygel_gst_launch_root_container_new (const gchar* title);
 RygelGstLaunchRootContainer* rygel_gst_launch_root_container_construct (GType object_type, const gchar* title);
 GType rygel_gst_launch_root_container_get_type (void) G_GNUC_CONST;
 
 
 void module_init (RygelPluginLoader* loader) {
-	RygelPluginLoader* _tmp0_;
-	gboolean _tmp1_ = FALSE;
-	RygelGstLaunchPlugin* _tmp2_;
+	RygelGstLaunchPlugin* _tmp0_;
 	RygelGstLaunchPlugin* plugin;
-	RygelPluginLoader* _tmp3_;
-	RygelGstLaunchPlugin* _tmp4_;
+	RygelPluginLoader* _tmp1_;
 	g_return_if_fail (loader != NULL);
-	_tmp0_ = loader;
-	_tmp1_ = rygel_plugin_loader_plugin_disabled (_tmp0_, RYGEL_GST_LAUNCH_PLUGIN_NAME);
-	if (_tmp1_) {
-		g_message ("rygel-gst-launch-plugin.vala:28: Plugin '%s' disabled by user, ignorin" \
-"g..", RYGEL_GST_LAUNCH_PLUGIN_NAME);
-		return;
-	}
-	_tmp2_ = rygel_gst_launch_plugin_new ();
-	plugin = _tmp2_;
-	_tmp3_ = loader;
-	_tmp4_ = plugin;
-	rygel_plugin_loader_add_plugin (_tmp3_, (RygelPlugin*) _tmp4_);
+	_tmp0_ = rygel_gst_launch_plugin_new ();
+	plugin = _tmp0_;
+	_tmp1_ = loader;
+	rygel_plugin_loader_add_plugin (_tmp1_, (RygelPlugin*) plugin);
 	_g_object_unref0 (plugin);
 }
 

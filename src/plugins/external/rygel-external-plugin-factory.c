@@ -28,10 +28,10 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <rygel-core.h>
-#include <stdlib.h>
-#include <string.h>
 #include <gio/gio.h>
 #include <glib/gi18n-lib.h>
+#include <stdlib.h>
+#include <string.h>
 #include <rygel-server.h>
 #include <gobject/gvaluecollector.h>
 
@@ -264,9 +264,9 @@ void rygel_external_value_take_plugin_factory (GValue* value, gpointer v_object)
 gpointer rygel_external_value_get_plugin_factory (const GValue* value);
 GType rygel_external_plugin_factory_get_type (void) G_GNUC_CONST;
 void module_init (RygelPluginLoader* loader);
-#define RYGEL_EXTERNAL_PLUGIN_MODULE_NAME "External"
 RygelExternalPluginFactory* rygel_external_plugin_factory_new (RygelPluginLoader* loader, GError** error);
 RygelExternalPluginFactory* rygel_external_plugin_factory_construct (GType object_type, RygelPluginLoader* loader, GError** error);
+#define RYGEL_EXTERNAL_PLUGIN_MODULE_NAME "External"
 gpointer rygel_external_icon_factory_ref (gpointer instance);
 void rygel_external_icon_factory_unref (gpointer instance);
 GParamSpec* rygel_external_param_spec_icon_factory (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
@@ -320,39 +320,30 @@ static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify 
 
 
 void module_init (RygelPluginLoader* loader) {
-	RygelPluginLoader* _tmp0_;
-	gboolean _tmp1_ = FALSE;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (loader != NULL);
-	_tmp0_ = loader;
-	_tmp1_ = rygel_plugin_loader_plugin_disabled (_tmp0_, RYGEL_EXTERNAL_PLUGIN_MODULE_NAME);
-	if (_tmp1_) {
-		g_message ("rygel-external-plugin-factory.vala:33: Module '%s' disabled by user. I" \
-"gnoring…", RYGEL_EXTERNAL_PLUGIN_MODULE_NAME);
-		return;
-	}
 	{
-		RygelPluginLoader* _tmp2_;
-		RygelExternalPluginFactory* _tmp3_;
-		RygelExternalPluginFactory* _tmp4_;
-		_tmp2_ = loader;
-		_tmp3_ = rygel_external_plugin_factory_new (_tmp2_, &_inner_error_);
-		_tmp4_ = _tmp3_;
+		RygelPluginLoader* _tmp0_;
+		RygelExternalPluginFactory* _tmp1_;
+		RygelExternalPluginFactory* _tmp2_;
+		_tmp0_ = loader;
+		_tmp1_ = rygel_external_plugin_factory_new (_tmp0_, &_inner_error_);
+		_tmp2_ = _tmp1_;
 		if (_inner_error_ != NULL) {
 			goto __catch2_g_error;
 		}
 		_rygel_external_plugin_factory_unref0 (plugin_factory);
-		plugin_factory = _tmp4_;
+		plugin_factory = _tmp2_;
 	}
 	goto __finally2;
 	__catch2_g_error:
 	{
 		GError* _error_ = NULL;
-		const gchar* _tmp5_ = NULL;
+		const gchar* _tmp3_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp5_ = _ ("Module '%s' could not connect to D-Bus session bus. " "Ignoring…");
-		g_message (_tmp5_, RYGEL_EXTERNAL_PLUGIN_MODULE_NAME);
+		_tmp3_ = _ ("Module '%s' could not connect to D-Bus session bus. " "Ignoring…");
+		g_message (_tmp3_, RYGEL_EXTERNAL_PLUGIN_MODULE_NAME);
 		_g_error_free0 (_error_);
 	}
 	__finally2:
@@ -734,8 +725,8 @@ static void rygel_external_plugin_factory_name_owner_changed (RygelExternalPlugi
 			const gchar* _tmp8_;
 			RygelPlugin* _tmp9_;
 			_tmp8_ = name;
-			g_debug ("rygel-external-plugin-factory.vala:102: Service '%s' going down, deact" \
-"ivating it", _tmp8_);
+			g_debug ("rygel-external-plugin-factory.vala:95: Service '%s' going down, deacti" \
+"vating it", _tmp8_);
 			_tmp9_ = plugin;
 			rygel_plugin_set_active (_tmp9_, FALSE);
 		} else {
@@ -755,8 +746,8 @@ static void rygel_external_plugin_factory_name_owner_changed (RygelExternalPlugi
 				const gchar* _tmp14_;
 				RygelPlugin* _tmp15_;
 				_tmp14_ = name;
-				g_debug ("rygel-external-plugin-factory.vala:106: Service '%s' up again, activat" \
-"ing it", _tmp14_);
+				g_debug ("rygel-external-plugin-factory.vala:99: Service '%s' up again, activati" \
+"ng it", _tmp14_);
 				_tmp15_ = plugin;
 				rygel_plugin_set_active (_tmp15_, TRUE);
 			}
@@ -847,7 +838,7 @@ static gboolean rygel_external_plugin_factory_load_plugin_n_handle_error_co (Ryg
 		_data_->_tmp1_ = _data_->service_name;
 		_data_->_tmp2_ = _data_->_error_;
 		_data_->_tmp3_ = _data_->_tmp2_->message;
-		g_warning ("rygel-external-plugin-factory.vala:119: Failed to load external plugin" \
+		g_warning ("rygel-external-plugin-factory.vala:112: Failed to load external plugin" \
 " '%s': %s", _data_->_tmp1_, _data_->_tmp3_);
 		_g_error_free0 (_data_->_error_);
 	}
@@ -1022,7 +1013,7 @@ static gboolean rygel_external_plugin_factory_load_plugin_co (RygelExternalPlugi
 	_data_->_tmp2_ = rygel_plugin_loader_plugin_disabled (_data_->_tmp0_, _data_->_tmp1_);
 	if (_data_->_tmp2_) {
 		_data_->_tmp3_ = _data_->service_name;
-		g_message ("rygel-external-plugin-factory.vala:128: Plugin '%s' disabled by user, " \
+		g_message ("rygel-external-plugin-factory.vala:121: Plugin '%s' disabled by user, " \
 "ignoring..", _data_->_tmp3_);
 		if (_data_->_state_ == 0) {
 			g_simple_async_result_complete_in_idle (_data_->_async_result);

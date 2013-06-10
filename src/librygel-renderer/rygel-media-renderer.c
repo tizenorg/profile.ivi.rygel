@@ -29,7 +29,6 @@
 #include <string.h>
 #include <float.h>
 #include <math.h>
-#include <glib/gi18n-lib.h>
 
 
 #define RYGEL_TYPE_MEDIA_RENDERER_PLUGIN (rygel_media_renderer_plugin_get_type ())
@@ -175,18 +174,16 @@ static gpointer _g_object_ref0 (gpointer self) {
 
 Plugin* plugin_construct (GType object_type, RygelMediaPlayer* player, RygelPluginCapabilities capabilities) {
 	Plugin * self = NULL;
-	const gchar* _tmp0_ = NULL;
-	RygelPluginCapabilities _tmp1_;
+	RygelPluginCapabilities _tmp0_;
+	RygelMediaPlayer* _tmp1_;
 	RygelMediaPlayer* _tmp2_;
-	RygelMediaPlayer* _tmp3_;
 	g_return_val_if_fail (player != NULL, NULL);
-	_tmp0_ = _ ("LibRygelRenderer");
-	_tmp1_ = capabilities;
-	self = (Plugin*) rygel_media_renderer_plugin_construct (object_type, "LibRygelRenderer", _tmp0_, NULL, _tmp1_);
-	_tmp2_ = player;
-	_tmp3_ = _g_object_ref0 (_tmp2_);
+	_tmp0_ = capabilities;
+	self = (Plugin*) rygel_media_renderer_plugin_construct (object_type, "LibRygelRenderer", "LibRygelRenderer", NULL, _tmp0_);
+	_tmp1_ = player;
+	_tmp2_ = _g_object_ref0 (_tmp1_);
 	_g_object_unref0 (self->priv->player);
-	self->priv->player = _tmp3_;
+	self->priv->player = _tmp2_;
 	return self;
 }
 

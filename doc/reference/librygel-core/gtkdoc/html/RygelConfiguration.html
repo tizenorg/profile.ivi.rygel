@@ -53,6 +53,8 @@ enum                <a class="link" href="RygelConfiguration.html#RygelConfigura
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="RygelConfiguration.html#rygel-configuration-get-interface" title="rygel_configuration_get_interface ()">rygel_configuration_get_interface</a>   (<em class="parameter"><code><a class="link" href="RygelConfiguration.html" title="RygelConfiguration"><span class="type">RygelConfiguration</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            <a class="link" href="RygelConfiguration.html#rygel-configuration-get-interfaces" title="rygel_configuration_get_interfaces ()">rygel_configuration_get_interfaces</a>  (<em class="parameter"><code><a class="link" href="RygelConfiguration.html" title="RygelConfiguration"><span class="type">RygelConfiguration</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelConfiguration.html#rygel-configuration-get-port" title="rygel_configuration_get_port ()">rygel_configuration_get_port</a>        (<em class="parameter"><code><a class="link" href="RygelConfiguration.html" title="RygelConfiguration"><span class="type">RygelConfiguration</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelConfiguration.html#rygel-configuration-get-transcoding" title="rygel_configuration_get_transcoding ()">rygel_configuration_get_transcoding</a> (<em class="parameter"><code><a class="link" href="RygelConfiguration.html" title="RygelConfiguration"><span class="type">RygelConfiguration</span></a> *self</code></em>,
@@ -213,6 +215,10 @@ RygelConfiguration is implemented by
 <a name="rygel-configuration-get-interface"></a><h3>rygel_configuration_get_interface ()</h3>
 <pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             rygel_configuration_get_interface   (<em class="parameter"><code><a class="link" href="RygelConfiguration.html" title="RygelConfiguration"><span class="type">RygelConfiguration</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">rygel_configuration_get_interface</code> has been deprecated since version 0.19.2 and should not be used in newly-written code. Replaced by <a class="link" href="RygelConfiguration.html#rygel-configuration-get-interfaces" title="rygel_configuration_get_interfaces ()"><code class="function">rygel_configuration_get_interfaces()</code></a>.</p>
+</div>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -223,6 +229,30 @@ RygelConfiguration is implemented by
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-configuration-get-interfaces"></a><h3>rygel_configuration_get_interfaces ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            rygel_configuration_get_interfaces  (<em class="parameter"><code><a class="link" href="RygelConfiguration.html" title="RygelConfiguration"><span class="type">RygelConfiguration</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelConfiguration.html" title="RygelConfiguration"><span class="type">RygelConfiguration</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=result_length1]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -604,6 +634,7 @@ Interface for dealing with Rygel configuration.
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -642,6 +673,11 @@ Interface for creating <a class="link" href="RygelConfiguration.html" title="Ryg
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelConfigurationIface.get-interface"></a>get_interface</code></em> ()</span></p></td>
 <td>virtual method called by <a class="link" href="RygelConfiguration.html#rygel-configuration-get-interface" title="rygel_configuration_get_interface ()"><code class="function"><a class="link" href="RygelConfiguration.html#rygel-configuration-get-interface" title="rygel_configuration_get_interface ()"><code class="function">rygel_configuration_get_interface()</code></a></code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="RygelConfigurationIface.get-interfaces"></a>get_interfaces</code></em> ()</span></p></td>
+<td>virtual method called by <a class="link" href="RygelConfiguration.html#rygel-configuration-get-interfaces" title="rygel_configuration_get_interfaces ()"><code class="function"><a class="link" href="RygelConfiguration.html#rygel-configuration-get-interfaces" title="rygel_configuration_get_interfaces ()"><code class="function">rygel_configuration_get_interfaces()</code></a></code></a>
 </td>
 </tr>
 <tr>

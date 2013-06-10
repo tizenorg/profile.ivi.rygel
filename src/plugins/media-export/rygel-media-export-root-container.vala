@@ -414,16 +414,14 @@ public class Rygel.MediaExport.RootContainer : TrackableDbContainer {
                                         (on_initial_harvesting_done);
 
         // For each location that we want the harvester to scan,
-        // remove it from the cache and request a rescan.
+        // remove it from the cache.
         foreach (var file in this.harvester.locations) {
             ids.remove (MediaCache.get_id (file));
-            this.harvester.schedule (file,
-                                     this.filesystem_container);
         }
 
         // Warn about any top-level locations that were known to 
         // the cache (see above) but which we no longer care about,
-        // and remote it from the cache.
+        // and remove it from the cache.
         foreach (var id in ids) {
             debug ("ID %s is no longer in the configuration. Deleting...", id);
             try {
@@ -433,6 +431,14 @@ public class Rygel.MediaExport.RootContainer : TrackableDbContainer {
                 warning (_("Failed to remove entry: %s"), error.message);
             }
         }
+
+        // Before we start (re-)scanning, create a cache with all mtimes. This
+        // is done here in case we removed ids from above so we make sure we
+        // re-visit everything.
+        this.media_db.rebuild_exists_cache ();
+
+        // Request a rescan of all top-level locations.
+        this.harvester.schedule_locations (this.filesystem_container);
 
         // We have removed some uris so we notify that the root container has
         // changed
@@ -582,7 +588,7 @@ public class Rygel.MediaExport.RootContainer : TrackableDbContainer {
 
     /**
      * Add a QueryContainer to the provided container,
-     * for the specified UpNP class,
+     * for the specified UPnP class,
      * with the specified definition,
      * saving it in the cache.
      */
@@ -653,8 +659,10 @@ public class Rygel.MediaExport.RootContainer : TrackableDbContainer {
         }
 
         // If no child QueryContainers were added, remove
-        // the provided parent container.
-        if (this.media_db.get_child_count (container.id) == 0) {
+        // the provided parent container. Unless it's the Playlist container.
+        if (this.media_db.get_child_count (container.id) == 0 &&
+            !container.id.has_prefix ("virtual-parent:" +
+                                      Rygel.PlaylistItem.UPNP_CLASS)) {
             this.media_db.remove_by_id (container.id);
         } else {
             container.updated ();

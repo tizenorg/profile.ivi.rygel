@@ -8,7 +8,7 @@ endif
 SUBDIRS = $(EXAMPLE_PLUGINS)
 
 
-include ../common.am
+include $(top_srcdir)/common.am
 
 initddir = $(sysconfdir)/rc.d/init.d
 initd_SCRIPTS = service/sysv/rygel

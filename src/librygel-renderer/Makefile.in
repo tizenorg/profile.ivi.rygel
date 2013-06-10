@@ -54,8 +54,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(librygel_renderer_include_HEADERS) \
-	$(srcdir)/../../common.am $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/filelist.am \
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/filelist.am $(top_srcdir)/common.am \
 	librygel_renderer_2_0_la_vala.stamp rygel-av-transport.c \
 	rygel-changelog.c rygel-media-player.c \
 	rygel-media-renderer-plugin.c rygel-media-renderer.c \
@@ -190,8 +190,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -523,7 +521,7 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/../../common.am $(srcdir)/filelist.am $(am__configure_deps)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(top_srcdir)/common.am $(srcdir)/filelist.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -544,7 +542,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
-$(srcdir)/../../common.am $(srcdir)/filelist.am:
+$(top_srcdir)/common.am $(srcdir)/filelist.am:
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh

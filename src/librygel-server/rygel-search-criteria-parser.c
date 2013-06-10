@@ -436,13 +436,13 @@ static gboolean rygel_search_criteria_parser_real_run_co (RygelSearchCriteriaPar
 		_data_->_tmp7_ = rygel_search_criteria_parser_parse_or_expression (_data_->self, &_data_->_inner_error_);
 		_data_->_tmp8_ = _data_->_tmp7_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch61_g_error;
+			goto __catch65_g_error;
 		}
 		_rygel_search_expression_unref0 (_data_->self->expression);
 		_data_->self->expression = _data_->_tmp8_;
 	}
-	goto __finally61;
-	__catch61_g_error:
+	goto __finally65;
+	__catch65_g_error:
 	{
 		_data_->err = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -452,7 +452,7 @@ static gboolean rygel_search_criteria_parser_real_run_co (RygelSearchCriteriaPar
 		_data_->self->err = _data_->_tmp10_;
 		_g_error_free0 (_data_->err);
 	}
-	__finally61:
+	__finally65:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);

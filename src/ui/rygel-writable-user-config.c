@@ -60,9 +60,11 @@ typedef struct _RygelUserConfigPrivate RygelUserConfigPrivate;
 typedef struct _RygelWritableUserConfig RygelWritableUserConfig;
 typedef struct _RygelWritableUserConfigClass RygelWritableUserConfigClass;
 typedef struct _RygelWritableUserConfigPrivate RygelWritableUserConfigPrivate;
-#define _g_free0(var) (var = (g_free (var), NULL))
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
+#define _g_free0(var) (var = (g_free (var), NULL))
 #define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
+typedef struct _Block1Data Block1Data;
+#define _g_main_loop_unref0(var) ((var == NULL) ? NULL : (var = (g_main_loop_unref (var), NULL)))
 
 struct _RygelUserConfig {
 	GObject parent_instance;
@@ -87,7 +89,13 @@ struct _RygelWritableUserConfigClass {
 };
 
 struct _RygelWritableUserConfigPrivate {
-	gchar* user_config;
+	GFile* user_config;
+};
+
+struct _Block1Data {
+	int _ref_count_;
+	RygelWritableUserConfig * self;
+	GMainLoop* loop;
 };
 
 
@@ -108,6 +116,7 @@ RygelWritableUserConfig* rygel_writable_user_config_construct (GType object_type
 RygelUserConfig* rygel_user_config_new (const gchar* local_path, GError** error);
 RygelUserConfig* rygel_user_config_construct (GType object_type, const gchar* local_path, GError** error);
 gboolean rygel_writable_user_config_is_upnp_enabled (RygelWritableUserConfig* self);
+static GFile* rygel_writable_user_config_get_autostart_file (RygelWritableUserConfig* self, GError** error);
 void rygel_writable_user_config_set_upnp_enabled (RygelWritableUserConfig* self, gboolean value);
 static void rygel_writable_user_config_enable_upnp (RygelWritableUserConfig* self, gboolean enable);
 void rygel_writable_user_config_set_interface (RygelWritableUserConfig* self, const gchar* value);
@@ -126,6 +135,12 @@ void rygel_writable_user_config_set_allow_deletion (RygelWritableUserConfig* sel
 void rygel_writable_user_config_save (RygelWritableUserConfig* self);
 void rygel_writable_user_config_set_string_list (RygelWritableUserConfig* self, const gchar* section, const gchar* key, GeeArrayList* str_list);
 static void rygel_writable_user_config_ensure_dir_exists (RygelWritableUserConfig* self, const gchar* dir_path, GError** error);
+static Block1Data* block1_data_ref (Block1Data* _data1_);
+static void block1_data_unref (void * _userdata_);
+static void ____lambda2_ (Block1Data* _data1_);
+static void _____lambda2__gbus_name_appeared_callback (GDBusConnection* connection, const gchar* name, const gchar* name_owner, gpointer self);
+static void ____lambda3_ (Block1Data* _data1_);
+static void _____lambda3__gbus_name_vanished_callback (GDBusConnection* connection, const gchar* name, gpointer self);
 #define RYGEL_USER_CONFIG_ENABLED_KEY "enabled"
 #define RYGEL_USER_CONFIG_UPNP_ENABLED_KEY "upnp-" RYGEL_USER_CONFIG_ENABLED_KEY
 static void rygel_writable_user_config_finalize (GObject* obj);
@@ -138,7 +153,9 @@ RygelWritableUserConfig* rygel_writable_user_config_construct (GType object_type
 	const gchar* _tmp0_ = NULL;
 	gchar* _tmp1_ = NULL;
 	gchar* path;
-	gchar* _tmp2_;
+	GFile* _tmp2_ = NULL;
+	GFile* _tmp3_;
+	gboolean _tmp4_ = FALSE;
 	GError * _inner_error_ = NULL;
 	_tmp0_ = g_get_user_config_dir ();
 	_tmp1_ = g_build_filename (_tmp0_, RYGEL_USER_CONFIG_CONFIG_FILE, NULL);
@@ -150,9 +167,44 @@ RygelWritableUserConfig* rygel_writable_user_config_construct (GType object_type
 		_g_object_unref0 (self);
 		return NULL;
 	}
-	_tmp2_ = g_strdup (path);
-	_g_free0 (self->priv->user_config);
+	_tmp2_ = g_file_new_for_path (path);
+	_g_object_unref0 (self->priv->user_config);
 	self->priv->user_config = _tmp2_;
+	_tmp3_ = self->priv->user_config;
+	_tmp4_ = g_file_query_exists (_tmp3_, NULL);
+	if (!_tmp4_) {
+		{
+			GKeyFile* _tmp5_;
+			GKeyFile* _tmp6_;
+			gchar* _tmp7_ = NULL;
+			gchar* _tmp8_;
+			_tmp5_ = ((RygelUserConfig*) self)->key_file;
+			_tmp6_ = ((RygelUserConfig*) self)->sys_key_file;
+			_tmp7_ = g_key_file_to_data (_tmp6_, NULL, NULL);
+			_tmp8_ = _tmp7_;
+			g_key_file_load_from_data (_tmp5_, _tmp8_, (gsize) (-1), G_KEY_FILE_KEEP_COMMENTS | G_KEY_FILE_KEEP_TRANSLATIONS, &_inner_error_);
+			_g_free0 (_tmp8_);
+			if (_inner_error_ != NULL) {
+				goto __catch2_g_error;
+			}
+		}
+		goto __finally2;
+		__catch2_g_error:
+		{
+			GError* _error_ = NULL;
+			_error_ = _inner_error_;
+			_inner_error_ = NULL;
+			g_assert_not_reached ();
+			_g_error_free0 (_error_);
+		}
+		__finally2:
+		if (_inner_error_ != NULL) {
+			g_propagate_error (error, _inner_error_);
+			_g_free0 (path);
+			_g_object_unref0 (self);
+			return NULL;
+		}
+	}
 	_g_free0 (path);
 	return self;
 }
@@ -168,35 +220,48 @@ gboolean rygel_writable_user_config_is_upnp_enabled (RygelWritableUserConfig* se
 	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (self != NULL, FALSE);
 	{
-		const gchar* _tmp0_;
-		GFile* _tmp1_ = NULL;
-		GFile* file;
+		GFile* _tmp0_ = NULL;
+		GFile* autostart_file;
+		gboolean _tmp1_ = FALSE;
 		GFile* _tmp2_;
 		gboolean _tmp3_ = FALSE;
-		_tmp0_ = self->priv->user_config;
-		_tmp1_ = g_file_new_for_path (_tmp0_);
-		file = _tmp1_;
-		_tmp2_ = file;
+		gboolean _tmp6_;
+		_tmp0_ = rygel_writable_user_config_get_autostart_file (self, &_inner_error_);
+		autostart_file = _tmp0_;
+		if (_inner_error_ != NULL) {
+			goto __catch3_g_error;
+		}
+		_tmp2_ = self->priv->user_config;
 		_tmp3_ = g_file_query_exists (_tmp2_, NULL);
 		if (_tmp3_) {
-			gboolean _tmp4_ = FALSE;
-			gboolean _tmp5_;
-			_tmp4_ = rygel_configuration_get_upnp_enabled ((RygelConfiguration*) self, &_inner_error_);
-			_tmp5_ = _tmp4_;
+			GFile* _tmp4_;
+			gboolean _tmp5_ = FALSE;
+			_tmp4_ = autostart_file;
+			_tmp5_ = g_file_query_exists (_tmp4_, NULL);
+			_tmp1_ = _tmp5_;
+		} else {
+			_tmp1_ = FALSE;
+		}
+		_tmp6_ = _tmp1_;
+		if (_tmp6_) {
+			gboolean _tmp7_ = FALSE;
+			gboolean _tmp8_;
+			_tmp7_ = rygel_configuration_get_upnp_enabled ((RygelConfiguration*) self, &_inner_error_);
+			_tmp8_ = _tmp7_;
 			if (_inner_error_ != NULL) {
-				_g_object_unref0 (file);
-				goto __catch2_g_error;
+				_g_object_unref0 (autostart_file);
+				goto __catch3_g_error;
 			}
-			result = _tmp5_;
-			_g_object_unref0 (file);
+			result = _tmp8_;
+			_g_object_unref0 (autostart_file);
 			return result;
 		}
 		result = FALSE;
-		_g_object_unref0 (file);
+		_g_object_unref0 (autostart_file);
 		return result;
 	}
-	goto __finally2;
-	__catch2_g_error:
+	goto __finally3;
+	__catch3_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -205,7 +270,7 @@ gboolean rygel_writable_user_config_is_upnp_enabled (RygelWritableUserConfig* se
 		_g_error_free0 (_error_);
 		return result;
 	}
-	__finally2:
+	__finally3:
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 	g_clear_error (&_inner_error_);
 	return FALSE;
@@ -310,7 +375,7 @@ void rygel_writable_user_config_save (RygelWritableUserConfig* self) {
 		g_file_set_contents (path, data, (gssize) ((glong) length), &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_FILE_ERROR) {
-				goto __catch3_g_file_error;
+				goto __catch4_g_file_error;
 			}
 			_g_free0 (data);
 			_g_free0 (path);
@@ -319,8 +384,8 @@ void rygel_writable_user_config_save (RygelWritableUserConfig* self) {
 			return;
 		}
 	}
-	goto __finally3;
-	__catch3_g_file_error:
+	goto __finally4;
+	__catch4_g_file_error:
 	{
 		GError* err = NULL;
 		const gchar* _tmp5_ = NULL;
@@ -334,7 +399,7 @@ void rygel_writable_user_config_save (RygelWritableUserConfig* self) {
 		g_critical (_tmp5_, path, _tmp7_);
 		_g_error_free0 (err);
 	}
-	__finally3:
+	__finally4:
 	if (_inner_error_ != NULL) {
 		_g_free0 (data);
 		_g_free0 (path);
@@ -496,104 +561,150 @@ void rygel_writable_user_config_set_bool (RygelWritableUserConfig* self, const g
 }
 
 
+static GFile* rygel_writable_user_config_get_autostart_file (RygelWritableUserConfig* self, GError** error) {
+	GFile* result = NULL;
+	const gchar* _tmp0_ = NULL;
+	gchar* _tmp1_;
+	gchar* config_dir;
+	const gchar* _tmp2_;
+	const gchar* _tmp3_;
+	gchar* _tmp4_ = NULL;
+	gchar* dest_dir;
+	const gchar* _tmp5_;
+	const gchar* _tmp6_;
+	gchar* _tmp7_ = NULL;
+	gchar* dest_path;
+	const gchar* _tmp8_;
+	GFile* _tmp9_ = NULL;
+	GFile* dest;
+	GError * _inner_error_ = NULL;
+	g_return_val_if_fail (self != NULL, NULL);
+	_tmp0_ = g_get_user_config_dir ();
+	_tmp1_ = g_strdup (_tmp0_);
+	config_dir = _tmp1_;
+	_tmp2_ = config_dir;
+	rygel_writable_user_config_ensure_dir_exists (self, _tmp2_, &_inner_error_);
+	if (_inner_error_ != NULL) {
+		g_propagate_error (error, _inner_error_);
+		_g_free0 (config_dir);
+		return NULL;
+	}
+	_tmp3_ = config_dir;
+	_tmp4_ = g_build_filename (_tmp3_, "autostart", NULL);
+	dest_dir = _tmp4_;
+	_tmp5_ = dest_dir;
+	rygel_writable_user_config_ensure_dir_exists (self, _tmp5_, &_inner_error_);
+	if (_inner_error_ != NULL) {
+		g_propagate_error (error, _inner_error_);
+		_g_free0 (dest_dir);
+		_g_free0 (config_dir);
+		return NULL;
+	}
+	_tmp6_ = dest_dir;
+	_tmp7_ = g_build_filename (_tmp6_, "rygel.desktop", NULL);
+	dest_path = _tmp7_;
+	_tmp8_ = dest_path;
+	_tmp9_ = g_file_new_for_path (_tmp8_);
+	dest = _tmp9_;
+	result = dest;
+	_g_free0 (dest_path);
+	_g_free0 (dest_dir);
+	_g_free0 (config_dir);
+	return result;
+}
+
+
+static Block1Data* block1_data_ref (Block1Data* _data1_) {
+	g_atomic_int_inc (&_data1_->_ref_count_);
+	return _data1_;
+}
+
+
+static void block1_data_unref (void * _userdata_) {
+	Block1Data* _data1_;
+	_data1_ = (Block1Data*) _userdata_;
+	if (g_atomic_int_dec_and_test (&_data1_->_ref_count_)) {
+		RygelWritableUserConfig * self;
+		self = _data1_->self;
+		_g_main_loop_unref0 (_data1_->loop);
+		_g_object_unref0 (self);
+		g_slice_free (Block1Data, _data1_);
+	}
+}
+
+
+static void ____lambda2_ (Block1Data* _data1_) {
+	RygelWritableUserConfig * self;
+	GMainLoop* _tmp0_;
+	self = _data1_->self;
+	_tmp0_ = _data1_->loop;
+	g_main_loop_quit (_tmp0_);
+}
+
+
+static void _____lambda2__gbus_name_appeared_callback (GDBusConnection* connection, const gchar* name, const gchar* name_owner, gpointer self) {
+	____lambda2_ (self);
+}
+
+
+static void ____lambda3_ (Block1Data* _data1_) {
+	RygelWritableUserConfig * self;
+	GMainLoop* _tmp0_;
+	self = _data1_->self;
+	_tmp0_ = _data1_->loop;
+	g_main_loop_quit (_tmp0_);
+}
+
+
+static void _____lambda3__gbus_name_vanished_callback (GDBusConnection* connection, const gchar* name, gpointer self) {
+	____lambda3_ (self);
+}
+
+
 static void rygel_writable_user_config_enable_upnp (RygelWritableUserConfig* self, gboolean enable) {
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	{
-		const gchar* _tmp0_ = NULL;
-		gchar* _tmp1_;
-		gchar* config_dir;
-		const gchar* _tmp2_;
-		const gchar* _tmp3_;
-		gchar* _tmp4_ = NULL;
-		gchar* dest_dir;
-		const gchar* _tmp5_;
-		const gchar* _tmp6_;
-		gchar* _tmp7_ = NULL;
-		gchar* dest_path;
-		const gchar* _tmp8_;
-		GFile* _tmp9_ = NULL;
+		GFile* _tmp0_ = NULL;
 		GFile* dest;
-		gboolean _tmp10_;
-		_tmp0_ = g_get_user_config_dir ();
-		_tmp1_ = g_strdup (_tmp0_);
-		config_dir = _tmp1_;
-		_tmp2_ = config_dir;
-		rygel_writable_user_config_ensure_dir_exists (self, _tmp2_, &_inner_error_);
+		gboolean _tmp1_;
+		_tmp0_ = rygel_writable_user_config_get_autostart_file (self, &_inner_error_);
+		dest = _tmp0_;
 		if (_inner_error_ != NULL) {
-			_g_free0 (config_dir);
-			goto __catch4_g_error;
+			goto __catch5_g_error;
 		}
-		_tmp3_ = config_dir;
-		_tmp4_ = g_build_filename (_tmp3_, "autostart", NULL);
-		dest_dir = _tmp4_;
-		_tmp5_ = dest_dir;
-		rygel_writable_user_config_ensure_dir_exists (self, _tmp5_, &_inner_error_);
-		if (_inner_error_ != NULL) {
-			_g_free0 (dest_dir);
-			_g_free0 (config_dir);
-			goto __catch4_g_error;
-		}
-		_tmp6_ = dest_dir;
-		_tmp7_ = g_build_filename (_tmp6_, "rygel.desktop", NULL);
-		dest_path = _tmp7_;
-		_tmp8_ = dest_path;
-		_tmp9_ = g_file_new_for_path (_tmp8_);
-		dest = _tmp9_;
-		_tmp10_ = enable;
-		if (_tmp10_) {
-			gchar* _tmp11_ = NULL;
+		_tmp1_ = enable;
+		if (_tmp1_) {
+			Block1Data* _data1_;
+			GMainLoop* _tmp2_;
+			GMainLoop* _tmp3_;
+			gchar* _tmp4_ = NULL;
 			gchar* source_path;
-			g_bus_watch_name_with_closures (G_BUS_TYPE_SESSION, RYGEL_DBUS_INTERFACE_SERVICE_NAME, G_BUS_NAME_WATCHER_FLAGS_AUTO_START, (GClosure*) ((NULL == NULL) ? NULL : g_cclosure_new ((GCallback) NULL, NULL, NULL)), (GClosure*) ((NULL == NULL) ? NULL : g_cclosure_new ((GCallback) NULL, NULL, NULL)));
-			_tmp11_ = g_build_filename (DESKTOP_DIR, "rygel.desktop", NULL);
-			source_path = _tmp11_;
+			_data1_ = g_slice_new0 (Block1Data);
+			_data1_->_ref_count_ = 1;
+			_data1_->self = g_object_ref (self);
+			_tmp2_ = g_main_loop_new (NULL, FALSE);
+			_data1_->loop = _tmp2_;
+			g_bus_watch_name_with_closures (G_BUS_TYPE_SESSION, RYGEL_DBUS_INTERFACE_SERVICE_NAME, G_BUS_NAME_WATCHER_FLAGS_AUTO_START, (GClosure*) ((_____lambda2__gbus_name_appeared_callback == NULL) ? NULL : g_cclosure_new ((GCallback) _____lambda2__gbus_name_appeared_callback, block1_data_ref (_data1_), block1_data_unref)), (GClosure*) ((_____lambda3__gbus_name_vanished_callback == NULL) ? NULL : g_cclosure_new ((GCallback) _____lambda3__gbus_name_vanished_callback, block1_data_ref (_data1_), block1_data_unref)));
+			_tmp3_ = _data1_->loop;
+			g_main_loop_run (_tmp3_);
+			_tmp4_ = g_build_filename (DESKTOP_DIR, "rygel.desktop", NULL);
+			source_path = _tmp4_;
 			{
-				GFile* _tmp12_;
-				const gchar* _tmp13_;
-				_tmp12_ = dest;
-				_tmp13_ = source_path;
-				g_file_make_symbolic_link (_tmp12_, _tmp13_, NULL, &_inner_error_);
+				GFile* _tmp5_;
+				const gchar* _tmp6_;
+				_tmp5_ = dest;
+				_tmp6_ = source_path;
+				g_file_make_symbolic_link (_tmp5_, _tmp6_, NULL, &_inner_error_);
 				if (_inner_error_ != NULL) {
 					if (g_error_matches (_inner_error_, G_IO_ERROR, G_IO_ERROR_EXISTS)) {
-						goto __catch5_g_io_error_exists;
-					}
-					goto __finally5;
-				}
-			}
-			goto __finally5;
-			__catch5_g_io_error_exists:
-			{
-				GError* err = NULL;
-				err = _inner_error_;
-				_inner_error_ = NULL;
-				_g_error_free0 (err);
-			}
-			__finally5:
-			if (_inner_error_ != NULL) {
-				_g_free0 (source_path);
-				_g_object_unref0 (dest);
-				_g_free0 (dest_path);
-				_g_free0 (dest_dir);
-				_g_free0 (config_dir);
-				goto __catch4_g_error;
-			}
-			rygel_writable_user_config_set_bool (self, "general", RYGEL_USER_CONFIG_UPNP_ENABLED_KEY, TRUE);
-			_g_free0 (source_path);
-		} else {
-			gboolean _tmp15_ = FALSE;
-			{
-				GFile* _tmp14_;
-				_tmp14_ = dest;
-				g_file_delete (_tmp14_, NULL, &_inner_error_);
-				if (_inner_error_ != NULL) {
-					if (g_error_matches (_inner_error_, G_IO_ERROR, G_IO_ERROR_NOT_FOUND)) {
-						goto __catch6_g_io_error_not_found;
+						goto __catch6_g_io_error_exists;
 					}
 					goto __finally6;
 				}
 			}
 			goto __finally6;
-			__catch6_g_io_error_not_found:
+			__catch6_g_io_error_exists:
 			{
 				GError* err = NULL;
 				err = _inner_error_;
@@ -602,80 +713,101 @@ static void rygel_writable_user_config_enable_upnp (RygelWritableUserConfig* sel
 			}
 			__finally6:
 			if (_inner_error_ != NULL) {
+				_g_free0 (source_path);
+				block1_data_unref (_data1_);
+				_data1_ = NULL;
 				_g_object_unref0 (dest);
-				_g_free0 (dest_path);
-				_g_free0 (dest_dir);
-				_g_free0 (config_dir);
-				goto __catch4_g_error;
+				goto __catch5_g_error;
+			}
+			rygel_writable_user_config_set_bool (self, "general", RYGEL_USER_CONFIG_UPNP_ENABLED_KEY, TRUE);
+			_g_free0 (source_path);
+			block1_data_unref (_data1_);
+			_data1_ = NULL;
+		} else {
+			gboolean _tmp8_ = FALSE;
+			{
+				GFile* _tmp7_;
+				_tmp7_ = dest;
+				g_file_delete (_tmp7_, NULL, &_inner_error_);
+				if (_inner_error_ != NULL) {
+					if (g_error_matches (_inner_error_, G_IO_ERROR, G_IO_ERROR_NOT_FOUND)) {
+						goto __catch7_g_io_error_not_found;
+					}
+					goto __finally7;
+				}
+			}
+			goto __finally7;
+			__catch7_g_io_error_not_found:
+			{
+				GError* err = NULL;
+				err = _inner_error_;
+				_inner_error_ = NULL;
+				_g_error_free0 (err);
+			}
+			__finally7:
+			if (_inner_error_ != NULL) {
+				_g_object_unref0 (dest);
+				goto __catch5_g_error;
 			}
 			rygel_writable_user_config_set_bool (self, "general", RYGEL_USER_CONFIG_UPNP_ENABLED_KEY, FALSE);
-			_tmp15_ = rygel_writable_user_config_is_upnp_enabled (self);
-			if (_tmp15_) {
-				RygelDBusInterface* _tmp16_ = NULL;
+			_tmp8_ = rygel_writable_user_config_is_upnp_enabled (self);
+			if (_tmp8_) {
+				RygelDBusInterface* _tmp9_ = NULL;
 				RygelDBusInterface* rygel_proxy;
-				RygelDBusInterface* _tmp17_;
-				_tmp16_ = g_initable_new (RYGEL_TYPE_DBUS_INTERFACE_PROXY, NULL, &_inner_error_, "g-flags", G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES, "g-name", RYGEL_DBUS_INTERFACE_SERVICE_NAME, "g-bus-type", G_BUS_TYPE_SESSION, "g-object-path", RYGEL_DBUS_INTERFACE_OBJECT_PATH, "g-interface-name", "org.gnome.Rygel1", NULL);
-				rygel_proxy = (RygelDBusInterface*) _tmp16_;
+				RygelDBusInterface* _tmp10_;
+				_tmp9_ = g_initable_new (RYGEL_TYPE_DBUS_INTERFACE_PROXY, NULL, &_inner_error_, "g-flags", G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES, "g-name", RYGEL_DBUS_INTERFACE_SERVICE_NAME, "g-bus-type", G_BUS_TYPE_SESSION, "g-object-path", RYGEL_DBUS_INTERFACE_OBJECT_PATH, "g-interface-name", "org.gnome.Rygel1", NULL);
+				rygel_proxy = (RygelDBusInterface*) _tmp9_;
 				if (_inner_error_ != NULL) {
 					_g_object_unref0 (dest);
-					_g_free0 (dest_path);
-					_g_free0 (dest_dir);
-					_g_free0 (config_dir);
-					goto __catch4_g_error;
+					goto __catch5_g_error;
 				}
-				_tmp17_ = rygel_proxy;
-				rygel_dbus_interface_shutdown (_tmp17_, &_inner_error_);
+				_tmp10_ = rygel_proxy;
+				rygel_dbus_interface_shutdown (_tmp10_, &_inner_error_);
 				if (_inner_error_ != NULL) {
 					_g_object_unref0 (rygel_proxy);
 					_g_object_unref0 (dest);
-					_g_free0 (dest_path);
-					_g_free0 (dest_dir);
-					_g_free0 (config_dir);
-					goto __catch4_g_error;
+					goto __catch5_g_error;
 				}
 				_g_object_unref0 (rygel_proxy);
 			}
 		}
 		_g_object_unref0 (dest);
-		_g_free0 (dest_path);
-		_g_free0 (dest_dir);
-		_g_free0 (config_dir);
 	}
-	goto __finally4;
-	__catch4_g_error:
+	goto __finally5;
+	__catch5_g_error:
 	{
 		GError* err = NULL;
 		gchar* message = NULL;
-		gboolean _tmp18_;
-		const gchar* _tmp23_;
-		GError* _tmp24_;
-		const gchar* _tmp25_;
+		gboolean _tmp11_;
+		const gchar* _tmp16_;
+		GError* _tmp17_;
+		const gchar* _tmp18_;
 		err = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp18_ = enable;
-		if (_tmp18_) {
-			const gchar* _tmp19_ = NULL;
-			gchar* _tmp20_;
-			_tmp19_ = _ ("Failed to start Rygel service: %s");
-			_tmp20_ = g_strdup (_tmp19_);
+		_tmp11_ = enable;
+		if (_tmp11_) {
+			const gchar* _tmp12_ = NULL;
+			gchar* _tmp13_;
+			_tmp12_ = _ ("Failed to start Rygel service: %s");
+			_tmp13_ = g_strdup (_tmp12_);
 			_g_free0 (message);
-			message = _tmp20_;
+			message = _tmp13_;
 		} else {
-			const gchar* _tmp21_ = NULL;
-			gchar* _tmp22_;
-			_tmp21_ = _ ("Failed to stop Rygel service: %s");
-			_tmp22_ = g_strdup (_tmp21_);
+			const gchar* _tmp14_ = NULL;
+			gchar* _tmp15_;
+			_tmp14_ = _ ("Failed to stop Rygel service: %s");
+			_tmp15_ = g_strdup (_tmp14_);
 			_g_free0 (message);
-			message = _tmp22_;
+			message = _tmp15_;
 		}
-		_tmp23_ = message;
-		_tmp24_ = err;
-		_tmp25_ = _tmp24_->message;
-		g_warning (_tmp23_, _tmp25_);
+		_tmp16_ = message;
+		_tmp17_ = err;
+		_tmp18_ = _tmp17_->message;
+		g_warning (_tmp16_, _tmp18_);
 		_g_free0 (message);
 		_g_error_free0 (err);
 	}
-	__finally4:
+	__finally5:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -698,20 +830,20 @@ static void rygel_writable_user_config_ensure_dir_exists (RygelWritableUserConfi
 		g_file_make_directory (dir, NULL, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (g_error_matches (_inner_error_, G_IO_ERROR, G_IO_ERROR_EXISTS)) {
-				goto __catch7_g_io_error_exists;
+				goto __catch8_g_io_error_exists;
 			}
-			goto __finally7;
+			goto __finally8;
 		}
 	}
-	goto __finally7;
-	__catch7_g_io_error_exists:
+	goto __finally8;
+	__catch8_g_io_error_exists:
 	{
 		GError* err = NULL;
 		err = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (err);
 	}
-	__finally7:
+	__finally8:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_object_unref0 (dir);
@@ -736,7 +868,7 @@ static void rygel_writable_user_config_instance_init (RygelWritableUserConfig * 
 static void rygel_writable_user_config_finalize (GObject* obj) {
 	RygelWritableUserConfig * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_WRITABLE_USER_CONFIG, RygelWritableUserConfig);
-	_g_free0 (self->priv->user_config);
+	_g_object_unref0 (self->priv->user_config);
 	G_OBJECT_CLASS (rygel_writable_user_config_parent_class)->finalize (obj);
 }
 

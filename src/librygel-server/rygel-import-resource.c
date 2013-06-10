@@ -632,13 +632,13 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		if (_data_->_tmp1_ == NULL) {
 			_data_->_tmp2_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, "Must provide source URI");
 			_data_->_inner_error_ = _data_->_tmp2_;
-			goto __catch42_g_error;
+			goto __catch46_g_error;
 		}
 		_data_->_tmp3_ = _data_->self->destination_uri;
 		if (_data_->_tmp3_ == NULL) {
 			_data_->_tmp4_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_DESTINATION_RESOURCE, "Must provide destination URI");
 			_data_->_inner_error_ = _data_->_tmp4_;
-			goto __catch42_g_error;
+			goto __catch46_g_error;
 		}
 		_data_->_tmp5_ = _data_->self->priv->action;
 		_data_->_tmp6_ = _data_->self->transfer_id;
@@ -651,13 +651,13 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		_data_->_tmp7_ = rygel_import_resource_fetch_item_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		_data_->_tmp8_ = _data_->_tmp7_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch42_g_error;
+			goto __catch46_g_error;
 		}
 		_g_object_unref0 (_data_->self->priv->item);
 		_data_->self->priv->item = _data_->_tmp8_;
 	}
-	goto __finally42;
-	__catch42_g_error:
+	goto __finally46;
+	__catch46_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -691,7 +691,7 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		g_object_unref (_data_->_async_result);
 		return FALSE;
 	}
-	__finally42:
+	__finally46:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);
@@ -726,7 +726,7 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		_data_->_tmp33_ = _data_->_tmp32_;
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->source_file);
-			goto __catch43_g_error;
+			goto __catch47_g_error;
 		}
 		_g_object_unref0 (_data_->self->priv->output_stream);
 		_data_->self->priv->output_stream = _data_->_tmp33_;
@@ -770,8 +770,8 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		_g_object_unref0 (_data_->message);
 		_g_object_unref0 (_data_->source_file);
 	}
-	goto __finally43;
-	__catch43_g_error:
+	goto __finally47;
+	__catch47_g_error:
 	{
 		_data_->err = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -790,7 +790,7 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		rygel_object_removal_queue_remove_now_finish (_data_->_tmp52_, _data_->_res_);
 		_g_error_free0 (_data_->err);
 	}
-	__finally43:
+	__finally47:
 	if (_data_->_inner_error_ != NULL) {
 		_g_object_unref0 (_data_->queue);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
@@ -1059,7 +1059,7 @@ static void rygel_import_resource_got_headers_cb (RygelImportResource* self, Sou
 			_tmp14_ = _tmp13_;
 			g_output_stream_close ((GOutputStream*) _tmp12_, _tmp14_, &_inner_error_);
 			if (_inner_error_ != NULL) {
-				goto __catch44_g_error;
+				goto __catch48_g_error;
 			}
 			_tmp15_ = self->priv->item;
 			_tmp16_ = ((RygelMediaObject*) _tmp15_)->uris;
@@ -1075,19 +1075,19 @@ static void rygel_import_resource_got_headers_cb (RygelImportResource* self, Sou
 			g_file_delete (_tmp21_, _tmp23_, &_inner_error_);
 			if (_inner_error_ != NULL) {
 				_g_object_unref0 (file);
-				goto __catch44_g_error;
+				goto __catch48_g_error;
 			}
 			_g_object_unref0 (file);
 		}
-		goto __finally44;
-		__catch44_g_error:
+		goto __finally48;
+		__catch48_g_error:
 		{
 			GError* _error_ = NULL;
 			_error_ = _inner_error_;
 			_inner_error_ = NULL;
 			_g_error_free0 (_error_);
 		}
-		__finally44:
+		__finally48:
 		if (_inner_error_ != NULL) {
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1150,11 +1150,11 @@ static void rygel_import_resource_got_chunk_cb (RygelImportResource* self, SoupM
 		g_output_stream_write_all ((GOutputStream*) _tmp3_, _tmp5_, (gsize) _tmp5__length1, &_tmp8_, _tmp7_, &_inner_error_);
 		bytes_written = _tmp8_;
 		if (_inner_error_ != NULL) {
-			goto __catch45_g_error;
+			goto __catch49_g_error;
 		}
 	}
-	goto __finally45;
-	__catch45_g_error:
+	goto __finally49;
+	__catch49_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp9_;
@@ -1178,7 +1178,7 @@ static void rygel_import_resource_got_chunk_cb (RygelImportResource* self, SoupM
 		soup_session_cancel_message (_tmp12_, _tmp13_, (guint) SOUP_STATUS_CANCELLED);
 		_g_error_free0 (_error_);
 	}
-	__finally45:
+	__finally49:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1217,15 +1217,15 @@ static void rygel_import_resource_got_body_cb (RygelImportResource* self, SoupMe
 		_tmp6_ = _tmp5_;
 		g_output_stream_close ((GOutputStream*) _tmp4_, _tmp6_, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch46_g_error;
+			goto __catch50_g_error;
 		}
 		_tmp7_ = self->status;
 		if (_tmp7_ == RYGEL_TRANSFER_STATUS_IN_PROGRESS) {
 			self->status = RYGEL_TRANSFER_STATUS_COMPLETED;
 		}
 	}
-	goto __finally46;
-	__catch46_g_error:
+	goto __finally50;
+	__catch50_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp8_;
@@ -1238,7 +1238,7 @@ static void rygel_import_resource_got_body_cb (RygelImportResource* self, SoupMe
 		self->status = RYGEL_TRANSFER_STATUS_ERROR;
 		_g_error_free0 (_error_);
 	}
-	__finally46:
+	__finally50:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

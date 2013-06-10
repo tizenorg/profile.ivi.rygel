@@ -4,7 +4,7 @@
   <chapters>
     <sub name="Overview" link="overview.html">
       <sub name="" link="overview.html#overview">
-        <sub name="Basic Usage" link="overview.html#idp9297920"/>
+        <sub name="Basic Usage" link="overview.html#idp8450256"/>
       </sub>
     </sub>
     <sub name="librygel-core API Reference" link="api-main-list-c.html">
@@ -49,7 +49,8 @@
     <keyword type="enum" name="enum RygelSectionEntry" link="RygelConfiguration.html#RygelSectionEntry-enum"/>
     <keyword type="enum" name="enum RygelConfigurationError" link="RygelConfiguration.html#RygelConfigurationError"/>
     <keyword type="function" name="rygel_configuration_get_upnp_enabled ()" link="RygelConfiguration.html#rygel-configuration-get-upnp-enabled"/>
-    <keyword type="function" name="rygel_configuration_get_interface ()" link="RygelConfiguration.html#rygel-configuration-get-interface"/>
+    <keyword type="function" name="rygel_configuration_get_interface ()" link="RygelConfiguration.html#rygel-configuration-get-interface" deprecated="0.19.2: Replaced by rygel_configuration_get_interfaces ()."/>
+    <keyword type="function" name="rygel_configuration_get_interfaces ()" link="RygelConfiguration.html#rygel-configuration-get-interfaces"/>
     <keyword type="function" name="rygel_configuration_get_port ()" link="RygelConfiguration.html#rygel-configuration-get-port"/>
     <keyword type="function" name="rygel_configuration_get_transcoding ()" link="RygelConfiguration.html#rygel-configuration-get-transcoding"/>
     <keyword type="function" name="rygel_configuration_get_allow_upload ()" link="RygelConfiguration.html#rygel-configuration-get-allow-upload"/>
@@ -142,6 +143,7 @@
     <keyword type="function" name="rygel_recursive_module_loader_load_modules ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-modules"/>
     <keyword type="function" name="rygel_recursive_module_loader_load_modules_sync ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-modules-sync"/>
     <keyword type="function" name="rygel_recursive_module_loader_load_module_from_file ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-file"/>
+    <keyword type="function" name="rygel_recursive_module_loader_load_module_from_info ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-info"/>
     <keyword type="function" name="rygel_recursive_module_loader_get_base_path ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-get-base-path"/>
     <keyword type="function" name="rygel_recursive_module_loader_set_base_path ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-set-base-path"/>
     <keyword type="struct" name="struct RygelRecursiveModuleLoader" link="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader-struct"/>
@@ -198,6 +200,7 @@
     <keyword type="macro" name="RYGEL_TYPE_BASE_CONFIGURATION" link="RygelBaseConfiguration.html#RYGEL-TYPE-BASE-CONFIGURATION:CAPS"/>
     <keyword type="function" name="rygel_base_configuration_get_upnp_enabled ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-upnp-enabled"/>
     <keyword type="function" name="rygel_base_configuration_get_interface ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-interface"/>
+    <keyword type="function" name="rygel_base_configuration_get_interfaces ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-interfaces"/>
     <keyword type="function" name="rygel_base_configuration_get_port ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-port"/>
     <keyword type="function" name="rygel_base_configuration_get_transcoding ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-transcoding"/>
     <keyword type="function" name="rygel_base_configuration_get_allow_upload ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-allow-upload"/>

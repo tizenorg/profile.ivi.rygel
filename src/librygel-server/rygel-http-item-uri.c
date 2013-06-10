@@ -570,6 +570,14 @@ RygelHTTPItemURI* rygel_http_item_uri_construct (GType object_type, RygelMediaOb
 	RygelHTTPServer* _tmp6_;
 	const gchar* _tmp7_;
 	RygelMediaObject* _tmp8_;
+	RygelMediaObject* _tmp9_;
+	RygelMediaItem* _tmp10_;
+	RygelMediaItem* item;
+	gint _tmp11_;
+	gchar* _tmp55_;
+	gchar* _tmp56_;
+	gchar* _tmp57_;
+	gboolean _tmp58_;
 	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (object != NULL, NULL);
 	g_return_val_if_fail (http_server != NULL, NULL);
@@ -590,268 +598,261 @@ RygelHTTPItemURI* rygel_http_item_uri_construct (GType object_type, RygelMediaOb
 	rygel_http_item_uri_set_playlist_format (self, _tmp7_);
 	rygel_http_item_uri_set_extension (self, "");
 	_tmp8_ = object;
-	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp8_, RYGEL_TYPE_MEDIA_ITEM)) {
-		RygelMediaObject* _tmp9_;
-		RygelMediaItem* _tmp10_;
-		RygelMediaItem* item;
-		gint _tmp11_;
-		gchar* _tmp55_;
-		gchar* _tmp56_;
-		gchar* _tmp57_;
-		gboolean _tmp58_;
-		_tmp9_ = object;
-		_tmp10_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp9_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp9_) : NULL);
-		item = _tmp10_;
-		_tmp11_ = thumbnail_index;
-		if (_tmp11_ > (-1)) {
-			RygelMediaItem* _tmp12_;
-			_tmp12_ = item;
-			if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp12_, RYGEL_TYPE_VISUAL_ITEM)) {
-				RygelMediaItem* _tmp13_;
-				GeeArrayList* _tmp14_;
-				GeeArrayList* _tmp15_;
-				GeeArrayList* _tmp16_;
-				GeeArrayList* thumbnails;
-				GeeArrayList* _tmp17_;
-				gint _tmp18_;
-				gint _tmp19_;
-				gint _tmp20_;
-				_tmp13_ = item;
-				_tmp14_ = rygel_visual_item_get_thumbnails (G_TYPE_CHECK_INSTANCE_TYPE (_tmp13_, RYGEL_TYPE_VISUAL_ITEM) ? ((RygelVisualItem*) _tmp13_) : NULL);
-				_tmp15_ = _tmp14_;
-				_tmp16_ = _g_object_ref0 (_tmp15_);
-				thumbnails = _tmp16_;
-				_tmp17_ = thumbnails;
-				_tmp18_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp17_);
-				_tmp19_ = _tmp18_;
-				_tmp20_ = thumbnail_index;
-				if (_tmp19_ > _tmp20_) {
-					GeeArrayList* _tmp21_;
-					gint _tmp22_;
-					gpointer _tmp23_ = NULL;
-					RygelThumbnail* _tmp24_;
-					const gchar* _tmp25_;
-					_tmp21_ = thumbnails;
-					_tmp22_ = thumbnail_index;
-					_tmp23_ = gee_abstract_list_get ((GeeAbstractList*) _tmp21_, _tmp22_);
-					_tmp24_ = (RygelThumbnail*) _tmp23_;
-					_tmp25_ = ((RygelIconInfo*) _tmp24_)->file_extension;
-					rygel_http_item_uri_set_extension (self, _tmp25_);
-					_rygel_icon_info_unref0 (_tmp24_);
+	if (!G_TYPE_CHECK_INSTANCE_TYPE (_tmp8_, RYGEL_TYPE_MEDIA_ITEM)) {
+		return self;
+	}
+	_tmp9_ = object;
+	_tmp10_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp9_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp9_) : NULL);
+	item = _tmp10_;
+	_tmp11_ = thumbnail_index;
+	if (_tmp11_ > (-1)) {
+		RygelMediaItem* _tmp12_;
+		_tmp12_ = item;
+		if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp12_, RYGEL_TYPE_VISUAL_ITEM)) {
+			RygelMediaItem* _tmp13_;
+			GeeArrayList* _tmp14_;
+			GeeArrayList* _tmp15_;
+			GeeArrayList* _tmp16_;
+			GeeArrayList* thumbnails;
+			GeeArrayList* _tmp17_;
+			gint _tmp18_;
+			gint _tmp19_;
+			gint _tmp20_;
+			_tmp13_ = item;
+			_tmp14_ = rygel_visual_item_get_thumbnails (G_TYPE_CHECK_INSTANCE_TYPE (_tmp13_, RYGEL_TYPE_VISUAL_ITEM) ? ((RygelVisualItem*) _tmp13_) : NULL);
+			_tmp15_ = _tmp14_;
+			_tmp16_ = _g_object_ref0 (_tmp15_);
+			thumbnails = _tmp16_;
+			_tmp17_ = thumbnails;
+			_tmp18_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp17_);
+			_tmp19_ = _tmp18_;
+			_tmp20_ = thumbnail_index;
+			if (_tmp19_ > _tmp20_) {
+				GeeArrayList* _tmp21_;
+				gint _tmp22_;
+				gpointer _tmp23_ = NULL;
+				RygelThumbnail* _tmp24_;
+				const gchar* _tmp25_;
+				_tmp21_ = thumbnails;
+				_tmp22_ = thumbnail_index;
+				_tmp23_ = gee_abstract_list_get ((GeeAbstractList*) _tmp21_, _tmp22_);
+				_tmp24_ = (RygelThumbnail*) _tmp23_;
+				_tmp25_ = ((RygelIconInfo*) _tmp24_)->file_extension;
+				rygel_http_item_uri_set_extension (self, _tmp25_);
+				_rygel_icon_info_unref0 (_tmp24_);
+			}
+			_g_object_unref0 (thumbnails);
+		} else {
+			RygelMediaItem* _tmp26_;
+			_tmp26_ = item;
+			if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp26_, RYGEL_TYPE_MUSIC_ITEM)) {
+				RygelMediaItem* _tmp27_;
+				RygelThumbnail* _tmp28_;
+				RygelThumbnail* _tmp29_;
+				RygelThumbnail* _tmp30_;
+				RygelThumbnail* album_art;
+				RygelThumbnail* _tmp31_;
+				_tmp27_ = item;
+				_tmp28_ = rygel_music_item_get_album_art (G_TYPE_CHECK_INSTANCE_TYPE (_tmp27_, RYGEL_TYPE_MUSIC_ITEM) ? ((RygelMusicItem*) _tmp27_) : NULL);
+				_tmp29_ = _tmp28_;
+				_tmp30_ = _rygel_icon_info_ref0 (_tmp29_);
+				album_art = _tmp30_;
+				_tmp31_ = album_art;
+				if (_tmp31_ != NULL) {
+					RygelThumbnail* _tmp32_;
+					const gchar* _tmp33_;
+					_tmp32_ = album_art;
+					_tmp33_ = ((RygelIconInfo*) _tmp32_)->file_extension;
+					rygel_http_item_uri_set_extension (self, _tmp33_);
 				}
-				_g_object_unref0 (thumbnails);
-			} else {
-				RygelMediaItem* _tmp26_;
-				_tmp26_ = item;
-				if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp26_, RYGEL_TYPE_MUSIC_ITEM)) {
-					RygelMediaItem* _tmp27_;
-					RygelThumbnail* _tmp28_;
-					RygelThumbnail* _tmp29_;
-					RygelThumbnail* _tmp30_;
-					RygelThumbnail* album_art;
-					RygelThumbnail* _tmp31_;
-					_tmp27_ = item;
-					_tmp28_ = rygel_music_item_get_album_art (G_TYPE_CHECK_INSTANCE_TYPE (_tmp27_, RYGEL_TYPE_MUSIC_ITEM) ? ((RygelMusicItem*) _tmp27_) : NULL);
-					_tmp29_ = _tmp28_;
-					_tmp30_ = _rygel_icon_info_ref0 (_tmp29_);
-					album_art = _tmp30_;
-					_tmp31_ = album_art;
-					if (_tmp31_ != NULL) {
-						RygelThumbnail* _tmp32_;
-						const gchar* _tmp33_;
-						_tmp32_ = album_art;
-						_tmp33_ = ((RygelIconInfo*) _tmp32_)->file_extension;
-						rygel_http_item_uri_set_extension (self, _tmp33_);
-					}
-					_rygel_icon_info_unref0 (album_art);
+				_rygel_icon_info_unref0 (album_art);
+			}
+		}
+	} else {
+		gint _tmp34_;
+		_tmp34_ = subtitle_index;
+		if (_tmp34_ > (-1)) {
+			RygelMediaItem* _tmp35_;
+			_tmp35_ = item;
+			if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp35_, RYGEL_TYPE_VIDEO_ITEM)) {
+				RygelMediaItem* _tmp36_;
+				GeeArrayList* _tmp37_;
+				GeeArrayList* _tmp38_;
+				GeeArrayList* subtitles;
+				GeeArrayList* _tmp39_;
+				gint _tmp40_;
+				gint _tmp41_;
+				gint _tmp42_;
+				_tmp36_ = item;
+				_tmp37_ = (G_TYPE_CHECK_INSTANCE_TYPE (_tmp36_, RYGEL_TYPE_VIDEO_ITEM) ? ((RygelVideoItem*) _tmp36_) : NULL)->subtitles;
+				_tmp38_ = _g_object_ref0 (_tmp37_);
+				subtitles = _tmp38_;
+				_tmp39_ = subtitles;
+				_tmp40_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp39_);
+				_tmp41_ = _tmp40_;
+				_tmp42_ = subtitle_index;
+				if (_tmp41_ > _tmp42_) {
+					GeeArrayList* _tmp43_;
+					gint _tmp44_;
+					gpointer _tmp45_ = NULL;
+					RygelSubtitle* _tmp46_;
+					const gchar* _tmp47_;
+					_tmp43_ = subtitles;
+					_tmp44_ = subtitle_index;
+					_tmp45_ = gee_abstract_list_get ((GeeAbstractList*) _tmp43_, _tmp44_);
+					_tmp46_ = (RygelSubtitle*) _tmp45_;
+					_tmp47_ = _tmp46_->caption_type;
+					rygel_http_item_uri_set_extension (self, _tmp47_);
+					_rygel_subtitle_unref0 (_tmp46_);
 				}
+				_g_object_unref0 (subtitles);
 			}
 		} else {
-			gint _tmp34_;
-			_tmp34_ = subtitle_index;
-			if (_tmp34_ > (-1)) {
-				RygelMediaItem* _tmp35_;
-				_tmp35_ = item;
-				if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp35_, RYGEL_TYPE_VIDEO_ITEM)) {
-					RygelMediaItem* _tmp36_;
-					GeeArrayList* _tmp37_;
-					GeeArrayList* _tmp38_;
-					GeeArrayList* subtitles;
-					GeeArrayList* _tmp39_;
-					gint _tmp40_;
-					gint _tmp41_;
-					gint _tmp42_;
-					_tmp36_ = item;
-					_tmp37_ = (G_TYPE_CHECK_INSTANCE_TYPE (_tmp36_, RYGEL_TYPE_VIDEO_ITEM) ? ((RygelVideoItem*) _tmp36_) : NULL)->subtitles;
-					_tmp38_ = _g_object_ref0 (_tmp37_);
-					subtitles = _tmp38_;
-					_tmp39_ = subtitles;
-					_tmp40_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp39_);
-					_tmp41_ = _tmp40_;
-					_tmp42_ = subtitle_index;
-					if (_tmp41_ > _tmp42_) {
-						GeeArrayList* _tmp43_;
-						gint _tmp44_;
-						gpointer _tmp45_ = NULL;
-						RygelSubtitle* _tmp46_;
-						const gchar* _tmp47_;
-						_tmp43_ = subtitles;
-						_tmp44_ = subtitle_index;
-						_tmp45_ = gee_abstract_list_get ((GeeAbstractList*) _tmp43_, _tmp44_);
-						_tmp46_ = (RygelSubtitle*) _tmp45_;
-						_tmp47_ = _tmp46_->caption_type;
-						rygel_http_item_uri_set_extension (self, _tmp47_);
-						_rygel_subtitle_unref0 (_tmp46_);
-					}
-					_g_object_unref0 (subtitles);
-				}
-			} else {
-				const gchar* _tmp48_;
-				_tmp48_ = transcode_target;
-				if (_tmp48_ != NULL) {
-					{
-						RygelHTTPServer* _tmp49_;
-						const gchar* _tmp50_;
-						RygelTranscoder* _tmp51_ = NULL;
-						RygelTranscoder* tc;
-						RygelTranscoder* _tmp52_;
-						const gchar* _tmp53_;
-						const gchar* _tmp54_;
-						_tmp49_ = self->priv->_http_server;
-						_tmp50_ = transcode_target;
-						_tmp51_ = rygel_transcode_manager_get_transcoder ((RygelTranscodeManager*) _tmp49_, _tmp50_, &_inner_error_);
-						tc = _tmp51_;
-						if (_inner_error_ != NULL) {
-							goto __catch31_g_error;
-						}
-						_tmp52_ = tc;
-						_tmp53_ = rygel_transcoder_get_extension (_tmp52_);
-						_tmp54_ = _tmp53_;
-						rygel_http_item_uri_set_extension (self, _tmp54_);
-						_g_object_unref0 (tc);
-					}
-					goto __finally31;
-					__catch31_g_error:
-					{
-						GError* _error_ = NULL;
-						_error_ = _inner_error_;
-						_inner_error_ = NULL;
-						_g_error_free0 (_error_);
-					}
-					__finally31:
+			const gchar* _tmp48_;
+			_tmp48_ = transcode_target;
+			if (_tmp48_ != NULL) {
+				{
+					RygelHTTPServer* _tmp49_;
+					const gchar* _tmp50_;
+					RygelTranscoder* _tmp51_ = NULL;
+					RygelTranscoder* tc;
+					RygelTranscoder* _tmp52_;
+					const gchar* _tmp53_;
+					const gchar* _tmp54_;
+					_tmp49_ = self->priv->_http_server;
+					_tmp50_ = transcode_target;
+					_tmp51_ = rygel_transcode_manager_get_transcoder ((RygelTranscodeManager*) _tmp49_, _tmp50_, &_inner_error_);
+					tc = _tmp51_;
 					if (_inner_error_ != NULL) {
-						_g_object_unref0 (item);
-						g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-						g_clear_error (&_inner_error_);
-						return NULL;
+						goto __catch34_g_error;
 					}
+					_tmp52_ = tc;
+					_tmp53_ = rygel_transcoder_get_extension (_tmp52_);
+					_tmp54_ = _tmp53_;
+					rygel_http_item_uri_set_extension (self, _tmp54_);
+					_g_object_unref0 (tc);
+				}
+				goto __finally34;
+				__catch34_g_error:
+				{
+					GError* _error_ = NULL;
+					_error_ = _inner_error_;
+					_inner_error_ = NULL;
+					_g_error_free0 (_error_);
+				}
+				__finally34:
+				if (_inner_error_ != NULL) {
+					_g_object_unref0 (item);
+					g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+					g_clear_error (&_inner_error_);
+					return NULL;
 				}
 			}
 		}
-		_tmp55_ = rygel_http_item_uri_get_extension (self);
-		_tmp56_ = _tmp55_;
-		_tmp57_ = _tmp56_;
-		_tmp58_ = g_strcmp0 (_tmp57_, "") == 0;
-		_g_free0 (_tmp57_);
-		if (_tmp58_) {
-			gchar* _tmp59_;
-			gchar* uri_extension;
-			const gchar* _tmp80_;
-			_tmp59_ = g_strdup ("");
-			uri_extension = _tmp59_;
-			{
-				RygelMediaItem* _tmp60_;
-				GeeArrayList* _tmp61_;
-				GeeArrayList* _tmp62_;
-				GeeArrayList* _uri_string_list;
-				GeeArrayList* _tmp63_;
-				gint _tmp64_;
-				gint _tmp65_;
-				gint _uri_string_size;
-				gint _uri_string_index;
-				_tmp60_ = item;
-				_tmp61_ = ((RygelMediaObject*) _tmp60_)->uris;
-				_tmp62_ = _g_object_ref0 (_tmp61_);
-				_uri_string_list = _tmp62_;
-				_tmp63_ = _uri_string_list;
-				_tmp64_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp63_);
-				_tmp65_ = _tmp64_;
-				_uri_string_size = _tmp65_;
-				_uri_string_index = -1;
-				while (TRUE) {
-					gint _tmp66_;
-					gint _tmp67_;
-					gint _tmp68_;
-					GeeArrayList* _tmp69_;
-					gint _tmp70_;
-					gpointer _tmp71_ = NULL;
-					gchar* uri_string;
-					const gchar* _tmp72_;
-					gchar* _tmp73_ = NULL;
-					gchar* basename;
-					const gchar* _tmp74_;
-					gint _tmp75_ = 0;
-					gint dot_index;
-					gint _tmp76_;
-					_tmp66_ = _uri_string_index;
-					_uri_string_index = _tmp66_ + 1;
-					_tmp67_ = _uri_string_index;
-					_tmp68_ = _uri_string_size;
-					if (!(_tmp67_ < _tmp68_)) {
-						break;
-					}
-					_tmp69_ = _uri_string_list;
-					_tmp70_ = _uri_string_index;
-					_tmp71_ = gee_abstract_list_get ((GeeAbstractList*) _tmp69_, _tmp70_);
-					uri_string = (gchar*) _tmp71_;
-					_tmp72_ = uri_string;
-					_tmp73_ = g_path_get_basename (_tmp72_);
-					basename = _tmp73_;
-					_tmp74_ = basename;
-					_tmp75_ = string_last_index_of (_tmp74_, ".", 0);
-					dot_index = _tmp75_;
-					_tmp76_ = dot_index;
-					if (_tmp76_ > (-1)) {
-						const gchar* _tmp77_;
-						gint _tmp78_;
-						gchar* _tmp79_ = NULL;
-						_tmp77_ = basename;
-						_tmp78_ = dot_index;
-						_tmp79_ = string_substring (_tmp77_, (glong) (_tmp78_ + 1), (glong) (-1));
-						_g_free0 (uri_extension);
-						uri_extension = _tmp79_;
-						_g_free0 (basename);
-						_g_free0 (uri_string);
-						break;
-					}
+	}
+	_tmp55_ = rygel_http_item_uri_get_extension (self);
+	_tmp56_ = _tmp55_;
+	_tmp57_ = _tmp56_;
+	_tmp58_ = g_strcmp0 (_tmp57_, "") == 0;
+	_g_free0 (_tmp57_);
+	if (_tmp58_) {
+		gchar* _tmp59_;
+		gchar* uri_extension;
+		const gchar* _tmp80_;
+		_tmp59_ = g_strdup ("");
+		uri_extension = _tmp59_;
+		{
+			RygelMediaItem* _tmp60_;
+			GeeArrayList* _tmp61_;
+			GeeArrayList* _tmp62_;
+			GeeArrayList* _uri_string_list;
+			GeeArrayList* _tmp63_;
+			gint _tmp64_;
+			gint _tmp65_;
+			gint _uri_string_size;
+			gint _uri_string_index;
+			_tmp60_ = item;
+			_tmp61_ = ((RygelMediaObject*) _tmp60_)->uris;
+			_tmp62_ = _g_object_ref0 (_tmp61_);
+			_uri_string_list = _tmp62_;
+			_tmp63_ = _uri_string_list;
+			_tmp64_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp63_);
+			_tmp65_ = _tmp64_;
+			_uri_string_size = _tmp65_;
+			_uri_string_index = -1;
+			while (TRUE) {
+				gint _tmp66_;
+				gint _tmp67_;
+				gint _tmp68_;
+				GeeArrayList* _tmp69_;
+				gint _tmp70_;
+				gpointer _tmp71_ = NULL;
+				gchar* uri_string;
+				const gchar* _tmp72_;
+				gchar* _tmp73_ = NULL;
+				gchar* basename;
+				const gchar* _tmp74_;
+				gint _tmp75_ = 0;
+				gint dot_index;
+				gint _tmp76_;
+				_tmp66_ = _uri_string_index;
+				_uri_string_index = _tmp66_ + 1;
+				_tmp67_ = _uri_string_index;
+				_tmp68_ = _uri_string_size;
+				if (!(_tmp67_ < _tmp68_)) {
+					break;
+				}
+				_tmp69_ = _uri_string_list;
+				_tmp70_ = _uri_string_index;
+				_tmp71_ = gee_abstract_list_get ((GeeAbstractList*) _tmp69_, _tmp70_);
+				uri_string = (gchar*) _tmp71_;
+				_tmp72_ = uri_string;
+				_tmp73_ = g_path_get_basename (_tmp72_);
+				basename = _tmp73_;
+				_tmp74_ = basename;
+				_tmp75_ = string_last_index_of (_tmp74_, ".", 0);
+				dot_index = _tmp75_;
+				_tmp76_ = dot_index;
+				if (_tmp76_ > (-1)) {
+					const gchar* _tmp77_;
+					gint _tmp78_;
+					gchar* _tmp79_ = NULL;
+					_tmp77_ = basename;
+					_tmp78_ = dot_index;
+					_tmp79_ = string_substring (_tmp77_, (glong) (_tmp78_ + 1), (glong) (-1));
+					_g_free0 (uri_extension);
+					uri_extension = _tmp79_;
 					_g_free0 (basename);
 					_g_free0 (uri_string);
+					break;
 				}
-				_g_object_unref0 (_uri_string_list);
+				_g_free0 (basename);
+				_g_free0 (uri_string);
 			}
-			_tmp80_ = uri_extension;
-			if (g_strcmp0 (_tmp80_, "") == 0) {
-				RygelMediaItem* _tmp81_;
-				const gchar* _tmp82_;
-				const gchar* _tmp83_;
-				gchar* _tmp84_ = NULL;
-				gchar* _tmp85_;
-				_tmp81_ = item;
-				_tmp82_ = rygel_media_item_get_mime_type (_tmp81_);
-				_tmp83_ = _tmp82_;
-				_tmp84_ = rygel_http_item_uri_ext_from_mime_type (self, _tmp83_);
-				_tmp85_ = _tmp84_;
-				rygel_http_item_uri_set_extension (self, _tmp85_);
-				_g_free0 (_tmp85_);
-			} else {
-				const gchar* _tmp86_;
-				_tmp86_ = uri_extension;
-				rygel_http_item_uri_set_extension (self, _tmp86_);
-			}
-			_g_free0 (uri_extension);
+			_g_object_unref0 (_uri_string_list);
 		}
-		_g_object_unref0 (item);
+		_tmp80_ = uri_extension;
+		if (g_strcmp0 (_tmp80_, "") == 0) {
+			RygelMediaItem* _tmp81_;
+			const gchar* _tmp82_;
+			const gchar* _tmp83_;
+			gchar* _tmp84_ = NULL;
+			gchar* _tmp85_;
+			_tmp81_ = item;
+			_tmp82_ = rygel_media_item_get_mime_type (_tmp81_);
+			_tmp83_ = _tmp82_;
+			_tmp84_ = rygel_http_item_uri_ext_from_mime_type (self, _tmp83_);
+			_tmp85_ = _tmp84_;
+			rygel_http_item_uri_set_extension (self, _tmp85_);
+			_g_free0 (_tmp85_);
+		} else {
+			const gchar* _tmp86_;
+			_tmp86_ = uri_extension;
+			rygel_http_item_uri_set_extension (self, _tmp86_);
+		}
+		_g_free0 (uri_extension);
 	}
+	_g_object_unref0 (item);
 	return self;
 }
 
@@ -887,7 +888,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		regex = _tmp4_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch32_g_regex_error;
+				goto __catch35_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -900,7 +901,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		if (_inner_error_ != NULL) {
 			_g_regex_unref0 (regex);
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch32_g_regex_error;
+				goto __catch35_g_regex_error;
 			}
 			_g_regex_unref0 (regex);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -911,8 +912,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_regex_unref0 (regex);
 		return result;
 	}
-	goto __finally32;
-	__catch32_g_regex_error:
+	goto __finally35;
+	__catch35_g_regex_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -920,7 +921,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_assert_not_reached ();
 		_g_error_free0 (e);
 	}
-	__finally32:
+	__finally35:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

@@ -2,12 +2,12 @@
 .\"     Title: rygel.conf
 .\"    Author: Jens Georg <mail@jensge.org>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 03/20/2013
+.\"      Date: 06/05/2013
 .\"    Manual: Rygel User Manual
 .\"    Source: rygel
 .\"  Language: English
 .\"
-.TH "RYGEL\&.CONF" "5" "03/20/2013" "rygel" "Rygel User Manual"
+.TH "RYGEL\&.CONF" "5" "06/05/2013" "rygel" "Rygel User Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -64,9 +64,9 @@ will still offer HTTP proxy URLs for its media files but not actively advertise 
 .PP
 \fBinterface=\fR\fB\fIINTERFACE\fR\fR
 .RS 4
-Set the network\-interface
+A list of the network interfaces
 rygel
-listens on\&.
+listens on\&. May be an IP, an interface name or on Linux even the ESSID of a wireless network\&.
 .RE
 .PP
 \fBport=\fR\fB\fIPORT\fR\fR
@@ -88,7 +88,11 @@ Comma\-separated list of
 pairs, allowing to set the log level individually for each domain, where
 \fIDOMAIN\fR
 is eiher
-\fB"*"\fR, "\fBrygel\fR" or the name of a plugin\&. Allowed log levels are 1=critical, 2=error, 3=warning, 4=message/info, 5=debug\&.
+\fB"*"\fR, "\fBrygel\fR" or the name of a plugin\&. Allowed log levels are 1=critical, 2=error, 3=warning, 4=message/info, 5=debug\&. Note that on recent versions of GLib (>= 2\&.36) it is required to set the environment variable
+\fBG_MESSAGES_DEBUG\fR
+to
+\fBall\fR
+to get any debug output\&.
 .RE
 .PP
 \fBplugin\-path=\fR\fB\fIPATH\fR\fR

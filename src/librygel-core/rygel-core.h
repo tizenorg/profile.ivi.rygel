@@ -125,6 +125,16 @@ typedef struct _RygelRecursiveModuleLoader RygelRecursiveModuleLoader;
 typedef struct _RygelRecursiveModuleLoaderClass RygelRecursiveModuleLoaderClass;
 typedef struct _RygelRecursiveModuleLoaderPrivate RygelRecursiveModuleLoaderPrivate;
 
+#define RYGEL_TYPE_PLUGIN_INFORMATION (rygel_plugin_information_get_type ())
+#define RYGEL_PLUGIN_INFORMATION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformation))
+#define RYGEL_PLUGIN_INFORMATION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformationClass))
+#define RYGEL_IS_PLUGIN_INFORMATION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_PLUGIN_INFORMATION))
+#define RYGEL_IS_PLUGIN_INFORMATION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_PLUGIN_INFORMATION))
+#define RYGEL_PLUGIN_INFORMATION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformationClass))
+
+typedef struct _RygelPluginInformation RygelPluginInformation;
+typedef struct _RygelPluginInformationClass RygelPluginInformationClass;
+
 #define RYGEL_TYPE_PLUGIN_LOADER (rygel_plugin_loader_get_type ())
 #define RYGEL_PLUGIN_LOADER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_PLUGIN_LOADER, RygelPluginLoader))
 #define RYGEL_PLUGIN_LOADER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_PLUGIN_LOADER, RygelPluginLoaderClass))
@@ -234,6 +244,7 @@ typedef struct _RygelIconInfoPrivate RygelIconInfoPrivate;
 typedef struct _RygelXMLUtils RygelXMLUtils;
 typedef struct _RygelXMLUtilsClass RygelXMLUtilsClass;
 typedef struct _RygelXMLUtilsPrivate RygelXMLUtilsPrivate;
+typedef struct _RygelPluginInformationPrivate RygelPluginInformationPrivate;
 
 struct _RygelConnectionManager {
 	GUPnPService parent_instance;
@@ -319,6 +330,7 @@ struct _RygelConfigurationIface {
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -356,6 +368,7 @@ struct _RygelRecursiveModuleLoader {
 struct _RygelRecursiveModuleLoaderClass {
 	GObjectClass parent_class;
 	gboolean (*load_module_from_file) (RygelRecursiveModuleLoader* self, GFile* file);
+	gboolean (*load_module_from_info) (RygelRecursiveModuleLoader* self, RygelPluginInformation* info);
 };
 
 struct _RygelPluginLoader {
@@ -434,6 +447,7 @@ struct _RygelBaseConfigurationClass {
 	GObjectClass parent_class;
 	gboolean (*get_upnp_enabled) (RygelBaseConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelBaseConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelBaseConfiguration* self, GError** error);
 	gint (*get_port) (RygelBaseConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelBaseConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelBaseConfiguration* self, GError** error);
@@ -515,6 +529,15 @@ struct _RygelXMLUtilsClass {
 	void (*finalize) (RygelXMLUtils *self);
 };
 
+struct _RygelPluginInformation {
+	GObject parent_instance;
+	RygelPluginInformationPrivate * priv;
+};
+
+struct _RygelPluginInformationClass {
+	GObjectClass parent_class;
+};
+
 
 GType rygel_connection_manager_get_type (void) G_GNUC_CONST;
 #define RYGEL_CONNECTION_MANAGER_UPNP_ID "urn:upnp-org:serviceId:ConnectionManager"
@@ -523,8 +546,8 @@ GType rygel_connection_manager_get_type (void) G_GNUC_CONST;
 RygelConnectionManager* rygel_connection_manager_new (void);
 RygelConnectionManager* rygel_connection_manager_construct (GType object_type);
 GType rygel_description_file_get_type (void) G_GNUC_CONST;
-RygelDescriptionFile* rygel_description_file_new (const gchar* template, GError** error);
-RygelDescriptionFile* rygel_description_file_construct (GType object_type, const gchar* template, GError** error);
+RygelDescriptionFile* rygel_description_file_new (const gchar* template_file, GError** error);
+RygelDescriptionFile* rygel_description_file_construct (GType object_type, const gchar* template_file, GError** error);
 RygelDescriptionFile* rygel_description_file_new_from_xml_document (GUPnPXMLDoc* doc);
 RygelDescriptionFile* rygel_description_file_construct_from_xml_document (GType object_type, GUPnPXMLDoc* doc);
 void rygel_description_file_set_device_type (RygelDescriptionFile* self, const gchar* device_type);
@@ -563,6 +586,7 @@ void rygel_meta_config_register_configuration (RygelConfiguration* config);
 RygelMetaConfig* rygel_meta_config_new (void);
 RygelMetaConfig* rygel_meta_config_construct (GType object_type);
 GType rygel_recursive_module_loader_get_type (void) G_GNUC_CONST;
+GType rygel_plugin_information_get_type (void) G_GNUC_CONST;
 GType rygel_plugin_loader_get_type (void) G_GNUC_CONST;
 RygelPluginLoader* rygel_plugin_loader_new (void);
 RygelPluginLoader* rygel_plugin_loader_construct (GType object_type);
@@ -574,6 +598,7 @@ RygelRecursiveModuleLoader* rygel_recursive_module_loader_construct (GType objec
 void rygel_recursive_module_loader_load_modules (RygelRecursiveModuleLoader* self);
 void rygel_recursive_module_loader_load_modules_sync (RygelRecursiveModuleLoader* self, GCancellable* cancellable);
 gboolean rygel_recursive_module_loader_load_module_from_file (RygelRecursiveModuleLoader* self, GFile* file);
+gboolean rygel_recursive_module_loader_load_module_from_info (RygelRecursiveModuleLoader* self, RygelPluginInformation* info);
 const gchar* rygel_recursive_module_loader_get_base_path (RygelRecursiveModuleLoader* self);
 void rygel_recursive_module_loader_set_base_path (RygelRecursiveModuleLoader* self, const gchar* value);
 RygelPlugin* rygel_plugin_new (const gchar* desc_path, const gchar* name, const gchar* title, const gchar* description, RygelPluginCapabilities capabilities);
@@ -622,7 +647,8 @@ GQuark rygel_configuration_error_quark (void);
 GType rygel_configuration_entry_get_type (void) G_GNUC_CONST;
 GType rygel_section_entry_get_type (void) G_GNUC_CONST;
 gboolean rygel_configuration_get_upnp_enabled (RygelConfiguration* self, GError** error);
-gchar* rygel_configuration_get_interface (RygelConfiguration* self, GError** error);
+gchar* rygel_configuration_get_interface (RygelConfiguration* self, GError** error) G_GNUC_DEPRECATED;
+gchar** rygel_configuration_get_interfaces (RygelConfiguration* self, GError** error);
 gint rygel_configuration_get_port (RygelConfiguration* self, GError** error);
 gboolean rygel_configuration_get_transcoding (RygelConfiguration* self, GError** error);
 gboolean rygel_configuration_get_allow_upload (RygelConfiguration* self, GError** error);
@@ -644,6 +670,7 @@ gboolean rygel_configuration_get_bool (RygelConfiguration* self, const gchar* se
 GType rygel_base_configuration_get_type (void) G_GNUC_CONST;
 gboolean rygel_base_configuration_get_upnp_enabled (RygelBaseConfiguration* self, GError** error);
 gchar* rygel_base_configuration_get_interface (RygelBaseConfiguration* self, GError** error);
+gchar** rygel_base_configuration_get_interfaces (RygelBaseConfiguration* self, GError** error);
 gint rygel_base_configuration_get_port (RygelBaseConfiguration* self, GError** error);
 gboolean rygel_base_configuration_get_transcoding (RygelBaseConfiguration* self, GError** error);
 gboolean rygel_base_configuration_get_allow_upload (RygelBaseConfiguration* self, GError** error);
@@ -702,6 +729,9 @@ GType rygel_xml_utils_get_type (void) G_GNUC_CONST;
 xmlNode* rygel_xml_utils_get_element (xmlNode* node, ...);
 RygelXMLUtils* rygel_xml_utils_new (void);
 RygelXMLUtils* rygel_xml_utils_construct (GType object_type);
+RygelPluginInformation* rygel_plugin_information_new_from_file (GFile* file, GError** error);
+const gchar* rygel_plugin_information_get_module_path (RygelPluginInformation* self);
+const gchar* rygel_plugin_information_get_name (RygelPluginInformation* self);
 
 
 G_END_DECLS

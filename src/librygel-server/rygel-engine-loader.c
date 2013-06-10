@@ -88,6 +88,7 @@ static gchar* rygel_engine_loader_get_config (void);
 static void rygel_engine_loader_real_constructed (GObject* base);
 RygelMediaEngine* rygel_engine_loader_load_engine (RygelEngineLoader* self);
 static gboolean rygel_engine_loader_real_load_module_from_file (RygelRecursiveModuleLoader* base, GFile* file);
+static gboolean rygel_engine_loader_real_load_module_from_info (RygelRecursiveModuleLoader* base, RygelPluginInformation* info);
 static void rygel_engine_loader_finalize (GObject* obj);
 
 
@@ -137,7 +138,7 @@ static void rygel_engine_loader_real_constructed (GObject* base) {
 		_tmp6_ = _tmp5_;
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (config);
-			goto __catch22_g_error;
+			goto __catch24_g_error;
 		}
 		_g_free0 (self->priv->engine_name);
 		self->priv->engine_name = _tmp6_;
@@ -145,15 +146,15 @@ static void rygel_engine_loader_real_constructed (GObject* base) {
 		g_debug ("rygel-engine-loader.vala:45: Looking for specific engine named '%s", _tmp7_);
 		_g_object_unref0 (config);
 	}
-	goto __finally22;
-	__catch22_g_error:
+	goto __finally24;
+	__catch24_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally22:
+	__finally24:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -286,6 +287,31 @@ static gboolean rygel_engine_loader_real_load_module_from_file (RygelRecursiveMo
 }
 
 
+static gboolean rygel_engine_loader_real_load_module_from_info (RygelRecursiveModuleLoader* base, RygelPluginInformation* info) {
+	RygelEngineLoader * self;
+	gboolean result = FALSE;
+	RygelPluginInformation* _tmp0_;
+	const gchar* _tmp1_;
+	const gchar* _tmp2_;
+	GFile* _tmp3_ = NULL;
+	GFile* _tmp4_;
+	gboolean _tmp5_ = FALSE;
+	gboolean _tmp6_;
+	self = (RygelEngineLoader*) base;
+	g_return_val_if_fail (info != NULL, FALSE);
+	_tmp0_ = info;
+	_tmp1_ = rygel_plugin_information_get_module_path (_tmp0_);
+	_tmp2_ = _tmp1_;
+	_tmp3_ = g_file_new_for_path (_tmp2_);
+	_tmp4_ = _tmp3_;
+	_tmp5_ = rygel_recursive_module_loader_load_module_from_file ((RygelRecursiveModuleLoader*) self, _tmp4_);
+	_tmp6_ = _tmp5_;
+	_g_object_unref0 (_tmp4_);
+	result = _tmp6_;
+	return result;
+}
+
+
 static gchar* rygel_engine_loader_get_config (void) {
 	gchar* result = NULL;
 	gchar* _tmp0_;
@@ -303,20 +329,20 @@ static gchar* rygel_engine_loader_get_config (void) {
 		_tmp2_ = rygel_configuration_get_engine_path ((RygelConfiguration*) config, &_inner_error_);
 		_tmp3_ = _tmp2_;
 		if (_inner_error_ != NULL) {
-			goto __catch23_g_error;
+			goto __catch25_g_error;
 		}
 		_g_free0 (path);
 		path = _tmp3_;
 	}
-	goto __finally23;
-	__catch23_g_error:
+	goto __finally25;
+	__catch25_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally23:
+	__finally25:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (config);
 		_g_free0 (path);
@@ -335,6 +361,7 @@ static void rygel_engine_loader_class_init (RygelEngineLoaderClass * klass) {
 	g_type_class_add_private (klass, sizeof (RygelEngineLoaderPrivate));
 	G_OBJECT_CLASS (klass)->constructed = rygel_engine_loader_real_constructed;
 	RYGEL_RECURSIVE_MODULE_LOADER_CLASS (klass)->load_module_from_file = rygel_engine_loader_real_load_module_from_file;
+	RYGEL_RECURSIVE_MODULE_LOADER_CLASS (klass)->load_module_from_info = rygel_engine_loader_real_load_module_from_info;
 	G_OBJECT_CLASS (klass)->finalize = rygel_engine_loader_finalize;
 }
 

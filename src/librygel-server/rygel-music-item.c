@@ -299,9 +299,9 @@ const gchar* rygel_music_item_get_album (RygelMusicItem* self);
 gint rygel_media_object_compare_int_props (RygelMediaObject* self, gint prop1, gint prop2);
 gint rygel_music_item_get_track_number (RygelMusicItem* self);
 gint rygel_media_object_compare_by_property (RygelMediaObject* self, RygelMediaObject* media_object, const gchar* property);
-static gchar* rygel_music_item_get_first (RygelMusicItem* self, GList* contributors);
 static void rygel_music_item_real_apply_didl_lite (RygelMediaObject* base, GUPnPDIDLLiteObject* didl_object);
 void rygel_media_object_apply_didl_lite (RygelMediaObject* self, GUPnPDIDLLiteObject* didl_object);
+static gchar* rygel_music_item_get_first (RygelMusicItem* self, GList* contributors);
 void rygel_music_item_set_artist (RygelMusicItem* self, const gchar* value);
 static void _g_object_unref0_ (gpointer var);
 static void _g_list_free__g_object_unref0_ (GList* self);
@@ -553,32 +553,6 @@ static gint rygel_music_item_real_compare_by_property (RygelMediaObject* base, R
 }
 
 
-static gchar* rygel_music_item_get_first (RygelMusicItem* self, GList* contributors) {
-	gchar* result = NULL;
-	GList* _tmp0_;
-	gchar* _tmp6_;
-	g_return_val_if_fail (self != NULL, NULL);
-	_tmp0_ = contributors;
-	if (_tmp0_ != NULL) {
-		GList* _tmp1_;
-		gconstpointer _tmp2_;
-		const gchar* _tmp3_;
-		const gchar* _tmp4_;
-		gchar* _tmp5_;
-		_tmp1_ = contributors;
-		_tmp2_ = _tmp1_->data;
-		_tmp3_ = gupnp_didl_lite_contributor_get_name ((GUPnPDIDLLiteContributor*) _tmp2_);
-		_tmp4_ = _tmp3_;
-		_tmp5_ = g_strdup (_tmp4_);
-		result = _tmp5_;
-		return result;
-	}
-	_tmp6_ = g_strdup ("");
-	result = _tmp6_;
-	return result;
-}
-
-
 static void _g_object_unref0_ (gpointer var) {
 	(var == NULL) ? NULL : (var = (g_object_unref (var), NULL));
 }
@@ -827,6 +801,32 @@ static void rygel_music_item_real_add_proxy_resources (RygelMediaItem* base, Ryg
 		gupnp_didl_lite_object_set_album_art ((GUPnPDIDLLiteObject*) _tmp13_, _tmp16_);
 		_g_free0 (_tmp16_);
 	}
+}
+
+
+static gchar* rygel_music_item_get_first (RygelMusicItem* self, GList* contributors) {
+	gchar* result = NULL;
+	GList* _tmp0_;
+	gchar* _tmp6_;
+	g_return_val_if_fail (self != NULL, NULL);
+	_tmp0_ = contributors;
+	if (_tmp0_ != NULL) {
+		GList* _tmp1_;
+		gconstpointer _tmp2_;
+		const gchar* _tmp3_;
+		const gchar* _tmp4_;
+		gchar* _tmp5_;
+		_tmp1_ = contributors;
+		_tmp2_ = _tmp1_->data;
+		_tmp3_ = gupnp_didl_lite_contributor_get_name ((GUPnPDIDLLiteContributor*) _tmp2_);
+		_tmp4_ = _tmp3_;
+		_tmp5_ = g_strdup (_tmp4_);
+		result = _tmp5_;
+		return result;
+	}
+	_tmp6_ = g_strdup ("");
+	result = _tmp6_;
+	return result;
 }
 
 

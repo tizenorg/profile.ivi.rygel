@@ -55,6 +55,8 @@ namespace Rygel {
 	}
 	[CCode (cheader_filename = "rygel-server.h")]
 	public abstract class MediaContainer : Rygel.MediaObject {
+		public bool create_mode_enabled;
+		protected int empty_child_count;
 		public int64 storage_used;
 		public int64 total_deleted_child_count;
 		public uint32 update_id;
@@ -72,6 +74,7 @@ namespace Rygel {
 		public abstract async Rygel.MediaObjects? get_children (uint offset, uint max_count, string sort_criteria, GLib.Cancellable? cancellable) throws GLib.Error;
 		public MediaContainer.root (string title, int child_count);
 		public void updated (Rygel.MediaObject? object = null, Rygel.ObjectEventType event_type = ObjectEventType.MODIFIED, bool sub_tree_update = false);
+		public int all_child_count { get; }
 		public int child_count { get; set construct; }
 		public string sort_criteria { get; set; }
 		public signal void container_updated (Rygel.MediaContainer container, Rygel.MediaObject object, Rygel.ObjectEventType event_type, bool sub_tree_update);
@@ -288,6 +291,7 @@ namespace Rygel {
 	}
 	[CCode (cheader_filename = "rygel-server.h")]
 	public interface WritableContainer : Rygel.MediaContainer {
+		public const string WRITABLE_SCHEME;
 		public abstract async void add_container (Rygel.MediaContainer container, GLib.Cancellable? cancellable) throws GLib.Error;
 		public abstract async void add_item (Rygel.MediaItem item, GLib.Cancellable? cancellable) throws GLib.Error;
 		public virtual async string add_reference (Rygel.MediaObject object, GLib.Cancellable? cancellable) throws GLib.Error;
@@ -326,8 +330,8 @@ namespace Rygel {
 	public errordomain MediaEngineError {
 		NOT_FOUND
 	}
-}
-[CCode (cheader_filename = "rygel-server.h")]
-public errordomain WriteableContainerError {
-	NOT_IMPLEMENTED
+	[CCode (cheader_filename = "rygel-server.h")]
+	public errordomain WritableContainerError {
+		NOT_IMPLEMENTED
+	}
 }

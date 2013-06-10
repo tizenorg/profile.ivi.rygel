@@ -1212,7 +1212,7 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 	_data_->_tmp8_ = ((RygelMediaObject*) _data_->_tmp7_)->id;
 	_data_->_tmp9_ = ((RygelHTTPRequest*) _data_->self)->object;
 	_data_->_tmp10_ = _data_->_tmp9_->id;
-	g_debug ("Waiting for update signal from container '%s' after pushing" " content to its child item '%s'..", _data_->_tmp8_, _data_->_tmp10_);
+	g_debug ("Waiting for update signal from container '%s' after pushing" " content to its child item '%s'…", _data_->_tmp8_, _data_->_tmp10_);
 	{
 		_data_->_tmp11_ = _data_->self->priv->dotfile;
 		_data_->_tmp12_ = _data_->self->priv->file;

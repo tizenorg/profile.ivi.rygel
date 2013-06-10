@@ -4,7 +4,7 @@
   <chapters>
     <sub name="Overview" link="overview.html">
       <sub name="" link="overview.html#overview">
-        <sub name="Basic Usage" link="overview.html#idp10119280"/>
+        <sub name="Basic Usage" link="overview.html#idp8415120"/>
       </sub>
     </sub>
     <sub name="Implementing Servers" link="implementing-servers.html">
@@ -143,11 +143,13 @@
     <keyword type="macro" name="RYGEL_MEDIA_CONTAINER_ALBUM_SORT_CRITERIA" link="RygelMediaContainer.html#RYGEL-MEDIA-CONTAINER-ALBUM-SORT-CRITERIA:CAPS"/>
     <keyword type="function" name="rygel_media_container_get_child_count ()" link="RygelMediaContainer.html#rygel-media-container-get-child-count"/>
     <keyword type="function" name="rygel_media_container_set_child_count ()" link="RygelMediaContainer.html#rygel-media-container-set-child-count"/>
+    <keyword type="function" name="rygel_media_container_get_all_child_count ()" link="RygelMediaContainer.html#rygel-media-container-get-all-child-count"/>
     <keyword type="function" name="rygel_media_container_get_sort_criteria ()" link="RygelMediaContainer.html#rygel-media-container-get-sort-criteria"/>
     <keyword type="function" name="rygel_media_container_set_sort_criteria ()" link="RygelMediaContainer.html#rygel-media-container-set-sort-criteria"/>
     <keyword type="struct" name="struct RygelMediaContainer" link="RygelMediaContainer.html#RygelMediaContainer-struct"/>
     <keyword type="struct" name="struct RygelMediaContainerClass" link="RygelMediaContainer.html#RygelMediaContainerClass"/>
     <keyword type="enum" name="enum RygelObjectEventType" link="RygelMediaContainer.html#RygelObjectEventType-enum"/>
+    <keyword type="property" name="The &quot;all-child-count&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--all-child-count"/>
     <keyword type="property" name="The &quot;child-count&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--child-count"/>
     <keyword type="property" name="The &quot;ocm-flags&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--ocm-flags"/>
     <keyword type="property" name="The &quot;sort-criteria&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--sort-criteria"/>
@@ -388,6 +390,7 @@
     <keyword type="property" name="The &quot;height&quot; property" link="RygelVisualItem.html#RygelVisualItem--height"/>
     <keyword type="property" name="The &quot;thumbnails&quot; property" link="RygelVisualItem.html#RygelVisualItem--thumbnails"/>
     <keyword type="property" name="The &quot;width&quot; property" link="RygelVisualItem.html#RygelVisualItem--width"/>
+    <keyword type="enum" name="enum RygelWritableContainerError" link="RygelWritableContainer.html#RygelWritableContainerError"/>
     <keyword type="function" name="rygel_writable_container_can_create ()" link="RygelWritableContainer.html#rygel-writable-container-can-create"/>
     <keyword type="function" name="rygel_writable_container_add_item ()" link="RygelWritableContainer.html#rygel-writable-container-add-item"/>
     <keyword type="function" name="rygel_writable_container_add_item_finish ()" link="RygelWritableContainer.html#rygel-writable-container-add-item-finish"/>
@@ -399,11 +402,11 @@
     <keyword type="function" name="rygel_writable_container_remove_item_finish ()" link="RygelWritableContainer.html#rygel-writable-container-remove-item-finish"/>
     <keyword type="function" name="rygel_writable_container_remove_container ()" link="RygelWritableContainer.html#rygel-writable-container-remove-container"/>
     <keyword type="function" name="rygel_writable_container_remove_container_finish ()" link="RygelWritableContainer.html#rygel-writable-container-remove-container-finish"/>
+    <keyword type="macro" name="RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME" link="RygelWritableContainer.html#RYGEL-WRITABLE-CONTAINER-WRITABLE-SCHEME:CAPS"/>
     <keyword type="function" name="rygel_writable_container_get_create_classes ()" link="RygelWritableContainer.html#rygel-writable-container-get-create-classes"/>
     <keyword type="function" name="rygel_writable_container_set_create_classes ()" link="RygelWritableContainer.html#rygel-writable-container-set-create-classes"/>
     <keyword type="struct" name="RygelWritableContainer" link="RygelWritableContainer.html#RygelWritableContainer-struct"/>
     <keyword type="struct" name="struct RygelWritableContainerIface" link="RygelWritableContainer.html#RygelWritableContainerIface"/>
-    <keyword type="enum" name="enum WriteableContainerError" link="RygelWritableContainer.html#WriteableContainerError"/>
     <keyword type="property" name="The &quot;create-classes&quot; property" link="RygelWritableContainer.html#RygelWritableContainer--create-classes"/>
   </functions>
 </book>

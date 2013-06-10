@@ -102,6 +102,7 @@ struct _RygelConfigurationIface {
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -131,8 +132,8 @@ enum  {
 	RYGEL_DESCRIPTION_FILE_DUMMY_PROPERTY
 };
 #define RYGEL_DESCRIPTION_FILE_SERVICE_TYPE_TEMPLATE "//*[.='%s']"
-RygelDescriptionFile* rygel_description_file_new (const gchar* template, GError** error);
-RygelDescriptionFile* rygel_description_file_construct (GType object_type, const gchar* template, GError** error);
+RygelDescriptionFile* rygel_description_file_new (const gchar* template_file, GError** error);
+RygelDescriptionFile* rygel_description_file_construct (GType object_type, const gchar* template_file, GError** error);
 RygelDescriptionFile* rygel_description_file_new_from_xml_document (GUPnPXMLDoc* doc);
 RygelDescriptionFile* rygel_description_file_construct_from_xml_document (GType object_type, GUPnPXMLDoc* doc);
 void rygel_description_file_set_device_type (RygelDescriptionFile* self, const gchar* device_type);
@@ -166,19 +167,19 @@ static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify 
 /**
      * Constructor to load a description file from disk
      *
-     * @param template the path to the description file.
+     * @param template_file the path to the description file.
      * @throws GUPnP.XMLError.PARSE if there was an error reading or parsing
      * the file.
      */
-RygelDescriptionFile* rygel_description_file_construct (GType object_type, const gchar* template, GError** error) {
+RygelDescriptionFile* rygel_description_file_construct (GType object_type, const gchar* template_file, GError** error) {
 	RygelDescriptionFile * self = NULL;
 	const gchar* _tmp0_;
 	GUPnPXMLDoc* _tmp1_;
 	GUPnPXMLDoc* _tmp2_;
 	GError * _inner_error_ = NULL;
-	g_return_val_if_fail (template != NULL, NULL);
+	g_return_val_if_fail (template_file != NULL, NULL);
 	self = (RygelDescriptionFile*) g_object_new (object_type, NULL);
-	_tmp0_ = template;
+	_tmp0_ = template_file;
 	_tmp1_ = gupnp_xml_doc_new_from_path (_tmp0_, &_inner_error_);
 	_tmp2_ = _tmp1_;
 	if (_inner_error_ != NULL) {
@@ -192,8 +193,8 @@ RygelDescriptionFile* rygel_description_file_construct (GType object_type, const
 }
 
 
-RygelDescriptionFile* rygel_description_file_new (const gchar* template, GError** error) {
-	return rygel_description_file_construct (RYGEL_TYPE_DESCRIPTION_FILE, template, error);
+RygelDescriptionFile* rygel_description_file_new (const gchar* template_file, GError** error) {
+	return rygel_description_file_construct (RYGEL_TYPE_DESCRIPTION_FILE, template_file, error);
 }
 
 
@@ -616,6 +617,7 @@ void rygel_description_file_modify_service_type (RygelDescriptionFile* self, con
 	_tmp10_ = xmlXPathNodeSetItem (_tmp9_, 0);
 	_tmp11_ = new_type;
 	xmlNodeSetContent (_tmp10_, _tmp11_);
+	xmlXPathFreeObject (xpath_object);
 	_g_free0 (xpath);
 	_xmlXPathFreeContext0 (context);
 }

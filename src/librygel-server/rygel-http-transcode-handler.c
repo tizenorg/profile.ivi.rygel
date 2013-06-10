@@ -500,7 +500,7 @@ static RygelHTTPResponse* rygel_http_transcode_handler_real_render_body (RygelHT
 		_tmp16_ = rygel_transcoder_create_source (_tmp13_, _tmp14_, _tmp15_, &_inner_error_);
 		_tmp17_ = _tmp16_;
 		if (_inner_error_ != NULL) {
-			goto __catch41_g_error;
+			goto __catch45_g_error;
 		}
 		_g_object_unref0 (src);
 		src = _tmp17_;
@@ -509,15 +509,15 @@ static RygelHTTPResponse* rygel_http_transcode_handler_real_render_body (RygelHT
 		_tmp20_ = rygel_http_response_new (_tmp18_, (RygelHTTPGetHandler*) self, _tmp19_, &_inner_error_);
 		_tmp21_ = _tmp20_;
 		if (_inner_error_ != NULL) {
-			goto __catch41_g_error;
+			goto __catch45_g_error;
 		}
 		result = _tmp21_;
 		_g_object_unref0 (src);
 		_g_object_unref0 (item);
 		return result;
 	}
-	goto __finally41;
-	__catch41_g_error:
+	goto __finally45;
+	__catch45_g_error:
 	{
 		GError* err = NULL;
 		GError* _tmp22_;
@@ -530,9 +530,9 @@ static RygelHTTPResponse* rygel_http_transcode_handler_real_render_body (RygelHT
 		_tmp24_ = g_error_new_literal (RYGEL_HTTP_REQUEST_ERROR, RYGEL_HTTP_REQUEST_ERROR_NOT_FOUND, _tmp23_);
 		_inner_error_ = _tmp24_;
 		_g_error_free0 (err);
-		goto __finally41;
+		goto __finally45;
 	}
-	__finally41:
+	__finally45:
 	if (_inner_error_->domain == RYGEL_HTTP_REQUEST_ERROR) {
 		g_propagate_error (error, _inner_error_);
 		_g_object_unref0 (src);

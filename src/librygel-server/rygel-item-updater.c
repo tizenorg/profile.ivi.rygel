@@ -417,7 +417,7 @@ static gboolean rygel_item_updater_real_run_co (RygelItemUpdaterRunData* _data_)
 			_data_->_tmp2_ = _ ("No such object");
 			_data_->_tmp3_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_OBJECT, _data_->_tmp2_);
 			_data_->_inner_error_ = _data_->_tmp3_;
-			goto __catch53_g_error;
+			goto __catch57_g_error;
 		}
 		_data_->_state_ = 1;
 		rygel_item_updater_update_object (_data_->self, rygel_item_updater_run_ready, _data_);
@@ -425,7 +425,7 @@ static gboolean rygel_item_updater_real_run_co (RygelItemUpdaterRunData* _data_)
 		_state_1:
 		rygel_item_updater_update_object_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch53_g_error;
+			goto __catch57_g_error;
 		}
 		_data_->_tmp4_ = _data_->self->priv->action;
 		gupnp_service_action_return (_data_->_tmp4_);
@@ -434,8 +434,8 @@ static gboolean rygel_item_updater_real_run_co (RygelItemUpdaterRunData* _data_)
 		_data_->_tmp6_ = _data_->self->priv->object_id;
 		g_debug (_data_->_tmp5_, _data_->_tmp6_);
 	}
-	goto __finally53;
-	__catch53_g_error:
+	goto __finally57;
+	__catch57_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -461,7 +461,7 @@ static gboolean rygel_item_updater_real_run_co (RygelItemUpdaterRunData* _data_)
 		g_warning (_data_->_tmp16_, _data_->_tmp17_, _data_->_tmp19_);
 		_g_error_free0 (_data_->_error_);
 	}
-	__finally53:
+	__finally57:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);
@@ -493,7 +493,7 @@ static gchar* rygel_item_updater_unescape (const gchar* value) {
 		_tmp3_ = _tmp2_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch54_g_regex_error;
+				goto __catch58_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -502,8 +502,8 @@ static gchar* rygel_item_updater_unescape (const gchar* value) {
 		result = _tmp3_;
 		return result;
 	}
-	goto __finally54;
-	__catch54_g_regex_error:
+	goto __finally58;
+	__catch58_g_regex_error:
 	{
 		GError* _error_ = NULL;
 		const gchar* _tmp4_;
@@ -516,7 +516,7 @@ static gchar* rygel_item_updater_unescape (const gchar* value) {
 		_g_error_free0 (_error_);
 		return result;
 	}
-	__finally54:
+	__finally58:
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 	g_clear_error (&_inner_error_);
 	return NULL;
@@ -1215,7 +1215,7 @@ static void rygel_item_updater_class_init (RygelItemUpdaterClass * klass) {
 		_tmp1_ = _tmp0_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch55_g_regex_error;
+				goto __catch59_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1223,8 +1223,8 @@ static void rygel_item_updater_class_init (RygelItemUpdaterClass * klass) {
 		_g_regex_unref0 (rygel_item_updater_escape_regex);
 		rygel_item_updater_escape_regex = _tmp1_;
 	}
-	goto __finally55;
-	__catch55_g_regex_error:
+	goto __finally59;
+	__catch59_g_regex_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -1232,7 +1232,7 @@ static void rygel_item_updater_class_init (RygelItemUpdaterClass * klass) {
 		g_assert_not_reached ();
 		_g_error_free0 (_error_);
 	}
-	__finally55:
+	__finally59:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

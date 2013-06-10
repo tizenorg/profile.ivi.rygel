@@ -247,6 +247,22 @@ internal class Rygel.AVTransport : Service {
             message.request_headers.append ("getContentFeatures.dlna.org",
                                             "1");
             message.finished.connect ((msg) => {
+                if ((msg.status_code == KnownStatusCode.MALFORMED ||
+                     msg.status_code == KnownStatusCode.BAD_REQUEST ||
+                     msg.status_code == KnownStatusCode.METHOD_NOT_ALLOWED ||
+                     msg.status_code == KnownStatusCode.NOT_IMPLEMENTED) &&
+                    msg.method == "HEAD") {
+                    debug ("Peer does not support HEAD, trying GET");
+                    msg.method = "GET";
+                    msg.got_headers.connect ((msg) => {
+                        this.session.cancel_message (msg, msg.status_code);
+                    });
+
+                    this.session.queue_message (msg, null);
+
+                    return;
+                }
+
                 if (msg.status_code != KnownStatusCode.OK) {
                     warning ("Failed to access %s: %s",
                              _uri,
@@ -260,9 +276,8 @@ internal class Rygel.AVTransport : Service {
                     var features = msg.response_headers.get_one
                                         ("contentFeatures.dlna.org");
 
-                    if (mime != null &&
-                        !(mime in this.player.get_mime_types () ||
-                          this.is_playlist (mime, features))) {
+                    if (!this.is_valid_mime_type (mime) &&
+                        !this.is_playlist (mime, features)) {
                         action.return_error (714, _("Illegal MIME-type"));
 
                         return;
@@ -307,6 +322,16 @@ internal class Rygel.AVTransport : Service {
 
             action.return ();
         }
+    }
+
+    private bool is_valid_mime_type (string? mime) {
+        if (mime == null) {
+            return false;
+        }
+
+        var normalized = mime.down ().replace (" ", "");
+
+        return normalized in this.player.get_mime_types ();
     }
 
     private void get_media_info_cb (Service       service,

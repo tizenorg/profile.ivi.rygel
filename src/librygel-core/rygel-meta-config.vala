@@ -111,6 +111,26 @@ public class Rygel.MetaConfig : GLib.Object, Configuration {
         return val;
     }
 
+    [CCode (array_length=false, array_null_terminated = true)]
+    public string[] get_interfaces () throws GLib.Error {
+        string[] val = null;
+        bool unavailable = true;
+
+        foreach (var config in MetaConfig.configs) {
+            try {
+                val = config.get_interfaces ();
+                unavailable = false;
+                break;
+            } catch (GLib.Error error) {}
+        }
+
+        if (unavailable) {
+            throw new ConfigurationError.NO_VALUE_SET (_("No value available"));
+        }
+
+        return val;
+    }
+
     public int get_port () throws GLib.Error {
         int val = 0;
         bool unavailable = true;
@@ -219,7 +239,7 @@ public class Rygel.MetaConfig : GLib.Object, Configuration {
         }
 
         if (unavailable) {
-            throw new ConfigurationError.NO_VALUE_SET ("No value available");
+            throw new ConfigurationError.NO_VALUE_SET (_("No value available"));
         }
 
         return val;
@@ -238,7 +258,7 @@ public class Rygel.MetaConfig : GLib.Object, Configuration {
         }
 
         if (unavailable) {
-            throw new ConfigurationError.NO_VALUE_SET ("No value available");
+            throw new ConfigurationError.NO_VALUE_SET (_("No value available"));
         }
 
         return val;
@@ -257,7 +277,7 @@ public class Rygel.MetaConfig : GLib.Object, Configuration {
         }
 
         if (unavailable) {
-            throw new ConfigurationError.NO_VALUE_SET ("No value available");
+            throw new ConfigurationError.NO_VALUE_SET (_("No value available"));
         }
 
         return val;
@@ -320,9 +340,9 @@ public class Rygel.MetaConfig : GLib.Object, Configuration {
         }
 
         if (unavailable) {
-            throw new ConfigurationError.NO_VALUE_SET
-                                        (_("No value set for '%s/enabled'"),
-                                         section);
+            // translators: "enabled" is part of the config key and must not be translated
+            var msg = _("No value set for '%s/enabled'");
+            throw new ConfigurationError.NO_VALUE_SET (msg, section);
         }
 
         return val;
@@ -339,9 +359,9 @@ public class Rygel.MetaConfig : GLib.Object, Configuration {
         }
 
         if (val == null) {
-            throw new ConfigurationError.NO_VALUE_SET
-                                        (_("No value set for '%s/title'"),
-                                         section);
+            // translators: "title" is part of the config key and must not be translated
+            var msg = _("No value set for '%s/title'");
+            throw new ConfigurationError.NO_VALUE_SET (msg, section);
         }
 
         return val;
@@ -471,7 +491,7 @@ public class Rygel.MetaConfig : GLib.Object, Configuration {
                 break;
 
             case ConfigurationEntry.INTERFACE:
-                config.get_interface ();
+                config.get_interfaces ();
                 break;
 
             case ConfigurationEntry.PORT:

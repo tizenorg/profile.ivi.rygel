@@ -27,9 +27,9 @@
 #include <glib-object.h>
 #include <libxml/xpath.h>
 #include <rygel-core.h>
+#include <rygel-server.h>
 #include <stdlib.h>
 #include <string.h>
-#include <rygel-server.h>
 
 
 #define RYGEL_MEDIATHEK_TYPE_PLUGIN (rygel_mediathek_plugin_get_type ())
@@ -68,37 +68,26 @@ static gpointer rygel_mediathek_plugin_parent_class = NULL;
 
 void xmlXPathFreeObject (xmlXPathObject* object);
 void module_init (RygelPluginLoader* loader);
-#define RYGEL_MEDIATHEK_PLUGIN_NAME "ZDFMediathek"
 RygelMediathekPlugin* rygel_mediathek_plugin_new (void);
 RygelMediathekPlugin* rygel_mediathek_plugin_construct (GType object_type);
 GType rygel_mediathek_plugin_get_type (void) G_GNUC_CONST;
 enum  {
 	RYGEL_MEDIATHEK_PLUGIN_DUMMY_PROPERTY
 };
+#define RYGEL_MEDIATHEK_PLUGIN_NAME "ZDFMediathek"
 GType rygel_mediathek_root_container_get_type (void) G_GNUC_CONST;
 RygelMediathekRootContainer* rygel_mediathek_root_container_get_instance (void);
 
 
 void module_init (RygelPluginLoader* loader) {
-	RygelPluginLoader* _tmp0_;
-	gboolean _tmp1_ = FALSE;
-	RygelMediathekPlugin* _tmp2_;
+	RygelMediathekPlugin* _tmp0_;
 	RygelMediathekPlugin* plugin;
-	RygelPluginLoader* _tmp3_;
-	RygelMediathekPlugin* _tmp4_;
+	RygelPluginLoader* _tmp1_;
 	g_return_if_fail (loader != NULL);
-	_tmp0_ = loader;
-	_tmp1_ = rygel_plugin_loader_plugin_disabled (_tmp0_, RYGEL_MEDIATHEK_PLUGIN_NAME);
-	if (_tmp1_) {
-		g_message ("rygel-mediathek-plugin.vala:33: Plugin '%s' disabled by user, ignoring" \
-"..", RYGEL_MEDIATHEK_PLUGIN_NAME);
-		return;
-	}
-	_tmp2_ = rygel_mediathek_plugin_new ();
-	plugin = _tmp2_;
-	_tmp3_ = loader;
-	_tmp4_ = plugin;
-	rygel_plugin_loader_add_plugin (_tmp3_, (RygelPlugin*) _tmp4_);
+	_tmp0_ = rygel_mediathek_plugin_new ();
+	plugin = _tmp0_;
+	_tmp1_ = loader;
+	rygel_plugin_loader_add_plugin (_tmp1_, (RygelPlugin*) plugin);
 	_g_object_unref0 (plugin);
 }
 

@@ -523,8 +523,10 @@ struct _RygelRelationalExpressionClass {
 struct _RygelMediaContainer {
 	RygelMediaObject parent_instance;
 	RygelMediaContainerPrivate * priv;
+	gint empty_child_count;
 	guint32 update_id;
 	gint64 storage_used;
+	gboolean create_mode_enabled;
 	gint64 total_deleted_child_count;
 };
 
@@ -645,9 +647,9 @@ struct _RygelTranscoderClass {
 };
 
 typedef enum  {
-	WRITEABLE_CONTAINER_ERROR_NOT_IMPLEMENTED
-} WriteableContainerError;
-#define WRITEABLE_CONTAINER_ERROR writeable_container_error_quark ()
+	RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED
+} RygelWritableContainerError;
+#define RYGEL_WRITABLE_CONTAINER_ERROR rygel_writable_container_error_quark ()
 struct _RygelWritableContainerIface {
 	GTypeInterface parent_iface;
 	void (*add_item) (RygelWritableContainer* self, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
@@ -863,6 +865,7 @@ RygelMediaObject* rygel_media_container_find_object_finish (RygelMediaContainer*
 void rygel_media_container_updated (RygelMediaContainer* self, RygelMediaObject* object, RygelObjectEventType event_type, gboolean sub_tree_update);
 gint rygel_media_container_get_child_count (RygelMediaContainer* self);
 void rygel_media_container_set_child_count (RygelMediaContainer* self, gint value);
+gint rygel_media_container_get_all_child_count (RygelMediaContainer* self);
 const gchar* rygel_media_container_get_sort_criteria (RygelMediaContainer* self);
 void rygel_media_container_set_sort_criteria (RygelMediaContainer* self, const gchar* value);
 extern GRegex* rygel_media_item_address_regex;
@@ -960,7 +963,7 @@ gint rygel_visual_item_get_color_depth (RygelVisualItem* self);
 void rygel_visual_item_set_color_depth (RygelVisualItem* self, gint value);
 GeeArrayList* rygel_visual_item_get_thumbnails (RygelVisualItem* self);
 void rygel_visual_item_set_thumbnails (RygelVisualItem* self, GeeArrayList* value);
-GQuark writeable_container_error_quark (void);
+GQuark rygel_writable_container_error_quark (void);
 GType rygel_writable_container_get_type (void) G_GNUC_CONST;
 gboolean rygel_writable_container_can_create (RygelWritableContainer* self, const gchar* upnp_class);
 void rygel_writable_container_add_item (RygelWritableContainer* self, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
@@ -973,6 +976,7 @@ void rygel_writable_container_remove_item (RygelWritableContainer* self, const g
 void rygel_writable_container_remove_item_finish (RygelWritableContainer* self, GAsyncResult* _res_, GError** error);
 void rygel_writable_container_remove_container (RygelWritableContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 void rygel_writable_container_remove_container_finish (RygelWritableContainer* self, GAsyncResult* _res_, GError** error);
+#define RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME "rygel-writable://"
 GeeArrayList* rygel_writable_container_get_create_classes (RygelWritableContainer* self);
 void rygel_writable_container_set_create_classes (RygelWritableContainer* self, GeeArrayList* value);
 GType rygel_media_server_get_type (void) G_GNUC_CONST;

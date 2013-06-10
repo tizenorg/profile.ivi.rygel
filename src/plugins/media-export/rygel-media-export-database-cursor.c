@@ -130,7 +130,7 @@ RygelMediaExportSqliteWrapper* rygel_media_export_sqlite_wrapper_new_wrap (sqlit
 RygelMediaExportSqliteWrapper* rygel_media_export_sqlite_wrapper_construct_wrap (GType object_type, sqlite3* db);
 void rygel_media_export_sqlite_wrapper_throw_if_code_is_error (RygelMediaExportSqliteWrapper* self, gint sqlite_error, GError** error);
 void rygel_media_export_sqlite_wrapper_throw_if_db_has_error (RygelMediaExportSqliteWrapper* self, GError** error);
-gboolean rygel_media_export_database_cursor_has_next (RygelMediaExportDatabaseCursor* self);
+gboolean rygel_media_export_database_cursor_has_next (RygelMediaExportDatabaseCursor* self, GError** error);
 sqlite3_stmt* rygel_media_export_database_cursor_next (RygelMediaExportDatabaseCursor* self, GError** error);
 gpointer rygel_media_export_database_cursor_iterator_ref (gpointer instance);
 void rygel_media_export_database_cursor_iterator_unref (gpointer instance);
@@ -145,7 +145,7 @@ RygelMediaExportDatabaseCursorIterator* rygel_media_export_database_cursor_itera
 enum  {
 	RYGEL_MEDIA_EXPORT_DATABASE_CURSOR_ITERATOR_DUMMY_PROPERTY
 };
-gboolean rygel_media_export_database_cursor_iterator_next (RygelMediaExportDatabaseCursorIterator* self);
+gboolean rygel_media_export_database_cursor_iterator_next (RygelMediaExportDatabaseCursorIterator* self, GError** error);
 sqlite3_stmt* rygel_media_export_database_cursor_iterator_get (RygelMediaExportDatabaseCursorIterator* self, GError** error);
 static void rygel_media_export_database_cursor_iterator_finalize (RygelMediaExportDatabaseCursorIterator* obj);
 static void rygel_media_export_database_cursor_finalize (GObject* obj);
@@ -367,12 +367,14 @@ RygelMediaExportDatabaseCursor* rygel_media_export_database_cursor_new (sqlite3*
      *
      * @return true if more rows left, false otherwise
      */
-gboolean rygel_media_export_database_cursor_has_next (RygelMediaExportDatabaseCursor* self) {
+gboolean rygel_media_export_database_cursor_has_next (RygelMediaExportDatabaseCursor* self, GError** error) {
 	gboolean result = FALSE;
 	gboolean _tmp0_;
-	gboolean _tmp3_ = FALSE;
-	gint _tmp4_;
-	gboolean _tmp6_;
+	gint _tmp3_;
+	gboolean _tmp4_ = FALSE;
+	gint _tmp5_;
+	gboolean _tmp7_;
+	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (self != NULL, FALSE);
 	_tmp0_ = self->priv->dirty;
 	if (_tmp0_) {
@@ -383,16 +385,28 @@ gboolean rygel_media_export_database_cursor_has_next (RygelMediaExportDatabaseCu
 		self->priv->current_state = _tmp2_;
 		self->priv->dirty = FALSE;
 	}
-	_tmp4_ = self->priv->current_state;
-	if (_tmp4_ == SQLITE_ROW) {
-		_tmp3_ = TRUE;
-	} else {
-		gint _tmp5_;
-		_tmp5_ = self->priv->current_state;
-		_tmp3_ = _tmp5_ == (-1);
+	_tmp3_ = self->priv->current_state;
+	rygel_media_export_sqlite_wrapper_throw_if_code_is_error ((RygelMediaExportSqliteWrapper*) self, _tmp3_, &_inner_error_);
+	if (_inner_error_ != NULL) {
+		if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+			g_propagate_error (error, _inner_error_);
+			return FALSE;
+		} else {
+			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return FALSE;
+		}
 	}
-	_tmp6_ = _tmp3_;
-	result = _tmp6_;
+	_tmp5_ = self->priv->current_state;
+	if (_tmp5_ == SQLITE_ROW) {
+		_tmp4_ = TRUE;
+	} else {
+		gint _tmp6_;
+		_tmp6_ = self->priv->current_state;
+		_tmp4_ = _tmp6_ == (-1);
+	}
+	_tmp7_ = _tmp4_;
+	result = _tmp7_;
 	return result;
 }
 
@@ -411,7 +425,17 @@ sqlite3_stmt* rygel_media_export_database_cursor_next (RygelMediaExportDatabaseC
 	sqlite3_stmt* _tmp1_;
 	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (self != NULL, NULL);
-	rygel_media_export_database_cursor_has_next (self);
+	rygel_media_export_database_cursor_has_next (self, &_inner_error_);
+	if (_inner_error_ != NULL) {
+		if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+			g_propagate_error (error, _inner_error_);
+			return NULL;
+		} else {
+			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return NULL;
+		}
+	}
 	_tmp0_ = self->priv->current_state;
 	rygel_media_export_sqlite_wrapper_throw_if_code_is_error ((RygelMediaExportSqliteWrapper*) self, _tmp0_, &_inner_error_);
 	if (_inner_error_ != NULL) {
@@ -470,14 +494,27 @@ RygelMediaExportDatabaseCursorIterator* rygel_media_export_database_cursor_itera
 }
 
 
-gboolean rygel_media_export_database_cursor_iterator_next (RygelMediaExportDatabaseCursorIterator* self) {
+gboolean rygel_media_export_database_cursor_iterator_next (RygelMediaExportDatabaseCursorIterator* self, GError** error) {
 	gboolean result = FALSE;
 	RygelMediaExportDatabaseCursor* _tmp0_;
 	gboolean _tmp1_ = FALSE;
+	gboolean _tmp2_;
+	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (self != NULL, FALSE);
 	_tmp0_ = self->cursor;
-	_tmp1_ = rygel_media_export_database_cursor_has_next (_tmp0_);
-	result = _tmp1_;
+	_tmp1_ = rygel_media_export_database_cursor_has_next (_tmp0_, &_inner_error_);
+	_tmp2_ = _tmp1_;
+	if (_inner_error_ != NULL) {
+		if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+			g_propagate_error (error, _inner_error_);
+			return FALSE;
+		} else {
+			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return FALSE;
+		}
+	}
+	result = _tmp2_;
 	return result;
 }
 

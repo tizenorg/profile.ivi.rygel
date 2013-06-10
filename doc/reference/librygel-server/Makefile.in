@@ -102,8 +102,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -455,6 +453,8 @@ RYGEL_DOCBUILD_MODULE = rygel-server
 @ENABLE_VALADOC_TRUE@	rygel-media-query-action.vala \
 @ENABLE_VALADOC_TRUE@	rygel-media-receiver-registrar.vala \
 @ENABLE_VALADOC_TRUE@	rygel-panasonic-hacks.vala \
+@ENABLE_VALADOC_TRUE@	rygel-samsung-tv-hacks.vala \
+@ENABLE_VALADOC_TRUE@	rygel-seek-hacks.vala \
 @ENABLE_VALADOC_TRUE@	rygel-search-criteria-parser.vala \
 @ENABLE_VALADOC_TRUE@	rygel-search.vala \
 @ENABLE_VALADOC_TRUE@	rygel-serializer.vala \

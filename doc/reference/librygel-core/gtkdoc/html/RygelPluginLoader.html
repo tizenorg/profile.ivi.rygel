@@ -75,7 +75,6 @@ struct              <a class="link" href="RygelPluginLoader.html#RygelPluginLoad
 </p>
 <p>It probes for shared library files in a specific directory, tries to find a <code class="function">module_init()</code> function with this signature: <code class="code">void module_init (RygelPluginLoader* loader);</code></p>
 <p>It then calls that function, passing a pointer to itself. The loaded module can then add plugins to Rygel by calling the <a class="link" href="RygelPluginLoader.html#rygel-plugin-loader-add-plugin" title="rygel_plugin_loader_add_plugin ()"><code class="function">rygel_plugin_loader_add_plugin()</code></a> function.</p>
-<p>NOTE: The module SHOULD make sure that the plugin has not been disabled by the user, by using the <a class="link" href="RygelPluginLoader.html#rygel-plugin-loader-plugin-disabled" title="rygel_plugin_loader_plugin_disabled ()"><code class="function">rygel_plugin_loader_plugin_disabled()</code></a> function before creating the plugin instance, and before creating any resources related to that instance.</p>
 <p>
 </p>
 </div>
@@ -171,7 +170,6 @@ This class is responsible for plugin loading.
 </p>
 <p>It probes for shared library files in a specific directory, tries to find a <code class="function">module_init()</code> function with this signature: <code class="code">void module_init (RygelPluginLoader* loader);</code></p>
 <p>It then calls that function, passing a pointer to itself. The loaded module can then add plugins to Rygel by calling the <a class="link" href="RygelPluginLoader.html#rygel-plugin-loader-add-plugin" title="rygel_plugin_loader_add_plugin ()"><code class="function">rygel_plugin_loader_add_plugin()</code></a> function.</p>
-<p>NOTE: The module SHOULD make sure that the plugin has not been disabled by the user, by using the <a class="link" href="RygelPluginLoader.html#rygel-plugin-loader-plugin-disabled" title="rygel_plugin_loader_plugin_disabled ()"><code class="function">rygel_plugin_loader_plugin_disabled()</code></a> function before creating the plugin instance, and before creating any resources related to that instance.</p>
 <p>
 </p>
 </div>

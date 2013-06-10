@@ -524,18 +524,18 @@ static gboolean rygel_http_response_real_run_co (RygelHttpResponseRunData* _data
 		_data_->_tmp1_ = _data_->self->seek;
 		rygel_data_source_start (_data_->_tmp0_, _data_->_tmp1_, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch40_g_error;
+			goto __catch43_g_error;
 		}
 	}
-	goto __finally40;
-	__catch40_g_error:
+	goto __finally43;
+	__catch43_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
 		g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, ____lambda13__gsource_func, g_object_ref (_data_->self), g_object_unref);
 		_g_error_free0 (_data_->_error_);
 	}
-	__finally40:
+	__finally43:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);

@@ -150,7 +150,8 @@ struct _MediaContainer {
 	MediaObject parent_instance;
 	MediaContainerPrivate * priv;
 	gchar* sort_criteria;
-	guint child_count;
+	gint child_count;
+	gboolean create_mode_enabled;
 };
 
 struct _MediaContainerClass {
@@ -361,7 +362,8 @@ MediaObject* media_object_new (void);
 MediaObject* media_object_construct (GType object_type);
 GType media_container_get_type (void) G_GNUC_CONST;
 enum  {
-	MEDIA_CONTAINER_DUMMY_PROPERTY
+	MEDIA_CONTAINER_DUMMY_PROPERTY,
+	MEDIA_CONTAINER_ALL_CHILD_COUNT
 };
 static void media_container_get_children_data_free (gpointer _data);
 GType media_objects_get_type (void) G_GNUC_CONST;
@@ -374,9 +376,12 @@ static gboolean __lambda2_ (Block1Data* _data1_);
 static gboolean ___lambda2__gsource_func (gpointer self);
 MediaObjects* media_objects_new (void);
 MediaObjects* media_objects_construct (GType object_type);
+void media_container_check_search_expression (MediaContainer* self, SearchExpression* expression);
 MediaContainer* media_container_new (void);
 MediaContainer* media_container_construct (GType object_type);
+gint media_container_get_all_child_count (MediaContainer* self);
 static void media_container_finalize (GObject* obj);
+static void _vala_media_container_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
 GType rygel_searchable_container_get_type (void) G_GNUC_CONST;
 GType test_container_get_type (void) G_GNUC_CONST;
 #define TEST_CONTAINER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), TYPE_TEST_CONTAINER, TestContainerPrivate))
@@ -698,6 +703,11 @@ static gboolean media_container_get_children_co (MediaContainerGetChildrenData* 
 }
 
 
+void media_container_check_search_expression (MediaContainer* self, SearchExpression* expression) {
+	g_return_if_fail (self != NULL);
+}
+
+
 MediaContainer* media_container_construct (GType object_type) {
 	MediaContainer * self = NULL;
 	self = (MediaContainer*) media_object_construct (object_type);
@@ -710,9 +720,21 @@ MediaContainer* media_container_new (void) {
 }
 
 
+gint media_container_get_all_child_count (MediaContainer* self) {
+	gint result;
+	gint _tmp0_;
+	g_return_val_if_fail (self != NULL, 0);
+	_tmp0_ = self->child_count;
+	result = _tmp0_;
+	return result;
+}
+
+
 static void media_container_class_init (MediaContainerClass * klass) {
 	media_container_parent_class = g_type_class_peek_parent (klass);
+	G_OBJECT_CLASS (klass)->get_property = _vala_media_container_get_property;
 	G_OBJECT_CLASS (klass)->finalize = media_container_finalize;
+	g_object_class_install_property (G_OBJECT_CLASS (klass), MEDIA_CONTAINER_ALL_CHILD_COUNT, g_param_spec_int ("all-child-count", "all-child-count", "all-child-count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 }
 
 
@@ -720,7 +742,8 @@ static void media_container_instance_init (MediaContainer * self) {
 	gchar* _tmp0_;
 	_tmp0_ = g_strdup ("+dc:title");
 	self->sort_criteria = _tmp0_;
-	self->child_count = (guint) 10;
+	self->child_count = 10;
+	self->create_mode_enabled = FALSE;
 }
 
 
@@ -741,6 +764,20 @@ GType media_container_get_type (void) {
 		g_once_init_leave (&media_container_type_id__volatile, media_container_type_id);
 	}
 	return media_container_type_id__volatile;
+}
+
+
+static void _vala_media_container_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
+	MediaContainer * self;
+	self = G_TYPE_CHECK_INSTANCE_CAST (object, TYPE_MEDIA_CONTAINER, MediaContainer);
+	switch (property_id) {
+		case MEDIA_CONTAINER_ALL_CHILD_COUNT:
+		g_value_set_int (value, media_container_get_all_child_count (self));
+		break;
+		default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
 }
 
 

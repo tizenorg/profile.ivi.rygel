@@ -156,6 +156,18 @@ typedef struct _RygelMediaItemClass RygelMediaItemClass;
 
 typedef struct _RygelHTTPItemURI RygelHTTPItemURI;
 typedef struct _RygelHTTPItemURIClass RygelHTTPItemURIClass;
+
+#define RYGEL_TYPE_RELATIONAL_EXPRESSION (rygel_relational_expression_get_type ())
+#define RYGEL_RELATIONAL_EXPRESSION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_RELATIONAL_EXPRESSION, RygelRelationalExpression))
+#define RYGEL_RELATIONAL_EXPRESSION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_RELATIONAL_EXPRESSION, RygelRelationalExpressionClass))
+#define RYGEL_IS_RELATIONAL_EXPRESSION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_RELATIONAL_EXPRESSION))
+#define RYGEL_IS_RELATIONAL_EXPRESSION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_RELATIONAL_EXPRESSION))
+#define RYGEL_RELATIONAL_EXPRESSION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_RELATIONAL_EXPRESSION, RygelRelationalExpressionClass))
+
+typedef struct _RygelRelationalExpression RygelRelationalExpression;
+typedef struct _RygelRelationalExpressionClass RygelRelationalExpressionClass;
+typedef struct _RygelSearchExpressionPrivate RygelSearchExpressionPrivate;
+#define _rygel_search_expression_unref0(var) ((var == NULL) ? NULL : (var = (rygel_search_expression_unref (var), NULL)))
 #define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 
 #define RYGEL_TYPE_UPDATABLE_OBJECT (rygel_updatable_object_get_type ())
@@ -191,8 +203,10 @@ struct _RygelMediaObjectClass {
 struct _RygelMediaContainer {
 	RygelMediaObject parent_instance;
 	RygelMediaContainerPrivate * priv;
+	gint empty_child_count;
 	guint32 update_id;
 	gint64 storage_used;
+	gboolean create_mode_enabled;
 	gint64 total_deleted_child_count;
 };
 
@@ -244,6 +258,22 @@ struct _RygelWritableContainerIface {
 	void (*set_create_classes) (RygelWritableContainer* self, GeeArrayList* value);
 };
 
+struct _RygelSearchExpression {
+	GTypeInstance parent_instance;
+	volatile int ref_count;
+	RygelSearchExpressionPrivate * priv;
+	gpointer op;
+	gpointer operand1;
+	gpointer operand2;
+};
+
+struct _RygelSearchExpressionClass {
+	GTypeClass parent_class;
+	void (*finalize) (RygelSearchExpression *self);
+	gboolean (*satisfied_by) (RygelSearchExpression* self, RygelMediaObject* media_object);
+	gchar* (*to_string) (RygelSearchExpression* self);
+};
+
 struct _RygelUpdatableObjectIface {
 	GTypeInterface parent_iface;
 	void (*commit) (RygelUpdatableObject* self, GAsyncReadyCallback _callback_, gpointer _user_data_);
@@ -264,6 +294,7 @@ GType rygel_media_objects_get_type (void) G_GNUC_CONST;
 enum  {
 	RYGEL_MEDIA_CONTAINER_DUMMY_PROPERTY,
 	RYGEL_MEDIA_CONTAINER_CHILD_COUNT,
+	RYGEL_MEDIA_CONTAINER_ALL_CHILD_COUNT,
 	RYGEL_MEDIA_CONTAINER_SORT_CRITERIA,
 	RYGEL_MEDIA_CONTAINER_OCM_FLAGS
 };
@@ -320,7 +351,10 @@ GUPnPDIDLLiteResource* rygel_media_object_add_resource (RygelMediaObject* self, 
 gchar* rygel_http_item_uri_to_string (RygelHTTPItemURI* self);
 gchar* rygel_transcode_manager_get_protocol (RygelTranscodeManager* self);
 static GUPnPDIDLLiteResource* rygel_media_container_real_add_resource (RygelMediaObject* base, GUPnPDIDLLiteObject* didl_object, const gchar* uri, const gchar* protocol, const gchar* import_uri, GError** error);
+void rygel_media_container_check_search_expression (RygelMediaContainer* self, RygelSearchExpression* expression);
+GType rygel_relational_expression_get_type (void) G_GNUC_CONST;
 void rygel_media_container_set_child_count (RygelMediaContainer* self, gint value);
+gint rygel_media_container_get_all_child_count (RygelMediaContainer* self);
 const gchar* rygel_media_container_get_sort_criteria (RygelMediaContainer* self);
 void rygel_media_container_set_sort_criteria (RygelMediaContainer* self, const gchar* value);
 GType rygel_updatable_object_get_type (void) G_GNUC_CONST;
@@ -400,10 +434,12 @@ static void rygel_media_container_real_constructed (GObject* base) {
 	RygelMediaContainer * self;
 	self = (RygelMediaContainer*) base;
 	G_OBJECT_CLASS (rygel_media_container_parent_class)->constructed ((GObject*) G_TYPE_CHECK_INSTANCE_CAST (self, RYGEL_TYPE_MEDIA_OBJECT, RygelMediaObject));
+	self->empty_child_count = 0;
 	self->update_id = (guint32) 0;
 	self->storage_used = (gint64) (-1);
 	self->total_deleted_child_count = (gint64) 0;
 	rygel_media_object_set_upnp_class ((RygelMediaObject*) self, RYGEL_MEDIA_CONTAINER_STORAGE_FOLDER);
+	self->create_mode_enabled = FALSE;
 	g_signal_connect_object (self, "container-updated", (GCallback) _rygel_media_container_on_container_updated_rygel_media_container_container_updated, self, 0);
 	g_signal_connect_object (self, "sub-tree-updates-finished", (GCallback) _rygel_media_container_on_sub_tree_updates_finished_rygel_media_container_sub_tree_updates_finished, self, 0);
 }
@@ -706,56 +742,68 @@ static GUPnPDIDLLiteObject* rygel_media_container_real_serialize (RygelMediaObje
 static GUPnPDIDLLiteResource* rygel_media_container_real_add_resource (RygelMediaObject* base, GUPnPDIDLLiteObject* didl_object, const gchar* uri, const gchar* protocol, const gchar* import_uri, GError** error) {
 	RygelMediaContainer * self;
 	GUPnPDIDLLiteResource* result = NULL;
-	GUPnPDIDLLiteObject* _tmp0_;
-	const gchar* _tmp1_;
-	const gchar* _tmp2_;
-	const gchar* _tmp3_;
-	GUPnPDIDLLiteResource* _tmp4_ = NULL;
-	GUPnPDIDLLiteResource* res;
-	const gchar* _tmp5_;
-	GUPnPProtocolInfo* _tmp7_;
-	GUPnPProtocolInfo* protocol_info;
-	GUPnPProtocolInfo* _tmp8_;
-	GUPnPProtocolInfo* _tmp9_;
-	GUPnPProtocolInfo* _tmp10_;
-	const gchar* _tmp11_;
-	GUPnPProtocolInfo* _tmp12_;
-	GUPnPProtocolInfo* _tmp13_;
+	gint _tmp0_;
+	GUPnPDIDLLiteResource* _tmp17_;
 	GError * _inner_error_ = NULL;
 	self = (RygelMediaContainer*) base;
 	g_return_val_if_fail (didl_object != NULL, NULL);
 	g_return_val_if_fail (protocol != NULL, NULL);
-	_tmp0_ = didl_object;
-	_tmp1_ = uri;
-	_tmp2_ = protocol;
-	_tmp3_ = import_uri;
-	_tmp4_ = RYGEL_MEDIA_OBJECT_CLASS (rygel_media_container_parent_class)->add_resource (G_TYPE_CHECK_INSTANCE_CAST (self, RYGEL_TYPE_MEDIA_OBJECT, RygelMediaObject), _tmp0_, _tmp1_, _tmp2_, _tmp3_, &_inner_error_);
-	res = _tmp4_;
-	if (_inner_error_ != NULL) {
-		g_propagate_error (error, _inner_error_);
-		return NULL;
-	}
-	_tmp5_ = uri;
-	if (_tmp5_ != NULL) {
+	_tmp0_ = self->priv->_child_count;
+	if (_tmp0_ > 0) {
+		GUPnPDIDLLiteObject* _tmp1_;
+		const gchar* _tmp2_;
+		const gchar* _tmp3_;
+		const gchar* _tmp4_;
+		GUPnPDIDLLiteResource* _tmp5_ = NULL;
+		GUPnPDIDLLiteResource* res;
 		const gchar* _tmp6_;
+		GUPnPProtocolInfo* _tmp9_;
+		GUPnPProtocolInfo* protocol_info;
+		GUPnPProtocolInfo* _tmp10_;
+		GUPnPProtocolInfo* _tmp11_;
+		GUPnPProtocolInfo* _tmp12_;
+		const gchar* _tmp13_;
+		GUPnPProtocolInfo* _tmp14_;
+		GUPnPDIDLLiteResource* _tmp15_;
+		GUPnPProtocolInfo* _tmp16_;
+		_tmp1_ = didl_object;
+		_tmp2_ = uri;
+		_tmp3_ = protocol;
+		_tmp4_ = import_uri;
+		_tmp5_ = RYGEL_MEDIA_OBJECT_CLASS (rygel_media_container_parent_class)->add_resource (G_TYPE_CHECK_INSTANCE_CAST (self, RYGEL_TYPE_MEDIA_OBJECT, RygelMediaObject), _tmp1_, _tmp2_, _tmp3_, _tmp4_, &_inner_error_);
+		res = _tmp5_;
+		if (_inner_error_ != NULL) {
+			g_propagate_error (error, _inner_error_);
+			return NULL;
+		}
 		_tmp6_ = uri;
-		gupnp_didl_lite_resource_set_uri (res, _tmp6_);
+		if (_tmp6_ != NULL) {
+			GUPnPDIDLLiteResource* _tmp7_;
+			const gchar* _tmp8_;
+			_tmp7_ = res;
+			_tmp8_ = uri;
+			gupnp_didl_lite_resource_set_uri (_tmp7_, _tmp8_);
+		}
+		_tmp9_ = gupnp_protocol_info_new ();
+		protocol_info = _tmp9_;
+		_tmp10_ = protocol_info;
+		gupnp_protocol_info_set_mime_type (_tmp10_, "text/xml");
+		_tmp11_ = protocol_info;
+		gupnp_protocol_info_set_dlna_profile (_tmp11_, "DIDL_S");
+		_tmp12_ = protocol_info;
+		_tmp13_ = protocol;
+		gupnp_protocol_info_set_protocol (_tmp12_, _tmp13_);
+		_tmp14_ = protocol_info;
+		gupnp_protocol_info_set_dlna_flags (_tmp14_, (GUPNP_DLNA_FLAGS_DLNA_V15 | GUPNP_DLNA_FLAGS_CONNECTION_STALL) | GUPNP_DLNA_FLAGS_BACKGROUND_TRANSFER_MODE);
+		_tmp15_ = res;
+		_tmp16_ = protocol_info;
+		gupnp_didl_lite_resource_set_protocol_info (_tmp15_, _tmp16_);
+		result = res;
+		_g_object_unref0 (protocol_info);
+		return result;
 	}
-	_tmp7_ = gupnp_protocol_info_new ();
-	protocol_info = _tmp7_;
-	_tmp8_ = protocol_info;
-	gupnp_protocol_info_set_mime_type (_tmp8_, "text/xml");
-	_tmp9_ = protocol_info;
-	gupnp_protocol_info_set_dlna_profile (_tmp9_, "DIDL_S");
-	_tmp10_ = protocol_info;
-	_tmp11_ = protocol;
-	gupnp_protocol_info_set_protocol (_tmp10_, _tmp11_);
-	_tmp12_ = protocol_info;
-	gupnp_protocol_info_set_dlna_flags (_tmp12_, (GUPNP_DLNA_FLAGS_DLNA_V15 | GUPNP_DLNA_FLAGS_CONNECTION_STALL) | GUPNP_DLNA_FLAGS_BACKGROUND_TRANSFER_MODE);
-	_tmp13_ = protocol_info;
-	gupnp_didl_lite_resource_set_protocol_info (res, _tmp13_);
-	result = res;
-	_g_object_unref0 (protocol_info);
+	_tmp17_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (NULL, gupnp_didl_lite_resource_get_type ()) ? ((GUPnPDIDLLiteResource*) NULL) : NULL);
+	result = _tmp17_;
 	return result;
 }
 
@@ -815,6 +863,57 @@ static void rygel_media_container_on_sub_tree_updates_finished (RygelMediaContai
 }
 
 
+static gpointer _rygel_search_expression_ref0 (gpointer self) {
+	return self ? rygel_search_expression_ref (self) : NULL;
+}
+
+
+void rygel_media_container_check_search_expression (RygelMediaContainer* self, RygelSearchExpression* expression) {
+	gboolean _tmp0_ = FALSE;
+	RygelSearchExpression* _tmp1_;
+	gboolean _tmp3_;
+	g_return_if_fail (self != NULL);
+	self->create_mode_enabled = FALSE;
+	_tmp1_ = expression;
+	if (_tmp1_ != NULL) {
+		RygelSearchExpression* _tmp2_;
+		_tmp2_ = expression;
+		_tmp0_ = G_TYPE_CHECK_INSTANCE_TYPE (_tmp2_, RYGEL_TYPE_RELATIONAL_EXPRESSION);
+	} else {
+		_tmp0_ = FALSE;
+	}
+	_tmp3_ = _tmp0_;
+	if (_tmp3_) {
+		RygelSearchExpression* _tmp4_;
+		RygelRelationalExpression* _tmp5_;
+		RygelRelationalExpression* relational_exp;
+		gboolean _tmp6_ = FALSE;
+		RygelRelationalExpression* _tmp7_;
+		gconstpointer _tmp8_;
+		gboolean _tmp11_;
+		_tmp4_ = expression;
+		_tmp5_ = _rygel_search_expression_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp4_, RYGEL_TYPE_RELATIONAL_EXPRESSION) ? ((RygelRelationalExpression*) _tmp4_) : NULL);
+		relational_exp = _tmp5_;
+		_tmp7_ = relational_exp;
+		_tmp8_ = ((RygelSearchExpression*) _tmp7_)->op;
+		if (((GUPnPSearchCriteriaOp) ((gintptr) _tmp8_)) == GUPNP_SEARCH_CRITERIA_OP_DERIVED_FROM) {
+			RygelRelationalExpression* _tmp9_;
+			gconstpointer _tmp10_;
+			_tmp9_ = relational_exp;
+			_tmp10_ = ((RygelSearchExpression*) _tmp9_)->operand1;
+			_tmp6_ = g_strcmp0 ((const gchar*) _tmp10_, "upnp:createClass") == 0;
+		} else {
+			_tmp6_ = FALSE;
+		}
+		_tmp11_ = _tmp6_;
+		if (_tmp11_) {
+			self->create_mode_enabled = TRUE;
+		}
+		_rygel_search_expression_unref0 (relational_exp);
+	}
+}
+
+
 gint rygel_media_container_get_child_count (RygelMediaContainer* self) {
 	gint result;
 	gint _tmp0_;
@@ -831,6 +930,18 @@ void rygel_media_container_set_child_count (RygelMediaContainer* self, gint valu
 	_tmp0_ = value;
 	self->priv->_child_count = _tmp0_;
 	g_object_notify ((GObject *) self, "child-count");
+}
+
+
+gint rygel_media_container_get_all_child_count (RygelMediaContainer* self) {
+	gint result;
+	gint _tmp0_;
+	gint _tmp1_;
+	g_return_val_if_fail (self != NULL, 0);
+	_tmp0_ = self->priv->_child_count;
+	_tmp1_ = self->empty_child_count;
+	result = _tmp0_ + _tmp1_;
+	return result;
 }
 
 
@@ -922,7 +1033,7 @@ static GUPnPOCMFlags rygel_media_container_real_get_ocm_flags (RygelMediaObject*
 	if (_tmp9_) {
 		GUPnPOCMFlags _tmp10_;
 		_tmp10_ = flags;
-		flags = _tmp10_ | (GUPNP_OCM_FLAGS_UPLOAD | GUPNP_OCM_FLAGS_UPLOAD_DESTROYABLE);
+		flags = _tmp10_ | ((GUPNP_OCM_FLAGS_UPLOAD | GUPNP_OCM_FLAGS_UPLOAD_DESTROYABLE) | GUPNP_OCM_FLAGS_CREATE_CONTAINER);
 	}
 	allow_deletion = TRUE;
 	{
@@ -1001,6 +1112,7 @@ static void rygel_media_container_class_init (RygelMediaContainerClass * klass) 
 	G_OBJECT_CLASS (klass)->set_property = _vala_rygel_media_container_set_property;
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_container_finalize;
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_CONTAINER_CHILD_COUNT, g_param_spec_int ("child-count", "child-count", "child-count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT));
+	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_CONTAINER_ALL_CHILD_COUNT, g_param_spec_int ("all-child-count", "all-child-count", "all-child-count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_CONTAINER_SORT_CRITERIA, g_param_spec_string ("sort-criteria", "sort-criteria", "sort-criteria", NULL, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_CONTAINER_OCM_FLAGS, g_param_spec_flags ("ocm-flags", "ocm-flags", "ocm-flags", gupnp_ocm_flags_get_type (), 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 	/**
@@ -1089,6 +1201,9 @@ static void _vala_rygel_media_container_get_property (GObject * object, guint pr
 	switch (property_id) {
 		case RYGEL_MEDIA_CONTAINER_CHILD_COUNT:
 		g_value_set_int (value, rygel_media_container_get_child_count (self));
+		break;
+		case RYGEL_MEDIA_CONTAINER_ALL_CHILD_COUNT:
+		g_value_set_int (value, rygel_media_container_get_all_child_count (self));
 		break;
 		case RYGEL_MEDIA_CONTAINER_SORT_CRITERIA:
 		g_value_set_string (value, rygel_media_container_get_sort_criteria (self));

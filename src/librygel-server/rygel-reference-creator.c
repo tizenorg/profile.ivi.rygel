@@ -30,8 +30,8 @@
 #include <string.h>
 #include <libgupnp/gupnp.h>
 #include <gio/gio.h>
-#include <gee.h>
 #include <glib/gi18n-lib.h>
+#include <gee.h>
 #include <libgupnp-av/gupnp-av.h>
 
 
@@ -354,24 +354,28 @@ RygelReferenceCreator* rygel_reference_creator_new (RygelContentDirectory* conte
 void rygel_reference_creator_parse_arguments (RygelReferenceCreator* self, GError** error) {
 	GUPnPServiceAction* _tmp0_;
 	const gchar* _tmp1_;
-	const gchar* _tmp3_;
+	const gchar* _tmp4_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	_tmp0_ = self->priv->action;
 	gupnp_service_action_get (_tmp0_, "ContainerID", G_TYPE_STRING, &self->container_id, "ObjectID", G_TYPE_STRING, &self->object_id, NULL);
 	_tmp1_ = self->container_id;
 	if (_tmp1_ == NULL) {
-		GError* _tmp2_;
-		_tmp2_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, "'ContainerID' agument missing.");
-		_inner_error_ = _tmp2_;
+		const gchar* _tmp2_ = NULL;
+		GError* _tmp3_;
+		_tmp2_ = _ ("'ContainerID' agument missing.");
+		_tmp3_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _tmp2_);
+		_inner_error_ = _tmp3_;
 		g_propagate_error (error, _inner_error_);
 		return;
 	}
-	_tmp3_ = self->object_id;
-	if (_tmp3_ == NULL) {
-		GError* _tmp4_;
-		_tmp4_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, "'ObjectID' argument missing.");
-		_inner_error_ = _tmp4_;
+	_tmp4_ = self->object_id;
+	if (_tmp4_ == NULL) {
+		const gchar* _tmp5_ = NULL;
+		GError* _tmp6_;
+		_tmp5_ = _ ("'ObjectID' argument missing.");
+		_tmp6_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _tmp5_);
+		_inner_error_ = _tmp6_;
 		g_propagate_error (error, _inner_error_);
 		return;
 	}
@@ -432,7 +436,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 	{
 		rygel_reference_creator_parse_arguments (_data_->self, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch51_g_error;
+			goto __catch55_g_error;
 		}
 		_data_->_state_ = 1;
 		rygel_reference_creator_fetch_container (_data_->self, rygel_reference_creator_run_ready, _data_);
@@ -442,7 +446,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		_data_->_tmp0_ = rygel_reference_creator_fetch_container_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		_data_->container = _data_->_tmp0_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch51_g_error;
+			goto __catch55_g_error;
 		}
 		_data_->_tmp1_ = _data_->self->priv->content_directory;
 		_data_->_tmp2_ = _data_->_tmp1_->root_container;
@@ -462,7 +466,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->root_container);
 			_g_object_unref0 (_data_->container);
-			goto __catch51_g_error;
+			goto __catch55_g_error;
 		}
 		_data_->_tmp9_ = _data_->object;
 		if (_data_->_tmp9_ == NULL) {
@@ -473,7 +477,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 			_g_object_unref0 (_data_->object);
 			_g_object_unref0 (_data_->root_container);
 			_g_object_unref0 (_data_->container);
-			goto __catch51_g_error;
+			goto __catch55_g_error;
 		}
 		_data_->_tmp12_ = _data_->container;
 		_data_->_tmp13_ = _data_->object;
@@ -490,7 +494,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 			_g_object_unref0 (_data_->object);
 			_g_object_unref0 (_data_->root_container);
 			_g_object_unref0 (_data_->container);
-			goto __catch51_g_error;
+			goto __catch55_g_error;
 		}
 		_data_->_tmp17_ = _data_->self->priv->action;
 		_data_->_tmp18_ = _data_->new_id;
@@ -503,8 +507,8 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		_g_object_unref0 (_data_->root_container);
 		_g_object_unref0 (_data_->container);
 	}
-	goto __finally51;
-	__catch51_g_error:
+	goto __finally55;
+	__catch55_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -530,7 +534,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		g_object_unref (_data_->_async_result);
 		return FALSE;
 	}
-	__finally51:
+	__finally55:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);

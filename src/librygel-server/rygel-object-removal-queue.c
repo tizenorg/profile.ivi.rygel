@@ -443,7 +443,7 @@ static gboolean rygel_object_removal_queue_remove_now_co (RygelObjectRemovalQueu
 			_state_1:
 			rygel_writable_container_remove_item_finish (_data_->_tmp9_, _data_->_res_, &_data_->_inner_error_);
 			if (_data_->_inner_error_ != NULL) {
-				goto __catch56_g_error;
+				goto __catch60_g_error;
 			}
 		} else {
 			_data_->_tmp14_ = _data_->parent;
@@ -457,7 +457,7 @@ static gboolean rygel_object_removal_queue_remove_now_co (RygelObjectRemovalQueu
 			_state_2:
 			rygel_writable_container_remove_container_finish (_data_->_tmp14_, _data_->_res_, &_data_->_inner_error_);
 			if (_data_->_inner_error_ != NULL) {
-				goto __catch56_g_error;
+				goto __catch60_g_error;
 			}
 		}
 		_data_->_tmp19_ = _data_->object;
@@ -465,8 +465,8 @@ static gboolean rygel_object_removal_queue_remove_now_co (RygelObjectRemovalQueu
 		_data_->_tmp21_ = _data_->_tmp20_;
 		g_debug ("rygel-object-removal-queue.vala:84: Auto-destroyed object '%s'!", _data_->_tmp21_);
 	}
-	goto __finally56;
-	__catch56_g_error:
+	goto __finally60;
+	__catch60_g_error:
 	{
 		_data_->err = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -479,7 +479,7 @@ static gboolean rygel_object_removal_queue_remove_now_co (RygelObjectRemovalQueu
 "bject '%s': %s", _data_->_tmp24_, _data_->_tmp26_);
 		_g_error_free0 (_data_->err);
 	}
-	__finally56:
+	__finally60:
 	if (_data_->_inner_error_ != NULL) {
 		_g_object_unref0 (_data_->parent);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);

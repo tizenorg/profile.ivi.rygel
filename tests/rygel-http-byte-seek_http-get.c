@@ -174,6 +174,8 @@ typedef struct _RygelMediaItemPrivate RygelMediaItemPrivate;
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 
 #define RYGEL_TYPE_HTTP_SEEK_TYPE (rygel_http_seek_type_get_type ())
+#define _rygel_client_hacks_unref0(var) ((var == NULL) ? NULL : (var = (rygel_client_hacks_unref (var), NULL)))
+#define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 
 #define RYGEL_TYPE_MEDIA_CONTAINER (rygel_media_container_get_type ())
 #define RYGEL_MEDIA_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_MEDIA_CONTAINER, RygelMediaContainer))
@@ -372,6 +374,8 @@ RygelHTTPSeek* rygel_http_seek_construct (GType object_type, SoupMessage* msg, g
 GType rygel_http_seek_type_get_type (void) G_GNUC_CONST;
 void rygel_http_seek_set_seek_type (RygelHTTPSeek* self, RygelHTTPSeekType value);
 gboolean rygel_http_byte_seek_needed (RygelHTTPGet* request);
+RygelClientHacks* rygel_client_hacks_create (SoupMessage* message, GError** error);
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self);
 GType rygel_media_container_get_type (void) G_GNUC_CONST;
 GType rygel_http_identity_handler_get_type (void) G_GNUC_CONST;
 gboolean rygel_http_byte_seek_requested (RygelHTTPGet* request);
@@ -562,106 +566,134 @@ RygelHTTPByteSeek* rygel_http_byte_seek_new (RygelHTTPGet* request, GError** err
 
 gboolean rygel_http_byte_seek_needed (RygelHTTPGet* request) {
 	gboolean result = FALSE;
-	gboolean _tmp0_ = FALSE;
-	gboolean _tmp1_ = FALSE;
-	gboolean _tmp2_ = FALSE;
-	gboolean _tmp3_ = FALSE;
-	RygelHTTPGet* _tmp4_;
-	RygelMediaObject* _tmp5_;
-	gboolean _tmp13_;
-	gboolean _tmp21_;
-	gboolean _tmp29_;
-	gboolean _tmp34_;
+	gboolean force_seek;
+	gboolean _tmp4_ = FALSE;
+	gboolean _tmp5_;
+	gboolean _tmp35_;
+	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (request != NULL, FALSE);
-	_tmp4_ = request;
-	_tmp5_ = ((RygelHTTPRequest*) _tmp4_)->object;
-	if (!G_TYPE_CHECK_INSTANCE_TYPE (_tmp5_, RYGEL_TYPE_MEDIA_CONTAINER)) {
+	force_seek = FALSE;
+	{
+		RygelHTTPGet* _tmp0_;
+		SoupMessage* _tmp1_;
+		RygelClientHacks* _tmp2_ = NULL;
+		RygelClientHacks* hack;
+		gboolean _tmp3_ = FALSE;
+		_tmp0_ = request;
+		_tmp1_ = ((RygelHTTPRequest*) _tmp0_)->msg;
+		_tmp2_ = rygel_client_hacks_create (_tmp1_, &_inner_error_);
+		hack = _tmp2_;
+		if (_inner_error_ != NULL) {
+			goto __catch9_g_error;
+		}
+		_tmp3_ = rygel_client_hacks_force_seek (hack);
+		force_seek = _tmp3_;
+		_rygel_client_hacks_unref0 (hack);
+	}
+	goto __finally9;
+	__catch9_g_error:
+	{
+		GError* _error_ = NULL;
+		_error_ = _inner_error_;
+		_inner_error_ = NULL;
+		_g_error_free0 (_error_);
+	}
+	__finally9:
+	if (_inner_error_ != NULL) {
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+		g_clear_error (&_inner_error_);
+		return FALSE;
+	}
+	_tmp5_ = force_seek;
+	if (_tmp5_) {
+		_tmp4_ = TRUE;
+	} else {
 		gboolean _tmp6_ = FALSE;
-		RygelHTTPGet* _tmp7_;
-		RygelMediaObject* _tmp8_;
-		glong _tmp9_;
-		gboolean _tmp12_;
-		_tmp7_ = request;
-		_tmp8_ = ((RygelHTTPRequest*) _tmp7_)->object;
-		_tmp9_ = (G_TYPE_CHECK_INSTANCE_TYPE (_tmp8_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp8_) : NULL)->size;
-		if (_tmp9_ > ((glong) 0)) {
-			RygelHTTPGet* _tmp10_;
-			RygelHTTPGetHandler* _tmp11_;
-			_tmp10_ = request;
-			_tmp11_ = _tmp10_->handler;
-			_tmp6_ = G_TYPE_CHECK_INSTANCE_TYPE (_tmp11_, RYGEL_TYPE_HTTP_IDENTITY_HANDLER);
+		gboolean _tmp7_ = FALSE;
+		gboolean _tmp8_ = FALSE;
+		RygelHTTPGet* _tmp9_;
+		RygelMediaObject* _tmp10_;
+		gboolean _tmp18_;
+		gboolean _tmp26_;
+		gboolean _tmp34_;
+		_tmp9_ = request;
+		_tmp10_ = ((RygelHTTPRequest*) _tmp9_)->object;
+		if (!G_TYPE_CHECK_INSTANCE_TYPE (_tmp10_, RYGEL_TYPE_MEDIA_CONTAINER)) {
+			gboolean _tmp11_ = FALSE;
+			RygelHTTPGet* _tmp12_;
+			RygelMediaObject* _tmp13_;
+			glong _tmp14_;
+			gboolean _tmp17_;
+			_tmp12_ = request;
+			_tmp13_ = ((RygelHTTPRequest*) _tmp12_)->object;
+			_tmp14_ = (G_TYPE_CHECK_INSTANCE_TYPE (_tmp13_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp13_) : NULL)->size;
+			if (_tmp14_ > ((glong) 0)) {
+				RygelHTTPGet* _tmp15_;
+				RygelHTTPGetHandler* _tmp16_;
+				_tmp15_ = request;
+				_tmp16_ = _tmp15_->handler;
+				_tmp11_ = G_TYPE_CHECK_INSTANCE_TYPE (_tmp16_, RYGEL_TYPE_HTTP_IDENTITY_HANDLER);
+			} else {
+				_tmp11_ = FALSE;
+			}
+			_tmp17_ = _tmp11_;
+			_tmp8_ = _tmp17_;
 		} else {
-			_tmp6_ = FALSE;
+			_tmp8_ = FALSE;
 		}
-		_tmp12_ = _tmp6_;
-		_tmp3_ = _tmp12_;
-	} else {
-		_tmp3_ = FALSE;
-	}
-	_tmp13_ = _tmp3_;
-	if (_tmp13_) {
-		_tmp2_ = TRUE;
-	} else {
-		gboolean _tmp14_ = FALSE;
-		RygelHTTPGet* _tmp15_;
-		RygelThumbnail* _tmp16_;
-		gboolean _tmp20_;
-		_tmp15_ = request;
-		_tmp16_ = _tmp15_->thumbnail;
-		if (_tmp16_ != NULL) {
-			RygelHTTPGet* _tmp17_;
-			RygelThumbnail* _tmp18_;
-			glong _tmp19_;
-			_tmp17_ = request;
-			_tmp18_ = _tmp17_->thumbnail;
-			_tmp19_ = _tmp18_->size;
-			_tmp14_ = _tmp19_ > ((glong) 0);
+		_tmp18_ = _tmp8_;
+		if (_tmp18_) {
+			_tmp7_ = TRUE;
 		} else {
-			_tmp14_ = FALSE;
+			gboolean _tmp19_ = FALSE;
+			RygelHTTPGet* _tmp20_;
+			RygelThumbnail* _tmp21_;
+			gboolean _tmp25_;
+			_tmp20_ = request;
+			_tmp21_ = _tmp20_->thumbnail;
+			if (_tmp21_ != NULL) {
+				RygelHTTPGet* _tmp22_;
+				RygelThumbnail* _tmp23_;
+				glong _tmp24_;
+				_tmp22_ = request;
+				_tmp23_ = _tmp22_->thumbnail;
+				_tmp24_ = _tmp23_->size;
+				_tmp19_ = _tmp24_ > ((glong) 0);
+			} else {
+				_tmp19_ = FALSE;
+			}
+			_tmp25_ = _tmp19_;
+			_tmp7_ = _tmp25_;
 		}
-		_tmp20_ = _tmp14_;
-		_tmp2_ = _tmp20_;
-	}
-	_tmp21_ = _tmp2_;
-	if (_tmp21_) {
-		_tmp1_ = TRUE;
-	} else {
-		gboolean _tmp22_ = FALSE;
-		RygelHTTPGet* _tmp23_;
-		RygelSubtitle* _tmp24_;
-		gboolean _tmp28_;
-		_tmp23_ = request;
-		_tmp24_ = _tmp23_->subtitle;
-		if (_tmp24_ != NULL) {
-			RygelHTTPGet* _tmp25_;
-			RygelSubtitle* _tmp26_;
-			glong _tmp27_;
-			_tmp25_ = request;
-			_tmp26_ = _tmp25_->subtitle;
-			_tmp27_ = _tmp26_->size;
-			_tmp22_ = _tmp27_ > ((glong) 0);
+		_tmp26_ = _tmp7_;
+		if (_tmp26_) {
+			_tmp6_ = TRUE;
 		} else {
-			_tmp22_ = FALSE;
+			gboolean _tmp27_ = FALSE;
+			RygelHTTPGet* _tmp28_;
+			RygelSubtitle* _tmp29_;
+			gboolean _tmp33_;
+			_tmp28_ = request;
+			_tmp29_ = _tmp28_->subtitle;
+			if (_tmp29_ != NULL) {
+				RygelHTTPGet* _tmp30_;
+				RygelSubtitle* _tmp31_;
+				glong _tmp32_;
+				_tmp30_ = request;
+				_tmp31_ = _tmp30_->subtitle;
+				_tmp32_ = _tmp31_->size;
+				_tmp27_ = _tmp32_ > ((glong) 0);
+			} else {
+				_tmp27_ = FALSE;
+			}
+			_tmp33_ = _tmp27_;
+			_tmp6_ = _tmp33_;
 		}
-		_tmp28_ = _tmp22_;
-		_tmp1_ = _tmp28_;
+		_tmp34_ = _tmp6_;
+		_tmp4_ = _tmp34_;
 	}
-	_tmp29_ = _tmp1_;
-	if (_tmp29_) {
-		_tmp0_ = TRUE;
-	} else {
-		RygelHTTPGet* _tmp30_;
-		SoupMessage* _tmp31_;
-		SoupMessageHeaders* _tmp32_;
-		const gchar* _tmp33_ = NULL;
-		_tmp30_ = request;
-		_tmp31_ = ((RygelHTTPRequest*) _tmp30_)->msg;
-		_tmp32_ = _tmp31_->request_headers;
-		_tmp33_ = soup_message_headers_get_one (_tmp32_, "User-Agent");
-		_tmp0_ = g_strcmp0 (_tmp33_, "PLAYSTATION 3") == 0;
-	}
-	_tmp34_ = _tmp0_;
-	result = _tmp34_;
+	_tmp35_ = _tmp4_;
+	result = _tmp35_;
 	return result;
 }
 

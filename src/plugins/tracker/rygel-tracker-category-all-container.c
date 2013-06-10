@@ -235,7 +235,8 @@ struct _RygelTrackerCategoryAllContainerAddContainerData {
 	RygelTrackerCategoryAllContainer* self;
 	RygelMediaContainer* container;
 	GCancellable* cancellable;
-	GError* _tmp0_;
+	const gchar* _tmp0_;
+	GError* _tmp1_;
 	GError * _inner_error_;
 };
 
@@ -593,7 +594,7 @@ RygelTrackerCategoryAllContainer* rygel_tracker_category_all_container_construct
 		const gchar* _tmp35_;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp33_ = _ ("Could not subscribe to tracker signals: %s");
+		_tmp33_ = _ ("Could not subscribe to Tracker signals: %s");
 		_tmp34_ = _error_;
 		_tmp35_ = _tmp34_->message;
 		g_critical (_tmp33_, _tmp35_);
@@ -781,8 +782,10 @@ static gboolean rygel_tracker_category_all_container_real_add_container_co (Ryge
 		g_assert_not_reached ();
 	}
 	_state_0:
-	_data_->_tmp0_ = g_error_new_literal (WRITEABLE_CONTAINER_ERROR, WRITEABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "Not supported");
-	_data_->_inner_error_ = _data_->_tmp0_;
+	_data_->_tmp0_ = NULL;
+	_data_->_tmp0_ = _ ("Not supported");
+	_data_->_tmp1_ = g_error_new_literal (RYGEL_WRITABLE_CONTAINER_ERROR, RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, _data_->_tmp0_);
+	_data_->_inner_error_ = _data_->_tmp1_;
 	g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 	g_error_free (_data_->_inner_error_);
 	if (_data_->_state_ == 0) {
@@ -956,7 +959,7 @@ static gboolean rygel_tracker_category_all_container_real_remove_container_co (R
 		g_assert_not_reached ();
 	}
 	_state_0:
-	_data_->_tmp0_ = g_error_new_literal (WRITEABLE_CONTAINER_ERROR, WRITEABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "Not supported");
+	_data_->_tmp0_ = g_error_new_literal (RYGEL_WRITABLE_CONTAINER_ERROR, RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "Not supported");
 	_data_->_inner_error_ = _data_->_tmp0_;
 	g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 	g_error_free (_data_->_inner_error_);

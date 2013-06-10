@@ -56,11 +56,6 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                                         "audio/x-wav",
                                         "audio/x-ac3",
                                         "audio/x-m4a",
-                                        "audio/L16;rate=44100;channels=2",
-                                        "audio/L16;rate=44100;channels=1",
-                                        "audio/L16;channels=2;rate=44100",
-                                        "audio/L16;channels=1;rate=44100",
-                                        "audio/L16;rate=44100",
                                         "audio/l16;rate=44100;channels=2",
                                         "audio/l16;rate=44100;channels=1",
                                         "audio/l16;channels=2;rate=44100",
@@ -436,13 +431,14 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
             break;
         case MessageType.ERROR:
             Error error;
-            string error_message;
+            string debug_message;
 
-            message.parse_error (out error, out error_message);
+            message.parse_error (out error, out debug_message);
 
-            warning ("Error from GStreamer element %s: %s",
+            warning ("Error from GStreamer element %s: %s (%s)",
                      this.playbin.name,
-                     error_message);
+                     error.message,
+                     debug_message);
             warning ("Going to STOPPED state");
 
             this.playback_state = "STOPPED";

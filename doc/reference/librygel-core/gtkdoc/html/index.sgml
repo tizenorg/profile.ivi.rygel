@@ -26,6 +26,7 @@
 <ANCHOR id="RygelConfigurationError" href="librygel-core/RygelConfiguration.html#RygelConfigurationError">
 <ANCHOR id="rygel-configuration-get-upnp-enabled" href="librygel-core/RygelConfiguration.html#rygel-configuration-get-upnp-enabled">
 <ANCHOR id="rygel-configuration-get-interface" href="librygel-core/RygelConfiguration.html#rygel-configuration-get-interface">
+<ANCHOR id="rygel-configuration-get-interfaces" href="librygel-core/RygelConfiguration.html#rygel-configuration-get-interfaces">
 <ANCHOR id="rygel-configuration-get-port" href="librygel-core/RygelConfiguration.html#rygel-configuration-get-port">
 <ANCHOR id="rygel-configuration-get-transcoding" href="librygel-core/RygelConfiguration.html#rygel-configuration-get-transcoding">
 <ANCHOR id="rygel-configuration-get-allow-upload" href="librygel-core/RygelConfiguration.html#rygel-configuration-get-allow-upload">
@@ -168,6 +169,7 @@
 <ANCHOR id="rygel-recursive-module-loader-load-modules" href="librygel-core/RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-modules">
 <ANCHOR id="rygel-recursive-module-loader-load-modules-sync" href="librygel-core/RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-modules-sync">
 <ANCHOR id="rygel-recursive-module-loader-load-module-from-file" href="librygel-core/RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-file">
+<ANCHOR id="rygel-recursive-module-loader-load-module-from-info" href="librygel-core/RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-info">
 <ANCHOR id="rygel-recursive-module-loader-get-base-path" href="librygel-core/RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-get-base-path">
 <ANCHOR id="rygel-recursive-module-loader-set-base-path" href="librygel-core/RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-set-base-path">
 <ANCHOR id="RygelRecursiveModuleLoader-struct" href="librygel-core/RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader-struct">
@@ -253,6 +255,7 @@
 <ANCHOR id="RYGEL-TYPE-BASE-CONFIGURATION:CAPS" href="librygel-core/RygelBaseConfiguration.html#RYGEL-TYPE-BASE-CONFIGURATION:CAPS">
 <ANCHOR id="rygel-base-configuration-get-upnp-enabled" href="librygel-core/RygelBaseConfiguration.html#rygel-base-configuration-get-upnp-enabled">
 <ANCHOR id="rygel-base-configuration-get-interface" href="librygel-core/RygelBaseConfiguration.html#rygel-base-configuration-get-interface">
+<ANCHOR id="rygel-base-configuration-get-interfaces" href="librygel-core/RygelBaseConfiguration.html#rygel-base-configuration-get-interfaces">
 <ANCHOR id="rygel-base-configuration-get-port" href="librygel-core/RygelBaseConfiguration.html#rygel-base-configuration-get-port">
 <ANCHOR id="rygel-base-configuration-get-transcoding" href="librygel-core/RygelBaseConfiguration.html#rygel-base-configuration-get-transcoding">
 <ANCHOR id="rygel-base-configuration-get-allow-upload" href="librygel-core/RygelBaseConfiguration.html#rygel-base-configuration-get-allow-upload">
@@ -355,6 +358,7 @@
 <ANCHOR id="docs-org-freedesktop-DBus-Properties.description" href="librygel-core/docs-org-freedesktop-DBus-Properties.html#docs-org-freedesktop-DBus-Properties.description">
 <ANCHOR id="docs-org-freedesktop-DBus-Properties.details" href="librygel-core/docs-org-freedesktop-DBus-Properties.html#docs-org-freedesktop-DBus-Properties.details">
 <ANCHOR id="org-freedesktop-DBus-Properties-GetAll" href="librygel-core/docs-org-freedesktop-DBus-Properties.html#org-freedesktop-DBus-Properties-GetAll">
+<ANCHOR id="annotation-glossterm-array" href="librygel-core/annotation-glossary.html#annotation-glossterm-array">
 <ANCHOR id="annotation-glossterm-allow-none" href="librygel-core/annotation-glossary.html#annotation-glossterm-allow-none">
 <ANCHOR id="annotation-glossterm-scope async" href="librygel-core/annotation-glossary.html#annotation-glossterm-scope async">
 <ANCHOR id="annotation-glossterm-in" href="librygel-core/annotation-glossary.html#annotation-glossterm-in">

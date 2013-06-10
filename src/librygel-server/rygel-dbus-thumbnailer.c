@@ -614,10 +614,10 @@ static void rygel_dbus_thumbnailer_on_activatable_names (RygelDbusThumbnailer* s
 		_names_size_ = names_length1;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_DBUS_ERROR) {
-				goto __catch21_g_dbus_error;
+				goto __catch23_g_dbus_error;
 			}
 			if (_inner_error_->domain == G_IO_ERROR) {
-				goto __catch21_g_io_error;
+				goto __catch23_g_io_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -633,10 +633,10 @@ static void rygel_dbus_thumbnailer_on_activatable_names (RygelDbusThumbnailer* s
 			if (_inner_error_ != NULL) {
 				names = (_vala_array_free (names, names_length1, (GDestroyNotify) g_free), NULL);
 				if (_inner_error_->domain == G_DBUS_ERROR) {
-					goto __catch21_g_dbus_error;
+					goto __catch23_g_dbus_error;
 				}
 				if (_inner_error_->domain == G_IO_ERROR) {
-					goto __catch21_g_io_error;
+					goto __catch23_g_io_error;
 				}
 				names = (_vala_array_free (names, names_length1, (GDestroyNotify) g_free), NULL);
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -652,23 +652,23 @@ static void rygel_dbus_thumbnailer_on_activatable_names (RygelDbusThumbnailer* s
 		}
 		names = (_vala_array_free (names, names_length1, (GDestroyNotify) g_free), NULL);
 	}
-	goto __finally21;
-	__catch21_g_dbus_error:
+	goto __finally23;
+	__catch23_g_dbus_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	goto __finally21;
-	__catch21_g_io_error:
+	goto __finally23;
+	__catch23_g_io_error:
 	{
 		GError* io_error = NULL;
 		io_error = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (io_error);
 	}
-	__finally21:
+	__finally23:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

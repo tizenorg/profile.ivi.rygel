@@ -53,14 +53,15 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-DIST_COMMON = $(librygelinc_HEADERS) $(srcdir)/../../common.am \
-	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(srcdir)/filelist.am librygel_core_2_0_la_vala.stamp \
+DIST_COMMON = $(librygelinc_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in $(srcdir)/filelist.am \
+	$(top_srcdir)/common.am librygel_core_2_0_la_vala.stamp \
 	rygel-base-configuration.c rygel-configuration.c \
 	rygel-connection-manager.c rygel-core.h rygel-dbus-interface.c \
 	rygel-description-file.c rygel-free-desktop-interfaces.c \
 	rygel-icon-info.c rygel-log-handler.c rygel-media-device.c \
-	rygel-meta-config.c rygel-plugin-loader.c rygel-plugin.c \
+	rygel-meta-config.c rygel-plugin-information.c \
+	rygel-plugin-loader.c rygel-plugin.c \
 	rygel-recursive-module-loader.c rygel-resource-info.c \
 	rygel-root-device-factory.c rygel-root-device.c \
 	rygel-state-machine.c rygel-v1-hacks.c rygel-xml-utils.c
@@ -127,7 +128,8 @@ am__objects_1 = librygel_core_2_0_la-rygel-connection-manager.lo \
 	librygel_core_2_0_la-rygel-state-machine.lo \
 	librygel_core_2_0_la-rygel-v1-hacks.lo
 am__objects_2 = librygel_core_2_0_la-rygel-icon-info.lo \
-	librygel_core_2_0_la-rygel-xml-utils.lo
+	librygel_core_2_0_la-rygel-xml-utils.lo \
+	librygel_core_2_0_la-rygel-plugin-information.lo
 am_librygel_core_2_0_la_OBJECTS = $(am__objects_1) $(am__objects_2)
 librygel_core_2_0_la_OBJECTS = $(am_librygel_core_2_0_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -197,8 +199,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -504,7 +504,8 @@ LIBRYGEL_CORE_VAPI_SOURCE_FILES = \
 
 LIBRYGEL_CORE_NONVAPI_SOURCE_FILES = \
 	rygel-icon-info.vala \
-	rygel-xml-utils.vala
+	rygel-xml-utils.vala \
+	rygel-plugin-information.vala
 
 librygelincdir = $(includedir)/rygel-2.0
 librygelinc_HEADERS = rygel-core.h
@@ -557,7 +558,7 @@ all: $(BUILT_SOURCES)
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/../../common.am $(srcdir)/filelist.am $(am__configure_deps)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(top_srcdir)/common.am $(srcdir)/filelist.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -578,7 +579,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
-$(srcdir)/../../common.am $(srcdir)/filelist.am:
+$(top_srcdir)/common.am $(srcdir)/filelist.am:
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -639,6 +640,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_core_2_0_la-rygel-log-handler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_core_2_0_la-rygel-media-device.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_core_2_0_la-rygel-meta-config.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_core_2_0_la-rygel-plugin-information.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_core_2_0_la-rygel-plugin-loader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_core_2_0_la-rygel-plugin.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_core_2_0_la-rygel-recursive-module-loader.Plo@am__quote@
@@ -802,6 +804,13 @@ librygel_core_2_0_la-rygel-xml-utils.lo: rygel-xml-utils.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-xml-utils.c' object='librygel_core_2_0_la-rygel-xml-utils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_core_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_core_2_0_la-rygel-xml-utils.lo `test -f 'rygel-xml-utils.c' || echo '$(srcdir)/'`rygel-xml-utils.c
+
+librygel_core_2_0_la-rygel-plugin-information.lo: rygel-plugin-information.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_core_2_0_la_CFLAGS) $(CFLAGS) -MT librygel_core_2_0_la-rygel-plugin-information.lo -MD -MP -MF $(DEPDIR)/librygel_core_2_0_la-rygel-plugin-information.Tpo -c -o librygel_core_2_0_la-rygel-plugin-information.lo `test -f 'rygel-plugin-information.c' || echo '$(srcdir)/'`rygel-plugin-information.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_core_2_0_la-rygel-plugin-information.Tpo $(DEPDIR)/librygel_core_2_0_la-rygel-plugin-information.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-plugin-information.c' object='librygel_core_2_0_la-rygel-plugin-information.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_core_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_core_2_0_la-rygel-plugin-information.lo `test -f 'rygel-plugin-information.c' || echo '$(srcdir)/'`rygel-plugin-information.c
 $(srcdir)/rygel-connection-manager.c: $(srcdir)/librygel_core_2_0_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/librygel_core_2_0_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -897,14 +906,19 @@ $(srcdir)/rygel-xml-utils.c: $(srcdir)/librygel_core_2_0_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_core_2_0_la_vala.stamp; \
 	fi
+$(srcdir)/rygel-plugin-information.c: $(srcdir)/librygel_core_2_0_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/librygel_core_2_0_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_core_2_0_la_vala.stamp; \
+	fi
 $(srcdir)/rygel-core.h: $(srcdir)/librygel_core_2_0_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/librygel_core_2_0_la_vala.stamp; fi
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_core_2_0_la_vala.stamp; \
 	fi
-$(srcdir)/librygel_core_2_0_la_vala.stamp: rygel-connection-manager.vala rygel-description-file.vala rygel-root-device.vala rygel-root-device-factory.vala rygel-dbus-interface.vala rygel-log-handler.vala rygel-meta-config.vala rygel-plugin-loader.vala rygel-recursive-module-loader.vala rygel-plugin.vala rygel-resource-info.vala rygel-media-device.vala rygel-configuration.vala rygel-base-configuration.vala rygel-free-desktop-interfaces.vala rygel-state-machine.vala rygel-v1-hacks.vala rygel-icon-info.vala rygel-xml-utils.vala
+$(srcdir)/librygel_core_2_0_la_vala.stamp: rygel-connection-manager.vala rygel-description-file.vala rygel-root-device.vala rygel-root-device-factory.vala rygel-dbus-interface.vala rygel-log-handler.vala rygel-meta-config.vala rygel-plugin-loader.vala rygel-recursive-module-loader.vala rygel-plugin.vala rygel-resource-info.vala rygel-media-device.vala rygel-configuration.vala rygel-base-configuration.vala rygel-free-desktop-interfaces.vala rygel-state-machine.vala rygel-v1-hacks.vala rygel-icon-info.vala rygel-xml-utils.vala rygel-plugin-information.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_core_2_0_la_VALAFLAGS) $(VALAFLAGS) -C rygel-connection-manager.vala rygel-description-file.vala rygel-root-device.vala rygel-root-device-factory.vala rygel-dbus-interface.vala rygel-log-handler.vala rygel-meta-config.vala rygel-plugin-loader.vala rygel-recursive-module-loader.vala rygel-plugin.vala rygel-resource-info.vala rygel-media-device.vala rygel-configuration.vala rygel-base-configuration.vala rygel-free-desktop-interfaces.vala rygel-state-machine.vala rygel-v1-hacks.vala rygel-icon-info.vala rygel-xml-utils.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_core_2_0_la_VALAFLAGS) $(VALAFLAGS) -C rygel-connection-manager.vala rygel-description-file.vala rygel-root-device.vala rygel-root-device-factory.vala rygel-dbus-interface.vala rygel-log-handler.vala rygel-meta-config.vala rygel-plugin-loader.vala rygel-recursive-module-loader.vala rygel-plugin.vala rygel-resource-info.vala rygel-media-device.vala rygel-configuration.vala rygel-base-configuration.vala rygel-free-desktop-interfaces.vala rygel-state-machine.vala rygel-v1-hacks.vala rygel-icon-info.vala rygel-xml-utils.vala rygel-plugin-information.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
@@ -1088,6 +1102,7 @@ maintainer-clean-generic:
 	-rm -f rygel-log-handler.c
 	-rm -f rygel-media-device.c
 	-rm -f rygel-meta-config.c
+	-rm -f rygel-plugin-information.c
 	-rm -f rygel-plugin-loader.c
 	-rm -f rygel-plugin.c
 	-rm -f rygel-recursive-module-loader.c

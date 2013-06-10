@@ -149,7 +149,8 @@ typedef enum  {
 	RYGEL_MEDIA_EXPORT_SQL_STRING_MAX_UPDATE_ID,
 	RYGEL_MEDIA_EXPORT_SQL_STRING_MAKE_GUARDED,
 	RYGEL_MEDIA_EXPORT_SQL_STRING_IS_GUARDED,
-	RYGEL_MEDIA_EXPORT_SQL_STRING_UPDATE_GUARDED_OBJECT
+	RYGEL_MEDIA_EXPORT_SQL_STRING_UPDATE_GUARDED_OBJECT,
+	RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_REFERENCE
 } RygelMediaExportSQLString;
 
 struct _RygelMediaExportParamSpecMediaCacheUpgrader {
@@ -181,7 +182,7 @@ RygelMediaExportMediaCacheUpgrader* rygel_media_export_media_cache_upgrader_cons
 gboolean rygel_media_export_media_cache_upgrader_needs_upgrade (RygelMediaExportMediaCacheUpgrader* self, gint* current_version, GError** error);
 GQuark rygel_media_export_database_error_quark (void);
 gint rygel_media_export_database_query_value (RygelMediaExportDatabase* self, const gchar* sql, GValue* args, int args_length1, GError** error);
-#define RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION "13"
+#define RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION "14"
 void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCacheUpgrader* self, GError** error);
 void rygel_media_export_database_begin (RygelMediaExportDatabase* self, GError** error);
 void rygel_media_export_database_exec (RygelMediaExportDatabase* self, const gchar* sql, GValue* arguments, int arguments_length1, GError** error);
@@ -202,6 +203,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaExportMediaCacheUpgrader* self);
 static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaExportMediaCacheUpgrader* self);
 static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaExportMediaCacheUpgrader* self);
+static void rygel_media_export_media_cache_upgrader_update_v13_v14 (RygelMediaExportMediaCacheUpgrader* self);
 static void rygel_media_export_media_cache_upgrader_force_reindex (RygelMediaExportMediaCacheUpgrader* self, GError** error);
 GType rygel_media_export_database_cursor_get_type (void) G_GNUC_CONST;
 RygelMediaExportDatabaseCursor* rygel_media_export_database_exec_cursor (RygelMediaExportDatabase* self, const gchar* sql, GValue* arguments, int arguments_length1, GError** error);
@@ -214,7 +216,7 @@ void rygel_media_export_database_cursor_value_take_iterator (GValue* value, gpoi
 gpointer rygel_media_export_database_cursor_value_get_iterator (const GValue* value);
 GType rygel_media_export_database_cursor_iterator_get_type (void) G_GNUC_CONST;
 RygelMediaExportDatabaseCursorIterator* rygel_media_export_database_cursor_iterator (RygelMediaExportDatabaseCursor* self);
-gboolean rygel_media_export_database_cursor_iterator_next (RygelMediaExportDatabaseCursorIterator* self);
+gboolean rygel_media_export_database_cursor_iterator_next (RygelMediaExportDatabaseCursorIterator* self, GError** error);
 sqlite3_stmt* rygel_media_export_database_cursor_iterator_get (RygelMediaExportDatabaseCursorIterator* self, GError** error);
 #define RYGEL_MEDIA_EXPORT_QUERY_CONTAINER_PREFIX "virtual-container:"
 #define RYGEL_MEDIA_EXPORT_ROOT_CONTAINER_FILESYSTEM_FOLDER_ID "Filesystem"
@@ -299,33 +301,33 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 			_tmp3_ = self->priv->database;
 			rygel_media_export_database_begin (_tmp3_, &_inner_error_);
 			if (_inner_error_ != NULL) {
-				goto __catch19_g_error;
+				goto __catch20_g_error;
 			}
 			_tmp4_ = self->priv->database;
 			rygel_media_export_database_exec (_tmp4_, "DELETE FROM Object WHERE upnp_id IN (" "SELECT DISTINCT object_fk FROM meta_data)", NULL, 0, &_inner_error_);
 			if (_inner_error_ != NULL) {
-				goto __catch19_g_error;
+				goto __catch20_g_error;
 			}
 			_tmp5_ = self->priv->database;
 			rygel_media_export_database_exec (_tmp5_, "DROP TABLE Meta_Data", NULL, 0, &_inner_error_);
 			if (_inner_error_ != NULL) {
-				goto __catch19_g_error;
+				goto __catch20_g_error;
 			}
 			_tmp6_ = self->priv->database;
 			_tmp7_ = self->priv->sql;
 			_tmp8_ = rygel_media_export_sql_factory_make (_tmp7_, RYGEL_MEDIA_EXPORT_SQL_STRING_TABLE_METADATA);
 			rygel_media_export_database_exec (_tmp6_, _tmp8_, NULL, 0, &_inner_error_);
 			if (_inner_error_ != NULL) {
-				goto __catch19_g_error;
+				goto __catch20_g_error;
 			}
 			_tmp9_ = self->priv->database;
 			rygel_media_export_database_commit (_tmp9_, &_inner_error_);
 			if (_inner_error_ != NULL) {
-				goto __catch19_g_error;
+				goto __catch20_g_error;
 			}
 		}
-		goto __finally19;
-		__catch19_g_error:
+		goto __finally20;
+		__catch20_g_error:
 		{
 			GError* _error_ = NULL;
 			RygelMediaExportDatabase* _tmp10_;
@@ -345,7 +347,7 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 			_g_free0 (_tmp14_);
 			_g_error_free0 (_error_);
 		}
-		__finally19:
+		__finally20:
 		if (_inner_error_ != NULL) {
 			g_propagate_error (error, _inner_error_);
 			return;
@@ -367,13 +369,13 @@ void rygel_media_export_media_cache_upgrader_ensure_indices (RygelMediaExportMed
 		_tmp2_ = rygel_media_export_sql_factory_make (_tmp1_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
 		rygel_media_export_database_exec (_tmp0_, _tmp2_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch20_g_error;
+			goto __catch21_g_error;
 		}
 		_tmp3_ = self->priv->database;
 		rygel_media_export_database_analyze (_tmp3_);
 	}
-	goto __finally20;
-	__catch20_g_error:
+	goto __finally21;
+	__catch21_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp4_;
@@ -390,7 +392,7 @@ void rygel_media_export_media_cache_upgrader_ensure_indices (RygelMediaExportMed
 		_g_free0 (_tmp7_);
 		_g_error_free0 (_error_);
 	}
-	__finally20:
+	__finally21:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -474,9 +476,14 @@ void rygel_media_export_media_cache_upgrader_upgrade (RygelMediaExportMediaCache
 				rygel_media_export_media_cache_upgrader_update_v12_v13 (self);
 				break;
 			}
+			case 13:
+			{
+				rygel_media_export_media_cache_upgrader_update_v13_v14 (self);
+				break;
+			}
 			default:
 			{
-				g_warning ("rygel-media-export-media-cache-upgrader.vala:123: Cannot upgrade");
+				g_warning ("rygel-media-export-media-cache-upgrader.vala:126: Cannot upgrade");
 				self->priv->database = NULL;
 				break;
 			}
@@ -528,7 +535,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -538,7 +545,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE Meta_Data RENAME TO _Meta_Data", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -550,7 +557,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp2_, _tmp4_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -560,7 +567,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp5_, "INSERT INTO meta_data (size, mime_type, " "duration, width, height, class, author, album, " "date, bitrate, sample_freq, bits_per_sample, " "channels, track, color_depth, object_fk) SELECT " "size, mime_type, duration, width, height, class, " "author, album, date, bitrate, sample_freq, " "bits_per_sample, channels, track, color_depth, " "o.upnp_id FROM _Meta_Data JOIN object o " "ON id = o.metadata_fk", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -570,7 +577,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp6_, "DROP TABLE _Meta_Data", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -580,7 +587,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp7_, RYGEL_MEDIA_EXPORT_MEDIA_CACHE_UPGRADER_UPDATE_V3_V4_STRING_3, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -590,7 +597,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp8_, RYGEL_MEDIA_EXPORT_MEDIA_CACHE_UPGRADER_UPDATE_V3_V4_STRING_4, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -602,7 +609,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp9_, _tmp11_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -612,7 +619,7 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp12_, "UPDATE schema_info SET version = '4'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -622,15 +629,15 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_commit (_tmp13_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch21_rygel_media_export_database_error;
+				goto __catch22_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
 	}
-	goto __finally21;
-	__catch21_rygel_media_export_database_error:
+	goto __finally22;
+	__catch22_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp14_;
@@ -642,12 +649,12 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		rygel_media_export_database_rollback (_tmp14_);
 		_tmp15_ = _error_;
 		_tmp16_ = _tmp15_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:157: Database upgrade fai" \
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:160: Database upgrade fai" \
 "led: %s", _tmp16_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally21:
+	__finally22:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -689,23 +696,23 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		RygelMediaExportDatabase* _tmp12_;
 		RygelMediaExportDatabase* _tmp13_;
 		GeeQueue* _tmp14_;
-		RygelMediaExportDatabase* _tmp36_;
 		RygelMediaExportDatabase* _tmp37_;
 		RygelMediaExportDatabase* _tmp38_;
-		RygelMediaExportSQLFactory* _tmp39_;
-		const gchar* _tmp40_ = NULL;
-		RygelMediaExportDatabase* _tmp41_;
-		RygelMediaExportSQLFactory* _tmp42_;
-		const gchar* _tmp43_ = NULL;
-		RygelMediaExportDatabase* _tmp44_;
+		RygelMediaExportDatabase* _tmp39_;
+		RygelMediaExportSQLFactory* _tmp40_;
+		const gchar* _tmp41_ = NULL;
+		RygelMediaExportDatabase* _tmp42_;
+		RygelMediaExportSQLFactory* _tmp43_;
+		const gchar* _tmp44_ = NULL;
 		RygelMediaExportDatabase* _tmp45_;
 		RygelMediaExportDatabase* _tmp46_;
 		RygelMediaExportDatabase* _tmp47_;
+		RygelMediaExportDatabase* _tmp48_;
 		_tmp1_ = self->priv->database;
 		rygel_media_export_database_begin (_tmp1_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -716,7 +723,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp2_, "DROP TRIGGER IF EXISTS trgr_delete_children", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -729,7 +736,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp3_, _tmp5_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -740,7 +747,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp6_, "ALTER TABLE Object RENAME TO _Object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -751,7 +758,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp7_, "CREATE TABLE Object AS SELECT * FROM _Object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -762,7 +769,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp8_, "DELETE FROM Object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -775,7 +782,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp9_, _tmp11_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -786,7 +793,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp12_, "INSERT INTO _Object (upnp_id, type_fk, title, " "timestamp) VALUES ('0', 0, 'Root', 0)", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -797,7 +804,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp13_, "INSERT INTO Object (upnp_id, type_fk, title, " "timestamp) VALUES ('0', 0, 'Root', 0)", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -822,9 +829,9 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 			gint _tmp23__length1;
 			RygelMediaExportDatabaseCursor* _tmp24_ = NULL;
 			RygelMediaExportDatabaseCursor* cursor;
-			RygelMediaExportDatabase* _tmp34_;
-			GValue* _tmp35_;
-			gint _tmp35__length1;
+			RygelMediaExportDatabase* _tmp35_;
+			GValue* _tmp36_;
+			gint _tmp36__length1;
 			_tmp15_ = queue;
 			_tmp16_ = gee_collection_get_is_empty ((GeeCollection*) _tmp15_);
 			_tmp17_ = _tmp16_;
@@ -848,7 +855,7 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 			if (_inner_error_ != NULL) {
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-					goto __catch22_rygel_media_export_database_error;
+					goto __catch23_rygel_media_export_database_error;
 				}
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
 				_g_object_unref0 (queue);
@@ -866,26 +873,22 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 				while (TRUE) {
 					RygelMediaExportDatabaseCursorIterator* _tmp27_;
 					gboolean _tmp28_ = FALSE;
-					RygelMediaExportDatabaseCursorIterator* _tmp29_;
-					sqlite3_stmt* _tmp30_ = NULL;
+					gboolean _tmp29_;
+					RygelMediaExportDatabaseCursorIterator* _tmp30_;
+					sqlite3_stmt* _tmp31_ = NULL;
 					sqlite3_stmt* statement;
-					GeeQueue* _tmp31_;
-					sqlite3_stmt* _tmp32_;
-					const gchar* _tmp33_ = NULL;
+					GeeQueue* _tmp32_;
+					sqlite3_stmt* _tmp33_;
+					const gchar* _tmp34_ = NULL;
 					_tmp27_ = _statement_it;
-					_tmp28_ = rygel_media_export_database_cursor_iterator_next (_tmp27_);
-					if (!_tmp28_) {
-						break;
-					}
-					_tmp29_ = _statement_it;
-					_tmp30_ = rygel_media_export_database_cursor_iterator_get (_tmp29_, &_inner_error_);
-					statement = _tmp30_;
+					_tmp28_ = rygel_media_export_database_cursor_iterator_next (_tmp27_, &_inner_error_);
+					_tmp29_ = _tmp28_;
 					if (_inner_error_ != NULL) {
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 						_g_object_unref0 (cursor);
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
 						if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-							goto __catch22_rygel_media_export_database_error;
+							goto __catch23_rygel_media_export_database_error;
 						}
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 						_g_object_unref0 (cursor);
@@ -895,22 +898,43 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 						g_clear_error (&_inner_error_);
 						return;
 					}
-					_tmp31_ = queue;
-					_tmp32_ = statement;
-					_tmp33_ = sqlite3_column_text (_tmp32_, 0);
-					gee_queue_offer (_tmp31_, _tmp33_);
+					if (!_tmp29_) {
+						break;
+					}
+					_tmp30_ = _statement_it;
+					_tmp31_ = rygel_media_export_database_cursor_iterator_get (_tmp30_, &_inner_error_);
+					statement = _tmp31_;
+					if (_inner_error_ != NULL) {
+						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+						_g_object_unref0 (cursor);
+						args = (_vala_GValue_array_free (args, args_length1), NULL);
+						if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+							goto __catch23_rygel_media_export_database_error;
+						}
+						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+						_g_object_unref0 (cursor);
+						args = (_vala_GValue_array_free (args, args_length1), NULL);
+						_g_object_unref0 (queue);
+						g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+						g_clear_error (&_inner_error_);
+						return;
+					}
+					_tmp32_ = queue;
+					_tmp33_ = statement;
+					_tmp34_ = sqlite3_column_text (_tmp33_, 0);
+					gee_queue_offer (_tmp32_, _tmp34_);
 				}
 				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 			}
-			_tmp34_ = self->priv->database;
-			_tmp35_ = args;
-			_tmp35__length1 = args_length1;
-			rygel_media_export_database_exec (_tmp34_, "INSERT INTO Object SELECT * FROM _OBJECT " "WHERE parent = ?", _tmp35_, _tmp35__length1, &_inner_error_);
+			_tmp35_ = self->priv->database;
+			_tmp36_ = args;
+			_tmp36__length1 = args_length1;
+			rygel_media_export_database_exec (_tmp35_, "INSERT INTO Object SELECT * FROM _OBJECT " "WHERE parent = ?", _tmp36_, _tmp36__length1, &_inner_error_);
 			if (_inner_error_ != NULL) {
 				_g_object_unref0 (cursor);
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-					goto __catch22_rygel_media_export_database_error;
+					goto __catch23_rygel_media_export_database_error;
 				}
 				_g_object_unref0 (cursor);
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
@@ -922,22 +946,11 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 			_g_object_unref0 (cursor);
 			args = (_vala_GValue_array_free (args, args_length1), NULL);
 		}
-		_tmp36_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp36_, "DROP TABLE Object", NULL, 0, &_inner_error_);
-		if (_inner_error_ != NULL) {
-			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
-			}
-			_g_object_unref0 (queue);
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-			g_clear_error (&_inner_error_);
-			return;
-		}
 		_tmp37_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp37_, "ALTER TABLE _Object RENAME TO Object", NULL, 0, &_inner_error_);
+		rygel_media_export_database_exec (_tmp37_, "DROP TABLE Object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -945,36 +958,36 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 			return;
 		}
 		_tmp38_ = self->priv->database;
-		_tmp39_ = self->priv->sql;
-		_tmp40_ = rygel_media_export_sql_factory_make (_tmp39_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
-		rygel_media_export_database_exec (_tmp38_, _tmp40_, NULL, 0, &_inner_error_);
+		rygel_media_export_database_exec (_tmp38_, "ALTER TABLE _Object RENAME TO Object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
-		_tmp41_ = self->priv->database;
-		_tmp42_ = self->priv->sql;
-		_tmp43_ = rygel_media_export_sql_factory_make (_tmp42_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
-		rygel_media_export_database_exec (_tmp41_, _tmp43_, NULL, 0, &_inner_error_);
+		_tmp39_ = self->priv->database;
+		_tmp40_ = self->priv->sql;
+		_tmp41_ = rygel_media_export_sql_factory_make (_tmp40_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
+		rygel_media_export_database_exec (_tmp39_, _tmp41_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
-		_tmp44_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp44_, "UPDATE schema_info SET version = '5'", NULL, 0, &_inner_error_);
+		_tmp42_ = self->priv->database;
+		_tmp43_ = self->priv->sql;
+		_tmp44_ = rygel_media_export_sql_factory_make (_tmp43_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
+		rygel_media_export_database_exec (_tmp42_, _tmp44_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -982,10 +995,10 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 			return;
 		}
 		_tmp45_ = self->priv->database;
-		rygel_media_export_database_commit (_tmp45_, &_inner_error_);
+		rygel_media_export_database_exec (_tmp45_, "UPDATE schema_info SET version = '5'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -993,10 +1006,10 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 			return;
 		}
 		_tmp46_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp46_, "VACUUM", NULL, 0, &_inner_error_);
+		rygel_media_export_database_commit (_tmp46_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch22_rygel_media_export_database_error;
+				goto __catch23_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1004,27 +1017,38 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 			return;
 		}
 		_tmp47_ = self->priv->database;
-		rygel_media_export_database_analyze (_tmp47_);
+		rygel_media_export_database_exec (_tmp47_, "VACUUM", NULL, 0, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch23_rygel_media_export_database_error;
+			}
+			_g_object_unref0 (queue);
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp48_ = self->priv->database;
+		rygel_media_export_database_analyze (_tmp48_);
 	}
-	goto __finally22;
-	__catch22_rygel_media_export_database_error:
+	goto __finally23;
+	__catch23_rygel_media_export_database_error:
 	{
 		GError* err = NULL;
-		RygelMediaExportDatabase* _tmp48_;
-		GError* _tmp49_;
-		const gchar* _tmp50_;
+		RygelMediaExportDatabase* _tmp49_;
+		GError* _tmp50_;
+		const gchar* _tmp51_;
 		err = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp48_ = self->priv->database;
-		rygel_media_export_database_rollback (_tmp48_);
-		_tmp49_ = err;
-		_tmp50_ = _tmp49_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:205: Database upgrade fai" \
-"led: %s", _tmp50_);
+		_tmp49_ = self->priv->database;
+		rygel_media_export_database_rollback (_tmp49_);
+		_tmp50_ = err;
+		_tmp51_ = _tmp50_->message;
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:208: Database upgrade fai" \
+"led: %s", _tmp51_);
 		self->priv->database = NULL;
 		_g_error_free0 (err);
 	}
-	__finally22:
+	__finally23:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (queue);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1054,7 +1078,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1064,7 +1088,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp1_, "DROP TABLE object_type", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1074,7 +1098,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp2_, "DROP TRIGGER IF EXISTS trgr_delete_uris", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1084,7 +1108,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp3_, "ALTER TABLE Object ADD COLUMN uri TEXT", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1094,7 +1118,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp4_, "UPDATE Object SET uri = (SELECT uri " "FROM uri WHERE Uri.object_fk == Object.upnp_id LIMIT 1)", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1104,7 +1128,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp5_, "DROP INDEX IF EXISTS idx_uri_fk", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1114,7 +1138,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp6_, "DROP TABLE Uri", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1124,7 +1148,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp7_, "UPDATE schema_info SET version = '6'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1134,7 +1158,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_commit (_tmp8_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1144,7 +1168,7 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp9_, "VACUUM", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1153,8 +1177,8 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		_tmp10_ = self->priv->database;
 		rygel_media_export_database_analyze (_tmp10_);
 	}
-	goto __finally23;
-	__catch23_rygel_media_export_database_error:
+	goto __finally24;
+	__catch24_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp11_;
@@ -1166,12 +1190,12 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		rygel_media_export_database_rollback (_tmp11_);
 		_tmp12_ = _error_;
 		_tmp13_ = _tmp12_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:226: Database upgrade fai" \
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:229: Database upgrade fai" \
 "led: %s", _tmp13_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally23:
+	__finally24:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1194,7 +1218,7 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch24_rygel_media_export_database_error;
+				goto __catch25_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1204,7 +1228,7 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE meta_data ADD COLUMN dlna_profile TEXT", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch24_rygel_media_export_database_error;
+				goto __catch25_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1214,7 +1238,7 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp2_, "UPDATE schema_info SET version = '7'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch24_rygel_media_export_database_error;
+				goto __catch25_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1223,7 +1247,7 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		rygel_media_export_media_cache_upgrader_force_reindex (self, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch24_rygel_media_export_database_error;
+				goto __catch25_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1233,7 +1257,7 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		rygel_media_export_database_commit (_tmp3_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch24_rygel_media_export_database_error;
+				goto __catch25_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1243,7 +1267,7 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp4_, "VACUUM", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch24_rygel_media_export_database_error;
+				goto __catch25_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1252,8 +1276,8 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		_tmp5_ = self->priv->database;
 		rygel_media_export_database_analyze (_tmp5_);
 	}
-	goto __finally24;
-	__catch24_rygel_media_export_database_error:
+	goto __finally25;
+	__catch25_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp6_;
@@ -1265,12 +1289,12 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		rygel_media_export_database_rollback (_tmp6_);
 		_tmp7_ = _error_;
 		_tmp8_ = _tmp7_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:242: Database upgrade fai" \
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:245: Database upgrade fai" \
 "led: %s", _tmp8_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally24:
+	__finally25:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1294,7 +1318,7 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch25_rygel_media_export_database_error;
+				goto __catch26_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1304,7 +1328,7 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE object ADD COLUMN flags TEXT", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch25_rygel_media_export_database_error;
+				goto __catch26_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1314,7 +1338,7 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp2_, "ALTER TABLE meta_data ADD COLUMN genre TEXT", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch25_rygel_media_export_database_error;
+				goto __catch26_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1324,7 +1348,7 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp3_, "UPDATE schema_info SET version = '8'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch25_rygel_media_export_database_error;
+				goto __catch26_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1333,7 +1357,7 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		rygel_media_export_media_cache_upgrader_force_reindex (self, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch25_rygel_media_export_database_error;
+				goto __catch26_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1343,7 +1367,7 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		rygel_media_export_database_commit (_tmp4_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch25_rygel_media_export_database_error;
+				goto __catch26_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1353,7 +1377,7 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp5_, "VACUUM", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch25_rygel_media_export_database_error;
+				goto __catch26_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1362,8 +1386,8 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		_tmp6_ = self->priv->database;
 		rygel_media_export_database_analyze (_tmp6_);
 	}
-	goto __finally25;
-	__catch25_rygel_media_export_database_error:
+	goto __finally26;
+	__catch26_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp7_;
@@ -1375,12 +1399,12 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		rygel_media_export_database_rollback (_tmp7_);
 		_tmp8_ = _error_;
 		_tmp9_ = _tmp8_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:259: Database upgrade fai" \
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:262: Database upgrade fai" \
 "led: %s", _tmp9_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally25:
+	__finally26:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1412,7 +1436,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1422,7 +1446,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp1_, "DROP TRIGGER trgr_update_closure", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1432,7 +1456,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp2_, "DROP TRIGGER trgr_delete_closure", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1442,7 +1466,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp3_, "ALTER TABLE Closure RENAME TO _Closure", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1454,7 +1478,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp4_, _tmp6_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1464,7 +1488,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp7_, "INSERT INTO Closure (ancestor, " "descendant, depth) SELECT DISTINCT " "ancestor, descendant, depth FROM " "_Closure", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1476,7 +1500,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp8_, _tmp10_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1486,7 +1510,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp11_, "DROP TABLE _Closure", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1496,7 +1520,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp12_, "UPDATE schema_info SET version = '9'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1506,7 +1530,7 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_commit (_tmp13_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -1516,15 +1540,15 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_exec (_tmp14_, "VACUUM", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch26_rygel_media_export_database_error;
+				goto __catch27_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
 	}
-	goto __finally26;
-	__catch26_rygel_media_export_database_error:
+	goto __finally27;
+	__catch27_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp15_;
@@ -1536,12 +1560,12 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		rygel_media_export_database_rollback (_tmp15_);
 		_tmp16_ = _error_;
 		_tmp17_ = _tmp16_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:282: Database upgrade fai" \
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:285: Database upgrade fai" \
 "led: %s", _tmp17_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally26:
+	__finally27:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1583,21 +1607,21 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		const gchar* _tmp25_ = NULL;
 		RygelMediaExportDatabase* _tmp26_;
 		GeeLinkedList* _tmp27_;
-		RygelMediaExportDatabase* _tmp49_;
 		RygelMediaExportDatabase* _tmp50_;
 		RygelMediaExportDatabase* _tmp51_;
-		RygelMediaExportSQLFactory* _tmp52_;
-		const gchar* _tmp53_ = NULL;
-		RygelMediaExportDatabase* _tmp54_;
-		RygelMediaExportSQLFactory* _tmp55_;
-		const gchar* _tmp56_ = NULL;
-		RygelMediaExportDatabase* _tmp57_;
-		RygelMediaExportSQLFactory* _tmp58_;
-		const gchar* _tmp59_ = NULL;
-		RygelMediaExportDatabase* _tmp60_;
+		RygelMediaExportDatabase* _tmp52_;
+		RygelMediaExportSQLFactory* _tmp53_;
+		const gchar* _tmp54_ = NULL;
+		RygelMediaExportDatabase* _tmp55_;
+		RygelMediaExportSQLFactory* _tmp56_;
+		const gchar* _tmp57_ = NULL;
+		RygelMediaExportDatabase* _tmp58_;
+		RygelMediaExportSQLFactory* _tmp59_;
+		const gchar* _tmp60_ = NULL;
 		RygelMediaExportDatabase* _tmp61_;
 		RygelMediaExportDatabase* _tmp62_;
 		RygelMediaExportDatabase* _tmp63_;
+		RygelMediaExportDatabase* _tmp64_;
 		_tmp0_ = gee_linked_list_new (G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free, NULL, NULL, NULL);
 		queue = _tmp0_;
 		_tmp1_ = self->priv->database;
@@ -1605,7 +1629,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1617,7 +1641,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1629,7 +1653,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1641,7 +1665,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1653,7 +1677,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1665,7 +1689,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1677,7 +1701,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1689,7 +1713,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1701,7 +1725,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1720,7 +1744,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1732,7 +1756,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1744,7 +1768,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1756,7 +1780,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1768,7 +1792,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1782,7 +1806,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1796,7 +1820,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1808,7 +1832,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1833,9 +1857,9 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 			gint _tmp36__length1;
 			RygelMediaExportDatabaseCursor* _tmp37_ = NULL;
 			RygelMediaExportDatabaseCursor* cursor;
-			RygelMediaExportDatabase* _tmp47_;
-			GValue* _tmp48_;
-			gint _tmp48__length1;
+			RygelMediaExportDatabase* _tmp48_;
+			GValue* _tmp49_;
+			gint _tmp49__length1;
 			_tmp28_ = queue;
 			_tmp29_ = gee_collection_get_is_empty ((GeeCollection*) _tmp28_);
 			_tmp30_ = _tmp29_;
@@ -1860,7 +1884,7 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
 				_g_object_unref0 (queue);
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-					goto __catch27_rygel_media_export_database_error;
+					goto __catch28_rygel_media_export_database_error;
 				}
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
 				_g_object_unref0 (queue);
@@ -1878,27 +1902,23 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 				while (TRUE) {
 					RygelMediaExportDatabaseCursorIterator* _tmp40_;
 					gboolean _tmp41_ = FALSE;
-					RygelMediaExportDatabaseCursorIterator* _tmp42_;
-					sqlite3_stmt* _tmp43_ = NULL;
+					gboolean _tmp42_;
+					RygelMediaExportDatabaseCursorIterator* _tmp43_;
+					sqlite3_stmt* _tmp44_ = NULL;
 					sqlite3_stmt* statement;
-					GeeLinkedList* _tmp44_;
-					sqlite3_stmt* _tmp45_;
-					const gchar* _tmp46_ = NULL;
+					GeeLinkedList* _tmp45_;
+					sqlite3_stmt* _tmp46_;
+					const gchar* _tmp47_ = NULL;
 					_tmp40_ = _statement_it;
-					_tmp41_ = rygel_media_export_database_cursor_iterator_next (_tmp40_);
-					if (!_tmp41_) {
-						break;
-					}
-					_tmp42_ = _statement_it;
-					_tmp43_ = rygel_media_export_database_cursor_iterator_get (_tmp42_, &_inner_error_);
-					statement = _tmp43_;
+					_tmp41_ = rygel_media_export_database_cursor_iterator_next (_tmp40_, &_inner_error_);
+					_tmp42_ = _tmp41_;
 					if (_inner_error_ != NULL) {
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 						_g_object_unref0 (cursor);
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
 						_g_object_unref0 (queue);
 						if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-							goto __catch27_rygel_media_export_database_error;
+							goto __catch28_rygel_media_export_database_error;
 						}
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 						_g_object_unref0 (cursor);
@@ -1908,23 +1928,45 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 						g_clear_error (&_inner_error_);
 						return;
 					}
-					_tmp44_ = queue;
-					_tmp45_ = statement;
-					_tmp46_ = sqlite3_column_text (_tmp45_, 0);
-					gee_queue_offer ((GeeQueue*) _tmp44_, _tmp46_);
+					if (!_tmp42_) {
+						break;
+					}
+					_tmp43_ = _statement_it;
+					_tmp44_ = rygel_media_export_database_cursor_iterator_get (_tmp43_, &_inner_error_);
+					statement = _tmp44_;
+					if (_inner_error_ != NULL) {
+						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+						_g_object_unref0 (cursor);
+						args = (_vala_GValue_array_free (args, args_length1), NULL);
+						_g_object_unref0 (queue);
+						if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+							goto __catch28_rygel_media_export_database_error;
+						}
+						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+						_g_object_unref0 (cursor);
+						args = (_vala_GValue_array_free (args, args_length1), NULL);
+						_g_object_unref0 (queue);
+						g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+						g_clear_error (&_inner_error_);
+						return;
+					}
+					_tmp45_ = queue;
+					_tmp46_ = statement;
+					_tmp47_ = sqlite3_column_text (_tmp46_, 0);
+					gee_queue_offer ((GeeQueue*) _tmp45_, _tmp47_);
 				}
 				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 			}
-			_tmp47_ = self->priv->database;
-			_tmp48_ = args;
-			_tmp48__length1 = args_length1;
-			rygel_media_export_database_exec (_tmp47_, "INSERT INTO Object SELECT * FROM _Object " "WHERE parent = ?", _tmp48_, _tmp48__length1, &_inner_error_);
+			_tmp48_ = self->priv->database;
+			_tmp49_ = args;
+			_tmp49__length1 = args_length1;
+			rygel_media_export_database_exec (_tmp48_, "INSERT INTO Object SELECT * FROM _Object " "WHERE parent = ?", _tmp49_, _tmp49__length1, &_inner_error_);
 			if (_inner_error_ != NULL) {
 				_g_object_unref0 (cursor);
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
 				_g_object_unref0 (queue);
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-					goto __catch27_rygel_media_export_database_error;
+					goto __catch28_rygel_media_export_database_error;
 				}
 				_g_object_unref0 (cursor);
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
@@ -1936,24 +1978,12 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 			_g_object_unref0 (cursor);
 			args = (_vala_GValue_array_free (args, args_length1), NULL);
 		}
-		_tmp49_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp49_, "DROP TABLE Object", NULL, 0, &_inner_error_);
-		if (_inner_error_ != NULL) {
-			_g_object_unref0 (queue);
-			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
-			}
-			_g_object_unref0 (queue);
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-			g_clear_error (&_inner_error_);
-			return;
-		}
 		_tmp50_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp50_, "ALTER TABLE _Object RENAME TO Object", NULL, 0, &_inner_error_);
+		rygel_media_export_database_exec (_tmp50_, "DROP TABLE Object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1961,53 +1991,53 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 			return;
 		}
 		_tmp51_ = self->priv->database;
-		_tmp52_ = self->priv->sql;
-		_tmp53_ = rygel_media_export_sql_factory_make (_tmp52_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
-		rygel_media_export_database_exec (_tmp51_, _tmp53_, NULL, 0, &_inner_error_);
+		rygel_media_export_database_exec (_tmp51_, "ALTER TABLE _Object RENAME TO Object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
-		_tmp54_ = self->priv->database;
-		_tmp55_ = self->priv->sql;
-		_tmp56_ = rygel_media_export_sql_factory_make (_tmp55_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_COMMON);
-		rygel_media_export_database_exec (_tmp54_, _tmp56_, NULL, 0, &_inner_error_);
+		_tmp52_ = self->priv->database;
+		_tmp53_ = self->priv->sql;
+		_tmp54_ = rygel_media_export_sql_factory_make (_tmp53_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
+		rygel_media_export_database_exec (_tmp52_, _tmp54_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
-		_tmp57_ = self->priv->database;
-		_tmp58_ = self->priv->sql;
-		_tmp59_ = rygel_media_export_sql_factory_make (_tmp58_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
-		rygel_media_export_database_exec (_tmp57_, _tmp59_, NULL, 0, &_inner_error_);
+		_tmp55_ = self->priv->database;
+		_tmp56_ = self->priv->sql;
+		_tmp57_ = rygel_media_export_sql_factory_make (_tmp56_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_COMMON);
+		rygel_media_export_database_exec (_tmp55_, _tmp57_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
-		_tmp60_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp60_, "UPDATE schema_info SET version = '10'", NULL, 0, &_inner_error_);
+		_tmp58_ = self->priv->database;
+		_tmp59_ = self->priv->sql;
+		_tmp60_ = rygel_media_export_sql_factory_make (_tmp59_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
+		rygel_media_export_database_exec (_tmp58_, _tmp60_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2015,11 +2045,11 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 			return;
 		}
 		_tmp61_ = self->priv->database;
-		rygel_media_export_database_commit (_tmp61_, &_inner_error_);
+		rygel_media_export_database_exec (_tmp61_, "UPDATE schema_info SET version = '10'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2027,11 +2057,11 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 			return;
 		}
 		_tmp62_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp62_, "VACUUM", NULL, 0, &_inner_error_);
+		rygel_media_export_database_commit (_tmp62_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (queue);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch27_rygel_media_export_database_error;
+				goto __catch28_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (queue);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2039,28 +2069,40 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 			return;
 		}
 		_tmp63_ = self->priv->database;
-		rygel_media_export_database_analyze (_tmp63_);
+		rygel_media_export_database_exec (_tmp63_, "VACUUM", NULL, 0, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			_g_object_unref0 (queue);
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch28_rygel_media_export_database_error;
+			}
+			_g_object_unref0 (queue);
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp64_ = self->priv->database;
+		rygel_media_export_database_analyze (_tmp64_);
 		_g_object_unref0 (queue);
 	}
-	goto __finally27;
-	__catch27_rygel_media_export_database_error:
+	goto __finally28;
+	__catch28_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
-		RygelMediaExportDatabase* _tmp64_;
-		GError* _tmp65_;
-		const gchar* _tmp66_;
+		RygelMediaExportDatabase* _tmp65_;
+		GError* _tmp66_;
+		const gchar* _tmp67_;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp64_ = self->priv->database;
-		rygel_media_export_database_rollback (_tmp64_);
-		_tmp65_ = _error_;
-		_tmp66_ = _tmp65_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:351: Database upgrade fai" \
-"led: %s", _tmp66_);
+		_tmp65_ = self->priv->database;
+		rygel_media_export_database_rollback (_tmp65_);
+		_tmp66_ = _error_;
+		_tmp67_ = _tmp66_->message;
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:354: Database upgrade fai" \
+"led: %s", _tmp67_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally27:
+	__finally28:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2084,7 +2126,7 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch28_rygel_media_export_database_error;
+				goto __catch29_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2094,7 +2136,7 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE Meta_Data " "   ADD COLUMN disc INTEGER", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch28_rygel_media_export_database_error;
+				goto __catch29_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2104,7 +2146,7 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp2_, "UPDATE Object SET timestamp = 0 WHERE " "  upnp_id IN (" "SELECT object_fk FROM Meta_Data WHERE " "  class LIKE 'object.item.audioItem.%')", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch28_rygel_media_export_database_error;
+				goto __catch29_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2114,7 +2156,7 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp3_, "UPDATE schema_info SET version = '11'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch28_rygel_media_export_database_error;
+				goto __catch29_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2124,7 +2166,7 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		rygel_media_export_database_commit (_tmp4_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch28_rygel_media_export_database_error;
+				goto __catch29_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2134,7 +2176,7 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp5_, "VACUUM", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch28_rygel_media_export_database_error;
+				goto __catch29_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2143,8 +2185,8 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		_tmp6_ = self->priv->database;
 		rygel_media_export_database_analyze (_tmp6_);
 	}
-	goto __finally28;
-	__catch28_rygel_media_export_database_error:
+	goto __finally29;
+	__catch29_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp7_;
@@ -2156,12 +2198,12 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		rygel_media_export_database_rollback (_tmp7_);
 		_tmp8_ = _error_;
 		_tmp9_ = _tmp8_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:372: Database upgrade fai" \
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:375: Database upgrade fai" \
 "led: %s", _tmp9_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally28:
+	__finally29:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2250,14 +2292,14 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		RygelMediaExportDatabaseCursor* _tmp15_ = NULL;
 		RygelMediaExportDatabaseCursor* cursor;
 		guint32 count;
-		RygelMediaExportDatabase* _tmp46_;
 		RygelMediaExportDatabase* _tmp47_;
 		RygelMediaExportDatabase* _tmp48_;
+		RygelMediaExportDatabase* _tmp49_;
 		_tmp0_ = self->priv->database;
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2267,7 +2309,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE schema_info " "ADD COLUMN reset_token TEXT", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2286,7 +2328,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		_g_free0 (_tmp4_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2296,7 +2338,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp9_, "UPDATE schema_info SET version = '12'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2306,7 +2348,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp10_, "ALTER TABLE object " "ADD COLUMN object_update_id INTEGER", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2316,7 +2358,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp11_, "ALTER TABLE object " "ADD COLUMN deleted_child_count INTEGER", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2326,7 +2368,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp12_, "ALTER TABLE object " "ADD COLUMN container_update_id INTEGER", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2340,7 +2382,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (ids);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (ids);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2357,26 +2399,22 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 			while (TRUE) {
 				RygelMediaExportDatabaseCursorIterator* _tmp18_;
 				gboolean _tmp19_ = FALSE;
-				RygelMediaExportDatabaseCursorIterator* _tmp20_;
-				sqlite3_stmt* _tmp21_ = NULL;
+				gboolean _tmp20_;
+				RygelMediaExportDatabaseCursorIterator* _tmp21_;
+				sqlite3_stmt* _tmp22_ = NULL;
 				sqlite3_stmt* statement;
-				GeeArrayList* _tmp22_;
-				sqlite3_stmt* _tmp23_;
-				const gchar* _tmp24_ = NULL;
+				GeeArrayList* _tmp23_;
+				sqlite3_stmt* _tmp24_;
+				const gchar* _tmp25_ = NULL;
 				_tmp18_ = _statement_it;
-				_tmp19_ = rygel_media_export_database_cursor_iterator_next (_tmp18_);
-				if (!_tmp19_) {
-					break;
-				}
-				_tmp20_ = _statement_it;
-				_tmp21_ = rygel_media_export_database_cursor_iterator_get (_tmp20_, &_inner_error_);
-				statement = _tmp21_;
+				_tmp19_ = rygel_media_export_database_cursor_iterator_next (_tmp18_, &_inner_error_);
+				_tmp20_ = _tmp19_;
 				if (_inner_error_ != NULL) {
 					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 					_g_object_unref0 (cursor);
 					_g_object_unref0 (ids);
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-						goto __catch29_rygel_media_export_database_error;
+						goto __catch30_rygel_media_export_database_error;
 					}
 					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 					_g_object_unref0 (cursor);
@@ -2385,86 +2423,106 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 					g_clear_error (&_inner_error_);
 					return;
 				}
-				_tmp22_ = ids;
-				_tmp23_ = statement;
-				_tmp24_ = sqlite3_column_text (_tmp23_, 0);
-				gee_abstract_collection_add ((GeeAbstractCollection*) _tmp22_, _tmp24_);
+				if (!_tmp20_) {
+					break;
+				}
+				_tmp21_ = _statement_it;
+				_tmp22_ = rygel_media_export_database_cursor_iterator_get (_tmp21_, &_inner_error_);
+				statement = _tmp22_;
+				if (_inner_error_ != NULL) {
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					_g_object_unref0 (ids);
+					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+						goto __catch30_rygel_media_export_database_error;
+					}
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					_g_object_unref0 (ids);
+					g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+					g_clear_error (&_inner_error_);
+					return;
+				}
+				_tmp23_ = ids;
+				_tmp24_ = statement;
+				_tmp25_ = sqlite3_column_text (_tmp24_, 0);
+				gee_abstract_collection_add ((GeeAbstractCollection*) _tmp23_, _tmp25_);
 			}
 			_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 		}
 		count = (guint32) 1;
 		{
-			GeeArrayList* _tmp25_;
 			GeeArrayList* _tmp26_;
-			GeeArrayList* _id_list;
 			GeeArrayList* _tmp27_;
-			gint _tmp28_;
+			GeeArrayList* _id_list;
+			GeeArrayList* _tmp28_;
 			gint _tmp29_;
+			gint _tmp30_;
 			gint _id_size;
 			gint _id_index;
-			_tmp25_ = ids;
-			_tmp26_ = _g_object_ref0 (_tmp25_);
-			_id_list = _tmp26_;
-			_tmp27_ = _id_list;
-			_tmp28_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp27_);
-			_tmp29_ = _tmp28_;
-			_id_size = _tmp29_;
+			_tmp26_ = ids;
+			_tmp27_ = _g_object_ref0 (_tmp26_);
+			_id_list = _tmp27_;
+			_tmp28_ = _id_list;
+			_tmp29_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp28_);
+			_tmp30_ = _tmp29_;
+			_id_size = _tmp30_;
 			_id_index = -1;
 			while (TRUE) {
-				gint _tmp30_;
 				gint _tmp31_;
 				gint _tmp32_;
-				GeeArrayList* _tmp33_;
-				gint _tmp34_;
-				gpointer _tmp35_ = NULL;
+				gint _tmp33_;
+				GeeArrayList* _tmp34_;
+				gint _tmp35_;
+				gpointer _tmp36_ = NULL;
 				gchar* id;
-				guint32 _tmp36_;
-				GValue _tmp37_ = {0};
-				guint32 _tmp38_;
-				GValue _tmp39_ = {0};
-				const gchar* _tmp40_;
-				GValue _tmp41_ = {0};
-				GValue* _tmp42_ = NULL;
+				guint32 _tmp37_;
+				GValue _tmp38_ = {0};
+				guint32 _tmp39_;
+				GValue _tmp40_ = {0};
+				const gchar* _tmp41_;
+				GValue _tmp42_ = {0};
+				GValue* _tmp43_ = NULL;
 				GValue* args;
 				gint args_length1;
 				gint _args_size_;
-				guint32 _tmp43_;
-				RygelMediaExportDatabase* _tmp44_;
-				GValue* _tmp45_;
-				gint _tmp45__length1;
-				_tmp30_ = _id_index;
-				_id_index = _tmp30_ + 1;
+				guint32 _tmp44_;
+				RygelMediaExportDatabase* _tmp45_;
+				GValue* _tmp46_;
+				gint _tmp46__length1;
 				_tmp31_ = _id_index;
-				_tmp32_ = _id_size;
-				if (!(_tmp31_ < _tmp32_)) {
+				_id_index = _tmp31_ + 1;
+				_tmp32_ = _id_index;
+				_tmp33_ = _id_size;
+				if (!(_tmp32_ < _tmp33_)) {
 					break;
 				}
-				_tmp33_ = _id_list;
-				_tmp34_ = _id_index;
-				_tmp35_ = gee_abstract_list_get ((GeeAbstractList*) _tmp33_, _tmp34_);
-				id = (gchar*) _tmp35_;
-				_tmp36_ = count;
-				g_value_init (&_tmp37_, G_TYPE_UINT);
-				g_value_set_uint (&_tmp37_, _tmp36_);
-				_tmp38_ = count;
-				g_value_init (&_tmp39_, G_TYPE_UINT);
-				g_value_set_uint (&_tmp39_, _tmp38_);
-				_tmp40_ = id;
-				g_value_init (&_tmp41_, G_TYPE_STRING);
-				g_value_set_string (&_tmp41_, _tmp40_);
-				_tmp42_ = g_new0 (GValue, 3);
-				_tmp42_[0] = _tmp37_;
-				_tmp42_[1] = _tmp39_;
-				_tmp42_[2] = _tmp41_;
-				args = _tmp42_;
+				_tmp34_ = _id_list;
+				_tmp35_ = _id_index;
+				_tmp36_ = gee_abstract_list_get ((GeeAbstractList*) _tmp34_, _tmp35_);
+				id = (gchar*) _tmp36_;
+				_tmp37_ = count;
+				g_value_init (&_tmp38_, G_TYPE_UINT);
+				g_value_set_uint (&_tmp38_, _tmp37_);
+				_tmp39_ = count;
+				g_value_init (&_tmp40_, G_TYPE_UINT);
+				g_value_set_uint (&_tmp40_, _tmp39_);
+				_tmp41_ = id;
+				g_value_init (&_tmp42_, G_TYPE_STRING);
+				g_value_set_string (&_tmp42_, _tmp41_);
+				_tmp43_ = g_new0 (GValue, 3);
+				_tmp43_[0] = _tmp38_;
+				_tmp43_[1] = _tmp40_;
+				_tmp43_[2] = _tmp42_;
+				args = _tmp43_;
 				args_length1 = 3;
 				_args_size_ = args_length1;
-				_tmp43_ = count;
-				count = _tmp43_ + 1;
-				_tmp44_ = self->priv->database;
-				_tmp45_ = args;
-				_tmp45__length1 = args_length1;
-				rygel_media_export_database_exec (_tmp44_, "UPDATE object SET " "container_update_id = ?, " "object_update_id = ?, " "deleted_child_count = 0 " "WHERE upnp_id = ?", _tmp45_, _tmp45__length1, &_inner_error_);
+				_tmp44_ = count;
+				count = _tmp44_ + 1;
+				_tmp45_ = self->priv->database;
+				_tmp46_ = args;
+				_tmp46__length1 = args_length1;
+				rygel_media_export_database_exec (_tmp45_, "UPDATE object SET " "container_update_id = ?, " "object_update_id = ?, " "deleted_child_count = 0 " "WHERE upnp_id = ?", _tmp46_, _tmp46__length1, &_inner_error_);
 				if (_inner_error_ != NULL) {
 					args = (_vala_GValue_array_free (args, args_length1), NULL);
 					_g_free0 (id);
@@ -2472,7 +2530,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 					_g_object_unref0 (cursor);
 					_g_object_unref0 (ids);
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-						goto __catch29_rygel_media_export_database_error;
+						goto __catch30_rygel_media_export_database_error;
 					}
 					args = (_vala_GValue_array_free (args, args_length1), NULL);
 					_g_free0 (id);
@@ -2488,27 +2546,13 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 			}
 			_g_object_unref0 (_id_list);
 		}
-		_tmp46_ = self->priv->database;
-		rygel_media_export_database_commit (_tmp46_, &_inner_error_);
-		if (_inner_error_ != NULL) {
-			_g_object_unref0 (cursor);
-			_g_object_unref0 (ids);
-			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
-			}
-			_g_object_unref0 (cursor);
-			_g_object_unref0 (ids);
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-			g_clear_error (&_inner_error_);
-			return;
-		}
 		_tmp47_ = self->priv->database;
-		rygel_media_export_database_exec (_tmp47_, "VACUUM", NULL, 0, &_inner_error_);
+		rygel_media_export_database_commit (_tmp47_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (cursor);
 			_g_object_unref0 (ids);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch29_rygel_media_export_database_error;
+				goto __catch30_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (cursor);
 			_g_object_unref0 (ids);
@@ -2517,29 +2561,43 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 			return;
 		}
 		_tmp48_ = self->priv->database;
-		rygel_media_export_database_analyze (_tmp48_);
+		rygel_media_export_database_exec (_tmp48_, "VACUUM", NULL, 0, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			_g_object_unref0 (cursor);
+			_g_object_unref0 (ids);
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch30_rygel_media_export_database_error;
+			}
+			_g_object_unref0 (cursor);
+			_g_object_unref0 (ids);
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp49_ = self->priv->database;
+		rygel_media_export_database_analyze (_tmp49_);
 		_g_object_unref0 (cursor);
 		_g_object_unref0 (ids);
 	}
-	goto __finally29;
-	__catch29_rygel_media_export_database_error:
+	goto __finally30;
+	__catch30_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
-		RygelMediaExportDatabase* _tmp49_;
-		GError* _tmp50_;
-		const gchar* _tmp51_;
+		RygelMediaExportDatabase* _tmp50_;
+		GError* _tmp51_;
+		const gchar* _tmp52_;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp49_ = self->priv->database;
-		rygel_media_export_database_rollback (_tmp49_);
-		_tmp50_ = _error_;
-		_tmp51_ = _tmp50_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:415: Database upgrade fai" \
-"led: %s", _tmp51_);
+		_tmp50_ = self->priv->database;
+		rygel_media_export_database_rollback (_tmp50_);
+		_tmp51_ = _error_;
+		_tmp52_ = _tmp51_->message;
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:418: Database upgrade fai" \
+"led: %s", _tmp52_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally29:
+	__finally30:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2584,7 +2642,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2595,7 +2653,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 "id " "REFERENCES Object(upnp_id), " "upnp_id TEXT PRIMARY KEY, " "type_fk INTEGER, " "title TEXT NOT NULL, " "timestamp INTEGER NOT NULL, " "uri TEXT, " "object_update_id INTEGER, " "deleted_child_count INTEGER, " "container_update_id INTEGER)", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2605,7 +2663,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp2_, "INSERT INTO object_backup SELECT " "parent, upnp_id, type_fk, title, " "timestamp, uri, object_update_id, " "deleted_child_count, container_update_id " "FROM object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2615,7 +2673,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp3_, "DROP TRIGGER IF EXISTS trgr_update_closure", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2625,7 +2683,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp4_, "DROP TRIGGER IF EXISTS trgr_delete_closure", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2635,7 +2693,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp5_, "DROP TRIGGER IF EXISTS trgr_delete_metadata", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2645,7 +2703,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp6_, "DROP INDEX IF EXISTS idx_parent", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2655,7 +2713,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp7_, "DROP INDEX IF EXISTS idx_object_upnp_id", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2665,7 +2723,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp8_, "DROP INDEX IF EXISTS idx_uri", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2675,7 +2733,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp9_, "DROP TABLE object", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2685,7 +2743,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp10_, "CREATE TABLE object " "(parent TEXT CONSTRAINT parent_fk_id " "REFERENCES Object(upnp_id), " "upnp_id TEXT PRIMARY KEY, " "type_fk INTEGER, " "title TEXT NOT NULL, " "timestamp INTEGER NOT NULL, " "uri TEXT, " "object_update_id INTEGER, " "deleted_child_count INTEGER, " "container_update_id INTEGER)", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2695,7 +2753,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp11_, "INSERT INTO object SELECT parent, " "upnp_id, type_fk, title, timestamp, " "uri, object_update_id, " "deleted_child_count, container_update_id " "FROM object_backup", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2705,7 +2763,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp12_, "DROP TABLE object_backup", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2715,7 +2773,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp13_, "ALTER TABLE object " "ADD COLUMN is_guarded INTEGER", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2725,7 +2783,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp14_, "UPDATE object SET is_guarded = 0", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2735,7 +2793,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp15_, "UPDATE schema_info SET version = '13'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2747,7 +2805,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp16_, _tmp18_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2759,7 +2817,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp19_, _tmp21_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2771,7 +2829,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp22_, _tmp24_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2781,7 +2839,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_commit (_tmp25_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2791,7 +2849,7 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_exec (_tmp26_, "VACUUM", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch30_rygel_media_export_database_error;
+				goto __catch31_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2800,8 +2858,8 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		_tmp27_ = self->priv->database;
 		rygel_media_export_database_analyze (_tmp27_);
 	}
-	goto __finally30;
-	__catch30_rygel_media_export_database_error:
+	goto __finally31;
+	__catch31_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp28_;
@@ -2813,12 +2871,117 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		rygel_media_export_database_rollback (_tmp28_);
 		_tmp29_ = _error_;
 		_tmp30_ = _tmp29_->message;
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:478: Database upgrade fai" \
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:481: Database upgrade fai" \
 "led: %s", _tmp30_);
 		self->priv->database = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally30:
+	__finally31:
+	if (_inner_error_ != NULL) {
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+		g_clear_error (&_inner_error_);
+		return;
+	}
+}
+
+
+static void rygel_media_export_media_cache_upgrader_update_v13_v14 (RygelMediaExportMediaCacheUpgrader* self) {
+	GError * _inner_error_ = NULL;
+	g_return_if_fail (self != NULL);
+	{
+		RygelMediaExportDatabase* _tmp0_;
+		RygelMediaExportDatabase* _tmp1_;
+		RygelMediaExportDatabase* _tmp2_;
+		RygelMediaExportSQLFactory* _tmp3_;
+		const gchar* _tmp4_ = NULL;
+		RygelMediaExportDatabase* _tmp5_;
+		RygelMediaExportDatabase* _tmp6_;
+		RygelMediaExportDatabase* _tmp7_;
+		RygelMediaExportDatabase* _tmp8_;
+		_tmp0_ = self->priv->database;
+		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch32_rygel_media_export_database_error;
+			}
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp1_ = self->priv->database;
+		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE Object ADD COLUMN reference_id " "DEFAULT NULL", NULL, 0, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch32_rygel_media_export_database_error;
+			}
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp2_ = self->priv->database;
+		_tmp3_ = self->priv->sql;
+		_tmp4_ = rygel_media_export_sql_factory_make (_tmp3_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_REFERENCE);
+		rygel_media_export_database_exec (_tmp2_, _tmp4_, NULL, 0, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch32_rygel_media_export_database_error;
+			}
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp5_ = self->priv->database;
+		rygel_media_export_database_exec (_tmp5_, "UPDATE schema_info SET version = '14'", NULL, 0, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch32_rygel_media_export_database_error;
+			}
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp6_ = self->priv->database;
+		rygel_media_export_database_commit (_tmp6_, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch32_rygel_media_export_database_error;
+			}
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp7_ = self->priv->database;
+		rygel_media_export_database_exec (_tmp7_, "VACUUM", NULL, 0, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				goto __catch32_rygel_media_export_database_error;
+			}
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return;
+		}
+		_tmp8_ = self->priv->database;
+		rygel_media_export_database_analyze (_tmp8_);
+	}
+	goto __finally32;
+	__catch32_rygel_media_export_database_error:
+	{
+		GError* _error_ = NULL;
+		RygelMediaExportDatabase* _tmp9_;
+		GError* _tmp10_;
+		const gchar* _tmp11_;
+		_error_ = _inner_error_;
+		_inner_error_ = NULL;
+		_tmp9_ = self->priv->database;
+		rygel_media_export_database_rollback (_tmp9_);
+		_tmp10_ = _error_;
+		_tmp11_ = _tmp10_->message;
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:500: Database upgrade fai" \
+"led: %s", _tmp11_);
+		self->priv->database = NULL;
+		_g_error_free0 (_error_);
+	}
+	__finally32:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

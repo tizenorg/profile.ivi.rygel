@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2009,2010 Jens Georg <mail@jensge.org>.
+ * Copyright (C) 2013 Intel Corporation.
  *
  * Author: Jens Georg <mail@jensge.org>
  *
@@ -59,10 +60,16 @@ public class Rygel.MediaExport.MediaCache : Object {
 
     // Constructors
     private MediaCache () throws Error {
+        var db_name = "media-export";
+        try {
+            var config = MetaConfig.get_default ();
+            if (config.get_bool ("MediaExport", "use-temp-db")) {
+                db_name = ":memory:";
+            }
+        } catch (Error error) { }
         this.sql = new SQLFactory ();
-        this.open_db ("media-export");
+        this.open_db (db_name);
         this.factory = new ObjectFactory ();
-        this.get_exists_cache ();
     }
 
     // Public static functions
@@ -534,7 +541,7 @@ public class Rygel.MediaExport.MediaCache : Object {
         }
     }
 
-    private void get_exists_cache () throws DatabaseError {
+    public void rebuild_exists_cache () throws DatabaseError {
         this.exists_cache = new HashMap<string, ExistsCacheEntry?> ();
         var cursor = this.exec_cursor (SQLString.EXISTS_CACHE);
         foreach (var statement in cursor) {
@@ -677,19 +684,19 @@ public class Rygel.MediaExport.MediaCache : Object {
             parent = object.parent.id;
         }
 
-        GLib.Value[] values = { object.id,
-                                type,
+        GLib.Value[] values = { type,
                                 parent,
                                 object.modified,
                                 object.uris.is_empty ? null : object.uris[0],
                                 object.object_update_id,
                                 -1,
-                                -1
+                                -1,
+                                object.id
                               };
         if (object is MediaContainer) {
             var container = object as MediaContainer;
-            values[7] = container.total_deleted_child_count;
-            values[8] = container.update_id;
+            values[6] = container.total_deleted_child_count;
+            values[7] = container.update_id;
         }
 
         this.db.exec (this.sql.make (SQLString.UPDATE_GUARDED_OBJECT), values);
@@ -719,7 +726,8 @@ public class Rygel.MediaExport.MediaCache : Object {
                                 object.object_update_id,
                                 -1,
                                 -1,
-                                is_guarded ? 1 : 0
+                                is_guarded ? 1 : 0,
+                                object.ref_id ?? null
                               };
         if (object is MediaContainer) {
             var container = object as MediaContainer;
@@ -760,6 +768,7 @@ public class Rygel.MediaExport.MediaCache : Object {
             db.exec (this.sql.make (SQLString.TABLE_CLOSURE));
             db.exec (this.sql.make (SQLString.INDEX_COMMON));
             db.exec (this.sql.make (SQLString.TRIGGER_CLOSURE));
+            db.exec (this.sql.make (SQLString.TRIGGER_REFERENCE));
             db.commit ();
             db.analyze ();
             this.save_reset_token (UUID.get ());
@@ -829,6 +838,7 @@ public class Rygel.MediaExport.MediaCache : Object {
             }
             object.object_update_id = (uint) statement.column_int64
                                         (DetailColumn.OBJECT_UPDATE_ID);
+            object.ref_id = statement.column_text (DetailColumn.REFERENCE_ID);
         }
 
         return object;
@@ -929,7 +939,8 @@ public class Rygel.MediaExport.MediaCache : Object {
     }
 
     private static string? map_operand_to_column (string     operand,
-                                                  out string? collate = null)
+                                                  out string? collate = null,
+                                                  bool        for_sort = false)
                                                   throws Error {
         string column = null;
         bool use_collation = false;
@@ -942,7 +953,7 @@ public class Rygel.MediaExport.MediaCache : Object {
                 column = "m.duration";
                 break;
             case "@refID":
-                column = "NULL";
+                column = "o.reference_id";
                 break;
             case "@id":
                 column = "o.upnp_id";
@@ -963,7 +974,11 @@ public class Rygel.MediaExport.MediaCache : Object {
                 use_collation = true;
                 break;
             case "dc:date":
-                column = "strftime(\"%Y\", m.date)";
+                if (for_sort) {
+                    column = "m.date";
+                } else {
+                    column = "strftime(\"%Y\", m.date)";
+                }
                 break;
             case "upnp:album":
                 column = "m.album";
@@ -1090,7 +1105,8 @@ public class Rygel.MediaExport.MediaCache : Object {
             try {
                 var column = MediaCache.map_operand_to_column
                                         (field[1:field.length],
-                                         out collate);
+                                         out collate,
+                                         true);
                 if (field != fields[0]) {
                     builder.append (",");
                 }

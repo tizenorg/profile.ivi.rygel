@@ -1,6 +1,7 @@
 include $(top_srcdir)/common.am
 
 plugin_LTLIBRARIES = librygel-media-export.la
+plugin_DATA = media-export.plugin
 
 librygel_media_export_la_SOURCES = \
 	rygel-media-export-plugin.vala \
@@ -28,6 +29,8 @@ librygel_media_export_la_SOURCES = \
 	rygel-media-export-jpeg-writer.vala \
 	rygel-media-export-object-factory.vala \
 	rygel-media-export-writable-db-container.vala \
+	rygel-media-export-playlist-root-container.vala \
+	rygel-media-export-playlist-container.vala \
 	rygel-media-export-music-item.vala \
 	rygel-media-export-video-item.vala \
 	rygel-media-export-photo-item.vala \
@@ -38,6 +41,9 @@ librygel_media_export_la_SOURCES = \
 
 librygel_media_export_la_VALAFLAGS = \
 	--enable-experimental \
+	--internal-vapi rygel-media-export.vapi \
+	--internal-header rygel-media-export-internal.h \
+	--header rygel-media-export.h \
 	$(RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_VALAFLAGS) \
 	$(RYGEL_COMMON_LIBRYGEL_SERVER_VALAFLAGS) \
 	$(RYGEL_COMMON_VALAFLAGS)
@@ -48,9 +54,9 @@ librygel_media_export_la_CFLAGS = \
 	-DG_LOG_DOMAIN='"MediaExport"'
 librygel_media_export_la_LIBADD = \
 	$(RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_LIBS) \
-	$(COLLATION_LIBS) \
 	$(RYGEL_COMMON_LIBRYGEL_SERVER_LIBS)
 
 librygel_media_export_la_LDFLAGS = \
 	$(RYGEL_PLUGIN_LINKER_FLAGS)
 
+EXTRA_DIST = media-export.plugin.in

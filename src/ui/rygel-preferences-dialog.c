@@ -115,7 +115,7 @@ struct _RygelPreferencesDialogPrivate {
 	RygelWritableUserConfig* config;
 	GtkBuilder* builder;
 	GtkDialog* dialog;
-	GtkCheckButton* upnp_check;
+	GtkSwitch* upnp_check;
 	GeeArrayList* sections;
 };
 
@@ -145,8 +145,9 @@ GType rygel_network_pref_section_get_type (void) G_GNUC_CONST;
 RygelMediaPrefSection* rygel_media_pref_section_new (GtkBuilder* builder, RygelWritableUserConfig* config);
 RygelMediaPrefSection* rygel_media_pref_section_construct (GType object_type, GtkBuilder* builder, RygelWritableUserConfig* config);
 GType rygel_media_pref_section_get_type (void) G_GNUC_CONST;
-static void rygel_preferences_dialog_on_upnp_check_button_toggled (RygelPreferencesDialog* self, GtkToggleButton* upnp_check);
-static void _rygel_preferences_dialog_on_upnp_check_button_toggled_gtk_toggle_button_toggled (GtkToggleButton* _sender, gpointer self);
+static void rygel_preferences_dialog_on_upnp_switch_toggled (RygelPreferencesDialog* self);
+static void __lambda4_ (RygelPreferencesDialog* self);
+static void ___lambda4__g_object_notify (GObject* _sender, GParamSpec* pspec, gpointer self);
 void rygel_preferences_dialog_run (RygelPreferencesDialog* self);
 void rygel_writable_user_config_set_upnp_enabled (RygelWritableUserConfig* self, gboolean value);
 void rygel_preferences_section_save (RygelPreferencesSection* self);
@@ -162,8 +163,13 @@ static gpointer _g_object_ref0 (gpointer self) {
 }
 
 
-static void _rygel_preferences_dialog_on_upnp_check_button_toggled_gtk_toggle_button_toggled (GtkToggleButton* _sender, gpointer self) {
-	rygel_preferences_dialog_on_upnp_check_button_toggled (self, _sender);
+static void __lambda4_ (RygelPreferencesDialog* self) {
+	rygel_preferences_dialog_on_upnp_switch_toggled (self);
+}
+
+
+static void ___lambda4__g_object_notify (GObject* _sender, GParamSpec* pspec, gpointer self) {
+	__lambda4_ (self);
 }
 
 
@@ -189,10 +195,10 @@ RygelPreferencesDialog* rygel_preferences_dialog_construct (GType object_type, G
 	GtkDialog* _tmp15_;
 	GtkBuilder* _tmp16_;
 	GObject* _tmp17_ = NULL;
-	GtkCheckButton* _tmp18_;
-	GtkCheckButton* _tmp19_;
+	GtkSwitch* _tmp18_;
+	GtkSwitch* _tmp19_;
 	GtkDialog* _tmp20_;
-	GtkCheckButton* _tmp21_;
+	GtkSwitch* _tmp21_;
 	RygelWritableUserConfig* _tmp22_;
 	gboolean _tmp23_ = FALSE;
 	GeeArrayList* _tmp24_;
@@ -207,8 +213,7 @@ RygelPreferencesDialog* rygel_preferences_dialog_construct (GType object_type, G
 	RygelWritableUserConfig* _tmp33_;
 	RygelMediaPrefSection* _tmp34_;
 	RygelMediaPrefSection* _tmp35_;
-	GtkCheckButton* _tmp36_;
-	GtkCheckButton* _tmp37_;
+	GtkSwitch* _tmp36_;
 	GError * _inner_error_ = NULL;
 	self = (RygelPreferencesDialog*) g_object_new (object_type, NULL);
 	_tmp0_ = rygel_writable_user_config_new (&_inner_error_);
@@ -251,7 +256,7 @@ RygelPreferencesDialog* rygel_preferences_dialog_construct (GType object_type, G
 	_vala_assert (_tmp15_ != NULL, "this.dialog != null");
 	_tmp16_ = self->priv->builder;
 	_tmp17_ = gtk_builder_get_object (_tmp16_, RYGEL_PREFERENCES_DIALOG_UPNP_CHECKBUTTON);
-	_tmp18_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_CAST (_tmp17_, GTK_TYPE_CHECK_BUTTON, GtkCheckButton));
+	_tmp18_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_CAST (_tmp17_, GTK_TYPE_SWITCH, GtkSwitch));
 	_g_object_unref0 (self->priv->upnp_check);
 	self->priv->upnp_check = _tmp18_;
 	_tmp19_ = self->priv->upnp_check;
@@ -268,7 +273,7 @@ RygelPreferencesDialog* rygel_preferences_dialog_construct (GType object_type, G
 	_tmp21_ = self->priv->upnp_check;
 	_tmp22_ = self->priv->config;
 	_tmp23_ = rygel_writable_user_config_is_upnp_enabled (_tmp22_);
-	gtk_toggle_button_set_active ((GtkToggleButton*) _tmp21_, _tmp23_);
+	gtk_switch_set_active (_tmp21_, _tmp23_);
 	_tmp24_ = gee_array_list_new (RYGEL_TYPE_PREFERENCES_SECTION, (GBoxedCopyFunc) g_object_ref, g_object_unref, NULL, NULL, NULL);
 	_g_object_unref0 (self->priv->sections);
 	self->priv->sections = _tmp24_;
@@ -294,10 +299,9 @@ RygelPreferencesDialog* rygel_preferences_dialog_construct (GType object_type, G
 	_tmp35_ = _tmp34_;
 	gee_abstract_collection_add ((GeeAbstractCollection*) _tmp31_, (RygelPreferencesSection*) _tmp35_);
 	_g_object_unref0 (_tmp35_);
+	rygel_preferences_dialog_on_upnp_switch_toggled (self);
 	_tmp36_ = self->priv->upnp_check;
-	rygel_preferences_dialog_on_upnp_check_button_toggled (self, (GtkToggleButton*) _tmp36_);
-	_tmp37_ = self->priv->upnp_check;
-	g_signal_connect_object ((GtkToggleButton*) _tmp37_, "toggled", (GCallback) _rygel_preferences_dialog_on_upnp_check_button_toggled_gtk_toggle_button_toggled, self, 0);
+	g_signal_connect_object ((GObject*) _tmp36_, "notify::active", (GCallback) ___lambda4__g_object_notify, self, 0);
 	_g_object_unref0 (style_context);
 	_g_object_unref0 (toolbar);
 	return self;
@@ -311,64 +315,67 @@ RygelPreferencesDialog* rygel_preferences_dialog_new (GError** error) {
 
 void rygel_preferences_dialog_run (RygelPreferencesDialog* self) {
 	GtkDialog* _tmp0_;
-	RygelWritableUserConfig* _tmp1_;
-	GtkCheckButton* _tmp2_;
-	gboolean _tmp3_;
+	GtkDialog* _tmp1_;
+	RygelWritableUserConfig* _tmp2_;
+	GtkSwitch* _tmp3_;
 	gboolean _tmp4_;
-	RygelWritableUserConfig* _tmp17_;
+	gboolean _tmp5_;
+	RygelWritableUserConfig* _tmp18_;
 	g_return_if_fail (self != NULL);
 	_tmp0_ = self->priv->dialog;
 	gtk_dialog_run (_tmp0_);
-	_tmp1_ = self->priv->config;
-	_tmp2_ = self->priv->upnp_check;
-	_tmp3_ = gtk_toggle_button_get_active ((GtkToggleButton*) _tmp2_);
-	_tmp4_ = _tmp3_;
-	rygel_writable_user_config_set_upnp_enabled (_tmp1_, _tmp4_);
+	_tmp1_ = self->priv->dialog;
+	gtk_widget_hide ((GtkWidget*) _tmp1_);
+	_tmp2_ = self->priv->config;
+	_tmp3_ = self->priv->upnp_check;
+	_tmp4_ = gtk_switch_get_active (_tmp3_);
+	_tmp5_ = _tmp4_;
+	rygel_writable_user_config_set_upnp_enabled (_tmp2_, _tmp5_);
 	{
-		GeeArrayList* _tmp5_;
 		GeeArrayList* _tmp6_;
-		GeeArrayList* _section_list;
 		GeeArrayList* _tmp7_;
-		gint _tmp8_;
+		GeeArrayList* _section_list;
+		GeeArrayList* _tmp8_;
 		gint _tmp9_;
+		gint _tmp10_;
 		gint _section_size;
 		gint _section_index;
-		_tmp5_ = self->priv->sections;
-		_tmp6_ = _g_object_ref0 (_tmp5_);
-		_section_list = _tmp6_;
-		_tmp7_ = _section_list;
-		_tmp8_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp7_);
-		_tmp9_ = _tmp8_;
-		_section_size = _tmp9_;
+		_tmp6_ = self->priv->sections;
+		_tmp7_ = _g_object_ref0 (_tmp6_);
+		_section_list = _tmp7_;
+		_tmp8_ = _section_list;
+		_tmp9_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp8_);
+		_tmp10_ = _tmp9_;
+		_section_size = _tmp10_;
 		_section_index = -1;
 		while (TRUE) {
-			gint _tmp10_;
 			gint _tmp11_;
 			gint _tmp12_;
-			GeeArrayList* _tmp13_;
-			gint _tmp14_;
-			gpointer _tmp15_ = NULL;
+			gint _tmp13_;
+			GeeArrayList* _tmp14_;
+			gint _tmp15_;
+			gpointer _tmp16_ = NULL;
 			RygelPreferencesSection* section;
-			RygelPreferencesSection* _tmp16_;
-			_tmp10_ = _section_index;
-			_section_index = _tmp10_ + 1;
+			RygelPreferencesSection* _tmp17_;
 			_tmp11_ = _section_index;
-			_tmp12_ = _section_size;
-			if (!(_tmp11_ < _tmp12_)) {
+			_section_index = _tmp11_ + 1;
+			_tmp12_ = _section_index;
+			_tmp13_ = _section_size;
+			if (!(_tmp12_ < _tmp13_)) {
 				break;
 			}
-			_tmp13_ = _section_list;
-			_tmp14_ = _section_index;
-			_tmp15_ = gee_abstract_list_get ((GeeAbstractList*) _tmp13_, _tmp14_);
-			section = (RygelPreferencesSection*) _tmp15_;
-			_tmp16_ = section;
-			rygel_preferences_section_save (_tmp16_);
+			_tmp14_ = _section_list;
+			_tmp15_ = _section_index;
+			_tmp16_ = gee_abstract_list_get ((GeeAbstractList*) _tmp14_, _tmp15_);
+			section = (RygelPreferencesSection*) _tmp16_;
+			_tmp17_ = section;
+			rygel_preferences_section_save (_tmp17_);
 			_g_object_unref0 (section);
 		}
 		_g_object_unref0 (_section_list);
 	}
-	_tmp17_ = self->priv->config;
-	rygel_writable_user_config_save (_tmp17_);
+	_tmp18_ = self->priv->config;
+	rygel_writable_user_config_save (_tmp18_);
 }
 
 
@@ -434,9 +441,8 @@ int main (int argc, char ** argv) {
 }
 
 
-static void rygel_preferences_dialog_on_upnp_check_button_toggled (RygelPreferencesDialog* self, GtkToggleButton* upnp_check) {
+static void rygel_preferences_dialog_on_upnp_switch_toggled (RygelPreferencesDialog* self) {
 	g_return_if_fail (self != NULL);
-	g_return_if_fail (upnp_check != NULL);
 	{
 		GeeArrayList* _tmp0_;
 		GeeArrayList* _tmp1_;
@@ -463,7 +469,7 @@ static void rygel_preferences_dialog_on_upnp_check_button_toggled (RygelPreferen
 			gpointer _tmp10_ = NULL;
 			RygelPreferencesSection* section;
 			RygelPreferencesSection* _tmp11_;
-			GtkToggleButton* _tmp12_;
+			GtkSwitch* _tmp12_;
 			gboolean _tmp13_;
 			gboolean _tmp14_;
 			_tmp5_ = _section_index;
@@ -478,8 +484,8 @@ static void rygel_preferences_dialog_on_upnp_check_button_toggled (RygelPreferen
 			_tmp10_ = gee_abstract_list_get ((GeeAbstractList*) _tmp8_, _tmp9_);
 			section = (RygelPreferencesSection*) _tmp10_;
 			_tmp11_ = section;
-			_tmp12_ = upnp_check;
-			_tmp13_ = gtk_toggle_button_get_active (_tmp12_);
+			_tmp12_ = self->priv->upnp_check;
+			_tmp13_ = gtk_switch_get_active (_tmp12_);
 			_tmp14_ = _tmp13_;
 			rygel_preferences_section_set_sensitivity (_tmp11_, _tmp14_);
 			_g_object_unref0 (section);

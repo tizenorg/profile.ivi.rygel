@@ -174,22 +174,22 @@ static RygelThumbnailer* rygel_thumbnailer_construct (GType object_type, GError*
 		_tmp7_ = rygel_dbus_thumbnailer_new ("normal", &_inner_error_);
 		_tmp8_ = _tmp7_;
 		if (_inner_error_ != NULL) {
-			goto __catch63_g_error;
+			goto __catch67_g_error;
 		}
 		_g_object_unref0 (self->priv->thumbler);
 		self->priv->thumbler = _tmp8_;
 		_tmp9_ = self->priv->thumbler;
 		g_signal_connect_object (_tmp9_, "ready", (GCallback) _rygel_thumbnailer_on_dbus_thumbnailer_ready_rygel_dbus_thumbnailer_ready, self, 0);
 	}
-	goto __finally63;
-	__catch63_g_error:
+	goto __finally67;
+	__catch67_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally63:
+	__finally67:
 	if (_inner_error_ != NULL) {
 		if (_inner_error_->domain == THUMBNAILER_ERROR) {
 			g_propagate_error (error, _inner_error_);
@@ -230,7 +230,7 @@ RygelThumbnailer* rygel_thumbnailer_get_default (void) {
 			_tmp2_ = _tmp1_;
 			if (_inner_error_ != NULL) {
 				if (_inner_error_->domain == THUMBNAILER_ERROR) {
-					goto __catch64_thumbnailer_error;
+					goto __catch68_thumbnailer_error;
 				}
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 				g_clear_error (&_inner_error_);
@@ -239,8 +239,8 @@ RygelThumbnailer* rygel_thumbnailer_get_default (void) {
 			_g_object_unref0 (rygel_thumbnailer_thumbnailer);
 			rygel_thumbnailer_thumbnailer = _tmp2_;
 		}
-		goto __finally64;
-		__catch64_thumbnailer_error:
+		goto __finally68;
+		__catch68_thumbnailer_error:
 		{
 			GError* err = NULL;
 			const gchar* _tmp3_ = NULL;
@@ -254,7 +254,7 @@ RygelThumbnailer* rygel_thumbnailer_get_default (void) {
 			g_warning (_tmp3_, _tmp5_);
 			_g_error_free0 (err);
 		}
-		__finally64:
+		__finally68:
 		if (_inner_error_ != NULL) {
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -333,7 +333,7 @@ RygelThumbnail* rygel_thumbnailer_get_thumbnail (RygelThumbnailer* self, const g
 	if (!_tmp3_) {
 		const gchar* _tmp4_ = NULL;
 		GError* _tmp5_;
-		_tmp4_ = _ ("Thubmnailing not supported");
+		_tmp4_ = _ ("Thumbnailing not supported");
 		_tmp5_ = g_error_new_literal (THUMBNAILER_ERROR, THUMBNAILER_ERROR_NO_THUMBNAIL, _tmp4_);
 		_inner_error_ = _tmp5_;
 		g_propagate_error (error, _inner_error_);

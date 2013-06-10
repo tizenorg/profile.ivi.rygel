@@ -802,6 +802,7 @@ gpointer rygel_value_get_media_object (const GValue* value);
 GType rygel_media_object_get_type (void) G_GNUC_CONST;
 GType rygel_media_item_get_type (void) G_GNUC_CONST;
 void rygel_client_hacks_apply (RygelClientHacks* self, RygelMediaItem* item);
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self);
 static void rygel_client_hacks_finalize (RygelClientHacks* obj);
 gpointer rygel_test_request_factory_ref (gpointer instance);
 void rygel_test_request_factory_unref (gpointer instance);
@@ -1107,6 +1108,14 @@ RygelClientHacks* rygel_client_hacks_create (SoupMessage* message, GError** erro
 
 void rygel_client_hacks_apply (RygelClientHacks* self, RygelMediaItem* item) {
 	g_return_if_fail (self != NULL);
+}
+
+
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self) {
+	gboolean result = FALSE;
+	g_return_val_if_fail (self != NULL, FALSE);
+	result = FALSE;
+	return result;
 }
 
 
@@ -1547,7 +1556,7 @@ gint rygel_http_get_test_main (gchar** args, int args_length1) {
 		_inner_error_ = NULL;
 		_tmp4_ = _error_;
 		_tmp5_ = _tmp4_->message;
-		g_critical ("rygel-http-get-test.vala:92: %s", _tmp5_);
+		g_critical ("rygel-http-get-test.vala:96: %s", _tmp5_);
 		result = -1;
 		_g_error_free0 (_error_);
 		return result;
@@ -2184,7 +2193,7 @@ static gboolean rygel_http_get_test_handle_client_message_co (RygelHttpGetTestHa
 		_data_->_tmp6_ = 0U;
 		g_object_get (_data_->_tmp5_, "status-code", &_data_->_tmp6_, NULL);
 		_data_->_tmp7_ = _data_->_tmp6_;
-		g_debug ("rygel-http-get-test.vala:227: status.code: %d", (gint) _data_->_tmp7_);
+		g_debug ("rygel-http-get-test.vala:231: status.code: %d", (gint) _data_->_tmp7_);
 		_data_->_tmp8_ = _data_->msg;
 		_data_->_tmp9_ = 0U;
 		g_object_get (_data_->_tmp8_, "status-code", &_data_->_tmp9_, NULL);
@@ -2867,7 +2876,7 @@ static gboolean rygel_media_container_find_object_co (RygelMediaContainerFindObj
 	_state_1:
 	;
 	_data_->_tmp0_ = _data_->item_id;
-	g_debug ("rygel-http-get-test.vala:351: item id: %s", _data_->_tmp0_);
+	g_debug ("rygel-http-get-test.vala:355: item id: %s", _data_->_tmp0_);
 	_data_->_tmp1_ = _data_->item_id;
 	if (g_strcmp0 (_data_->_tmp1_, "VideoItem") == 0) {
 		_data_->_tmp2_ = rygel_video_item_new ();

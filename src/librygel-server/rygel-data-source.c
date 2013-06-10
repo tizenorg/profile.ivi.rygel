@@ -151,14 +151,20 @@ static void rygel_data_source_base_init (RygelDataSourceIface * iface) {
 		initialized = TRUE;
 		/**
 		     * Emitted when the source has produced some data.
+		     *
+		     * This signal has to be emitted in the main thread.
 		     */
 		g_signal_new ("data_available", RYGEL_TYPE_DATA_SOURCE, G_SIGNAL_RUN_LAST, 0, NULL, NULL, g_cclosure_user_marshal_VOID__POINTER_INT, G_TYPE_NONE, 2, G_TYPE_POINTER, G_TYPE_INT);
 		/**
 		     * Emitted when the source does not have data anymore.
+		     *
+		     * This signal has to be emitted in the main thread.
 		     */
 		g_signal_new ("done", RYGEL_TYPE_DATA_SOURCE, G_SIGNAL_RUN_LAST, 0, NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 		/**
 		     * Emitted when the source encounters a problem during data generation.
+		     *
+		     * This signal has to be emitted in the main thread.
 		     */
 		g_signal_new ("error", RYGEL_TYPE_DATA_SOURCE, G_SIGNAL_RUN_LAST, 0, NULL, NULL, g_cclosure_marshal_VOID__POINTER, G_TYPE_NONE, 1, G_TYPE_POINTER);
 	}

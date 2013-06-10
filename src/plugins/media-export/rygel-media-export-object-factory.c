@@ -92,6 +92,26 @@ typedef struct _RygelMediaExportQueryContainerFactoryClass RygelMediaExportQuery
 typedef struct _RygelMediaExportQueryContainer RygelMediaExportQueryContainer;
 typedef struct _RygelMediaExportQueryContainerClass RygelMediaExportQueryContainerClass;
 
+#define RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_ROOT_CONTAINER (rygel_media_export_playlist_root_container_get_type ())
+#define RYGEL_MEDIA_EXPORT_PLAYLIST_ROOT_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_ROOT_CONTAINER, RygelMediaExportPlaylistRootContainer))
+#define RYGEL_MEDIA_EXPORT_PLAYLIST_ROOT_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_ROOT_CONTAINER, RygelMediaExportPlaylistRootContainerClass))
+#define RYGEL_MEDIA_EXPORT_IS_PLAYLIST_ROOT_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_ROOT_CONTAINER))
+#define RYGEL_MEDIA_EXPORT_IS_PLAYLIST_ROOT_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_ROOT_CONTAINER))
+#define RYGEL_MEDIA_EXPORT_PLAYLIST_ROOT_CONTAINER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_ROOT_CONTAINER, RygelMediaExportPlaylistRootContainerClass))
+
+typedef struct _RygelMediaExportPlaylistRootContainer RygelMediaExportPlaylistRootContainer;
+typedef struct _RygelMediaExportPlaylistRootContainerClass RygelMediaExportPlaylistRootContainerClass;
+
+#define RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_CONTAINER (rygel_media_export_playlist_container_get_type ())
+#define RYGEL_MEDIA_EXPORT_PLAYLIST_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_CONTAINER, RygelMediaExportPlaylistContainer))
+#define RYGEL_MEDIA_EXPORT_PLAYLIST_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_CONTAINER, RygelMediaExportPlaylistContainerClass))
+#define RYGEL_MEDIA_EXPORT_IS_PLAYLIST_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_CONTAINER))
+#define RYGEL_MEDIA_EXPORT_IS_PLAYLIST_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_CONTAINER))
+#define RYGEL_MEDIA_EXPORT_PLAYLIST_CONTAINER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_MEDIA_EXPORT_TYPE_PLAYLIST_CONTAINER, RygelMediaExportPlaylistContainerClass))
+
+typedef struct _RygelMediaExportPlaylistContainer RygelMediaExportPlaylistContainer;
+typedef struct _RygelMediaExportPlaylistContainerClass RygelMediaExportPlaylistContainerClass;
+
 #define RYGEL_MEDIA_EXPORT_TYPE_WRITABLE_DB_CONTAINER (rygel_media_export_writable_db_container_get_type ())
 #define RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_MEDIA_EXPORT_TYPE_WRITABLE_DB_CONTAINER, RygelMediaExportWritableDbContainer))
 #define RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_MEDIA_EXPORT_TYPE_WRITABLE_DB_CONTAINER, RygelMediaExportWritableDbContainerClass))
@@ -173,10 +193,16 @@ GType rygel_media_export_query_container_factory_get_type (void) G_GNUC_CONST;
 RygelMediaExportQueryContainerFactory* rygel_media_export_query_container_factory_get_default (void);
 GType rygel_media_export_query_container_get_type (void) G_GNUC_CONST;
 RygelMediaExportQueryContainer* rygel_media_export_query_container_factory_create_from_hashed_id (RygelMediaExportQueryContainerFactory* self, const gchar* id, const gchar* name);
+RygelMediaExportPlaylistRootContainer* rygel_media_export_playlist_root_container_new (const gchar* id, const gchar* title);
+RygelMediaExportPlaylistRootContainer* rygel_media_export_playlist_root_container_construct (GType object_type, const gchar* id, const gchar* title);
+GType rygel_media_export_playlist_root_container_get_type (void) G_GNUC_CONST;
 RygelMediaExportDBContainer* rygel_media_export_db_container_new (const gchar* id, const gchar* title);
 RygelMediaExportDBContainer* rygel_media_export_db_container_construct (GType object_type, const gchar* id, const gchar* title);
 RygelMediaExportTrackableDbContainer* rygel_media_export_trackable_db_container_new (const gchar* id, const gchar* title);
 RygelMediaExportTrackableDbContainer* rygel_media_export_trackable_db_container_construct (GType object_type, const gchar* id, const gchar* title);
+RygelMediaExportPlaylistContainer* rygel_media_export_playlist_container_new (const gchar* id, const gchar* title);
+RygelMediaExportPlaylistContainer* rygel_media_export_playlist_container_construct (GType object_type, const gchar* id, const gchar* title);
+GType rygel_media_export_playlist_container_get_type (void) G_GNUC_CONST;
 RygelMediaExportWritableDbContainer* rygel_media_export_writable_db_container_new (const gchar* id, const gchar* title);
 RygelMediaExportWritableDbContainer* rygel_media_export_writable_db_container_construct (GType object_type, const gchar* id, const gchar* title);
 GType rygel_media_export_writable_db_container_get_type (void) G_GNUC_CONST;
@@ -213,9 +239,13 @@ static RygelMediaExportDBContainer* rygel_media_export_object_factory_real_get_c
 	const gchar* _tmp13_;
 	gboolean _tmp14_ = FALSE;
 	const gchar* _tmp18_;
-	const gchar* _tmp22_;
+	gboolean _tmp19_ = FALSE;
 	const gchar* _tmp23_;
-	RygelMediaExportWritableDbContainer* _tmp24_;
+	const gchar* _tmp27_;
+	gboolean _tmp28_ = FALSE;
+	const gchar* _tmp32_;
+	const gchar* _tmp33_;
+	RygelMediaExportWritableDbContainer* _tmp34_;
 	g_return_val_if_fail (id != NULL, NULL);
 	g_return_val_if_fail (title != NULL, NULL);
 	_tmp0_ = id;
@@ -261,32 +291,56 @@ static RygelMediaExportDBContainer* rygel_media_export_object_factory_real_get_c
 		return result;
 	}
 	_tmp13_ = id;
-	_tmp14_ = g_str_has_prefix (_tmp13_, "virtual-parent:");
+	_tmp14_ = g_str_has_prefix (_tmp13_, "virtual-parent:" RYGEL_PLAYLIST_ITEM_UPNP_CLASS);
 	if (_tmp14_) {
 		const gchar* _tmp15_;
 		const gchar* _tmp16_;
-		RygelMediaExportDBContainer* _tmp17_;
+		RygelMediaExportPlaylistRootContainer* _tmp17_;
 		_tmp15_ = id;
 		_tmp16_ = title;
-		_tmp17_ = rygel_media_export_db_container_new (_tmp15_, _tmp16_);
-		result = _tmp17_;
+		_tmp17_ = rygel_media_export_playlist_root_container_new (_tmp15_, _tmp16_);
+		result = (RygelMediaExportDBContainer*) _tmp17_;
 		return result;
 	}
-	_tmp18_ = uri;
-	if (_tmp18_ == NULL) {
-		const gchar* _tmp19_;
+	_tmp18_ = id;
+	_tmp19_ = g_str_has_prefix (_tmp18_, "virtual-parent:");
+	if (_tmp19_) {
 		const gchar* _tmp20_;
-		RygelMediaExportTrackableDbContainer* _tmp21_;
-		_tmp19_ = id;
-		_tmp20_ = title;
-		_tmp21_ = rygel_media_export_trackable_db_container_new (_tmp19_, _tmp20_);
-		result = (RygelMediaExportDBContainer*) _tmp21_;
+		const gchar* _tmp21_;
+		RygelMediaExportDBContainer* _tmp22_;
+		_tmp20_ = id;
+		_tmp21_ = title;
+		_tmp22_ = rygel_media_export_db_container_new (_tmp20_, _tmp21_);
+		result = _tmp22_;
 		return result;
 	}
-	_tmp22_ = id;
-	_tmp23_ = title;
-	_tmp24_ = rygel_media_export_writable_db_container_new (_tmp22_, _tmp23_);
-	result = (RygelMediaExportDBContainer*) _tmp24_;
+	_tmp23_ = uri;
+	if (_tmp23_ == NULL) {
+		const gchar* _tmp24_;
+		const gchar* _tmp25_;
+		RygelMediaExportTrackableDbContainer* _tmp26_;
+		_tmp24_ = id;
+		_tmp25_ = title;
+		_tmp26_ = rygel_media_export_trackable_db_container_new (_tmp24_, _tmp25_);
+		result = (RygelMediaExportDBContainer*) _tmp26_;
+		return result;
+	}
+	_tmp27_ = id;
+	_tmp28_ = g_str_has_prefix (_tmp27_, "playlist:");
+	if (_tmp28_) {
+		const gchar* _tmp29_;
+		const gchar* _tmp30_;
+		RygelMediaExportPlaylistContainer* _tmp31_;
+		_tmp29_ = id;
+		_tmp30_ = title;
+		_tmp31_ = rygel_media_export_playlist_container_new (_tmp29_, _tmp30_);
+		result = (RygelMediaExportDBContainer*) _tmp31_;
+		return result;
+	}
+	_tmp32_ = id;
+	_tmp33_ = title;
+	_tmp34_ = rygel_media_export_writable_db_container_new (_tmp32_, _tmp33_);
+	result = (RygelMediaExportDBContainer*) _tmp34_;
 	return result;
 }
 

@@ -158,7 +158,7 @@ enum  {
 #define RYGEL_MP2_TS_TRANSCODER_CONTAINER "video/mpegts,systemstream=true,packetsize=188"
 #define RYGEL_MP2_TS_TRANSCODER_AUDIO_FORMAT "audio/mpeg,mpegversion=1,layer=2"
 #define RYGEL_MP2_TS_TRANSCODER_BASE_VIDEO_FORMAT "video/mpeg,mpegversion=2,systemstream=false"
-#define RYGEL_MP2_TS_TRANSCODER_RESTRICTION_TEMPLATE "video/x-raw,format=I420,framerate=(fraction)%d/1,width=%d,height=%d"
+#define RYGEL_MP2_TS_TRANSCODER_RESTRICTION_TEMPLATE "video/x-raw,framerate=(fraction)%d/1,width=%d,height=%d"
 RygelMP2TSTranscoder* rygel_mp2_ts_transcoder_new (RygelMP2TSProfile profile);
 RygelMP2TSTranscoder* rygel_mp2_ts_transcoder_construct (GType object_type, RygelMP2TSProfile profile);
 RygelVideoTranscoder* rygel_video_transcoder_new (const gchar* content_type, const gchar* dlna_profile, gint audio_bitrate, gint video_bitrate, const gchar* container_caps, const gchar* audio_codec_caps, const gchar* video_codec_caps, const gchar* extension, const gchar* restrictions);

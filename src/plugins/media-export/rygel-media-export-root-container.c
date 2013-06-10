@@ -389,8 +389,9 @@ static void rygel_media_export_root_container_on_initial_harvesting_done (RygelM
 static void _rygel_media_export_root_container_on_initial_harvesting_done_rygel_media_export_harvester_done (RygelMediaExportHarvester* _sender, gpointer self);
 GeeArrayList* rygel_media_export_harvester_get_locations (RygelMediaExportHarvester* self);
 gchar* rygel_media_export_media_cache_get_id (GFile* file);
-void rygel_media_export_harvester_schedule (RygelMediaExportHarvester* self, GFile* file, RygelMediaContainer* parent);
 void rygel_media_export_media_cache_remove_by_id (RygelMediaExportMediaCache* self, const gchar* id, GError** error);
+void rygel_media_export_media_cache_rebuild_exists_cache (RygelMediaExportMediaCache* self, GError** error);
+void rygel_media_export_harvester_schedule_locations (RygelMediaExportHarvester* self, RygelMediaContainer* parent);
 static void rygel_media_export_root_container_root_updated (RygelMediaExportRootContainer* self);
 static void rygel_media_export_root_container_on_setting_changed (RygelMediaExportRootContainer* self, const gchar* section, const gchar* key);
 static void _rygel_media_export_root_container_on_setting_changed_rygel_configuration_setting_changed (RygelConfiguration* _sender, const gchar* section, const gchar* key, gpointer self);
@@ -398,6 +399,7 @@ static void _rygel_media_export_root_container_on_setting_changed_rygel_configur
 static void rygel_media_export_root_container_handle_uri_config_change (RygelMediaExportRootContainer* self);
 static void rygel_media_export_root_container_handle_virtual_folder_change (RygelMediaExportRootContainer* self);
 void rygel_media_export_harvester_cancel (RygelMediaExportHarvester* self, GFile* file);
+void rygel_media_export_harvester_schedule (RygelMediaExportHarvester* self, GFile* file, RygelMediaContainer* parent);
 static void rygel_media_export_root_container_add_default_virtual_folders (RygelMediaExportRootContainer* self);
 void rygel_media_export_media_cache_drop_virtual_folders (RygelMediaExportMediaCache* self);
 void rygel_media_export_media_cache_debug_statistics (RygelMediaExportMediaCache* self);
@@ -606,7 +608,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		regex = _tmp4_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch35_g_regex_error;
+				goto __catch37_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -619,7 +621,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		if (_inner_error_ != NULL) {
 			_g_regex_unref0 (regex);
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch35_g_regex_error;
+				goto __catch37_g_regex_error;
 			}
 			_g_regex_unref0 (regex);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -630,8 +632,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_regex_unref0 (regex);
 		return result;
 	}
-	goto __finally35;
-	__catch35_g_regex_error:
+	goto __finally37;
+	__catch37_g_regex_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -639,7 +641,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_assert_not_reached ();
 		_g_error_free0 (e);
 	}
-	__finally35:
+	__finally37:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1172,13 +1174,13 @@ static GeeArrayList* rygel_media_export_root_container_get_shared_uris (RygelMed
 		_tmp2_ = rygel_configuration_get_string_list ((RygelConfiguration*) _tmp1_, "MediaExport", "uris", &_inner_error_);
 		_tmp3_ = _tmp2_;
 		if (_inner_error_ != NULL) {
-			goto __catch36_g_error;
+			goto __catch38_g_error;
 		}
 		_g_object_unref0 (uris);
 		uris = _tmp3_;
 	}
-	goto __finally36;
-	__catch36_g_error:
+	goto __finally38;
+	__catch38_g_error:
 	{
 		GError* _error_ = NULL;
 		GeeArrayList* _tmp4_;
@@ -1189,7 +1191,7 @@ static GeeArrayList* rygel_media_export_root_container_get_shared_uris (RygelMed
 		uris = _tmp4_;
 		_g_error_free0 (_error_);
 	}
-	__finally36:
+	__finally38:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (config);
 		_g_object_unref0 (actual_uris);
@@ -1689,18 +1691,18 @@ static gboolean __lambda6_ (RygelMediaExportRootContainer* self) {
 	{
 		rygel_media_export_root_container_init (self, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch37_g_error;
+			goto __catch39_g_error;
 		}
 	}
-	goto __finally37;
-	__catch37_g_error:
+	goto __finally39;
+	__catch39_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally37:
+	__finally39:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1752,6 +1754,9 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 	RygelMediaExportHarvester* _tmp15_;
 	RygelMediaExportHarvester* _tmp16_;
 	gulong _tmp17_ = 0UL;
+	RygelMediaExportMediaCache* _tmp52_;
+	RygelMediaExportHarvester* _tmp53_;
+	RygelMediaExportDBContainer* _tmp54_;
 	GeeArrayList* _tmp55_;
 	gboolean _tmp56_;
 	gboolean _tmp57_;
@@ -1772,18 +1777,18 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 		_tmp2_ = ((RygelMediaExportDBContainer*) self)->media_db;
 		rygel_media_export_media_cache_save_container (_tmp2_, (RygelMediaContainer*) self, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch38_g_error;
+			goto __catch40_g_error;
 		}
 	}
-	goto __finally38;
-	__catch38_g_error:
+	goto __finally40;
+	__catch40_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally38:
+	__finally40:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		return;
@@ -1804,18 +1809,18 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 		_tmp7_ = self->priv->filesystem_container;
 		rygel_media_export_media_cache_save_container (_tmp6_, (RygelMediaContainer*) _tmp7_, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch39_g_error;
+			goto __catch41_g_error;
 		}
 	}
-	goto __finally39;
-	__catch39_g_error:
+	goto __finally41;
+	__catch41_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally39:
+	__finally41:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		return;
@@ -1829,7 +1834,7 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 		_tmp10_ = _tmp9_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch40_rygel_media_export_database_error;
+				goto __catch42_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (ids);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1839,8 +1844,8 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 		_g_object_unref0 (ids);
 		ids = _tmp10_;
 	}
-	goto __finally40;
-	__catch40_rygel_media_export_database_error:
+	goto __finally42;
+	__catch42_rygel_media_export_database_error:
 	{
 		GError* e = NULL;
 		GeeArrayList* _tmp11_;
@@ -1851,7 +1856,7 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 		ids = _tmp11_;
 		_g_error_free0 (e);
 	}
-	__finally40:
+	__finally42:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_object_unref0 (ids);
@@ -1900,9 +1905,6 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 			GFile* _tmp32_;
 			gchar* _tmp33_ = NULL;
 			gchar* _tmp34_;
-			RygelMediaExportHarvester* _tmp35_;
-			GFile* _tmp36_;
-			RygelMediaExportDBContainer* _tmp37_;
 			_tmp25_ = _file_index;
 			_file_index = _tmp25_ + 1;
 			_tmp26_ = _file_index;
@@ -1920,63 +1922,59 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 			_tmp34_ = _tmp33_;
 			gee_abstract_collection_remove ((GeeAbstractCollection*) _tmp31_, _tmp34_);
 			_g_free0 (_tmp34_);
-			_tmp35_ = self->priv->harvester;
-			_tmp36_ = file;
-			_tmp37_ = self->priv->filesystem_container;
-			rygel_media_export_harvester_schedule (_tmp35_, _tmp36_, (RygelMediaContainer*) _tmp37_);
 			_g_object_unref0 (file);
 		}
 		_g_object_unref0 (_file_list);
 	}
 	{
-		GeeArrayList* _tmp38_;
-		GeeArrayList* _tmp39_;
+		GeeArrayList* _tmp35_;
+		GeeArrayList* _tmp36_;
 		GeeArrayList* _id_list;
-		GeeArrayList* _tmp40_;
-		gint _tmp41_;
-		gint _tmp42_;
+		GeeArrayList* _tmp37_;
+		gint _tmp38_;
+		gint _tmp39_;
 		gint _id_size;
 		gint _id_index;
-		_tmp38_ = ids;
-		_tmp39_ = _g_object_ref0 (_tmp38_);
-		_id_list = _tmp39_;
-		_tmp40_ = _id_list;
-		_tmp41_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp40_);
-		_tmp42_ = _tmp41_;
-		_id_size = _tmp42_;
+		_tmp35_ = ids;
+		_tmp36_ = _g_object_ref0 (_tmp35_);
+		_id_list = _tmp36_;
+		_tmp37_ = _id_list;
+		_tmp38_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp37_);
+		_tmp39_ = _tmp38_;
+		_id_size = _tmp39_;
 		_id_index = -1;
 		while (TRUE) {
-			gint _tmp43_;
+			gint _tmp40_;
+			gint _tmp41_;
+			gint _tmp42_;
+			GeeArrayList* _tmp43_;
 			gint _tmp44_;
-			gint _tmp45_;
-			GeeArrayList* _tmp46_;
-			gint _tmp47_;
-			gpointer _tmp48_ = NULL;
+			gpointer _tmp45_ = NULL;
 			gchar* id;
-			const gchar* _tmp49_;
-			_tmp43_ = _id_index;
-			_id_index = _tmp43_ + 1;
-			_tmp44_ = _id_index;
-			_tmp45_ = _id_size;
-			if (!(_tmp44_ < _tmp45_)) {
+			const gchar* _tmp46_;
+			_tmp40_ = _id_index;
+			_id_index = _tmp40_ + 1;
+			_tmp41_ = _id_index;
+			_tmp42_ = _id_size;
+			if (!(_tmp41_ < _tmp42_)) {
 				break;
 			}
-			_tmp46_ = _id_list;
-			_tmp47_ = _id_index;
-			_tmp48_ = gee_abstract_list_get ((GeeAbstractList*) _tmp46_, _tmp47_);
-			id = (gchar*) _tmp48_;
-			_tmp49_ = id;
-			g_debug ("rygel-media-export-root-container.vala:428: ID %s is no longer in the " \
-"configuration. Deleting...", _tmp49_);
+			_tmp43_ = _id_list;
+			_tmp44_ = _id_index;
+			_tmp45_ = gee_abstract_list_get ((GeeAbstractList*) _tmp43_, _tmp44_);
+			id = (gchar*) _tmp45_;
+			_tmp46_ = id;
+			g_debug ("rygel-media-export-root-container.vala:426: ID %s is no longer in the " \
+"configuration. Deleting...", _tmp46_);
 			{
-				RygelMediaExportMediaCache* _tmp50_;
-				const gchar* _tmp51_;
-				_tmp50_ = ((RygelMediaExportDBContainer*) self)->media_db;
-				_tmp51_ = id;
-				rygel_media_export_media_cache_remove_by_id (_tmp50_, _tmp51_, &_inner_error_);
+				RygelMediaExportMediaCache* _tmp47_;
+				const gchar* _tmp48_;
+				_tmp47_ = ((RygelMediaExportDBContainer*) self)->media_db;
+				_tmp48_ = id;
+				rygel_media_export_media_cache_remove_by_id (_tmp47_, _tmp48_, &_inner_error_);
 				if (_inner_error_ != NULL) {
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-						goto __catch41_rygel_media_export_database_error;
+						goto __catch43_rygel_media_export_database_error;
 					}
 					_g_free0 (id);
 					_g_object_unref0 (_id_list);
@@ -1986,22 +1984,22 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 					return;
 				}
 			}
-			goto __finally41;
-			__catch41_rygel_media_export_database_error:
+			goto __finally43;
+			__catch43_rygel_media_export_database_error:
 			{
 				GError* _error_ = NULL;
-				const gchar* _tmp52_ = NULL;
-				GError* _tmp53_;
-				const gchar* _tmp54_;
+				const gchar* _tmp49_ = NULL;
+				GError* _tmp50_;
+				const gchar* _tmp51_;
 				_error_ = _inner_error_;
 				_inner_error_ = NULL;
-				_tmp52_ = _ ("Failed to remove entry: %s");
-				_tmp53_ = _error_;
-				_tmp54_ = _tmp53_->message;
-				g_warning (_tmp52_, _tmp54_);
+				_tmp49_ = _ ("Failed to remove entry: %s");
+				_tmp50_ = _error_;
+				_tmp51_ = _tmp50_->message;
+				g_warning (_tmp49_, _tmp51_);
 				_g_error_free0 (_error_);
 			}
-			__finally41:
+			__finally43:
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_g_free0 (id);
@@ -2013,6 +2011,16 @@ static void rygel_media_export_root_container_init (RygelMediaExportRootContaine
 		}
 		_g_object_unref0 (_id_list);
 	}
+	_tmp52_ = ((RygelMediaExportDBContainer*) self)->media_db;
+	rygel_media_export_media_cache_rebuild_exists_cache (_tmp52_, &_inner_error_);
+	if (_inner_error_ != NULL) {
+		g_propagate_error (error, _inner_error_);
+		_g_object_unref0 (ids);
+		return;
+	}
+	_tmp53_ = self->priv->harvester;
+	_tmp54_ = self->priv->filesystem_container;
+	rygel_media_export_harvester_schedule_locations (_tmp53_, (RygelMediaContainer*) _tmp54_);
 	_tmp55_ = ids;
 	_tmp56_ = gee_collection_get_is_empty ((GeeCollection*) _tmp55_);
 	_tmp57_ = _tmp56_;
@@ -2036,18 +2044,18 @@ static void rygel_media_export_root_container_root_updated (RygelMediaExportRoot
 		_tmp0_ = ((RygelMediaExportDBContainer*) self)->media_db;
 		rygel_media_export_media_cache_save_container (_tmp0_, (RygelMediaContainer*) self, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch42_g_error;
+			goto __catch44_g_error;
 		}
 	}
-	goto __finally42;
-	__catch42_g_error:
+	goto __finally44;
+	__catch44_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally42:
+	__finally44:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2183,7 +2191,7 @@ static void rygel_media_export_root_container_handle_uri_config_change (RygelMed
 				_g_free0 (_tmp31_);
 				if (_inner_error_ != NULL) {
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-						goto __catch43_rygel_media_export_database_error;
+						goto __catch45_rygel_media_export_database_error;
 					}
 					_g_object_unref0 (file);
 					_g_object_unref0 (_file_list);
@@ -2195,8 +2203,8 @@ static void rygel_media_export_root_container_handle_uri_config_change (RygelMed
 					return;
 				}
 			}
-			goto __finally43;
-			__catch43_rygel_media_export_database_error:
+			goto __finally45;
+			__catch45_rygel_media_export_database_error:
 			{
 				GError* _error_ = NULL;
 				const gchar* _tmp32_ = NULL;
@@ -2210,7 +2218,7 @@ static void rygel_media_export_root_container_handle_uri_config_change (RygelMed
 				g_warning (_tmp32_, _tmp34_);
 				_g_error_free0 (_error_);
 			}
-			__finally43:
+			__finally45:
 			if (_inner_error_ != NULL) {
 				_g_object_unref0 (file);
 				_g_object_unref0 (_file_list);
@@ -2330,19 +2338,19 @@ static void rygel_media_export_root_container_handle_virtual_folder_change (Ryge
 		_tmp1_ = rygel_configuration_get_bool ((RygelConfiguration*) config, RYGEL_MEDIA_EXPORT_PLUGIN_NAME, "virtual-folders", &_inner_error_);
 		_tmp2_ = _tmp1_;
 		if (_inner_error_ != NULL) {
-			goto __catch44_g_error;
+			goto __catch46_g_error;
 		}
 		virtual_folders = _tmp2_;
 	}
-	goto __finally44;
-	__catch44_g_error:
+	goto __finally46;
+	__catch46_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally44:
+	__finally46:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (config);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2418,19 +2426,19 @@ static void rygel_media_export_root_container_add_default_virtual_folders (Rygel
 		_tmp2_ = rygel_configuration_get_bool ((RygelConfiguration*) _tmp1_, RYGEL_MEDIA_EXPORT_PLUGIN_NAME, "virtual-folders", &_inner_error_);
 		_tmp3_ = _tmp2_;
 		if (_inner_error_ != NULL) {
-			goto __catch45_g_error;
+			goto __catch47_g_error;
 		}
 		virtual_folders = _tmp3_;
 	}
-	goto __finally45;
-	__catch45_g_error:
+	goto __finally47;
+	__catch47_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally45:
+	__finally47:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (config);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2450,33 +2458,33 @@ static void rygel_media_export_root_container_add_default_virtual_folders (Rygel
 		_tmp5_ = _ ("Music");
 		rygel_media_export_root_container_add_virtual_containers_for_class (self, _tmp5_, RYGEL_MUSIC_ITEM_UPNP_CLASS, VIRTUAL_FOLDERS_MUSIC, G_N_ELEMENTS (VIRTUAL_FOLDERS_MUSIC), &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch46_g_error;
+			goto __catch48_g_error;
 		}
 		_tmp6_ = _ ("Pictures");
 		rygel_media_export_root_container_add_virtual_containers_for_class (self, _tmp6_, RYGEL_PHOTO_ITEM_UPNP_CLASS, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch46_g_error;
+			goto __catch48_g_error;
 		}
 		_tmp7_ = _ ("Videos");
 		rygel_media_export_root_container_add_virtual_containers_for_class (self, _tmp7_, RYGEL_VIDEO_ITEM_UPNP_CLASS, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch46_g_error;
+			goto __catch48_g_error;
 		}
 		_tmp8_ = _ ("Playlists");
 		rygel_media_export_root_container_add_virtual_containers_for_class (self, _tmp8_, RYGEL_PLAYLIST_ITEM_UPNP_CLASS, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch46_g_error;
+			goto __catch48_g_error;
 		}
 	}
-	goto __finally46;
-	__catch46_g_error:
+	goto __finally48;
+	__catch48_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally46:
+	__finally48:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (config);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2489,7 +2497,7 @@ static void rygel_media_export_root_container_add_default_virtual_folders (Rygel
 
 /**
      * Add a QueryContainer to the provided container,
-     * for the specified UpNP class,
+     * for the specified UPnP class,
      * with the specified definition,
      * saving it in the cache.
      */
@@ -2674,12 +2682,14 @@ static void rygel_media_export_root_container_add_virtual_containers_for_class (
 	RygelNullContainer* _tmp7_;
 	RygelMediaExportFolderDefinition* _tmp11_;
 	gint _tmp11__length1;
-	RygelMediaExportMediaCache* _tmp17_;
-	RygelNullContainer* _tmp18_;
-	const gchar* _tmp19_;
+	gboolean _tmp17_ = FALSE;
+	RygelMediaExportMediaCache* _tmp18_;
+	RygelNullContainer* _tmp19_;
 	const gchar* _tmp20_;
-	gint _tmp21_ = 0;
-	gint _tmp22_;
+	const gchar* _tmp21_;
+	gint _tmp22_ = 0;
+	gint _tmp23_;
+	gboolean _tmp28_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	g_return_if_fail (parent != NULL);
@@ -2764,36 +2774,50 @@ static void rygel_media_export_root_container_add_virtual_containers_for_class (
 			}
 		}
 	}
-	_tmp17_ = ((RygelMediaExportDBContainer*) self)->media_db;
-	_tmp18_ = container;
-	_tmp19_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp18_);
-	_tmp20_ = _tmp19_;
-	_tmp21_ = rygel_media_export_media_cache_get_child_count (_tmp17_, _tmp20_, &_inner_error_);
-	_tmp22_ = _tmp21_;
+	_tmp18_ = ((RygelMediaExportDBContainer*) self)->media_db;
+	_tmp19_ = container;
+	_tmp20_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp19_);
+	_tmp21_ = _tmp20_;
+	_tmp22_ = rygel_media_export_media_cache_get_child_count (_tmp18_, _tmp21_, &_inner_error_);
+	_tmp23_ = _tmp22_;
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_object_unref0 (container);
 		return;
 	}
-	if (_tmp22_ == 0) {
-		RygelMediaExportMediaCache* _tmp23_;
+	if (_tmp23_ == 0) {
 		RygelNullContainer* _tmp24_;
 		const gchar* _tmp25_;
 		const gchar* _tmp26_;
-		_tmp23_ = ((RygelMediaExportDBContainer*) self)->media_db;
+		gboolean _tmp27_ = FALSE;
 		_tmp24_ = container;
 		_tmp25_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp24_);
 		_tmp26_ = _tmp25_;
-		rygel_media_export_media_cache_remove_by_id (_tmp23_, _tmp26_, &_inner_error_);
+		_tmp27_ = g_str_has_prefix (_tmp26_, "virtual-parent:" RYGEL_PLAYLIST_ITEM_UPNP_CLASS);
+		_tmp17_ = !_tmp27_;
+	} else {
+		_tmp17_ = FALSE;
+	}
+	_tmp28_ = _tmp17_;
+	if (_tmp28_) {
+		RygelMediaExportMediaCache* _tmp29_;
+		RygelNullContainer* _tmp30_;
+		const gchar* _tmp31_;
+		const gchar* _tmp32_;
+		_tmp29_ = ((RygelMediaExportDBContainer*) self)->media_db;
+		_tmp30_ = container;
+		_tmp31_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp30_);
+		_tmp32_ = _tmp31_;
+		rygel_media_export_media_cache_remove_by_id (_tmp29_, _tmp32_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			g_propagate_error (error, _inner_error_);
 			_g_object_unref0 (container);
 			return;
 		}
 	} else {
-		RygelNullContainer* _tmp27_;
-		_tmp27_ = container;
-		rygel_media_container_updated ((RygelMediaContainer*) _tmp27_, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
+		RygelNullContainer* _tmp33_;
+		_tmp33_ = container;
+		rygel_media_container_updated ((RygelMediaContainer*) _tmp33_, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
 	}
 	_g_object_unref0 (container);
 }

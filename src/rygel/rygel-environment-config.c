@@ -105,6 +105,7 @@ static gboolean rygel_environment_config_real_get_upnp_enabled (RygelConfigurati
 static gboolean rygel_environment_config_get_bool_variable (RygelEnvironmentConfig* self, const gchar* variable, GError** error);
 static gchar* rygel_environment_config_real_get_interface (RygelConfiguration* base, GError** error);
 static gchar* rygel_environment_config_get_string_variable (RygelEnvironmentConfig* self, const gchar* variable, GError** error);
+static gchar** rygel_environment_config_real_get_interfaces (RygelConfiguration* base, GError** error);
 static gint rygel_environment_config_real_get_port (RygelConfiguration* base, GError** error);
 static gint rygel_environment_config_get_int_variable (RygelEnvironmentConfig* self, const gchar* variable, gint min, gint max, GError** error);
 static gboolean rygel_environment_config_real_get_transcoding (RygelConfiguration* base, GError** error);
@@ -190,6 +191,36 @@ static gchar* rygel_environment_config_real_get_interface (RygelConfiguration* b
 		return NULL;
 	}
 	result = _tmp2_;
+	return result;
+}
+
+
+static gchar** rygel_environment_config_real_get_interfaces (RygelConfiguration* base, GError** error) {
+	RygelEnvironmentConfig * self;
+	gchar** result = NULL;
+	const gchar* _tmp0_;
+	gchar* _tmp1_ = NULL;
+	gchar* _tmp2_;
+	gchar* _tmp3_;
+	gchar** _tmp4_;
+	gchar** _tmp5_ = NULL;
+	gchar** _tmp6_;
+	gint _tmp6__length1;
+	GError * _inner_error_ = NULL;
+	self = (RygelEnvironmentConfig*) base;
+	_tmp0_ = rygel_environment_config_INTERFACE_ENV;
+	_tmp1_ = rygel_environment_config_get_string_variable (self, _tmp0_, &_inner_error_);
+	_tmp2_ = _tmp1_;
+	if (_inner_error_ != NULL) {
+		g_propagate_error (error, _inner_error_);
+		return NULL;
+	}
+	_tmp3_ = _tmp2_;
+	_tmp5_ = _tmp4_ = g_strsplit (_tmp3_, ",", 0);
+	_tmp6_ = _tmp5_;
+	_tmp6__length1 = _vala_array_length (_tmp4_);
+	_g_free0 (_tmp3_);
+	result = _tmp6_;
 	return result;
 }
 
@@ -476,7 +507,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		regex = _tmp4_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch12_g_regex_error;
+				goto __catch13_g_regex_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -489,7 +520,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		if (_inner_error_ != NULL) {
 			_g_regex_unref0 (regex);
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-				goto __catch12_g_regex_error;
+				goto __catch13_g_regex_error;
 			}
 			_g_regex_unref0 (regex);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -500,8 +531,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_regex_unref0 (regex);
 		return result;
 	}
-	goto __finally12;
-	__catch12_g_regex_error:
+	goto __finally13;
+	__catch13_g_regex_error:
 	{
 		GError* e = NULL;
 		e = _inner_error_;
@@ -509,7 +540,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_assert_not_reached ();
 		_g_error_free0 (e);
 	}
-	__finally12:
+	__finally13:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1005,6 +1036,7 @@ static void rygel_environment_config_rygel_configuration_interface_init (RygelCo
 	rygel_environment_config_rygel_configuration_parent_iface = g_type_interface_peek_parent (iface);
 	iface->get_upnp_enabled = (gboolean (*)(RygelConfiguration*, GError**)) rygel_environment_config_real_get_upnp_enabled;
 	iface->get_interface = (gchar* (*)(RygelConfiguration*, GError**)) rygel_environment_config_real_get_interface;
+	iface->get_interfaces = (gchar** (*)(RygelConfiguration*, GError**)) rygel_environment_config_real_get_interfaces;
 	iface->get_port = (gint (*)(RygelConfiguration*, GError**)) rygel_environment_config_real_get_port;
 	iface->get_transcoding = (gboolean (*)(RygelConfiguration*, GError**)) rygel_environment_config_real_get_transcoding;
 	iface->get_allow_upload = (gboolean (*)(RygelConfiguration*, GError**)) rygel_environment_config_real_get_allow_upload;

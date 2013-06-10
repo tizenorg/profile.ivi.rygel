@@ -26,7 +26,7 @@
 
 using Gee;
 
-public errordomain WriteableContainerError {
+public errordomain Rygel.WritableContainerError {
     NOT_IMPLEMENTED
 }
 
@@ -41,6 +41,8 @@ public errordomain WriteableContainerError {
  *  # Monitor not only its own URI but also that of its child items, though the latter is implied in the former if you use GIO for monitoring.
  */
 public interface Rygel.WritableContainer : MediaContainer {
+    public static const string WRITABLE_SCHEME = "rygel-writable://";
+
     //TODO: The valadoc gtk-doc doclet doesn't use the property's documentation
     //on getters and setters:
     //https://bugzilla.gnome.org/show_bug.cgi?id=684193
@@ -105,7 +107,7 @@ public interface Rygel.WritableContainer : MediaContainer {
     public async virtual string add_reference (MediaObject    object,
                                                Cancellable? cancellable)
                                                throws Error {
-        throw new WriteableContainerError.NOT_IMPLEMENTED
+        throw new WritableContainerError.NOT_IMPLEMENTED
                                         ("Cannot create references here");
     }
 

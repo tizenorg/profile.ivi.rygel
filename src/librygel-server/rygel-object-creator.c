@@ -315,8 +315,10 @@ struct _RygelMediaObjectClass {
 struct _RygelMediaContainer {
 	RygelMediaObject parent_instance;
 	RygelMediaContainerPrivate * priv;
+	gint empty_child_count;
 	guint32 update_id;
 	gint64 storage_used;
+	gboolean create_mode_enabled;
 	gint64 total_deleted_child_count;
 };
 
@@ -479,22 +481,19 @@ struct _RygelObjectCreatorRunData {
 	const gchar* _tmp34_;
 	gboolean _tmp35_;
 	RygelMediaObject* _tmp36_;
-	gboolean _tmp37_;
-	RygelMediaObject* _tmp38_;
-	RygelMediaObject* _tmp39_;
+	RygelMediaObject* _tmp37_;
+	gboolean _tmp38_;
+	gboolean _tmp39_;
 	gboolean _tmp40_;
 	gboolean _tmp41_;
-	gboolean _tmp42_;
-	gboolean _tmp43_;
-	gboolean _tmp44_;
-	RygelObjectRemovalQueue* _tmp45_;
+	RygelObjectRemovalQueue* _tmp42_;
 	RygelObjectRemovalQueue* queue;
-	RygelObjectRemovalQueue* _tmp46_;
-	RygelMediaObject* _tmp47_;
-	GCancellable* _tmp48_;
-	GCancellable* _tmp49_;
+	RygelObjectRemovalQueue* _tmp43_;
+	RygelMediaObject* _tmp44_;
+	GCancellable* _tmp45_;
+	GCancellable* _tmp46_;
 	GError* err;
-	GError* _tmp50_;
+	GError* _tmp47_;
 	GError * _inner_error_;
 };
 
@@ -567,10 +566,11 @@ struct _RygelObjectCreatorFindAnyContainerData {
 	RygelMediaObjects* _tmp30_;
 	gpointer _tmp31_;
 	const gchar* _tmp32_;
-	GUPnPDIDLLiteObject* _tmp33_;
-	const gchar* _tmp34_;
+	const gchar* _tmp33_;
+	GUPnPDIDLLiteObject* _tmp34_;
 	const gchar* _tmp35_;
-	GError* _tmp36_;
+	const gchar* _tmp36_;
+	GError* _tmp37_;
 	GError * _inner_error_;
 };
 
@@ -743,25 +743,31 @@ struct _RygelObjectCreatorWaitForObjectData {
 	RygelMediaObject* _tmp11_;
 	RygelMediaObject* _tmp12_;
 	GError* _error_;
-	RygelWritableContainer* _tmp13_;
-	const gchar* _tmp14_;
+	const gchar* _tmp13_;
+	gchar* _tmp14_;
+	gchar* msg;
 	const gchar* _tmp15_;
-	RygelMediaObject* _tmp16_;
+	RygelWritableContainer* _tmp16_;
 	const gchar* _tmp17_;
 	const gchar* _tmp18_;
 	RygelMediaObject* _tmp19_;
+	const gchar* _tmp20_;
+	const gchar* _tmp21_;
+	GError* _tmp22_;
+	const gchar* _tmp23_;
+	RygelMediaObject* _tmp24_;
 	Block9Data* _data9_;
-	RygelWritableContainer* _tmp20_;
-	gulong _tmp21_;
+	RygelWritableContainer* _tmp25_;
+	gulong _tmp26_;
 	gulong id;
-	guint _tmp22_;
-	RygelWritableContainer* _tmp23_;
-	gulong _tmp24_;
-	guint _tmp25_;
-	guint _tmp26_;
-	RygelWritableContainer* _tmp27_;
-	const gchar* _tmp28_;
-	const gchar* _tmp29_;
+	guint _tmp27_;
+	RygelWritableContainer* _tmp28_;
+	gulong _tmp29_;
+	guint _tmp30_;
+	guint _tmp31_;
+	RygelWritableContainer* _tmp32_;
+	const gchar* _tmp33_;
+	const gchar* _tmp34_;
 	GError * _inner_error_;
 };
 
@@ -1250,14 +1256,14 @@ RygelObjectCreator* rygel_object_creator_construct (GType object_type, RygelCont
 		_tmp14_ = _tmp13_;
 		if (_inner_error_ != NULL) {
 			_g_free0 (pattern);
-			goto __catch47_g_error;
+			goto __catch51_g_error;
 		}
 		_g_regex_unref0 (self->priv->title_regex);
 		self->priv->title_regex = _tmp14_;
 		_g_free0 (pattern);
 	}
-	goto __finally47;
-	__catch47_g_error:
+	goto __finally51;
+	__catch51_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -1265,7 +1271,7 @@ RygelObjectCreator* rygel_object_creator_construct (GType object_type, RygelCont
 		g_assert_not_reached ();
 		_g_error_free0 (_error_);
 	}
-	__finally47:
+	__finally51:
 	if (_inner_error_ != NULL) {
 		__vala_GUPnPServiceAction_free0 (action);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1340,11 +1346,11 @@ static gboolean rygel_object_creator_real_run_co (RygelObjectCreatorRunData* _da
 	{
 		rygel_object_creator_parse_args (_data_->self, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch48_g_error;
+			goto __catch52_g_error;
 		}
 		rygel_object_creator_parse_didl (_data_->self, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch48_g_error;
+			goto __catch52_g_error;
 		}
 		_data_->_state_ = 1;
 		rygel_object_creator_fetch_container (_data_->self, rygel_object_creator_run_ready, _data_);
@@ -1354,7 +1360,7 @@ static gboolean rygel_object_creator_real_run_co (RygelObjectCreatorRunData* _da
 		_data_->_tmp0_ = rygel_object_creator_fetch_container_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		_data_->container = _data_->_tmp0_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch48_g_error;
+			goto __catch52_g_error;
 		}
 		_data_->_tmp2_ = _data_->container;
 		_data_->_tmp3_ = _data_->self->priv->didl_object;
@@ -1379,7 +1385,7 @@ static gboolean rygel_object_creator_real_run_co (RygelObjectCreatorRunData* _da
 			_data_->_tmp15_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "Creating of objects with class %s " "is not supported in %s", _data_->_tmp11_, _data_->_tmp14_);
 			_data_->_inner_error_ = _data_->_tmp15_;
 			_g_object_unref0 (_data_->container);
-			goto __catch48_g_error;
+			goto __catch52_g_error;
 		}
 		_data_->_tmp16_ = _data_->container;
 		_data_->_state_ = 2;
@@ -1389,7 +1395,7 @@ static gboolean rygel_object_creator_real_run_co (RygelObjectCreatorRunData* _da
 		rygel_object_creator_create_object_from_didl_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->container);
-			goto __catch48_g_error;
+			goto __catch52_g_error;
 		}
 		_data_->_tmp17_ = _data_->self->priv->object;
 		if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp17_, RYGEL_TYPE_MEDIA_ITEM)) {
@@ -1404,7 +1410,7 @@ static gboolean rygel_object_creator_real_run_co (RygelObjectCreatorRunData* _da
 			rygel_writable_container_add_item_finish (_data_->_tmp18_, _data_->_res_, &_data_->_inner_error_);
 			if (_data_->_inner_error_ != NULL) {
 				_g_object_unref0 (_data_->container);
-				goto __catch48_g_error;
+				goto __catch52_g_error;
 			}
 		} else {
 			_data_->_tmp22_ = _data_->container;
@@ -1418,7 +1424,7 @@ static gboolean rygel_object_creator_real_run_co (RygelObjectCreatorRunData* _da
 			rygel_writable_container_add_container_finish (_data_->_tmp22_, _data_->_res_, &_data_->_inner_error_);
 			if (_data_->_inner_error_ != NULL) {
 				_g_object_unref0 (_data_->container);
-				goto __catch48_g_error;
+				goto __catch52_g_error;
 			}
 		}
 		_data_->_tmp26_ = _data_->container;
@@ -1437,56 +1443,49 @@ static gboolean rygel_object_creator_real_run_co (RygelObjectCreatorRunData* _da
 		_g_object_unref0 (_data_->_tmp32_);
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->container);
-			goto __catch48_g_error;
+			goto __catch52_g_error;
 		}
 		rygel_object_creator_conclude (_data_->self);
 		_data_->_tmp34_ = _data_->self->priv->container_id;
 		if (g_strcmp0 (_data_->_tmp34_, RYGEL_MEDIA_CONTAINER_ANY) == 0) {
 			_data_->_tmp36_ = _data_->self->priv->object;
-			if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp36_, RYGEL_TYPE_MEDIA_CONTAINER)) {
-				_data_->_tmp35_ = TRUE;
+			if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp36_, RYGEL_TYPE_MEDIA_ITEM)) {
+				_data_->_tmp37_ = _data_->self->priv->object;
+				_data_->_tmp38_ = rygel_media_item_get_place_holder (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp37_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp37_) : NULL);
+				_data_->_tmp39_ = _data_->_tmp38_;
+				_data_->_tmp35_ = _data_->_tmp39_;
 			} else {
-				_data_->_tmp38_ = _data_->self->priv->object;
-				if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp38_, RYGEL_TYPE_MEDIA_ITEM)) {
-					_data_->_tmp39_ = _data_->self->priv->object;
-					_data_->_tmp40_ = rygel_media_item_get_place_holder (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp39_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp39_) : NULL);
-					_data_->_tmp41_ = _data_->_tmp40_;
-					_data_->_tmp37_ = _data_->_tmp41_;
-				} else {
-					_data_->_tmp37_ = FALSE;
-				}
-				_data_->_tmp42_ = _data_->_tmp37_;
-				_data_->_tmp35_ = _data_->_tmp42_;
+				_data_->_tmp35_ = FALSE;
 			}
-			_data_->_tmp43_ = _data_->_tmp35_;
-			_data_->_tmp33_ = _data_->_tmp43_;
+			_data_->_tmp40_ = _data_->_tmp35_;
+			_data_->_tmp33_ = _data_->_tmp40_;
 		} else {
 			_data_->_tmp33_ = FALSE;
 		}
-		_data_->_tmp44_ = _data_->_tmp33_;
-		if (_data_->_tmp44_) {
-			_data_->_tmp45_ = NULL;
-			_data_->_tmp45_ = rygel_object_removal_queue_get_default ();
-			_data_->queue = _data_->_tmp45_;
-			_data_->_tmp46_ = _data_->queue;
-			_data_->_tmp47_ = _data_->self->priv->object;
-			_data_->_tmp48_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
-			_data_->_tmp49_ = _data_->_tmp48_;
-			rygel_object_removal_queue_queue (_data_->_tmp46_, _data_->_tmp47_, _data_->_tmp49_);
+		_data_->_tmp41_ = _data_->_tmp33_;
+		if (_data_->_tmp41_) {
+			_data_->_tmp42_ = NULL;
+			_data_->_tmp42_ = rygel_object_removal_queue_get_default ();
+			_data_->queue = _data_->_tmp42_;
+			_data_->_tmp43_ = _data_->queue;
+			_data_->_tmp44_ = _data_->self->priv->object;
+			_data_->_tmp45_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
+			_data_->_tmp46_ = _data_->_tmp45_;
+			rygel_object_removal_queue_queue (_data_->_tmp43_, _data_->_tmp44_, _data_->_tmp46_);
 			_g_object_unref0 (_data_->queue);
 		}
 		_g_object_unref0 (_data_->container);
 	}
-	goto __finally48;
-	__catch48_g_error:
+	goto __finally52;
+	__catch52_g_error:
 	{
 		_data_->err = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
-		_data_->_tmp50_ = _data_->err;
-		rygel_object_creator_handle_error (_data_->self, _data_->_tmp50_);
+		_data_->_tmp47_ = _data_->err;
+		rygel_object_creator_handle_error (_data_->self, _data_->_tmp47_);
 		_g_error_free0 (_data_->err);
 	}
-	__finally48:
+	__finally52:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);
@@ -1582,22 +1581,22 @@ static void rygel_object_creator_parse_didl (RygelObjectCreator* self, GError** 
 	const gchar* _tmp12_;
 	const gchar* _tmp13_;
 	gboolean _tmp17_;
-	GUPnPDIDLLiteObject* _tmp19_;
-	const gchar* _tmp20_;
-	const gchar* _tmp21_;
-	GUPnPDIDLLiteObject* _tmp23_;
-	GUPnPOCMFlags _tmp24_;
-	GUPnPOCMFlags _tmp25_;
-	gboolean _tmp27_ = FALSE;
-	gboolean _tmp28_ = FALSE;
-	GUPnPDIDLLiteObject* _tmp29_;
-	const gchar* _tmp30_;
-	const gchar* _tmp31_;
-	gboolean _tmp35_;
-	gboolean _tmp40_;
-	GUPnPDIDLLiteObject* _tmp42_;
-	gboolean _tmp43_;
-	gboolean _tmp44_;
+	GUPnPDIDLLiteObject* _tmp22_;
+	const gchar* _tmp23_;
+	const gchar* _tmp24_;
+	gboolean _tmp29_ = FALSE;
+	GUPnPDIDLLiteObject* _tmp30_;
+	gboolean _tmp34_;
+	gboolean _tmp39_ = FALSE;
+	gboolean _tmp40_ = FALSE;
+	GUPnPDIDLLiteObject* _tmp41_;
+	const gchar* _tmp42_;
+	const gchar* _tmp43_;
+	gboolean _tmp47_;
+	gboolean _tmp52_;
+	GUPnPDIDLLiteObject* _tmp55_;
+	gboolean _tmp56_;
+	gboolean _tmp57_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	_tmp0_ = self->priv->didl_parser;
@@ -1609,11 +1608,11 @@ static void rygel_object_creator_parse_didl (RygelObjectCreator* self, GError** 
 		_tmp2_ = self->priv->elements;
 		gupnp_didl_lite_parser_parse_didl (_tmp1_, _tmp2_, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch49_g_error;
+			goto __catch53_g_error;
 		}
 	}
-	goto __finally49;
-	__catch49_g_error:
+	goto __finally53;
+	__catch53_g_error:
 	{
 		GError* parse_err = NULL;
 		GError* _tmp3_;
@@ -1622,9 +1621,9 @@ static void rygel_object_creator_parse_didl (RygelObjectCreator* self, GError** 
 		_tmp3_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "Bad metadata");
 		_inner_error_ = _tmp3_;
 		_g_error_free0 (parse_err);
-		goto __finally49;
+		goto __finally53;
 	}
-	__finally49:
+	__finally53:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		return;
@@ -1637,7 +1636,7 @@ static void rygel_object_creator_parse_didl (RygelObjectCreator* self, GError** 
 		const gchar* _tmp7_;
 		const gchar* _tmp8_;
 		GError* _tmp9_;
-		_tmp5_ = _ ("No items in DIDL-Lite from client: '%s'");
+		_tmp5_ = _ ("No objects in DIDL-Lite from client: '%s'");
 		_tmp6_ = g_strdup (_tmp5_);
 		message = _tmp6_;
 		_tmp7_ = message;
@@ -1664,75 +1663,116 @@ static void rygel_object_creator_parse_didl (RygelObjectCreator* self, GError** 
 	}
 	_tmp17_ = _tmp10_;
 	if (_tmp17_) {
-		GError* _tmp18_;
-		_tmp18_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "@id must be set to \"\" in " "CreateItem");
-		_inner_error_ = _tmp18_;
+		const gchar* _tmp18_ = NULL;
+		gchar* _tmp19_;
+		gchar* msg;
+		const gchar* _tmp20_;
+		GError* _tmp21_;
+		_tmp18_ = _ ("@id must be set to \"\" in CreateObject call");
+		_tmp19_ = g_strdup (_tmp18_);
+		msg = _tmp19_;
+		_tmp20_ = msg;
+		_tmp21_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _tmp20_);
+		_inner_error_ = _tmp21_;
 		g_propagate_error (error, _inner_error_);
+		_g_free0 (msg);
 		return;
 	}
-	_tmp19_ = self->priv->didl_object;
-	_tmp20_ = gupnp_didl_lite_object_get_title (_tmp19_);
-	_tmp21_ = _tmp20_;
-	if (_tmp21_ == NULL) {
-		GError* _tmp22_;
-		_tmp22_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "dc:title must be set in " "CreateItem");
-		_inner_error_ = _tmp22_;
+	_tmp22_ = self->priv->didl_object;
+	_tmp23_ = gupnp_didl_lite_object_get_title (_tmp22_);
+	_tmp24_ = _tmp23_;
+	if (_tmp24_ == NULL) {
+		const gchar* _tmp25_ = NULL;
+		gchar* _tmp26_;
+		gchar* msg;
+		const gchar* _tmp27_;
+		GError* _tmp28_;
+		_tmp25_ = _ ("dc:title must not be empty in CreateObject call");
+		_tmp26_ = g_strdup (_tmp25_);
+		msg = _tmp26_;
+		_tmp27_ = msg;
+		_tmp28_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _tmp27_);
+		_inner_error_ = _tmp28_;
 		g_propagate_error (error, _inner_error_);
+		_g_free0 (msg);
 		return;
 	}
-	_tmp23_ = self->priv->didl_object;
-	_tmp24_ = gupnp_didl_lite_object_get_dlna_managed (_tmp23_);
-	_tmp25_ = _tmp24_;
-	if ((_tmp25_ & ((GUPNP_OCM_FLAGS_UPLOAD | GUPNP_OCM_FLAGS_CREATE_CONTAINER) | GUPNP_OCM_FLAGS_UPLOAD_DESTROYABLE)) != 0) {
-		GError* _tmp26_;
-		_tmp26_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "Flags that must not be set " "were found in 'dlnaManaged'");
-		_inner_error_ = _tmp26_;
-		g_propagate_error (error, _inner_error_);
-		return;
-	}
-	_tmp29_ = self->priv->didl_object;
-	_tmp30_ = gupnp_didl_lite_object_get_upnp_class (_tmp29_);
-	_tmp31_ = _tmp30_;
-	if (_tmp31_ == NULL) {
-		_tmp28_ = TRUE;
+	_tmp30_ = self->priv->didl_object;
+	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp30_, gupnp_didl_lite_item_get_type ())) {
+		GUPnPDIDLLiteObject* _tmp31_;
+		GUPnPOCMFlags _tmp32_;
+		GUPnPOCMFlags _tmp33_;
+		_tmp31_ = self->priv->didl_object;
+		_tmp32_ = gupnp_didl_lite_object_get_dlna_managed (_tmp31_);
+		_tmp33_ = _tmp32_;
+		_tmp29_ = (_tmp33_ & ((GUPNP_OCM_FLAGS_UPLOAD | GUPNP_OCM_FLAGS_CREATE_CONTAINER) | GUPNP_OCM_FLAGS_UPLOAD_DESTROYABLE)) != 0;
 	} else {
-		GUPnPDIDLLiteObject* _tmp32_;
-		const gchar* _tmp33_;
-		const gchar* _tmp34_;
-		_tmp32_ = self->priv->didl_object;
-		_tmp33_ = gupnp_didl_lite_object_get_upnp_class (_tmp32_);
-		_tmp34_ = _tmp33_;
-		_tmp28_ = g_strcmp0 (_tmp34_, "") == 0;
+		_tmp29_ = FALSE;
 	}
-	_tmp35_ = _tmp28_;
-	if (_tmp35_) {
-		_tmp27_ = TRUE;
-	} else {
-		GUPnPDIDLLiteObject* _tmp36_;
+	_tmp34_ = _tmp29_;
+	if (_tmp34_) {
+		const gchar* _tmp35_ = NULL;
+		gchar* _tmp36_;
+		gchar* msg;
 		const gchar* _tmp37_;
-		const gchar* _tmp38_;
-		gboolean _tmp39_ = FALSE;
-		_tmp36_ = self->priv->didl_object;
-		_tmp37_ = gupnp_didl_lite_object_get_upnp_class (_tmp36_);
-		_tmp38_ = _tmp37_;
-		_tmp39_ = g_str_has_prefix (_tmp38_, "object");
-		_tmp27_ = !_tmp39_;
+		GError* _tmp38_;
+		_tmp35_ = _ ("Flags that must not be set were found in 'dlnaManaged'");
+		_tmp36_ = g_strdup (_tmp35_);
+		msg = _tmp36_;
+		_tmp37_ = msg;
+		_tmp38_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _tmp37_);
+		_inner_error_ = _tmp38_;
+		g_propagate_error (error, _inner_error_);
+		_g_free0 (msg);
+		return;
 	}
-	_tmp40_ = _tmp27_;
-	if (_tmp40_) {
-		GError* _tmp41_;
-		_tmp41_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "Invalid upnp:class given ");
-		_inner_error_ = _tmp41_;
+	_tmp41_ = self->priv->didl_object;
+	_tmp42_ = gupnp_didl_lite_object_get_upnp_class (_tmp41_);
+	_tmp43_ = _tmp42_;
+	if (_tmp43_ == NULL) {
+		_tmp40_ = TRUE;
+	} else {
+		GUPnPDIDLLiteObject* _tmp44_;
+		const gchar* _tmp45_;
+		const gchar* _tmp46_;
+		_tmp44_ = self->priv->didl_object;
+		_tmp45_ = gupnp_didl_lite_object_get_upnp_class (_tmp44_);
+		_tmp46_ = _tmp45_;
+		_tmp40_ = g_strcmp0 (_tmp46_, "") == 0;
+	}
+	_tmp47_ = _tmp40_;
+	if (_tmp47_) {
+		_tmp39_ = TRUE;
+	} else {
+		GUPnPDIDLLiteObject* _tmp48_;
+		const gchar* _tmp49_;
+		const gchar* _tmp50_;
+		gboolean _tmp51_ = FALSE;
+		_tmp48_ = self->priv->didl_object;
+		_tmp49_ = gupnp_didl_lite_object_get_upnp_class (_tmp48_);
+		_tmp50_ = _tmp49_;
+		_tmp51_ = g_str_has_prefix (_tmp50_, "object");
+		_tmp39_ = !_tmp51_;
+	}
+	_tmp52_ = _tmp39_;
+	if (_tmp52_) {
+		const gchar* _tmp53_ = NULL;
+		GError* _tmp54_;
+		_tmp53_ = _ ("Invalid upnp:class given in CreateObject");
+		_tmp54_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _tmp53_);
+		_inner_error_ = _tmp54_;
 		g_propagate_error (error, _inner_error_);
 		return;
 	}
-	_tmp42_ = self->priv->didl_object;
-	_tmp43_ = gupnp_didl_lite_object_get_restricted (_tmp42_);
-	_tmp44_ = _tmp43_;
-	if (_tmp44_) {
-		GError* _tmp45_;
-		_tmp45_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, "Cannot create restricted item");
-		_inner_error_ = _tmp45_;
+	_tmp55_ = self->priv->didl_object;
+	_tmp56_ = gupnp_didl_lite_object_get_restricted (_tmp55_);
+	_tmp57_ = _tmp56_;
+	if (_tmp57_) {
+		const gchar* _tmp58_ = NULL;
+		GError* _tmp59_;
+		_tmp58_ = _ ("Cannot create restricted item");
+		_tmp59_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _tmp58_);
+		_inner_error_ = _tmp59_;
 		g_propagate_error (error, _inner_error_);
 		return;
 	}
@@ -1930,11 +1970,13 @@ static gboolean rygel_object_creator_find_any_container_co (RygelObjectCreatorFi
 	}
 	_data_->_tmp32_ = _data_->upnp_class;
 	if (g_strcmp0 (_data_->_tmp32_, "object") == 0) {
-		_data_->_tmp33_ = _data_->self->priv->didl_object;
-		_data_->_tmp34_ = gupnp_didl_lite_object_get_upnp_class (_data_->_tmp33_);
-		_data_->_tmp35_ = _data_->_tmp34_;
-		_data_->_tmp36_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "'%s' UPnP class unsupported", _data_->_tmp35_);
-		_data_->_inner_error_ = _data_->_tmp36_;
+		_data_->_tmp33_ = NULL;
+		_data_->_tmp33_ = _ ("UPnP class '%s' not supported");
+		_data_->_tmp34_ = _data_->self->priv->didl_object;
+		_data_->_tmp35_ = gupnp_didl_lite_object_get_upnp_class (_data_->_tmp34_);
+		_data_->_tmp36_ = _data_->_tmp35_;
+		_data_->_tmp37_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _data_->_tmp33_, _data_->_tmp36_);
+		_data_->_inner_error_ = _data_->_tmp37_;
 		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 		g_error_free (_data_->_inner_error_);
 		_rygel_search_expression_unref0 (_data_->expression);
@@ -2489,12 +2531,12 @@ static void rygel_object_creator_extract_item_parameters (RygelObjectCreator* se
 	gboolean _tmp4_ = FALSE;
 	GList* _tmp5_;
 	gboolean _tmp8_;
-	RygelMediaItem* _tmp54_;
-	const gchar* _tmp55_;
-	const gchar* _tmp56_;
-	RygelMediaItem* _tmp60_;
-	gint64 _tmp61_;
-	gint64 _tmp62_;
+	RygelMediaItem* _tmp57_;
+	const gchar* _tmp58_;
+	const gchar* _tmp59_;
+	RygelMediaItem* _tmp63_;
+	gint64 _tmp64_;
+	gint64 _tmp65_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	_tmp0_ = self->priv->object;
@@ -2527,14 +2569,14 @@ static void rygel_object_creator_extract_item_parameters (RygelObjectCreator* se
 		GUPnPProtocolInfo* info;
 		GUPnPProtocolInfo* _tmp17_;
 		gchar* sanitized_uri;
-		GUPnPDIDLLiteResource* _tmp40_;
-		const gchar* _tmp41_;
-		const gchar* _tmp42_;
-		gchar* _tmp43_ = NULL;
-		gboolean _tmp44_ = FALSE;
-		GUPnPDIDLLiteResource* _tmp47_;
-		glong _tmp48_;
-		glong _tmp49_;
+		GUPnPDIDLLiteResource* _tmp43_;
+		const gchar* _tmp44_;
+		const gchar* _tmp45_;
+		gchar* _tmp46_ = NULL;
+		gboolean _tmp47_ = FALSE;
+		GUPnPDIDLLiteResource* _tmp50_;
+		glong _tmp51_;
+		glong _tmp52_;
 		_tmp9_ = resources;
 		_tmp10_ = g_list_nth (_tmp9_, (guint) 0);
 		_tmp11_ = _tmp10_->data;
@@ -2550,9 +2592,9 @@ static void rygel_object_creator_extract_item_parameters (RygelObjectCreator* se
 			GUPnPProtocolInfo* _tmp18_;
 			const gchar* _tmp19_;
 			const gchar* _tmp20_;
-			GUPnPProtocolInfo* _tmp33_;
-			const gchar* _tmp34_;
-			const gchar* _tmp35_;
+			GUPnPProtocolInfo* _tmp36_;
+			const gchar* _tmp37_;
+			const gchar* _tmp38_;
 			_tmp18_ = info;
 			_tmp19_ = gupnp_protocol_info_get_dlna_profile (_tmp18_);
 			_tmp20_ = _tmp19_;
@@ -2561,104 +2603,113 @@ static void rygel_object_creator_extract_item_parameters (RygelObjectCreator* se
 				const gchar* _tmp22_;
 				const gchar* _tmp23_;
 				gboolean _tmp24_ = FALSE;
-				RygelMediaItem* _tmp29_;
-				GUPnPProtocolInfo* _tmp30_;
-				const gchar* _tmp31_;
-				const gchar* _tmp32_;
+				RygelMediaItem* _tmp32_;
+				GUPnPProtocolInfo* _tmp33_;
+				const gchar* _tmp34_;
+				const gchar* _tmp35_;
 				_tmp21_ = info;
 				_tmp22_ = gupnp_protocol_info_get_dlna_profile (_tmp21_);
 				_tmp23_ = _tmp22_;
 				_tmp24_ = rygel_object_creator_is_profile_valid (self, _tmp23_);
 				if (!_tmp24_) {
-					GUPnPProtocolInfo* _tmp25_;
-					const gchar* _tmp26_;
+					const gchar* _tmp25_ = NULL;
+					gchar* _tmp26_;
+					gchar* msg;
 					const gchar* _tmp27_;
-					GError* _tmp28_;
-					_tmp25_ = info;
-					_tmp26_ = gupnp_protocol_info_get_dlna_profile (_tmp25_);
-					_tmp27_ = _tmp26_;
-					_tmp28_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "'%s' DLNA profile unsupported", _tmp27_);
-					_inner_error_ = _tmp28_;
+					GUPnPProtocolInfo* _tmp28_;
+					const gchar* _tmp29_;
+					const gchar* _tmp30_;
+					GError* _tmp31_;
+					_tmp25_ = _ ("DLNA profile '%s' not supported");
+					_tmp26_ = g_strdup (_tmp25_);
+					msg = _tmp26_;
+					_tmp27_ = msg;
+					_tmp28_ = info;
+					_tmp29_ = gupnp_protocol_info_get_dlna_profile (_tmp28_);
+					_tmp30_ = _tmp29_;
+					_tmp31_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _tmp27_, _tmp30_);
+					_inner_error_ = _tmp31_;
 					g_propagate_error (error, _inner_error_);
+					_g_free0 (msg);
 					_g_object_unref0 (info);
 					_g_object_unref0 (resource);
 					__g_list_free__g_object_unref0_0 (resources);
 					_g_object_unref0 (item);
 					return;
 				}
-				_tmp29_ = item;
-				_tmp30_ = info;
-				_tmp31_ = gupnp_protocol_info_get_dlna_profile (_tmp30_);
-				_tmp32_ = _tmp31_;
-				rygel_media_item_set_dlna_profile (_tmp29_, _tmp32_);
+				_tmp32_ = item;
+				_tmp33_ = info;
+				_tmp34_ = gupnp_protocol_info_get_dlna_profile (_tmp33_);
+				_tmp35_ = _tmp34_;
+				rygel_media_item_set_dlna_profile (_tmp32_, _tmp35_);
 			}
-			_tmp33_ = info;
-			_tmp34_ = gupnp_protocol_info_get_mime_type (_tmp33_);
-			_tmp35_ = _tmp34_;
-			if (_tmp35_ != NULL) {
-				RygelMediaItem* _tmp36_;
-				GUPnPProtocolInfo* _tmp37_;
-				const gchar* _tmp38_;
-				const gchar* _tmp39_;
-				_tmp36_ = item;
-				_tmp37_ = info;
-				_tmp38_ = gupnp_protocol_info_get_mime_type (_tmp37_);
-				_tmp39_ = _tmp38_;
-				rygel_media_item_set_mime_type (_tmp36_, _tmp39_);
+			_tmp36_ = info;
+			_tmp37_ = gupnp_protocol_info_get_mime_type (_tmp36_);
+			_tmp38_ = _tmp37_;
+			if (_tmp38_ != NULL) {
+				RygelMediaItem* _tmp39_;
+				GUPnPProtocolInfo* _tmp40_;
+				const gchar* _tmp41_;
+				const gchar* _tmp42_;
+				_tmp39_ = item;
+				_tmp40_ = info;
+				_tmp41_ = gupnp_protocol_info_get_mime_type (_tmp40_);
+				_tmp42_ = _tmp41_;
+				rygel_media_item_set_mime_type (_tmp39_, _tmp42_);
 			}
 		}
 		sanitized_uri = NULL;
-		_tmp40_ = resource;
-		_tmp41_ = gupnp_didl_lite_resource_get_uri (_tmp40_);
-		_tmp42_ = _tmp41_;
-		_tmp44_ = rygel_object_creator_is_valid_uri (self, _tmp42_, &_tmp43_);
+		_tmp43_ = resource;
+		_tmp44_ = gupnp_didl_lite_resource_get_uri (_tmp43_);
+		_tmp45_ = _tmp44_;
+		_tmp47_ = rygel_object_creator_is_valid_uri (self, _tmp45_, &_tmp46_);
 		_g_free0 (sanitized_uri);
-		sanitized_uri = _tmp43_;
-		if (_tmp44_) {
-			RygelMediaItem* _tmp45_;
-			const gchar* _tmp46_;
-			_tmp45_ = item;
-			_tmp46_ = sanitized_uri;
-			rygel_media_item_add_uri (_tmp45_, _tmp46_);
+		sanitized_uri = _tmp46_;
+		if (_tmp47_) {
+			RygelMediaItem* _tmp48_;
+			const gchar* _tmp49_;
+			_tmp48_ = item;
+			_tmp49_ = sanitized_uri;
+			rygel_media_item_add_uri (_tmp48_, _tmp49_);
 		}
-		_tmp47_ = resource;
-		_tmp48_ = gupnp_didl_lite_resource_get_size (_tmp47_);
-		_tmp49_ = _tmp48_;
-		if (_tmp49_ >= ((glong) 0)) {
-			RygelMediaItem* _tmp50_;
-			GUPnPDIDLLiteResource* _tmp51_;
-			glong _tmp52_;
-			glong _tmp53_;
-			_tmp50_ = item;
-			_tmp51_ = resource;
-			_tmp52_ = gupnp_didl_lite_resource_get_size (_tmp51_);
-			_tmp53_ = _tmp52_;
-			rygel_media_item_set_size (_tmp50_, (gint64) _tmp53_);
+		_tmp50_ = resource;
+		_tmp51_ = gupnp_didl_lite_resource_get_size (_tmp50_);
+		_tmp52_ = _tmp51_;
+		if (_tmp52_ >= ((glong) 0)) {
+			RygelMediaItem* _tmp53_;
+			GUPnPDIDLLiteResource* _tmp54_;
+			glong _tmp55_;
+			glong _tmp56_;
+			_tmp53_ = item;
+			_tmp54_ = resource;
+			_tmp55_ = gupnp_didl_lite_resource_get_size (_tmp54_);
+			_tmp56_ = _tmp55_;
+			rygel_media_item_set_size (_tmp53_, (gint64) _tmp56_);
 		}
 		_g_free0 (sanitized_uri);
 		_g_object_unref0 (info);
 		_g_object_unref0 (resource);
 	}
-	_tmp54_ = item;
-	_tmp55_ = rygel_media_item_get_mime_type (_tmp54_);
-	_tmp56_ = _tmp55_;
-	if (_tmp56_ == NULL) {
-		RygelMediaItem* _tmp57_;
-		gchar* _tmp58_ = NULL;
-		gchar* _tmp59_;
-		_tmp57_ = item;
-		_tmp58_ = rygel_object_creator_get_generic_mime_type (self);
-		_tmp59_ = _tmp58_;
-		rygel_media_item_set_mime_type (_tmp57_, _tmp59_);
-		_g_free0 (_tmp59_);
+	_tmp57_ = item;
+	_tmp58_ = rygel_media_item_get_mime_type (_tmp57_);
+	_tmp59_ = _tmp58_;
+	if (_tmp59_ == NULL) {
+		RygelMediaItem* _tmp60_;
+		gchar* _tmp61_ = NULL;
+		gchar* _tmp62_;
+		_tmp60_ = item;
+		_tmp61_ = rygel_object_creator_get_generic_mime_type (self);
+		_tmp62_ = _tmp61_;
+		rygel_media_item_set_mime_type (_tmp60_, _tmp62_);
+		_g_free0 (_tmp62_);
 	}
-	_tmp60_ = item;
-	_tmp61_ = rygel_media_item_get_size (_tmp60_);
-	_tmp62_ = _tmp61_;
-	if (_tmp62_ < ((gint64) 0)) {
-		RygelMediaItem* _tmp63_;
-		_tmp63_ = item;
-		rygel_media_item_set_size (_tmp63_, (gint64) 0);
+	_tmp63_ = item;
+	_tmp64_ = rygel_media_item_get_size (_tmp63_);
+	_tmp65_ = _tmp64_;
+	if (_tmp65_ < ((gint64) 0)) {
+		RygelMediaItem* _tmp66_;
+		_tmp66_ = item;
+		rygel_media_item_set_size (_tmp66_, (gint64) 0);
 	}
 	__g_list_free__g_object_unref0_0 (resources);
 	_g_object_unref0 (item);
@@ -2692,16 +2743,16 @@ static void rygel_object_creator_parse_and_verify_didl_date (RygelObjectCreator*
 	const gchar* _tmp17_;
 	gint _tmp18_ = 0;
 	GDate date = {0};
-	gint _tmp23_;
 	gint _tmp24_;
 	gint _tmp25_;
-	gboolean _tmp26_ = FALSE;
-	RygelMediaObject* _tmp31_;
-	GUPnPDIDLLiteItem* _tmp32_;
-	const gchar* _tmp33_;
-	const gchar* _tmp34_;
-	gchar* _tmp35_;
-	gchar* _tmp36_;
+	gint _tmp26_;
+	gboolean _tmp27_ = FALSE;
+	RygelMediaObject* _tmp33_;
+	GUPnPDIDLLiteItem* _tmp34_;
+	const gchar* _tmp35_;
+	const gchar* _tmp36_;
+	gchar* _tmp37_;
+	gchar* _tmp38_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	_tmp0_ = self->priv->didl_object;
@@ -2747,49 +2798,53 @@ static void rygel_object_creator_parse_and_verify_didl_date (RygelObjectCreator*
 	_tmp17_ = _tmp16_;
 	_tmp18_ = sscanf (_tmp17_, "%4d-%02d-%02d", &year, &month, &day);
 	if (_tmp18_ != 3) {
-		GUPnPDIDLLiteItem* _tmp19_;
-		const gchar* _tmp20_;
+		const gchar* _tmp19_ = NULL;
+		GUPnPDIDLLiteItem* _tmp20_;
 		const gchar* _tmp21_;
-		GError* _tmp22_;
-		_tmp19_ = didl_item;
-		_tmp20_ = gupnp_didl_lite_object_get_date ((GUPnPDIDLLiteObject*) _tmp19_);
-		_tmp21_ = _tmp20_;
-		_tmp22_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "Invalid date format: %s", _tmp21_);
-		_inner_error_ = _tmp22_;
+		const gchar* _tmp22_;
+		GError* _tmp23_;
+		_tmp19_ = _ ("Invalid date format: %s");
+		_tmp20_ = didl_item;
+		_tmp21_ = gupnp_didl_lite_object_get_date ((GUPnPDIDLLiteObject*) _tmp20_);
+		_tmp22_ = _tmp21_;
+		_tmp23_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _tmp19_, _tmp22_);
+		_inner_error_ = _tmp23_;
 		g_propagate_error (error, _inner_error_);
 		__vala_SoupDate_free0 (parsed_date);
 		_g_object_unref0 (didl_item);
 		return;
 	}
 	memset (&date, 0, sizeof (GDate));
-	_tmp23_ = day;
-	_tmp24_ = month;
-	_tmp25_ = year;
-	g_date_set_dmy (&date, (GDateDay) _tmp23_, (gint) ((GDateMonth) _tmp24_), (GDateYear) _tmp25_);
-	_tmp26_ = g_date_valid (&date);
-	if (!_tmp26_) {
-		GUPnPDIDLLiteItem* _tmp27_;
-		const gchar* _tmp28_;
-		const gchar* _tmp29_;
-		GError* _tmp30_;
-		_tmp27_ = didl_item;
-		_tmp28_ = gupnp_didl_lite_object_get_date ((GUPnPDIDLLiteObject*) _tmp27_);
-		_tmp29_ = _tmp28_;
-		_tmp30_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "Invalid date: %s", _tmp29_);
-		_inner_error_ = _tmp30_;
+	_tmp24_ = day;
+	_tmp25_ = month;
+	_tmp26_ = year;
+	g_date_set_dmy (&date, (GDateDay) _tmp24_, (gint) ((GDateMonth) _tmp25_), (GDateYear) _tmp26_);
+	_tmp27_ = g_date_valid (&date);
+	if (!_tmp27_) {
+		const gchar* _tmp28_ = NULL;
+		GUPnPDIDLLiteItem* _tmp29_;
+		const gchar* _tmp30_;
+		const gchar* _tmp31_;
+		GError* _tmp32_;
+		_tmp28_ = _ ("Invalid date: %s");
+		_tmp29_ = didl_item;
+		_tmp30_ = gupnp_didl_lite_object_get_date ((GUPnPDIDLLiteObject*) _tmp29_);
+		_tmp31_ = _tmp30_;
+		_tmp32_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _tmp28_, _tmp31_);
+		_inner_error_ = _tmp32_;
 		g_propagate_error (error, _inner_error_);
 		__vala_SoupDate_free0 (parsed_date);
 		_g_object_unref0 (didl_item);
 		return;
 	}
-	_tmp31_ = self->priv->object;
-	_tmp32_ = didl_item;
-	_tmp33_ = gupnp_didl_lite_object_get_date ((GUPnPDIDLLiteObject*) _tmp32_);
-	_tmp34_ = _tmp33_;
-	_tmp35_ = g_strconcat (_tmp34_, "T00:00:00", NULL);
+	_tmp33_ = self->priv->object;
+	_tmp34_ = didl_item;
+	_tmp35_ = gupnp_didl_lite_object_get_date ((GUPnPDIDLLiteObject*) _tmp34_);
 	_tmp36_ = _tmp35_;
-	rygel_media_item_set_date (G_TYPE_CHECK_INSTANCE_TYPE (_tmp31_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp31_) : NULL, _tmp36_);
-	_g_free0 (_tmp36_);
+	_tmp37_ = g_strconcat (_tmp36_, "T00:00:00", NULL);
+	_tmp38_ = _tmp37_;
+	rygel_media_item_set_date (G_TYPE_CHECK_INSTANCE_TYPE (_tmp33_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp33_) : NULL, _tmp38_);
+	_g_free0 (_tmp38_);
 	__vala_SoupDate_free0 (parsed_date);
 	_g_object_unref0 (didl_item);
 }
@@ -2948,12 +3003,21 @@ static RygelMediaObject* rygel_object_creator_create_object (RygelObjectCreator*
 		switch (0) {
 			default:
 			{
-				const gchar* _tmp38_;
-				GError* _tmp39_;
-				_tmp38_ = upnp_class;
-				_tmp39_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "Creation of item of class '%s' " "not supported.", _tmp38_);
-				_inner_error_ = _tmp39_;
+				const gchar* _tmp38_ = NULL;
+				gchar* _tmp39_;
+				gchar* msg;
+				const gchar* _tmp40_;
+				const gchar* _tmp41_;
+				GError* _tmp42_;
+				_tmp38_ = _ ("Cannot create object of class '%s': Not supported");
+				_tmp39_ = g_strdup (_tmp38_);
+				msg = _tmp39_;
+				_tmp40_ = msg;
+				_tmp41_ = upnp_class;
+				_tmp42_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, _tmp40_, _tmp41_);
+				_inner_error_ = _tmp42_;
 				g_propagate_error (error, _inner_error_);
+				_g_free0 (msg);
 				return NULL;
 			}
 		}
@@ -3566,7 +3630,7 @@ static gboolean ____lambda8_ (Block9Data* _data9_) {
 	_tmp0_ = _data8_->container;
 	_tmp1_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp0_);
 	_tmp2_ = _tmp1_;
-	g_debug ("rygel-object-creator.vala:672: Timeout on waiting for 'updated' signal" \
+	g_debug ("rygel-object-creator.vala:663: Timeout on waiting for 'updated' signal" \
 " on '%s'.", _tmp2_);
 	_data9_->timeout = (guint) 0;
 	rygel_object_creator_wait_for_object_co (_data8_->_async_data_);
@@ -3604,8 +3668,8 @@ static gboolean rygel_object_creator_wait_for_object_co (RygelObjectCreatorWaitF
 	_data_->_tmp1_ = _data_->_data8_->container;
 	_data_->_tmp2_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->_tmp1_);
 	_data_->_tmp3_ = _data_->_tmp2_;
-	g_debug ("rygel-object-creator.vala:649: Waiting for new object to appear under " \
-"container '%s'..", _data_->_tmp3_);
+	g_debug ("rygel-object-creator.vala:642: Waiting for new object to appear under " \
+"container '%s'…", _data_->_tmp3_);
 	_data_->object = NULL;
 	while (TRUE) {
 		_data_->_tmp4_ = _data_->object;
@@ -3627,26 +3691,35 @@ static gboolean rygel_object_creator_wait_for_object_co (RygelObjectCreatorWaitF
 			_data_->_tmp11_ = rygel_media_container_find_object_finish ((RygelMediaContainer*) _data_->_tmp5_, _data_->_res_, &_data_->_inner_error_);
 			_data_->_tmp12_ = _data_->_tmp11_;
 			if (_data_->_inner_error_ != NULL) {
-				goto __catch50_g_error;
+				goto __catch54_g_error;
 			}
 			_g_object_unref0 (_data_->object);
 			_data_->object = _data_->_tmp12_;
 		}
-		goto __finally50;
-		__catch50_g_error:
+		goto __finally54;
+		__catch54_g_error:
 		{
 			_data_->_error_ = _data_->_inner_error_;
 			_data_->_inner_error_ = NULL;
-			_data_->_tmp13_ = _data_->_data8_->container;
-			_data_->_tmp14_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->_tmp13_);
-			_data_->_tmp15_ = _data_->_tmp14_;
-			_data_->_tmp16_ = _data_->self->priv->object;
-			_data_->_tmp17_ = rygel_media_object_get_id (_data_->_tmp16_);
+			_data_->_tmp13_ = NULL;
+			_data_->_tmp13_ = _ ("Error from container '%s' on trying to find the newly added child obje" \
+"ct '%s' in it: %s");
+			_data_->_tmp14_ = g_strdup (_data_->_tmp13_);
+			_data_->msg = _data_->_tmp14_;
+			_data_->_tmp15_ = _data_->msg;
+			_data_->_tmp16_ = _data_->_data8_->container;
+			_data_->_tmp17_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->_tmp16_);
 			_data_->_tmp18_ = _data_->_tmp17_;
-			g_warning ("Error from container '%s' on trying to find newly " "added child object '%s' in it", _data_->_tmp15_, _data_->_tmp18_);
+			_data_->_tmp19_ = _data_->self->priv->object;
+			_data_->_tmp20_ = rygel_media_object_get_id (_data_->_tmp19_);
+			_data_->_tmp21_ = _data_->_tmp20_;
+			_data_->_tmp22_ = _data_->_error_;
+			_data_->_tmp23_ = _data_->_tmp22_->message;
+			g_warning (_data_->_tmp15_, _data_->_tmp18_, _data_->_tmp21_, _data_->_tmp23_);
+			_g_free0 (_data_->msg);
 			_g_error_free0 (_data_->_error_);
 		}
-		__finally50:
+		__finally54:
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->object);
 			block8_data_unref (_data_->_data8_);
@@ -3655,30 +3728,30 @@ static gboolean rygel_object_creator_wait_for_object_co (RygelObjectCreatorWaitF
 			g_clear_error (&_data_->_inner_error_);
 			return FALSE;
 		}
-		_data_->_tmp19_ = _data_->object;
-		if (_data_->_tmp19_ == NULL) {
+		_data_->_tmp24_ = _data_->object;
+		if (_data_->_tmp24_ == NULL) {
 			_data_->_data9_ = g_slice_new0 (Block9Data);
 			_data_->_data9_->_ref_count_ = 1;
 			_data_->_data9_->_data8_ = block8_data_ref (_data_->_data8_);
-			_data_->_tmp20_ = _data_->_data8_->container;
-			_data_->_tmp21_ = 0UL;
-			_data_->_tmp21_ = g_signal_connect_data ((RygelMediaContainer*) _data_->_tmp20_, "container-updated", (GCallback) _____lambda7__rygel_media_container_container_updated, block9_data_ref (_data_->_data9_), (GClosureNotify) block9_data_unref, 0);
-			_data_->id = _data_->_tmp21_;
+			_data_->_tmp25_ = _data_->_data8_->container;
+			_data_->_tmp26_ = 0UL;
+			_data_->_tmp26_ = g_signal_connect_data ((RygelMediaContainer*) _data_->_tmp25_, "container-updated", (GCallback) _____lambda7__rygel_media_container_container_updated, block9_data_ref (_data_->_data9_), (GClosureNotify) block9_data_unref, 0);
+			_data_->id = _data_->_tmp26_;
 			_data_->_data9_->timeout = (guint) 0;
-			_data_->_tmp22_ = 0U;
-			_data_->_tmp22_ = g_timeout_add_seconds_full (G_PRIORITY_DEFAULT, (guint) 5, _____lambda8__gsource_func, block9_data_ref (_data_->_data9_), block9_data_unref);
-			_data_->_data9_->timeout = _data_->_tmp22_;
+			_data_->_tmp27_ = 0U;
+			_data_->_tmp27_ = g_timeout_add_seconds_full (G_PRIORITY_DEFAULT, (guint) 5, _____lambda8__gsource_func, block9_data_ref (_data_->_data9_), block9_data_unref);
+			_data_->_data9_->timeout = _data_->_tmp27_;
 			_data_->_state_ = 2;
 			return FALSE;
 			_state_2:
 			;
-			_data_->_tmp23_ = _data_->_data8_->container;
-			_data_->_tmp24_ = _data_->id;
-			g_signal_handler_disconnect ((GObject*) _data_->_tmp23_, _data_->_tmp24_);
-			_data_->_tmp25_ = _data_->_data9_->timeout;
-			if (_data_->_tmp25_ != ((guint) 0)) {
-				_data_->_tmp26_ = _data_->_data9_->timeout;
-				g_source_remove (_data_->_tmp26_);
+			_data_->_tmp28_ = _data_->_data8_->container;
+			_data_->_tmp29_ = _data_->id;
+			g_signal_handler_disconnect ((GObject*) _data_->_tmp28_, _data_->_tmp29_);
+			_data_->_tmp30_ = _data_->_data9_->timeout;
+			if (_data_->_tmp30_ != ((guint) 0)) {
+				_data_->_tmp31_ = _data_->_data9_->timeout;
+				g_source_remove (_data_->_tmp31_);
 			} else {
 				block9_data_unref (_data_->_data9_);
 				_data_->_data9_ = NULL;
@@ -3688,11 +3761,11 @@ static gboolean rygel_object_creator_wait_for_object_co (RygelObjectCreatorWaitF
 			_data_->_data9_ = NULL;
 		}
 	}
-	_data_->_tmp27_ = _data_->_data8_->container;
-	_data_->_tmp28_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->_tmp27_);
-	_data_->_tmp29_ = _data_->_tmp28_;
-	g_debug ("rygel-object-creator.vala:691: Finished waiting for new object to appe" \
-"ar under container '%s'", _data_->_tmp29_);
+	_data_->_tmp32_ = _data_->_data8_->container;
+	_data_->_tmp33_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->_tmp32_);
+	_data_->_tmp34_ = _data_->_tmp33_;
+	g_debug ("rygel-object-creator.vala:682: Finished waiting for new object to appe" \
+"ar under container '%s'", _data_->_tmp34_);
 	_g_object_unref0 (_data_->object);
 	block8_data_unref (_data_->_data8_);
 	_data_->_data8_ = NULL;

@@ -453,7 +453,7 @@ static void rygel_http_get_handler_real_add_response_headers (RygelHTTPGetHandle
 		_tmp13_ = rygel_http_get_handler_add_resource (self, (GUPnPDIDLLiteObject*) didl_item, _tmp12_, &_inner_error_);
 		resource = _tmp13_;
 		if (_inner_error_ != NULL) {
-			goto __catch24_g_error;
+			goto __catch27_g_error;
 		}
 		if (resource != NULL) {
 			GUPnPProtocolInfo* _tmp14_;
@@ -500,8 +500,8 @@ static void rygel_http_get_handler_real_add_response_headers (RygelHTTPGetHandle
 		}
 		_g_object_unref0 (resource);
 	}
-	goto __finally24;
-	__catch24_g_error:
+	goto __finally27;
+	__catch27_g_error:
 	{
 		GError* err = NULL;
 		err = _inner_error_;
@@ -509,7 +509,7 @@ static void rygel_http_get_handler_real_add_response_headers (RygelHTTPGetHandle
 		g_warning ("rygel-http-get-handler.vala:61: %s", "Received request for 'contentFeatures.dlna.org' but " "failed to provide the value in response headers");
 		_g_error_free0 (err);
 	}
-	__finally24:
+	__finally27:
 	if (_inner_error_ != NULL) {
 		if (_inner_error_->domain == RYGEL_HTTP_REQUEST_ERROR) {
 			g_propagate_error (error, _inner_error_);

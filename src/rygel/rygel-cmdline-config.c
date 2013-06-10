@@ -68,8 +68,8 @@ struct _RygelCmdlineConfigClass {
 
 
 static gpointer rygel_cmdline_config_parent_class = NULL;
-static gchar* rygel_cmdline_config_iface;
-static gchar* rygel_cmdline_config_iface = NULL;
+static gchar** rygel_cmdline_config_ifaces;
+static gchar** rygel_cmdline_config_ifaces = NULL;
 static gint rygel_cmdline_config_port;
 static gint rygel_cmdline_config_port = 0;
 static gboolean rygel_cmdline_config_no_upnp;
@@ -111,6 +111,8 @@ RygelCmdlineConfig* rygel_cmdline_config_construct (GType object_type);
 void rygel_cmdline_config_parse_args (gchar*** args, int* args_length1, GError** error);
 static gboolean rygel_cmdline_config_real_get_upnp_enabled (RygelConfiguration* base, GError** error);
 static gchar* rygel_cmdline_config_real_get_interface (RygelConfiguration* base, GError** error);
+static gchar** rygel_cmdline_config_real_get_interfaces (RygelConfiguration* base, GError** error);
+static gchar** _vala_array_dup2 (gchar** self, int length);
 static gint rygel_cmdline_config_real_get_port (RygelConfiguration* base, GError** error);
 static gboolean rygel_cmdline_config_real_get_transcoding (RygelConfiguration* base, GError** error);
 static gboolean rygel_cmdline_config_real_get_allow_upload (RygelConfiguration* base, GError** error);
@@ -135,7 +137,7 @@ static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNoti
 static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func);
 static gint _vala_array_length (gpointer array);
 
-static const GOptionEntry RYGEL_CMDLINE_CONFIG_OPTIONS[15] = {{"version", (gchar) 0, 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_version, "Display version number", NULL}, {"network-interface", 'n', 0, G_OPTION_ARG_STRING, &rygel_cmdline_config_iface, "Network Interface", "INTERFACE"}, {"port", 'p', 0, G_OPTION_ARG_INT, &rygel_cmdline_config_port, "Port", "PORT"}, {"disable-transcoding", 't', 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_no_transcoding, "Disable transcoding", NULL}, {"disallow-upload", 'U', 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_disallow_upload, "Disallow upload", NULL}, {"disallow-deletion", 'D', 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_disallow_deletion, "Disallow deletion", NULL}, {"log-level", 'g', 0, G_OPTION_ARG_STRING, &rygel_cmdline_config_log_levels, "Comma-separated list of domain:level pairs to specify log level " "thresholds for individual domains. domain could be either " "'rygel', name of a plugin or '*' for all domains. " " Allowed levels are: " "0=critical,2=error,3=warning,4=message/info,5=debug.", "DOMAIN1:LEVEL1[,DOMAIN2:LEVEL2,..]"}, {"plugin-path", 'u', 0, G_OPTION_ARG_STRING, &rygel_cmdline_config_plugin_path, "Plugin Path", "PLUGIN_PATH"}, {"engine-path", 'e', 0, G_OPTION_ARG_STRING, &rygel_cmdline_config_engine_path, "Engine Path", "ENGINE_PATH"}, {"disable-plugin", 'd', 0, G_OPTION_ARG_STRING_ARRAY, &rygel_cmdline_config_disabled_plugins, "Disable plugin", "PluginName"}, {"title", 'i', 0, G_OPTION_ARG_STRING_ARRAY, &rygel_cmdline_config_plugin_titles, "Set plugin titles", "PluginName:TITLE"}, {"plugin-option", 'o', 0, G_OPTION_ARG_STRING_ARRAY, &rygel_cmdline_config_plugin_options, "Set plugin options", "PluginName:OPTION:VALUE1[,VALUE2,..]"}, {"disable-upnp", 'P', 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_no_upnp, "Disable UPnP (streaming-only)", NULL}, {"config", 'c', 0, G_OPTION_ARG_FILENAME, &rygel_cmdline_config_config_file, "Use configuration file instead of user configuration", NULL}, {NULL}};
+static const GOptionEntry RYGEL_CMDLINE_CONFIG_OPTIONS[15] = {{"version", (gchar) 0, 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_version, "Display version number", NULL}, {"network-interface", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &rygel_cmdline_config_ifaces, "Network Interfaces", "INTERFACE"}, {"port", 'p', 0, G_OPTION_ARG_INT, &rygel_cmdline_config_port, "Port", "PORT"}, {"disable-transcoding", 't', 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_no_transcoding, "Disable transcoding", NULL}, {"disallow-upload", 'U', 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_disallow_upload, "Disallow upload", NULL}, {"disallow-deletion", 'D', 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_disallow_deletion, "Disallow deletion", NULL}, {"log-level", 'g', 0, G_OPTION_ARG_STRING, &rygel_cmdline_config_log_levels, "Comma-separated list of domain:level pairs. See rygel(1) for details"}, {"plugin-path", 'u', 0, G_OPTION_ARG_STRING, &rygel_cmdline_config_plugin_path, "Plugin Path", "PLUGIN_PATH"}, {"engine-path", 'e', 0, G_OPTION_ARG_STRING, &rygel_cmdline_config_engine_path, "Engine Path", "ENGINE_PATH"}, {"disable-plugin", 'd', 0, G_OPTION_ARG_STRING_ARRAY, &rygel_cmdline_config_disabled_plugins, "Disable plugin", "PluginName"}, {"title", 'i', 0, G_OPTION_ARG_STRING_ARRAY, &rygel_cmdline_config_plugin_titles, "Set plugin titles", "PluginName:TITLE"}, {"plugin-option", 'o', 0, G_OPTION_ARG_STRING_ARRAY, &rygel_cmdline_config_plugin_options, "Set plugin options", "PluginName:OPTION:VALUE1[,VALUE2,..]"}, {"disable-upnp", 'P', 0, G_OPTION_ARG_NONE, &rygel_cmdline_config_no_upnp, "Disable UPnP (streaming-only)", NULL}, {"config", 'c', 0, G_OPTION_ARG_FILENAME, &rygel_cmdline_config_config_file, "Use configuration file instead of user configuration", "FILE"}, {NULL}};
 
 GQuark rygel_cmdline_config_error_quark (void) {
 	return g_quark_from_static_string ("rygel_cmdline_config_error-quark");
@@ -194,13 +196,13 @@ void rygel_cmdline_config_parse_args (gchar*** args, int* args_length1, GError**
 		g_option_context_parse (_tmp6_, args_length1, args, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (g_error_matches (_inner_error_, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE)) {
-				goto __catch11_g_option_error_bad_value;
+				goto __catch12_g_option_error_bad_value;
 			}
-			goto __finally11;
+			goto __finally12;
 		}
 	}
-	goto __finally11;
-	__catch11_g_option_error_bad_value:
+	goto __finally12;
+	__catch12_g_option_error_bad_value:
 	{
 		GError* err = NULL;
 		FILE* _tmp7_;
@@ -219,9 +221,9 @@ void rygel_cmdline_config_parse_args (gchar*** args, int* args_length1, GError**
 		_tmp11_ = g_error_new_literal (RYGEL_CMDLINE_CONFIG_ERROR, RYGEL_CMDLINE_CONFIG_ERROR_VERSION_ONLY, "");
 		_inner_error_ = _tmp11_;
 		_g_error_free0 (err);
-		goto __finally11;
+		goto __finally12;
 	}
-	__finally11:
+	__finally12:
 	if (_inner_error_ != NULL) {
 		if ((_inner_error_->domain == RYGEL_CMDLINE_CONFIG_ERROR) || (_inner_error_->domain == G_OPTION_ERROR)) {
 			g_propagate_error (error, _inner_error_);
@@ -287,12 +289,16 @@ static gboolean rygel_cmdline_config_real_get_upnp_enabled (RygelConfiguration* 
 static gchar* rygel_cmdline_config_real_get_interface (RygelConfiguration* base, GError** error) {
 	RygelCmdlineConfig * self;
 	gchar* result = NULL;
-	const gchar* _tmp0_;
-	const gchar* _tmp3_;
-	gchar* _tmp4_;
+	gchar** _tmp0_;
+	gint _tmp0__length1;
+	gchar** _tmp3_;
+	gint _tmp3__length1;
+	const gchar* _tmp4_;
+	gchar* _tmp5_;
 	GError * _inner_error_ = NULL;
 	self = (RygelCmdlineConfig*) base;
-	_tmp0_ = rygel_cmdline_config_iface;
+	_tmp0_ = rygel_cmdline_config_ifaces;
+	_tmp0__length1 = _vala_array_length (rygel_cmdline_config_ifaces);
 	if (_tmp0_ == NULL) {
 		const gchar* _tmp1_ = NULL;
 		GError* _tmp2_;
@@ -302,8 +308,54 @@ static gchar* rygel_cmdline_config_real_get_interface (RygelConfiguration* base,
 		g_propagate_error (error, _inner_error_);
 		return NULL;
 	}
-	_tmp3_ = rygel_cmdline_config_iface;
-	_tmp4_ = g_strdup (_tmp3_);
+	_tmp3_ = rygel_cmdline_config_ifaces;
+	_tmp3__length1 = _vala_array_length (rygel_cmdline_config_ifaces);
+	_tmp4_ = _tmp3_[0];
+	_tmp5_ = g_strdup (_tmp4_);
+	result = _tmp5_;
+	return result;
+}
+
+
+static gchar** _vala_array_dup2 (gchar** self, int length) {
+	gchar** result;
+	int i;
+	result = g_new0 (gchar*, length + 1);
+	for (i = 0; i < length; i++) {
+		gchar* _tmp0_;
+		_tmp0_ = g_strdup (self[i]);
+		result[i] = _tmp0_;
+	}
+	return result;
+}
+
+
+static gchar** rygel_cmdline_config_real_get_interfaces (RygelConfiguration* base, GError** error) {
+	RygelCmdlineConfig * self;
+	gchar** result = NULL;
+	gchar** _tmp0_;
+	gint _tmp0__length1;
+	gchar** _tmp3_;
+	gint _tmp3__length1;
+	gchar** _tmp4_;
+	gint _tmp4__length1;
+	GError * _inner_error_ = NULL;
+	self = (RygelCmdlineConfig*) base;
+	_tmp0_ = rygel_cmdline_config_ifaces;
+	_tmp0__length1 = _vala_array_length (rygel_cmdline_config_ifaces);
+	if (_tmp0_ == NULL) {
+		const gchar* _tmp1_ = NULL;
+		GError* _tmp2_;
+		_tmp1_ = _ ("No value available");
+		_tmp2_ = g_error_new_literal (RYGEL_CONFIGURATION_ERROR, RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET, _tmp1_);
+		_inner_error_ = _tmp2_;
+		g_propagate_error (error, _inner_error_);
+		return NULL;
+	}
+	_tmp3_ = rygel_cmdline_config_ifaces;
+	_tmp3__length1 = _vala_array_length (rygel_cmdline_config_ifaces);
+	_tmp4_ = (_tmp3_ != NULL) ? _vala_array_dup2 (_tmp3_, _tmp3__length1) : ((gpointer) _tmp3_);
+	_tmp4__length1 = _tmp3__length1;
 	result = _tmp4_;
 	return result;
 }
@@ -1540,6 +1592,7 @@ static void rygel_cmdline_config_rygel_configuration_interface_init (RygelConfig
 	rygel_cmdline_config_rygel_configuration_parent_iface = g_type_interface_peek_parent (iface);
 	iface->get_upnp_enabled = (gboolean (*)(RygelConfiguration*, GError**)) rygel_cmdline_config_real_get_upnp_enabled;
 	iface->get_interface = (gchar* (*)(RygelConfiguration*, GError**)) rygel_cmdline_config_real_get_interface;
+	iface->get_interfaces = (gchar** (*)(RygelConfiguration*, GError**)) rygel_cmdline_config_real_get_interfaces;
 	iface->get_port = (gint (*)(RygelConfiguration*, GError**)) rygel_cmdline_config_real_get_port;
 	iface->get_transcoding = (gboolean (*)(RygelConfiguration*, GError**)) rygel_cmdline_config_real_get_transcoding;
 	iface->get_allow_upload = (gboolean (*)(RygelConfiguration*, GError**)) rygel_cmdline_config_real_get_allow_upload;

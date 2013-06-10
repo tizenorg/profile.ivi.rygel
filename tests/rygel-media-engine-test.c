@@ -102,7 +102,6 @@ typedef struct _Block2Data Block2Data;
 typedef struct _Block3Data Block3Data;
 typedef struct _Block4Data Block4Data;
 typedef struct _Block5Data Block5Data;
-typedef struct _Block6Data Block6Data;
 #define _vala_assert(expr, msg) if G_LIKELY (expr) ; else g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, msg);
 
 struct _RygelDataSourceTestConfig {
@@ -195,17 +194,11 @@ struct _Block3Data {
 struct _Block4Data {
 	int _ref_count_;
 	RygelDataSourceTest * self;
-	GMainLoop* loop;
-};
-
-struct _Block5Data {
-	int _ref_count_;
-	RygelDataSourceTest * self;
 	RygelDataSource* source;
 	GMainLoop* loop;
 };
 
-struct _Block6Data {
+struct _Block5Data {
 	int _ref_count_;
 	RygelDataSourceTest * self;
 	GMainLoop* loop;
@@ -308,33 +301,22 @@ static gboolean __lambda16_ (Block3Data* _data3_);
 static gboolean ___lambda16__gsource_func (gpointer self);
 static gboolean __lambda17_ (Block3Data* _data3_);
 static gboolean ___lambda17__gsource_func (gpointer self);
-static void rygel_data_source_test_test_multiple_freeze (RygelDataSourceTest* self);
+static void rygel_data_source_test_test_freeze_stop (RygelDataSourceTest* self);
 static Block4Data* block4_data_ref (Block4Data* _data4_);
 static void block4_data_unref (void * _userdata_);
-static void __lambda18_ (RygelDataSourceTest* self);
-static void ___lambda18__rygel_data_source_data_available (RygelDataSource* _sender, guint8* data, int data_length1, gpointer self);
-static gboolean __lambda19_ (Block4Data* _data4_);
+static void __lambda18_ (Block4Data* _data4_);
+static void ___lambda18__rygel_data_source_done (RygelDataSource* _sender, gpointer self);
+static gboolean __lambda19_ (RygelDataSourceTest* self);
 static gboolean ___lambda19__gsource_func (gpointer self);
-static void __lambda20_ (Block4Data* _data4_);
-static void ___lambda20__rygel_data_source_data_available (RygelDataSource* _sender, guint8* data, int data_length1, gpointer self);
-static gboolean __lambda21_ (RygelDataSourceTest* self);
-static gboolean ___lambda21__gsource_func (gpointer self);
-static void rygel_data_source_test_test_freeze_stop (RygelDataSourceTest* self);
+static gboolean __lambda20_ (Block4Data* _data4_);
+static gboolean ___lambda20__gsource_func (gpointer self);
+void rygel_data_source_test_test_parallel_streaming (RygelDataSourceTest* self);
 static Block5Data* block5_data_ref (Block5Data* _data5_);
 static void block5_data_unref (void * _userdata_);
+static void __lambda21_ (Block5Data* _data5_);
+static void ___lambda21__rygel_data_source_done (RygelDataSource* _sender, gpointer self);
 static void __lambda22_ (Block5Data* _data5_);
 static void ___lambda22__rygel_data_source_done (RygelDataSource* _sender, gpointer self);
-static gboolean __lambda23_ (RygelDataSourceTest* self);
-static gboolean ___lambda23__gsource_func (gpointer self);
-static gboolean __lambda24_ (Block5Data* _data5_);
-static gboolean ___lambda24__gsource_func (gpointer self);
-void rygel_data_source_test_test_parallel_streaming (RygelDataSourceTest* self);
-static Block6Data* block6_data_ref (Block6Data* _data6_);
-static void block6_data_unref (void * _userdata_);
-static void __lambda25_ (Block6Data* _data6_);
-static void ___lambda25__rygel_data_source_done (RygelDataSource* _sender, gpointer self);
-static void __lambda26_ (Block6Data* _data6_);
-static void ___lambda26__rygel_data_source_done (RygelDataSource* _sender, gpointer self);
 gint rygel_data_source_test_run (RygelDataSourceTest* self);
 gint rygel_data_source_test_main (gchar** args, int args_length1);
 static void rygel_data_source_test_finalize (GObject* obj);
@@ -1836,30 +1818,28 @@ static void block4_data_unref (void * _userdata_) {
 		RygelDataSourceTest * self;
 		self = _data4_->self;
 		_g_main_loop_unref0 (_data4_->loop);
+		_g_object_unref0 (_data4_->source);
 		_g_object_unref0 (self);
 		g_slice_free (Block4Data, _data4_);
 	}
 }
 
 
-static void __lambda18_ (RygelDataSourceTest* self) {
-	g_assert_not_reached ();
+static void __lambda18_ (Block4Data* _data4_) {
+	RygelDataSourceTest * self;
+	self = _data4_->self;
+	g_main_loop_quit (_data4_->loop);
 }
 
 
-static void ___lambda18__rygel_data_source_data_available (RygelDataSource* _sender, guint8* data, int data_length1, gpointer self) {
+static void ___lambda18__rygel_data_source_done (RygelDataSource* _sender, gpointer self) {
 	__lambda18_ (self);
 }
 
 
-static gboolean __lambda19_ (Block4Data* _data4_) {
-	RygelDataSourceTest * self;
+static gboolean __lambda19_ (RygelDataSourceTest* self) {
 	gboolean result = FALSE;
-	GMainLoop* _tmp0_;
-	self = _data4_->self;
-	_tmp0_ = _data4_->loop;
-	g_main_loop_quit (_tmp0_);
-	result = FALSE;
+	g_assert_not_reached ();
 	return result;
 }
 
@@ -1871,93 +1851,65 @@ static gboolean ___lambda19__gsource_func (gpointer self) {
 }
 
 
-static void __lambda20_ (Block4Data* _data4_) {
+static gboolean __lambda20_ (Block4Data* _data4_) {
 	RygelDataSourceTest * self;
-	GMainLoop* _tmp0_;
-	self = _data4_->self;
-	_tmp0_ = _data4_->loop;
-	g_main_loop_quit (_tmp0_);
-}
-
-
-static void ___lambda20__rygel_data_source_data_available (RygelDataSource* _sender, guint8* data, int data_length1, gpointer self) {
-	__lambda20_ (self);
-}
-
-
-static gboolean __lambda21_ (RygelDataSourceTest* self) {
 	gboolean result = FALSE;
-	g_assert_not_reached ();
+	RygelDataSource* _tmp0_;
+	self = _data4_->self;
+	_tmp0_ = _data4_->source;
+	rygel_data_source_stop (_tmp0_);
+	result = FALSE;
 	return result;
 }
 
 
-static gboolean ___lambda21__gsource_func (gpointer self) {
+static gboolean ___lambda20__gsource_func (gpointer self) {
 	gboolean result;
-	result = __lambda21_ (self);
+	result = __lambda20_ (self);
 	return result;
 }
 
 
-static void rygel_data_source_test_test_multiple_freeze (RygelDataSourceTest* self) {
+static void rygel_data_source_test_test_freeze_stop (RygelDataSourceTest* self) {
 	Block4Data* _data4_;
-	RygelMediaEngine* _tmp7_ = NULL;
-	RygelMediaEngine* _tmp8_;
-	GFile* _tmp9_;
-	gchar* _tmp10_ = NULL;
-	gchar* _tmp11_;
-	RygelDataSource* _tmp12_ = NULL;
+	RygelMediaEngine* _tmp0_ = NULL;
+	RygelMediaEngine* _tmp1_;
+	GFile* _tmp2_;
+	gchar* _tmp3_ = NULL;
+	gchar* _tmp4_;
+	RygelDataSource* _tmp5_ = NULL;
+	RygelDataSource* _tmp6_;
+	RygelDataSource* _tmp7_;
+	RygelDataSource* _tmp9_;
+	GMainLoop* _tmp10_;
+	RygelDataSource* _tmp11_;
+	guint _tmp12_ = 0U;
+	guint id;
 	RygelDataSource* _tmp13_;
-	RygelDataSource* source;
-	RygelDataSource* _tmp14_;
-	RygelDataSource* _tmp15_;
-	gulong _tmp16_ = 0UL;
-	gulong available_id;
-	RygelDataSource* _tmp18_;
-	RygelDataSource* _tmp19_;
-	GMainLoop* _tmp20_;
-	GMainLoop* _tmp21_;
-	RygelDataSource* _tmp22_;
-	gulong _tmp23_;
-	RygelDataSource* _tmp24_;
-	guint _tmp25_ = 0U;
-	guint timeout_id;
-	RygelDataSource* _tmp26_;
-	GMainLoop* _tmp27_;
-	guint _tmp28_;
-	RygelDataSource* _tmp29_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	_data4_ = g_slice_new0 (Block4Data);
 	_data4_->_ref_count_ = 1;
 	_data4_->self = g_object_ref (self);
-	g_debug ("rygel-media-engine-test.vala:335: test_multiple_freeze");
+	g_debug ("rygel-media-engine-test.vala:335: test_freeze_stop");
+	_tmp0_ = rygel_media_engine_get_default ();
+	_tmp1_ = _tmp0_;
+	_tmp2_ = self->priv->test_data_file;
+	_tmp3_ = g_file_get_uri (_tmp2_);
+	_tmp4_ = _tmp3_;
+	_tmp5_ = rygel_media_engine_create_data_source (_tmp1_, _tmp4_);
+	_tmp6_ = _tmp5_;
+	_g_free0 (_tmp4_);
+	_g_object_unref0 (_tmp1_);
+	_data4_->source = _tmp6_;
+	_tmp7_ = _data4_->source;
+	_vala_assert (_tmp7_ != NULL, "source != null");
 	{
-		RygelMetaConfig* _tmp0_ = NULL;
-		RygelMetaConfig* _tmp1_;
-		gchar* _tmp2_ = NULL;
-		gchar* _tmp3_;
-		gchar* _tmp4_;
-		gchar* _tmp5_;
-		gboolean _tmp6_;
-		_tmp0_ = rygel_meta_config_get_default ();
-		_tmp1_ = _tmp0_;
-		_tmp2_ = rygel_configuration_get_media_engine ((RygelConfiguration*) _tmp1_, &_inner_error_);
-		_tmp3_ = _tmp2_;
-		_g_object_unref0 (_tmp1_);
-		_tmp4_ = _tmp3_;
+		RygelDataSource* _tmp8_;
+		_tmp8_ = _data4_->source;
+		rygel_data_source_start (_tmp8_, NULL, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			goto __catch6_g_error;
-		}
-		_tmp5_ = _tmp4_;
-		_tmp6_ = g_strcmp0 (_tmp5_, "librygel-media-engine-gst.so") == 0;
-		_g_free0 (_tmp5_);
-		if (_tmp6_) {
-			g_message ("rygel-media-engine-test.vala:340: Skipping double-freeze test for gst " \
-"engine.");
-			block4_data_unref (_data4_);
-			_data4_ = NULL;
-			return;
 		}
 	}
 	goto __finally6;
@@ -1977,72 +1929,21 @@ static void rygel_data_source_test_test_multiple_freeze (RygelDataSourceTest* se
 		g_clear_error (&_inner_error_);
 		return;
 	}
-	_tmp7_ = rygel_media_engine_get_default ();
-	_tmp8_ = _tmp7_;
-	_tmp9_ = self->priv->test_data_file;
-	_tmp10_ = g_file_get_uri (_tmp9_);
-	_tmp11_ = _tmp10_;
-	_tmp12_ = rygel_media_engine_create_data_source (_tmp8_, _tmp11_);
-	_tmp13_ = _tmp12_;
-	_g_free0 (_tmp11_);
-	_g_object_unref0 (_tmp8_);
-	source = _tmp13_;
-	_tmp14_ = source;
-	_vala_assert (_tmp14_ != NULL, "source != null");
-	_tmp15_ = source;
-	_tmp16_ = g_signal_connect_object (_tmp15_, "data-available", (GCallback) ___lambda18__rygel_data_source_data_available, self, 0);
-	available_id = _tmp16_;
-	{
-		RygelDataSource* _tmp17_;
-		_tmp17_ = source;
-		rygel_data_source_start (_tmp17_, NULL, &_inner_error_);
-		if (_inner_error_ != NULL) {
-			goto __catch7_g_error;
-		}
-	}
-	goto __finally7;
-	__catch7_g_error:
-	{
-		GError* _error_ = NULL;
-		_error_ = _inner_error_;
-		_inner_error_ = NULL;
-		g_assert_not_reached ();
-		_g_error_free0 (_error_);
-	}
-	__finally7:
-	if (_inner_error_ != NULL) {
-		_g_object_unref0 (source);
-		block4_data_unref (_data4_);
-		_data4_ = NULL;
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-		g_clear_error (&_inner_error_);
-		return;
-	}
-	_tmp18_ = source;
-	rygel_data_source_freeze (_tmp18_);
-	_tmp19_ = source;
-	rygel_data_source_freeze (_tmp19_);
-	_tmp20_ = g_main_loop_new (NULL, FALSE);
-	_data4_->loop = _tmp20_;
-	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT, (guint) 5, ___lambda19__gsource_func, block4_data_ref (_data4_), block4_data_unref);
-	_tmp21_ = _data4_->loop;
-	g_main_loop_run (_tmp21_);
-	_tmp22_ = source;
-	_tmp23_ = available_id;
-	g_signal_handler_disconnect ((GObject*) _tmp22_, _tmp23_);
-	_tmp24_ = source;
-	g_signal_connect_data (_tmp24_, "data-available", (GCallback) ___lambda20__rygel_data_source_data_available, block4_data_ref (_data4_), (GClosureNotify) block4_data_unref, 0);
-	_tmp25_ = g_timeout_add_seconds_full (G_PRIORITY_DEFAULT, (guint) 5, ___lambda21__gsource_func, g_object_ref (self), g_object_unref);
-	timeout_id = _tmp25_;
-	_tmp26_ = source;
-	rygel_data_source_thaw (_tmp26_);
-	_tmp27_ = _data4_->loop;
-	g_main_loop_run (_tmp27_);
-	_tmp28_ = timeout_id;
-	g_source_remove (_tmp28_);
-	_tmp29_ = source;
-	rygel_data_source_stop (_tmp29_);
-	_g_object_unref0 (source);
+	_tmp9_ = _data4_->source;
+	rygel_data_source_freeze (_tmp9_);
+	_tmp10_ = g_main_loop_new (NULL, FALSE);
+	_data4_->loop = _tmp10_;
+	_tmp11_ = _data4_->source;
+	g_signal_connect_data (_tmp11_, "done", (GCallback) ___lambda18__rygel_data_source_done, block4_data_ref (_data4_), (GClosureNotify) block4_data_unref, 0);
+	_tmp12_ = g_timeout_add_seconds_full (G_PRIORITY_DEFAULT, (guint) 5, ___lambda19__gsource_func, g_object_ref (self), g_object_unref);
+	id = _tmp12_;
+	g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, ___lambda20__gsource_func, block4_data_ref (_data4_), block4_data_unref);
+	g_main_loop_run (_data4_->loop);
+	g_source_remove (id);
+	_tmp13_ = _data4_->source;
+	rygel_data_source_stop (_tmp13_);
+	_g_object_unref0 (_data4_->source);
+	_data4_->source = NULL;
 	block4_data_unref (_data4_);
 	_data4_ = NULL;
 }
@@ -2061,17 +1962,36 @@ static void block5_data_unref (void * _userdata_) {
 		RygelDataSourceTest * self;
 		self = _data5_->self;
 		_g_main_loop_unref0 (_data5_->loop);
-		_g_object_unref0 (_data5_->source);
 		_g_object_unref0 (self);
 		g_slice_free (Block5Data, _data5_);
 	}
 }
 
 
+static void __lambda21_ (Block5Data* _data5_) {
+	RygelDataSourceTest * self;
+	self = _data5_->self;
+	if (_data5_->quit) {
+		g_main_loop_quit (_data5_->loop);
+	} else {
+		_data5_->quit = TRUE;
+	}
+}
+
+
+static void ___lambda21__rygel_data_source_done (RygelDataSource* _sender, gpointer self) {
+	__lambda21_ (self);
+}
+
+
 static void __lambda22_ (Block5Data* _data5_) {
 	RygelDataSourceTest * self;
 	self = _data5_->self;
-	g_main_loop_quit (_data5_->loop);
+	if (_data5_->quit) {
+		g_main_loop_quit (_data5_->loop);
+	} else {
+		_data5_->quit = TRUE;
+	}
 }
 
 
@@ -2080,171 +2000,8 @@ static void ___lambda22__rygel_data_source_done (RygelDataSource* _sender, gpoin
 }
 
 
-static gboolean __lambda23_ (RygelDataSourceTest* self) {
-	gboolean result = FALSE;
-	g_assert_not_reached ();
-	return result;
-}
-
-
-static gboolean ___lambda23__gsource_func (gpointer self) {
-	gboolean result;
-	result = __lambda23_ (self);
-	return result;
-}
-
-
-static gboolean __lambda24_ (Block5Data* _data5_) {
-	RygelDataSourceTest * self;
-	gboolean result = FALSE;
-	RygelDataSource* _tmp0_;
-	self = _data5_->self;
-	_tmp0_ = _data5_->source;
-	rygel_data_source_stop (_tmp0_);
-	result = FALSE;
-	return result;
-}
-
-
-static gboolean ___lambda24__gsource_func (gpointer self) {
-	gboolean result;
-	result = __lambda24_ (self);
-	return result;
-}
-
-
-static void rygel_data_source_test_test_freeze_stop (RygelDataSourceTest* self) {
-	Block5Data* _data5_;
-	RygelMediaEngine* _tmp0_ = NULL;
-	RygelMediaEngine* _tmp1_;
-	GFile* _tmp2_;
-	gchar* _tmp3_ = NULL;
-	gchar* _tmp4_;
-	RygelDataSource* _tmp5_ = NULL;
-	RygelDataSource* _tmp6_;
-	RygelDataSource* _tmp7_;
-	RygelDataSource* _tmp9_;
-	GMainLoop* _tmp10_;
-	RygelDataSource* _tmp11_;
-	guint _tmp12_ = 0U;
-	guint id;
-	RygelDataSource* _tmp13_;
-	GError * _inner_error_ = NULL;
-	g_return_if_fail (self != NULL);
-	_data5_ = g_slice_new0 (Block5Data);
-	_data5_->_ref_count_ = 1;
-	_data5_->self = g_object_ref (self);
-	g_debug ("rygel-media-engine-test.vala:393: test_freeze_stop");
-	_tmp0_ = rygel_media_engine_get_default ();
-	_tmp1_ = _tmp0_;
-	_tmp2_ = self->priv->test_data_file;
-	_tmp3_ = g_file_get_uri (_tmp2_);
-	_tmp4_ = _tmp3_;
-	_tmp5_ = rygel_media_engine_create_data_source (_tmp1_, _tmp4_);
-	_tmp6_ = _tmp5_;
-	_g_free0 (_tmp4_);
-	_g_object_unref0 (_tmp1_);
-	_data5_->source = _tmp6_;
-	_tmp7_ = _data5_->source;
-	_vala_assert (_tmp7_ != NULL, "source != null");
-	{
-		RygelDataSource* _tmp8_;
-		_tmp8_ = _data5_->source;
-		rygel_data_source_start (_tmp8_, NULL, &_inner_error_);
-		if (_inner_error_ != NULL) {
-			goto __catch8_g_error;
-		}
-	}
-	goto __finally8;
-	__catch8_g_error:
-	{
-		GError* _error_ = NULL;
-		_error_ = _inner_error_;
-		_inner_error_ = NULL;
-		g_assert_not_reached ();
-		_g_error_free0 (_error_);
-	}
-	__finally8:
-	if (_inner_error_ != NULL) {
-		block5_data_unref (_data5_);
-		_data5_ = NULL;
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-		g_clear_error (&_inner_error_);
-		return;
-	}
-	_tmp9_ = _data5_->source;
-	rygel_data_source_freeze (_tmp9_);
-	_tmp10_ = g_main_loop_new (NULL, FALSE);
-	_data5_->loop = _tmp10_;
-	_tmp11_ = _data5_->source;
-	g_signal_connect_data (_tmp11_, "done", (GCallback) ___lambda22__rygel_data_source_done, block5_data_ref (_data5_), (GClosureNotify) block5_data_unref, 0);
-	_tmp12_ = g_timeout_add_seconds_full (G_PRIORITY_DEFAULT, (guint) 5, ___lambda23__gsource_func, g_object_ref (self), g_object_unref);
-	id = _tmp12_;
-	g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, ___lambda24__gsource_func, block5_data_ref (_data5_), block5_data_unref);
-	g_main_loop_run (_data5_->loop);
-	g_source_remove (id);
-	_tmp13_ = _data5_->source;
-	rygel_data_source_stop (_tmp13_);
-	_g_object_unref0 (_data5_->source);
-	_data5_->source = NULL;
-	block5_data_unref (_data5_);
-	_data5_ = NULL;
-}
-
-
-static Block6Data* block6_data_ref (Block6Data* _data6_) {
-	g_atomic_int_inc (&_data6_->_ref_count_);
-	return _data6_;
-}
-
-
-static void block6_data_unref (void * _userdata_) {
-	Block6Data* _data6_;
-	_data6_ = (Block6Data*) _userdata_;
-	if (g_atomic_int_dec_and_test (&_data6_->_ref_count_)) {
-		RygelDataSourceTest * self;
-		self = _data6_->self;
-		_g_main_loop_unref0 (_data6_->loop);
-		_g_object_unref0 (self);
-		g_slice_free (Block6Data, _data6_);
-	}
-}
-
-
-static void __lambda25_ (Block6Data* _data6_) {
-	RygelDataSourceTest * self;
-	self = _data6_->self;
-	if (_data6_->quit) {
-		g_main_loop_quit (_data6_->loop);
-	} else {
-		_data6_->quit = TRUE;
-	}
-}
-
-
-static void ___lambda25__rygel_data_source_done (RygelDataSource* _sender, gpointer self) {
-	__lambda25_ (self);
-}
-
-
-static void __lambda26_ (Block6Data* _data6_) {
-	RygelDataSourceTest * self;
-	self = _data6_->self;
-	if (_data6_->quit) {
-		g_main_loop_quit (_data6_->loop);
-	} else {
-		_data6_->quit = TRUE;
-	}
-}
-
-
-static void ___lambda26__rygel_data_source_done (RygelDataSource* _sender, gpointer self) {
-	__lambda26_ (self);
-}
-
-
 void rygel_data_source_test_test_parallel_streaming (RygelDataSourceTest* self) {
-	Block6Data* _data6_;
+	Block5Data* _data5_;
 	RygelMediaEngine* _tmp0_ = NULL;
 	RygelMediaEngine* _tmp1_;
 	GFile* _tmp2_;
@@ -2270,10 +2027,10 @@ void rygel_data_source_test_test_parallel_streaming (RygelDataSourceTest* self) 
 	GMainLoop* _tmp19_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
-	_data6_ = g_slice_new0 (Block6Data);
-	_data6_->_ref_count_ = 1;
-	_data6_->self = g_object_ref (self);
-	g_debug ("rygel-media-engine-test.vala:422: test_parallel_streaming");
+	_data5_ = g_slice_new0 (Block5Data);
+	_data5_->_ref_count_ = 1;
+	_data5_->self = g_object_ref (self);
+	g_debug ("rygel-media-engine-test.vala:364: test_parallel_streaming");
 	_tmp0_ = rygel_media_engine_get_default ();
 	_tmp1_ = _tmp0_;
 	_tmp2_ = self->priv->test_data_file;
@@ -2299,11 +2056,11 @@ void rygel_data_source_test_test_parallel_streaming (RygelDataSourceTest* self) 
 	{
 		rygel_data_source_start (source1, NULL, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch9_g_error;
+			goto __catch7_g_error;
 		}
 	}
-	goto __finally9;
-	__catch9_g_error:
+	goto __finally7;
+	__catch7_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -2311,12 +2068,12 @@ void rygel_data_source_test_test_parallel_streaming (RygelDataSourceTest* self) 
 		g_assert_not_reached ();
 		_g_error_free0 (_error_);
 	}
-	__finally9:
+	__finally7:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (source2);
 		_g_object_unref0 (source1);
-		block6_data_unref (_data6_);
-		_data6_ = NULL;
+		block5_data_unref (_data5_);
+		_data5_ = NULL;
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
 		return;
@@ -2331,11 +2088,11 @@ void rygel_data_source_test_test_parallel_streaming (RygelDataSourceTest* self) 
 	{
 		rygel_data_source_start (source2, NULL, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch10_g_error;
+			goto __catch8_g_error;
 		}
 	}
-	goto __finally10;
-	__catch10_g_error:
+	goto __finally8;
+	__catch8_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
@@ -2343,28 +2100,28 @@ void rygel_data_source_test_test_parallel_streaming (RygelDataSourceTest* self) 
 		g_assert_not_reached ();
 		_g_error_free0 (_error_);
 	}
-	__finally10:
+	__finally8:
 	if (_inner_error_ != NULL) {
 		_g_object_unref0 (seek);
 		_g_object_unref0 (source2);
 		_g_object_unref0 (source1);
-		block6_data_unref (_data6_);
-		_data6_ = NULL;
+		block5_data_unref (_data5_);
+		_data5_ = NULL;
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
 		return;
 	}
 	_tmp19_ = g_main_loop_new (NULL, FALSE);
-	_data6_->loop = _tmp19_;
-	_data6_->quit = FALSE;
-	g_signal_connect_data (source1, "done", (GCallback) ___lambda25__rygel_data_source_done, block6_data_ref (_data6_), (GClosureNotify) block6_data_unref, 0);
-	g_signal_connect_data (source2, "done", (GCallback) ___lambda26__rygel_data_source_done, block6_data_ref (_data6_), (GClosureNotify) block6_data_unref, 0);
-	g_main_loop_run (_data6_->loop);
+	_data5_->loop = _tmp19_;
+	_data5_->quit = FALSE;
+	g_signal_connect_data (source1, "done", (GCallback) ___lambda21__rygel_data_source_done, block5_data_ref (_data5_), (GClosureNotify) block5_data_unref, 0);
+	g_signal_connect_data (source2, "done", (GCallback) ___lambda22__rygel_data_source_done, block5_data_ref (_data5_), (GClosureNotify) block5_data_unref, 0);
+	g_main_loop_run (_data5_->loop);
 	_g_object_unref0 (seek);
 	_g_object_unref0 (source2);
 	_g_object_unref0 (source1);
-	block6_data_unref (_data6_);
-	_data6_ = NULL;
+	block5_data_unref (_data5_);
+	_data5_ = NULL;
 }
 
 
@@ -2374,7 +2131,6 @@ gint rygel_data_source_test_run (RygelDataSourceTest* self) {
 	rygel_data_source_test_test_simple_streaming (self);
 	rygel_data_source_test_test_byte_range_request (self);
 	rygel_data_source_test_test_stop_start (self);
-	rygel_data_source_test_test_multiple_freeze (self);
 	rygel_data_source_test_test_freeze_stop (self);
 	rygel_data_source_test_test_parallel_streaming (self);
 	result = 0;
@@ -2588,7 +2344,7 @@ gint rygel_data_source_test_main (gchar** args, int args_length1) {
 			_tmp50_ = config;
 			_tmp51_ = rygel_data_source_test_config_to_string (_tmp50_);
 			_tmp52_ = _tmp51_;
-			g_debug ("rygel-media-engine-test.vala:510: => Executing tests for config %s", _tmp52_);
+			g_debug ("rygel-media-engine-test.vala:451: => Executing tests for config %s", _tmp52_);
 			_g_free0 (_tmp52_);
 			_tmp53_ = config;
 			rygel_meta_config_register_configuration ((RygelConfiguration*) _tmp53_);
@@ -2599,11 +2355,11 @@ gint rygel_data_source_test_main (gchar** args, int args_length1) {
 			{
 				rygel_media_engine_init (&_inner_error_);
 				if (_inner_error_ != NULL) {
-					goto __catch11_g_error;
+					goto __catch9_g_error;
 				}
 			}
-			goto __finally11;
-			__catch11_g_error:
+			goto __finally9;
+			__catch9_g_error:
 			{
 				GError* _error_ = NULL;
 				_error_ = _inner_error_;
@@ -2611,7 +2367,7 @@ gint rygel_data_source_test_main (gchar** args, int args_length1) {
 				g_assert_not_reached ();
 				_g_error_free0 (_error_);
 			}
-			__finally11:
+			__finally9:
 			if (_inner_error_ != NULL) {
 				_g_object_unref0 (config);
 				_g_object_unref0 (_config_list);

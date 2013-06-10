@@ -593,11 +593,11 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 		_state_1:
 		rygel_http_post_handle_real_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch33_g_error;
+			goto __catch36_g_error;
 		}
 	}
-	goto __finally33;
-	__catch33_g_error:
+	goto __finally36;
+	__catch36_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -614,9 +614,9 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 		_data_->_tmp8_ = _g_error_copy0 (_data_->_tmp7_);
 		_data_->_inner_error_ = _data_->_tmp8_;
 		_g_error_free0 (_data_->_error_);
-		goto __finally33;
+		goto __finally36;
 	}
-	__finally33:
+	__finally36:
 	if (_data_->_inner_error_ != NULL) {
 		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 		g_error_free (_data_->_inner_error_);
@@ -1052,20 +1052,20 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			_data_->_tmp11_ = rygel_media_container_find_object_finish (_data_->_tmp7_, _data_->_res_, &_data_->_inner_error_);
 			_data_->_tmp12_ = _data_->_tmp11_;
 			if (_data_->_inner_error_ != NULL) {
-				goto __catch34_g_error;
+				goto __catch37_g_error;
 			}
 			_g_object_unref0 (_data_->item);
 			_data_->item = G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp12_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp12_) : NULL;
 		}
-		goto __finally34;
-		__catch34_g_error:
+		goto __finally37;
+		__catch37_g_error:
 		{
 			_data_->_error_ = _data_->_inner_error_;
 			_data_->_inner_error_ = NULL;
 			_g_error_free0 (_data_->_error_);
 			break;
 		}
-		__finally34:
+		__finally37:
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->item);
 			block6_data_unref (_data_->_data6_);
@@ -1180,11 +1180,11 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		_data_->_tmp2_ = _data_->_tmp1_;
 		g_output_stream_close (_data_->_tmp0_, _data_->_tmp2_, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch35_g_error;
+			goto __catch38_g_error;
 		}
 	}
-	goto __finally35;
-	__catch35_g_error:
+	goto __finally38;
+	__catch38_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -1201,7 +1201,7 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		g_object_unref (_data_->_async_result);
 		return FALSE;
 	}
-	__finally35:
+	__finally38:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);
@@ -1218,7 +1218,7 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 	_data_->_tmp11_ = ((RygelHTTPRequest*) _data_->self)->object;
 	_data_->_tmp12_ = rygel_media_object_get_id (_data_->_tmp11_);
 	_data_->_tmp13_ = _data_->_tmp12_;
-	g_debug ("Waiting for update signal from container '%s' after pushing" " content to its child item '%s'..", _data_->_tmp10_, _data_->_tmp13_);
+	g_debug ("Waiting for update signal from container '%s' after pushing" " content to its child item '%s'…", _data_->_tmp10_, _data_->_tmp13_);
 	{
 		_data_->_tmp14_ = _data_->self->priv->dotfile;
 		_data_->_tmp15_ = _data_->self->priv->file;
@@ -1226,11 +1226,11 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		_data_->_tmp17_ = _data_->_tmp16_;
 		g_file_move (_data_->_tmp14_, _data_->_tmp15_, G_FILE_COPY_NONE, _data_->_tmp17_, NULL, NULL, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch36_g_error;
+			goto __catch39_g_error;
 		}
 	}
-	goto __finally36;
-	__catch36_g_error:
+	goto __finally39;
+	__catch39_g_error:
 	{
 		_data_->move_error = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -1260,7 +1260,7 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		g_object_unref (_data_->_async_result);
 		return FALSE;
 	}
-	__finally36:
+	__finally39:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);
@@ -1314,11 +1314,11 @@ static void rygel_http_post_on_got_chunk (RygelHTTPPost* self, SoupMessage* msg,
 		_tmp4_ = _tmp3_;
 		g_output_stream_write_all (_tmp0_, _tmp2_, (gsize) _tmp2__length1, NULL, _tmp4_, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch37_g_error;
+			goto __catch40_g_error;
 		}
 	}
-	goto __finally37;
-	__catch37_g_error:
+	goto __finally40;
+	__catch40_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp5_;
@@ -1341,7 +1341,7 @@ static void rygel_http_post_on_got_chunk (RygelHTTPPost* self, SoupMessage* msg,
 		_tmp9_ (_tmp9__target);
 		_g_error_free0 (_error_);
 	}
-	__finally37:
+	__finally40:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);

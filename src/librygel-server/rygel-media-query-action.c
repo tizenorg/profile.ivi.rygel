@@ -213,8 +213,10 @@ struct _RygelMediaObjectClass {
 struct _RygelMediaContainer {
 	RygelMediaObject parent_instance;
 	RygelMediaContainerPrivate * priv;
+	gint empty_child_count;
 	guint32 update_id;
 	gint64 storage_used;
+	gboolean create_mode_enabled;
 	gint64 total_deleted_child_count;
 };
 
@@ -423,18 +425,18 @@ RygelMediaQueryAction* rygel_media_query_action_construct (GType object_type, Ry
 		_g_object_unref0 (_tmp14_);
 		_tmp17_ = _tmp16_;
 		if (_inner_error_ != NULL) {
-			goto __catch57_g_error;
+			goto __catch61_g_error;
 		}
 		_g_object_unref0 (self->hacks);
 		self->hacks = _tmp17_;
 	}
-	goto __finally57;
-	__catch57_g_error:
+	goto __finally61;
+	__catch61_g_error:
 	{
 		g_clear_error (&_inner_error_);
 		_inner_error_ = NULL;
 	}
-	__finally57:
+	__finally61:
 	if (_inner_error_ != NULL) {
 		__vala_GUPnPServiceAction_free0 (action);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -498,7 +500,7 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 	{
 		rygel_media_query_action_parse_args (_data_->self, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch58_g_error;
+			goto __catch62_g_error;
 		}
 		_data_->_state_ = 1;
 		rygel_media_query_action_fetch_media_object (_data_->self, rygel_media_query_action_run_ready, _data_);
@@ -508,7 +510,7 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		_data_->_tmp0_ = rygel_media_query_action_fetch_media_object_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		_data_->media_object = _data_->_tmp0_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch58_g_error;
+			goto __catch62_g_error;
 		}
 		_data_->_tmp1_ = _data_->media_object;
 		_data_->_state_ = 2;
@@ -520,7 +522,7 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		_data_->results = _data_->_tmp2_;
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->media_object);
-			goto __catch58_g_error;
+			goto __catch62_g_error;
 		}
 		_data_->_tmp3_ = _data_->results;
 		_data_->_tmp4_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp3_);
@@ -543,14 +545,14 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->results);
 			_g_object_unref0 (_data_->media_object);
-			goto __catch58_g_error;
+			goto __catch62_g_error;
 		}
 		rygel_media_query_action_conclude (_data_->self);
 		_g_object_unref0 (_data_->results);
 		_g_object_unref0 (_data_->media_object);
 	}
-	goto __finally58;
-	__catch58_g_error:
+	goto __finally62;
+	__catch62_g_error:
 	{
 		_data_->err = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -558,7 +560,7 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		rygel_media_query_action_handle_error (_data_->self, _data_->_tmp14_);
 		_g_error_free0 (_data_->err);
 	}
-	__finally58:
+	__finally62:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);

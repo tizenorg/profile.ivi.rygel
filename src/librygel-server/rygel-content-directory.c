@@ -423,8 +423,10 @@ struct _RygelMediaObjectClass {
 struct _RygelMediaContainer {
 	RygelMediaObject parent_instance;
 	RygelMediaContainerPrivate * priv;
+	gint empty_child_count;
 	guint32 update_id;
 	gint64 storage_used;
+	gboolean create_mode_enabled;
 	gint64 total_deleted_child_count;
 };
 
@@ -2454,7 +2456,7 @@ static gboolean rygel_content_directory_service_reset_co (RygelContentDirectoryS
 		_data_->objects = _data_->_tmp26_;
 		if (_data_->_inner_error_ != NULL) {
 			_g_object_unref0 (_data_->root);
-			goto __catch20_g_error;
+			goto __catch22_g_error;
 		}
 		_data_->_tmp27_ = _data_->objects;
 		_data_->_tmp28_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp27_);
@@ -2519,15 +2521,15 @@ static gboolean rygel_content_directory_service_reset_co (RygelContentDirectoryS
 		_g_object_unref0 (_data_->objects);
 		_g_object_unref0 (_data_->root);
 	}
-	goto __finally20;
-	__catch20_g_error:
+	goto __finally22;
+	__catch22_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
 		g_warning ("rygel-content-directory.vala:738: Failed to search for objects...");
 		_g_error_free0 (_data_->_error_);
 	}
-	__finally20:
+	__finally22:
 	if (_data_->_inner_error_ != NULL) {
 		_rygel_search_expression_unref0 (_data_->expression);
 		_g_object_unref0 (_data_->plugin);

@@ -254,13 +254,18 @@ struct _RygelMediaObjectCheckWritableData {
 	GCancellable* cancellable;
 	gboolean result;
 	GFile* _tmp0_;
-	gboolean _tmp1_;
-	GFile* _tmp2_;
-	GCancellable* _tmp3_;
-	GFileInfo* _tmp4_;
-	GFileInfo* info;
-	GFileInfo* _tmp5_;
+	gchar* _tmp1_;
+	gchar* _tmp2_;
+	gboolean _tmp3_;
+	gboolean _tmp4_;
+	GFile* _tmp5_;
 	gboolean _tmp6_;
+	GFile* _tmp7_;
+	GCancellable* _tmp8_;
+	GFileInfo* _tmp9_;
+	GFileInfo* info;
+	GFileInfo* _tmp10_;
+	gboolean _tmp11_;
 	GError* _error_;
 	GError * _inner_error_;
 };
@@ -334,6 +339,7 @@ static GUPnPDIDLLiteResource* rygel_media_object_real_add_resource (RygelMediaOb
 gint rygel_media_object_compare_int_props (RygelMediaObject* self, gint prop1, gint prop2);
 static void rygel_media_object_check_writable_data_free (gpointer _data);
 static gboolean rygel_media_object_check_writable_co (RygelMediaObjectCheckWritableData* _data_);
+#define RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME "rygel-writable://"
 static void rygel_media_object_check_writable_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
 RygelMediaObject* rygel_media_object_construct (GType object_type);
 void rygel_media_object_set_id (RygelMediaObject* self, const gchar* value);
@@ -1087,9 +1093,27 @@ static gboolean rygel_media_object_check_writable_co (RygelMediaObjectCheckWrita
 	}
 	_state_0:
 	_data_->_tmp0_ = _data_->file;
-	_data_->_tmp1_ = FALSE;
-	_data_->_tmp1_ = g_file_is_native (_data_->_tmp0_);
-	if (!_data_->_tmp1_) {
+	_data_->_tmp1_ = NULL;
+	_data_->_tmp1_ = g_file_get_uri_scheme (_data_->_tmp0_);
+	_data_->_tmp2_ = _data_->_tmp1_;
+	_data_->_tmp3_ = FALSE;
+	_data_->_tmp3_ = g_str_has_prefix (RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME, _data_->_tmp2_);
+	_data_->_tmp4_ = _data_->_tmp3_;
+	_g_free0 (_data_->_tmp2_);
+	if (_data_->_tmp4_) {
+		_data_->result = TRUE;
+		if (_data_->_state_ == 0) {
+			g_simple_async_result_complete_in_idle (_data_->_async_result);
+		} else {
+			g_simple_async_result_complete (_data_->_async_result);
+		}
+		g_object_unref (_data_->_async_result);
+		return FALSE;
+	}
+	_data_->_tmp5_ = _data_->file;
+	_data_->_tmp6_ = FALSE;
+	_data_->_tmp6_ = g_file_is_native (_data_->_tmp5_);
+	if (!_data_->_tmp6_) {
 		_data_->result = FALSE;
 		if (_data_->_state_ == 0) {
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
@@ -1100,25 +1124,25 @@ static gboolean rygel_media_object_check_writable_co (RygelMediaObjectCheckWrita
 		return FALSE;
 	}
 	{
-		_data_->_tmp2_ = _data_->file;
-		_data_->_tmp3_ = _data_->cancellable;
+		_data_->_tmp7_ = _data_->file;
+		_data_->_tmp8_ = _data_->cancellable;
 		_data_->_state_ = 1;
-		g_file_query_info_async (_data_->_tmp2_, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE, G_FILE_QUERY_INFO_NONE, G_PRIORITY_DEFAULT, _data_->_tmp3_, rygel_media_object_check_writable_ready, _data_);
+		g_file_query_info_async (_data_->_tmp7_, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE, G_FILE_QUERY_INFO_NONE, G_PRIORITY_DEFAULT, _data_->_tmp8_, rygel_media_object_check_writable_ready, _data_);
 		return FALSE;
 		_state_1:
-		_data_->_tmp4_ = NULL;
-		_data_->_tmp4_ = g_file_query_info_finish (_data_->_tmp2_, _data_->_res_, &_data_->_inner_error_);
-		_data_->info = _data_->_tmp4_;
+		_data_->_tmp9_ = NULL;
+		_data_->_tmp9_ = g_file_query_info_finish (_data_->_tmp7_, _data_->_res_, &_data_->_inner_error_);
+		_data_->info = _data_->_tmp9_;
 		if (_data_->_inner_error_ != NULL) {
 			if (g_error_matches (_data_->_inner_error_, G_IO_ERROR, G_IO_ERROR_NOT_FOUND)) {
 				goto __catch11_g_io_error_not_found;
 			}
 			goto __finally11;
 		}
-		_data_->_tmp5_ = _data_->info;
-		_data_->_tmp6_ = FALSE;
-		_data_->_tmp6_ = g_file_info_get_attribute_boolean (_data_->_tmp5_, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE);
-		_data_->result = _data_->_tmp6_;
+		_data_->_tmp10_ = _data_->info;
+		_data_->_tmp11_ = FALSE;
+		_data_->_tmp11_ = g_file_info_get_attribute_boolean (_data_->_tmp10_, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE);
+		_data_->result = _data_->_tmp11_;
 		_g_object_unref0 (_data_->info);
 		if (_data_->_state_ == 0) {
 			g_simple_async_result_complete_in_idle (_data_->_async_result);

@@ -340,20 +340,20 @@ RygelHTTPRequest* rygel_http_request_construct (GType object_type, RygelHTTPServ
 		_tmp10_ = rygel_client_hacks_create (_tmp9_, &_inner_error_);
 		_tmp11_ = _tmp10_;
 		if (_inner_error_ != NULL) {
-			goto __catch38_g_error;
+			goto __catch41_g_error;
 		}
 		_g_object_unref0 (self->hack);
 		self->hack = _tmp11_;
 	}
-	goto __finally38;
-	__catch38_g_error:
+	goto __finally41;
+	__catch41_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally38:
+	__finally41:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -424,7 +424,7 @@ static gboolean rygel_http_request_real_run_co (RygelHttpRequestRunData* _data_)
 		_data_->_tmp7_ = rygel_http_item_uri_new_from_string (_data_->_tmp5_, _data_->_tmp6_, &_data_->_inner_error_);
 		_data_->_tmp8_ = _data_->_tmp7_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch39_g_error;
+			goto __catch42_g_error;
 		}
 		_g_object_unref0 (_data_->self->uri);
 		_data_->self->uri = _data_->_tmp8_;
@@ -434,7 +434,7 @@ static gboolean rygel_http_request_real_run_co (RygelHttpRequestRunData* _data_)
 		_state_1:
 		rygel_http_request_find_item_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch39_g_error;
+			goto __catch42_g_error;
 		}
 		_data_->_state_ = 2;
 		rygel_http_request_handle (_data_->self, rygel_http_request_run_ready, _data_);
@@ -442,11 +442,11 @@ static gboolean rygel_http_request_real_run_co (RygelHttpRequestRunData* _data_)
 		_state_2:
 		rygel_http_request_handle_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch39_g_error;
+			goto __catch42_g_error;
 		}
 	}
-	goto __finally39;
-	__catch39_g_error:
+	goto __finally42;
+	__catch42_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -454,7 +454,7 @@ static gboolean rygel_http_request_real_run_co (RygelHttpRequestRunData* _data_)
 		rygel_http_request_handle_error (_data_->self, _data_->_tmp9_);
 		_g_error_free0 (_data_->_error_);
 	}
-	__finally39:
+	__finally42:
 	if (_data_->_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
 		g_clear_error (&_data_->_inner_error_);

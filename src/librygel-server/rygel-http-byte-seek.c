@@ -173,6 +173,7 @@ typedef struct _RygelMediaItemClass RygelMediaItemClass;
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 
 #define RYGEL_TYPE_HTTP_SEEK_TYPE (rygel_http_seek_type_get_type ())
+#define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 
 #define RYGEL_TYPE_MEDIA_CONTAINER (rygel_media_container_get_type ())
 #define RYGEL_MEDIA_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_MEDIA_CONTAINER, RygelMediaContainer))
@@ -271,6 +272,10 @@ typedef enum  {
 	RYGEL_HTTP_SEEK_TYPE_TIME
 } RygelHTTPSeekType;
 
+typedef enum  {
+	RYGEL_CLIENT_HACKS_ERROR_NA
+} RygelClientHacksError;
+#define RYGEL_CLIENT_HACKS_ERROR rygel_client_hacks_error_quark ()
 
 static gpointer rygel_http_byte_seek_parent_class = NULL;
 
@@ -304,6 +309,9 @@ RygelHTTPSeek* rygel_http_seek_construct (GType object_type, SoupMessage* msg, g
 GType rygel_http_seek_type_get_type (void) G_GNUC_CONST;
 void rygel_http_seek_set_seek_type (RygelHTTPSeek* self, RygelHTTPSeekType value);
 gboolean rygel_http_byte_seek_needed (RygelHTTPGet* request);
+GQuark rygel_client_hacks_error_quark (void);
+RygelClientHacks* rygel_client_hacks_create (SoupMessage* message, GError** error);
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self);
 GType rygel_media_container_get_type (void) G_GNUC_CONST;
 GType rygel_http_identity_handler_get_type (void) G_GNUC_CONST;
 gboolean rygel_http_byte_seek_requested (RygelHTTPGet* request);
@@ -496,108 +504,136 @@ RygelHTTPByteSeek* rygel_http_byte_seek_new (RygelHTTPGet* request, GError** err
 
 gboolean rygel_http_byte_seek_needed (RygelHTTPGet* request) {
 	gboolean result = FALSE;
-	gboolean _tmp0_ = FALSE;
-	gboolean _tmp1_ = FALSE;
-	gboolean _tmp2_ = FALSE;
-	gboolean _tmp3_ = FALSE;
-	RygelHTTPGet* _tmp4_;
-	RygelMediaObject* _tmp5_;
-	gboolean _tmp14_;
-	gboolean _tmp22_;
-	gboolean _tmp30_;
-	gboolean _tmp35_;
+	gboolean force_seek;
+	gboolean _tmp4_ = FALSE;
+	gboolean _tmp5_;
+	gboolean _tmp36_;
+	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (request != NULL, FALSE);
-	_tmp4_ = request;
-	_tmp5_ = ((RygelHTTPRequest*) _tmp4_)->object;
-	if (!G_TYPE_CHECK_INSTANCE_TYPE (_tmp5_, RYGEL_TYPE_MEDIA_CONTAINER)) {
+	force_seek = FALSE;
+	{
+		RygelHTTPGet* _tmp0_;
+		SoupMessage* _tmp1_;
+		RygelClientHacks* _tmp2_ = NULL;
+		RygelClientHacks* hack;
+		gboolean _tmp3_ = FALSE;
+		_tmp0_ = request;
+		_tmp1_ = ((RygelHTTPRequest*) _tmp0_)->msg;
+		_tmp2_ = rygel_client_hacks_create (_tmp1_, &_inner_error_);
+		hack = _tmp2_;
+		if (_inner_error_ != NULL) {
+			goto __catch26_g_error;
+		}
+		_tmp3_ = rygel_client_hacks_force_seek (hack);
+		force_seek = _tmp3_;
+		_g_object_unref0 (hack);
+	}
+	goto __finally26;
+	__catch26_g_error:
+	{
+		GError* _error_ = NULL;
+		_error_ = _inner_error_;
+		_inner_error_ = NULL;
+		_g_error_free0 (_error_);
+	}
+	__finally26:
+	if (_inner_error_ != NULL) {
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+		g_clear_error (&_inner_error_);
+		return FALSE;
+	}
+	_tmp5_ = force_seek;
+	if (_tmp5_) {
+		_tmp4_ = TRUE;
+	} else {
 		gboolean _tmp6_ = FALSE;
-		RygelHTTPGet* _tmp7_;
-		RygelMediaObject* _tmp8_;
-		gint64 _tmp9_;
-		gint64 _tmp10_;
-		gboolean _tmp13_;
-		_tmp7_ = request;
-		_tmp8_ = ((RygelHTTPRequest*) _tmp7_)->object;
-		_tmp9_ = rygel_media_item_get_size (G_TYPE_CHECK_INSTANCE_TYPE (_tmp8_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp8_) : NULL);
-		_tmp10_ = _tmp9_;
-		if (_tmp10_ > ((gint64) 0)) {
-			RygelHTTPGet* _tmp11_;
-			RygelHTTPGetHandler* _tmp12_;
-			_tmp11_ = request;
-			_tmp12_ = _tmp11_->handler;
-			_tmp6_ = G_TYPE_CHECK_INSTANCE_TYPE (_tmp12_, RYGEL_TYPE_HTTP_IDENTITY_HANDLER);
+		gboolean _tmp7_ = FALSE;
+		gboolean _tmp8_ = FALSE;
+		RygelHTTPGet* _tmp9_;
+		RygelMediaObject* _tmp10_;
+		gboolean _tmp19_;
+		gboolean _tmp27_;
+		gboolean _tmp35_;
+		_tmp9_ = request;
+		_tmp10_ = ((RygelHTTPRequest*) _tmp9_)->object;
+		if (!G_TYPE_CHECK_INSTANCE_TYPE (_tmp10_, RYGEL_TYPE_MEDIA_CONTAINER)) {
+			gboolean _tmp11_ = FALSE;
+			RygelHTTPGet* _tmp12_;
+			RygelMediaObject* _tmp13_;
+			gint64 _tmp14_;
+			gint64 _tmp15_;
+			gboolean _tmp18_;
+			_tmp12_ = request;
+			_tmp13_ = ((RygelHTTPRequest*) _tmp12_)->object;
+			_tmp14_ = rygel_media_item_get_size (G_TYPE_CHECK_INSTANCE_TYPE (_tmp13_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _tmp13_) : NULL);
+			_tmp15_ = _tmp14_;
+			if (_tmp15_ > ((gint64) 0)) {
+				RygelHTTPGet* _tmp16_;
+				RygelHTTPGetHandler* _tmp17_;
+				_tmp16_ = request;
+				_tmp17_ = _tmp16_->handler;
+				_tmp11_ = G_TYPE_CHECK_INSTANCE_TYPE (_tmp17_, RYGEL_TYPE_HTTP_IDENTITY_HANDLER);
+			} else {
+				_tmp11_ = FALSE;
+			}
+			_tmp18_ = _tmp11_;
+			_tmp8_ = _tmp18_;
 		} else {
-			_tmp6_ = FALSE;
+			_tmp8_ = FALSE;
 		}
-		_tmp13_ = _tmp6_;
-		_tmp3_ = _tmp13_;
-	} else {
-		_tmp3_ = FALSE;
-	}
-	_tmp14_ = _tmp3_;
-	if (_tmp14_) {
-		_tmp2_ = TRUE;
-	} else {
-		gboolean _tmp15_ = FALSE;
-		RygelHTTPGet* _tmp16_;
-		RygelThumbnail* _tmp17_;
-		gboolean _tmp21_;
-		_tmp16_ = request;
-		_tmp17_ = _tmp16_->thumbnail;
-		if (_tmp17_ != NULL) {
-			RygelHTTPGet* _tmp18_;
-			RygelThumbnail* _tmp19_;
-			gint64 _tmp20_;
-			_tmp18_ = request;
-			_tmp19_ = _tmp18_->thumbnail;
-			_tmp20_ = ((RygelIconInfo*) _tmp19_)->size;
-			_tmp15_ = _tmp20_ > ((gint64) 0);
+		_tmp19_ = _tmp8_;
+		if (_tmp19_) {
+			_tmp7_ = TRUE;
 		} else {
-			_tmp15_ = FALSE;
+			gboolean _tmp20_ = FALSE;
+			RygelHTTPGet* _tmp21_;
+			RygelThumbnail* _tmp22_;
+			gboolean _tmp26_;
+			_tmp21_ = request;
+			_tmp22_ = _tmp21_->thumbnail;
+			if (_tmp22_ != NULL) {
+				RygelHTTPGet* _tmp23_;
+				RygelThumbnail* _tmp24_;
+				gint64 _tmp25_;
+				_tmp23_ = request;
+				_tmp24_ = _tmp23_->thumbnail;
+				_tmp25_ = ((RygelIconInfo*) _tmp24_)->size;
+				_tmp20_ = _tmp25_ > ((gint64) 0);
+			} else {
+				_tmp20_ = FALSE;
+			}
+			_tmp26_ = _tmp20_;
+			_tmp7_ = _tmp26_;
 		}
-		_tmp21_ = _tmp15_;
-		_tmp2_ = _tmp21_;
-	}
-	_tmp22_ = _tmp2_;
-	if (_tmp22_) {
-		_tmp1_ = TRUE;
-	} else {
-		gboolean _tmp23_ = FALSE;
-		RygelHTTPGet* _tmp24_;
-		RygelSubtitle* _tmp25_;
-		gboolean _tmp29_;
-		_tmp24_ = request;
-		_tmp25_ = _tmp24_->subtitle;
-		if (_tmp25_ != NULL) {
-			RygelHTTPGet* _tmp26_;
-			RygelSubtitle* _tmp27_;
-			gint64 _tmp28_;
-			_tmp26_ = request;
-			_tmp27_ = _tmp26_->subtitle;
-			_tmp28_ = _tmp27_->size;
-			_tmp23_ = _tmp28_ > ((gint64) 0);
+		_tmp27_ = _tmp7_;
+		if (_tmp27_) {
+			_tmp6_ = TRUE;
 		} else {
-			_tmp23_ = FALSE;
+			gboolean _tmp28_ = FALSE;
+			RygelHTTPGet* _tmp29_;
+			RygelSubtitle* _tmp30_;
+			gboolean _tmp34_;
+			_tmp29_ = request;
+			_tmp30_ = _tmp29_->subtitle;
+			if (_tmp30_ != NULL) {
+				RygelHTTPGet* _tmp31_;
+				RygelSubtitle* _tmp32_;
+				gint64 _tmp33_;
+				_tmp31_ = request;
+				_tmp32_ = _tmp31_->subtitle;
+				_tmp33_ = _tmp32_->size;
+				_tmp28_ = _tmp33_ > ((gint64) 0);
+			} else {
+				_tmp28_ = FALSE;
+			}
+			_tmp34_ = _tmp28_;
+			_tmp6_ = _tmp34_;
 		}
-		_tmp29_ = _tmp23_;
-		_tmp1_ = _tmp29_;
+		_tmp35_ = _tmp6_;
+		_tmp4_ = _tmp35_;
 	}
-	_tmp30_ = _tmp1_;
-	if (_tmp30_) {
-		_tmp0_ = TRUE;
-	} else {
-		RygelHTTPGet* _tmp31_;
-		SoupMessage* _tmp32_;
-		SoupMessageHeaders* _tmp33_;
-		const gchar* _tmp34_ = NULL;
-		_tmp31_ = request;
-		_tmp32_ = ((RygelHTTPRequest*) _tmp31_)->msg;
-		_tmp33_ = _tmp32_->request_headers;
-		_tmp34_ = soup_message_headers_get_one (_tmp33_, "User-Agent");
-		_tmp0_ = g_strcmp0 (_tmp34_, "PLAYSTATION 3") == 0;
-	}
-	_tmp35_ = _tmp0_;
-	result = _tmp35_;
+	_tmp36_ = _tmp4_;
+	result = _tmp36_;
 	return result;
 }
 

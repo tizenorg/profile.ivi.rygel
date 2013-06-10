@@ -142,6 +142,7 @@ struct _RygelClientHacksClass {
 	void (*translate_container_id) (RygelClientHacks* self, RygelMediaQueryAction* action, gchar** container_id);
 	void (*apply) (RygelClientHacks* self, RygelMediaItem* item);
 	void (*filter_sort_criteria) (RygelClientHacks* self, gchar** sort_criteria);
+	gboolean (*force_seek) (RygelClientHacks* self);
 	void (*search) (RygelClientHacks* self, RygelSearchableContainer* container, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 	RygelMediaObjects* (*search_finish) (RygelClientHacks* self, GAsyncResult* _res_, guint* total_matches, GError** error);
 };
@@ -188,6 +189,7 @@ RygelClientHacks* rygel_client_hacks_construct (GType object_type, const gchar* 
 static void rygel_xbmc_hacks_real_apply (RygelClientHacks* base, RygelMediaItem* item);
 const gchar* rygel_media_item_get_mime_type (RygelMediaItem* self);
 void rygel_media_item_set_mime_type (RygelMediaItem* self, const gchar* value);
+static gboolean rygel_xbmc_hacks_real_force_seek (RygelClientHacks* base);
 
 
 RygelXBMCHacks* rygel_xbmc_hacks_construct (GType object_type, SoupMessage* message, GError** error) {
@@ -262,9 +264,19 @@ static void rygel_xbmc_hacks_real_apply (RygelClientHacks* base, RygelMediaItem*
 }
 
 
+static gboolean rygel_xbmc_hacks_real_force_seek (RygelClientHacks* base) {
+	RygelXBMCHacks * self;
+	gboolean result = FALSE;
+	self = (RygelXBMCHacks*) base;
+	result = TRUE;
+	return result;
+}
+
+
 static void rygel_xbmc_hacks_class_init (RygelXBMCHacksClass * klass) {
 	rygel_xbmc_hacks_parent_class = g_type_class_peek_parent (klass);
 	RYGEL_CLIENT_HACKS_CLASS (klass)->apply = rygel_xbmc_hacks_real_apply;
+	RYGEL_CLIENT_HACKS_CLASS (klass)->force_seek = rygel_xbmc_hacks_real_force_seek;
 }
 
 

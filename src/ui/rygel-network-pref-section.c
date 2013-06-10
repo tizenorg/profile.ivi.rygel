@@ -76,8 +76,8 @@ typedef struct _RygelNetworkPrefSection RygelNetworkPrefSection;
 typedef struct _RygelNetworkPrefSectionClass RygelNetworkPrefSectionClass;
 typedef struct _RygelNetworkPrefSectionPrivate RygelNetworkPrefSectionPrivate;
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
-#define _g_free0(var) (var = (g_free (var), NULL))
 #define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
+#define _g_free0(var) (var = (g_free (var), NULL))
 #define _vala_assert(expr, msg) if G_LIKELY (expr) ; else g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, msg);
 
 struct _RygelPreferencesSection {
@@ -122,6 +122,7 @@ enum  {
 RygelNetworkPrefSection* rygel_network_pref_section_new (GtkBuilder* builder, RygelWritableUserConfig* config, GError** error);
 RygelNetworkPrefSection* rygel_network_pref_section_construct (GType object_type, GtkBuilder* builder, RygelWritableUserConfig* config, GError** error);
 RygelPreferencesSection* rygel_preferences_section_construct (GType object_type, RygelWritableUserConfig* config, const gchar* name);
+static gint rygel_network_pref_section_count_items (RygelNetworkPrefSection* self, GtkTreeModel* model);
 static void rygel_network_pref_section_on_context_available (RygelNetworkPrefSection* self, GUPnPContextManager* manager, GUPnPContext* context);
 static void _rygel_network_pref_section_on_context_available_gupnp_context_manager_context_available (GUPnPContextManager* _sender, GUPnPContext* context, gpointer self);
 static void rygel_network_pref_section_on_context_unavailable (RygelNetworkPrefSection* self, GUPnPContextManager* manager, GUPnPContext* context);
@@ -131,6 +132,9 @@ void rygel_writable_user_config_set_interface (RygelWritableUserConfig* self, co
 static void rygel_network_pref_section_real_set_sensitivity (RygelPreferencesSection* base, gboolean sensitivity);
 static gboolean rygel_network_pref_section_find_interface (RygelNetworkPrefSection* self, const gchar* iface, GtkTreeIter* iter);
 static void rygel_network_pref_section_finalize (GObject* obj);
+static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNotify destroy_func);
+static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func);
+static gint _vala_array_length (gpointer array);
 
 
 static gpointer _g_object_ref0 (gpointer self) {
@@ -156,8 +160,8 @@ RygelNetworkPrefSection* rygel_network_pref_section_construct (GType object_type
 	GtkComboBoxText* _tmp3_;
 	GtkComboBoxText* _tmp4_;
 	GUPnPContextManager* _tmp5_ = NULL;
-	GUPnPContextManager* _tmp12_;
-	GUPnPContextManager* _tmp13_;
+	GUPnPContextManager* _tmp17_;
+	GUPnPContextManager* _tmp18_;
 	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (builder != NULL, NULL);
 	g_return_val_if_fail (config != NULL, NULL);
@@ -175,42 +179,61 @@ RygelNetworkPrefSection* rygel_network_pref_section_construct (GType object_type
 	self->priv->context_manager = _tmp5_;
 	{
 		RygelWritableUserConfig* _tmp6_;
-		gchar* _tmp7_ = NULL;
-		gchar* _tmp8_;
-		GtkComboBoxText* _tmp9_;
-		gchar* _tmp10_;
-		GtkComboBoxText* _tmp11_;
+		gchar** _tmp7_;
+		gchar** _tmp8_ = NULL;
+		gchar** interfaces;
+		gint interfaces_length1;
+		gint _interfaces_size_;
 		_tmp6_ = config;
-		_tmp7_ = rygel_configuration_get_interface ((RygelConfiguration*) _tmp6_, &_inner_error_);
-		_tmp8_ = _tmp7_;
+		_tmp8_ = _tmp7_ = rygel_configuration_get_interfaces ((RygelConfiguration*) _tmp6_, &_inner_error_);
+		interfaces = _tmp8_;
+		interfaces_length1 = _vala_array_length (_tmp7_);
+		_interfaces_size_ = interfaces_length1;
 		if (_inner_error_ != NULL) {
-			goto __catch8_g_error;
+			goto __catch9_g_error;
 		}
-		_tmp9_ = self->priv->iface_entry;
-		_tmp10_ = _tmp8_;
-		gtk_combo_box_text_append_text (_tmp9_, _tmp10_);
-		_g_free0 (_tmp10_);
-		_tmp11_ = self->priv->iface_entry;
-		gtk_combo_box_set_active ((GtkComboBox*) _tmp11_, 0);
+		if (interfaces != NULL) {
+			gint num_items = 0;
+			GtkComboBoxText* _tmp9_;
+			const gchar* _tmp10_;
+			GtkComboBoxText* _tmp11_;
+			GtkTreeModel* _tmp12_;
+			GtkTreeModel* _tmp13_;
+			gint _tmp14_ = 0;
+			GtkComboBoxText* _tmp15_;
+			gint _tmp16_;
+			_tmp9_ = self->priv->iface_entry;
+			_tmp10_ = interfaces[0];
+			gtk_combo_box_text_append_text (_tmp9_, _tmp10_);
+			_tmp11_ = self->priv->iface_entry;
+			_tmp12_ = gtk_combo_box_get_model ((GtkComboBox*) _tmp11_);
+			_tmp13_ = _tmp12_;
+			_tmp14_ = rygel_network_pref_section_count_items (self, _tmp13_);
+			num_items = _tmp14_;
+			_tmp15_ = self->priv->iface_entry;
+			_tmp16_ = num_items;
+			gtk_combo_box_set_active ((GtkComboBox*) _tmp15_, _tmp16_ - 1);
+		}
+		interfaces = (_vala_array_free (interfaces, interfaces_length1, (GDestroyNotify) g_free), NULL);
 	}
-	goto __finally8;
-	__catch8_g_error:
+	goto __finally9;
+	__catch9_g_error:
 	{
 		GError* err = NULL;
 		err = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (err);
 	}
-	__finally8:
+	__finally9:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_object_unref0 (self);
 		return NULL;
 	}
-	_tmp12_ = self->priv->context_manager;
-	g_signal_connect_object (_tmp12_, "context-available", (GCallback) _rygel_network_pref_section_on_context_available_gupnp_context_manager_context_available, self, 0);
-	_tmp13_ = self->priv->context_manager;
-	g_signal_connect_object (_tmp13_, "context-unavailable", (GCallback) _rygel_network_pref_section_on_context_unavailable_gupnp_context_manager_context_unavailable, self, 0);
+	_tmp17_ = self->priv->context_manager;
+	g_signal_connect_object (_tmp17_, "context-available", (GCallback) _rygel_network_pref_section_on_context_available_gupnp_context_manager_context_available, self, 0);
+	_tmp18_ = self->priv->context_manager;
+	g_signal_connect_object (_tmp18_, "context-unavailable", (GCallback) _rygel_network_pref_section_on_context_unavailable_gupnp_context_manager_context_unavailable, self, 0);
 	return self;
 }
 
@@ -384,6 +407,41 @@ static gboolean rygel_network_pref_section_find_interface (RygelNetworkPrefSecti
 }
 
 
+static gint rygel_network_pref_section_count_items (RygelNetworkPrefSection* self, GtkTreeModel* model) {
+	gint result = 0;
+	GtkTreeIter iter = {0};
+	gint count;
+	GtkTreeModel* _tmp0_;
+	GtkTreeIter _tmp1_ = {0};
+	gboolean _tmp2_ = FALSE;
+	gboolean more;
+	g_return_val_if_fail (self != NULL, 0);
+	g_return_val_if_fail (model != NULL, 0);
+	count = 0;
+	_tmp0_ = model;
+	_tmp2_ = gtk_tree_model_get_iter_first (_tmp0_, &_tmp1_);
+	iter = _tmp1_;
+	more = _tmp2_;
+	while (TRUE) {
+		gboolean _tmp3_;
+		gint _tmp4_;
+		GtkTreeModel* _tmp5_;
+		gboolean _tmp6_ = FALSE;
+		_tmp3_ = more;
+		if (!_tmp3_) {
+			break;
+		}
+		_tmp4_ = count;
+		count = _tmp4_ + 1;
+		_tmp5_ = model;
+		_tmp6_ = gtk_tree_model_iter_next (_tmp5_, &iter);
+		more = _tmp6_;
+	}
+	result = count;
+	return result;
+}
+
+
 static void rygel_network_pref_section_class_init (RygelNetworkPrefSectionClass * klass) {
 	rygel_network_pref_section_parent_class = g_type_class_peek_parent (klass);
 	g_type_class_add_private (klass, sizeof (RygelNetworkPrefSectionPrivate));
@@ -416,6 +474,36 @@ GType rygel_network_pref_section_get_type (void) {
 		g_once_init_leave (&rygel_network_pref_section_type_id__volatile, rygel_network_pref_section_type_id);
 	}
 	return rygel_network_pref_section_type_id__volatile;
+}
+
+
+static void _vala_array_destroy (gpointer array, gint array_length, GDestroyNotify destroy_func) {
+	if ((array != NULL) && (destroy_func != NULL)) {
+		int i;
+		for (i = 0; i < array_length; i = i + 1) {
+			if (((gpointer*) array)[i] != NULL) {
+				destroy_func (((gpointer*) array)[i]);
+			}
+		}
+	}
+}
+
+
+static void _vala_array_free (gpointer array, gint array_length, GDestroyNotify destroy_func) {
+	_vala_array_destroy (array, array_length, destroy_func);
+	g_free (array);
+}
+
+
+static gint _vala_array_length (gpointer array) {
+	int length;
+	length = 0;
+	if (array) {
+		while (((gpointer*) array)[length]) {
+			length++;
+		}
+	}
+	return length;
 }
 
 

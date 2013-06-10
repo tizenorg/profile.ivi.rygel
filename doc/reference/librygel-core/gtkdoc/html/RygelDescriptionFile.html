@@ -64,7 +64,7 @@
 <span class="returnvalue">void</span>                <a class="link" href="RygelDescriptionFile.html#rygel-description-file-save" title="rygel_description_file_save ()">rygel_description_file_save</a>         (<em class="parameter"><code><a class="link" href="RygelDescriptionFile.html" title="RygelDescriptionFile"><span class="type">RygelDescriptionFile</span></a> *self</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a class="link" href="RygelDescriptionFile.html" title="RygelDescriptionFile"><span class="returnvalue">RygelDescriptionFile</span></a> * <a class="link" href="RygelDescriptionFile.html#rygel-description-file-new" title="rygel_description_file_new ()">rygel_description_file_new</a>       (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *template</code></em>,
+<a class="link" href="RygelDescriptionFile.html" title="RygelDescriptionFile"><span class="returnvalue">RygelDescriptionFile</span></a> * <a class="link" href="RygelDescriptionFile.html#rygel-description-file-new" title="rygel_description_file_new ()">rygel_description_file_new</a>       (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *template_file</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a class="link" href="RygelDescriptionFile.html" title="RygelDescriptionFile"><span class="returnvalue">RygelDescriptionFile</span></a> * <a class="link" href="RygelDescriptionFile.html#rygel-description-file-new-from-xml-document" title="rygel_description_file_new_from_xml_document ()">rygel_description_file_new_from_xml_document</a>
                                                         (<em class="parameter"><code><span class="type">GUPnPXMLDoc</span> *doc</code></em>);
@@ -328,7 +328,7 @@ Writes the current document to a file.
 <hr>
 <div class="refsect2">
 <a name="rygel-description-file-new"></a><h3>rygel_description_file_new ()</h3>
-<pre class="programlisting"><a class="link" href="RygelDescriptionFile.html" title="RygelDescriptionFile"><span class="returnvalue">RygelDescriptionFile</span></a> * rygel_description_file_new       (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *template</code></em>,
+<pre class="programlisting"><a class="link" href="RygelDescriptionFile.html" title="RygelDescriptionFile"><span class="returnvalue">RygelDescriptionFile</span></a> * rygel_description_file_new       (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *template_file</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
 Constructor to load a description file from disk
@@ -342,7 +342,7 @@ Constructor to load a description file from disk
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><em class="parameter"><code>template</code></em> :</span></p></td>
+<td><p><span class="term"><em class="parameter"><code>template_file</code></em> :</span></p></td>
 <td>the path to the description file. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>

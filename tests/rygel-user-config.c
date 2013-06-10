@@ -34,8 +34,8 @@
 #include <string.h>
 #include <gee.h>
 #include <gio/gio.h>
-#include <config.h>
 #include <glib/gi18n-lib.h>
+#include <config.h>
 #include <gobject/gvaluecollector.h>
 
 
@@ -104,6 +104,7 @@ struct _RygelConfigurationIface {
 	GTypeInterface parent_iface;
 	gboolean (*get_upnp_enabled) (RygelConfiguration* self, GError** error);
 	gchar* (*get_interface) (RygelConfiguration* self, GError** error);
+	gchar** (*get_interfaces) (RygelConfiguration* self, GError** error);
 	gint (*get_port) (RygelConfiguration* self, GError** error);
 	gboolean (*get_transcoding) (RygelConfiguration* self, GError** error);
 	gboolean (*get_allow_upload) (RygelConfiguration* self, GError** error);
@@ -247,6 +248,9 @@ static GType rygel_user_config_section_pair_get_type (void) G_GNUC_CONST G_GNUC_
 #define RYGEL_USER_CONFIG_PICTURE_UPLOAD_DIR_PATH_KEY "picture-" RYGEL_USER_CONFIG_UPLOAD_FOLDER_KEY
 static gboolean rygel_user_config_real_get_upnp_enabled (RygelConfiguration* base, GError** error);
 gboolean rygel_configuration_get_bool (RygelConfiguration* self, const gchar* section, const gchar* key, GError** error);
+static gchar** rygel_user_config_real_get_interfaces (RygelConfiguration* base, GError** error);
+GeeArrayList* rygel_configuration_get_string_list (RygelConfiguration* self, const gchar* section, const gchar* key, GError** error);
+static void _vala_array_add1 (gchar*** array, int* length, int* size, gchar* value);
 static gchar* rygel_user_config_real_get_interface (RygelConfiguration* base, GError** error);
 gchar* rygel_configuration_get_string (RygelConfiguration* self, const gchar* section, const gchar* key, GError** error);
 static gint rygel_user_config_real_get_port (RygelConfiguration* base, GError** error);
@@ -338,6 +342,61 @@ static gboolean rygel_user_config_real_get_upnp_enabled (RygelConfiguration* bas
 		return FALSE;
 	}
 	result = _tmp1_;
+	return result;
+}
+
+
+static void _vala_array_add1 (gchar*** array, int* length, int* size, gchar* value) {
+	if ((*length) == (*size)) {
+		*size = (*size) ? (2 * (*size)) : 4;
+		*array = g_renew (gchar*, *array, (*size) + 1);
+	}
+	(*array)[(*length)++] = value;
+	(*array)[*length] = NULL;
+}
+
+
+static gchar** rygel_user_config_real_get_interfaces (RygelConfiguration* base, GError** error) {
+	RygelUserConfig * self;
+	gchar** result = NULL;
+	GeeArrayList* _tmp0_ = NULL;
+	GeeArrayList* _tmp1_;
+	GeeArrayList* _tmp2_;
+	gint _tmp3_ = 0;
+	gpointer* _tmp4_ = NULL;
+	gchar** _tmp5_;
+	gint _tmp5__length1;
+	gchar** interfaces;
+	gint interfaces_length1;
+	gint _interfaces_size_;
+	gchar** _tmp6_;
+	gint _tmp6__length1;
+	GError * _inner_error_ = NULL;
+	self = (RygelUserConfig*) base;
+	_tmp0_ = rygel_configuration_get_string_list ((RygelConfiguration*) self, RYGEL_USER_CONFIG_GENERAL_SECTION, RYGEL_USER_CONFIG_IFACE_KEY, &_inner_error_);
+	_tmp1_ = _tmp0_;
+	if (_inner_error_ != NULL) {
+		g_propagate_error (error, _inner_error_);
+		return NULL;
+	}
+	_tmp2_ = _tmp1_;
+	_tmp4_ = gee_collection_to_array ((GeeCollection*) _tmp2_, &_tmp3_);
+	_tmp5_ = _tmp4_;
+	_tmp5__length1 = _tmp3_;
+	_g_object_unref0 (_tmp2_);
+	interfaces = _tmp5_;
+	interfaces_length1 = _tmp5__length1;
+	_interfaces_size_ = interfaces_length1;
+	_tmp6_ = interfaces;
+	_tmp6__length1 = interfaces_length1;
+	if (_tmp6_ != NULL) {
+		gchar** _tmp7_;
+		gint _tmp7__length1;
+		_tmp7_ = interfaces;
+		_tmp7__length1 = interfaces_length1;
+		_vala_array_add1 (&interfaces, &interfaces_length1, &_interfaces_size_, NULL);
+	}
+	result = interfaces;
 	return result;
 }
 
@@ -626,13 +685,13 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 	GFileMonitor* _tmp8_ = NULL;
 	GFileMonitor* _tmp9_;
 	GFileMonitor* _tmp10_;
-	const gchar* _tmp18_;
-	GFile* _tmp19_ = NULL;
+	const gchar* _tmp19_;
+	GFile* _tmp20_ = NULL;
 	GFile* key_g_file;
-	GFile* _tmp20_;
-	GFileMonitor* _tmp21_ = NULL;
-	GFileMonitor* _tmp22_;
+	GFile* _tmp21_;
+	GFileMonitor* _tmp22_ = NULL;
 	GFileMonitor* _tmp23_;
+	GFileMonitor* _tmp24_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	g_return_if_fail (local_path != NULL);
@@ -651,7 +710,7 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 		return;
 	}
 	_tmp4_ = system_path;
-	g_debug ("rygel-user-config.vala:222: Loaded system configuration from file '%s'", _tmp4_);
+	g_debug ("rygel-user-config.vala:234: Loaded system configuration from file '%s'", _tmp4_);
 	_tmp5_ = system_path;
 	_tmp6_ = g_file_new_for_path (_tmp5_);
 	sys_key_g_file = _tmp6_;
@@ -678,26 +737,27 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 			goto __catch0_g_error;
 		}
 		_tmp13_ = local_path;
-		g_debug ("rygel-user-config.vala:237: Loaded user configuration from file '%s'", _tmp13_);
+		g_debug ("rygel-user-config.vala:249: Loaded user configuration from file '%s'", _tmp13_);
 	}
 	goto __finally0;
 	__catch0_g_error:
 	{
 		GError* _error_ = NULL;
-		const gchar* _tmp14_;
-		GError* _tmp15_;
-		const gchar* _tmp16_;
-		GKeyFile* _tmp17_;
+		const gchar* _tmp14_ = NULL;
+		const gchar* _tmp15_;
+		GError* _tmp16_;
+		const gchar* _tmp17_;
+		GKeyFile* _tmp18_;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp14_ = local_path;
-		_tmp15_ = _error_;
-		_tmp16_ = _tmp15_->message;
-		g_debug ("rygel-user-config.vala:239: Failed to load user configuration from fil" \
-"e '%s': %s", _tmp14_, _tmp16_);
-		_tmp17_ = g_key_file_new ();
+		_tmp14_ = _ ("Failed to load user configuration from file '%s': %s");
+		_tmp15_ = local_path;
+		_tmp16_ = _error_;
+		_tmp17_ = _tmp16_->message;
+		g_warning (_tmp14_, _tmp15_, _tmp17_);
+		_tmp18_ = g_key_file_new ();
 		_g_key_file_unref0 (self->key_file);
-		self->key_file = _tmp17_;
+		self->key_file = _tmp18_;
 		_g_error_free0 (_error_);
 	}
 	__finally0:
@@ -706,12 +766,12 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 		_g_object_unref0 (sys_key_g_file);
 		return;
 	}
-	_tmp18_ = local_path;
-	_tmp19_ = g_file_new_for_path (_tmp18_);
-	key_g_file = _tmp19_;
-	_tmp20_ = key_g_file;
-	_tmp21_ = g_file_monitor_file (_tmp20_, G_FILE_MONITOR_NONE, NULL, &_inner_error_);
-	_tmp22_ = _tmp21_;
+	_tmp19_ = local_path;
+	_tmp20_ = g_file_new_for_path (_tmp19_);
+	key_g_file = _tmp20_;
+	_tmp21_ = key_g_file;
+	_tmp22_ = g_file_monitor_file (_tmp21_, G_FILE_MONITOR_NONE, NULL, &_inner_error_);
+	_tmp23_ = _tmp22_;
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		_g_object_unref0 (key_g_file);
@@ -719,9 +779,9 @@ static void rygel_user_config_initialize (RygelUserConfig* self, const gchar* lo
 		return;
 	}
 	_g_object_unref0 (self->key_file_monitor);
-	self->key_file_monitor = _tmp22_;
-	_tmp23_ = self->key_file_monitor;
-	g_signal_connect_object (_tmp23_, "changed", (GCallback) _rygel_user_config_on_local_config_changed_g_file_monitor_changed, self, 0);
+	self->key_file_monitor = _tmp23_;
+	_tmp24_ = self->key_file_monitor;
+	g_signal_connect_object (_tmp24_, "changed", (GCallback) _rygel_user_config_on_local_config_changed_g_file_monitor_changed, self, 0);
 	_g_object_unref0 (key_g_file);
 	_g_object_unref0 (sys_key_g_file);
 }
@@ -3180,6 +3240,7 @@ static void rygel_user_config_class_init (RygelUserConfigClass * klass) {
 static void rygel_user_config_rygel_configuration_interface_init (RygelConfigurationIface * iface) {
 	rygel_user_config_rygel_configuration_parent_iface = g_type_interface_peek_parent (iface);
 	iface->get_upnp_enabled = (gboolean (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_upnp_enabled;
+	iface->get_interfaces = (gchar** (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_interfaces;
 	iface->get_interface = (gchar* (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_interface;
 	iface->get_port = (gint (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_port;
 	iface->get_transcoding = (gboolean (*)(RygelConfiguration*, GError**)) rygel_user_config_real_get_transcoding;

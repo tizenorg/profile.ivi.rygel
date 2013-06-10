@@ -670,7 +670,7 @@ static void rygel_media_device_on_context_available (RygelMediaDevice* self, GUP
 			_tmp7_ = rygel_device_context_new (_tmp5_, _tmp6_, &_inner_error_);
 			ctx = _tmp7_;
 			if (_inner_error_ != NULL) {
-				goto __catch34_g_error;
+				goto __catch36_g_error;
 			}
 			_tmp8_ = self->priv->devices;
 			_tmp9_ = context;
@@ -680,8 +680,8 @@ static void rygel_media_device_on_context_available (RygelMediaDevice* self, GUP
 			gee_abstract_map_set ((GeeAbstractMap*) _tmp8_, _tmp11_, _tmp12_);
 			_rygel_device_context_unref0 (ctx);
 		}
-		goto __finally34;
-		__catch34_g_error:
+		goto __finally36;
+		__catch36_g_error:
 		{
 			GError* _error_ = NULL;
 			GError* _tmp13_;
@@ -693,7 +693,7 @@ static void rygel_media_device_on_context_available (RygelMediaDevice* self, GUP
 			g_warning ("rygel-media-device.vala:131: Failed to create device context: %s", _tmp14_);
 			_g_error_free0 (_error_);
 		}
-		__finally34:
+		__finally36:
 		if (_inner_error_ != NULL) {
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);

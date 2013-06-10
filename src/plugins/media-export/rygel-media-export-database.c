@@ -115,7 +115,7 @@ RygelMediaExportDatabaseCursor* rygel_media_export_database_exec_cursor (RygelMe
 RygelMediaExportDatabaseCursor* rygel_media_export_database_cursor_new (sqlite3* db, const gchar* sql, GValue* arguments, int arguments_length1, GError** error);
 RygelMediaExportDatabaseCursor* rygel_media_export_database_cursor_construct (GType object_type, sqlite3* db, const gchar* sql, GValue* arguments, int arguments_length1, GError** error);
 void rygel_media_export_sqlite_wrapper_throw_if_code_is_error (RygelMediaExportSqliteWrapper* self, gint sqlite_error, GError** error);
-gboolean rygel_media_export_database_cursor_has_next (RygelMediaExportDatabaseCursor* self);
+gboolean rygel_media_export_database_cursor_has_next (RygelMediaExportDatabaseCursor* self, GError** error);
 sqlite3_stmt* rygel_media_export_database_cursor_next (RygelMediaExportDatabaseCursor* self, GError** error);
 gint rygel_media_export_database_query_value (RygelMediaExportDatabase* self, const gchar* sql, GValue* args, int args_length1, GError** error);
 void rygel_media_export_database_analyze (RygelMediaExportDatabase* self);
@@ -261,68 +261,75 @@ static gint _rygel_media_export_database_utf8_collate_sqlite_compare_callback (g
 
 RygelMediaExportDatabase* rygel_media_export_database_construct (GType object_type, const gchar* name, GError** error) {
 	RygelMediaExportDatabase * self = NULL;
-	const gchar* _tmp0_ = NULL;
-	gchar* _tmp1_ = NULL;
-	gchar* dirname;
-	const gchar* _tmp2_;
-	const gchar* _tmp3_;
-	const gchar* _tmp4_;
-	gchar* _tmp5_ = NULL;
-	gchar* _tmp6_;
-	gchar* _tmp7_ = NULL;
-	gchar* _tmp8_;
-	gchar* db_file;
-	const gchar* _tmp9_;
-	const gchar* _tmp10_;
-	sqlite3* _tmp11_;
-	sqlite3* _tmp12_;
+	gchar* db_file = NULL;
+	const gchar* _tmp0_;
+	const gchar* _tmp11_;
+	const gchar* _tmp12_;
 	sqlite3* _tmp13_;
 	sqlite3* _tmp14_;
+	sqlite3* _tmp15_;
+	sqlite3* _tmp16_;
 	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (name != NULL, NULL);
-	_tmp0_ = g_get_user_cache_dir ();
-	_tmp1_ = g_build_filename (_tmp0_, "rygel", NULL);
-	dirname = _tmp1_;
-	_tmp2_ = dirname;
-	g_mkdir_with_parents (_tmp2_, 0750);
-	_tmp3_ = dirname;
-	_tmp4_ = name;
-	_tmp5_ = g_strdup_printf ("%s.db", _tmp4_);
-	_tmp6_ = _tmp5_;
-	_tmp7_ = g_build_filename (_tmp3_, _tmp6_, NULL);
-	_tmp8_ = _tmp7_;
-	_g_free0 (_tmp6_);
-	db_file = _tmp8_;
-	_tmp9_ = db_file;
-	self = (RygelMediaExportDatabase*) rygel_media_export_sqlite_wrapper_construct (object_type, _tmp9_, &_inner_error_);
+	_tmp0_ = name;
+	if (g_strcmp0 (_tmp0_, ":memory:") != 0) {
+		const gchar* _tmp1_ = NULL;
+		gchar* _tmp2_ = NULL;
+		gchar* dirname;
+		const gchar* _tmp3_;
+		const gchar* _tmp4_;
+		const gchar* _tmp5_;
+		gchar* _tmp6_ = NULL;
+		gchar* _tmp7_;
+		gchar* _tmp8_ = NULL;
+		_tmp1_ = g_get_user_cache_dir ();
+		_tmp2_ = g_build_filename (_tmp1_, "rygel", NULL);
+		dirname = _tmp2_;
+		_tmp3_ = dirname;
+		g_mkdir_with_parents (_tmp3_, 0750);
+		_tmp4_ = dirname;
+		_tmp5_ = name;
+		_tmp6_ = g_strdup_printf ("%s.db", _tmp5_);
+		_tmp7_ = _tmp6_;
+		_tmp8_ = g_build_filename (_tmp4_, _tmp7_, NULL);
+		_g_free0 (db_file);
+		db_file = _tmp8_;
+		_g_free0 (_tmp7_);
+		_g_free0 (dirname);
+	} else {
+		const gchar* _tmp9_;
+		gchar* _tmp10_;
+		_tmp9_ = name;
+		_tmp10_ = g_strdup (_tmp9_);
+		_g_free0 (db_file);
+		db_file = _tmp10_;
+	}
+	_tmp11_ = db_file;
+	self = (RygelMediaExportDatabase*) rygel_media_export_sqlite_wrapper_construct (object_type, _tmp11_, &_inner_error_);
 	if (_inner_error_ != NULL) {
 		if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 			g_propagate_error (error, _inner_error_);
 			_g_free0 (db_file);
-			_g_free0 (dirname);
 			_g_object_unref0 (self);
 			return NULL;
 		} else {
 			_g_free0 (db_file);
-			_g_free0 (dirname);
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return NULL;
 		}
 	}
-	_tmp10_ = db_file;
-	g_debug ("rygel-media-export-database.vala:97: Using database file %s", _tmp10_);
+	_tmp12_ = db_file;
+	g_debug ("rygel-media-export-database.vala:104: Using database file %s", _tmp12_);
 	rygel_media_export_database_exec (self, "PRAGMA synchronous = OFF", NULL, 0, &_inner_error_);
 	if (_inner_error_ != NULL) {
 		if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 			g_propagate_error (error, _inner_error_);
 			_g_free0 (db_file);
-			_g_free0 (dirname);
 			_g_object_unref0 (self);
 			return NULL;
 		} else {
 			_g_free0 (db_file);
-			_g_free0 (dirname);
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return NULL;
@@ -333,12 +340,10 @@ RygelMediaExportDatabase* rygel_media_export_database_construct (GType object_ty
 		if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 			g_propagate_error (error, _inner_error_);
 			_g_free0 (db_file);
-			_g_free0 (dirname);
 			_g_object_unref0 (self);
 			return NULL;
 		} else {
 			_g_free0 (db_file);
-			_g_free0 (dirname);
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return NULL;
@@ -349,25 +354,22 @@ RygelMediaExportDatabase* rygel_media_export_database_construct (GType object_ty
 		if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 			g_propagate_error (error, _inner_error_);
 			_g_free0 (db_file);
-			_g_free0 (dirname);
 			_g_object_unref0 (self);
 			return NULL;
 		} else {
 			_g_free0 (db_file);
-			_g_free0 (dirname);
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return NULL;
 		}
 	}
-	_tmp11_ = rygel_media_export_sqlite_wrapper_get_db ((RygelMediaExportSqliteWrapper*) self);
-	_tmp12_ = _tmp11_;
-	sqlite3_create_function (_tmp12_, "contains", 2, SQLITE_UTF8, NULL, _rygel_media_export_database_utf8_contains_sqlite_user_func_callback, NULL, NULL);
 	_tmp13_ = rygel_media_export_sqlite_wrapper_get_db ((RygelMediaExportSqliteWrapper*) self);
 	_tmp14_ = _tmp13_;
-	sqlite3_create_collation (_tmp14_, "CASEFOLD", SQLITE_UTF8, NULL, (int (*)(void *, int,  const void *, int,  const void *)) _rygel_media_export_database_utf8_collate_sqlite_compare_callback);
+	sqlite3_create_function (_tmp14_, "contains", 2, SQLITE_UTF8, NULL, _rygel_media_export_database_utf8_contains_sqlite_user_func_callback, NULL, NULL);
+	_tmp15_ = rygel_media_export_sqlite_wrapper_get_db ((RygelMediaExportSqliteWrapper*) self);
+	_tmp16_ = _tmp15_;
+	sqlite3_create_collation (_tmp16_, "CASEFOLD", SQLITE_UTF8, NULL, (int (*)(void *, int,  const void *, int,  const void *)) _rygel_media_export_database_utf8_collate_sqlite_compare_callback);
 	_g_free0 (db_file);
-	_g_free0 (dirname);
 	return self;
 }
 
@@ -521,14 +523,28 @@ void rygel_media_export_database_exec (RygelMediaExportDatabase* self, const gch
 	while (TRUE) {
 		RygelMediaExportDatabaseCursor* _tmp8_;
 		gboolean _tmp9_ = FALSE;
-		RygelMediaExportDatabaseCursor* _tmp10_;
+		gboolean _tmp10_;
+		RygelMediaExportDatabaseCursor* _tmp11_;
 		_tmp8_ = cursor;
-		_tmp9_ = rygel_media_export_database_cursor_has_next (_tmp8_);
-		if (!_tmp9_) {
+		_tmp9_ = rygel_media_export_database_cursor_has_next (_tmp8_, &_inner_error_);
+		_tmp10_ = _tmp9_;
+		if (_inner_error_ != NULL) {
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+				g_propagate_error (error, _inner_error_);
+				_g_object_unref0 (cursor);
+				return;
+			} else {
+				_g_object_unref0 (cursor);
+				g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+				g_clear_error (&_inner_error_);
+				return;
+			}
+		}
+		if (!_tmp10_) {
 			break;
 		}
-		_tmp10_ = cursor;
-		rygel_media_export_database_cursor_next (_tmp10_, &_inner_error_);
+		_tmp11_ = cursor;
+		rygel_media_export_database_cursor_next (_tmp11_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 				g_propagate_error (error, _inner_error_);

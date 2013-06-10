@@ -3,6 +3,7 @@
 
 /*
  * Copyright (C) 2009,2010 Jens Georg <mail@jensge.org>.
+ * Copyright (C) 2013 Intel Corporation.
  *
  * Author: Jens Georg <mail@jensge.org>
  *
@@ -28,6 +29,7 @@
 #include <string.h>
 #include <gee.h>
 #include <stdlib.h>
+#include <rygel-core.h>
 #include <gio/gio.h>
 #include <rygel-server.h>
 #include <glib/gi18n-lib.h>
@@ -93,9 +95,9 @@ typedef struct _RygelMediaExportSQLFactory RygelMediaExportSQLFactory;
 typedef struct _RygelMediaExportSQLFactoryClass RygelMediaExportSQLFactoryClass;
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 #define _g_free0(var) (var = (g_free (var), NULL))
+#define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 
 #define RYGEL_MEDIA_EXPORT_TYPE_SQL_STRING (rygel_media_export_sql_string_get_type ())
-#define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 
 #define RYGEL_MEDIA_EXPORT_TYPE_DATABASE_CURSOR (rygel_media_export_database_cursor_get_type ())
 #define RYGEL_MEDIA_EXPORT_DATABASE_CURSOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_MEDIA_EXPORT_TYPE_DATABASE_CURSOR, RygelMediaExportDatabaseCursor))
@@ -278,7 +280,8 @@ typedef enum  {
 	RYGEL_MEDIA_EXPORT_SQL_STRING_MAX_UPDATE_ID,
 	RYGEL_MEDIA_EXPORT_SQL_STRING_MAKE_GUARDED,
 	RYGEL_MEDIA_EXPORT_SQL_STRING_IS_GUARDED,
-	RYGEL_MEDIA_EXPORT_SQL_STRING_UPDATE_GUARDED_OBJECT
+	RYGEL_MEDIA_EXPORT_SQL_STRING_UPDATE_GUARDED_OBJECT,
+	RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_REFERENCE
 } RygelMediaExportSQLString;
 
 typedef enum  {
@@ -308,7 +311,8 @@ typedef enum  {
 	RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_DISC,
 	RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_OBJECT_UPDATE_ID,
 	RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_DELETED_CHILD_COUNT,
-	RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_CONTAINER_UPDATE_ID
+	RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_CONTAINER_UPDATE_ID,
+	RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_REFERENCE_ID
 } RygelMediaExportDetailColumn;
 
 struct _RygelMediaExportUpdatableObjectIface {
@@ -353,11 +357,10 @@ RygelMediaExportSQLFactory* rygel_media_export_sql_factory_construct (GType obje
 static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* self, const gchar* name, GError** error);
 RygelMediaExportObjectFactory* rygel_media_export_object_factory_new (void);
 RygelMediaExportObjectFactory* rygel_media_export_object_factory_construct (GType object_type);
-GQuark rygel_media_export_database_error_quark (void);
-static void rygel_media_export_media_cache_get_exists_cache (RygelMediaExportMediaCache* self, GError** error);
 gchar* rygel_media_export_media_cache_get_id (GFile* file);
 void rygel_media_export_media_cache_ensure_exists (GError** error);
 RygelMediaExportMediaCache* rygel_media_export_media_cache_get_default (void);
+GQuark rygel_media_export_database_error_quark (void);
 void rygel_media_export_media_cache_remove_by_id (RygelMediaExportMediaCache* self, const gchar* id, GError** error);
 void rygel_media_export_database_exec (RygelMediaExportDatabase* self, const gchar* sql, GValue* arguments, int arguments_length1, GError** error);
 GType rygel_media_export_sql_string_get_type (void) G_GNUC_CONST;
@@ -382,7 +385,7 @@ void rygel_media_export_database_cursor_value_take_iterator (GValue* value, gpoi
 gpointer rygel_media_export_database_cursor_value_get_iterator (const GValue* value);
 GType rygel_media_export_database_cursor_iterator_get_type (void) G_GNUC_CONST;
 RygelMediaExportDatabaseCursorIterator* rygel_media_export_database_cursor_iterator (RygelMediaExportDatabaseCursor* self);
-gboolean rygel_media_export_database_cursor_iterator_next (RygelMediaExportDatabaseCursorIterator* self);
+gboolean rygel_media_export_database_cursor_iterator_next (RygelMediaExportDatabaseCursorIterator* self, GError** error);
 sqlite3_stmt* rygel_media_export_database_cursor_iterator_get (RygelMediaExportDatabaseCursorIterator* self, GError** error);
 static RygelMediaObject* rygel_media_export_media_cache_get_object_from_statement (RygelMediaExportMediaCache* self, RygelMediaContainer* parent, sqlite3_stmt* statement);
 RygelMediaContainer* rygel_media_export_media_cache_get_container (RygelMediaExportMediaCache* self, const gchar* container_id, GError** error);
@@ -414,15 +417,16 @@ void rygel_media_export_media_cache_debug_statistics (RygelMediaExportMediaCache
 GeeArrayList* rygel_media_export_media_cache_get_child_ids (RygelMediaExportMediaCache* self, const gchar* container_id, GError** error);
 GeeList* rygel_media_export_media_cache_get_meta_data_column_by_filter (RygelMediaExportMediaCache* self, const gchar* column, const gchar* filter, GValueArray* args, glong offset, glong max_count, GError** error);
 GeeList* rygel_media_export_media_cache_get_object_attribute_by_search_expression (RygelMediaExportMediaCache* self, const gchar* attribute, RygelSearchExpression* expression, glong offset, guint max_count, GError** error);
-static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar* operand, gchar** collate, GError** error);
+static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar* operand, gchar** collate, gboolean for_sort, GError** error);
 gchar* rygel_media_export_media_cache_get_reset_token (RygelMediaExportMediaCache* self);
 void rygel_media_export_media_cache_save_reset_token (RygelMediaExportMediaCache* self, const gchar* token);
 void rygel_media_export_media_cache_drop_virtual_folders (RygelMediaExportMediaCache* self);
 void rygel_media_export_media_cache_make_object_guarded (RygelMediaExportMediaCache* self, RygelMediaObject* object, gboolean guarded);
 static gboolean rygel_media_export_media_cache_is_object_guarded (RygelMediaExportMediaCache* self, const gchar* id);
+void rygel_media_export_media_cache_rebuild_exists_cache (RygelMediaExportMediaCache* self, GError** error);
 RygelMediaExportDatabase* rygel_media_export_database_new (const gchar* name, GError** error);
 RygelMediaExportDatabase* rygel_media_export_database_construct (GType object_type, const gchar* name, GError** error);
-#define RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION "13"
+#define RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION "14"
 RygelMediaExportMediaCacheUpgrader* rygel_media_export_media_cache_upgrader_new (RygelMediaExportDatabase* database, RygelMediaExportSQLFactory* sql);
 RygelMediaExportMediaCacheUpgrader* rygel_media_export_media_cache_upgrader_construct (GType object_type, RygelMediaExportDatabase* database, RygelMediaExportSQLFactory* sql);
 gpointer rygel_media_export_media_cache_upgrader_ref (gpointer instance);
@@ -510,28 +514,66 @@ GType rygel_media_export_exists_cache_entry_get_type (void) {
 
 static RygelMediaExportMediaCache* rygel_media_export_media_cache_construct (GType object_type, GError** error) {
 	RygelMediaExportMediaCache * self = NULL;
-	RygelMediaExportSQLFactory* _tmp0_;
-	RygelMediaExportObjectFactory* _tmp1_;
+	gchar* _tmp0_;
+	gchar* db_name;
+	RygelMediaExportSQLFactory* _tmp5_;
+	const gchar* _tmp6_;
+	RygelMediaExportObjectFactory* _tmp7_;
 	GError * _inner_error_ = NULL;
 	self = (RygelMediaExportMediaCache*) g_object_new (object_type, NULL);
-	_tmp0_ = rygel_media_export_sql_factory_new ();
+	_tmp0_ = g_strdup ("media-export");
+	db_name = _tmp0_;
+	{
+		RygelMetaConfig* _tmp1_ = NULL;
+		RygelMetaConfig* config;
+		gboolean _tmp2_ = FALSE;
+		gboolean _tmp3_;
+		_tmp1_ = rygel_meta_config_get_default ();
+		config = _tmp1_;
+		_tmp2_ = rygel_configuration_get_bool ((RygelConfiguration*) config, "MediaExport", "use-temp-db", &_inner_error_);
+		_tmp3_ = _tmp2_;
+		if (_inner_error_ != NULL) {
+			_g_object_unref0 (config);
+			goto __catch5_g_error;
+		}
+		if (_tmp3_) {
+			gchar* _tmp4_;
+			_tmp4_ = g_strdup (":memory:");
+			_g_free0 (db_name);
+			db_name = _tmp4_;
+		}
+		_g_object_unref0 (config);
+	}
+	goto __finally5;
+	__catch5_g_error:
+	{
+		GError* _error_ = NULL;
+		_error_ = _inner_error_;
+		_inner_error_ = NULL;
+		_g_error_free0 (_error_);
+	}
+	__finally5:
+	if (_inner_error_ != NULL) {
+		g_propagate_error (error, _inner_error_);
+		_g_free0 (db_name);
+		_g_object_unref0 (self);
+		return NULL;
+	}
+	_tmp5_ = rygel_media_export_sql_factory_new ();
 	_g_object_unref0 (self->priv->sql);
-	self->priv->sql = _tmp0_;
-	rygel_media_export_media_cache_open_db (self, "media-export", &_inner_error_);
+	self->priv->sql = _tmp5_;
+	_tmp6_ = db_name;
+	rygel_media_export_media_cache_open_db (self, _tmp6_, &_inner_error_);
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
+		_g_free0 (db_name);
 		_g_object_unref0 (self);
 		return NULL;
 	}
-	_tmp1_ = rygel_media_export_object_factory_new ();
+	_tmp7_ = rygel_media_export_object_factory_new ();
 	_g_object_unref0 (self->priv->factory);
-	self->priv->factory = _tmp1_;
-	rygel_media_export_media_cache_get_exists_cache (self, &_inner_error_);
-	if (_inner_error_ != NULL) {
-		g_propagate_error (error, _inner_error_);
-		_g_object_unref0 (self);
-		return NULL;
-	}
+	self->priv->factory = _tmp7_;
+	_g_free0 (db_name);
 	return self;
 }
 
@@ -692,7 +734,7 @@ void rygel_media_export_media_cache_save_container (RygelMediaExportMediaCache* 
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch5_rygel_media_export_database_error;
+				goto __catch6_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -702,23 +744,23 @@ void rygel_media_export_media_cache_save_container (RygelMediaExportMediaCache* 
 		rygel_media_export_media_cache_create_object (self, (RygelMediaObject*) _tmp1_, FALSE, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch5_rygel_media_export_database_error;
+				goto __catch6_rygel_media_export_database_error;
 			}
-			goto __finally5;
+			goto __finally6;
 		}
 		_tmp2_ = self->priv->db;
 		rygel_media_export_database_commit (_tmp2_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch5_rygel_media_export_database_error;
+				goto __catch6_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
 	}
-	goto __finally5;
-	__catch5_rygel_media_export_database_error:
+	goto __finally6;
+	__catch6_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp3_;
@@ -732,9 +774,9 @@ void rygel_media_export_media_cache_save_container (RygelMediaExportMediaCache* 
 		_tmp5_ = _g_error_copy0 (_tmp4_);
 		_inner_error_ = _tmp5_;
 		_g_error_free0 (_error_);
-		goto __finally5;
+		goto __finally6;
 	}
-	__finally5:
+	__finally6:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		return;
@@ -759,7 +801,7 @@ void rygel_media_export_media_cache_save_item (RygelMediaExportMediaCache* self,
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch6_rygel_media_export_database_error;
+				goto __catch7_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -769,32 +811,32 @@ void rygel_media_export_media_cache_save_item (RygelMediaExportMediaCache* self,
 		rygel_media_export_media_cache_save_metadata (self, _tmp1_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch6_rygel_media_export_database_error;
+				goto __catch7_rygel_media_export_database_error;
 			}
-			goto __finally6;
+			goto __finally7;
 		}
 		_tmp2_ = item;
 		_tmp3_ = override_guarded;
 		rygel_media_export_media_cache_create_object (self, (RygelMediaObject*) _tmp2_, _tmp3_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch6_rygel_media_export_database_error;
+				goto __catch7_rygel_media_export_database_error;
 			}
-			goto __finally6;
+			goto __finally7;
 		}
 		_tmp4_ = self->priv->db;
 		rygel_media_export_database_commit (_tmp4_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch6_rygel_media_export_database_error;
+				goto __catch7_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
 	}
-	goto __finally6;
-	__catch6_rygel_media_export_database_error:
+	goto __finally7;
+	__catch7_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		const gchar* _tmp5_ = NULL;
@@ -821,9 +863,9 @@ void rygel_media_export_media_cache_save_item (RygelMediaExportMediaCache* self,
 		_tmp13_ = _g_error_copy0 (_tmp12_);
 		_inner_error_ = _tmp13_;
 		_g_error_free0 (_error_);
-		goto __finally6;
+		goto __finally7;
 	}
-	__finally6:
+	__finally7:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		return;
@@ -890,28 +932,24 @@ RygelMediaObject* rygel_media_export_media_cache_get_object (RygelMediaExportMed
 		while (TRUE) {
 			RygelMediaExportDatabaseCursorIterator* _tmp7_;
 			gboolean _tmp8_ = FALSE;
-			RygelMediaExportDatabaseCursorIterator* _tmp9_;
-			sqlite3_stmt* _tmp10_ = NULL;
+			gboolean _tmp9_;
+			RygelMediaExportDatabaseCursorIterator* _tmp10_;
+			sqlite3_stmt* _tmp11_ = NULL;
 			sqlite3_stmt* statement;
-			RygelMediaObject* _tmp11_;
-			RygelMediaContainer* _tmp12_;
-			RygelMediaContainer* parent_container;
+			RygelMediaObject* _tmp12_;
 			RygelMediaContainer* _tmp13_;
-			sqlite3_stmt* _tmp14_;
-			RygelMediaObject* _tmp15_ = NULL;
+			RygelMediaContainer* parent_container;
+			RygelMediaContainer* _tmp14_;
+			sqlite3_stmt* _tmp15_;
+			RygelMediaObject* _tmp16_ = NULL;
 			RygelMediaObject* object;
-			RygelMediaObject* _tmp16_;
-			RygelMediaContainer* _tmp17_;
-			RygelMediaObject* _tmp18_;
+			RygelMediaObject* _tmp17_;
+			RygelMediaContainer* _tmp18_;
 			RygelMediaObject* _tmp19_;
+			RygelMediaObject* _tmp20_;
 			_tmp7_ = _statement_it;
-			_tmp8_ = rygel_media_export_database_cursor_iterator_next (_tmp7_);
-			if (!_tmp8_) {
-				break;
-			}
-			_tmp9_ = _statement_it;
-			_tmp10_ = rygel_media_export_database_cursor_iterator_get (_tmp9_, &_inner_error_);
-			statement = _tmp10_;
+			_tmp8_ = rygel_media_export_database_cursor_iterator_next (_tmp7_, &_inner_error_);
+			_tmp9_ = _tmp8_;
 			if (_inner_error_ != NULL) {
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 					g_propagate_error (error, _inner_error_);
@@ -930,20 +968,44 @@ RygelMediaObject* rygel_media_export_media_cache_get_object (RygelMediaExportMed
 					return NULL;
 				}
 			}
-			_tmp11_ = parent;
-			_tmp12_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp11_, RYGEL_TYPE_MEDIA_CONTAINER) ? ((RygelMediaContainer*) _tmp11_) : NULL);
-			parent_container = _tmp12_;
-			_tmp13_ = parent_container;
-			_tmp14_ = statement;
-			_tmp15_ = rygel_media_export_media_cache_get_object_from_statement (self, _tmp13_, _tmp14_);
-			object = _tmp15_;
-			_tmp16_ = object;
-			_tmp17_ = parent_container;
-			rygel_media_object_set_parent_ref (_tmp16_, _tmp17_);
-			_tmp18_ = object;
-			_tmp19_ = _g_object_ref0 (_tmp18_);
+			if (!_tmp9_) {
+				break;
+			}
+			_tmp10_ = _statement_it;
+			_tmp11_ = rygel_media_export_database_cursor_iterator_get (_tmp10_, &_inner_error_);
+			statement = _tmp11_;
+			if (_inner_error_ != NULL) {
+				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+					g_propagate_error (error, _inner_error_);
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					_g_object_unref0 (parent);
+					values = (_vala_GValue_array_free (values, values_length1), NULL);
+					return NULL;
+				} else {
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					_g_object_unref0 (parent);
+					values = (_vala_GValue_array_free (values, values_length1), NULL);
+					g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+					g_clear_error (&_inner_error_);
+					return NULL;
+				}
+			}
+			_tmp12_ = parent;
+			_tmp13_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp12_, RYGEL_TYPE_MEDIA_CONTAINER) ? ((RygelMediaContainer*) _tmp12_) : NULL);
+			parent_container = _tmp13_;
+			_tmp14_ = parent_container;
+			_tmp15_ = statement;
+			_tmp16_ = rygel_media_export_media_cache_get_object_from_statement (self, _tmp14_, _tmp15_);
+			object = _tmp16_;
+			_tmp17_ = object;
+			_tmp18_ = parent_container;
+			rygel_media_object_set_parent_ref (_tmp17_, _tmp18_);
+			_tmp19_ = object;
+			_tmp20_ = _g_object_ref0 (_tmp19_);
 			_g_object_unref0 (parent);
-			parent = _tmp19_;
+			parent = _tmp20_;
 			_g_object_unref0 (object);
 			_g_object_unref0 (parent_container);
 		}
@@ -1067,20 +1129,20 @@ guint32 rygel_media_export_media_cache_get_update_id (RygelMediaExportMediaCache
 		_tmp0_ = rygel_media_export_media_cache_query_value (self, RYGEL_MEDIA_EXPORT_SQL_STRING_MAX_UPDATE_ID, NULL, 0, &_inner_error_);
 		_tmp1_ = _tmp0_;
 		if (_inner_error_ != NULL) {
-			goto __catch7_g_error;
+			goto __catch8_g_error;
 		}
 		result = (guint32) _tmp1_;
 		return result;
 	}
-	goto __finally7;
-	__catch7_g_error:
+	goto __finally8;
+	__catch8_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally7:
+	__finally8:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -1136,14 +1198,14 @@ void rygel_media_export_media_cache_get_track_properties (RygelMediaExportMediaC
 		_tmp5_ = rygel_media_export_database_exec_cursor (_tmp3_, "SELECT object_update_id, " "container_update_id, " "deleted_child_count " "FROM Object WHERE upnp_id = ?", _tmp4_, _tmp4__length1, &_inner_error_);
 		cursor = _tmp5_;
 		if (_inner_error_ != NULL) {
-			goto __catch8_g_error;
+			goto __catch9_g_error;
 		}
 		_tmp6_ = cursor;
 		_tmp7_ = rygel_media_export_database_cursor_next (_tmp6_, &_inner_error_);
 		statement = _tmp7_;
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (cursor);
-			goto __catch8_g_error;
+			goto __catch9_g_error;
 		}
 		_tmp8_ = statement;
 		_tmp9_ = sqlite3_column_int64 (_tmp8_, 0);
@@ -1167,8 +1229,8 @@ void rygel_media_export_media_cache_get_track_properties (RygelMediaExportMediaC
 		}
 		return;
 	}
-	goto __finally8;
-	__catch8_g_error:
+	goto __finally9;
+	__catch9_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp14_;
@@ -1177,10 +1239,10 @@ void rygel_media_export_media_cache_get_track_properties (RygelMediaExportMediaC
 		_inner_error_ = NULL;
 		_tmp14_ = _error_;
 		_tmp15_ = _tmp14_->message;
-		g_warning ("rygel-media-export-media-cache.vala:206: Failed to get update ids: %s", _tmp15_);
+		g_warning ("rygel-media-export-media-cache.vala:213: Failed to get update ids: %s", _tmp15_);
 		_g_error_free0 (_error_);
 	}
-	__finally8:
+	__finally9:
 	if (_inner_error_ != NULL) {
 		values = (_vala_GValue_array_free (values, values_length1), NULL);
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1441,26 +1503,22 @@ RygelMediaObjects* rygel_media_export_media_cache_get_children (RygelMediaExport
 		while (TRUE) {
 			RygelMediaExportDatabaseCursorIterator* _tmp25_;
 			gboolean _tmp26_ = FALSE;
-			RygelMediaExportDatabaseCursorIterator* _tmp27_;
-			sqlite3_stmt* _tmp28_ = NULL;
+			gboolean _tmp27_;
+			RygelMediaExportDatabaseCursorIterator* _tmp28_;
+			sqlite3_stmt* _tmp29_ = NULL;
 			sqlite3_stmt* statement;
-			RygelMediaObjects* _tmp29_;
-			RygelMediaContainer* _tmp30_;
-			sqlite3_stmt* _tmp31_;
-			RygelMediaObject* _tmp32_ = NULL;
-			RygelMediaObject* _tmp33_;
-			RygelMediaObjects* _tmp34_;
-			gpointer _tmp35_ = NULL;
-			RygelMediaObject* _tmp36_;
-			RygelMediaContainer* _tmp37_;
+			RygelMediaObjects* _tmp30_;
+			RygelMediaContainer* _tmp31_;
+			sqlite3_stmt* _tmp32_;
+			RygelMediaObject* _tmp33_ = NULL;
+			RygelMediaObject* _tmp34_;
+			RygelMediaObjects* _tmp35_;
+			gpointer _tmp36_ = NULL;
+			RygelMediaObject* _tmp37_;
+			RygelMediaContainer* _tmp38_;
 			_tmp25_ = _statement_it;
-			_tmp26_ = rygel_media_export_database_cursor_iterator_next (_tmp25_);
-			if (!_tmp26_) {
-				break;
-			}
-			_tmp27_ = _statement_it;
-			_tmp28_ = rygel_media_export_database_cursor_iterator_get (_tmp27_, &_inner_error_);
-			statement = _tmp28_;
+			_tmp26_ = rygel_media_export_database_cursor_iterator_next (_tmp25_, &_inner_error_);
+			_tmp27_ = _tmp26_;
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
@@ -1471,19 +1529,35 @@ RygelMediaObjects* rygel_media_export_media_cache_get_children (RygelMediaExport
 				_g_object_unref0 (children);
 				return NULL;
 			}
-			_tmp29_ = children;
-			_tmp30_ = container;
-			_tmp31_ = statement;
-			_tmp32_ = rygel_media_export_media_cache_get_object_from_statement (self, _tmp30_, _tmp31_);
-			_tmp33_ = _tmp32_;
-			gee_abstract_collection_add ((GeeAbstractCollection*) _tmp29_, _tmp33_);
-			_g_object_unref0 (_tmp33_);
-			_tmp34_ = children;
-			_tmp35_ = gee_list_last ((GeeList*) _tmp34_);
-			_tmp36_ = (RygelMediaObject*) _tmp35_;
-			_tmp37_ = container;
-			rygel_media_object_set_parent_ref (_tmp36_, _tmp37_);
-			_g_object_unref0 (_tmp36_);
+			if (!_tmp27_) {
+				break;
+			}
+			_tmp28_ = _statement_it;
+			_tmp29_ = rygel_media_export_database_cursor_iterator_get (_tmp28_, &_inner_error_);
+			statement = _tmp29_;
+			if (_inner_error_ != NULL) {
+				g_propagate_error (error, _inner_error_);
+				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+				_g_object_unref0 (cursor);
+				_g_free0 (sort_order);
+				_g_free0 (sql);
+				values = (_vala_GValue_array_free (values, values_length1), NULL);
+				_g_object_unref0 (children);
+				return NULL;
+			}
+			_tmp30_ = children;
+			_tmp31_ = container;
+			_tmp32_ = statement;
+			_tmp33_ = rygel_media_export_media_cache_get_object_from_statement (self, _tmp31_, _tmp32_);
+			_tmp34_ = _tmp33_;
+			gee_abstract_collection_add ((GeeAbstractCollection*) _tmp30_, _tmp34_);
+			_g_object_unref0 (_tmp34_);
+			_tmp35_ = children;
+			_tmp36_ = gee_list_last ((GeeList*) _tmp35_);
+			_tmp37_ = (RygelMediaObject*) _tmp36_;
+			_tmp38_ = container;
+			rygel_media_object_set_parent_ref (_tmp37_, _tmp38_);
+			_g_object_unref0 (_tmp37_);
 		}
 		_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 	}
@@ -1545,10 +1619,10 @@ RygelMediaObjects* rygel_media_export_media_cache_get_objects_by_search_expressi
 		_tmp5_ = expression;
 		_tmp6_ = rygel_search_expression_to_string (_tmp5_);
 		_tmp7_ = _tmp6_;
-		g_debug ("rygel-media-export-media-cache.vala:275: Original search: %s", _tmp7_);
+		g_debug ("rygel-media-export-media-cache.vala:282: Original search: %s", _tmp7_);
 		_g_free0 (_tmp7_);
 		_tmp8_ = filter;
-		g_debug ("rygel-media-export-media-cache.vala:276: Parsed search expression: %s", _tmp8_);
+		g_debug ("rygel-media-export-media-cache.vala:283: Parsed search expression: %s", _tmp8_);
 	}
 	_tmp9_ = max_count;
 	_tmp10_ = rygel_media_export_media_cache_modify_limit (self, _tmp9_);
@@ -1641,10 +1715,10 @@ glong rygel_media_export_media_cache_get_object_count_by_search_expression (Ryge
 		_tmp5_ = expression;
 		_tmp6_ = rygel_search_expression_to_string (_tmp5_);
 		_tmp7_ = _tmp6_;
-		g_debug ("rygel-media-export-media-cache.vala:300: Original search: %s", _tmp7_);
+		g_debug ("rygel-media-export-media-cache.vala:307: Original search: %s", _tmp7_);
 		_g_free0 (_tmp7_);
 		_tmp8_ = filter;
-		g_debug ("rygel-media-export-media-cache.vala:301: Parsed search expression: %s", _tmp8_);
+		g_debug ("rygel-media-export-media-cache.vala:308: Parsed search expression: %s", _tmp8_);
 	}
 	{
 		gint i;
@@ -1706,7 +1780,7 @@ glong rygel_media_export_media_cache_get_object_count_by_search_expression (Ryge
 				}
 				_tmp27_ = i;
 				_tmp28_ = _tmp19_;
-				g_debug ("rygel-media-export-media-cache.vala:306: Arg %d: %s", _tmp27_, _tmp28_);
+				g_debug ("rygel-media-export-media-cache.vala:313: Arg %d: %s", _tmp27_, _tmp28_);
 				_g_free0 (_tmp19_);
 				__vala_GValue_free0 (arg);
 			}
@@ -1773,7 +1847,7 @@ glong rygel_media_export_media_cache_get_object_count_by_filter (RygelMediaExpor
 	}
 	_tmp5_ = args;
 	_tmp6_ = _tmp5_->n_values;
-	g_debug ("rygel-media-export-media-cache.vala:326: Parameters to bind: %u", _tmp6_);
+	g_debug ("rygel-media-export-media-cache.vala:333: Parameters to bind: %u", _tmp6_);
 	_tmp7_ = container_id;
 	if (_tmp7_ != NULL) {
 		string_id = RYGEL_MEDIA_EXPORT_SQL_STRING_GET_OBJECT_COUNT_BY_FILTER_WITH_ANCESTOR;
@@ -1862,7 +1936,7 @@ RygelMediaObjects* rygel_media_export_media_cache_get_objects_by_filter (RygelMe
 	parent = NULL;
 	_tmp9_ = args;
 	_tmp10_ = _tmp9_->n_values;
-	g_debug ("rygel-media-export-media-cache.vala:353: Parameters to bind: %u", _tmp10_);
+	g_debug ("rygel-media-export-media-cache.vala:360: Parameters to bind: %u", _tmp10_);
 	{
 		gint i;
 		i = 0;
@@ -1923,7 +1997,7 @@ RygelMediaObjects* rygel_media_export_media_cache_get_objects_by_filter (RygelMe
 				}
 				_tmp29_ = i;
 				_tmp30_ = _tmp21_;
-				g_debug ("rygel-media-export-media-cache.vala:356: Arg %d: %s", _tmp29_, _tmp30_);
+				g_debug ("rygel-media-export-media-cache.vala:363: Arg %d: %s", _tmp29_, _tmp30_);
 				_g_free0 (_tmp21_);
 				__vala_GValue_free0 (arg);
 			}
@@ -1977,24 +2051,20 @@ RygelMediaObjects* rygel_media_export_media_cache_get_objects_by_filter (RygelMe
 		while (TRUE) {
 			RygelMediaExportDatabaseCursorIterator* _tmp50_;
 			gboolean _tmp51_ = FALSE;
-			RygelMediaExportDatabaseCursorIterator* _tmp52_;
-			sqlite3_stmt* _tmp53_ = NULL;
+			gboolean _tmp52_;
+			RygelMediaExportDatabaseCursorIterator* _tmp53_;
+			sqlite3_stmt* _tmp54_ = NULL;
 			sqlite3_stmt* statement;
-			sqlite3_stmt* _tmp54_;
-			const gchar* _tmp55_ = NULL;
+			sqlite3_stmt* _tmp55_;
+			const gchar* _tmp56_ = NULL;
 			const gchar* parent_id;
-			gboolean _tmp56_ = FALSE;
-			RygelMediaContainer* _tmp57_;
-			gboolean _tmp62_;
-			RygelMediaContainer* _tmp67_;
+			gboolean _tmp57_ = FALSE;
+			RygelMediaContainer* _tmp58_;
+			gboolean _tmp63_;
+			RygelMediaContainer* _tmp68_;
 			_tmp50_ = _statement_it;
-			_tmp51_ = rygel_media_export_database_cursor_iterator_next (_tmp50_);
-			if (!_tmp51_) {
-				break;
-			}
-			_tmp52_ = _statement_it;
-			_tmp53_ = rygel_media_export_database_cursor_iterator_get (_tmp52_, &_inner_error_);
-			statement = _tmp53_;
+			_tmp51_ = rygel_media_export_database_cursor_iterator_next (_tmp50_, &_inner_error_);
+			_tmp52_ = _tmp51_;
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
@@ -2005,73 +2075,89 @@ RygelMediaObjects* rygel_media_export_media_cache_get_objects_by_filter (RygelMe
 				_g_object_unref0 (children);
 				return NULL;
 			}
-			_tmp54_ = statement;
-			_tmp55_ = sqlite3_column_text (_tmp54_, (gint) RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_PARENT);
-			parent_id = _tmp55_;
-			_tmp57_ = parent;
-			if (_tmp57_ == NULL) {
-				_tmp56_ = TRUE;
-			} else {
-				const gchar* _tmp58_;
-				RygelMediaContainer* _tmp59_;
-				const gchar* _tmp60_;
-				const gchar* _tmp61_;
-				_tmp58_ = parent_id;
-				_tmp59_ = parent;
-				_tmp60_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp59_);
-				_tmp61_ = _tmp60_;
-				_tmp56_ = g_strcmp0 (_tmp58_, _tmp61_) != 0;
+			if (!_tmp52_) {
+				break;
 			}
-			_tmp62_ = _tmp56_;
-			if (_tmp62_) {
-				const gchar* _tmp63_;
-				_tmp63_ = parent_id;
-				if (_tmp63_ == NULL) {
-					RygelNullContainer* _tmp64_;
-					_tmp64_ = rygel_null_container_new_root ();
+			_tmp53_ = _statement_it;
+			_tmp54_ = rygel_media_export_database_cursor_iterator_get (_tmp53_, &_inner_error_);
+			statement = _tmp54_;
+			if (_inner_error_ != NULL) {
+				g_propagate_error (error, _inner_error_);
+				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+				_g_object_unref0 (cursor);
+				_g_free0 (sort_order);
+				_g_object_unref0 (parent);
+				G_IS_VALUE (&v) ? (g_value_unset (&v), NULL) : NULL;
+				_g_object_unref0 (children);
+				return NULL;
+			}
+			_tmp55_ = statement;
+			_tmp56_ = sqlite3_column_text (_tmp55_, (gint) RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_PARENT);
+			parent_id = _tmp56_;
+			_tmp58_ = parent;
+			if (_tmp58_ == NULL) {
+				_tmp57_ = TRUE;
+			} else {
+				const gchar* _tmp59_;
+				RygelMediaContainer* _tmp60_;
+				const gchar* _tmp61_;
+				const gchar* _tmp62_;
+				_tmp59_ = parent_id;
+				_tmp60_ = parent;
+				_tmp61_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp60_);
+				_tmp62_ = _tmp61_;
+				_tmp57_ = g_strcmp0 (_tmp59_, _tmp62_) != 0;
+			}
+			_tmp63_ = _tmp57_;
+			if (_tmp63_) {
+				const gchar* _tmp64_;
+				_tmp64_ = parent_id;
+				if (_tmp64_ == NULL) {
+					RygelNullContainer* _tmp65_;
+					_tmp65_ = rygel_null_container_new_root ();
 					_g_object_unref0 (parent);
-					parent = (RygelMediaContainer*) _tmp64_;
+					parent = (RygelMediaContainer*) _tmp65_;
 				} else {
-					const gchar* _tmp65_;
-					RygelNullContainer* _tmp66_;
-					_tmp65_ = parent_id;
-					_tmp66_ = rygel_null_container_new (_tmp65_, NULL, "MediaExport");
+					const gchar* _tmp66_;
+					RygelNullContainer* _tmp67_;
+					_tmp66_ = parent_id;
+					_tmp67_ = rygel_null_container_new (_tmp66_, NULL, "MediaExport");
 					_g_object_unref0 (parent);
-					parent = (RygelMediaContainer*) _tmp66_;
+					parent = (RygelMediaContainer*) _tmp67_;
 				}
 			}
-			_tmp67_ = parent;
-			if (_tmp67_ != NULL) {
-				RygelMediaObjects* _tmp68_;
-				RygelMediaContainer* _tmp69_;
-				sqlite3_stmt* _tmp70_;
-				RygelMediaObject* _tmp71_ = NULL;
-				RygelMediaObject* _tmp72_;
-				RygelMediaObjects* _tmp73_;
-				gpointer _tmp74_ = NULL;
-				RygelMediaObject* _tmp75_;
-				RygelMediaContainer* _tmp76_;
-				_tmp68_ = children;
-				_tmp69_ = parent;
-				_tmp70_ = statement;
-				_tmp71_ = rygel_media_export_media_cache_get_object_from_statement (self, _tmp69_, _tmp70_);
-				_tmp72_ = _tmp71_;
-				gee_abstract_collection_add ((GeeAbstractCollection*) _tmp68_, _tmp72_);
-				_g_object_unref0 (_tmp72_);
-				_tmp73_ = children;
-				_tmp74_ = gee_list_last ((GeeList*) _tmp73_);
-				_tmp75_ = (RygelMediaObject*) _tmp74_;
-				_tmp76_ = parent;
-				rygel_media_object_set_parent_ref (_tmp75_, _tmp76_);
-				_g_object_unref0 (_tmp75_);
+			_tmp68_ = parent;
+			if (_tmp68_ != NULL) {
+				RygelMediaObjects* _tmp69_;
+				RygelMediaContainer* _tmp70_;
+				sqlite3_stmt* _tmp71_;
+				RygelMediaObject* _tmp72_ = NULL;
+				RygelMediaObject* _tmp73_;
+				RygelMediaObjects* _tmp74_;
+				gpointer _tmp75_ = NULL;
+				RygelMediaObject* _tmp76_;
+				RygelMediaContainer* _tmp77_;
+				_tmp69_ = children;
+				_tmp70_ = parent;
+				_tmp71_ = statement;
+				_tmp72_ = rygel_media_export_media_cache_get_object_from_statement (self, _tmp70_, _tmp71_);
+				_tmp73_ = _tmp72_;
+				gee_abstract_collection_add ((GeeAbstractCollection*) _tmp69_, _tmp73_);
+				_g_object_unref0 (_tmp73_);
+				_tmp74_ = children;
+				_tmp75_ = gee_list_last ((GeeList*) _tmp74_);
+				_tmp76_ = (RygelMediaObject*) _tmp75_;
+				_tmp77_ = parent;
+				rygel_media_object_set_parent_ref (_tmp76_, _tmp77_);
+				_g_object_unref0 (_tmp76_);
 			} else {
-				sqlite3_stmt* _tmp77_;
-				const gchar* _tmp78_ = NULL;
-				const gchar* _tmp79_;
-				_tmp77_ = statement;
-				_tmp78_ = sqlite3_column_text (_tmp77_, (gint) RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_ID);
-				_tmp79_ = parent_id;
-				g_warning ("Inconsistent database: item %s " "has no parent %s", _tmp78_, _tmp79_);
+				sqlite3_stmt* _tmp78_;
+				const gchar* _tmp79_ = NULL;
+				const gchar* _tmp80_;
+				_tmp78_ = statement;
+				_tmp79_ = sqlite3_column_text (_tmp78_, (gint) RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_ID);
+				_tmp80_ = parent_id;
+				g_warning ("Inconsistent database: item %s " "has no parent %s", _tmp79_, _tmp80_);
 			}
 		}
 		_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
@@ -2091,11 +2177,11 @@ void rygel_media_export_media_cache_debug_statistics (RygelMediaExportMediaCache
 	{
 		RygelMediaExportDatabaseCursor* _tmp0_ = NULL;
 		RygelMediaExportDatabaseCursor* cursor;
-		g_debug ("rygel-media-export-media-cache.vala:399: Database statistics:");
+		g_debug ("rygel-media-export-media-cache.vala:406: Database statistics:");
 		_tmp0_ = rygel_media_export_media_cache_exec_cursor (self, RYGEL_MEDIA_EXPORT_SQL_STRING_STATISTICS, NULL, 0, &_inner_error_);
 		cursor = _tmp0_;
 		if (_inner_error_ != NULL) {
-			goto __catch9_g_error;
+			goto __catch10_g_error;
 		}
 		{
 			RygelMediaExportDatabaseCursor* _tmp1_;
@@ -2107,45 +2193,52 @@ void rygel_media_export_media_cache_debug_statistics (RygelMediaExportMediaCache
 			while (TRUE) {
 				RygelMediaExportDatabaseCursorIterator* _tmp3_;
 				gboolean _tmp4_ = FALSE;
-				RygelMediaExportDatabaseCursorIterator* _tmp5_;
-				sqlite3_stmt* _tmp6_ = NULL;
+				gboolean _tmp5_;
+				RygelMediaExportDatabaseCursorIterator* _tmp6_;
+				sqlite3_stmt* _tmp7_ = NULL;
 				sqlite3_stmt* statement;
-				sqlite3_stmt* _tmp7_;
-				const gchar* _tmp8_ = NULL;
-				sqlite3_stmt* _tmp9_;
-				gint _tmp10_ = 0;
+				sqlite3_stmt* _tmp8_;
+				const gchar* _tmp9_ = NULL;
+				sqlite3_stmt* _tmp10_;
+				gint _tmp11_ = 0;
 				_tmp3_ = _statement_it;
-				_tmp4_ = rygel_media_export_database_cursor_iterator_next (_tmp3_);
-				if (!_tmp4_) {
-					break;
-				}
-				_tmp5_ = _statement_it;
-				_tmp6_ = rygel_media_export_database_cursor_iterator_get (_tmp5_, &_inner_error_);
-				statement = _tmp6_;
+				_tmp4_ = rygel_media_export_database_cursor_iterator_next (_tmp3_, &_inner_error_);
+				_tmp5_ = _tmp4_;
 				if (_inner_error_ != NULL) {
 					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 					_g_object_unref0 (cursor);
-					goto __catch9_g_error;
+					goto __catch10_g_error;
 				}
-				_tmp7_ = statement;
-				_tmp8_ = sqlite3_column_text (_tmp7_, 0);
-				_tmp9_ = statement;
-				_tmp10_ = sqlite3_column_int (_tmp9_, 1);
-				g_debug ("rygel-media-export-media-cache.vala:402: %s: %d", _tmp8_, _tmp10_);
+				if (!_tmp5_) {
+					break;
+				}
+				_tmp6_ = _statement_it;
+				_tmp7_ = rygel_media_export_database_cursor_iterator_get (_tmp6_, &_inner_error_);
+				statement = _tmp7_;
+				if (_inner_error_ != NULL) {
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					goto __catch10_g_error;
+				}
+				_tmp8_ = statement;
+				_tmp9_ = sqlite3_column_text (_tmp8_, 0);
+				_tmp10_ = statement;
+				_tmp11_ = sqlite3_column_int (_tmp10_, 1);
+				g_debug ("rygel-media-export-media-cache.vala:409: %s: %d", _tmp9_, _tmp11_);
 			}
 			_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 		}
 		_g_object_unref0 (cursor);
 	}
-	goto __finally9;
-	__catch9_g_error:
+	goto __finally10;
+	__catch10_g_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
 		_g_error_free0 (_error_);
 	}
-	__finally9:
+	__finally10:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2209,20 +2302,16 @@ GeeArrayList* rygel_media_export_media_cache_get_child_ids (RygelMediaExportMedi
 		while (TRUE) {
 			RygelMediaExportDatabaseCursorIterator* _tmp8_;
 			gboolean _tmp9_ = FALSE;
-			RygelMediaExportDatabaseCursorIterator* _tmp10_;
-			sqlite3_stmt* _tmp11_ = NULL;
+			gboolean _tmp10_;
+			RygelMediaExportDatabaseCursorIterator* _tmp11_;
+			sqlite3_stmt* _tmp12_ = NULL;
 			sqlite3_stmt* statement;
-			GeeArrayList* _tmp12_;
-			sqlite3_stmt* _tmp13_;
-			const gchar* _tmp14_ = NULL;
+			GeeArrayList* _tmp13_;
+			sqlite3_stmt* _tmp14_;
+			const gchar* _tmp15_ = NULL;
 			_tmp8_ = _statement_it;
-			_tmp9_ = rygel_media_export_database_cursor_iterator_next (_tmp8_);
-			if (!_tmp9_) {
-				break;
-			}
-			_tmp10_ = _statement_it;
-			_tmp11_ = rygel_media_export_database_cursor_iterator_get (_tmp10_, &_inner_error_);
-			statement = _tmp11_;
+			_tmp9_ = rygel_media_export_database_cursor_iterator_next (_tmp8_, &_inner_error_);
+			_tmp10_ = _tmp9_;
 			if (_inner_error_ != NULL) {
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 					g_propagate_error (error, _inner_error_);
@@ -2241,10 +2330,34 @@ GeeArrayList* rygel_media_export_media_cache_get_child_ids (RygelMediaExportMedi
 					return NULL;
 				}
 			}
-			_tmp12_ = children;
-			_tmp13_ = statement;
-			_tmp14_ = sqlite3_column_text (_tmp13_, 0);
-			gee_abstract_collection_add ((GeeAbstractCollection*) _tmp12_, _tmp14_);
+			if (!_tmp10_) {
+				break;
+			}
+			_tmp11_ = _statement_it;
+			_tmp12_ = rygel_media_export_database_cursor_iterator_get (_tmp11_, &_inner_error_);
+			statement = _tmp12_;
+			if (_inner_error_ != NULL) {
+				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+					g_propagate_error (error, _inner_error_);
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					values = (_vala_GValue_array_free (values, values_length1), NULL);
+					_g_object_unref0 (children);
+					return NULL;
+				} else {
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					values = (_vala_GValue_array_free (values, values_length1), NULL);
+					_g_object_unref0 (children);
+					g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+					g_clear_error (&_inner_error_);
+					return NULL;
+				}
+			}
+			_tmp13_ = children;
+			_tmp14_ = statement;
+			_tmp15_ = sqlite3_column_text (_tmp14_, 0);
+			gee_abstract_collection_add ((GeeAbstractCollection*) _tmp13_, _tmp15_);
 		}
 		_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 	}
@@ -2337,20 +2450,16 @@ GeeList* rygel_media_export_media_cache_get_meta_data_column_by_filter (RygelMed
 		while (TRUE) {
 			RygelMediaExportDatabaseCursorIterator* _tmp23_;
 			gboolean _tmp24_ = FALSE;
-			RygelMediaExportDatabaseCursorIterator* _tmp25_;
-			sqlite3_stmt* _tmp26_ = NULL;
+			gboolean _tmp25_;
+			RygelMediaExportDatabaseCursorIterator* _tmp26_;
+			sqlite3_stmt* _tmp27_ = NULL;
 			sqlite3_stmt* statement;
-			GeeArrayList* _tmp27_;
-			sqlite3_stmt* _tmp28_;
-			const gchar* _tmp29_ = NULL;
+			GeeArrayList* _tmp28_;
+			sqlite3_stmt* _tmp29_;
+			const gchar* _tmp30_ = NULL;
 			_tmp23_ = _statement_it;
-			_tmp24_ = rygel_media_export_database_cursor_iterator_next (_tmp23_);
-			if (!_tmp24_) {
-				break;
-			}
-			_tmp25_ = _statement_it;
-			_tmp26_ = rygel_media_export_database_cursor_iterator_get (_tmp25_, &_inner_error_);
-			statement = _tmp26_;
+			_tmp24_ = rygel_media_export_database_cursor_iterator_next (_tmp23_, &_inner_error_);
+			_tmp25_ = _tmp24_;
 			if (_inner_error_ != NULL) {
 				g_propagate_error (error, _inner_error_);
 				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
@@ -2359,10 +2468,24 @@ GeeList* rygel_media_export_media_cache_get_meta_data_column_by_filter (RygelMed
 				G_IS_VALUE (&v) ? (g_value_unset (&v), NULL) : NULL;
 				return NULL;
 			}
-			_tmp27_ = data;
-			_tmp28_ = statement;
-			_tmp29_ = sqlite3_column_text (_tmp28_, 0);
-			gee_abstract_collection_add ((GeeAbstractCollection*) _tmp27_, _tmp29_);
+			if (!_tmp25_) {
+				break;
+			}
+			_tmp26_ = _statement_it;
+			_tmp27_ = rygel_media_export_database_cursor_iterator_get (_tmp26_, &_inner_error_);
+			statement = _tmp27_;
+			if (_inner_error_ != NULL) {
+				g_propagate_error (error, _inner_error_);
+				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+				_g_object_unref0 (cursor);
+				_g_object_unref0 (data);
+				G_IS_VALUE (&v) ? (g_value_unset (&v), NULL) : NULL;
+				return NULL;
+			}
+			_tmp28_ = data;
+			_tmp29_ = statement;
+			_tmp30_ = sqlite3_column_text (_tmp29_, 0);
+			gee_abstract_collection_add ((GeeAbstractCollection*) _tmp28_, _tmp30_);
 		}
 		_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 	}
@@ -2413,9 +2536,9 @@ GeeList* rygel_media_export_media_cache_get_object_attribute_by_search_expressio
 		return NULL;
 	}
 	_tmp4_ = filter;
-	g_debug ("rygel-media-export-media-cache.vala:460: Parsed filter: %s", _tmp4_);
+	g_debug ("rygel-media-export-media-cache.vala:467: Parsed filter: %s", _tmp4_);
 	_tmp5_ = attribute;
-	_tmp6_ = rygel_media_export_media_cache_map_operand_to_column (_tmp5_, NULL, &_inner_error_);
+	_tmp6_ = rygel_media_export_media_cache_map_operand_to_column (_tmp5_, NULL, FALSE, &_inner_error_);
 	column = _tmp6_;
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
@@ -2517,7 +2640,7 @@ gchar* rygel_media_export_media_cache_get_reset_token (RygelMediaExportMediaCach
 		cursor = _tmp0_;
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch10_rygel_media_export_database_error;
+				goto __catch11_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
@@ -2529,7 +2652,7 @@ gchar* rygel_media_export_media_cache_get_reset_token (RygelMediaExportMediaCach
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (cursor);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch10_rygel_media_export_database_error;
+				goto __catch11_rygel_media_export_database_error;
 			}
 			_g_object_unref0 (cursor);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2543,20 +2666,20 @@ gchar* rygel_media_export_media_cache_get_reset_token (RygelMediaExportMediaCach
 		_g_object_unref0 (cursor);
 		return result;
 	}
-	goto __finally10;
-	__catch10_rygel_media_export_database_error:
+	goto __finally11;
+	__catch11_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		gchar* _tmp6_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		g_warning ("rygel-media-export-media-cache.vala:479: Failed to get reset token");
+		g_warning ("rygel-media-export-media-cache.vala:486: Failed to get reset token");
 		_tmp6_ = uuid_get ();
 		result = _tmp6_;
 		_g_error_free0 (_error_);
 		return result;
 	}
-	__finally10:
+	__finally11:
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 	g_clear_error (&_inner_error_);
 	return NULL;
@@ -2588,7 +2711,7 @@ void rygel_media_export_media_cache_save_reset_token (RygelMediaExportMediaCache
 		if (_inner_error_ != NULL) {
 			args = (_vala_GValue_array_free (args, args_length1), NULL);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch11_rygel_media_export_database_error;
+				goto __catch12_rygel_media_export_database_error;
 			}
 			args = (_vala_GValue_array_free (args, args_length1), NULL);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2597,8 +2720,8 @@ void rygel_media_export_media_cache_save_reset_token (RygelMediaExportMediaCache
 		}
 		args = (_vala_GValue_array_free (args, args_length1), NULL);
 	}
-	goto __finally11;
-	__catch11_rygel_media_export_database_error:
+	goto __finally12;
+	__catch12_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp4_;
@@ -2607,11 +2730,11 @@ void rygel_media_export_media_cache_save_reset_token (RygelMediaExportMediaCache
 		_inner_error_ = NULL;
 		_tmp4_ = _error_;
 		_tmp5_ = _tmp4_->message;
-		g_warning ("rygel-media-export-media-cache.vala:491: Failed to persist ServiceRese" \
+		g_warning ("rygel-media-export-media-cache.vala:498: Failed to persist ServiceRese" \
 "tToken: %s", _tmp5_);
 		_g_error_free0 (_error_);
 	}
-	__finally11:
+	__finally12:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2629,15 +2752,15 @@ void rygel_media_export_media_cache_drop_virtual_folders (RygelMediaExportMediaC
 		rygel_media_export_database_exec (_tmp0_, "DELETE FROM object WHERE " "upnp_id LIKE 'virtual-parent:%'", NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch12_rygel_media_export_database_error;
+				goto __catch13_rygel_media_export_database_error;
 			}
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
 	}
-	goto __finally12;
-	__catch12_rygel_media_export_database_error:
+	goto __finally13;
+	__catch13_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp1_;
@@ -2646,11 +2769,11 @@ void rygel_media_export_media_cache_drop_virtual_folders (RygelMediaExportMediaC
 		_inner_error_ = NULL;
 		_tmp1_ = _error_;
 		_tmp2_ = _tmp1_->message;
-		g_warning ("rygel-media-export-media-cache.vala:500: Failed to drop virtual folder" \
+		g_warning ("rygel-media-export-media-cache.vala:507: Failed to drop virtual folder" \
 "s: %s", _tmp2_);
 		_g_error_free0 (_error_);
 	}
-	__finally12:
+	__finally13:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2708,7 +2831,7 @@ void rygel_media_export_media_cache_make_object_guarded (RygelMediaExportMediaCa
 		if (_inner_error_ != NULL) {
 			values = (_vala_GValue_array_free (values, values_length1), NULL);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch13_rygel_media_export_database_error;
+				goto __catch14_rygel_media_export_database_error;
 			}
 			values = (_vala_GValue_array_free (values, values_length1), NULL);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2717,8 +2840,8 @@ void rygel_media_export_media_cache_make_object_guarded (RygelMediaExportMediaCa
 		}
 		values = (_vala_GValue_array_free (values, values_length1), NULL);
 	}
-	goto __finally13;
-	__catch13_rygel_media_export_database_error:
+	goto __finally14;
+	__catch14_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaObject* _tmp12_;
@@ -2733,11 +2856,11 @@ void rygel_media_export_media_cache_make_object_guarded (RygelMediaExportMediaCa
 		_tmp14_ = _tmp13_;
 		_tmp15_ = _error_;
 		_tmp16_ = _tmp15_->message;
-		g_warning ("rygel-media-export-media-cache.vala:514: Failed to mark item %s as gua" \
+		g_warning ("rygel-media-export-media-cache.vala:521: Failed to mark item %s as gua" \
 "rded (%d): %s", _tmp14_, guarded_val, _tmp16_);
 		_g_error_free0 (_error_);
 	}
-	__finally13:
+	__finally14:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -2773,7 +2896,7 @@ static gboolean rygel_media_export_media_cache_is_object_guarded (RygelMediaExpo
 		if (_inner_error_ != NULL) {
 			id_value = (_vala_GValue_array_free (id_value, id_value_length1), NULL);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch14_rygel_media_export_database_error;
+				goto __catch15_rygel_media_export_database_error;
 			}
 			id_value = (_vala_GValue_array_free (id_value, id_value_length1), NULL);
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -2784,8 +2907,8 @@ static gboolean rygel_media_export_media_cache_is_object_guarded (RygelMediaExpo
 		id_value = (_vala_GValue_array_free (id_value, id_value_length1), NULL);
 		return result;
 	}
-	goto __finally14;
-	__catch14_rygel_media_export_database_error:
+	goto __finally15;
+	__catch15_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		const gchar* _tmp5_;
@@ -2796,20 +2919,20 @@ static gboolean rygel_media_export_media_cache_is_object_guarded (RygelMediaExpo
 		_tmp5_ = id;
 		_tmp6_ = _error_;
 		_tmp7_ = _tmp6_->message;
-		g_warning ("rygel-media-export-media-cache.vala:529: Failed to get whether item %s" \
+		g_warning ("rygel-media-export-media-cache.vala:536: Failed to get whether item %s" \
 " is guarded: %s", _tmp5_, _tmp7_);
 		result = FALSE;
 		_g_error_free0 (_error_);
 		return result;
 	}
-	__finally14:
+	__finally15:
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 	g_clear_error (&_inner_error_);
 	return FALSE;
 }
 
 
-static void rygel_media_export_media_cache_get_exists_cache (RygelMediaExportMediaCache* self, GError** error) {
+void rygel_media_export_media_cache_rebuild_exists_cache (RygelMediaExportMediaCache* self, GError** error) {
 	GeeHashMap* _tmp0_;
 	RygelMediaExportDatabaseCursor* _tmp1_ = NULL;
 	RygelMediaExportDatabaseCursor* cursor;
@@ -2840,26 +2963,42 @@ static void rygel_media_export_media_cache_get_exists_cache (RygelMediaExportMed
 		while (TRUE) {
 			RygelMediaExportDatabaseCursorIterator* _tmp4_;
 			gboolean _tmp5_ = FALSE;
-			RygelMediaExportDatabaseCursorIterator* _tmp6_;
-			sqlite3_stmt* _tmp7_ = NULL;
+			gboolean _tmp6_;
+			RygelMediaExportDatabaseCursorIterator* _tmp7_;
+			sqlite3_stmt* _tmp8_ = NULL;
 			sqlite3_stmt* statement;
 			RygelMediaExportExistsCacheEntry entry = {0};
-			sqlite3_stmt* _tmp8_;
-			gint64 _tmp9_ = 0LL;
-			sqlite3_stmt* _tmp10_;
-			gint64 _tmp11_ = 0LL;
-			GeeHashMap* _tmp12_;
-			sqlite3_stmt* _tmp13_;
-			const gchar* _tmp14_ = NULL;
-			RygelMediaExportExistsCacheEntry _tmp15_;
+			sqlite3_stmt* _tmp9_;
+			gint64 _tmp10_ = 0LL;
+			sqlite3_stmt* _tmp11_;
+			gint64 _tmp12_ = 0LL;
+			GeeHashMap* _tmp13_;
+			sqlite3_stmt* _tmp14_;
+			const gchar* _tmp15_ = NULL;
+			RygelMediaExportExistsCacheEntry _tmp16_;
 			_tmp4_ = _statement_it;
-			_tmp5_ = rygel_media_export_database_cursor_iterator_next (_tmp4_);
-			if (!_tmp5_) {
+			_tmp5_ = rygel_media_export_database_cursor_iterator_next (_tmp4_, &_inner_error_);
+			_tmp6_ = _tmp5_;
+			if (_inner_error_ != NULL) {
+				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+					g_propagate_error (error, _inner_error_);
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					return;
+				} else {
+					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+					_g_object_unref0 (cursor);
+					g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+					g_clear_error (&_inner_error_);
+					return;
+				}
+			}
+			if (!_tmp6_) {
 				break;
 			}
-			_tmp6_ = _statement_it;
-			_tmp7_ = rygel_media_export_database_cursor_iterator_get (_tmp6_, &_inner_error_);
-			statement = _tmp7_;
+			_tmp7_ = _statement_it;
+			_tmp8_ = rygel_media_export_database_cursor_iterator_get (_tmp7_, &_inner_error_);
+			statement = _tmp8_;
 			if (_inner_error_ != NULL) {
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 					g_propagate_error (error, _inner_error_);
@@ -2875,17 +3014,17 @@ static void rygel_media_export_media_cache_get_exists_cache (RygelMediaExportMed
 				}
 			}
 			memset (&entry, 0, sizeof (RygelMediaExportExistsCacheEntry));
-			_tmp8_ = statement;
-			_tmp9_ = sqlite3_column_int64 (_tmp8_, 1);
-			entry.mtime = _tmp9_;
-			_tmp10_ = statement;
-			_tmp11_ = sqlite3_column_int64 (_tmp10_, 0);
-			entry.size = _tmp11_;
-			_tmp12_ = self->priv->exists_cache;
-			_tmp13_ = statement;
-			_tmp14_ = sqlite3_column_text (_tmp13_, 2);
-			_tmp15_ = entry;
-			gee_abstract_map_set ((GeeAbstractMap*) _tmp12_, _tmp14_, &_tmp15_);
+			_tmp9_ = statement;
+			_tmp10_ = sqlite3_column_int64 (_tmp9_, 1);
+			entry.mtime = _tmp10_;
+			_tmp11_ = statement;
+			_tmp12_ = sqlite3_column_int64 (_tmp11_, 0);
+			entry.size = _tmp12_;
+			_tmp13_ = self->priv->exists_cache;
+			_tmp14_ = statement;
+			_tmp15_ = sqlite3_column_text (_tmp14_, 2);
+			_tmp16_ = entry;
+			gee_abstract_map_set ((GeeAbstractMap*) _tmp13_, _tmp15_, &_tmp16_);
 		}
 		_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
 	}
@@ -2953,9 +3092,9 @@ static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* 
 		if (_inner_error_ != NULL) {
 			_rygel_media_export_media_cache_upgrader_unref0 (upgrader);
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-				goto __catch15_rygel_media_export_database_error;
+				goto __catch16_rygel_media_export_database_error;
 			}
-			goto __finally15;
+			goto __finally16;
 		}
 		if (_tmp10_) {
 			RygelMediaExportMediaCacheUpgrader* _tmp11_;
@@ -2975,9 +3114,9 @@ static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* 
 				if (_inner_error_ != NULL) {
 					_rygel_media_export_media_cache_upgrader_unref0 (upgrader);
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-						goto __catch15_rygel_media_export_database_error;
+						goto __catch16_rygel_media_export_database_error;
 					}
-					goto __finally15;
+					goto __finally16;
 				}
 			} else {
 				gint _tmp16_;
@@ -2992,22 +3131,22 @@ static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* 
 				_inner_error_ = _tmp18_;
 				_rygel_media_export_media_cache_upgrader_unref0 (upgrader);
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-					goto __catch15_rygel_media_export_database_error;
+					goto __catch16_rygel_media_export_database_error;
 				}
-				goto __finally15;
+				goto __finally16;
 			}
 		}
 		_tmp19_ = upgrader;
 		rygel_media_export_media_cache_upgrader_ensure_indices (_tmp19_);
 		_rygel_media_export_media_cache_upgrader_unref0 (upgrader);
 	}
-	goto __finally15;
-	__catch15_rygel_media_export_database_error:
+	goto __finally16;
+	__catch16_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		_error_ = _inner_error_;
 		_inner_error_ = NULL;
-		g_debug ("rygel-media-export-media-cache.vala:579: %s", "Could not find schema version;" " checking for empty database...");
+		g_debug ("rygel-media-export-media-cache.vala:586: %s", "Could not find schema version;" " checking for empty database...");
 		{
 			RygelMediaExportDatabase* _tmp20_;
 			gint _tmp21_ = 0;
@@ -3018,7 +3157,7 @@ static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* 
 			rows = _tmp21_;
 			if (_inner_error_ != NULL) {
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-					goto __catch16_rygel_media_export_database_error;
+					goto __catch17_rygel_media_export_database_error;
 				}
 				_g_error_free0 (_error_);
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -3028,7 +3167,7 @@ static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* 
 			_tmp22_ = rows;
 			if (_tmp22_ == 0) {
 				gboolean _tmp23_ = FALSE;
-				g_debug ("rygel-media-export-media-cache.vala:585: Empty database, creating new " \
+				g_debug ("rygel-media-export-media-cache.vala:592: Empty database, creating new " \
 "schema version %s", RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION);
 				_tmp23_ = rygel_media_export_media_cache_create_schema (self);
 				if (!_tmp23_) {
@@ -3038,7 +3177,7 @@ static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* 
 					return;
 				}
 			} else {
-				g_warning ("rygel-media-export-media-cache.vala:593: Incompatible schema... cannot" \
+				g_warning ("rygel-media-export-media-cache.vala:600: Incompatible schema... cannot" \
 " proceed");
 				_g_object_unref0 (self->priv->db);
 				self->priv->db = NULL;
@@ -3046,8 +3185,8 @@ static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* 
 				return;
 			}
 		}
-		goto __finally16;
-		__catch16_rygel_media_export_database_error:
+		goto __finally17;
+		__catch17_rygel_media_export_database_error:
 		{
 			GError* _error_ = NULL;
 			GError* _tmp24_;
@@ -3057,22 +3196,22 @@ static void rygel_media_export_media_cache_open_db (RygelMediaExportMediaCache* 
 			_inner_error_ = NULL;
 			_tmp24_ = _error_;
 			_tmp25_ = _tmp24_->message;
-			g_warning ("rygel-media-export-media-cache.vala:599: Something weird going on: %s", _tmp25_);
+			g_warning ("rygel-media-export-media-cache.vala:606: Something weird going on: %s", _tmp25_);
 			_g_object_unref0 (self->priv->db);
 			self->priv->db = NULL;
 			_tmp26_ = g_error_new_literal (RYGEL_MEDIA_EXPORT_MEDIA_CACHE_ERROR, RYGEL_MEDIA_EXPORT_MEDIA_CACHE_ERROR_GENERAL_ERROR, "Invalid database");
 			_inner_error_ = _tmp26_;
 			_g_error_free0 (_error_);
-			goto __finally16;
+			goto __finally17;
 		}
-		__finally16:
+		__finally17:
 		if (_inner_error_ != NULL) {
 			_g_error_free0 (_error_);
-			goto __finally15;
+			goto __finally16;
 		}
 		_g_error_free0 (_error_);
 	}
-	__finally15:
+	__finally16:
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		return;
@@ -3541,25 +3680,25 @@ static void rygel_media_export_media_cache_update_guarded_object (RygelMediaExpo
 	GeeArrayList* _tmp13_;
 	gboolean _tmp14_;
 	gboolean _tmp15_;
-	RygelMediaObject* _tmp19_;
-	const gchar* _tmp20_;
-	const gchar* _tmp21_;
+	gint _tmp19_;
+	GValue _tmp20_ = {0};
+	GValue _tmp21_;
 	GValue _tmp22_ = {0};
-	gint _tmp23_;
-	GValue _tmp24_ = {0};
-	GValue _tmp25_;
+	RygelMediaObject* _tmp23_;
+	guint64 _tmp24_;
+	guint64 _tmp25_;
 	GValue _tmp26_ = {0};
-	RygelMediaObject* _tmp27_;
-	guint64 _tmp28_;
-	guint64 _tmp29_;
-	GValue _tmp30_ = {0};
-	const gchar* _tmp31_;
+	const gchar* _tmp27_;
+	GValue _tmp28_ = {0};
+	RygelMediaObject* _tmp29_;
+	guint _tmp30_;
+	guint _tmp31_;
 	GValue _tmp32_ = {0};
-	RygelMediaObject* _tmp33_;
-	guint _tmp34_;
-	guint _tmp35_;
-	GValue _tmp36_ = {0};
-	GValue _tmp37_ = {0};
+	GValue _tmp33_ = {0};
+	GValue _tmp34_ = {0};
+	RygelMediaObject* _tmp35_;
+	const gchar* _tmp36_;
+	const gchar* _tmp37_;
 	GValue _tmp38_ = {0};
 	GValue* _tmp39_ = NULL;
 	GValue* values;
@@ -3621,46 +3760,46 @@ static void rygel_media_export_media_cache_update_guarded_object (RygelMediaExpo
 		_g_free0 (_tmp11_);
 		_tmp11_ = (gchar*) _tmp18_;
 	}
-	_tmp19_ = object;
-	_tmp20_ = rygel_media_object_get_id (_tmp19_);
-	_tmp21_ = _tmp20_;
-	g_value_init (&_tmp22_, G_TYPE_STRING);
-	g_value_set_string (&_tmp22_, _tmp21_);
-	_tmp23_ = type;
-	g_value_init (&_tmp24_, G_TYPE_INT);
-	g_value_set_int (&_tmp24_, _tmp23_);
-	_tmp25_ = parent;
-	if (G_IS_VALUE (&_tmp25_)) {
-		g_value_init (&_tmp26_, G_VALUE_TYPE (&_tmp25_));
-		g_value_copy (&_tmp25_, &_tmp26_);
+	_tmp19_ = type;
+	g_value_init (&_tmp20_, G_TYPE_INT);
+	g_value_set_int (&_tmp20_, _tmp19_);
+	_tmp21_ = parent;
+	if (G_IS_VALUE (&_tmp21_)) {
+		g_value_init (&_tmp22_, G_VALUE_TYPE (&_tmp21_));
+		g_value_copy (&_tmp21_, &_tmp22_);
 	} else {
-		_tmp26_ = _tmp25_;
+		_tmp22_ = _tmp21_;
 	}
-	_tmp27_ = object;
-	_tmp28_ = rygel_media_object_get_modified (_tmp27_);
-	_tmp29_ = _tmp28_;
-	g_value_init (&_tmp30_, G_TYPE_UINT64);
-	g_value_set_uint64 (&_tmp30_, _tmp29_);
-	_tmp31_ = _tmp11_;
-	g_value_init (&_tmp32_, G_TYPE_STRING);
-	g_value_set_string (&_tmp32_, _tmp31_);
-	_tmp33_ = object;
-	_tmp34_ = rygel_media_object_get_object_update_id (_tmp33_);
-	_tmp35_ = _tmp34_;
-	g_value_init (&_tmp36_, G_TYPE_UINT);
-	g_value_set_uint (&_tmp36_, _tmp35_);
-	g_value_init (&_tmp37_, G_TYPE_INT);
-	g_value_set_int (&_tmp37_, -1);
-	g_value_init (&_tmp38_, G_TYPE_INT);
-	g_value_set_int (&_tmp38_, -1);
+	_tmp23_ = object;
+	_tmp24_ = rygel_media_object_get_modified (_tmp23_);
+	_tmp25_ = _tmp24_;
+	g_value_init (&_tmp26_, G_TYPE_UINT64);
+	g_value_set_uint64 (&_tmp26_, _tmp25_);
+	_tmp27_ = _tmp11_;
+	g_value_init (&_tmp28_, G_TYPE_STRING);
+	g_value_set_string (&_tmp28_, _tmp27_);
+	_tmp29_ = object;
+	_tmp30_ = rygel_media_object_get_object_update_id (_tmp29_);
+	_tmp31_ = _tmp30_;
+	g_value_init (&_tmp32_, G_TYPE_UINT);
+	g_value_set_uint (&_tmp32_, _tmp31_);
+	g_value_init (&_tmp33_, G_TYPE_INT);
+	g_value_set_int (&_tmp33_, -1);
+	g_value_init (&_tmp34_, G_TYPE_INT);
+	g_value_set_int (&_tmp34_, -1);
+	_tmp35_ = object;
+	_tmp36_ = rygel_media_object_get_id (_tmp35_);
+	_tmp37_ = _tmp36_;
+	g_value_init (&_tmp38_, G_TYPE_STRING);
+	g_value_set_string (&_tmp38_, _tmp37_);
 	_tmp39_ = g_new0 (GValue, 8);
-	_tmp39_[0] = _tmp22_;
-	_tmp39_[1] = _tmp24_;
+	_tmp39_[0] = _tmp20_;
+	_tmp39_[1] = _tmp22_;
 	_tmp39_[2] = _tmp26_;
-	_tmp39_[3] = _tmp30_;
+	_tmp39_[3] = _tmp28_;
 	_tmp39_[4] = _tmp32_;
-	_tmp39_[5] = _tmp36_;
-	_tmp39_[6] = _tmp37_;
+	_tmp39_[5] = _tmp33_;
+	_tmp39_[6] = _tmp34_;
 	_tmp39_[7] = _tmp38_;
 	values = _tmp39_;
 	values_length1 = 8;
@@ -3691,18 +3830,18 @@ static void rygel_media_export_media_cache_update_guarded_object (RygelMediaExpo
 		_tmp45_ = _tmp44_->total_deleted_child_count;
 		g_value_init (&_tmp46_, G_TYPE_INT64);
 		g_value_set_int64 (&_tmp46_, _tmp45_);
-		G_IS_VALUE (&_tmp43_[7]) ? (g_value_unset (&_tmp43_[7]), NULL) : NULL;
-		_tmp43_[7] = _tmp46_;
-		_tmp47_ = _tmp43_[7];
+		G_IS_VALUE (&_tmp43_[6]) ? (g_value_unset (&_tmp43_[6]), NULL) : NULL;
+		_tmp43_[6] = _tmp46_;
+		_tmp47_ = _tmp43_[6];
 		_tmp48_ = values;
 		_tmp48__length1 = values_length1;
 		_tmp49_ = container;
 		_tmp50_ = _tmp49_->update_id;
 		g_value_init (&_tmp51_, G_TYPE_UINT);
 		g_value_set_uint (&_tmp51_, _tmp50_);
-		G_IS_VALUE (&_tmp48_[8]) ? (g_value_unset (&_tmp48_[8]), NULL) : NULL;
-		_tmp48_[8] = _tmp51_;
-		_tmp52_ = _tmp48_[8];
+		G_IS_VALUE (&_tmp48_[7]) ? (g_value_unset (&_tmp48_[7]), NULL) : NULL;
+		_tmp48_[7] = _tmp51_;
+		_tmp52_ = _tmp48_[7];
 		_g_object_unref0 (container);
 	}
 	_tmp53_ = self->priv->db;
@@ -3741,39 +3880,47 @@ static void rygel_media_export_media_cache_create_normal_object (RygelMediaExpor
 	RygelMediaObject* _tmp21_;
 	const gchar* _tmp22_;
 	const gchar* _tmp23_;
-	GValue _tmp24_ = {0};
-	RygelMediaObject* _tmp25_;
+	gchar* _tmp24_;
+	gchar* _tmp25_;
 	const gchar* _tmp26_;
-	const gchar* _tmp27_;
-	GValue _tmp28_ = {0};
-	gint _tmp29_;
+	RygelMediaObject* _tmp27_;
+	const gchar* _tmp28_;
+	const gchar* _tmp29_;
 	GValue _tmp30_ = {0};
-	GValue _tmp31_;
-	GValue _tmp32_ = {0};
-	RygelMediaObject* _tmp33_;
-	guint64 _tmp34_;
-	guint64 _tmp35_;
+	RygelMediaObject* _tmp31_;
+	const gchar* _tmp32_;
+	const gchar* _tmp33_;
+	GValue _tmp34_ = {0};
+	gint _tmp35_;
 	GValue _tmp36_ = {0};
-	const gchar* _tmp37_;
+	GValue _tmp37_;
 	GValue _tmp38_ = {0};
 	RygelMediaObject* _tmp39_;
-	guint _tmp40_;
-	guint _tmp41_;
+	guint64 _tmp40_;
+	guint64 _tmp41_;
 	GValue _tmp42_ = {0};
-	GValue _tmp43_ = {0};
+	const gchar* _tmp43_;
 	GValue _tmp44_ = {0};
-	gint _tmp45_;
-	GValue _tmp46_ = {0};
-	GValue* _tmp47_ = NULL;
+	RygelMediaObject* _tmp45_;
+	guint _tmp46_;
+	guint _tmp47_;
+	GValue _tmp48_ = {0};
+	GValue _tmp49_ = {0};
+	GValue _tmp50_ = {0};
+	gint _tmp51_;
+	GValue _tmp52_ = {0};
+	const gchar* _tmp53_;
+	GValue _tmp54_ = {0};
+	GValue* _tmp55_ = NULL;
 	GValue* values;
 	gint values_length1;
 	gint _values_size_;
-	RygelMediaObject* _tmp48_;
-	RygelMediaExportDatabase* _tmp61_;
-	RygelMediaExportSQLFactory* _tmp62_;
-	const gchar* _tmp63_ = NULL;
-	GValue* _tmp64_;
-	gint _tmp64__length1;
+	RygelMediaObject* _tmp56_;
+	RygelMediaExportDatabase* _tmp69_;
+	RygelMediaExportSQLFactory* _tmp70_;
+	const gchar* _tmp71_ = NULL;
+	GValue* _tmp72_;
+	gint _tmp72__length1;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	g_return_if_fail (object != NULL);
@@ -3831,113 +3978,129 @@ static void rygel_media_export_media_cache_create_normal_object (RygelMediaExpor
 		_tmp19_ = 0;
 	}
 	_tmp21_ = object;
-	_tmp22_ = rygel_media_object_get_id (_tmp21_);
+	_tmp22_ = rygel_media_object_get_ref_id (_tmp21_);
 	_tmp23_ = _tmp22_;
-	g_value_init (&_tmp24_, G_TYPE_STRING);
-	g_value_set_string (&_tmp24_, _tmp23_);
-	_tmp25_ = object;
-	_tmp26_ = rygel_media_object_get_title (_tmp25_);
-	_tmp27_ = _tmp26_;
-	g_value_init (&_tmp28_, G_TYPE_STRING);
-	g_value_set_string (&_tmp28_, _tmp27_);
-	_tmp29_ = type;
-	g_value_init (&_tmp30_, G_TYPE_INT);
-	g_value_set_int (&_tmp30_, _tmp29_);
-	_tmp31_ = parent;
-	if (G_IS_VALUE (&_tmp31_)) {
-		g_value_init (&_tmp32_, G_VALUE_TYPE (&_tmp31_));
-		g_value_copy (&_tmp31_, &_tmp32_);
-	} else {
-		_tmp32_ = _tmp31_;
+	_tmp24_ = g_strdup (_tmp23_);
+	_tmp25_ = _tmp24_;
+	_tmp26_ = _tmp25_;
+	if (_tmp26_ == NULL) {
+		_g_free0 (_tmp25_);
+		_tmp25_ = NULL;
 	}
-	_tmp33_ = object;
-	_tmp34_ = rygel_media_object_get_modified (_tmp33_);
-	_tmp35_ = _tmp34_;
-	g_value_init (&_tmp36_, G_TYPE_UINT64);
-	g_value_set_uint64 (&_tmp36_, _tmp35_);
-	_tmp37_ = _tmp11_;
-	g_value_init (&_tmp38_, G_TYPE_STRING);
-	g_value_set_string (&_tmp38_, _tmp37_);
+	_tmp27_ = object;
+	_tmp28_ = rygel_media_object_get_id (_tmp27_);
+	_tmp29_ = _tmp28_;
+	g_value_init (&_tmp30_, G_TYPE_STRING);
+	g_value_set_string (&_tmp30_, _tmp29_);
+	_tmp31_ = object;
+	_tmp32_ = rygel_media_object_get_title (_tmp31_);
+	_tmp33_ = _tmp32_;
+	g_value_init (&_tmp34_, G_TYPE_STRING);
+	g_value_set_string (&_tmp34_, _tmp33_);
+	_tmp35_ = type;
+	g_value_init (&_tmp36_, G_TYPE_INT);
+	g_value_set_int (&_tmp36_, _tmp35_);
+	_tmp37_ = parent;
+	if (G_IS_VALUE (&_tmp37_)) {
+		g_value_init (&_tmp38_, G_VALUE_TYPE (&_tmp37_));
+		g_value_copy (&_tmp37_, &_tmp38_);
+	} else {
+		_tmp38_ = _tmp37_;
+	}
 	_tmp39_ = object;
-	_tmp40_ = rygel_media_object_get_object_update_id (_tmp39_);
+	_tmp40_ = rygel_media_object_get_modified (_tmp39_);
 	_tmp41_ = _tmp40_;
-	g_value_init (&_tmp42_, G_TYPE_UINT);
-	g_value_set_uint (&_tmp42_, _tmp41_);
-	g_value_init (&_tmp43_, G_TYPE_INT);
-	g_value_set_int (&_tmp43_, -1);
-	g_value_init (&_tmp44_, G_TYPE_INT);
-	g_value_set_int (&_tmp44_, -1);
-	_tmp45_ = _tmp19_;
-	g_value_init (&_tmp46_, G_TYPE_INT);
-	g_value_set_int (&_tmp46_, _tmp45_);
-	_tmp47_ = g_new0 (GValue, 10);
-	_tmp47_[0] = _tmp24_;
-	_tmp47_[1] = _tmp28_;
-	_tmp47_[2] = _tmp30_;
-	_tmp47_[3] = _tmp32_;
-	_tmp47_[4] = _tmp36_;
-	_tmp47_[5] = _tmp38_;
-	_tmp47_[6] = _tmp42_;
-	_tmp47_[7] = _tmp43_;
-	_tmp47_[8] = _tmp44_;
-	_tmp47_[9] = _tmp46_;
-	values = _tmp47_;
-	values_length1 = 10;
+	g_value_init (&_tmp42_, G_TYPE_UINT64);
+	g_value_set_uint64 (&_tmp42_, _tmp41_);
+	_tmp43_ = _tmp11_;
+	g_value_init (&_tmp44_, G_TYPE_STRING);
+	g_value_set_string (&_tmp44_, _tmp43_);
+	_tmp45_ = object;
+	_tmp46_ = rygel_media_object_get_object_update_id (_tmp45_);
+	_tmp47_ = _tmp46_;
+	g_value_init (&_tmp48_, G_TYPE_UINT);
+	g_value_set_uint (&_tmp48_, _tmp47_);
+	g_value_init (&_tmp49_, G_TYPE_INT);
+	g_value_set_int (&_tmp49_, -1);
+	g_value_init (&_tmp50_, G_TYPE_INT);
+	g_value_set_int (&_tmp50_, -1);
+	_tmp51_ = _tmp19_;
+	g_value_init (&_tmp52_, G_TYPE_INT);
+	g_value_set_int (&_tmp52_, _tmp51_);
+	_tmp53_ = _tmp25_;
+	g_value_init (&_tmp54_, G_TYPE_STRING);
+	g_value_set_string (&_tmp54_, _tmp53_);
+	_tmp55_ = g_new0 (GValue, 11);
+	_tmp55_[0] = _tmp30_;
+	_tmp55_[1] = _tmp34_;
+	_tmp55_[2] = _tmp36_;
+	_tmp55_[3] = _tmp38_;
+	_tmp55_[4] = _tmp42_;
+	_tmp55_[5] = _tmp44_;
+	_tmp55_[6] = _tmp48_;
+	_tmp55_[7] = _tmp49_;
+	_tmp55_[8] = _tmp50_;
+	_tmp55_[9] = _tmp52_;
+	_tmp55_[10] = _tmp54_;
+	values = _tmp55_;
+	values_length1 = 11;
 	_values_size_ = values_length1;
-	_tmp48_ = object;
-	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp48_, RYGEL_TYPE_MEDIA_CONTAINER)) {
-		RygelMediaObject* _tmp49_;
-		RygelMediaContainer* _tmp50_;
+	_tmp56_ = object;
+	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp56_, RYGEL_TYPE_MEDIA_CONTAINER)) {
+		RygelMediaObject* _tmp57_;
+		RygelMediaContainer* _tmp58_;
 		RygelMediaContainer* container;
-		GValue* _tmp51_;
-		gint _tmp51__length1;
-		RygelMediaContainer* _tmp52_;
-		gint64 _tmp53_;
-		GValue _tmp54_ = {0};
-		GValue _tmp55_;
-		GValue* _tmp56_;
-		gint _tmp56__length1;
-		RygelMediaContainer* _tmp57_;
-		guint32 _tmp58_;
-		GValue _tmp59_ = {0};
-		GValue _tmp60_;
-		_tmp49_ = object;
-		_tmp50_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp49_, RYGEL_TYPE_MEDIA_CONTAINER) ? ((RygelMediaContainer*) _tmp49_) : NULL);
-		container = _tmp50_;
-		_tmp51_ = values;
-		_tmp51__length1 = values_length1;
-		_tmp52_ = container;
-		_tmp53_ = _tmp52_->total_deleted_child_count;
-		g_value_init (&_tmp54_, G_TYPE_INT64);
-		g_value_set_int64 (&_tmp54_, _tmp53_);
-		G_IS_VALUE (&_tmp51_[7]) ? (g_value_unset (&_tmp51_[7]), NULL) : NULL;
-		_tmp51_[7] = _tmp54_;
-		_tmp55_ = _tmp51_[7];
-		_tmp56_ = values;
-		_tmp56__length1 = values_length1;
-		_tmp57_ = container;
-		_tmp58_ = _tmp57_->update_id;
-		g_value_init (&_tmp59_, G_TYPE_UINT);
-		g_value_set_uint (&_tmp59_, _tmp58_);
-		G_IS_VALUE (&_tmp56_[8]) ? (g_value_unset (&_tmp56_[8]), NULL) : NULL;
-		_tmp56_[8] = _tmp59_;
-		_tmp60_ = _tmp56_[8];
+		GValue* _tmp59_;
+		gint _tmp59__length1;
+		RygelMediaContainer* _tmp60_;
+		gint64 _tmp61_;
+		GValue _tmp62_ = {0};
+		GValue _tmp63_;
+		GValue* _tmp64_;
+		gint _tmp64__length1;
+		RygelMediaContainer* _tmp65_;
+		guint32 _tmp66_;
+		GValue _tmp67_ = {0};
+		GValue _tmp68_;
+		_tmp57_ = object;
+		_tmp58_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp57_, RYGEL_TYPE_MEDIA_CONTAINER) ? ((RygelMediaContainer*) _tmp57_) : NULL);
+		container = _tmp58_;
+		_tmp59_ = values;
+		_tmp59__length1 = values_length1;
+		_tmp60_ = container;
+		_tmp61_ = _tmp60_->total_deleted_child_count;
+		g_value_init (&_tmp62_, G_TYPE_INT64);
+		g_value_set_int64 (&_tmp62_, _tmp61_);
+		G_IS_VALUE (&_tmp59_[7]) ? (g_value_unset (&_tmp59_[7]), NULL) : NULL;
+		_tmp59_[7] = _tmp62_;
+		_tmp63_ = _tmp59_[7];
+		_tmp64_ = values;
+		_tmp64__length1 = values_length1;
+		_tmp65_ = container;
+		_tmp66_ = _tmp65_->update_id;
+		g_value_init (&_tmp67_, G_TYPE_UINT);
+		g_value_set_uint (&_tmp67_, _tmp66_);
+		G_IS_VALUE (&_tmp64_[8]) ? (g_value_unset (&_tmp64_[8]), NULL) : NULL;
+		_tmp64_[8] = _tmp67_;
+		_tmp68_ = _tmp64_[8];
 		_g_object_unref0 (container);
 	}
-	_tmp61_ = self->priv->db;
-	_tmp62_ = self->priv->sql;
-	_tmp63_ = rygel_media_export_sql_factory_make (_tmp62_, RYGEL_MEDIA_EXPORT_SQL_STRING_INSERT);
-	_tmp64_ = values;
-	_tmp64__length1 = values_length1;
-	rygel_media_export_database_exec (_tmp61_, _tmp63_, _tmp64_, _tmp64__length1, &_inner_error_);
+	_tmp69_ = self->priv->db;
+	_tmp70_ = self->priv->sql;
+	_tmp71_ = rygel_media_export_sql_factory_make (_tmp70_, RYGEL_MEDIA_EXPORT_SQL_STRING_INSERT);
+	_tmp72_ = values;
+	_tmp72__length1 = values_length1;
+	rygel_media_export_database_exec (_tmp69_, _tmp71_, _tmp72_, _tmp72__length1, &_inner_error_);
 	if (_inner_error_ != NULL) {
 		g_propagate_error (error, _inner_error_);
 		values = (_vala_GValue_array_free (values, values_length1), NULL);
+		_g_free0 (_tmp25_);
 		_g_free0 (_tmp11_);
 		G_IS_VALUE (&parent) ? (g_value_unset (&parent), NULL) : NULL;
 		return;
 	}
 	values = (_vala_GValue_array_free (values, values_length1), NULL);
+	_g_free0 (_tmp25_);
 	_g_free0 (_tmp11_);
 	G_IS_VALUE (&parent) ? (g_value_unset (&parent), NULL) : NULL;
 }
@@ -4034,80 +4197,90 @@ static gboolean rygel_media_export_media_cache_create_schema (RygelMediaExportMe
 		RygelMediaExportSQLFactory* _tmp14_;
 		const gchar* _tmp15_ = NULL;
 		RygelMediaExportDatabase* _tmp16_;
-		RygelMediaExportDatabase* _tmp17_;
-		gchar* _tmp18_ = NULL;
-		gchar* _tmp19_;
+		RygelMediaExportSQLFactory* _tmp17_;
+		const gchar* _tmp18_ = NULL;
+		RygelMediaExportDatabase* _tmp19_;
+		RygelMediaExportDatabase* _tmp20_;
+		gchar* _tmp21_ = NULL;
+		gchar* _tmp22_;
 		_tmp0_ = self->priv->db;
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch17_g_error;
+			goto __catch18_g_error;
 		}
 		_tmp1_ = self->priv->db;
 		_tmp2_ = self->priv->sql;
 		_tmp3_ = rygel_media_export_sql_factory_make (_tmp2_, RYGEL_MEDIA_EXPORT_SQL_STRING_SCHEMA);
 		rygel_media_export_database_exec (_tmp1_, _tmp3_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch17_g_error;
+			goto __catch18_g_error;
 		}
 		_tmp4_ = self->priv->db;
 		_tmp5_ = self->priv->sql;
 		_tmp6_ = rygel_media_export_sql_factory_make (_tmp5_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_COMMON);
 		rygel_media_export_database_exec (_tmp4_, _tmp6_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch17_g_error;
+			goto __catch18_g_error;
 		}
 		_tmp7_ = self->priv->db;
 		_tmp8_ = self->priv->sql;
 		_tmp9_ = rygel_media_export_sql_factory_make (_tmp8_, RYGEL_MEDIA_EXPORT_SQL_STRING_TABLE_CLOSURE);
 		rygel_media_export_database_exec (_tmp7_, _tmp9_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch17_g_error;
+			goto __catch18_g_error;
 		}
 		_tmp10_ = self->priv->db;
 		_tmp11_ = self->priv->sql;
 		_tmp12_ = rygel_media_export_sql_factory_make (_tmp11_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
 		rygel_media_export_database_exec (_tmp10_, _tmp12_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch17_g_error;
+			goto __catch18_g_error;
 		}
 		_tmp13_ = self->priv->db;
 		_tmp14_ = self->priv->sql;
 		_tmp15_ = rygel_media_export_sql_factory_make (_tmp14_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
 		rygel_media_export_database_exec (_tmp13_, _tmp15_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch17_g_error;
+			goto __catch18_g_error;
 		}
 		_tmp16_ = self->priv->db;
-		rygel_media_export_database_commit (_tmp16_, &_inner_error_);
+		_tmp17_ = self->priv->sql;
+		_tmp18_ = rygel_media_export_sql_factory_make (_tmp17_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_REFERENCE);
+		rygel_media_export_database_exec (_tmp16_, _tmp18_, NULL, 0, &_inner_error_);
 		if (_inner_error_ != NULL) {
-			goto __catch17_g_error;
+			goto __catch18_g_error;
 		}
-		_tmp17_ = self->priv->db;
-		rygel_media_export_database_analyze (_tmp17_);
-		_tmp18_ = uuid_get ();
-		_tmp19_ = _tmp18_;
-		rygel_media_export_media_cache_save_reset_token (self, _tmp19_);
-		_g_free0 (_tmp19_);
+		_tmp19_ = self->priv->db;
+		rygel_media_export_database_commit (_tmp19_, &_inner_error_);
+		if (_inner_error_ != NULL) {
+			goto __catch18_g_error;
+		}
+		_tmp20_ = self->priv->db;
+		rygel_media_export_database_analyze (_tmp20_);
+		_tmp21_ = uuid_get ();
+		_tmp22_ = _tmp21_;
+		rygel_media_export_media_cache_save_reset_token (self, _tmp22_);
+		_g_free0 (_tmp22_);
 		result = TRUE;
 		return result;
 	}
-	goto __finally17;
-	__catch17_g_error:
+	goto __finally18;
+	__catch18_g_error:
 	{
 		GError* err = NULL;
-		GError* _tmp20_;
-		const gchar* _tmp21_;
-		RygelMediaExportDatabase* _tmp22_;
+		GError* _tmp23_;
+		const gchar* _tmp24_;
+		RygelMediaExportDatabase* _tmp25_;
 		err = _inner_error_;
 		_inner_error_ = NULL;
-		_tmp20_ = err;
-		_tmp21_ = _tmp20_->message;
-		g_warning ("rygel-media-export-media-cache.vala:769: Failed to create schema: %s", _tmp21_);
-		_tmp22_ = self->priv->db;
-		rygel_media_export_database_rollback (_tmp22_);
+		_tmp23_ = err;
+		_tmp24_ = _tmp23_->message;
+		g_warning ("rygel-media-export-media-cache.vala:778: Failed to create schema: %s", _tmp24_);
+		_tmp25_ = self->priv->db;
+		rygel_media_export_database_rollback (_tmp25_);
 		_g_error_free0 (err);
 	}
-	__finally17:
+	__finally18:
 	if (_inner_error_ != NULL) {
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 		g_clear_error (&_inner_error_);
@@ -4262,6 +4435,9 @@ static RygelMediaObject* rygel_media_export_media_cache_get_object_from_statemen
 		RygelMediaObject* _tmp51_;
 		sqlite3_stmt* _tmp52_;
 		gint64 _tmp53_ = 0LL;
+		RygelMediaObject* _tmp54_;
+		sqlite3_stmt* _tmp55_;
+		const gchar* _tmp56_ = NULL;
 		_tmp39_ = object;
 		_tmp40_ = statement;
 		_tmp41_ = sqlite3_column_int64 (_tmp40_, (gint) RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_TIMESTAMP);
@@ -4290,6 +4466,10 @@ static RygelMediaObject* rygel_media_export_media_cache_get_object_from_statemen
 		_tmp52_ = statement;
 		_tmp53_ = sqlite3_column_int64 (_tmp52_, (gint) RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_OBJECT_UPDATE_ID);
 		rygel_media_object_set_object_update_id (_tmp51_, (guint) _tmp53_);
+		_tmp54_ = object;
+		_tmp55_ = statement;
+		_tmp56_ = sqlite3_column_text (_tmp55_, (gint) RYGEL_MEDIA_EXPORT_DETAIL_COLUMN_REFERENCE_ID);
+		rygel_media_object_set_ref_id (_tmp54_, _tmp56_);
 	}
 	result = object;
 	return result;
@@ -4612,7 +4792,7 @@ static gchar* rygel_media_export_media_cache_logical_expression_to_sql (RygelLog
 }
 
 
-static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar* operand, gchar** collate, GError** error) {
+static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar* operand, gchar** collate, gboolean for_sort, GError** error) {
 	gchar* _vala_collate = NULL;
 	gchar* result = NULL;
 	gchar* column;
@@ -4637,7 +4817,7 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 	static GQuark _tmp2_label14 = 0;
 	static GQuark _tmp2_label15 = 0;
 	static GQuark _tmp2_label16 = 0;
-	gboolean _tmp23_;
+	gboolean _tmp25_;
 	GError * _inner_error_ = NULL;
 	g_return_val_if_fail (operand != NULL, NULL);
 	column = NULL;
@@ -4672,7 +4852,7 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 			default:
 			{
 				gchar* _tmp6_;
-				_tmp6_ = g_strdup ("NULL");
+				_tmp6_ = g_strdup ("o.reference_id");
 				_g_free0 (column);
 				column = _tmp6_;
 				break;
@@ -4739,10 +4919,19 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 		switch (0) {
 			default:
 			{
-				gchar* _tmp12_;
-				_tmp12_ = g_strdup ("strftime(\"%Y\", m.date)");
-				_g_free0 (column);
-				column = _tmp12_;
+				gboolean _tmp12_;
+				_tmp12_ = for_sort;
+				if (_tmp12_) {
+					gchar* _tmp13_;
+					_tmp13_ = g_strdup ("m.date");
+					_g_free0 (column);
+					column = _tmp13_;
+				} else {
+					gchar* _tmp14_;
+					_tmp14_ = g_strdup ("strftime(\"%Y\", m.date)");
+					_g_free0 (column);
+					column = _tmp14_;
+				}
 				break;
 			}
 		}
@@ -4750,10 +4939,10 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 		switch (0) {
 			default:
 			{
-				gchar* _tmp13_;
-				_tmp13_ = g_strdup ("m.album");
+				gchar* _tmp15_;
+				_tmp15_ = g_strdup ("m.album");
 				_g_free0 (column);
-				column = _tmp13_;
+				column = _tmp15_;
 				use_collation = TRUE;
 				break;
 			}
@@ -4762,10 +4951,10 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 		switch (0) {
 			default:
 			{
-				gchar* _tmp14_;
-				_tmp14_ = g_strdup ("m.genre");
+				gchar* _tmp16_;
+				_tmp16_ = g_strdup ("m.genre");
 				_g_free0 (column);
-				column = _tmp14_;
+				column = _tmp16_;
 				use_collation = TRUE;
 				break;
 			}
@@ -4774,10 +4963,10 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 		switch (0) {
 			default:
 			{
-				gchar* _tmp15_;
-				_tmp15_ = g_strdup ("m.track");
+				gchar* _tmp17_;
+				_tmp17_ = g_strdup ("m.track");
 				_g_free0 (column);
-				column = _tmp15_;
+				column = _tmp17_;
 				break;
 			}
 		}
@@ -4785,10 +4974,10 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 		switch (0) {
 			default:
 			{
-				gchar* _tmp16_;
-				_tmp16_ = g_strdup ("m.disc");
+				gchar* _tmp18_;
+				_tmp18_ = g_strdup ("m.disc");
 				_g_free0 (column);
-				column = _tmp16_;
+				column = _tmp18_;
 				break;
 			}
 		}
@@ -4796,10 +4985,10 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 		switch (0) {
 			default:
 			{
-				gchar* _tmp17_;
-				_tmp17_ = g_strdup ("o.object_update_id");
+				gchar* _tmp19_;
+				_tmp19_ = g_strdup ("o.object_update_id");
 				_g_free0 (column);
-				column = _tmp17_;
+				column = _tmp19_;
 				break;
 			}
 		}
@@ -4807,10 +4996,10 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 		switch (0) {
 			default:
 			{
-				gchar* _tmp18_;
-				_tmp18_ = g_strdup ("o.container_update_id");
+				gchar* _tmp20_;
+				_tmp20_ = g_strdup ("o.container_update_id");
 				_g_free0 (column);
-				column = _tmp18_;
+				column = _tmp20_;
 				break;
 			}
 		}
@@ -4818,17 +5007,17 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 		switch (0) {
 			default:
 			{
-				const gchar* _tmp19_;
-				gchar* _tmp20_ = NULL;
-				gchar* message;
 				const gchar* _tmp21_;
-				GError* _tmp22_;
-				_tmp19_ = operand;
-				_tmp20_ = g_strdup_printf ("Unsupported column %s", _tmp19_);
-				message = _tmp20_;
-				_tmp21_ = message;
-				_tmp22_ = g_error_new_literal (RYGEL_MEDIA_EXPORT_MEDIA_CACHE_ERROR, RYGEL_MEDIA_EXPORT_MEDIA_CACHE_ERROR_UNSUPPORTED_SEARCH, _tmp21_);
-				_inner_error_ = _tmp22_;
+				gchar* _tmp22_ = NULL;
+				gchar* message;
+				const gchar* _tmp23_;
+				GError* _tmp24_;
+				_tmp21_ = operand;
+				_tmp22_ = g_strdup_printf ("Unsupported column %s", _tmp21_);
+				message = _tmp22_;
+				_tmp23_ = message;
+				_tmp24_ = g_error_new_literal (RYGEL_MEDIA_EXPORT_MEDIA_CACHE_ERROR, RYGEL_MEDIA_EXPORT_MEDIA_CACHE_ERROR_UNSUPPORTED_SEARCH, _tmp23_);
+				_inner_error_ = _tmp24_;
 				g_propagate_error (error, _inner_error_);
 				_g_free0 (message);
 				_g_free0 (column);
@@ -4836,17 +5025,17 @@ static gchar* rygel_media_export_media_cache_map_operand_to_column (const gchar*
 			}
 		}
 	}
-	_tmp23_ = use_collation;
-	if (_tmp23_) {
-		gchar* _tmp24_;
-		_tmp24_ = g_strdup ("COLLATE CASEFOLD");
+	_tmp25_ = use_collation;
+	if (_tmp25_) {
+		gchar* _tmp26_;
+		_tmp26_ = g_strdup ("COLLATE CASEFOLD");
 		_g_free0 (_vala_collate);
-		_vala_collate = _tmp24_;
+		_vala_collate = _tmp26_;
 	} else {
-		gchar* _tmp25_;
-		_tmp25_ = g_strdup ("");
+		gchar* _tmp27_;
+		_tmp27_ = g_strdup ("");
 		_g_free0 (_vala_collate);
-		_vala_collate = _tmp25_;
+		_vala_collate = _tmp27_;
 	}
 	result = column;
 	if (collate) {
@@ -4880,7 +5069,7 @@ static gchar* rygel_media_export_media_cache_relational_expression_to_sql (Rygel
 	collate = NULL;
 	_tmp0_ = exp;
 	_tmp1_ = ((RygelSearchExpression*) _tmp0_)->operand1;
-	_tmp3_ = rygel_media_export_media_cache_map_operand_to_column ((const gchar*) _tmp1_, &_tmp2_, &_inner_error_);
+	_tmp3_ = rygel_media_export_media_cache_map_operand_to_column ((const gchar*) _tmp1_, &_tmp2_, FALSE, &_inner_error_);
 	_g_free0 (collate);
 	collate = _tmp2_;
 	column = _tmp3_;
@@ -5094,7 +5283,7 @@ static gchar* rygel_media_export_media_cache_relational_expression_to_sql (Rygel
 			gconstpointer _tmp58_;
 			_tmp57_ = exp;
 			_tmp58_ = ((RygelSearchExpression*) _tmp57_)->op;
-			g_warning ("rygel-media-export-media-cache.vala:1062: Unsupported op %d", (gint) ((GUPnPSearchCriteriaOp) ((gintptr) _tmp58_)));
+			g_warning ("rygel-media-export-media-cache.vala:1077: Unsupported op %d", (gint) ((GUPnPSearchCriteriaOp) ((gintptr) _tmp58_)));
 			result = NULL;
 			_g_object_unref0 (operator);
 			_g_free0 (column);
@@ -5347,14 +5536,14 @@ static gchar* rygel_media_export_media_cache_translate_sort_criteria (const gcha
 					_tmp8_ = _tmp7_;
 					_tmp9_ = string_slice (_tmp5_, (glong) 1, (glong) _tmp8_);
 					_tmp10_ = _tmp9_;
-					_tmp12_ = rygel_media_export_media_cache_map_operand_to_column (_tmp10_, &_tmp11_, &_inner_error_);
+					_tmp12_ = rygel_media_export_media_cache_map_operand_to_column (_tmp10_, &_tmp11_, TRUE, &_inner_error_);
 					_g_free0 (collate);
 					collate = _tmp11_;
 					_tmp13_ = _tmp12_;
 					_g_free0 (_tmp10_);
 					column = _tmp13_;
 					if (_inner_error_ != NULL) {
-						goto __catch18_g_error;
+						goto __catch19_g_error;
 					}
 					_tmp14_ = field;
 					_tmp15_ = fields;
@@ -5379,19 +5568,19 @@ static gchar* rygel_media_export_media_cache_translate_sort_criteria (const gcha
 					g_string_append_printf (_tmp21_, "%s %s %s ", _tmp22_, _tmp23_, _tmp24_);
 					_g_free0 (column);
 				}
-				goto __finally18;
-				__catch18_g_error:
+				goto __finally19;
+				__catch19_g_error:
 				{
 					GError* _error_ = NULL;
 					const gchar* _tmp25_;
 					_error_ = _inner_error_;
 					_inner_error_ = NULL;
 					_tmp25_ = field;
-					g_warning ("rygel-media-export-media-cache.vala:1102: Skipping unsupported field: " \
+					g_warning ("rygel-media-export-media-cache.vala:1118: Skipping unsupported field: " \
 "%s", _tmp25_);
 					_g_error_free0 (_error_);
 				}
-				__finally18:
+				__finally19:
 				if (_inner_error_ != NULL) {
 					fields = (_vala_array_free (fields, fields_length1, (GDestroyNotify) g_free), NULL);
 					_g_string_free0 (builder);

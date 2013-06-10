@@ -72,7 +72,6 @@ struct _RygelGstSinkClass {
 
 struct _RygelGstSinkPrivate {
 	gint priority;
-	gint64 chunks_buffered;
 	gint64 bytes_sent;
 	gint64 max_bytes;
 	GMutex buffer_mutex;
@@ -140,7 +139,6 @@ RygelGstSink* rygel_gst_sink_construct (GType object_type, RygelDataSource* sour
 	GCancellable* _tmp12_;
 	g_return_val_if_fail (source != NULL, NULL);
 	self = (RygelGstSink*) g_object_new (object_type, NULL);
-	self->priv->chunks_buffered = (gint64) 0;
 	self->priv->bytes_sent = (gint64) 0;
 	_tmp0_ = G_MAXINT64;
 	self->priv->max_bytes = _tmp0_;
@@ -334,12 +332,16 @@ gboolean rygel_gst_sink_push_data (RygelGstSink* self, GstBuffer* buffer) {
 	GstMapInfo info = {0};
 	GstBuffer* _tmp12_;
 	GstMapInfo _tmp13_ = {0};
-	RygelDataSource* _tmp14_;
-	GstMapInfo _tmp15_;
-	guint8* _tmp16_;
-	gint _tmp16__length1;
-	gint64 _tmp17_;
-	gint64 _tmp18_;
+	GstMapInfo _tmp14_;
+	guint8* _tmp15_;
+	gint _tmp15__length1;
+	gint64 _tmp16_;
+	guint8* tmp;
+	gint tmp_length1;
+	gint _tmp_size_;
+	RygelDataSource* _tmp17_;
+	guint8* _tmp18_;
+	gint _tmp18__length1;
 	gint64 _tmp19_;
 	gint64 _tmp20_;
 	GstBuffer* _tmp21_;
@@ -373,14 +375,17 @@ gboolean rygel_gst_sink_push_data (RygelGstSink* self, GstBuffer* buffer) {
 	_tmp12_ = buffer;
 	gst_buffer_map (_tmp12_, &_tmp13_, GST_MAP_READ);
 	info = _tmp13_;
-	_tmp14_ = self->priv->source;
-	_tmp15_ = info;
-	_tmp16_ = _tmp15_.data;
-	_tmp16__length1 = (gint) _tmp15_.size;
-	_tmp17_ = to_send;
-	g_signal_emit_by_name (_tmp14_, "data-available", _tmp16_ + 0, _tmp17_ - 0);
-	_tmp18_ = self->priv->chunks_buffered;
-	self->priv->chunks_buffered = _tmp18_ + 1;
+	_tmp14_ = info;
+	_tmp15_ = _tmp14_.data;
+	_tmp15__length1 = (gint) _tmp14_.size;
+	_tmp16_ = to_send;
+	tmp = _tmp15_ + 0;
+	tmp_length1 = _tmp16_ - 0;
+	_tmp_size_ = tmp_length1;
+	_tmp17_ = self->priv->source;
+	_tmp18_ = tmp;
+	_tmp18__length1 = tmp_length1;
+	g_signal_emit_by_name (_tmp17_, "data-available", _tmp18_, _tmp18__length1);
 	_tmp19_ = self->priv->bytes_sent;
 	_tmp20_ = to_send;
 	self->priv->bytes_sent = _tmp19_ + _tmp20_;

@@ -165,8 +165,10 @@ struct _RygelMediaObjectClass {
 struct _RygelMediaContainer {
 	RygelMediaObject parent_instance;
 	RygelMediaContainerPrivate * priv;
+	gint empty_child_count;
 	guint32 update_id;
 	gint64 storage_used;
+	gboolean create_mode_enabled;
 	gint64 total_deleted_child_count;
 };
 
@@ -221,19 +223,27 @@ struct _RygelSimpleContainerGetChildrenData {
 	guint _tmp0_;
 	guint _tmp1_;
 	guint stop;
-	guint _tmp2_;
-	gint _tmp3_;
+	RygelMediaObjects* unsorted_children;
+	gboolean _tmp2_;
+	guint _tmp3_;
 	gint _tmp4_;
-	guint _tmp5_;
-	RygelMediaObjects* _tmp6_;
-	gint _tmp7_;
-	gint _tmp8_;
-	GeeList* _tmp9_;
-	RygelMediaObjects* sorted_children;
-	const gchar* _tmp10_;
+	gint _tmp5_;
+	guint _tmp6_;
+	RygelMediaObjects* _tmp7_;
+	guint _tmp8_;
+	gint _tmp9_;
+	gint _tmp10_;
 	guint _tmp11_;
-	guint _tmp12_;
-	GeeList* _tmp13_;
+	RygelMediaObjects* _tmp12_;
+	gint _tmp13_;
+	gint _tmp14_;
+	GeeList* _tmp15_;
+	RygelMediaObjects* _tmp16_;
+	const gchar* _tmp17_;
+	RygelMediaObjects* _tmp18_;
+	guint _tmp19_;
+	guint _tmp20_;
+	GeeList* _tmp21_;
 };
 
 struct _Block2Data {
@@ -261,48 +271,58 @@ struct _RygelSimpleContainerFindObjectData {
 	RygelMediaObject* result;
 	Block2Data* _data2_;
 	RygelMediaObject* media_object;
+	gint max_count;
 	gboolean _tmp0_;
-	Block3Data* _data3_;
-	gboolean _tmp1_;
-	gboolean _tmp2_;
-	gboolean _tmp3_;
+	gint _tmp1_;
+	gint _tmp2_;
+	gint _tmp3_;
 	gint _tmp4_;
-	gboolean _tmp5_;
-	RygelMediaObjects* _tmp6_;
+	gint _tmp5_;
+	GCancellable* _tmp6_;
 	RygelMediaObjects* _tmp7_;
+	RygelMediaObjects* children_to_search;
+	gboolean _tmp8_;
+	Block3Data* _data3_;
+	gboolean _tmp9_;
+	gboolean _tmp10_;
+	gboolean _tmp11_;
+	gint _tmp12_;
+	gboolean _tmp13_;
+	RygelMediaObjects* _tmp14_;
+	RygelMediaObjects* _tmp15_;
 	RygelMediaObjects* _child_list;
-	RygelMediaObjects* _tmp8_;
-	gint _tmp9_;
-	gint _tmp10_;
+	RygelMediaObjects* _tmp16_;
+	gint _tmp17_;
+	gint _tmp18_;
 	gint _child_size;
 	gint _child_index;
-	gint _tmp11_;
-	gint _tmp12_;
-	gint _tmp13_;
-	RygelMediaObjects* _tmp14_;
-	gint _tmp15_;
-	gpointer _tmp16_;
+	gint _tmp19_;
+	gint _tmp20_;
+	gint _tmp21_;
+	RygelMediaObjects* _tmp22_;
+	gint _tmp23_;
+	gpointer _tmp24_;
 	RygelMediaObject* child;
-	RygelMediaObject* _tmp17_;
-	const gchar* _tmp18_;
-	const gchar* _tmp19_;
-	const gchar* _tmp20_;
-	RygelMediaObject* _tmp21_;
-	RygelMediaObject* _tmp22_;
-	RygelMediaObject* _tmp23_;
-	gulong _tmp24_;
 	RygelMediaObject* _tmp25_;
-	RygelMediaContainer* _tmp26_;
-	RygelMediaContainer* container;
-	RygelMediaContainer* _tmp27_;
+	const gchar* _tmp26_;
+	const gchar* _tmp27_;
 	const gchar* _tmp28_;
-	GCancellable* _tmp29_;
+	RygelMediaObject* _tmp29_;
 	RygelMediaObject* _tmp30_;
 	RygelMediaObject* _tmp31_;
 	gulong _tmp32_;
-	gulong _tmp33_;
-	RygelMediaObject* _tmp34_;
-	gboolean _tmp35_;
+	RygelMediaObject* _tmp33_;
+	RygelMediaContainer* _tmp34_;
+	RygelMediaContainer* container;
+	RygelMediaContainer* _tmp35_;
+	const gchar* _tmp36_;
+	GCancellable* _tmp37_;
+	RygelMediaObject* _tmp38_;
+	RygelMediaObject* _tmp39_;
+	gulong _tmp40_;
+	gulong _tmp41_;
+	RygelMediaObject* _tmp42_;
+	gboolean _tmp43_;
 	GError * _inner_error_;
 };
 
@@ -380,19 +400,22 @@ gboolean rygel_simple_container_is_child_id_unique (RygelSimpleContainer* self, 
 static void rygel_simple_container_real_get_children_data_free (gpointer _data);
 static void rygel_simple_container_real_get_children (RygelMediaContainer* base, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 static gboolean rygel_simple_container_real_get_children_co (RygelSimpleContainerGetChildrenData* _data_);
+gint rygel_media_container_get_all_child_count (RygelMediaContainer* self);
 void rygel_media_objects_sort_by_criteria (RygelMediaObjects* self, const gchar* sort_criteria);
 static void rygel_simple_container_real_find_object_data_free (gpointer _data);
 static void rygel_simple_container_real_find_object (RygelMediaContainer* base, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 static gboolean rygel_simple_container_real_find_object_co (RygelSimpleContainerFindObjectData* _data_);
 static Block2Data* block2_data_ref (Block2Data* _data2_);
 static void block2_data_unref (void * _userdata_);
+void rygel_media_container_get_children (RygelMediaContainer* self, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+RygelMediaObjects* rygel_media_container_get_children_finish (RygelMediaContainer* self, GAsyncResult* _res_, GError** error);
+static void rygel_simple_container_find_object_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
 static Block3Data* block3_data_ref (Block3Data* _data3_);
 static void block3_data_unref (void * _userdata_);
 static void ________lambda19_ (Block3Data* _data3_, RygelMediaContainer* _, RygelMediaObject* updated);
 static void _________lambda19__rygel_media_container_container_updated (RygelMediaContainer* _sender, RygelMediaContainer* container, RygelMediaObject* object, RygelObjectEventType event_type, gboolean sub_tree_update, gpointer self);
 void rygel_media_container_find_object (RygelMediaContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 RygelMediaObject* rygel_media_container_find_object_finish (RygelMediaContainer* self, GAsyncResult* _res_, GError** error);
-static void rygel_simple_container_find_object_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
 static void rygel_simple_container_real_search_data_free (gpointer _data);
 static void rygel_simple_container_real_search (RygelSearchableContainer* base, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 static gboolean rygel_simple_container_real_search_co (RygelSimpleContainerSearchData* _data_);
@@ -572,7 +595,8 @@ void rygel_simple_container_add_child_container (RygelSimpleContainer* self, Ryg
 		const gchar* _tmp14_;
 		RygelMediaObjects* _tmp15_;
 		RygelMediaContainer* _tmp16_;
-		RygelMediaContainer* _tmp17_;
+		gint _tmp17_;
+		RygelMediaContainer* _tmp18_;
 		_tmp12_ = child;
 		_tmp13_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp12_);
 		_tmp14_ = _tmp13_;
@@ -580,8 +604,10 @@ void rygel_simple_container_add_child_container (RygelSimpleContainer* self, Ryg
 		_tmp15_ = self->priv->empty_children;
 		_tmp16_ = child;
 		gee_abstract_collection_add ((GeeAbstractCollection*) _tmp15_, (RygelMediaObject*) _tmp16_);
-		_tmp17_ = child;
-		g_signal_connect_object (_tmp17_, "container-updated", (GCallback) _rygel_simple_container_on_container_updated_rygel_media_container_container_updated, self, 0);
+		_tmp17_ = ((RygelMediaContainer*) self)->empty_child_count;
+		((RygelMediaContainer*) self)->empty_child_count = _tmp17_ + 1;
+		_tmp18_ = child;
+		g_signal_connect_object (_tmp18_, "container-updated", (GCallback) _rygel_simple_container_on_container_updated_rygel_media_container_container_updated, self, 0);
 	}
 }
 
@@ -814,26 +840,43 @@ static gboolean rygel_simple_container_real_get_children_co (RygelSimpleContaine
 	_data_->_tmp0_ = _data_->offset;
 	_data_->_tmp1_ = _data_->max_count;
 	_data_->stop = _data_->_tmp0_ + _data_->_tmp1_;
-	_data_->_tmp2_ = _data_->stop;
-	_data_->_tmp3_ = rygel_media_container_get_child_count ((RygelMediaContainer*) _data_->self);
-	_data_->_tmp4_ = _data_->_tmp3_;
-	_data_->_tmp5_ = 0U;
-	_data_->_tmp5_ = CLAMP (_data_->_tmp2_, (guint) 0, (guint) _data_->_tmp4_);
-	_data_->stop = _data_->_tmp5_;
-	_data_->_tmp6_ = _data_->self->children;
-	_data_->_tmp7_ = rygel_media_container_get_child_count ((RygelMediaContainer*) _data_->self);
-	_data_->_tmp8_ = _data_->_tmp7_;
-	_data_->_tmp9_ = NULL;
-	_data_->_tmp9_ = gee_abstract_list_slice ((GeeAbstractList*) _data_->_tmp6_, 0, _data_->_tmp8_);
-	_data_->sorted_children = G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp9_, RYGEL_TYPE_MEDIA_OBJECTS) ? ((RygelMediaObjects*) _data_->_tmp9_) : NULL;
-	_data_->_tmp10_ = _data_->sort_criteria;
-	rygel_media_objects_sort_by_criteria (_data_->sorted_children, _data_->_tmp10_);
-	_data_->_tmp11_ = _data_->offset;
-	_data_->_tmp12_ = _data_->stop;
-	_data_->_tmp13_ = NULL;
-	_data_->_tmp13_ = gee_abstract_list_slice ((GeeAbstractList*) _data_->sorted_children, (gint) _data_->_tmp11_, (gint) _data_->_tmp12_);
-	_data_->result = G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp13_, RYGEL_TYPE_MEDIA_OBJECTS) ? ((RygelMediaObjects*) _data_->_tmp13_) : NULL;
-	_g_object_unref0 (_data_->sorted_children);
+	_data_->_tmp2_ = ((RygelMediaContainer*) _data_->self)->create_mode_enabled;
+	if (_data_->_tmp2_) {
+		_data_->_tmp3_ = _data_->stop;
+		_data_->_tmp4_ = rygel_media_container_get_all_child_count ((RygelMediaContainer*) _data_->self);
+		_data_->_tmp5_ = _data_->_tmp4_;
+		_data_->_tmp6_ = 0U;
+		_data_->_tmp6_ = CLAMP (_data_->_tmp3_, (guint) 0, (guint) _data_->_tmp5_);
+		_data_->stop = _data_->_tmp6_;
+		_data_->_tmp7_ = NULL;
+		_data_->_tmp7_ = rygel_simple_container_get_all_children (_data_->self);
+		_g_object_unref0 (_data_->unsorted_children);
+		_data_->unsorted_children = _data_->_tmp7_;
+	} else {
+		_data_->_tmp8_ = _data_->stop;
+		_data_->_tmp9_ = rygel_media_container_get_child_count ((RygelMediaContainer*) _data_->self);
+		_data_->_tmp10_ = _data_->_tmp9_;
+		_data_->_tmp11_ = 0U;
+		_data_->_tmp11_ = CLAMP (_data_->_tmp8_, (guint) 0, (guint) _data_->_tmp10_);
+		_data_->stop = _data_->_tmp11_;
+		_data_->_tmp12_ = _data_->self->children;
+		_data_->_tmp13_ = rygel_media_container_get_child_count ((RygelMediaContainer*) _data_->self);
+		_data_->_tmp14_ = _data_->_tmp13_;
+		_data_->_tmp15_ = NULL;
+		_data_->_tmp15_ = gee_abstract_list_slice ((GeeAbstractList*) _data_->_tmp12_, 0, _data_->_tmp14_);
+		_g_object_unref0 (_data_->unsorted_children);
+		_data_->unsorted_children = G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp15_, RYGEL_TYPE_MEDIA_OBJECTS) ? ((RygelMediaObjects*) _data_->_tmp15_) : NULL;
+	}
+	_data_->_tmp16_ = _data_->unsorted_children;
+	_data_->_tmp17_ = _data_->sort_criteria;
+	rygel_media_objects_sort_by_criteria (_data_->_tmp16_, _data_->_tmp17_);
+	_data_->_tmp18_ = _data_->unsorted_children;
+	_data_->_tmp19_ = _data_->offset;
+	_data_->_tmp20_ = _data_->stop;
+	_data_->_tmp21_ = NULL;
+	_data_->_tmp21_ = gee_abstract_list_slice ((GeeAbstractList*) _data_->_tmp18_, (gint) _data_->_tmp19_, (gint) _data_->_tmp20_);
+	_data_->result = G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp21_, RYGEL_TYPE_MEDIA_OBJECTS) ? ((RygelMediaObjects*) _data_->_tmp21_) : NULL;
+	_g_object_unref0 (_data_->unsorted_children);
 	if (_data_->_state_ == 0) {
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
 	} else {
@@ -841,7 +884,7 @@ static gboolean rygel_simple_container_real_get_children_co (RygelSimpleContaine
 	}
 	g_object_unref (_data_->_async_result);
 	return FALSE;
-	_g_object_unref0 (_data_->sorted_children);
+	_g_object_unref0 (_data_->unsorted_children);
 	if (_data_->_state_ == 0) {
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
 	} else {
@@ -920,6 +963,15 @@ static void block2_data_unref (void * _userdata_) {
 }
 
 
+static void rygel_simple_container_find_object_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_) {
+	RygelSimpleContainerFindObjectData* _data_;
+	_data_ = _user_data_;
+	_data_->_source_object_ = source_object;
+	_data_->_res_ = _res_;
+	rygel_simple_container_real_find_object_co (_data_);
+}
+
+
 static Block3Data* block3_data_ref (Block3Data* _data3_) {
 	g_atomic_int_inc (&_data3_->_ref_count_);
 	return _data3_;
@@ -966,21 +1018,14 @@ static void _________lambda19__rygel_media_container_container_updated (RygelMed
 }
 
 
-static void rygel_simple_container_find_object_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_) {
-	RygelSimpleContainerFindObjectData* _data_;
-	_data_ = _user_data_;
-	_data_->_source_object_ = source_object;
-	_data_->_res_ = _res_;
-	rygel_simple_container_real_find_object_co (_data_);
-}
-
-
 static gboolean rygel_simple_container_real_find_object_co (RygelSimpleContainerFindObjectData* _data_) {
 	switch (_data_->_state_) {
 		case 0:
 		goto _state_0;
 		case 1:
 		goto _state_1;
+		case 2:
+		goto _state_2;
 		default:
 		g_assert_not_reached ();
 	}
@@ -990,85 +1035,119 @@ static gboolean rygel_simple_container_real_find_object_co (RygelSimpleContainer
 	_data_->_data2_->self = g_object_ref (_data_->self);
 	_data_->_data2_->_async_data_ = _data_;
 	_data_->media_object = NULL;
+	_data_->max_count = 0;
 	_data_->_data2_->restart_count = 0;
 	_data_->_data2_->restart = FALSE;
+	_data_->_tmp0_ = ((RygelMediaContainer*) _data_->self)->create_mode_enabled;
+	if (_data_->_tmp0_) {
+		_data_->_tmp1_ = rygel_media_container_get_all_child_count ((RygelMediaContainer*) _data_->self);
+		_data_->_tmp2_ = _data_->_tmp1_;
+		_data_->max_count = _data_->_tmp2_;
+	} else {
+		_data_->_tmp3_ = rygel_media_container_get_child_count ((RygelMediaContainer*) _data_->self);
+		_data_->_tmp4_ = _data_->_tmp3_;
+		_data_->max_count = _data_->_tmp4_;
+	}
+	_data_->_tmp5_ = _data_->max_count;
+	_data_->_tmp6_ = _data_->cancellable;
+	_data_->_state_ = 1;
+	rygel_media_container_get_children ((RygelMediaContainer*) _data_->self, (guint) 0, (guint) _data_->_tmp5_, "", _data_->_tmp6_, rygel_simple_container_find_object_ready, _data_);
+	return FALSE;
+	_state_1:
+	_data_->_tmp7_ = NULL;
+	_data_->_tmp7_ = rygel_media_container_get_children_finish ((RygelMediaContainer*) _data_->self, _data_->_res_, &_data_->_inner_error_);
+	_data_->children_to_search = _data_->_tmp7_;
+	if (_data_->_inner_error_ != NULL) {
+		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+		g_error_free (_data_->_inner_error_);
+		_g_object_unref0 (_data_->media_object);
+		block2_data_unref (_data_->_data2_);
+		_data_->_data2_ = NULL;
+		if (_data_->_state_ == 0) {
+			g_simple_async_result_complete_in_idle (_data_->_async_result);
+		} else {
+			g_simple_async_result_complete (_data_->_async_result);
+		}
+		g_object_unref (_data_->_async_result);
+		return FALSE;
+	}
 	{
-		_data_->_tmp0_ = TRUE;
+		_data_->_tmp8_ = TRUE;
 		while (TRUE) {
 			_data_->_data3_ = g_slice_new0 (Block3Data);
 			_data_->_data3_->_ref_count_ = 1;
 			_data_->_data3_->_data2_ = block2_data_ref (_data_->_data2_);
-			_data_->_tmp1_ = _data_->_tmp0_;
-			if (!_data_->_tmp1_) {
-				_data_->_tmp3_ = _data_->_data2_->restart;
-				if (_data_->_tmp3_) {
-					_data_->_tmp4_ = _data_->_data2_->restart_count;
-					_data_->_tmp2_ = _data_->_tmp4_ < 10;
+			_data_->_tmp9_ = _data_->_tmp8_;
+			if (!_data_->_tmp9_) {
+				_data_->_tmp11_ = _data_->_data2_->restart;
+				if (_data_->_tmp11_) {
+					_data_->_tmp12_ = _data_->_data2_->restart_count;
+					_data_->_tmp10_ = _data_->_tmp12_ < 10;
 				} else {
-					_data_->_tmp2_ = FALSE;
+					_data_->_tmp10_ = FALSE;
 				}
-				_data_->_tmp5_ = _data_->_tmp2_;
-				if (!_data_->_tmp5_) {
+				_data_->_tmp13_ = _data_->_tmp10_;
+				if (!_data_->_tmp13_) {
 					block3_data_unref (_data_->_data3_);
 					_data_->_data3_ = NULL;
 					break;
 				}
 			}
-			_data_->_tmp0_ = FALSE;
+			_data_->_tmp8_ = FALSE;
 			_data_->_data2_->restart = FALSE;
 			_data_->_data3_->updated_id = (gulong) 0;
 			{
-				_data_->_tmp6_ = _data_->self->children;
-				_data_->_tmp7_ = _g_object_ref0 (_data_->_tmp6_);
-				_data_->_child_list = _data_->_tmp7_;
-				_data_->_tmp8_ = _data_->_child_list;
-				_data_->_tmp9_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp8_);
-				_data_->_tmp10_ = _data_->_tmp9_;
-				_data_->_child_size = _data_->_tmp10_;
+				_data_->_tmp14_ = _data_->children_to_search;
+				_data_->_tmp15_ = _g_object_ref0 (_data_->_tmp14_);
+				_data_->_child_list = _data_->_tmp15_;
+				_data_->_tmp16_ = _data_->_child_list;
+				_data_->_tmp17_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp16_);
+				_data_->_tmp18_ = _data_->_tmp17_;
+				_data_->_child_size = _data_->_tmp18_;
 				_data_->_child_index = -1;
 				while (TRUE) {
-					_data_->_tmp11_ = _data_->_child_index;
-					_data_->_child_index = _data_->_tmp11_ + 1;
-					_data_->_tmp12_ = _data_->_child_index;
-					_data_->_tmp13_ = _data_->_child_size;
-					if (!(_data_->_tmp12_ < _data_->_tmp13_)) {
+					_data_->_tmp19_ = _data_->_child_index;
+					_data_->_child_index = _data_->_tmp19_ + 1;
+					_data_->_tmp20_ = _data_->_child_index;
+					_data_->_tmp21_ = _data_->_child_size;
+					if (!(_data_->_tmp20_ < _data_->_tmp21_)) {
 						break;
 					}
-					_data_->_tmp14_ = _data_->_child_list;
-					_data_->_tmp15_ = _data_->_child_index;
-					_data_->_tmp16_ = NULL;
-					_data_->_tmp16_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp14_, _data_->_tmp15_);
-					_data_->child = (RygelMediaObject*) _data_->_tmp16_;
-					_data_->_tmp17_ = _data_->child;
-					_data_->_tmp18_ = rygel_media_object_get_id (_data_->_tmp17_);
-					_data_->_tmp19_ = _data_->_tmp18_;
-					_data_->_tmp20_ = _data_->id;
-					if (g_strcmp0 (_data_->_tmp19_, _data_->_tmp20_) == 0) {
-						_data_->_tmp21_ = _data_->child;
-						_data_->_tmp22_ = _g_object_ref0 (_data_->_tmp21_);
+					_data_->_tmp22_ = _data_->_child_list;
+					_data_->_tmp23_ = _data_->_child_index;
+					_data_->_tmp24_ = NULL;
+					_data_->_tmp24_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp22_, _data_->_tmp23_);
+					_data_->child = (RygelMediaObject*) _data_->_tmp24_;
+					_data_->_tmp25_ = _data_->child;
+					_data_->_tmp26_ = rygel_media_object_get_id (_data_->_tmp25_);
+					_data_->_tmp27_ = _data_->_tmp26_;
+					_data_->_tmp28_ = _data_->id;
+					if (g_strcmp0 (_data_->_tmp27_, _data_->_tmp28_) == 0) {
+						_data_->_tmp29_ = _data_->child;
+						_data_->_tmp30_ = _g_object_ref0 (_data_->_tmp29_);
 						_g_object_unref0 (_data_->media_object);
-						_data_->media_object = _data_->_tmp22_;
+						_data_->media_object = _data_->_tmp30_;
 						_g_object_unref0 (_data_->child);
 						break;
 					} else {
-						_data_->_tmp23_ = _data_->child;
-						if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp23_, RYGEL_TYPE_MEDIA_CONTAINER)) {
-							_data_->_tmp24_ = 0UL;
-							_data_->_tmp24_ = g_signal_connect_data ((RygelMediaContainer*) _data_->self, "container-updated", (GCallback) _________lambda19__rygel_media_container_container_updated, block3_data_ref (_data_->_data3_), (GClosureNotify) block3_data_unref, 0);
-							_data_->_data3_->updated_id = _data_->_tmp24_;
-							_data_->_tmp25_ = _data_->child;
-							_data_->_tmp26_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp25_, RYGEL_TYPE_MEDIA_CONTAINER) ? ((RygelMediaContainer*) _data_->_tmp25_) : NULL);
-							_data_->container = _data_->_tmp26_;
-							_data_->_tmp27_ = _data_->container;
-							_data_->_tmp28_ = _data_->id;
-							_data_->_tmp29_ = _data_->cancellable;
-							_data_->_state_ = 1;
-							rygel_media_container_find_object (_data_->_tmp27_, _data_->_tmp28_, _data_->_tmp29_, rygel_simple_container_find_object_ready, _data_);
+						_data_->_tmp31_ = _data_->child;
+						if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp31_, RYGEL_TYPE_MEDIA_CONTAINER)) {
+							_data_->_tmp32_ = 0UL;
+							_data_->_tmp32_ = g_signal_connect_data ((RygelMediaContainer*) _data_->self, "container-updated", (GCallback) _________lambda19__rygel_media_container_container_updated, block3_data_ref (_data_->_data3_), (GClosureNotify) block3_data_unref, 0);
+							_data_->_data3_->updated_id = _data_->_tmp32_;
+							_data_->_tmp33_ = _data_->child;
+							_data_->_tmp34_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp33_, RYGEL_TYPE_MEDIA_CONTAINER) ? ((RygelMediaContainer*) _data_->_tmp33_) : NULL);
+							_data_->container = _data_->_tmp34_;
+							_data_->_tmp35_ = _data_->container;
+							_data_->_tmp36_ = _data_->id;
+							_data_->_tmp37_ = _data_->cancellable;
+							_data_->_state_ = 2;
+							rygel_media_container_find_object (_data_->_tmp35_, _data_->_tmp36_, _data_->_tmp37_, rygel_simple_container_find_object_ready, _data_);
 							return FALSE;
-							_state_1:
-							_data_->_tmp30_ = NULL;
-							_data_->_tmp30_ = rygel_media_container_find_object_finish (_data_->_tmp27_, _data_->_res_, &_data_->_inner_error_);
-							_data_->_tmp31_ = _data_->_tmp30_;
+							_state_2:
+							_data_->_tmp38_ = NULL;
+							_data_->_tmp38_ = rygel_media_container_find_object_finish (_data_->_tmp35_, _data_->_res_, &_data_->_inner_error_);
+							_data_->_tmp39_ = _data_->_tmp38_;
 							if (_data_->_inner_error_ != NULL) {
 								g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 								g_error_free (_data_->_inner_error_);
@@ -1077,6 +1156,7 @@ static gboolean rygel_simple_container_real_find_object_co (RygelSimpleContainer
 								_g_object_unref0 (_data_->_child_list);
 								block3_data_unref (_data_->_data3_);
 								_data_->_data3_ = NULL;
+								_g_object_unref0 (_data_->children_to_search);
 								_g_object_unref0 (_data_->media_object);
 								block2_data_unref (_data_->_data2_);
 								_data_->_data2_ = NULL;
@@ -1089,21 +1169,21 @@ static gboolean rygel_simple_container_real_find_object_co (RygelSimpleContainer
 								return FALSE;
 							}
 							_g_object_unref0 (_data_->media_object);
-							_data_->media_object = _data_->_tmp31_;
-							_data_->_tmp32_ = _data_->_data3_->updated_id;
-							if (_data_->_tmp32_ != ((gulong) 0)) {
-								_data_->_tmp33_ = _data_->_data3_->updated_id;
-								g_signal_handler_disconnect ((GObject*) _data_->self, _data_->_tmp33_);
+							_data_->media_object = _data_->_tmp39_;
+							_data_->_tmp40_ = _data_->_data3_->updated_id;
+							if (_data_->_tmp40_ != ((gulong) 0)) {
+								_data_->_tmp41_ = _data_->_data3_->updated_id;
+								g_signal_handler_disconnect ((GObject*) _data_->self, _data_->_tmp41_);
 							}
-							_data_->_tmp34_ = _data_->media_object;
-							if (_data_->_tmp34_ != NULL) {
+							_data_->_tmp42_ = _data_->media_object;
+							if (_data_->_tmp42_ != NULL) {
 								_data_->_data2_->restart = FALSE;
 								_g_object_unref0 (_data_->container);
 								_g_object_unref0 (_data_->child);
 								break;
 							}
-							_data_->_tmp35_ = _data_->_data2_->restart;
-							if (_data_->_tmp35_) {
+							_data_->_tmp43_ = _data_->_data2_->restart;
+							if (_data_->_tmp43_) {
 								_g_object_unref0 (_data_->container);
 								_g_object_unref0 (_data_->child);
 								break;
@@ -1120,6 +1200,7 @@ static gboolean rygel_simple_container_real_find_object_co (RygelSimpleContainer
 		}
 	}
 	_data_->result = _data_->media_object;
+	_g_object_unref0 (_data_->children_to_search);
 	block2_data_unref (_data_->_data2_);
 	_data_->_data2_ = NULL;
 	if (_data_->_state_ == 0) {
@@ -1129,6 +1210,7 @@ static gboolean rygel_simple_container_real_find_object_co (RygelSimpleContainer
 	}
 	g_object_unref (_data_->_async_result);
 	return FALSE;
+	_g_object_unref0 (_data_->children_to_search);
 	_g_object_unref0 (_data_->media_object);
 	block2_data_unref (_data_->_data2_);
 	_data_->_data2_ = NULL;
@@ -1308,10 +1390,11 @@ static void rygel_simple_container_on_container_updated (RygelSimpleContainer* s
 		gboolean _tmp5_ = FALSE;
 		RygelMediaObjects* _tmp6_;
 		RygelMediaContainer* _tmp7_;
-		RygelMediaContainer* _tmp8_;
+		gint _tmp8_;
 		RygelMediaContainer* _tmp9_;
-		const gchar* _tmp10_;
+		RygelMediaContainer* _tmp10_;
 		const gchar* _tmp11_;
+		const gchar* _tmp12_;
 		_tmp3_ = self->priv->empty_children;
 		_tmp4_ = updated;
 		_tmp5_ = gee_abstract_collection_contains ((GeeAbstractCollection*) _tmp3_, (RygelMediaObject*) _tmp4_);
@@ -1321,41 +1404,46 @@ static void rygel_simple_container_on_container_updated (RygelSimpleContainer* s
 		_tmp6_ = self->priv->empty_children;
 		_tmp7_ = updated;
 		gee_abstract_collection_remove ((GeeAbstractCollection*) _tmp6_, (RygelMediaObject*) _tmp7_);
-		_tmp8_ = updated;
-		rygel_simple_container_add_child (self, (RygelMediaObject*) _tmp8_);
-		rygel_media_container_updated ((RygelMediaContainer*) self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
+		_tmp8_ = ((RygelMediaContainer*) self)->empty_child_count;
+		((RygelMediaContainer*) self)->empty_child_count = _tmp8_ - 1;
 		_tmp9_ = updated;
-		_tmp10_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp9_);
-		_tmp11_ = _tmp10_;
-		g_debug ("rygel-simple-container.vala:286: Container '%s' now non-empty, added i" \
-"t to hierarchy now.", _tmp11_);
+		rygel_simple_container_add_child (self, (RygelMediaObject*) _tmp9_);
+		rygel_media_container_updated ((RygelMediaContainer*) self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
+		_tmp10_ = updated;
+		_tmp11_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp10_);
+		_tmp12_ = _tmp11_;
+		g_debug ("rygel-simple-container.vala:304: Container '%s' now non-empty, added i" \
+"t to hierarchy now.", _tmp12_);
 	} else {
-		RygelMediaObjects* _tmp12_;
-		RygelMediaContainer* _tmp13_;
-		gboolean _tmp14_ = FALSE;
-		RygelMediaContainer* _tmp15_;
-		RygelMediaObjects* _tmp16_;
-		RygelMediaContainer* _tmp17_;
+		RygelMediaObjects* _tmp13_;
+		RygelMediaContainer* _tmp14_;
+		gboolean _tmp15_ = FALSE;
+		RygelMediaContainer* _tmp16_;
+		RygelMediaObjects* _tmp17_;
 		RygelMediaContainer* _tmp18_;
-		const gchar* _tmp19_;
-		const gchar* _tmp20_;
-		_tmp12_ = self->children;
-		_tmp13_ = updated;
-		_tmp14_ = gee_abstract_collection_contains ((GeeAbstractCollection*) _tmp12_, (RygelMediaObject*) _tmp13_);
-		if (!_tmp14_) {
+		gint _tmp19_;
+		RygelMediaContainer* _tmp20_;
+		const gchar* _tmp21_;
+		const gchar* _tmp22_;
+		_tmp13_ = self->children;
+		_tmp14_ = updated;
+		_tmp15_ = gee_abstract_collection_contains ((GeeAbstractCollection*) _tmp13_, (RygelMediaObject*) _tmp14_);
+		if (!_tmp15_) {
 			return;
 		}
-		_tmp15_ = updated;
-		rygel_simple_container_remove_child (self, (RygelMediaObject*) _tmp15_);
-		_tmp16_ = self->priv->empty_children;
-		_tmp17_ = updated;
-		gee_abstract_collection_add ((GeeAbstractCollection*) _tmp16_, (RygelMediaObject*) _tmp17_);
-		rygel_media_container_updated ((RygelMediaContainer*) self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
+		_tmp16_ = updated;
+		rygel_simple_container_remove_child (self, (RygelMediaObject*) _tmp16_);
+		_tmp17_ = self->priv->empty_children;
 		_tmp18_ = updated;
-		_tmp19_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp18_);
-		_tmp20_ = _tmp19_;
-		g_debug ("rygel-simple-container.vala:298: Container '%s' now empty, removing it" \
-" from hierarchy now.", _tmp20_);
+		gee_abstract_collection_add ((GeeAbstractCollection*) _tmp17_, (RygelMediaObject*) _tmp18_);
+		_tmp19_ = ((RygelMediaContainer*) self)->empty_child_count;
+		((RygelMediaContainer*) self)->empty_child_count = _tmp19_ + 1;
+		rygel_media_container_updated ((RygelMediaContainer*) self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
+		_tmp20_ = updated;
+		_tmp21_ = rygel_media_object_get_id ((RygelMediaObject*) _tmp20_);
+		_tmp22_ = _tmp21_;
+		g_debug ("rygel-simple-container.vala:317: Container '%s' now empty, removing it" \
+" from hierarchy now.", _tmp22_);
 	}
 }
 

@@ -138,12 +138,14 @@
 <ANCHOR id="RYGEL-MEDIA-CONTAINER-ALBUM-SORT-CRITERIA:CAPS" href="librygel-server/RygelMediaContainer.html#RYGEL-MEDIA-CONTAINER-ALBUM-SORT-CRITERIA:CAPS">
 <ANCHOR id="rygel-media-container-get-child-count" href="librygel-server/RygelMediaContainer.html#rygel-media-container-get-child-count">
 <ANCHOR id="rygel-media-container-set-child-count" href="librygel-server/RygelMediaContainer.html#rygel-media-container-set-child-count">
+<ANCHOR id="rygel-media-container-get-all-child-count" href="librygel-server/RygelMediaContainer.html#rygel-media-container-get-all-child-count">
 <ANCHOR id="rygel-media-container-get-sort-criteria" href="librygel-server/RygelMediaContainer.html#rygel-media-container-get-sort-criteria">
 <ANCHOR id="rygel-media-container-set-sort-criteria" href="librygel-server/RygelMediaContainer.html#rygel-media-container-set-sort-criteria">
 <ANCHOR id="RygelMediaContainer-struct" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer-struct">
 <ANCHOR id="RygelMediaContainerClass" href="librygel-server/RygelMediaContainer.html#RygelMediaContainerClass">
 <ANCHOR id="RygelObjectEventType-enum" href="librygel-server/RygelMediaContainer.html#RygelObjectEventType-enum">
 <ANCHOR id="RygelMediaContainer.property-details" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer.property-details">
+<ANCHOR id="RygelMediaContainer--all-child-count" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--all-child-count">
 <ANCHOR id="RygelMediaContainer--child-count" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--child-count">
 <ANCHOR id="RygelMediaContainer--ocm-flags" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--ocm-flags">
 <ANCHOR id="RygelMediaContainer--sort-criteria" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--sort-criteria">
@@ -522,6 +524,7 @@
 <ANCHOR id="RygelWritableContainer.properties" href="librygel-server/RygelWritableContainer.html#RygelWritableContainer.properties">
 <ANCHOR id="RygelWritableContainer.description" href="librygel-server/RygelWritableContainer.html#RygelWritableContainer.description">
 <ANCHOR id="RygelWritableContainer.details" href="librygel-server/RygelWritableContainer.html#RygelWritableContainer.details">
+<ANCHOR id="RygelWritableContainerError" href="librygel-server/RygelWritableContainer.html#RygelWritableContainerError">
 <ANCHOR id="rygel-writable-container-can-create" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-can-create">
 <ANCHOR id="rygel-writable-container-add-item" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-add-item">
 <ANCHOR id="rygel-writable-container-add-item-finish" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-add-item-finish">
@@ -533,11 +536,11 @@
 <ANCHOR id="rygel-writable-container-remove-item-finish" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-remove-item-finish">
 <ANCHOR id="rygel-writable-container-remove-container" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-remove-container">
 <ANCHOR id="rygel-writable-container-remove-container-finish" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-remove-container-finish">
+<ANCHOR id="RYGEL-WRITABLE-CONTAINER-WRITABLE-SCHEME:CAPS" href="librygel-server/RygelWritableContainer.html#RYGEL-WRITABLE-CONTAINER-WRITABLE-SCHEME:CAPS">
 <ANCHOR id="rygel-writable-container-get-create-classes" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-get-create-classes">
 <ANCHOR id="rygel-writable-container-set-create-classes" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-set-create-classes">
 <ANCHOR id="RygelWritableContainer-struct" href="librygel-server/RygelWritableContainer.html#RygelWritableContainer-struct">
 <ANCHOR id="RygelWritableContainerIface" href="librygel-server/RygelWritableContainer.html#RygelWritableContainerIface">
-<ANCHOR id="WriteableContainerError" href="librygel-server/RygelWritableContainer.html#WriteableContainerError">
 <ANCHOR id="RygelWritableContainer.property-details" href="librygel-server/RygelWritableContainer.html#RygelWritableContainer.property-details">
 <ANCHOR id="RygelWritableContainer--create-classes" href="librygel-server/RygelWritableContainer.html#RygelWritableContainer--create-classes">
 <ANCHOR id="annotation-glossterm-out" href="librygel-server/annotation-glossary.html#annotation-glossterm-out">

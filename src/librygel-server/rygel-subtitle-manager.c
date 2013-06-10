@@ -357,7 +357,7 @@ GeeArrayList* rygel_subtitle_manager_get_subtitles (RygelSubtitleManager* self, 
 					_tmp28_ = g_file_query_info (_tmp27_, G_FILE_ATTRIBUTE_ACCESS_CAN_READ "," G_FILE_ATTRIBUTE_STANDARD_SIZE "," G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE, G_FILE_QUERY_INFO_NONE, NULL, &_inner_error_);
 					info = _tmp28_;
 					if (_inner_error_ != NULL) {
-						goto __catch62_g_error;
+						goto __catch66_g_error;
 					}
 					_tmp29_ = info;
 					_tmp30_ = g_file_info_get_attribute_boolean (_tmp29_, G_FILE_ATTRIBUTE_ACCESS_CAN_READ);
@@ -403,15 +403,15 @@ GeeArrayList* rygel_subtitle_manager_get_subtitles (RygelSubtitleManager* self, 
 					}
 					_g_object_unref0 (info);
 				}
-				goto __finally62;
-				__catch62_g_error:
+				goto __finally66;
+				__catch66_g_error:
 				{
 					GError* err = NULL;
 					err = _inner_error_;
 					_inner_error_ = NULL;
 					_g_error_free0 (err);
 				}
-				__finally62:
+				__finally66:
 				if (_inner_error_ != NULL) {
 					g_propagate_error (error, _inner_error_);
 					_g_object_unref0 (subtitle_file);

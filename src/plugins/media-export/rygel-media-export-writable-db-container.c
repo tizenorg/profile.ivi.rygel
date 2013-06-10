@@ -113,6 +113,14 @@ struct _RygelMediaExportWritableDbContainer {
 
 struct _RygelMediaExportWritableDbContainerClass {
 	RygelMediaExportTrackableDbContainerClass parent_class;
+	void (*add_item) (RygelMediaExportWritableDbContainer* self, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	void (*add_item_finish) (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error);
+	void (*add_container) (RygelMediaExportWritableDbContainer* self, RygelMediaContainer* container, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	void (*add_container_finish) (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error);
+	void (*remove_item) (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	void (*remove_item_finish) (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error);
+	void (*remove_container) (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	void (*remove_container_finish) (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error);
 };
 
 struct _RygelMediaExportWritableDbContainerPrivate {
@@ -127,25 +135,35 @@ struct _RygelMediaExportWritableDbContainerAddItemData {
 	RygelMediaExportWritableDbContainer* self;
 	RygelMediaItem* item;
 	GCancellable* cancellable;
-	RygelMediaItem* _tmp0_;
+	gboolean _tmp0_;
 	RygelMediaItem* _tmp1_;
-	GeeArrayList* _tmp2_;
-	gpointer _tmp3_;
-	gchar* _tmp4_;
-	GFile* _tmp5_;
-	GFile* _tmp6_;
-	GFile* file;
-	GFile* _tmp7_;
-	gboolean _tmp8_;
+	const gchar* _tmp2_;
+	const gchar* _tmp3_;
+	RygelMediaItem* _tmp4_;
+	const gchar* _tmp5_;
+	const gchar* _tmp6_;
+	gboolean _tmp7_;
+	GError* _tmp8_;
 	RygelMediaItem* _tmp9_;
-	gint64 _tmp10_;
-	RygelMediaItem* _tmp11_;
-	GFile* _tmp12_;
+	RygelMediaItem* _tmp10_;
+	GeeArrayList* _tmp11_;
+	gpointer _tmp12_;
 	gchar* _tmp13_;
-	gchar* _tmp14_;
-	RygelMediaItem* _tmp15_;
-	RygelMediaExportMediaCache* _tmp16_;
-	RygelMediaItem* _tmp17_;
+	GFile* _tmp14_;
+	GFile* _tmp15_;
+	GFile* file;
+	GFile* _tmp16_;
+	gboolean _tmp17_;
+	RygelMediaItem* _tmp18_;
+	gint64 _tmp19_;
+	RygelMediaItem* _tmp20_;
+	GFile* _tmp21_;
+	gchar* _tmp22_;
+	gchar* _tmp23_;
+	RygelMediaItem* _tmp24_;
+	RygelMediaExportMediaCache* _tmp25_;
+	RygelMediaItem* _tmp26_;
+	GError * _inner_error_;
 };
 
 struct _RygelMediaExportWritableDbContainerAddContainerData {
@@ -169,15 +187,21 @@ struct _RygelMediaExportWritableDbContainerAddContainerData {
 	GFile* _tmp11_;
 	GFile* _tmp12_;
 	GFile* file;
-	GFile* _tmp13_;
-	gboolean _tmp14_;
-	GFile* _tmp15_;
-	GCancellable* _tmp16_;
-	RygelMediaContainer* _tmp17_;
-	const gchar* _tmp18_;
-	const gchar* _tmp19_;
-	GError* _tmp20_;
+	RygelMediaContainer* _tmp13_;
+	GFile* _tmp14_;
+	gchar* _tmp15_;
+	gchar* _tmp16_;
+	GFile* _tmp17_;
+	gboolean _tmp18_;
+	GFile* _tmp19_;
+	GCancellable* _tmp20_;
 	RygelMediaContainer* _tmp21_;
+	const gchar* _tmp22_;
+	const gchar* _tmp23_;
+	GError* _tmp24_;
+	RygelMediaContainer* _tmp25_;
+	RygelMediaExportMediaCache* _tmp26_;
+	RygelMediaContainer* _tmp27_;
 	GError * _inner_error_;
 };
 
@@ -230,23 +254,31 @@ RygelMediaExportWritableDbContainer* rygel_media_export_writable_db_container_ne
 RygelMediaExportWritableDbContainer* rygel_media_export_writable_db_container_construct (GType object_type, const gchar* id, const gchar* title);
 static void rygel_media_export_writable_db_container_real_constructed (GObject* base);
 static void rygel_media_export_writable_db_container_real_add_item_data_free (gpointer _data);
-static void rygel_media_export_writable_db_container_real_add_item (RygelWritableContainer* base, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+static void rygel_media_export_writable_db_container_real_add_item (RygelMediaExportWritableDbContainer* self, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_writable_db_container_add_item (RygelMediaExportWritableDbContainer* self, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_writable_db_container_add_item_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error);
 static gboolean rygel_media_export_writable_db_container_real_add_item_co (RygelMediaExportWritableDbContainerAddItemData* _data_);
 gchar* rygel_media_export_media_cache_get_id (GFile* file);
 static void rygel_media_export_writable_db_container_add_item_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
 void rygel_media_export_media_cache_make_object_guarded (RygelMediaExportMediaCache* self, RygelMediaObject* object, gboolean guarded);
 static void rygel_media_export_writable_db_container_real_add_container_data_free (gpointer _data);
-static void rygel_media_export_writable_db_container_real_add_container (RygelWritableContainer* base, RygelMediaContainer* container, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+static void rygel_media_export_writable_db_container_real_add_container (RygelMediaExportWritableDbContainer* self, RygelMediaContainer* container, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_writable_db_container_add_container (RygelMediaExportWritableDbContainer* self, RygelMediaContainer* container, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_writable_db_container_add_container_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error);
 static gboolean rygel_media_export_writable_db_container_real_add_container_co (RygelMediaExportWritableDbContainerAddContainerData* _data_);
 static void rygel_media_export_writable_db_container_add_container_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
 static void rygel_media_export_writable_db_container_real_remove_item_data_free (gpointer _data);
-static void rygel_media_export_writable_db_container_real_remove_item (RygelWritableContainer* base, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+static void rygel_media_export_writable_db_container_real_remove_item (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_writable_db_container_remove_item (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_writable_db_container_remove_item_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error);
 static gboolean rygel_media_export_writable_db_container_real_remove_item_co (RygelMediaExportWritableDbContainerRemoveItemData* _data_);
 GQuark rygel_media_export_database_error_quark (void);
 RygelMediaObject* rygel_media_export_media_cache_get_object (RygelMediaExportMediaCache* self, const gchar* object_id, GError** error);
 static void rygel_media_export_writable_db_container_remove_item_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
 static void rygel_media_export_writable_db_container_real_remove_container_data_free (gpointer _data);
-static void rygel_media_export_writable_db_container_real_remove_container (RygelWritableContainer* base, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+static void rygel_media_export_writable_db_container_real_remove_container (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_writable_db_container_remove_container (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_writable_db_container_remove_container_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error);
 static gboolean rygel_media_export_writable_db_container_real_remove_container_co (RygelMediaExportWritableDbContainerRemoveContainerData* _data_);
 static void rygel_media_export_writable_db_container_finalize (GObject* obj);
 static void _vala_rygel_media_export_writable_db_container_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
@@ -334,15 +366,13 @@ static gpointer _g_object_ref0 (gpointer self) {
 }
 
 
-static void rygel_media_export_writable_db_container_real_add_item (RygelWritableContainer* base, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
-	RygelMediaExportWritableDbContainer * self;
+static void rygel_media_export_writable_db_container_real_add_item (RygelMediaExportWritableDbContainer* self, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
 	RygelMediaExportWritableDbContainerAddItemData* _data_;
 	RygelMediaExportWritableDbContainer* _tmp0_;
 	RygelMediaItem* _tmp1_;
 	RygelMediaItem* _tmp2_;
 	GCancellable* _tmp3_;
 	GCancellable* _tmp4_;
-	self = (RygelMediaExportWritableDbContainer*) base;
 	_data_ = g_slice_new0 (RygelMediaExportWritableDbContainerAddItemData);
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_media_export_writable_db_container_real_add_item);
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_media_export_writable_db_container_real_add_item_data_free);
@@ -360,7 +390,7 @@ static void rygel_media_export_writable_db_container_real_add_item (RygelWritabl
 }
 
 
-static void rygel_media_export_writable_db_container_real_add_item_finish (RygelWritableContainer* base, GAsyncResult* _res_, GError** error) {
+static void rygel_media_export_writable_db_container_real_add_item_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error) {
 	RygelMediaExportWritableDbContainerAddItemData* _data_;
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 		return;
@@ -388,42 +418,69 @@ static gboolean rygel_media_export_writable_db_container_real_add_item_co (Rygel
 		g_assert_not_reached ();
 	}
 	_state_0:
-	_data_->_tmp0_ = _data_->item;
-	rygel_media_object_set_parent ((RygelMediaObject*) _data_->_tmp0_, (RygelMediaContainer*) _data_->self);
 	_data_->_tmp1_ = _data_->item;
-	_data_->_tmp2_ = ((RygelMediaObject*) _data_->_tmp1_)->uris;
-	_data_->_tmp3_ = NULL;
-	_data_->_tmp3_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp2_, 0);
-	_data_->_tmp4_ = (gchar*) _data_->_tmp3_;
-	_data_->_tmp5_ = NULL;
-	_data_->_tmp5_ = g_file_new_for_uri (_data_->_tmp4_);
-	_data_->_tmp6_ = _data_->_tmp5_;
-	_g_free0 (_data_->_tmp4_);
-	_data_->file = _data_->_tmp6_;
-	_data_->_tmp7_ = _data_->file;
-	_data_->_tmp8_ = FALSE;
-	_data_->_tmp8_ = g_file_is_native (_data_->_tmp7_);
-	if (_data_->_tmp8_) {
-		_data_->_tmp9_ = _data_->item;
-		_data_->_tmp10_ = G_MAXINT64;
-		rygel_media_object_set_modified ((RygelMediaObject*) _data_->_tmp9_, (guint64) _data_->_tmp10_);
+	_data_->_tmp2_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->_tmp1_);
+	_data_->_tmp3_ = _data_->_tmp2_;
+	if (_data_->_tmp3_ == NULL) {
+		_data_->_tmp4_ = _data_->item;
+		_data_->_tmp5_ = rygel_media_object_get_ref_id ((RygelMediaObject*) _data_->_tmp4_);
+		_data_->_tmp6_ = _data_->_tmp5_;
+		_data_->_tmp0_ = _data_->_tmp6_ != NULL;
+	} else {
+		_data_->_tmp0_ = FALSE;
 	}
-	_data_->_tmp11_ = _data_->item;
-	_data_->_tmp12_ = _data_->file;
-	_data_->_tmp13_ = NULL;
-	_data_->_tmp13_ = rygel_media_export_media_cache_get_id (_data_->_tmp12_);
-	_data_->_tmp14_ = _data_->_tmp13_;
-	rygel_media_object_set_id ((RygelMediaObject*) _data_->_tmp11_, _data_->_tmp14_);
-	_g_free0 (_data_->_tmp14_);
-	_data_->_tmp15_ = _data_->item;
+	_data_->_tmp7_ = _data_->_tmp0_;
+	if (_data_->_tmp7_) {
+		g_warning ("rygel-media-export-writable-db-container.vala:63: => CreateReference n" \
+"ot supported");
+		_data_->_tmp8_ = g_error_new_literal (RYGEL_WRITABLE_CONTAINER_ERROR, RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "Not supported");
+		_data_->_inner_error_ = _data_->_tmp8_;
+		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+		g_error_free (_data_->_inner_error_);
+		if (_data_->_state_ == 0) {
+			g_simple_async_result_complete_in_idle (_data_->_async_result);
+		} else {
+			g_simple_async_result_complete (_data_->_async_result);
+		}
+		g_object_unref (_data_->_async_result);
+		return FALSE;
+	}
+	_data_->_tmp9_ = _data_->item;
+	rygel_media_object_set_parent ((RygelMediaObject*) _data_->_tmp9_, (RygelMediaContainer*) _data_->self);
+	_data_->_tmp10_ = _data_->item;
+	_data_->_tmp11_ = ((RygelMediaObject*) _data_->_tmp10_)->uris;
+	_data_->_tmp12_ = NULL;
+	_data_->_tmp12_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp11_, 0);
+	_data_->_tmp13_ = (gchar*) _data_->_tmp12_;
+	_data_->_tmp14_ = NULL;
+	_data_->_tmp14_ = g_file_new_for_uri (_data_->_tmp13_);
+	_data_->_tmp15_ = _data_->_tmp14_;
+	_g_free0 (_data_->_tmp13_);
+	_data_->file = _data_->_tmp15_;
+	_data_->_tmp16_ = _data_->file;
+	_data_->_tmp17_ = FALSE;
+	_data_->_tmp17_ = g_file_is_native (_data_->_tmp16_);
+	if (_data_->_tmp17_) {
+		_data_->_tmp18_ = _data_->item;
+		_data_->_tmp19_ = G_MAXINT64;
+		rygel_media_object_set_modified ((RygelMediaObject*) _data_->_tmp18_, (guint64) _data_->_tmp19_);
+	}
+	_data_->_tmp20_ = _data_->item;
+	_data_->_tmp21_ = _data_->file;
+	_data_->_tmp22_ = NULL;
+	_data_->_tmp22_ = rygel_media_export_media_cache_get_id (_data_->_tmp21_);
+	_data_->_tmp23_ = _data_->_tmp22_;
+	rygel_media_object_set_id ((RygelMediaObject*) _data_->_tmp20_, _data_->_tmp23_);
+	_g_free0 (_data_->_tmp23_);
+	_data_->_tmp24_ = _data_->item;
 	_data_->_state_ = 1;
-	rygel_trackable_container_add_child_tracked ((RygelTrackableContainer*) _data_->self, (RygelMediaObject*) _data_->_tmp15_, rygel_media_export_writable_db_container_add_item_ready, _data_);
+	rygel_trackable_container_add_child_tracked ((RygelTrackableContainer*) _data_->self, (RygelMediaObject*) _data_->_tmp24_, rygel_media_export_writable_db_container_add_item_ready, _data_);
 	return FALSE;
 	_state_1:
 	rygel_trackable_container_add_child_tracked_finish ((RygelTrackableContainer*) _data_->self, _data_->_res_);
-	_data_->_tmp16_ = ((RygelMediaExportDBContainer*) _data_->self)->media_db;
-	_data_->_tmp17_ = _data_->item;
-	rygel_media_export_media_cache_make_object_guarded (_data_->_tmp16_, (RygelMediaObject*) _data_->_tmp17_, TRUE);
+	_data_->_tmp25_ = ((RygelMediaExportDBContainer*) _data_->self)->media_db;
+	_data_->_tmp26_ = _data_->item;
+	rygel_media_export_media_cache_make_object_guarded (_data_->_tmp25_, (RygelMediaObject*) _data_->_tmp26_, TRUE);
 	_g_object_unref0 (_data_->file);
 	if (_data_->_state_ == 0) {
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
@@ -432,6 +489,16 @@ static gboolean rygel_media_export_writable_db_container_real_add_item_co (Rygel
 	}
 	g_object_unref (_data_->_async_result);
 	return FALSE;
+}
+
+
+void rygel_media_export_writable_db_container_add_item (RygelMediaExportWritableDbContainer* self, RygelMediaItem* item, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_GET_CLASS (self)->add_item (self, item, cancellable, _callback_, _user_data_);
+}
+
+
+void rygel_media_export_writable_db_container_add_item_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error) {
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_GET_CLASS (self)->add_item_finish (self, _res_, error);
 }
 
 
@@ -445,15 +512,13 @@ static void rygel_media_export_writable_db_container_real_add_container_data_fre
 }
 
 
-static void rygel_media_export_writable_db_container_real_add_container (RygelWritableContainer* base, RygelMediaContainer* container, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
-	RygelMediaExportWritableDbContainer * self;
+static void rygel_media_export_writable_db_container_real_add_container (RygelMediaExportWritableDbContainer* self, RygelMediaContainer* container, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
 	RygelMediaExportWritableDbContainerAddContainerData* _data_;
 	RygelMediaExportWritableDbContainer* _tmp0_;
 	RygelMediaContainer* _tmp1_;
 	RygelMediaContainer* _tmp2_;
 	GCancellable* _tmp3_;
 	GCancellable* _tmp4_;
-	self = (RygelMediaExportWritableDbContainer*) base;
 	_data_ = g_slice_new0 (RygelMediaExportWritableDbContainerAddContainerData);
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_media_export_writable_db_container_real_add_container);
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_media_export_writable_db_container_real_add_container_data_free);
@@ -471,7 +536,7 @@ static void rygel_media_export_writable_db_container_real_add_container (RygelWr
 }
 
 
-static void rygel_media_export_writable_db_container_real_add_container_finish (RygelWritableContainer* base, GAsyncResult* _res_, GError** error) {
+static void rygel_media_export_writable_db_container_real_add_container_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error) {
 	RygelMediaExportWritableDbContainerAddContainerData* _data_;
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 		return;
@@ -521,13 +586,20 @@ static gboolean rygel_media_export_writable_db_container_real_add_container_co (
 				_data_->_tmp12_ = _data_->_tmp11_;
 				_g_free0 (_data_->_tmp10_);
 				_data_->file = _data_->_tmp12_;
-				_data_->_tmp13_ = _data_->file;
-				_data_->_tmp14_ = FALSE;
-				_data_->_tmp14_ = g_file_is_native (_data_->_tmp13_);
-				if (_data_->_tmp14_) {
-					_data_->_tmp15_ = _data_->file;
-					_data_->_tmp16_ = _data_->cancellable;
-					g_file_make_directory_with_parents (_data_->_tmp15_, _data_->_tmp16_, &_data_->_inner_error_);
+				_data_->_tmp13_ = _data_->container;
+				_data_->_tmp14_ = _data_->file;
+				_data_->_tmp15_ = NULL;
+				_data_->_tmp15_ = rygel_media_export_media_cache_get_id (_data_->_tmp14_);
+				_data_->_tmp16_ = _data_->_tmp15_;
+				rygel_media_object_set_id ((RygelMediaObject*) _data_->_tmp13_, _data_->_tmp16_);
+				_g_free0 (_data_->_tmp16_);
+				_data_->_tmp17_ = _data_->file;
+				_data_->_tmp18_ = FALSE;
+				_data_->_tmp18_ = g_file_is_native (_data_->_tmp17_);
+				if (_data_->_tmp18_) {
+					_data_->_tmp19_ = _data_->file;
+					_data_->_tmp20_ = _data_->cancellable;
+					g_file_make_directory_with_parents (_data_->_tmp19_, _data_->_tmp20_, &_data_->_inner_error_);
 					if (_data_->_inner_error_ != NULL) {
 						g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 						g_error_free (_data_->_inner_error_);
@@ -549,11 +621,11 @@ static gboolean rygel_media_export_writable_db_container_real_add_container_co (
 		switch (0) {
 			default:
 			{
-				_data_->_tmp17_ = _data_->container;
-				_data_->_tmp18_ = rygel_media_object_get_upnp_class ((RygelMediaObject*) _data_->_tmp17_);
-				_data_->_tmp19_ = _data_->_tmp18_;
-				_data_->_tmp20_ = g_error_new (WRITEABLE_CONTAINER_ERROR, WRITEABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "upnp:class %s not supported", _data_->_tmp19_);
-				_data_->_inner_error_ = _data_->_tmp20_;
+				_data_->_tmp21_ = _data_->container;
+				_data_->_tmp22_ = rygel_media_object_get_upnp_class ((RygelMediaObject*) _data_->_tmp21_);
+				_data_->_tmp23_ = _data_->_tmp22_;
+				_data_->_tmp24_ = g_error_new (RYGEL_WRITABLE_CONTAINER_ERROR, RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "upnp:class %s not supported", _data_->_tmp23_);
+				_data_->_inner_error_ = _data_->_tmp24_;
 				g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 				g_error_free (_data_->_inner_error_);
 				if (_data_->_state_ == 0) {
@@ -566,12 +638,15 @@ static gboolean rygel_media_export_writable_db_container_real_add_container_co (
 			}
 		}
 	}
-	_data_->_tmp21_ = _data_->container;
+	_data_->_tmp25_ = _data_->container;
 	_data_->_state_ = 1;
-	rygel_trackable_container_add_child_tracked ((RygelTrackableContainer*) _data_->self, (RygelMediaObject*) _data_->_tmp21_, rygel_media_export_writable_db_container_add_container_ready, _data_);
+	rygel_trackable_container_add_child_tracked ((RygelTrackableContainer*) _data_->self, (RygelMediaObject*) _data_->_tmp25_, rygel_media_export_writable_db_container_add_container_ready, _data_);
 	return FALSE;
 	_state_1:
 	rygel_trackable_container_add_child_tracked_finish ((RygelTrackableContainer*) _data_->self, _data_->_res_);
+	_data_->_tmp26_ = ((RygelMediaExportDBContainer*) _data_->self)->media_db;
+	_data_->_tmp27_ = _data_->container;
+	rygel_media_export_media_cache_make_object_guarded (_data_->_tmp26_, (RygelMediaObject*) _data_->_tmp27_, TRUE);
 	if (_data_->_state_ == 0) {
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
 	} else {
@@ -579,6 +654,16 @@ static gboolean rygel_media_export_writable_db_container_real_add_container_co (
 	}
 	g_object_unref (_data_->_async_result);
 	return FALSE;
+}
+
+
+void rygel_media_export_writable_db_container_add_container (RygelMediaExportWritableDbContainer* self, RygelMediaContainer* container, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_GET_CLASS (self)->add_container (self, container, cancellable, _callback_, _user_data_);
+}
+
+
+void rygel_media_export_writable_db_container_add_container_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error) {
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_GET_CLASS (self)->add_container_finish (self, _res_, error);
 }
 
 
@@ -592,15 +677,13 @@ static void rygel_media_export_writable_db_container_real_remove_item_data_free 
 }
 
 
-static void rygel_media_export_writable_db_container_real_remove_item (RygelWritableContainer* base, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
-	RygelMediaExportWritableDbContainer * self;
+static void rygel_media_export_writable_db_container_real_remove_item (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
 	RygelMediaExportWritableDbContainerRemoveItemData* _data_;
 	RygelMediaExportWritableDbContainer* _tmp0_;
 	const gchar* _tmp1_;
 	gchar* _tmp2_;
 	GCancellable* _tmp3_;
 	GCancellable* _tmp4_;
-	self = (RygelMediaExportWritableDbContainer*) base;
 	_data_ = g_slice_new0 (RygelMediaExportWritableDbContainerRemoveItemData);
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_media_export_writable_db_container_real_remove_item);
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_media_export_writable_db_container_real_remove_item_data_free);
@@ -618,7 +701,7 @@ static void rygel_media_export_writable_db_container_real_remove_item (RygelWrit
 }
 
 
-static void rygel_media_export_writable_db_container_real_remove_item_finish (RygelWritableContainer* base, GAsyncResult* _res_, GError** error) {
+static void rygel_media_export_writable_db_container_real_remove_item_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error) {
 	RygelMediaExportWritableDbContainerRemoveItemData* _data_;
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 		return;
@@ -678,6 +761,16 @@ static gboolean rygel_media_export_writable_db_container_real_remove_item_co (Ry
 }
 
 
+void rygel_media_export_writable_db_container_remove_item (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_GET_CLASS (self)->remove_item (self, id, cancellable, _callback_, _user_data_);
+}
+
+
+void rygel_media_export_writable_db_container_remove_item_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error) {
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_GET_CLASS (self)->remove_item_finish (self, _res_, error);
+}
+
+
 static void rygel_media_export_writable_db_container_real_remove_container_data_free (gpointer _data) {
 	RygelMediaExportWritableDbContainerRemoveContainerData* _data_;
 	_data_ = _data;
@@ -688,15 +781,13 @@ static void rygel_media_export_writable_db_container_real_remove_container_data_
 }
 
 
-static void rygel_media_export_writable_db_container_real_remove_container (RygelWritableContainer* base, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
-	RygelMediaExportWritableDbContainer * self;
+static void rygel_media_export_writable_db_container_real_remove_container (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
 	RygelMediaExportWritableDbContainerRemoveContainerData* _data_;
 	RygelMediaExportWritableDbContainer* _tmp0_;
 	const gchar* _tmp1_;
 	gchar* _tmp2_;
 	GCancellable* _tmp3_;
 	GCancellable* _tmp4_;
-	self = (RygelMediaExportWritableDbContainer*) base;
 	_data_ = g_slice_new0 (RygelMediaExportWritableDbContainerRemoveContainerData);
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_media_export_writable_db_container_real_remove_container);
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_media_export_writable_db_container_real_remove_container_data_free);
@@ -714,7 +805,7 @@ static void rygel_media_export_writable_db_container_real_remove_container (Ryge
 }
 
 
-static void rygel_media_export_writable_db_container_real_remove_container_finish (RygelWritableContainer* base, GAsyncResult* _res_, GError** error) {
+static void rygel_media_export_writable_db_container_real_remove_container_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error) {
 	RygelMediaExportWritableDbContainerRemoveContainerData* _data_;
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 		return;
@@ -731,7 +822,7 @@ static gboolean rygel_media_export_writable_db_container_real_remove_container_c
 		g_assert_not_reached ();
 	}
 	_state_0:
-	_data_->_tmp0_ = g_error_new_literal (WRITEABLE_CONTAINER_ERROR, WRITEABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "Not supported");
+	_data_->_tmp0_ = g_error_new_literal (RYGEL_WRITABLE_CONTAINER_ERROR, RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED, "Not supported");
 	_data_->_inner_error_ = _data_->_tmp0_;
 	g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 	g_error_free (_data_->_inner_error_);
@@ -749,6 +840,16 @@ static gboolean rygel_media_export_writable_db_container_real_remove_container_c
 	}
 	g_object_unref (_data_->_async_result);
 	return FALSE;
+}
+
+
+void rygel_media_export_writable_db_container_remove_container (RygelMediaExportWritableDbContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_GET_CLASS (self)->remove_container (self, id, cancellable, _callback_, _user_data_);
+}
+
+
+void rygel_media_export_writable_db_container_remove_container_finish (RygelMediaExportWritableDbContainer* self, GAsyncResult* _res_, GError** error) {
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_GET_CLASS (self)->remove_container_finish (self, _res_, error);
 }
 
 
@@ -780,6 +881,14 @@ static void rygel_media_export_writable_db_container_class_init (RygelMediaExpor
 	rygel_media_export_writable_db_container_parent_class = g_type_class_peek_parent (klass);
 	g_type_class_add_private (klass, sizeof (RygelMediaExportWritableDbContainerPrivate));
 	G_OBJECT_CLASS (klass)->constructed = rygel_media_export_writable_db_container_real_constructed;
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS (klass)->add_item = rygel_media_export_writable_db_container_real_add_item;
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS (klass)->add_item_finish = rygel_media_export_writable_db_container_real_add_item_finish;
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS (klass)->add_container = rygel_media_export_writable_db_container_real_add_container;
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS (klass)->add_container_finish = rygel_media_export_writable_db_container_real_add_container_finish;
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS (klass)->remove_item = rygel_media_export_writable_db_container_real_remove_item;
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS (klass)->remove_item_finish = rygel_media_export_writable_db_container_real_remove_item_finish;
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS (klass)->remove_container = rygel_media_export_writable_db_container_real_remove_container;
+	RYGEL_MEDIA_EXPORT_WRITABLE_DB_CONTAINER_CLASS (klass)->remove_container_finish = rygel_media_export_writable_db_container_real_remove_container_finish;
 	G_OBJECT_CLASS (klass)->get_property = _vala_rygel_media_export_writable_db_container_get_property;
 	G_OBJECT_CLASS (klass)->set_property = _vala_rygel_media_export_writable_db_container_set_property;
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_export_writable_db_container_finalize;
@@ -789,14 +898,14 @@ static void rygel_media_export_writable_db_container_class_init (RygelMediaExpor
 
 static void rygel_media_export_writable_db_container_rygel_writable_container_interface_init (RygelWritableContainerIface * iface) {
 	rygel_media_export_writable_db_container_rygel_writable_container_parent_iface = g_type_interface_peek_parent (iface);
-	iface->add_item = (void (*)(RygelWritableContainer*, RygelMediaItem*, GCancellable*, GError**)) rygel_media_export_writable_db_container_real_add_item;
-	iface->add_item_finish = rygel_media_export_writable_db_container_real_add_item_finish;
-	iface->add_container = (void (*)(RygelWritableContainer*, RygelMediaContainer*, GCancellable*, GError**)) rygel_media_export_writable_db_container_real_add_container;
-	iface->add_container_finish = rygel_media_export_writable_db_container_real_add_container_finish;
-	iface->remove_item = (void (*)(RygelWritableContainer*, const gchar*, GCancellable*, GError**)) rygel_media_export_writable_db_container_real_remove_item;
-	iface->remove_item_finish = rygel_media_export_writable_db_container_real_remove_item_finish;
-	iface->remove_container = (void (*)(RygelWritableContainer*, const gchar*, GCancellable*, GError**)) rygel_media_export_writable_db_container_real_remove_container;
-	iface->remove_container_finish = rygel_media_export_writable_db_container_real_remove_container_finish;
+	iface->add_item = (void (*)(RygelWritableContainer*, RygelMediaItem*, GCancellable*, GError**)) rygel_media_export_writable_db_container_add_item;
+	iface->add_item_finish = rygel_media_export_writable_db_container_add_item_finish;
+	iface->add_container = (void (*)(RygelWritableContainer*, RygelMediaContainer*, GCancellable*, GError**)) rygel_media_export_writable_db_container_add_container;
+	iface->add_container_finish = rygel_media_export_writable_db_container_add_container_finish;
+	iface->remove_item = (void (*)(RygelWritableContainer*, const gchar*, GCancellable*, GError**)) rygel_media_export_writable_db_container_remove_item;
+	iface->remove_item_finish = rygel_media_export_writable_db_container_remove_item_finish;
+	iface->remove_container = (void (*)(RygelWritableContainer*, const gchar*, GCancellable*, GError**)) rygel_media_export_writable_db_container_remove_container;
+	iface->remove_container_finish = rygel_media_export_writable_db_container_remove_container_finish;
 	iface->get_create_classes = rygel_media_export_writable_db_container_real_get_create_classes;
 	iface->set_create_classes = rygel_media_export_writable_db_container_real_set_create_classes;
 }

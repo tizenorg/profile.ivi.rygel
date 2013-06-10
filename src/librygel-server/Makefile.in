@@ -53,12 +53,12 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-DIST_COMMON = $(librygel_server_include_HEADERS) \
-	$(srcdir)/../../common.am $(srcdir)/Makefile.am \
+DIST_COMMON = $(librygel_server_include_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/filelist.am \
-	librygel_server_2_0_la_vala.stamp rygel-audio-item.c \
-	rygel-browse.c rygel-client-hacks.c rygel-content-directory.c \
-	rygel-data-sink.c rygel-data-source.c rygel-dbus-thumbnailer.c \
+	$(top_srcdir)/common.am librygel_server_2_0_la_vala.stamp \
+	rygel-audio-item.c rygel-browse.c rygel-client-hacks.c \
+	rygel-content-directory.c rygel-data-sink.c \
+	rygel-data-source.c rygel-dbus-thumbnailer.c \
 	rygel-dlna-profile.c rygel-engine-loader.c \
 	rygel-http-byte-seek.c rygel-http-get-handler.c \
 	rygel-http-get.c rygel-http-identity-handler.c \
@@ -79,9 +79,10 @@ DIST_COMMON = $(librygel_server_include_HEADERS) \
 	rygel-object-removal-queue.c rygel-panasonic-hacks.c \
 	rygel-photo-item.c rygel-playlist-item.c \
 	rygel-reference-creator.c rygel-relational-expression.c \
-	rygel-search-criteria-parser.c rygel-search-expression.c \
-	rygel-search.c rygel-searchable-container.c rygel-serializer.c \
-	rygel-server.h rygel-simple-container.c \
+	rygel-samsung-tv-hacks.c rygel-search-criteria-parser.c \
+	rygel-search-expression.c rygel-search.c \
+	rygel-searchable-container.c rygel-seek-hacks.c \
+	rygel-serializer.c rygel-server.h rygel-simple-container.c \
 	rygel-source-connection-manager.c rygel-subtitle-manager.c \
 	rygel-subtitle.c rygel-thumbnail.c rygel-thumbnailer.c \
 	rygel-trackable-container.c rygel-trackable-item.c \
@@ -199,6 +200,8 @@ am__objects_2 = librygel_server_2_0_la-rygel-browse.lo \
 	librygel_server_2_0_la-rygel-media-query-action.lo \
 	librygel_server_2_0_la-rygel-media-receiver-registrar.lo \
 	librygel_server_2_0_la-rygel-panasonic-hacks.lo \
+	librygel_server_2_0_la-rygel-samsung-tv-hacks.lo \
+	librygel_server_2_0_la-rygel-seek-hacks.lo \
 	librygel_server_2_0_la-rygel-search-criteria-parser.lo \
 	librygel_server_2_0_la-rygel-search.lo \
 	librygel_server_2_0_la-rygel-serializer.lo \
@@ -278,8 +281,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -630,6 +631,8 @@ LIBRYGEL_SERVER_NONVAPI_SOURCE_FILES = \
 	rygel-media-query-action.vala \
 	rygel-media-receiver-registrar.vala \
 	rygel-panasonic-hacks.vala \
+	rygel-samsung-tv-hacks.vala \
+	rygel-seek-hacks.vala \
 	rygel-search-criteria-parser.vala \
 	rygel-search.vala \
 	rygel-serializer.vala \
@@ -676,7 +679,7 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/../../common.am $(srcdir)/filelist.am $(am__configure_deps)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(top_srcdir)/common.am $(srcdir)/filelist.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -697,7 +700,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
-$(srcdir)/../../common.am $(srcdir)/filelist.am:
+$(top_srcdir)/common.am $(srcdir)/filelist.am:
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -799,10 +802,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-playlist-item.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-reference-creator.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-relational-expression.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-samsung-tv-hacks.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-search-criteria-parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-search-expression.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-search.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-searchable-container.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-seek-hacks.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-serializer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-simple-container.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-source-connection-manager.Plo@am__quote@
@@ -1284,6 +1289,20 @@ librygel_server_2_0_la-rygel-panasonic-hacks.lo: rygel-panasonic-hacks.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_server_2_0_la-rygel-panasonic-hacks.lo `test -f 'rygel-panasonic-hacks.c' || echo '$(srcdir)/'`rygel-panasonic-hacks.c
 
+librygel_server_2_0_la-rygel-samsung-tv-hacks.lo: rygel-samsung-tv-hacks.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -MT librygel_server_2_0_la-rygel-samsung-tv-hacks.lo -MD -MP -MF $(DEPDIR)/librygel_server_2_0_la-rygel-samsung-tv-hacks.Tpo -c -o librygel_server_2_0_la-rygel-samsung-tv-hacks.lo `test -f 'rygel-samsung-tv-hacks.c' || echo '$(srcdir)/'`rygel-samsung-tv-hacks.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_server_2_0_la-rygel-samsung-tv-hacks.Tpo $(DEPDIR)/librygel_server_2_0_la-rygel-samsung-tv-hacks.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-samsung-tv-hacks.c' object='librygel_server_2_0_la-rygel-samsung-tv-hacks.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_server_2_0_la-rygel-samsung-tv-hacks.lo `test -f 'rygel-samsung-tv-hacks.c' || echo '$(srcdir)/'`rygel-samsung-tv-hacks.c
+
+librygel_server_2_0_la-rygel-seek-hacks.lo: rygel-seek-hacks.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -MT librygel_server_2_0_la-rygel-seek-hacks.lo -MD -MP -MF $(DEPDIR)/librygel_server_2_0_la-rygel-seek-hacks.Tpo -c -o librygel_server_2_0_la-rygel-seek-hacks.lo `test -f 'rygel-seek-hacks.c' || echo '$(srcdir)/'`rygel-seek-hacks.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_server_2_0_la-rygel-seek-hacks.Tpo $(DEPDIR)/librygel_server_2_0_la-rygel-seek-hacks.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-seek-hacks.c' object='librygel_server_2_0_la-rygel-seek-hacks.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_server_2_0_la-rygel-seek-hacks.lo `test -f 'rygel-seek-hacks.c' || echo '$(srcdir)/'`rygel-seek-hacks.c
+
 librygel_server_2_0_la-rygel-search-criteria-parser.lo: rygel-search-criteria-parser.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -MT librygel_server_2_0_la-rygel-search-criteria-parser.lo -MD -MP -MF $(DEPDIR)/librygel_server_2_0_la-rygel-search-criteria-parser.Tpo -c -o librygel_server_2_0_la-rygel-search-criteria-parser.lo `test -f 'rygel-search-criteria-parser.c' || echo '$(srcdir)/'`rygel-search-criteria-parser.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_server_2_0_la-rygel-search-criteria-parser.Tpo $(DEPDIR)/librygel_server_2_0_la-rygel-search-criteria-parser.Plo
@@ -1668,6 +1687,16 @@ $(srcdir)/rygel-panasonic-hacks.c: $(srcdir)/librygel_server_2_0_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_server_2_0_la_vala.stamp; \
 	fi
+$(srcdir)/rygel-samsung-tv-hacks.c: $(srcdir)/librygel_server_2_0_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/librygel_server_2_0_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_server_2_0_la_vala.stamp; \
+	fi
+$(srcdir)/rygel-seek-hacks.c: $(srcdir)/librygel_server_2_0_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/librygel_server_2_0_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_server_2_0_la_vala.stamp; \
+	fi
 $(srcdir)/rygel-search-criteria-parser.c: $(srcdir)/librygel_server_2_0_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/librygel_server_2_0_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -1723,9 +1752,9 @@ $(srcdir)/rygel-server.h: $(srcdir)/librygel_server_2_0_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_server_2_0_la_vala.stamp; \
 	fi
-$(srcdir)/librygel_server_2_0_la_vala.stamp: rygel-audio-item.vala rygel-dlna-profile.vala rygel-image-item.vala rygel-logical-expression.vala rygel-media-art-store.vala rygel-media-objects.vala rygel-music-item.vala rygel-photo-item.vala rygel-relational-expression.vala rygel-simple-container.vala rygel-subtitle.vala rygel-thumbnail.vala rygel-video-item.vala rygel-media-container.vala rygel-media-item.vala rygel-media-object.vala rygel-media-server-plugin.vala rygel-search-expression.vala rygel-searchable-container.vala rygel-trackable-container.vala rygel-trackable-item.vala rygel-transcode-manager.vala rygel-transcoder.vala rygel-visual-item.vala rygel-writable-container.vala rygel-media-server.vala rygel-media-engine.vala rygel-http-seek.vala rygel-data-source.vala rygel-updatable-object.vala rygel-playlist-item.vala rygel-browse.vala rygel-client-hacks.vala rygel-content-directory.vala rygel-dbus-thumbnailer.vala rygel-engine-loader.vala rygel-http-byte-seek.vala rygel-http-get-handler.vala rygel-http-get.vala rygel-http-identity-handler.vala rygel-http-playlist-handler.vala rygel-http-item-uri.vala rygel-http-post.vala rygel-http-request.vala rygel-http-response.vala rygel-http-server.vala rygel-http-time-seek.vala rygel-http-transcode-handler.vala rygel-import-resource.vala rygel-object-creator.vala rygel-reference-creator.vala rygel-item-destroyer.vala rygel-item-updater.vala rygel-object-removal-queue.vala rygel-last-change-entry.vala rygel-last-change-obj-add.vala rygel-last-change-obj-del.vala rygel-last-change-obj-mod.vala rygel-last-change-st-done.vala rygel-last-change.vala rygel-media-query-action.vala rygel-media-receiver-registrar.vala rygel-panasonic-hacks.vala rygel-search-criteria-parser.vala rygel-search.vala rygel-serializer.vala rygel-source-connection-manager.vala rygel-subtitle-manager.vala rygel-thumbnailer.vala rygel-wmp-hacks.vala rygel-xbmc-hacks.vala rygel-xbox-hacks.vala rygel-data-sink.vala
+$(srcdir)/librygel_server_2_0_la_vala.stamp: rygel-audio-item.vala rygel-dlna-profile.vala rygel-image-item.vala rygel-logical-expression.vala rygel-media-art-store.vala rygel-media-objects.vala rygel-music-item.vala rygel-photo-item.vala rygel-relational-expression.vala rygel-simple-container.vala rygel-subtitle.vala rygel-thumbnail.vala rygel-video-item.vala rygel-media-container.vala rygel-media-item.vala rygel-media-object.vala rygel-media-server-plugin.vala rygel-search-expression.vala rygel-searchable-container.vala rygel-trackable-container.vala rygel-trackable-item.vala rygel-transcode-manager.vala rygel-transcoder.vala rygel-visual-item.vala rygel-writable-container.vala rygel-media-server.vala rygel-media-engine.vala rygel-http-seek.vala rygel-data-source.vala rygel-updatable-object.vala rygel-playlist-item.vala rygel-browse.vala rygel-client-hacks.vala rygel-content-directory.vala rygel-dbus-thumbnailer.vala rygel-engine-loader.vala rygel-http-byte-seek.vala rygel-http-get-handler.vala rygel-http-get.vala rygel-http-identity-handler.vala rygel-http-playlist-handler.vala rygel-http-item-uri.vala rygel-http-post.vala rygel-http-request.vala rygel-http-response.vala rygel-http-server.vala rygel-http-time-seek.vala rygel-http-transcode-handler.vala rygel-import-resource.vala rygel-object-creator.vala rygel-reference-creator.vala rygel-item-destroyer.vala rygel-item-updater.vala rygel-object-removal-queue.vala rygel-last-change-entry.vala rygel-last-change-obj-add.vala rygel-last-change-obj-del.vala rygel-last-change-obj-mod.vala rygel-last-change-st-done.vala rygel-last-change.vala rygel-media-query-action.vala rygel-media-receiver-registrar.vala rygel-panasonic-hacks.vala rygel-samsung-tv-hacks.vala rygel-seek-hacks.vala rygel-search-criteria-parser.vala rygel-search.vala rygel-serializer.vala rygel-source-connection-manager.vala rygel-subtitle-manager.vala rygel-thumbnailer.vala rygel-wmp-hacks.vala rygel-xbmc-hacks.vala rygel-xbox-hacks.vala rygel-data-sink.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_server_2_0_la_VALAFLAGS) $(VALAFLAGS) -C rygel-audio-item.vala rygel-dlna-profile.vala rygel-image-item.vala rygel-logical-expression.vala rygel-media-art-store.vala rygel-media-objects.vala rygel-music-item.vala rygel-photo-item.vala rygel-relational-expression.vala rygel-simple-container.vala rygel-subtitle.vala rygel-thumbnail.vala rygel-video-item.vala rygel-media-container.vala rygel-media-item.vala rygel-media-object.vala rygel-media-server-plugin.vala rygel-search-expression.vala rygel-searchable-container.vala rygel-trackable-container.vala rygel-trackable-item.vala rygel-transcode-manager.vala rygel-transcoder.vala rygel-visual-item.vala rygel-writable-container.vala rygel-media-server.vala rygel-media-engine.vala rygel-http-seek.vala rygel-data-source.vala rygel-updatable-object.vala rygel-playlist-item.vala rygel-browse.vala rygel-client-hacks.vala rygel-content-directory.vala rygel-dbus-thumbnailer.vala rygel-engine-loader.vala rygel-http-byte-seek.vala rygel-http-get-handler.vala rygel-http-get.vala rygel-http-identity-handler.vala rygel-http-playlist-handler.vala rygel-http-item-uri.vala rygel-http-post.vala rygel-http-request.vala rygel-http-response.vala rygel-http-server.vala rygel-http-time-seek.vala rygel-http-transcode-handler.vala rygel-import-resource.vala rygel-object-creator.vala rygel-reference-creator.vala rygel-item-destroyer.vala rygel-item-updater.vala rygel-object-removal-queue.vala rygel-last-change-entry.vala rygel-last-change-obj-add.vala rygel-last-change-obj-del.vala rygel-last-change-obj-mod.vala rygel-last-change-st-done.vala rygel-last-change.vala rygel-media-query-action.vala rygel-media-receiver-registrar.vala rygel-panasonic-hacks.vala rygel-search-criteria-parser.vala rygel-search.vala rygel-serializer.vala rygel-source-connection-manager.vala rygel-subtitle-manager.vala rygel-thumbnailer.vala rygel-wmp-hacks.vala rygel-xbmc-hacks.vala rygel-xbox-hacks.vala rygel-data-sink.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_server_2_0_la_VALAFLAGS) $(VALAFLAGS) -C rygel-audio-item.vala rygel-dlna-profile.vala rygel-image-item.vala rygel-logical-expression.vala rygel-media-art-store.vala rygel-media-objects.vala rygel-music-item.vala rygel-photo-item.vala rygel-relational-expression.vala rygel-simple-container.vala rygel-subtitle.vala rygel-thumbnail.vala rygel-video-item.vala rygel-media-container.vala rygel-media-item.vala rygel-media-object.vala rygel-media-server-plugin.vala rygel-search-expression.vala rygel-searchable-container.vala rygel-trackable-container.vala rygel-trackable-item.vala rygel-transcode-manager.vala rygel-transcoder.vala rygel-visual-item.vala rygel-writable-container.vala rygel-media-server.vala rygel-media-engine.vala rygel-http-seek.vala rygel-data-source.vala rygel-updatable-object.vala rygel-playlist-item.vala rygel-browse.vala rygel-client-hacks.vala rygel-content-directory.vala rygel-dbus-thumbnailer.vala rygel-engine-loader.vala rygel-http-byte-seek.vala rygel-http-get-handler.vala rygel-http-get.vala rygel-http-identity-handler.vala rygel-http-playlist-handler.vala rygel-http-item-uri.vala rygel-http-post.vala rygel-http-request.vala rygel-http-response.vala rygel-http-server.vala rygel-http-time-seek.vala rygel-http-transcode-handler.vala rygel-import-resource.vala rygel-object-creator.vala rygel-reference-creator.vala rygel-item-destroyer.vala rygel-item-updater.vala rygel-object-removal-queue.vala rygel-last-change-entry.vala rygel-last-change-obj-add.vala rygel-last-change-obj-del.vala rygel-last-change-obj-mod.vala rygel-last-change-st-done.vala rygel-last-change.vala rygel-media-query-action.vala rygel-media-receiver-registrar.vala rygel-panasonic-hacks.vala rygel-samsung-tv-hacks.vala rygel-seek-hacks.vala rygel-search-criteria-parser.vala rygel-search.vala rygel-serializer.vala rygel-source-connection-manager.vala rygel-subtitle-manager.vala rygel-thumbnailer.vala rygel-wmp-hacks.vala rygel-xbmc-hacks.vala rygel-xbox-hacks.vala rygel-data-sink.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
@@ -1947,10 +1976,12 @@ maintainer-clean-generic:
 	-rm -f rygel-playlist-item.c
 	-rm -f rygel-reference-creator.c
 	-rm -f rygel-relational-expression.c
+	-rm -f rygel-samsung-tv-hacks.c
 	-rm -f rygel-search-criteria-parser.c
 	-rm -f rygel-search-expression.c
 	-rm -f rygel-search.c
 	-rm -f rygel-searchable-container.c
+	-rm -f rygel-seek-hacks.c
 	-rm -f rygel-serializer.c
 	-rm -f rygel-server.h
 	-rm -f rygel-simple-container.c

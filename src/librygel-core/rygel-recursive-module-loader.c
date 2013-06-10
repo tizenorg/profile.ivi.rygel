@@ -42,6 +42,16 @@
 typedef struct _RygelRecursiveModuleLoader RygelRecursiveModuleLoader;
 typedef struct _RygelRecursiveModuleLoaderClass RygelRecursiveModuleLoaderClass;
 typedef struct _RygelRecursiveModuleLoaderPrivate RygelRecursiveModuleLoaderPrivate;
+
+#define RYGEL_TYPE_PLUGIN_INFORMATION (rygel_plugin_information_get_type ())
+#define RYGEL_PLUGIN_INFORMATION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformation))
+#define RYGEL_PLUGIN_INFORMATION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformationClass))
+#define RYGEL_IS_PLUGIN_INFORMATION(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_PLUGIN_INFORMATION))
+#define RYGEL_IS_PLUGIN_INFORMATION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_PLUGIN_INFORMATION))
+#define RYGEL_PLUGIN_INFORMATION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_PLUGIN_INFORMATION, RygelPluginInformationClass))
+
+typedef struct _RygelPluginInformation RygelPluginInformation;
+typedef struct _RygelPluginInformationClass RygelPluginInformationClass;
 #define _g_free0(var) (var = (g_free (var), NULL))
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 typedef struct _Block1Data Block1Data;
@@ -59,6 +69,7 @@ struct _RygelRecursiveModuleLoader {
 struct _RygelRecursiveModuleLoaderClass {
 	GObjectClass parent_class;
 	gboolean (*load_module_from_file) (RygelRecursiveModuleLoader* self, GFile* file);
+	gboolean (*load_module_from_info) (RygelRecursiveModuleLoader* self, RygelPluginInformation* info);
 };
 
 struct _RygelRecursiveModuleLoaderPrivate {
@@ -117,6 +128,7 @@ struct _RygelRecursiveModuleLoaderLoadModulesFromFolderData {
 static gpointer rygel_recursive_module_loader_parent_class = NULL;
 
 GType rygel_recursive_module_loader_get_type (void) G_GNUC_CONST;
+GType rygel_plugin_information_get_type (void) G_GNUC_CONST;
 #define RYGEL_RECURSIVE_MODULE_LOADER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), RYGEL_TYPE_RECURSIVE_MODULE_LOADER, RygelRecursiveModuleLoaderPrivate))
 enum  {
 	RYGEL_RECURSIVE_MODULE_LOADER_DUMMY_PROPERTY,
@@ -140,6 +152,8 @@ static void _____lambda3_ (Block1Data* _data1_, GFile* subfolder);
 static void ______lambda3__rygel_recursive_module_loader_folder_handler (GFile* folder, gpointer self);
 gboolean rygel_recursive_module_loader_load_module_from_file (RygelRecursiveModuleLoader* self, GFile* file);
 static gboolean rygel_recursive_module_loader_real_load_module_from_file (RygelRecursiveModuleLoader* self, GFile* file);
+gboolean rygel_recursive_module_loader_load_module_from_info (RygelRecursiveModuleLoader* self, RygelPluginInformation* info);
+static gboolean rygel_recursive_module_loader_real_load_module_from_info (RygelRecursiveModuleLoader* self, RygelPluginInformation* info);
 static void rygel_recursive_module_loader_load_modules_from_folder_data_free (gpointer _data);
 static gboolean rygel_recursive_module_loader_load_modules_from_folder_co (RygelRecursiveModuleLoaderLoadModulesFromFolderData* _data_);
 static void rygel_recursive_module_loader_load_modules_from_folder_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
@@ -147,6 +161,7 @@ static void _g_list_free__g_object_unref0_ (GList* self);
 static void ____lambda2_ (RygelRecursiveModuleLoader* self, GFile* subfolder);
 static void _____lambda2__rygel_recursive_module_loader_folder_handler (GFile* folder, gpointer self);
 static gboolean rygel_recursive_module_loader_is_folder_eligible (RygelRecursiveModuleLoader* self, GFileInfo* file_info);
+RygelPluginInformation* rygel_plugin_information_new_from_file (GFile* file, GError** error);
 void rygel_recursive_module_loader_set_base_path (RygelRecursiveModuleLoader* self, const gchar* value);
 static void rygel_recursive_module_loader_finalize (GObject* obj);
 static void _vala_rygel_recursive_module_loader_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
@@ -338,7 +353,7 @@ void rygel_recursive_module_loader_load_modules_sync (RygelRecursiveModuleLoader
 			_tmp16_ = g_file_enumerate_children (_tmp14_, RYGEL_RECURSIVE_MODULE_LOADER_LOADER_ATTRIBUTES, G_FILE_QUERY_INFO_NONE, _tmp15_, &_inner_error_);
 			enumerator = _tmp16_;
 			if (_inner_error_ != NULL) {
-				goto __catch31_g_error;
+				goto __catch32_g_error;
 			}
 			_tmp17_ = enumerator;
 			_tmp18_ = cancellable;
@@ -346,7 +361,7 @@ void rygel_recursive_module_loader_load_modules_sync (RygelRecursiveModuleLoader
 			info = _tmp19_;
 			if (_inner_error_ != NULL) {
 				_g_object_unref0 (enumerator);
-				goto __catch31_g_error;
+				goto __catch32_g_error;
 			}
 			while (TRUE) {
 				GFileInfo* _tmp20_;
@@ -370,7 +385,7 @@ void rygel_recursive_module_loader_load_modules_sync (RygelRecursiveModuleLoader
 				if (_inner_error_ != NULL) {
 					_g_object_unref0 (info);
 					_g_object_unref0 (enumerator);
-					goto __catch31_g_error;
+					goto __catch32_g_error;
 				}
 				_g_object_unref0 (info);
 				info = _tmp26_;
@@ -378,8 +393,8 @@ void rygel_recursive_module_loader_load_modules_sync (RygelRecursiveModuleLoader
 			_g_object_unref0 (info);
 			_g_object_unref0 (enumerator);
 		}
-		goto __finally31;
-		__catch31_g_error:
+		goto __finally32;
+		__catch32_g_error:
 		{
 			GError* _error_ = NULL;
 			GFile* _tmp27_;
@@ -399,7 +414,7 @@ void rygel_recursive_module_loader_load_modules_sync (RygelRecursiveModuleLoader
 			_g_free0 (_tmp29_);
 			_g_error_free0 (_error_);
 		}
-		__finally31:
+		__finally32:
 		if (_inner_error_ != NULL) {
 			_g_object_unref0 (folder);
 			block1_data_unref (_data1_);
@@ -430,6 +445,18 @@ static gboolean rygel_recursive_module_loader_real_load_module_from_file (RygelR
 gboolean rygel_recursive_module_loader_load_module_from_file (RygelRecursiveModuleLoader* self, GFile* file) {
 	g_return_val_if_fail (self != NULL, FALSE);
 	return RYGEL_RECURSIVE_MODULE_LOADER_GET_CLASS (self)->load_module_from_file (self, file);
+}
+
+
+static gboolean rygel_recursive_module_loader_real_load_module_from_info (RygelRecursiveModuleLoader* self, RygelPluginInformation* info) {
+	g_critical ("Type `%s' does not implement abstract method `rygel_recursive_module_loader_load_module_from_info'", g_type_name (G_TYPE_FROM_INSTANCE (self)));
+	return FALSE;
+}
+
+
+gboolean rygel_recursive_module_loader_load_module_from_info (RygelRecursiveModuleLoader* self, RygelPluginInformation* info) {
+	g_return_val_if_fail (self != NULL, FALSE);
+	return RYGEL_RECURSIVE_MODULE_LOADER_GET_CLASS (self)->load_module_from_info (self, info);
 }
 
 
@@ -518,7 +545,7 @@ static gboolean rygel_recursive_module_loader_load_modules_from_folder_co (Rygel
 	_data_->_tmp1_ = NULL;
 	_data_->_tmp1_ = g_file_get_path (_data_->_tmp0_);
 	_data_->_tmp2_ = _data_->_tmp1_;
-	g_debug ("rygel-recursive-module-loader.vala:126: Searching for modules in folde" \
+	g_debug ("rygel-recursive-module-loader.vala:128: Searching for modules in folde" \
 "r '%s'.", _data_->_tmp2_);
 	_g_free0 (_data_->_tmp2_);
 	{
@@ -531,7 +558,7 @@ static gboolean rygel_recursive_module_loader_load_modules_from_folder_co (Rygel
 		_data_->_tmp4_ = g_file_enumerate_children_finish (_data_->_tmp3_, _data_->_res_, &_data_->_inner_error_);
 		_data_->_tmp5_ = _data_->_tmp4_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch32_g_error;
+			goto __catch33_g_error;
 		}
 		_g_object_unref0 (_data_->enumerator);
 		_data_->enumerator = _data_->_tmp5_;
@@ -545,13 +572,13 @@ static gboolean rygel_recursive_module_loader_load_modules_from_folder_co (Rygel
 		_data_->_tmp8_ = g_file_enumerator_next_files_finish (_data_->_tmp6_, _data_->_res_, &_data_->_inner_error_);
 		_data_->_tmp9_ = _data_->_tmp8_;
 		if (_data_->_inner_error_ != NULL) {
-			goto __catch32_g_error;
+			goto __catch33_g_error;
 		}
 		__g_list_free__g_object_unref0_0 (_data_->infos);
 		_data_->infos = _data_->_tmp9_;
 	}
-	goto __finally32;
-	__catch32_g_error:
+	goto __finally33;
+	__catch33_g_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -576,7 +603,7 @@ static gboolean rygel_recursive_module_loader_load_modules_from_folder_co (Rygel
 		g_object_unref (_data_->_async_result);
 		return FALSE;
 	}
-	__finally32:
+	__finally33:
 	if (_data_->_inner_error_ != NULL) {
 		_g_object_unref0 (_data_->enumerator);
 		__g_list_free__g_object_unref0_0 (_data_->infos);
@@ -607,7 +634,7 @@ static gboolean rygel_recursive_module_loader_load_modules_from_folder_co (Rygel
 	_data_->_tmp22_ = NULL;
 	_data_->_tmp22_ = g_file_get_path (_data_->_tmp21_);
 	_data_->_tmp23_ = _data_->_tmp22_;
-	g_debug ("rygel-recursive-module-loader.vala:159: Finished searching for modules" \
+	g_debug ("rygel-recursive-module-loader.vala:161: Finished searching for modules" \
 " in folder '%s'", _data_->_tmp23_);
 	_g_free0 (_data_->_tmp23_);
 	_g_object_unref0 (_data_->enumerator);
@@ -637,14 +664,8 @@ static void rygel_recursive_module_loader_handle_file_info (RygelRecursiveModule
 	GFile* _tmp3_ = NULL;
 	GFile* file;
 	GFileInfo* _tmp4_;
-	const gchar* _tmp5_ = NULL;
-	gchar* _tmp6_;
-	gchar* content_type;
-	const gchar* _tmp7_;
-	gchar* _tmp8_ = NULL;
-	gchar* mime;
-	GFileInfo* _tmp9_;
-	gboolean _tmp10_ = FALSE;
+	gboolean _tmp5_ = FALSE;
+	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
 	g_return_if_fail (folder != NULL);
 	g_return_if_fail (info != NULL);
@@ -654,37 +675,66 @@ static void rygel_recursive_module_loader_handle_file_info (RygelRecursiveModule
 	_tmp3_ = g_file_get_child (_tmp0_, _tmp2_);
 	file = _tmp3_;
 	_tmp4_ = info;
-	_tmp5_ = g_file_info_get_content_type (_tmp4_);
-	_tmp6_ = g_strdup (_tmp5_);
-	content_type = _tmp6_;
-	_tmp7_ = content_type;
-	_tmp8_ = g_content_type_get_mime_type (_tmp7_);
-	mime = _tmp8_;
-	_tmp9_ = info;
-	_tmp10_ = rygel_recursive_module_loader_is_folder_eligible (self, _tmp9_);
-	if (_tmp10_) {
-		RygelRecursiveModuleLoaderFolderHandler _tmp11_;
-		void* _tmp11__target;
-		GFile* _tmp12_;
-		_tmp11_ = handler;
-		_tmp11__target = handler_target;
-		_tmp12_ = file;
-		_tmp11_ (_tmp12_, _tmp11__target);
+	_tmp5_ = rygel_recursive_module_loader_is_folder_eligible (self, _tmp4_);
+	if (_tmp5_) {
+		RygelRecursiveModuleLoaderFolderHandler _tmp6_;
+		void* _tmp6__target;
+		GFile* _tmp7_;
+		_tmp6_ = handler;
+		_tmp6__target = handler_target;
+		_tmp7_ = file;
+		_tmp6_ (_tmp7_, _tmp6__target);
 	} else {
-		const gchar* _tmp13_;
-		_tmp13_ = mime;
-		if (g_strcmp0 (_tmp13_, "application/x-sharedlib") == 0) {
-			GFile* _tmp14_;
-			gboolean _tmp15_ = FALSE;
-			_tmp14_ = file;
-			_tmp15_ = rygel_recursive_module_loader_load_module_from_file (self, _tmp14_);
-			if (!_tmp15_) {
-				self->priv->done = TRUE;
+		GFileInfo* _tmp8_;
+		const gchar* _tmp9_ = NULL;
+		gboolean _tmp10_ = FALSE;
+		_tmp8_ = info;
+		_tmp9_ = g_file_info_get_name (_tmp8_);
+		_tmp10_ = g_str_has_suffix (_tmp9_, ".plugin");
+		if (_tmp10_) {
+			{
+				GFile* _tmp11_;
+				RygelPluginInformation* _tmp12_ = NULL;
+				RygelPluginInformation* plugin_info;
+				RygelPluginInformation* _tmp13_;
+				gboolean _tmp14_ = FALSE;
+				_tmp11_ = file;
+				_tmp12_ = rygel_plugin_information_new_from_file (_tmp11_, &_inner_error_);
+				plugin_info = _tmp12_;
+				if (_inner_error_ != NULL) {
+					goto __catch34_g_error;
+				}
+				_tmp13_ = plugin_info;
+				_tmp14_ = rygel_recursive_module_loader_load_module_from_info (self, _tmp13_);
+				if (!_tmp14_) {
+					self->priv->done = TRUE;
+				}
+				_g_object_unref0 (plugin_info);
+			}
+			goto __finally34;
+			__catch34_g_error:
+			{
+				GError* _error_ = NULL;
+				const gchar* _tmp15_ = NULL;
+				GError* _tmp16_;
+				const gchar* _tmp17_;
+				_error_ = _inner_error_;
+				_inner_error_ = NULL;
+				_tmp15_ = _ ("Could not load plugin: %s");
+				_tmp16_ = _error_;
+				_tmp17_ = _tmp16_->message;
+				g_warning (_tmp15_, _tmp17_);
+				_g_error_free0 (_error_);
+			}
+			__finally34:
+			if (_inner_error_ != NULL) {
+				_g_object_unref0 (file);
+				g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+				g_clear_error (&_inner_error_);
+				return;
 			}
 		}
 	}
-	_g_free0 (mime);
-	_g_free0 (content_type);
 	_g_object_unref0 (file);
 }
 
@@ -746,15 +796,15 @@ static gboolean rygel_recursive_module_loader_is_folder (RygelRecursiveModuleLoa
 		_tmp1_ = g_file_query_info (_tmp0_, G_FILE_ATTRIBUTE_STANDARD_TYPE "," G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN, G_FILE_QUERY_INFO_NONE, NULL, &_inner_error_);
 		file_info = _tmp1_;
 		if (_inner_error_ != NULL) {
-			goto __catch33_g_error;
+			goto __catch35_g_error;
 		}
 		_tmp2_ = rygel_recursive_module_loader_is_folder_eligible (self, file_info);
 		result = _tmp2_;
 		_g_object_unref0 (file_info);
 		return result;
 	}
-	goto __finally33;
-	__catch33_g_error:
+	goto __finally35;
+	__catch35_g_error:
 	{
 		GError* _error_ = NULL;
 		const gchar* _tmp3_ = NULL;
@@ -773,7 +823,7 @@ static gboolean rygel_recursive_module_loader_is_folder (RygelRecursiveModuleLoa
 		_g_error_free0 (_error_);
 		return result;
 	}
-	__finally33:
+	__finally35:
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 	g_clear_error (&_inner_error_);
 	return FALSE;
@@ -807,6 +857,7 @@ static void rygel_recursive_module_loader_class_init (RygelRecursiveModuleLoader
 	g_type_class_add_private (klass, sizeof (RygelRecursiveModuleLoaderPrivate));
 	G_OBJECT_CLASS (klass)->constructed = rygel_recursive_module_loader_real_constructed;
 	RYGEL_RECURSIVE_MODULE_LOADER_CLASS (klass)->load_module_from_file = rygel_recursive_module_loader_real_load_module_from_file;
+	RYGEL_RECURSIVE_MODULE_LOADER_CLASS (klass)->load_module_from_info = rygel_recursive_module_loader_real_load_module_from_info;
 	G_OBJECT_CLASS (klass)->get_property = _vala_rygel_recursive_module_loader_get_property;
 	G_OBJECT_CLASS (klass)->set_property = _vala_rygel_recursive_module_loader_set_property;
 	G_OBJECT_CLASS (klass)->finalize = rygel_recursive_module_loader_finalize;

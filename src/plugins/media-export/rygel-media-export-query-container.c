@@ -316,15 +316,15 @@ static gboolean rygel_media_export_query_container_real_search_co (RygelMediaExp
 		_data_->_tmp20_ = _data_->_tmp19_;
 		if (_data_->_inner_error_ != NULL) {
 			if (_data_->_inner_error_->domain == RYGEL_MEDIA_EXPORT_MEDIA_CACHE_ERROR) {
-				goto __catch47_rygel_media_export_media_cache_error;
+				goto __catch49_rygel_media_export_media_cache_error;
 			}
-			goto __finally47;
+			goto __finally49;
 		}
 		_g_object_unref0 (_data_->children);
 		_data_->children = _data_->_tmp20_;
 	}
-	goto __finally47;
-	__catch47_rygel_media_export_media_cache_error:
+	goto __finally49;
+	__catch49_rygel_media_export_media_cache_error:
 	{
 		_data_->_error_ = _data_->_inner_error_;
 		_data_->_inner_error_ = NULL;
@@ -339,11 +339,11 @@ static gboolean rygel_media_export_query_container_real_search_co (RygelMediaExp
 			_data_->_tmp24_ = _g_error_copy0 (_data_->_tmp23_);
 			_data_->_inner_error_ = _data_->_tmp24_;
 			_g_error_free0 (_data_->_error_);
-			goto __finally47;
+			goto __finally49;
 		}
 		_g_error_free0 (_data_->_error_);
 	}
-	__finally47:
+	__finally49:
 	if (_data_->_inner_error_ != NULL) {
 		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 		g_error_free (_data_->_inner_error_);

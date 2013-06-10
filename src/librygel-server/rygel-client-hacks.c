@@ -146,6 +146,26 @@ typedef struct _RygelXBoxHacksClass RygelXBoxHacksClass;
 typedef struct _RygelWMPHacks RygelWMPHacks;
 typedef struct _RygelWMPHacksClass RygelWMPHacksClass;
 
+#define RYGEL_TYPE_SAMSUNG_TV_HACKS (rygel_samsung_tv_hacks_get_type ())
+#define RYGEL_SAMSUNG_TV_HACKS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_SAMSUNG_TV_HACKS, RygelSamsungTVHacks))
+#define RYGEL_SAMSUNG_TV_HACKS_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_SAMSUNG_TV_HACKS, RygelSamsungTVHacksClass))
+#define RYGEL_IS_SAMSUNG_TV_HACKS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_SAMSUNG_TV_HACKS))
+#define RYGEL_IS_SAMSUNG_TV_HACKS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_SAMSUNG_TV_HACKS))
+#define RYGEL_SAMSUNG_TV_HACKS_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_SAMSUNG_TV_HACKS, RygelSamsungTVHacksClass))
+
+typedef struct _RygelSamsungTVHacks RygelSamsungTVHacks;
+typedef struct _RygelSamsungTVHacksClass RygelSamsungTVHacksClass;
+
+#define RYGEL_TYPE_SEEK_HACKS (rygel_seek_hacks_get_type ())
+#define RYGEL_SEEK_HACKS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_SEEK_HACKS, RygelSeekHacks))
+#define RYGEL_SEEK_HACKS_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_SEEK_HACKS, RygelSeekHacksClass))
+#define RYGEL_IS_SEEK_HACKS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_SEEK_HACKS))
+#define RYGEL_IS_SEEK_HACKS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_SEEK_HACKS))
+#define RYGEL_SEEK_HACKS_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_SEEK_HACKS, RygelSeekHacksClass))
+
+typedef struct _RygelSeekHacks RygelSeekHacks;
+typedef struct _RygelSeekHacksClass RygelSeekHacksClass;
+
 #define RYGEL_TYPE_XBMC_HACKS (rygel_xbmc_hacks_get_type ())
 #define RYGEL_XBMC_HACKS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_XBMC_HACKS, RygelXBMCHacks))
 #define RYGEL_XBMC_HACKS_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_XBMC_HACKS, RygelXBMCHacksClass))
@@ -158,6 +178,7 @@ typedef struct _RygelXBMCHacksClass RygelXBMCHacksClass;
 #define _rygel_search_expression_unref0(var) ((var == NULL) ? NULL : (var = (rygel_search_expression_unref (var), NULL)))
 #define _g_free0(var) (var = (g_free (var), NULL))
 typedef struct _RygelClientHacksSearchData RygelClientHacksSearchData;
+#define __vala_SoupMessageHeaders_free0(var) ((var == NULL) ? NULL : (var = (_vala_SoupMessageHeaders_free (var), NULL)))
 
 typedef enum  {
 	RYGEL_CLIENT_HACKS_ERROR_NA
@@ -182,6 +203,7 @@ struct _RygelClientHacksClass {
 	void (*translate_container_id) (RygelClientHacks* self, RygelMediaQueryAction* action, gchar** container_id);
 	void (*apply) (RygelClientHacks* self, RygelMediaItem* item);
 	void (*filter_sort_criteria) (RygelClientHacks* self, gchar** sort_criteria);
+	gboolean (*force_seek) (RygelClientHacks* self);
 	void (*search) (RygelClientHacks* self, RygelSearchableContainer* container, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 	RygelMediaObjects* (*search_finish) (RygelClientHacks* self, GAsyncResult* _res_, guint* total_matches, GError** error);
 };
@@ -218,6 +240,8 @@ struct _RygelClientHacksSearchData {
 
 
 static gpointer rygel_client_hacks_parent_class = NULL;
+static GeeHashMap* rygel_client_hacks_client_agent_cache;
+static GeeHashMap* rygel_client_hacks_client_agent_cache = NULL;
 
 GQuark rygel_client_hacks_error_quark (void);
 GType rygel_client_hacks_get_type (void) G_GNUC_CONST;
@@ -241,7 +265,7 @@ enum  {
 };
 #define RYGEL_CLIENT_HACKS_CORRECT_OBJECT_ID "ObjectID"
 RygelClientHacks* rygel_client_hacks_construct (GType object_type, const gchar* agent, SoupMessage* message, GError** error);
-static void rygel_client_hacks_check_headers (RygelClientHacks* self, SoupMessageHeaders* headers, GError** error);
+static void rygel_client_hacks_check_headers (RygelClientHacks* self, SoupMessage* message, GError** error);
 RygelClientHacks* rygel_client_hacks_create (SoupMessage* message, GError** error);
 RygelPanasonicHacks* rygel_panasonic_hacks_new (SoupMessage* message, GError** error);
 RygelPanasonicHacks* rygel_panasonic_hacks_construct (GType object_type, SoupMessage* message, GError** error);
@@ -252,6 +276,12 @@ GType rygel_xbox_hacks_get_type (void) G_GNUC_CONST;
 RygelWMPHacks* rygel_wmp_hacks_new (SoupMessage* message, GError** error);
 RygelWMPHacks* rygel_wmp_hacks_construct (GType object_type, SoupMessage* message, GError** error);
 GType rygel_wmp_hacks_get_type (void) G_GNUC_CONST;
+RygelSamsungTVHacks* rygel_samsung_tv_hacks_new (SoupMessage* message, GError** error);
+RygelSamsungTVHacks* rygel_samsung_tv_hacks_construct (GType object_type, SoupMessage* message, GError** error);
+GType rygel_samsung_tv_hacks_get_type (void) G_GNUC_CONST;
+RygelSeekHacks* rygel_seek_hacks_new (SoupMessage* message, GError** error);
+RygelSeekHacks* rygel_seek_hacks_construct (GType object_type, SoupMessage* message, GError** error);
+GType rygel_seek_hacks_get_type (void) G_GNUC_CONST;
 RygelXBMCHacks* rygel_xbmc_hacks_new (SoupMessage* message, GError** error);
 RygelXBMCHacks* rygel_xbmc_hacks_construct (GType object_type, SoupMessage* message, GError** error);
 GType rygel_xbmc_hacks_get_type (void) G_GNUC_CONST;
@@ -261,6 +291,8 @@ void rygel_client_hacks_apply (RygelClientHacks* self, RygelMediaItem* item);
 static void rygel_client_hacks_real_apply (RygelClientHacks* self, RygelMediaItem* item);
 void rygel_client_hacks_filter_sort_criteria (RygelClientHacks* self, gchar** sort_criteria);
 static void rygel_client_hacks_real_filter_sort_criteria (RygelClientHacks* self, gchar** sort_criteria);
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self);
+static gboolean rygel_client_hacks_real_force_seek (RygelClientHacks* self);
 static void rygel_client_hacks_real_search_data_free (gpointer _data);
 static void rygel_client_hacks_real_search (RygelClientHacks* self, RygelSearchableContainer* container, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 void rygel_client_hacks_search (RygelClientHacks* self, RygelSearchableContainer* container, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
@@ -269,6 +301,8 @@ static gboolean rygel_client_hacks_real_search_co (RygelClientHacksSearchData* _
 void rygel_searchable_container_search (RygelSearchableContainer* self, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 RygelMediaObjects* rygel_searchable_container_search_finish (RygelSearchableContainer* self, GAsyncResult* _res_, guint* total_matches, GError** error);
 static void rygel_client_hacks_search_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
+static SoupMessageHeaders* _vala_SoupMessageHeaders_copy (SoupMessageHeaders* self);
+static void _vala_SoupMessageHeaders_free (SoupMessageHeaders* self);
 const gchar* rygel_client_hacks_get_object_id (RygelClientHacks* self);
 void rygel_client_hacks_set_object_id (RygelClientHacks* self, const gchar* value);
 static void rygel_client_hacks_finalize (GObject* obj);
@@ -329,10 +363,8 @@ RygelClientHacks* rygel_client_hacks_construct (GType object_type, const gchar* 
 	_tmp3_ = message;
 	if (_tmp3_ != NULL) {
 		SoupMessage* _tmp4_;
-		SoupMessageHeaders* _tmp5_;
 		_tmp4_ = message;
-		_tmp5_ = _tmp4_->request_headers;
-		rygel_client_hacks_check_headers (self, _tmp5_, &_inner_error_);
+		rygel_client_hacks_check_headers (self, _tmp4_, &_inner_error_);
 		if (_inner_error_ != NULL) {
 			if (_inner_error_->domain == RYGEL_CLIENT_HACKS_ERROR) {
 				g_propagate_error (error, _inner_error_);
@@ -351,9 +383,9 @@ RygelClientHacks* rygel_client_hacks_construct (GType object_type, const gchar* 
 
 RygelClientHacks* rygel_client_hacks_create (SoupMessage* message, GError** error) {
 	RygelClientHacks* result = NULL;
-	SoupMessage* _tmp9_;
-	RygelXBMCHacks* _tmp10_;
-	RygelXBMCHacks* _tmp11_;
+	SoupMessage* _tmp15_;
+	RygelXBMCHacks* _tmp16_;
+	RygelXBMCHacks* _tmp17_;
 	GError * _inner_error_ = NULL;
 	{
 		SoupMessage* _tmp0_;
@@ -451,9 +483,28 @@ RygelClientHacks* rygel_client_hacks_create (SoupMessage* message, GError** erro
 			return NULL;
 		}
 	}
-	_tmp9_ = message;
-	_tmp10_ = rygel_xbmc_hacks_new (_tmp9_, &_inner_error_);
-	_tmp11_ = _tmp10_;
+	{
+		SoupMessage* _tmp9_;
+		RygelSamsungTVHacks* _tmp10_;
+		RygelSamsungTVHacks* _tmp11_;
+		_tmp9_ = message;
+		_tmp10_ = rygel_samsung_tv_hacks_new (_tmp9_, &_inner_error_);
+		_tmp11_ = _tmp10_;
+		if (_inner_error_ != NULL) {
+			goto __catch20_g_error;
+		}
+		result = (RygelClientHacks*) _tmp11_;
+		return result;
+	}
+	goto __finally20;
+	__catch20_g_error:
+	{
+		GError* _error_ = NULL;
+		_error_ = _inner_error_;
+		_inner_error_ = NULL;
+		_g_error_free0 (_error_);
+	}
+	__finally20:
 	if (_inner_error_ != NULL) {
 		if (_inner_error_->domain == RYGEL_CLIENT_HACKS_ERROR) {
 			g_propagate_error (error, _inner_error_);
@@ -464,7 +515,52 @@ RygelClientHacks* rygel_client_hacks_create (SoupMessage* message, GError** erro
 			return NULL;
 		}
 	}
-	result = (RygelClientHacks*) _tmp11_;
+	{
+		SoupMessage* _tmp12_;
+		RygelSeekHacks* _tmp13_;
+		RygelSeekHacks* _tmp14_;
+		_tmp12_ = message;
+		_tmp13_ = rygel_seek_hacks_new (_tmp12_, &_inner_error_);
+		_tmp14_ = _tmp13_;
+		if (_inner_error_ != NULL) {
+			goto __catch21_g_error;
+		}
+		result = (RygelClientHacks*) _tmp14_;
+		return result;
+	}
+	goto __finally21;
+	__catch21_g_error:
+	{
+		GError* _error_ = NULL;
+		_error_ = _inner_error_;
+		_inner_error_ = NULL;
+		_g_error_free0 (_error_);
+	}
+	__finally21:
+	if (_inner_error_ != NULL) {
+		if (_inner_error_->domain == RYGEL_CLIENT_HACKS_ERROR) {
+			g_propagate_error (error, _inner_error_);
+			return NULL;
+		} else {
+			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return NULL;
+		}
+	}
+	_tmp15_ = message;
+	_tmp16_ = rygel_xbmc_hacks_new (_tmp15_, &_inner_error_);
+	_tmp17_ = _tmp16_;
+	if (_inner_error_ != NULL) {
+		if (_inner_error_->domain == RYGEL_CLIENT_HACKS_ERROR) {
+			g_propagate_error (error, _inner_error_);
+			return NULL;
+		} else {
+			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+			g_clear_error (&_inner_error_);
+			return NULL;
+		}
+	}
+	result = (RygelClientHacks*) _tmp17_;
 	return result;
 }
 
@@ -500,6 +596,19 @@ static void rygel_client_hacks_real_filter_sort_criteria (RygelClientHacks* self
 void rygel_client_hacks_filter_sort_criteria (RygelClientHacks* self, gchar** sort_criteria) {
 	g_return_if_fail (self != NULL);
 	RYGEL_CLIENT_HACKS_GET_CLASS (self)->filter_sort_criteria (self, sort_criteria);
+}
+
+
+static gboolean rygel_client_hacks_real_force_seek (RygelClientHacks* self) {
+	gboolean result = FALSE;
+	result = FALSE;
+	return result;
+}
+
+
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self) {
+	g_return_val_if_fail (self != NULL, FALSE);
+	return RYGEL_CLIENT_HACKS_GET_CLASS (self)->force_seek (self);
 }
 
 
@@ -657,52 +766,141 @@ RygelMediaObjects* rygel_client_hacks_search_finish (RygelClientHacks* self, GAs
 }
 
 
-static void rygel_client_hacks_check_headers (RygelClientHacks* self, SoupMessageHeaders* headers, GError** error) {
-	SoupMessageHeaders* _tmp0_;
-	const gchar* _tmp1_ = NULL;
-	gchar* _tmp2_;
+static SoupMessageHeaders* _vala_SoupMessageHeaders_copy (SoupMessageHeaders* self) {
+	return g_boxed_copy (soup_message_headers_get_type (), self);
+}
+
+
+static gpointer __vala_SoupMessageHeaders_copy0 (gpointer self) {
+	return self ? _vala_SoupMessageHeaders_copy (self) : NULL;
+}
+
+
+static void _vala_SoupMessageHeaders_free (SoupMessageHeaders* self) {
+	g_boxed_free (soup_message_headers_get_type (), self);
+}
+
+
+static void rygel_client_hacks_check_headers (RygelClientHacks* self, SoupMessage* message, GError** error) {
+	SoupMessage* _tmp0_;
+	SoupMessageHeaders* _tmp1_;
+	SoupMessageHeaders* _tmp2_;
+	SoupMessageHeaders* headers;
+	SoupMessageHeaders* _tmp3_;
+	const gchar* _tmp4_ = NULL;
+	gchar* _tmp5_;
 	gchar* agent;
-	gboolean _tmp3_ = FALSE;
-	const gchar* _tmp4_;
-	gboolean _tmp8_;
+	gboolean _tmp6_ = FALSE;
+	const gchar* _tmp7_;
+	gboolean _tmp9_;
+	gboolean _tmp17_ = FALSE;
+	const gchar* _tmp18_;
+	gboolean _tmp22_;
+	const gchar* _tmp25_;
 	GError * _inner_error_ = NULL;
 	g_return_if_fail (self != NULL);
-	g_return_if_fail (headers != NULL);
-	_tmp0_ = headers;
-	_tmp1_ = soup_message_headers_get_one (_tmp0_, "User-Agent");
-	_tmp2_ = g_strdup (_tmp1_);
-	agent = _tmp2_;
-	_tmp4_ = agent;
-	if (_tmp4_ == NULL) {
-		_tmp3_ = TRUE;
+	g_return_if_fail (message != NULL);
+	_tmp0_ = message;
+	_tmp1_ = _tmp0_->request_headers;
+	_tmp2_ = __vala_SoupMessageHeaders_copy0 (_tmp1_);
+	headers = _tmp2_;
+	_tmp3_ = headers;
+	_tmp4_ = soup_message_headers_get_one (_tmp3_, "User-Agent");
+	_tmp5_ = g_strdup (_tmp4_);
+	agent = _tmp5_;
+	_tmp7_ = agent;
+	if (_tmp7_ == NULL) {
+		GeeHashMap* _tmp8_;
+		_tmp8_ = rygel_client_hacks_client_agent_cache;
+		_tmp6_ = _tmp8_ != NULL;
 	} else {
-		GRegex* _tmp5_;
-		const gchar* _tmp6_;
-		gboolean _tmp7_ = FALSE;
-		_tmp5_ = self->agent_regex;
-		_tmp6_ = agent;
-		_tmp7_ = g_regex_match (_tmp5_, _tmp6_, 0, NULL);
-		_tmp3_ = !_tmp7_;
+		_tmp6_ = FALSE;
 	}
-	_tmp8_ = _tmp3_;
-	if (_tmp8_) {
-		const gchar* _tmp9_ = NULL;
-		GError* _tmp10_;
-		_tmp9_ = _ ("Not Applicable");
-		_tmp10_ = g_error_new_literal (RYGEL_CLIENT_HACKS_ERROR, RYGEL_CLIENT_HACKS_ERROR_NA, _tmp9_);
-		_inner_error_ = _tmp10_;
+	_tmp9_ = _tmp6_;
+	if (_tmp9_) {
+		SoupMessage* _tmp10_;
+		SoupAddress* _tmp11_ = NULL;
+		SoupAddress* _tmp12_;
+		SoupAddress* address;
+		GeeHashMap* _tmp13_;
+		SoupAddress* _tmp14_;
+		const gchar* _tmp15_ = NULL;
+		gpointer _tmp16_ = NULL;
+		_tmp10_ = message;
+		_tmp11_ = soup_message_get_address (_tmp10_);
+		_tmp12_ = _g_object_ref0 (_tmp11_);
+		address = _tmp12_;
+		_tmp13_ = rygel_client_hacks_client_agent_cache;
+		_tmp14_ = address;
+		_tmp15_ = soup_address_get_physical (_tmp14_);
+		_tmp16_ = gee_abstract_map_get ((GeeAbstractMap*) _tmp13_, _tmp15_);
+		_g_free0 (agent);
+		agent = (gchar*) _tmp16_;
+		_g_object_unref0 (address);
+	}
+	_tmp18_ = agent;
+	if (_tmp18_ == NULL) {
+		_tmp17_ = TRUE;
+	} else {
+		GRegex* _tmp19_;
+		const gchar* _tmp20_;
+		gboolean _tmp21_ = FALSE;
+		_tmp19_ = self->agent_regex;
+		_tmp20_ = agent;
+		_tmp21_ = g_regex_match (_tmp19_, _tmp20_, 0, NULL);
+		_tmp17_ = !_tmp21_;
+	}
+	_tmp22_ = _tmp17_;
+	if (_tmp22_) {
+		const gchar* _tmp23_ = NULL;
+		GError* _tmp24_;
+		_tmp23_ = _ ("Not Applicable");
+		_tmp24_ = g_error_new_literal (RYGEL_CLIENT_HACKS_ERROR, RYGEL_CLIENT_HACKS_ERROR_NA, _tmp23_);
+		_inner_error_ = _tmp24_;
 		if (_inner_error_->domain == RYGEL_CLIENT_HACKS_ERROR) {
 			g_propagate_error (error, _inner_error_);
 			_g_free0 (agent);
+			__vala_SoupMessageHeaders_free0 (headers);
 			return;
 		} else {
 			_g_free0 (agent);
+			__vala_SoupMessageHeaders_free0 (headers);
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 			g_clear_error (&_inner_error_);
 			return;
 		}
 	}
+	_tmp25_ = agent;
+	if (_tmp25_ != NULL) {
+		SoupMessage* _tmp26_;
+		SoupAddress* _tmp27_ = NULL;
+		SoupAddress* _tmp28_;
+		SoupAddress* address;
+		GeeHashMap* _tmp29_;
+		GeeHashMap* _tmp31_;
+		SoupAddress* _tmp32_;
+		const gchar* _tmp33_ = NULL;
+		const gchar* _tmp34_;
+		_tmp26_ = message;
+		_tmp27_ = soup_message_get_address (_tmp26_);
+		_tmp28_ = _g_object_ref0 (_tmp27_);
+		address = _tmp28_;
+		_tmp29_ = rygel_client_hacks_client_agent_cache;
+		if (_tmp29_ == NULL) {
+			GeeHashMap* _tmp30_;
+			_tmp30_ = gee_hash_map_new (G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free, G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+			_g_object_unref0 (rygel_client_hacks_client_agent_cache);
+			rygel_client_hacks_client_agent_cache = _tmp30_;
+		}
+		_tmp31_ = rygel_client_hacks_client_agent_cache;
+		_tmp32_ = address;
+		_tmp33_ = soup_address_get_physical (_tmp32_);
+		_tmp34_ = agent;
+		gee_abstract_map_set ((GeeAbstractMap*) _tmp31_, _tmp33_, _tmp34_);
+		_g_object_unref0 (address);
+	}
 	_g_free0 (agent);
+	__vala_SoupMessageHeaders_free0 (headers);
 }
 
 
@@ -731,6 +929,7 @@ static void rygel_client_hacks_class_init (RygelClientHacksClass * klass) {
 	RYGEL_CLIENT_HACKS_CLASS (klass)->translate_container_id = rygel_client_hacks_real_translate_container_id;
 	RYGEL_CLIENT_HACKS_CLASS (klass)->apply = rygel_client_hacks_real_apply;
 	RYGEL_CLIENT_HACKS_CLASS (klass)->filter_sort_criteria = rygel_client_hacks_real_filter_sort_criteria;
+	RYGEL_CLIENT_HACKS_CLASS (klass)->force_seek = rygel_client_hacks_real_force_seek;
 	RYGEL_CLIENT_HACKS_CLASS (klass)->search = rygel_client_hacks_real_search;
 	RYGEL_CLIENT_HACKS_CLASS (klass)->search_finish = rygel_client_hacks_real_search_finish;
 	G_OBJECT_CLASS (klass)->get_property = _vala_rygel_client_hacks_get_property;

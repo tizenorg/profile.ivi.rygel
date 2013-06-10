@@ -145,6 +145,7 @@ struct _RygelClientHacksClass {
 	void (*translate_container_id) (RygelClientHacks* self, RygelMediaQueryAction* action, gchar** container_id);
 	void (*apply) (RygelClientHacks* self, RygelMediaItem* item);
 	void (*filter_sort_criteria) (RygelClientHacks* self, gchar** sort_criteria);
+	gboolean (*force_seek) (RygelClientHacks* self);
 	void (*search) (RygelClientHacks* self, RygelSearchableContainer* container, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 	RygelMediaObjects* (*search_finish) (RygelClientHacks* self, GAsyncResult* _res_, guint* total_matches, GError** error);
 };

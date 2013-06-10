@@ -15,6 +15,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 am__make_dryrun = \
   { \
@@ -52,6 +53,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/example-renderer-vala.plugin.in \
 	$(top_srcdir)/common.am example-player-vala.c \
 	example-renderer-plugin-vala.c \
 	librygel_example_renderer_plugin_vala_la_vala.stamp
@@ -66,7 +68,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/build-aux/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = example-renderer-vala.plugin
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -95,7 +97,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(plugindir)"
+am__installdirs = "$(DESTDIR)$(plugindir)" "$(DESTDIR)$(plugindir)"
 LTLIBRARIES = $(plugin_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 librygel_example_renderer_plugin_vala_la_DEPENDENCIES =  \
@@ -152,6 +154,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+DATA = $(plugin_DATA)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -170,8 +173,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -457,6 +458,7 @@ RYGEL_COMMON_VALAFLAGS = \
 	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS)
 
 plugin_LTLIBRARIES = librygel-example-renderer-plugin-vala.la
+plugin_DATA = example-renderer-vala.plugin
 librygel_example_renderer_plugin_vala_la_SOURCES = \
 	example-renderer-plugin-vala.vala \
 	example-player-vala.vala
@@ -477,6 +479,7 @@ librygel_example_renderer_plugin_vala_la_LIBADD = \
 librygel_example_renderer_plugin_vala_la_LDFLAGS = \
 	$(RYGEL_PLUGIN_LINKER_FLAGS)
 
+EXTRA_DIST = example-renderer-vala.plugin.in
 all: all-am
 
 .SUFFIXES:
@@ -512,6 +515,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+example-renderer-vala.plugin: $(top_builddir)/config.status $(srcdir)/example-renderer-vala.plugin.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-pluginLTLIBRARIES: $(plugin_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	@list='$(plugin_LTLIBRARIES)'; test -n "$(plugindir)" || list=; \
@@ -610,6 +615,27 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-pluginDATA: $(plugin_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(plugin_DATA)'; test -n "$(plugindir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(plugindir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(plugindir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(plugindir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(plugindir)" || exit $$?; \
+	done
+
+uninstall-pluginDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(plugin_DATA)'; test -n "$(plugindir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(plugindir)'; $(am__uninstall_files_from_dir)
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -695,9 +721,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(plugindir)"; do \
+	for dir in "$(DESTDIR)$(plugindir)" "$(DESTDIR)$(plugindir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 @UNINSTALLED_FALSE@install: install-am
@@ -757,7 +783,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-pluginLTLIBRARIES
+install-data-am: install-pluginDATA install-pluginLTLIBRARIES
 
 install-dvi: install-dvi-am
 
@@ -803,7 +829,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-pluginLTLIBRARIES
+uninstall-am: uninstall-pluginDATA uninstall-pluginLTLIBRARIES
 
 .MAKE: install-am install-strip
 
@@ -814,12 +840,13 @@ uninstall-am: uninstall-pluginLTLIBRARIES
 	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-pluginLTLIBRARIES \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-pluginLTLIBRARIES
+	install-pdf install-pdf-am install-pluginDATA \
+	install-pluginLTLIBRARIES install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-pluginDATA uninstall-pluginLTLIBRARIES
 
 
 @UNINSTALLED_TRUE@install: all-am

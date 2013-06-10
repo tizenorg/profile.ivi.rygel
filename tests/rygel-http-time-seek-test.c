@@ -86,6 +86,17 @@ typedef struct _RygelAudioItem RygelAudioItem;
 typedef struct _RygelAudioItemClass RygelAudioItemClass;
 typedef struct _RygelAudioItemPrivate RygelAudioItemPrivate;
 
+#define RYGEL_TYPE_CLIENT_HACKS (rygel_client_hacks_get_type ())
+#define RYGEL_CLIENT_HACKS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_CLIENT_HACKS, RygelClientHacks))
+#define RYGEL_CLIENT_HACKS_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_CLIENT_HACKS, RygelClientHacksClass))
+#define RYGEL_IS_CLIENT_HACKS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_CLIENT_HACKS))
+#define RYGEL_IS_CLIENT_HACKS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_CLIENT_HACKS))
+#define RYGEL_CLIENT_HACKS_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_CLIENT_HACKS, RygelClientHacksClass))
+
+typedef struct _RygelClientHacks RygelClientHacks;
+typedef struct _RygelClientHacksClass RygelClientHacksClass;
+typedef struct _RygelClientHacksPrivate RygelClientHacksPrivate;
+
 #define RYGEL_TYPE_THUMBNAIL (rygel_thumbnail_get_type ())
 #define RYGEL_THUMBNAIL(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_THUMBNAIL, RygelThumbnail))
 #define RYGEL_THUMBNAIL_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_THUMBNAIL, RygelThumbnailClass))
@@ -208,6 +219,15 @@ struct _RygelAudioItemClass {
 	RygelMediaItemClass parent_class;
 };
 
+struct _RygelClientHacks {
+	GObject parent_instance;
+	RygelClientHacksPrivate * priv;
+};
+
+struct _RygelClientHacksClass {
+	GObjectClass parent_class;
+};
+
 struct _RygelThumbnail {
 	GObject parent_instance;
 	RygelThumbnailPrivate * priv;
@@ -271,6 +291,7 @@ static gpointer rygel_media_object_parent_class = NULL;
 static gpointer rygel_media_container_parent_class = NULL;
 static gpointer rygel_media_item_parent_class = NULL;
 static gpointer rygel_audio_item_parent_class = NULL;
+static gpointer rygel_client_hacks_parent_class = NULL;
 static gpointer rygel_thumbnail_parent_class = NULL;
 static gpointer rygel_subtitle_parent_class = NULL;
 static gpointer rygel_http_get_parent_class = NULL;
@@ -309,6 +330,14 @@ enum  {
 RygelAudioItem* rygel_audio_item_new (void);
 RygelAudioItem* rygel_audio_item_construct (GType object_type);
 static void rygel_audio_item_finalize (GObject* obj);
+GType rygel_client_hacks_get_type (void) G_GNUC_CONST;
+enum  {
+	RYGEL_CLIENT_HACKS_DUMMY_PROPERTY
+};
+RygelClientHacks* rygel_client_hacks_create (SoupMessage* msg, GError** error);
+RygelClientHacks* rygel_client_hacks_new (void);
+RygelClientHacks* rygel_client_hacks_construct (GType object_type);
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self);
 GType rygel_thumbnail_get_type (void) G_GNUC_CONST;
 enum  {
 	RYGEL_THUMBNAIL_DUMMY_PROPERTY
@@ -559,6 +588,57 @@ GType rygel_audio_item_get_type (void) {
 		g_once_init_leave (&rygel_audio_item_type_id__volatile, rygel_audio_item_type_id);
 	}
 	return rygel_audio_item_type_id__volatile;
+}
+
+
+RygelClientHacks* rygel_client_hacks_create (SoupMessage* msg, GError** error) {
+	RygelClientHacks* result = NULL;
+	RygelClientHacks* _tmp0_;
+	g_return_val_if_fail (msg != NULL, NULL);
+	_tmp0_ = rygel_client_hacks_new ();
+	result = _tmp0_;
+	return result;
+}
+
+
+gboolean rygel_client_hacks_force_seek (RygelClientHacks* self) {
+	gboolean result = FALSE;
+	g_return_val_if_fail (self != NULL, FALSE);
+	result = FALSE;
+	return result;
+}
+
+
+RygelClientHacks* rygel_client_hacks_construct (GType object_type) {
+	RygelClientHacks * self = NULL;
+	self = (RygelClientHacks*) g_object_new (object_type, NULL);
+	return self;
+}
+
+
+RygelClientHacks* rygel_client_hacks_new (void) {
+	return rygel_client_hacks_construct (RYGEL_TYPE_CLIENT_HACKS);
+}
+
+
+static void rygel_client_hacks_class_init (RygelClientHacksClass * klass) {
+	rygel_client_hacks_parent_class = g_type_class_peek_parent (klass);
+}
+
+
+static void rygel_client_hacks_instance_init (RygelClientHacks * self) {
+}
+
+
+GType rygel_client_hacks_get_type (void) {
+	static volatile gsize rygel_client_hacks_type_id__volatile = 0;
+	if (g_once_init_enter (&rygel_client_hacks_type_id__volatile)) {
+		static const GTypeInfo g_define_type_info = { sizeof (RygelClientHacksClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) rygel_client_hacks_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (RygelClientHacks), 0, (GInstanceInitFunc) rygel_client_hacks_instance_init, NULL };
+		GType rygel_client_hacks_type_id;
+		rygel_client_hacks_type_id = g_type_register_static (G_TYPE_OBJECT, "RygelClientHacks", &g_define_type_info, 0);
+		g_once_init_leave (&rygel_client_hacks_type_id__volatile, rygel_client_hacks_type_id);
+	}
+	return rygel_client_hacks_type_id__volatile;
 }
 
 
@@ -918,7 +998,7 @@ gint rygel_http_time_seek_test_main (gchar** args, int args_length1) {
 		_inner_error_ = NULL;
 		_tmp2_ = _error_;
 		_tmp3_ = _tmp2_->message;
-		g_critical ("rygel-http-time-seek-test.vala:134: %s", _tmp3_);
+		g_critical ("rygel-http-time-seek-test.vala:144: %s", _tmp3_);
 		result = -1;
 		_g_error_free0 (_error_);
 		return result;

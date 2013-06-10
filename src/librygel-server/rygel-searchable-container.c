@@ -86,6 +86,38 @@ typedef struct _RygelMediaObjectsClass RygelMediaObjectsClass;
 #define _rygel_search_expression_unref0(var) ((var == NULL) ? NULL : (var = (rygel_search_expression_unref (var), NULL)))
 #define _g_free0(var) (var = (g_free (var), NULL))
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
+typedef struct _RygelMediaObjectPrivate RygelMediaObjectPrivate;
+
+#define RYGEL_TYPE_SERIALIZER (rygel_serializer_get_type ())
+#define RYGEL_SERIALIZER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_SERIALIZER, RygelSerializer))
+#define RYGEL_SERIALIZER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_SERIALIZER, RygelSerializerClass))
+#define RYGEL_IS_SERIALIZER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_SERIALIZER))
+#define RYGEL_IS_SERIALIZER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_SERIALIZER))
+#define RYGEL_SERIALIZER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_SERIALIZER, RygelSerializerClass))
+
+typedef struct _RygelSerializer RygelSerializer;
+typedef struct _RygelSerializerClass RygelSerializerClass;
+
+#define RYGEL_TYPE_TRANSCODE_MANAGER (rygel_transcode_manager_get_type ())
+#define RYGEL_TRANSCODE_MANAGER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_TRANSCODE_MANAGER, RygelTranscodeManager))
+#define RYGEL_TRANSCODE_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_TRANSCODE_MANAGER, RygelTranscodeManagerClass))
+#define RYGEL_IS_TRANSCODE_MANAGER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_TRANSCODE_MANAGER))
+#define RYGEL_IS_TRANSCODE_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_TRANSCODE_MANAGER))
+#define RYGEL_TRANSCODE_MANAGER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_TRANSCODE_MANAGER, RygelTranscodeManagerClass))
+
+typedef struct _RygelTranscodeManager RygelTranscodeManager;
+typedef struct _RygelTranscodeManagerClass RygelTranscodeManagerClass;
+
+#define RYGEL_TYPE_HTTP_SERVER (rygel_http_server_get_type ())
+#define RYGEL_HTTP_SERVER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_HTTP_SERVER, RygelHTTPServer))
+#define RYGEL_HTTP_SERVER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_HTTP_SERVER, RygelHTTPServerClass))
+#define RYGEL_IS_HTTP_SERVER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_HTTP_SERVER))
+#define RYGEL_IS_HTTP_SERVER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_HTTP_SERVER))
+#define RYGEL_HTTP_SERVER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_HTTP_SERVER, RygelHTTPServerClass))
+
+typedef struct _RygelHTTPServer RygelHTTPServer;
+typedef struct _RygelHTTPServerClass RygelHTTPServerClass;
+typedef struct _RygelMediaContainerPrivate RygelMediaContainerPrivate;
 typedef struct _RygelSearchableContainerSimpleSearchData RygelSearchableContainerSimpleSearchData;
 
 #define RYGEL_TYPE_RELATIONAL_EXPRESSION (rygel_relational_expression_get_type ())
@@ -109,6 +141,40 @@ struct _RygelSearchableContainerIface {
 	void (*set_search_classes) (RygelSearchableContainer* self, GeeArrayList* value);
 };
 
+struct _RygelMediaObject {
+	GObject parent_instance;
+	RygelMediaObjectPrivate * priv;
+	GeeArrayList* uris;
+	RygelMediaContainer* parent_ptr;
+};
+
+struct _RygelMediaObjectClass {
+	GObjectClass parent_class;
+	GUPnPDIDLLiteObject* (*serialize) (RygelMediaObject* self, RygelSerializer* serializer, RygelHTTPServer* http_server, GError** error);
+	void (*apply_didl_lite) (RygelMediaObject* self, GUPnPDIDLLiteObject* didl_object);
+	gint (*compare_by_property) (RygelMediaObject* self, RygelMediaObject* media_object, const gchar* property);
+	GUPnPDIDLLiteResource* (*add_resource) (RygelMediaObject* self, GUPnPDIDLLiteObject* object, const gchar* uri, const gchar* protocol, const gchar* import_uri, GError** error);
+	GUPnPOCMFlags (*get_ocm_flags) (RygelMediaObject* self);
+};
+
+struct _RygelMediaContainer {
+	RygelMediaObject parent_instance;
+	RygelMediaContainerPrivate * priv;
+	gint empty_child_count;
+	guint32 update_id;
+	gint64 storage_used;
+	gboolean create_mode_enabled;
+	gint64 total_deleted_child_count;
+};
+
+struct _RygelMediaContainerClass {
+	RygelMediaObjectClass parent_class;
+	void (*get_children) (RygelMediaContainer* self, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	RygelMediaObjects* (*get_children_finish) (RygelMediaContainer* self, GAsyncResult* _res_, GError** error);
+	void (*find_object) (RygelMediaContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	RygelMediaObject* (*find_object_finish) (RygelMediaContainer* self, GAsyncResult* _res_, GError** error);
+};
+
 struct _RygelSearchableContainerSimpleSearchData {
 	int _state_;
 	GObject* _source_object_;
@@ -126,104 +192,110 @@ struct _RygelSearchableContainerSimpleSearchData {
 	RygelMediaObjects* _result_;
 	gint _tmp1_;
 	gint _tmp2_;
-	const gchar* _tmp3_;
-	GCancellable* _tmp4_;
-	RygelMediaObjects* _tmp5_;
+	gint count;
+	RygelSearchExpression* _tmp3_;
+	gboolean _tmp4_;
+	gint _tmp5_;
+	gint _tmp6_;
+	gint _tmp7_;
+	const gchar* _tmp8_;
+	GCancellable* _tmp9_;
+	RygelMediaObjects* _tmp10_;
 	RygelMediaObjects* children;
 	guint limit;
-	guint _tmp6_;
-	guint _tmp7_;
-	guint _tmp8_;
-	RygelMediaObjects* _tmp9_;
-	RygelMediaObjects* _tmp10_;
+	guint _tmp11_;
+	guint _tmp12_;
+	guint _tmp13_;
+	RygelMediaObjects* _tmp14_;
+	RygelMediaObjects* _tmp15_;
 	RygelMediaObjects* _child_list;
-	RygelMediaObjects* _tmp11_;
-	gint _tmp12_;
-	gint _tmp13_;
+	RygelMediaObjects* _tmp16_;
+	gint _tmp17_;
+	gint _tmp18_;
 	gint _child_size;
 	gint _child_index;
-	gint _tmp14_;
-	gint _tmp15_;
-	gint _tmp16_;
-	RygelMediaObjects* _tmp17_;
-	gint _tmp18_;
-	gpointer _tmp19_;
+	gint _tmp19_;
+	gint _tmp20_;
+	gint _tmp21_;
+	RygelMediaObjects* _tmp22_;
+	gint _tmp23_;
+	gpointer _tmp24_;
 	RygelMediaObject* child;
-	gboolean _tmp20_;
-	RygelSearchExpression* _tmp21_;
-	RygelSearchExpression* _tmp22_;
-	RygelMediaObject* _tmp23_;
-	gboolean _tmp24_;
 	gboolean _tmp25_;
-	RygelMediaObjects* _tmp26_;
-	RygelMediaObject* _tmp27_;
-	gboolean _tmp28_;
-	guint _tmp29_;
-	RygelMediaObjects* _tmp30_;
-	gint _tmp31_;
-	gint _tmp32_;
-	guint _tmp33_;
-	gboolean _tmp34_;
-	gboolean _tmp35_;
-	guint _tmp36_;
-	RygelMediaObjects* _tmp37_;
-	gint _tmp38_;
-	gint _tmp39_;
-	guint _tmp40_;
-	gboolean _tmp41_;
-	guint _tmp42_;
-	guint _tmp43_;
-	guint _tmp44_;
-	RygelMediaObjects* _tmp45_;
-	gint _tmp46_;
-	gint _tmp47_;
+	RygelSearchExpression* _tmp26_;
+	RygelSearchExpression* _tmp27_;
+	RygelMediaObject* _tmp28_;
+	gboolean _tmp29_;
+	gboolean _tmp30_;
+	RygelMediaObjects* _tmp31_;
+	RygelMediaObject* _tmp32_;
+	gboolean _tmp33_;
+	guint _tmp34_;
+	RygelMediaObjects* _tmp35_;
+	gint _tmp36_;
+	gint _tmp37_;
+	guint _tmp38_;
+	gboolean _tmp39_;
+	gboolean _tmp40_;
+	guint _tmp41_;
+	RygelMediaObjects* _tmp42_;
+	gint _tmp43_;
+	gint _tmp44_;
+	guint _tmp45_;
+	gboolean _tmp46_;
+	guint _tmp47_;
 	guint _tmp48_;
-	guint child_limit;
-	RygelSearchExpression* _tmp49_;
+	guint _tmp49_;
 	RygelMediaObjects* _tmp50_;
-	guint _tmp51_;
-	const gchar* _tmp52_;
-	GCancellable* _tmp53_;
-	RygelMediaObjects* _tmp54_;
-	RygelMediaObjects* child_results;
+	gint _tmp51_;
+	gint _tmp52_;
+	guint _tmp53_;
+	guint child_limit;
+	RygelSearchExpression* _tmp54_;
 	RygelMediaObjects* _tmp55_;
-	RygelMediaObjects* _tmp56_;
-	guint _tmp57_;
-	RygelMediaObjects* _tmp58_;
-	gint _tmp59_;
-	gint _tmp60_;
-	guint _tmp61_;
-	RygelMediaObjects* _tmp62_;
-	gint _tmp63_;
+	guint _tmp56_;
+	const gchar* _tmp57_;
+	GCancellable* _tmp58_;
+	RygelMediaObjects* _tmp59_;
+	RygelMediaObjects* child_results;
+	RygelMediaObjects* _tmp60_;
+	RygelMediaObjects* _tmp61_;
+	guint _tmp62_;
+	RygelMediaObjects* _tmp63_;
 	gint _tmp64_;
-	RygelMediaObjects* _tmp65_;
-	gboolean _tmp66_;
+	gint _tmp65_;
+	guint _tmp66_;
 	RygelMediaObjects* _tmp67_;
 	gint _tmp68_;
 	gint _tmp69_;
-	gboolean _tmp70_;
-	guint _tmp71_;
-	guint _tmp72_;
-	gboolean _tmp73_;
-	gboolean _tmp74_;
-	guint stop;
+	RygelMediaObjects* _tmp70_;
+	gboolean _tmp71_;
+	RygelMediaObjects* _tmp72_;
+	gint _tmp73_;
+	gint _tmp74_;
 	gboolean _tmp75_;
 	guint _tmp76_;
 	guint _tmp77_;
-	guint _tmp78_;
-	RygelMediaObjects* _tmp79_;
-	gint _tmp80_;
-	gint _tmp81_;
-	gboolean _tmp82_;
+	gboolean _tmp78_;
+	gboolean _tmp79_;
+	guint stop;
+	gboolean _tmp80_;
+	guint _tmp81_;
+	guint _tmp82_;
 	guint _tmp83_;
-	guint _tmp84_;
-	RygelMediaObjects* _tmp85_;
+	RygelMediaObjects* _tmp84_;
+	gint _tmp85_;
 	gint _tmp86_;
-	gint _tmp87_;
-	RygelMediaObjects* _tmp88_;
+	gboolean _tmp87_;
+	guint _tmp88_;
 	guint _tmp89_;
-	guint _tmp90_;
-	GeeList* _tmp91_;
+	RygelMediaObjects* _tmp90_;
+	gint _tmp91_;
+	gint _tmp92_;
+	RygelMediaObjects* _tmp93_;
+	guint _tmp94_;
+	guint _tmp95_;
+	GeeList* _tmp96_;
 	GError * _inner_error_;
 };
 
@@ -343,9 +415,14 @@ RygelMediaObjects* rygel_searchable_container_simple_search_finish (RygelSearcha
 static gboolean rygel_searchable_container_simple_search_co (RygelSearchableContainerSimpleSearchData* _data_);
 RygelMediaObjects* rygel_media_objects_new (void);
 RygelMediaObjects* rygel_media_objects_construct (GType object_type);
+gint rygel_media_container_get_child_count (RygelMediaContainer* self);
+void rygel_media_container_check_search_expression (RygelMediaContainer* self, RygelSearchExpression* expression);
+GType rygel_serializer_get_type (void) G_GNUC_CONST;
+GType rygel_transcode_manager_get_type (void) G_GNUC_CONST;
+GType rygel_http_server_get_type (void) G_GNUC_CONST;
+gint rygel_media_container_get_all_child_count (RygelMediaContainer* self);
 void rygel_media_container_get_children (RygelMediaContainer* self, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 RygelMediaObjects* rygel_media_container_get_children_finish (RygelMediaContainer* self, GAsyncResult* _res_, GError** error);
-gint rygel_media_container_get_child_count (RygelMediaContainer* self);
 static void rygel_searchable_container_simple_search_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
 gboolean rygel_search_expression_satisfied_by (RygelSearchExpression* self, RygelMediaObject* media_object);
 static void rygel_searchable_container_search_in_children (RygelSearchableContainer* self, RygelSearchExpression* expression, RygelMediaObjects* children, guint limit, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
@@ -491,15 +568,25 @@ static gboolean rygel_searchable_container_simple_search_co (RygelSearchableCont
 	_data_->_result_ = _data_->_tmp0_;
 	_data_->_tmp1_ = rygel_media_container_get_child_count ((RygelMediaContainer*) _data_->self);
 	_data_->_tmp2_ = _data_->_tmp1_;
-	_data_->_tmp3_ = _data_->sort_criteria;
-	_data_->_tmp4_ = _data_->cancellable;
+	_data_->count = _data_->_tmp2_;
+	_data_->_tmp3_ = _data_->expression;
+	rygel_media_container_check_search_expression ((RygelMediaContainer*) _data_->self, _data_->_tmp3_);
+	_data_->_tmp4_ = ((RygelMediaContainer*) _data_->self)->create_mode_enabled;
+	if (_data_->_tmp4_) {
+		_data_->_tmp5_ = rygel_media_container_get_all_child_count ((RygelMediaContainer*) _data_->self);
+		_data_->_tmp6_ = _data_->_tmp5_;
+		_data_->count = _data_->_tmp6_;
+	}
+	_data_->_tmp7_ = _data_->count;
+	_data_->_tmp8_ = _data_->sort_criteria;
+	_data_->_tmp9_ = _data_->cancellable;
 	_data_->_state_ = 1;
-	rygel_media_container_get_children ((RygelMediaContainer*) _data_->self, (guint) 0, (guint) _data_->_tmp2_, _data_->_tmp3_, _data_->_tmp4_, rygel_searchable_container_simple_search_ready, _data_);
+	rygel_media_container_get_children ((RygelMediaContainer*) _data_->self, (guint) 0, (guint) _data_->_tmp7_, _data_->_tmp8_, _data_->_tmp9_, rygel_searchable_container_simple_search_ready, _data_);
 	return FALSE;
 	_state_1:
-	_data_->_tmp5_ = NULL;
-	_data_->_tmp5_ = rygel_media_container_get_children_finish ((RygelMediaContainer*) _data_->self, _data_->_res_, &_data_->_inner_error_);
-	_data_->children = _data_->_tmp5_;
+	_data_->_tmp10_ = NULL;
+	_data_->_tmp10_ = rygel_media_container_get_children_finish ((RygelMediaContainer*) _data_->self, _data_->_res_, &_data_->_inner_error_);
+	_data_->children = _data_->_tmp10_;
 	if (_data_->_inner_error_ != NULL) {
 		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 		g_error_free (_data_->_inner_error_);
@@ -512,64 +599,64 @@ static gboolean rygel_searchable_container_simple_search_co (RygelSearchableCont
 		g_object_unref (_data_->_async_result);
 		return FALSE;
 	}
-	_data_->_tmp6_ = _data_->max_count;
-	if (_data_->_tmp6_ > ((guint) 0)) {
-		_data_->_tmp7_ = _data_->offset;
-		_data_->_tmp8_ = _data_->max_count;
-		_data_->limit = _data_->_tmp7_ + _data_->_tmp8_;
+	_data_->_tmp11_ = _data_->max_count;
+	if (_data_->_tmp11_ > ((guint) 0)) {
+		_data_->_tmp12_ = _data_->offset;
+		_data_->_tmp13_ = _data_->max_count;
+		_data_->limit = _data_->_tmp12_ + _data_->_tmp13_;
 	} else {
 		_data_->limit = (guint) 0;
 	}
 	{
-		_data_->_tmp9_ = _data_->children;
-		_data_->_tmp10_ = _g_object_ref0 (_data_->_tmp9_);
-		_data_->_child_list = _data_->_tmp10_;
-		_data_->_tmp11_ = _data_->_child_list;
-		_data_->_tmp12_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp11_);
-		_data_->_tmp13_ = _data_->_tmp12_;
-		_data_->_child_size = _data_->_tmp13_;
+		_data_->_tmp14_ = _data_->children;
+		_data_->_tmp15_ = _g_object_ref0 (_data_->_tmp14_);
+		_data_->_child_list = _data_->_tmp15_;
+		_data_->_tmp16_ = _data_->_child_list;
+		_data_->_tmp17_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp16_);
+		_data_->_tmp18_ = _data_->_tmp17_;
+		_data_->_child_size = _data_->_tmp18_;
 		_data_->_child_index = -1;
 		while (TRUE) {
-			_data_->_tmp14_ = _data_->_child_index;
-			_data_->_child_index = _data_->_tmp14_ + 1;
-			_data_->_tmp15_ = _data_->_child_index;
-			_data_->_tmp16_ = _data_->_child_size;
-			if (!(_data_->_tmp15_ < _data_->_tmp16_)) {
+			_data_->_tmp19_ = _data_->_child_index;
+			_data_->_child_index = _data_->_tmp19_ + 1;
+			_data_->_tmp20_ = _data_->_child_index;
+			_data_->_tmp21_ = _data_->_child_size;
+			if (!(_data_->_tmp20_ < _data_->_tmp21_)) {
 				break;
 			}
-			_data_->_tmp17_ = _data_->_child_list;
-			_data_->_tmp18_ = _data_->_child_index;
-			_data_->_tmp19_ = NULL;
-			_data_->_tmp19_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp17_, _data_->_tmp18_);
-			_data_->child = (RygelMediaObject*) _data_->_tmp19_;
-			_data_->_tmp21_ = _data_->expression;
-			if (_data_->_tmp21_ == NULL) {
-				_data_->_tmp20_ = TRUE;
+			_data_->_tmp22_ = _data_->_child_list;
+			_data_->_tmp23_ = _data_->_child_index;
+			_data_->_tmp24_ = NULL;
+			_data_->_tmp24_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp22_, _data_->_tmp23_);
+			_data_->child = (RygelMediaObject*) _data_->_tmp24_;
+			_data_->_tmp26_ = _data_->expression;
+			if (_data_->_tmp26_ == NULL) {
+				_data_->_tmp25_ = TRUE;
 			} else {
-				_data_->_tmp22_ = _data_->expression;
-				_data_->_tmp23_ = _data_->child;
-				_data_->_tmp24_ = FALSE;
-				_data_->_tmp24_ = rygel_search_expression_satisfied_by (_data_->_tmp22_, _data_->_tmp23_);
-				_data_->_tmp20_ = _data_->_tmp24_;
+				_data_->_tmp27_ = _data_->expression;
+				_data_->_tmp28_ = _data_->child;
+				_data_->_tmp29_ = FALSE;
+				_data_->_tmp29_ = rygel_search_expression_satisfied_by (_data_->_tmp27_, _data_->_tmp28_);
+				_data_->_tmp25_ = _data_->_tmp29_;
 			}
-			_data_->_tmp25_ = _data_->_tmp20_;
-			if (_data_->_tmp25_) {
-				_data_->_tmp26_ = _data_->_result_;
-				_data_->_tmp27_ = _data_->child;
-				gee_abstract_collection_add ((GeeAbstractCollection*) _data_->_tmp26_, _data_->_tmp27_);
+			_data_->_tmp30_ = _data_->_tmp25_;
+			if (_data_->_tmp30_) {
+				_data_->_tmp31_ = _data_->_result_;
+				_data_->_tmp32_ = _data_->child;
+				gee_abstract_collection_add ((GeeAbstractCollection*) _data_->_tmp31_, _data_->_tmp32_);
 			}
-			_data_->_tmp29_ = _data_->limit;
-			if (_data_->_tmp29_ > ((guint) 0)) {
-				_data_->_tmp30_ = _data_->_result_;
-				_data_->_tmp31_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp30_);
-				_data_->_tmp32_ = _data_->_tmp31_;
-				_data_->_tmp33_ = _data_->limit;
-				_data_->_tmp28_ = ((guint) _data_->_tmp32_) >= _data_->_tmp33_;
+			_data_->_tmp34_ = _data_->limit;
+			if (_data_->_tmp34_ > ((guint) 0)) {
+				_data_->_tmp35_ = _data_->_result_;
+				_data_->_tmp36_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp35_);
+				_data_->_tmp37_ = _data_->_tmp36_;
+				_data_->_tmp38_ = _data_->limit;
+				_data_->_tmp33_ = ((guint) _data_->_tmp37_) >= _data_->_tmp38_;
 			} else {
-				_data_->_tmp28_ = FALSE;
+				_data_->_tmp33_ = FALSE;
 			}
-			_data_->_tmp34_ = _data_->_tmp28_;
-			if (_data_->_tmp34_) {
+			_data_->_tmp39_ = _data_->_tmp33_;
+			if (_data_->_tmp39_) {
 				_g_object_unref0 (_data_->child);
 				break;
 			}
@@ -577,42 +664,42 @@ static gboolean rygel_searchable_container_simple_search_co (RygelSearchableCont
 		}
 		_g_object_unref0 (_data_->_child_list);
 	}
-	_data_->_tmp36_ = _data_->limit;
-	if (_data_->_tmp36_ == ((guint) 0)) {
-		_data_->_tmp35_ = TRUE;
+	_data_->_tmp41_ = _data_->limit;
+	if (_data_->_tmp41_ == ((guint) 0)) {
+		_data_->_tmp40_ = TRUE;
 	} else {
-		_data_->_tmp37_ = _data_->_result_;
-		_data_->_tmp38_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp37_);
-		_data_->_tmp39_ = _data_->_tmp38_;
-		_data_->_tmp40_ = _data_->limit;
-		_data_->_tmp35_ = ((guint) _data_->_tmp39_) < _data_->_tmp40_;
+		_data_->_tmp42_ = _data_->_result_;
+		_data_->_tmp43_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp42_);
+		_data_->_tmp44_ = _data_->_tmp43_;
+		_data_->_tmp45_ = _data_->limit;
+		_data_->_tmp40_ = ((guint) _data_->_tmp44_) < _data_->_tmp45_;
 	}
-	_data_->_tmp41_ = _data_->_tmp35_;
-	if (_data_->_tmp41_) {
-		_data_->_tmp43_ = _data_->limit;
-		if (_data_->_tmp43_ == ((guint) 0)) {
-			_data_->_tmp42_ = (guint) 0;
+	_data_->_tmp46_ = _data_->_tmp40_;
+	if (_data_->_tmp46_) {
+		_data_->_tmp48_ = _data_->limit;
+		if (_data_->_tmp48_ == ((guint) 0)) {
+			_data_->_tmp47_ = (guint) 0;
 		} else {
-			_data_->_tmp44_ = _data_->limit;
-			_data_->_tmp45_ = _data_->_result_;
-			_data_->_tmp46_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp45_);
-			_data_->_tmp47_ = _data_->_tmp46_;
-			_data_->_tmp42_ = _data_->_tmp44_ - _data_->_tmp47_;
+			_data_->_tmp49_ = _data_->limit;
+			_data_->_tmp50_ = _data_->_result_;
+			_data_->_tmp51_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp50_);
+			_data_->_tmp52_ = _data_->_tmp51_;
+			_data_->_tmp47_ = _data_->_tmp49_ - _data_->_tmp52_;
 		}
-		_data_->_tmp48_ = _data_->_tmp42_;
-		_data_->child_limit = _data_->_tmp48_;
-		_data_->_tmp49_ = _data_->expression;
-		_data_->_tmp50_ = _data_->children;
-		_data_->_tmp51_ = _data_->child_limit;
-		_data_->_tmp52_ = _data_->sort_criteria;
-		_data_->_tmp53_ = _data_->cancellable;
+		_data_->_tmp53_ = _data_->_tmp47_;
+		_data_->child_limit = _data_->_tmp53_;
+		_data_->_tmp54_ = _data_->expression;
+		_data_->_tmp55_ = _data_->children;
+		_data_->_tmp56_ = _data_->child_limit;
+		_data_->_tmp57_ = _data_->sort_criteria;
+		_data_->_tmp58_ = _data_->cancellable;
 		_data_->_state_ = 2;
-		rygel_searchable_container_search_in_children (_data_->self, _data_->_tmp49_, _data_->_tmp50_, _data_->_tmp51_, _data_->_tmp52_, _data_->_tmp53_, rygel_searchable_container_simple_search_ready, _data_);
+		rygel_searchable_container_search_in_children (_data_->self, _data_->_tmp54_, _data_->_tmp55_, _data_->_tmp56_, _data_->_tmp57_, _data_->_tmp58_, rygel_searchable_container_simple_search_ready, _data_);
 		return FALSE;
 		_state_2:
-		_data_->_tmp54_ = NULL;
-		_data_->_tmp54_ = rygel_searchable_container_search_in_children_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
-		_data_->child_results = _data_->_tmp54_;
+		_data_->_tmp59_ = NULL;
+		_data_->_tmp59_ = rygel_searchable_container_search_in_children_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
+		_data_->child_results = _data_->_tmp59_;
 		if (_data_->_inner_error_ != NULL) {
 			g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 			g_error_free (_data_->_inner_error_);
@@ -626,27 +713,27 @@ static gboolean rygel_searchable_container_simple_search_co (RygelSearchableCont
 			g_object_unref (_data_->_async_result);
 			return FALSE;
 		}
-		_data_->_tmp55_ = _data_->_result_;
-		_data_->_tmp56_ = _data_->child_results;
-		gee_array_list_add_all ((GeeArrayList*) _data_->_tmp55_, (GeeCollection*) _data_->_tmp56_);
+		_data_->_tmp60_ = _data_->_result_;
+		_data_->_tmp61_ = _data_->child_results;
+		gee_array_list_add_all ((GeeArrayList*) _data_->_tmp60_, (GeeCollection*) _data_->_tmp61_);
 		_g_object_unref0 (_data_->child_results);
 	}
-	_data_->_tmp57_ = _data_->max_count;
-	if (_data_->_tmp57_ > ((guint) 0)) {
+	_data_->_tmp62_ = _data_->max_count;
+	if (_data_->_tmp62_ > ((guint) 0)) {
 		_data_->total_matches = (guint) 0;
 	} else {
-		_data_->_tmp58_ = _data_->_result_;
-		_data_->_tmp59_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp58_);
-		_data_->_tmp60_ = _data_->_tmp59_;
-		_data_->total_matches = (guint) _data_->_tmp60_;
+		_data_->_tmp63_ = _data_->_result_;
+		_data_->_tmp64_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp63_);
+		_data_->_tmp65_ = _data_->_tmp64_;
+		_data_->total_matches = (guint) _data_->_tmp65_;
 	}
-	_data_->_tmp61_ = _data_->offset;
-	_data_->_tmp62_ = _data_->_result_;
-	_data_->_tmp63_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp62_);
-	_data_->_tmp64_ = _data_->_tmp63_;
-	if (_data_->_tmp61_ >= ((guint) _data_->_tmp64_)) {
-		_data_->_tmp65_ = rygel_media_objects_new ();
-		_data_->result = _data_->_tmp65_;
+	_data_->_tmp66_ = _data_->offset;
+	_data_->_tmp67_ = _data_->_result_;
+	_data_->_tmp68_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp67_);
+	_data_->_tmp69_ = _data_->_tmp68_;
+	if (_data_->_tmp66_ >= ((guint) _data_->_tmp69_)) {
+		_data_->_tmp70_ = rygel_media_objects_new ();
+		_data_->result = _data_->_tmp70_;
 		_g_object_unref0 (_data_->children);
 		_g_object_unref0 (_data_->_result_);
 		if (_data_->_state_ == 0) {
@@ -657,52 +744,52 @@ static gboolean rygel_searchable_container_simple_search_co (RygelSearchableCont
 		g_object_unref (_data_->_async_result);
 		return FALSE;
 	}
-	_data_->_tmp67_ = _data_->_result_;
-	_data_->_tmp68_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp67_);
-	_data_->_tmp69_ = _data_->_tmp68_;
-	if (_data_->_tmp69_ > 0) {
-		_data_->_tmp71_ = _data_->max_count;
-		if (_data_->_tmp71_ > ((guint) 0)) {
-			_data_->_tmp70_ = TRUE;
-		} else {
-			_data_->_tmp72_ = _data_->offset;
-			_data_->_tmp70_ = _data_->_tmp72_ > ((guint) 0);
-		}
-		_data_->_tmp73_ = _data_->_tmp70_;
-		_data_->_tmp66_ = _data_->_tmp73_;
-	} else {
-		_data_->_tmp66_ = FALSE;
-	}
-	_data_->_tmp74_ = _data_->_tmp66_;
-	if (_data_->_tmp74_) {
+	_data_->_tmp72_ = _data_->_result_;
+	_data_->_tmp73_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp72_);
+	_data_->_tmp74_ = _data_->_tmp73_;
+	if (_data_->_tmp74_ > 0) {
 		_data_->_tmp76_ = _data_->max_count;
-		if (_data_->_tmp76_ != ((guint) 0)) {
+		if (_data_->_tmp76_ > ((guint) 0)) {
+			_data_->_tmp75_ = TRUE;
+		} else {
 			_data_->_tmp77_ = _data_->offset;
-			_data_->_tmp78_ = _data_->max_count;
-			_data_->_tmp79_ = _data_->_result_;
-			_data_->_tmp80_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp79_);
-			_data_->_tmp81_ = _data_->_tmp80_;
-			_data_->_tmp75_ = (_data_->_tmp77_ + _data_->_tmp78_) <= ((guint) _data_->_tmp81_);
-		} else {
-			_data_->_tmp75_ = FALSE;
+			_data_->_tmp75_ = _data_->_tmp77_ > ((guint) 0);
 		}
-		_data_->_tmp82_ = _data_->_tmp75_;
-		if (_data_->_tmp82_) {
-			_data_->_tmp83_ = _data_->offset;
-			_data_->_tmp84_ = _data_->max_count;
-			_data_->stop = _data_->_tmp83_ + _data_->_tmp84_;
+		_data_->_tmp78_ = _data_->_tmp75_;
+		_data_->_tmp71_ = _data_->_tmp78_;
+	} else {
+		_data_->_tmp71_ = FALSE;
+	}
+	_data_->_tmp79_ = _data_->_tmp71_;
+	if (_data_->_tmp79_) {
+		_data_->_tmp81_ = _data_->max_count;
+		if (_data_->_tmp81_ != ((guint) 0)) {
+			_data_->_tmp82_ = _data_->offset;
+			_data_->_tmp83_ = _data_->max_count;
+			_data_->_tmp84_ = _data_->_result_;
+			_data_->_tmp85_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp84_);
+			_data_->_tmp86_ = _data_->_tmp85_;
+			_data_->_tmp80_ = (_data_->_tmp82_ + _data_->_tmp83_) <= ((guint) _data_->_tmp86_);
 		} else {
-			_data_->_tmp85_ = _data_->_result_;
-			_data_->_tmp86_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp85_);
-			_data_->_tmp87_ = _data_->_tmp86_;
-			_data_->stop = (guint) _data_->_tmp87_;
+			_data_->_tmp80_ = FALSE;
 		}
-		_data_->_tmp88_ = _data_->_result_;
-		_data_->_tmp89_ = _data_->offset;
-		_data_->_tmp90_ = _data_->stop;
-		_data_->_tmp91_ = NULL;
-		_data_->_tmp91_ = gee_abstract_list_slice ((GeeAbstractList*) _data_->_tmp88_, (gint) _data_->_tmp89_, (gint) _data_->_tmp90_);
-		_data_->result = G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp91_, RYGEL_TYPE_MEDIA_OBJECTS) ? ((RygelMediaObjects*) _data_->_tmp91_) : NULL;
+		_data_->_tmp87_ = _data_->_tmp80_;
+		if (_data_->_tmp87_) {
+			_data_->_tmp88_ = _data_->offset;
+			_data_->_tmp89_ = _data_->max_count;
+			_data_->stop = _data_->_tmp88_ + _data_->_tmp89_;
+		} else {
+			_data_->_tmp90_ = _data_->_result_;
+			_data_->_tmp91_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp90_);
+			_data_->_tmp92_ = _data_->_tmp91_;
+			_data_->stop = (guint) _data_->_tmp92_;
+		}
+		_data_->_tmp93_ = _data_->_result_;
+		_data_->_tmp94_ = _data_->offset;
+		_data_->_tmp95_ = _data_->stop;
+		_data_->_tmp96_ = NULL;
+		_data_->_tmp96_ = gee_abstract_list_slice ((GeeAbstractList*) _data_->_tmp93_, (gint) _data_->_tmp94_, (gint) _data_->_tmp95_);
+		_data_->result = G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp96_, RYGEL_TYPE_MEDIA_OBJECTS) ? ((RygelMediaObjects*) _data_->_tmp96_) : NULL;
 		_g_object_unref0 (_data_->children);
 		_g_object_unref0 (_data_->_result_);
 		if (_data_->_state_ == 0) {
