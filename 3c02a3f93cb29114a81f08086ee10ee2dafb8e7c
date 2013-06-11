@@ -1,0 +1,8 @@
+Change-Id: I3c02a3f93cb29114a81f08086ee10ee2dafb8e7c
+Code-Review+2: Regis Merlino <regis.merlino@intel.com>
+Verified+1: Regis Merlino <regis.merlino@intel.com>
+Submitted-by: Regis Merlino <regis.merlino@intel.com>
+Submitted-at: Tue, 11 Jun 2013 06:22:04 -0700
+Reviewed-on: https://review.tizen.org/gerrit/3951
+Project: profile/ivi/rygel
+Branch: refs/heads/tizen
