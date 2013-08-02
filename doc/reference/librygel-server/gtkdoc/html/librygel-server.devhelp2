@@ -4,7 +4,7 @@
   <chapters>
     <sub name="Overview" link="overview.html">
       <sub name="" link="overview.html#overview">
-        <sub name="Basic Usage" link="overview.html#idp8415120"/>
+        <sub name="Basic Usage" link="overview.html#idp8813344"/>
       </sub>
     </sub>
     <sub name="Implementing Servers" link="implementing-servers.html">
@@ -143,7 +143,11 @@
     <keyword type="macro" name="RYGEL_MEDIA_CONTAINER_ALBUM_SORT_CRITERIA" link="RygelMediaContainer.html#RYGEL-MEDIA-CONTAINER-ALBUM-SORT-CRITERIA:CAPS"/>
     <keyword type="function" name="rygel_media_container_get_child_count ()" link="RygelMediaContainer.html#rygel-media-container-get-child-count"/>
     <keyword type="function" name="rygel_media_container_set_child_count ()" link="RygelMediaContainer.html#rygel-media-container-set-child-count"/>
+    <keyword type="function" name="rygel_media_container_get_empty_child_count ()" link="RygelMediaContainer.html#rygel-media-container-get-empty-child-count"/>
+    <keyword type="function" name="rygel_media_container_set_empty_child_count ()" link="RygelMediaContainer.html#rygel-media-container-set-empty-child-count"/>
     <keyword type="function" name="rygel_media_container_get_all_child_count ()" link="RygelMediaContainer.html#rygel-media-container-get-all-child-count"/>
+    <keyword type="function" name="rygel_media_container_get_create_mode_enabled ()" link="RygelMediaContainer.html#rygel-media-container-get-create-mode-enabled"/>
+    <keyword type="function" name="rygel_media_container_set_create_mode_enabled ()" link="RygelMediaContainer.html#rygel-media-container-set-create-mode-enabled"/>
     <keyword type="function" name="rygel_media_container_get_sort_criteria ()" link="RygelMediaContainer.html#rygel-media-container-get-sort-criteria"/>
     <keyword type="function" name="rygel_media_container_set_sort_criteria ()" link="RygelMediaContainer.html#rygel-media-container-set-sort-criteria"/>
     <keyword type="struct" name="struct RygelMediaContainer" link="RygelMediaContainer.html#RygelMediaContainer-struct"/>
@@ -173,6 +177,8 @@
     <keyword type="function" name="rygel_media_item_add_resources ()" link="RygelMediaItem.html#rygel-media-item-add-resources"/>
     <keyword type="function" name="rygel_media_item_get_date ()" link="RygelMediaItem.html#rygel-media-item-get-date"/>
     <keyword type="function" name="rygel_media_item_set_date ()" link="RygelMediaItem.html#rygel-media-item-set-date"/>
+    <keyword type="function" name="rygel_media_item_get_creator ()" link="RygelMediaItem.html#rygel-media-item-get-creator"/>
+    <keyword type="function" name="rygel_media_item_set_creator ()" link="RygelMediaItem.html#rygel-media-item-set-creator"/>
     <keyword type="function" name="rygel_media_item_get_mime_type ()" link="RygelMediaItem.html#rygel-media-item-get-mime-type"/>
     <keyword type="function" name="rygel_media_item_set_mime_type ()" link="RygelMediaItem.html#rygel-media-item-set-mime-type"/>
     <keyword type="function" name="rygel_media_item_get_dlna_profile ()" link="RygelMediaItem.html#rygel-media-item-get-dlna-profile"/>
@@ -215,6 +221,7 @@
     <keyword type="function" name="rygel_media_object_set_parent_ref ()" link="RygelMediaObject.html#rygel-media-object-set-parent-ref"/>
     <keyword type="function" name="rygel_media_object_get_title ()" link="RygelMediaObject.html#rygel-media-object-get-title"/>
     <keyword type="function" name="rygel_media_object_set_title ()" link="RygelMediaObject.html#rygel-media-object-set-title"/>
+    <keyword type="function" name="rygel_media_object_get_ocm_flags ()" link="RygelMediaObject.html#rygel-media-object-get-ocm-flags"/>
     <keyword type="struct" name="struct RygelMediaObject" link="RygelMediaObject.html#RygelMediaObject-struct"/>
     <keyword type="struct" name="struct RygelMediaObjectClass" link="RygelMediaObject.html#RygelMediaObjectClass"/>
     <keyword type="property" name="The &quot;id&quot; property" link="RygelMediaObject.html#RygelMediaObject--id"/>
@@ -267,8 +274,6 @@
     <keyword type="macro" name="RYGEL_TYPE_PHOTO_ITEM" link="RygelPhotoItem.html#RYGEL-TYPE-PHOTO-ITEM:CAPS"/>
     <keyword type="macro" name="RYGEL_PHOTO_ITEM_UPNP_CLASS" link="RygelPhotoItem.html#RYGEL-PHOTO-ITEM-UPNP-CLASS:CAPS"/>
     <keyword type="function" name="rygel_photo_item_new ()" link="RygelPhotoItem.html#rygel-photo-item-new"/>
-    <keyword type="function" name="rygel_photo_item_get_creator ()" link="RygelPhotoItem.html#rygel-photo-item-get-creator"/>
-    <keyword type="function" name="rygel_photo_item_set_creator ()" link="RygelPhotoItem.html#rygel-photo-item-set-creator"/>
     <keyword type="struct" name="struct RygelPhotoItem" link="RygelPhotoItem.html#RygelPhotoItem-struct"/>
     <keyword type="struct" name="struct RygelPhotoItemClass" link="RygelPhotoItem.html#RygelPhotoItemClass"/>
     <keyword type="property" name="The &quot;creator&quot; property" link="RygelPhotoItem.html#RygelPhotoItem--creator"/>

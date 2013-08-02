@@ -83,8 +83,18 @@
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-set-child-count" title="rygel_media_container_set_child_count ()">rygel_media_container_set_child_count</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-empty-child-count" title="rygel_media_container_get_empty_child_count ()">rygel_media_container_get_empty_child_count</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-set-empty-child-count" title="rygel_media_container_set_empty_child_count ()">rygel_media_container_set_empty_child_count</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
 <a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-all-child-count" title="rygel_media_container_get_all_child_count ()">rygel_media_container_get_all_child_count</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-create-mode-enabled" title="rygel_media_container_get_create_mode_enabled ()">rygel_media_container_get_create_mode_enabled</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-set-create-mode-enabled" title="rygel_media_container_set_create_mode_enabled ()">rygel_media_container_set_create_mode_enabled</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);
 const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-sort-criteria" title="rygel_media_container_get_sort_criteria ()">rygel_media_container_get_sort_criteria</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaContainer.html#rygel-media-container-set-sort-criteria" title="rygel_media_container_set_sort_criteria ()">rygel_media_container_set_sort_criteria</a>
@@ -179,22 +189,22 @@ Fetches the list of media objects directly under this container.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>offset</code></em> :</span></p></td>
-<td>zero-based index of the first item to return. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  zero-based index of the first item to return. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>max_count</code></em> :</span></p></td>
-<td>maximum number of objects to return. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  maximum number of objects to return. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>sort_criteria</code></em> :</span></p></td>
-<td>sorting order of objects to return. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  sorting order of objects to return. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>optional cancellable for this operation. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+<td> .  optional cancellable for this operation. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -269,12 +279,12 @@ Recursively searches this container for a media object with the given ID.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>id</code></em> :</span></p></td>
-<td>ID of the media object to search for. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  ID of the media object to search for. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>optional cancellable for this operation. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+<td> .  optional cancellable for this operation. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -353,17 +363,17 @@ This method should be called each time this container is updated.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
-<td>The object that has changed, or null to mean the container itself. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+<td> .  The object that has changed, or null to mean the container itself. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>event_type</code></em> :</span></p></td>
-<td>This describes what actually happened to the object. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  This describes what actually happened to the object. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>sub_tree_update</code></em> :</span></p></td>
-<td>Whether the modification is part of a sub-tree update. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  Whether the modification is part of a sub-tree update. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 </tbody>
@@ -464,6 +474,51 @@ Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaCo
 </div>
 <hr>
 <div class="refsect2">
+<a name="rygel-media-container-get-empty-child-count"></a><h3>rygel_media_container_get_empty_child_count ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_media_container_get_empty_child_count
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);</pre>
+<p>
+Get and return the current value of the <span class="type">"empty-child-count"</span> property.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> instance to query</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the value of the <span class="type">"empty-child-count"</span> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-media-container-set-empty-child-count"></a><h3>rygel_media_container_set_empty_child_count ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                rygel_media_container_set_empty_child_count
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
+<p>
+Set the value of the <span class="type">"empty-child-count"</span> property to <em class="parameter"><code>value</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> instance to modify</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>the new value of the <span class="type">"empty-child-count"</span> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
 <a name="rygel-media-container-get-all-child-count"></a><h3>rygel_media_container_get_all_child_count ()</h3>
 <pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_media_container_get_all_child_count
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);</pre>
@@ -480,6 +535,51 @@ Get and return the current value of the <a class="link" href="RygelMediaContaine
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--all-child-count" title='The "all-child-count" property'><span class="type">"all-child-count"</span></a> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-media-container-get-create-mode-enabled"></a><h3>rygel_media_container_get_create_mode_enabled ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_media_container_get_create_mode_enabled
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);</pre>
+<p>
+Get and return the current value of the <span class="type">"create-mode-enabled"</span> property.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> instance to query</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the value of the <span class="type">"create-mode-enabled"</span> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-media-container-set-create-mode-enabled"></a><h3>rygel_media_container_set_create_mode_enabled ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                rygel_media_container_set_create_mode_enabled
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
+<p>
+Set the value of the <span class="type">"create-mode-enabled"</span> property to <em class="parameter"><code>value</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> instance to modify</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>the new value of the <span class="type">"create-mode-enabled"</span> property</td>
 </tr>
 </tbody>
 </table></div>
@@ -657,22 +757,22 @@ The container_updated signal is emitted if a child container under the tree of t
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>container</code></em> :</span></p></td>
-<td>The child container that has been updated. <p></p>
+<td> .  The child container that has been updated. <p></p>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
-<td>The object that has changed. This may be the container itself, or a child item. <p></p>
+<td> .  The object that has changed. This may be the container itself, or a child item. <p></p>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>event_type</code></em> :</span></p></td>
-<td>This describes what actually happened to the object. <p></p>
+<td> .  This describes what actually happened to the object. <p></p>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>sub_tree_update</code></em> :</span></p></td>
-<td>Whether the modification is part of a sub-tree update. See the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer-sub-tree-updates-finished" title='The "sub-tree-updates-finished" signal'><span class="type">"sub_tree_updates_finished"</span></a> signal. <p></p>
+<td> .  Whether the modification is part of a sub-tree update. See the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer-sub-tree-updates-finished" title='The "sub-tree-updates-finished" signal'><span class="type">"sub_tree_updates_finished"</span></a> signal. <p></p>
 </td>
 </tr>
 <tr>
@@ -700,7 +800,7 @@ The sub_tree_updates_finished signal is emitted when all of the sub-tree operati
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>sub_tree_root</code></em> :</span></p></td>
-<td>- root of a sub-tree where all operations were performed. <p></p>
+<td> .  - root of a sub-tree where all operations were performed. <p></p>
 </td>
 </tr>
 <tr>

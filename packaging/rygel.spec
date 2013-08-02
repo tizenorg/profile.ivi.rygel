@@ -7,7 +7,7 @@
 
 Name:       rygel
 Summary:    GNOME UPnP/DLNA Media Server
-Version:    0.19.2
+Version:    0.19.4
 Release:    0
 Group:      Applications/Multimedia
 License:    GPLv2
@@ -94,7 +94,6 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %defattr(-,root,root,-)
 # >> files
 %config /etc/rygel.conf
-%config /etc/rc.d/init.d/rygel
 %{_bindir}/rygel
 %{_datadir}/dbus-1/services/org.gnome.Rygel1.service
 %{_datadir}/icons/hicolor/128x128/apps/rygel.png

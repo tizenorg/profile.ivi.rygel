@@ -36,6 +36,9 @@
           <li class="constant"><a href="Rygel.MediaContainer.UPNP_CLASS.html">UPNP_CLASS</a></li>
           <li class="property"><a href="Rygel.MediaContainer.all_child_count.html">all_child_count</a></li>
           <li class="property"><a href="Rygel.MediaContainer.child_count.html">child_count</a></li>
+          <li class="property"><a href="Rygel.MediaContainer.create_mode_enabled.html">create_mode_enabled</a></li>
+          <li class="property"><a href="Rygel.MediaContainer.empty_child_count.html">empty_child_count</a></li>
+          <li class="virtual_property"><a href="Rygel.MediaContainer.ocm_flags.html">ocm_flags</a></li>
           <li class="property"><a href="Rygel.MediaContainer.sort_criteria.html">sort_criteria</a></li>
           <li class="creation_method"><a href="Rygel.MediaContainer.MediaContainer.html">MediaContainer</a></li>
           <li class="creation_method"><a href="Rygel.MediaContainer.MediaContainer.root.html">MediaContainer.root</a></li>
@@ -45,8 +48,6 @@
           <li class="method"><a href="Rygel.MediaContainer.updated.html">updated</a></li>
           <li class="signal"><a href="Rygel.MediaContainer.container_updated.html">container_updated</a></li>
           <li class="signal"><a href="Rygel.MediaContainer.sub_tree_updates_finished.html">sub_tree_updates_finished</a></li>
-          <li class="field"><a href="Rygel.MediaContainer.create_mode_enabled.html">create_mode_enabled</a></li>
-          <li class="field"><a href="Rygel.MediaContainer.empty_child_count.html">empty_child_count</a></li>
           <li class="field"><a href="Rygel.MediaContainer.storage_used.html">storage_used</a></li>
           <li class="field"><a href="Rygel.MediaContainer.total_deleted_child_count.html">total_deleted_child_count</a></li>
           <li class="field"><a href="Rygel.MediaContainer.update_id.html">update_id</a></li>
@@ -172,11 +173,23 @@
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">protected</span> <span class="main_basic_type"><code>int</code></span> <b><a href="Rygel.MediaContainer.empty_child_count.html" class="property">empty_child_count</a></b> { <span class="main_keyword">public</span> <span class="main_keyword">set</span>; <span class="main_keyword">public</span> <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
               <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>int</code></span> <b><a href="Rygel.MediaContainer.all_child_count.html" class="property">all_child_count</a></b> { <span class="main_keyword">get</span>; }
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.MediaContainer.create_mode_enabled.html" class="property">create_mode_enabled</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
               <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaContainer.sort_criteria.html" class="property">sort_criteria</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
+              <li class="virtual_property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">override</span> <span class="main_type"><code>OCMFlags</code></span> <b><a href="Rygel.MediaContainer.ocm_flags.html" class="virtual_property">ocm_flags</a></b> { <span class="main_keyword">get</span>; }
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
@@ -231,19 +244,11 @@
             </ul>
             <h3 class="main_title">Fields:</h3>
             <ul class="navi_inline">
-              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">protected</span> <span class="main_basic_type"><code>int</code></span> <b><a href="Rygel.MediaContainer.empty_child_count.html" class="field">empty_child_count</a></b>
-                </span>
-                <div class="leaf_brief_description">
-                </div></li>
               <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>uint32</code></span> <b><a href="Rygel.MediaContainer.update_id.html" class="field">update_id</a></b>
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
               <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>int64</code></span> <b><a href="Rygel.MediaContainer.storage_used.html" class="field">storage_used</a></b>
-                </span>
-                <div class="leaf_brief_description">
-                </div></li>
-              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.MediaContainer.create_mode_enabled.html" class="field">create_mode_enabled</a></b>
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
@@ -267,13 +272,14 @@
                       <li class="property"><a href="Rygel.MediaObject.upnp_class.html">upnp_class</a></li>
                       <li class="property"><a href="Rygel.MediaObject.modified.html">modified</a></li>
                       <li class="property"><a href="Rygel.MediaObject.object_update_id.html">object_update_id</a></li>
+                      <li class="property"><a href="Rygel.MediaObject.parent.html">parent</a></li>
                     </ul>
                   </div>
                   <div class="column">
                     <ul class="navi_inline">
-                      <li class="property"><a href="Rygel.MediaObject.parent.html">parent</a></li>
                       <li class="property"><a href="Rygel.MediaObject.parent_ref.html">parent_ref</a></li>
                       <li class="property"><a href="Rygel.MediaObject.title.html">title</a></li>
+                      <li class="virtual_property"><a href="Rygel.MediaObject.ocm_flags.html">ocm_flags</a></li>
                       <li class="virtual_method"><a href="Rygel.MediaObject.constructed.html">constructed</a></li>
                       <li class="method"><a href="Rygel.MediaObject.get_writable.html">get_writable</a></li>
                     </ul>

@@ -69,7 +69,7 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/intltool.m4 \
 	$(top_srcdir)/m4/vala.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-mkinstalldirs = $(SHELL) $(top_srcdir)/build-aux/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
@@ -385,7 +385,10 @@ RYGEL_DOCBUILD_MODULE = rygel-core
 # Note: This must always be the last one in *_VALAFLAGS,
 # because the -g needs to be at the end of VALAFLAGS to not break make dist.
 @ENABLE_VALADOC_TRUE@RYGEL_COMMON_VALAFLAGS = \
-@ENABLE_VALADOC_TRUE@	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS)
+@ENABLE_VALADOC_TRUE@	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS) \
+@ENABLE_VALADOC_TRUE@	$(RYGEL_COMMON_VALAFLAGS_PKG) \
+@ENABLE_VALADOC_TRUE@	$(COVERAGE_VALAFLAGS) \
+@ENABLE_VALADOC_TRUE@	$(RYGEL_DEBUG_VALAFLAGS)
 
 @ENABLE_VALADOC_TRUE@LIBRYGEL_CORE_VAPI_SOURCE_FILES = \
 @ENABLE_VALADOC_TRUE@	rygel-connection-manager.vala \
@@ -647,9 +650,6 @@ uninstall-am:
 
 @ENABLE_VALADOC_TRUE@@UNINSTALLED_TRUE@install: all-am
 @ENABLE_VALADOC_TRUE@@UNINSTALLED_TRUE@	@echo "You called configure with --enable-uninstalled. Cannot install"
-@ENABLE_VALADOC_TRUE@	$(RYGEL_COMMON_VALAFLAGS_PKG) \
-@ENABLE_VALADOC_TRUE@	$(RYGEL_DEBUG_VALAFLAGS) \
-@ENABLE_VALADOC_TRUE@	$(COVERAGE_VALAFLAGS)
 
 @ENABLE_VALADOC_TRUE@vala-clean:
 @ENABLE_VALADOC_TRUE@	rm -f `find . -name "*.stamp"`

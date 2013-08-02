@@ -71,11 +71,12 @@ DIST_COMMON = $(librygel_server_include_HEADERS) $(srcdir)/Makefile.am \
 	rygel-last-change-obj-add.c rygel-last-change-obj-del.c \
 	rygel-last-change-obj-mod.c rygel-last-change-st-done.c \
 	rygel-last-change.c rygel-logical-expression.c \
-	rygel-media-art-store.c rygel-media-container.c \
-	rygel-media-engine.c rygel-media-item.c rygel-media-object.c \
-	rygel-media-objects.c rygel-media-query-action.c \
-	rygel-media-receiver-registrar.c rygel-media-server-plugin.c \
-	rygel-media-server.c rygel-music-item.c rygel-object-creator.c \
+	rygel-m3u-playlist.c rygel-media-art-store.c \
+	rygel-media-container.c rygel-media-engine.c \
+	rygel-media-item.c rygel-media-object.c rygel-media-objects.c \
+	rygel-media-query-action.c rygel-media-receiver-registrar.c \
+	rygel-media-server-plugin.c rygel-media-server.c \
+	rygel-music-item.c rygel-object-creator.c \
 	rygel-object-removal-queue.c rygel-panasonic-hacks.c \
 	rygel-photo-item.c rygel-playlist-item.c \
 	rygel-reference-creator.c rygel-relational-expression.c \
@@ -100,7 +101,7 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/intltool.m4 \
 	$(top_srcdir)/m4/vala.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-mkinstalldirs = $(SHELL) $(top_srcdir)/build-aux/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
@@ -197,6 +198,7 @@ am__objects_2 = librygel_server_2_0_la-rygel-browse.lo \
 	librygel_server_2_0_la-rygel-last-change-obj-mod.lo \
 	librygel_server_2_0_la-rygel-last-change-st-done.lo \
 	librygel_server_2_0_la-rygel-last-change.lo \
+	librygel_server_2_0_la-rygel-m3u-playlist.lo \
 	librygel_server_2_0_la-rygel-media-query-action.lo \
 	librygel_server_2_0_la-rygel-media-receiver-registrar.lo \
 	librygel_server_2_0_la-rygel-panasonic-hacks.lo \
@@ -563,7 +565,10 @@ RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS = \
 # Note: This must always be the last one in *_VALAFLAGS,
 # because the -g needs to be at the end of VALAFLAGS to not break make dist.
 RYGEL_COMMON_VALAFLAGS = \
-	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS)
+	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS) \
+	$(RYGEL_COMMON_VALAFLAGS_PKG) \
+	$(COVERAGE_VALAFLAGS) \
+	$(RYGEL_DEBUG_VALAFLAGS)
 
 LIBRYGEL_SERVER_VAPI_SOURCE_FILES = \
 	rygel-audio-item.vala \
@@ -628,6 +633,7 @@ LIBRYGEL_SERVER_NONVAPI_SOURCE_FILES = \
 	rygel-last-change-obj-mod.vala \
 	rygel-last-change-st-done.vala \
 	rygel-last-change.vala \
+	rygel-m3u-playlist.vala \
 	rygel-media-query-action.vala \
 	rygel-media-receiver-registrar.vala \
 	rygel-panasonic-hacks.vala \
@@ -784,6 +790,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-last-change-st-done.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-last-change.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-logical-expression.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-m3u-playlist.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-media-art-store.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-media-container.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_server_2_0_la-rygel-media-engine.Plo@am__quote@
@@ -1268,6 +1275,13 @@ librygel_server_2_0_la-rygel-last-change.lo: rygel-last-change.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_server_2_0_la-rygel-last-change.lo `test -f 'rygel-last-change.c' || echo '$(srcdir)/'`rygel-last-change.c
 
+librygel_server_2_0_la-rygel-m3u-playlist.lo: rygel-m3u-playlist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -MT librygel_server_2_0_la-rygel-m3u-playlist.lo -MD -MP -MF $(DEPDIR)/librygel_server_2_0_la-rygel-m3u-playlist.Tpo -c -o librygel_server_2_0_la-rygel-m3u-playlist.lo `test -f 'rygel-m3u-playlist.c' || echo '$(srcdir)/'`rygel-m3u-playlist.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_server_2_0_la-rygel-m3u-playlist.Tpo $(DEPDIR)/librygel_server_2_0_la-rygel-m3u-playlist.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-m3u-playlist.c' object='librygel_server_2_0_la-rygel-m3u-playlist.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_server_2_0_la-rygel-m3u-playlist.lo `test -f 'rygel-m3u-playlist.c' || echo '$(srcdir)/'`rygel-m3u-playlist.c
+
 librygel_server_2_0_la-rygel-media-query-action.lo: rygel-media-query-action.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_server_2_0_la_CFLAGS) $(CFLAGS) -MT librygel_server_2_0_la-rygel-media-query-action.lo -MD -MP -MF $(DEPDIR)/librygel_server_2_0_la-rygel-media-query-action.Tpo -c -o librygel_server_2_0_la-rygel-media-query-action.lo `test -f 'rygel-media-query-action.c' || echo '$(srcdir)/'`rygel-media-query-action.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_server_2_0_la-rygel-media-query-action.Tpo $(DEPDIR)/librygel_server_2_0_la-rygel-media-query-action.Plo
@@ -1672,6 +1686,11 @@ $(srcdir)/rygel-last-change.c: $(srcdir)/librygel_server_2_0_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_server_2_0_la_vala.stamp; \
 	fi
+$(srcdir)/rygel-m3u-playlist.c: $(srcdir)/librygel_server_2_0_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/librygel_server_2_0_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_server_2_0_la_vala.stamp; \
+	fi
 $(srcdir)/rygel-media-query-action.c: $(srcdir)/librygel_server_2_0_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/librygel_server_2_0_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -1752,9 +1771,9 @@ $(srcdir)/rygel-server.h: $(srcdir)/librygel_server_2_0_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_server_2_0_la_vala.stamp; \
 	fi
-$(srcdir)/librygel_server_2_0_la_vala.stamp: rygel-audio-item.vala rygel-dlna-profile.vala rygel-image-item.vala rygel-logical-expression.vala rygel-media-art-store.vala rygel-media-objects.vala rygel-music-item.vala rygel-photo-item.vala rygel-relational-expression.vala rygel-simple-container.vala rygel-subtitle.vala rygel-thumbnail.vala rygel-video-item.vala rygel-media-container.vala rygel-media-item.vala rygel-media-object.vala rygel-media-server-plugin.vala rygel-search-expression.vala rygel-searchable-container.vala rygel-trackable-container.vala rygel-trackable-item.vala rygel-transcode-manager.vala rygel-transcoder.vala rygel-visual-item.vala rygel-writable-container.vala rygel-media-server.vala rygel-media-engine.vala rygel-http-seek.vala rygel-data-source.vala rygel-updatable-object.vala rygel-playlist-item.vala rygel-browse.vala rygel-client-hacks.vala rygel-content-directory.vala rygel-dbus-thumbnailer.vala rygel-engine-loader.vala rygel-http-byte-seek.vala rygel-http-get-handler.vala rygel-http-get.vala rygel-http-identity-handler.vala rygel-http-playlist-handler.vala rygel-http-item-uri.vala rygel-http-post.vala rygel-http-request.vala rygel-http-response.vala rygel-http-server.vala rygel-http-time-seek.vala rygel-http-transcode-handler.vala rygel-import-resource.vala rygel-object-creator.vala rygel-reference-creator.vala rygel-item-destroyer.vala rygel-item-updater.vala rygel-object-removal-queue.vala rygel-last-change-entry.vala rygel-last-change-obj-add.vala rygel-last-change-obj-del.vala rygel-last-change-obj-mod.vala rygel-last-change-st-done.vala rygel-last-change.vala rygel-media-query-action.vala rygel-media-receiver-registrar.vala rygel-panasonic-hacks.vala rygel-samsung-tv-hacks.vala rygel-seek-hacks.vala rygel-search-criteria-parser.vala rygel-search.vala rygel-serializer.vala rygel-source-connection-manager.vala rygel-subtitle-manager.vala rygel-thumbnailer.vala rygel-wmp-hacks.vala rygel-xbmc-hacks.vala rygel-xbox-hacks.vala rygel-data-sink.vala
+$(srcdir)/librygel_server_2_0_la_vala.stamp: rygel-audio-item.vala rygel-dlna-profile.vala rygel-image-item.vala rygel-logical-expression.vala rygel-media-art-store.vala rygel-media-objects.vala rygel-music-item.vala rygel-photo-item.vala rygel-relational-expression.vala rygel-simple-container.vala rygel-subtitle.vala rygel-thumbnail.vala rygel-video-item.vala rygel-media-container.vala rygel-media-item.vala rygel-media-object.vala rygel-media-server-plugin.vala rygel-search-expression.vala rygel-searchable-container.vala rygel-trackable-container.vala rygel-trackable-item.vala rygel-transcode-manager.vala rygel-transcoder.vala rygel-visual-item.vala rygel-writable-container.vala rygel-media-server.vala rygel-media-engine.vala rygel-http-seek.vala rygel-data-source.vala rygel-updatable-object.vala rygel-playlist-item.vala rygel-browse.vala rygel-client-hacks.vala rygel-content-directory.vala rygel-dbus-thumbnailer.vala rygel-engine-loader.vala rygel-http-byte-seek.vala rygel-http-get-handler.vala rygel-http-get.vala rygel-http-identity-handler.vala rygel-http-playlist-handler.vala rygel-http-item-uri.vala rygel-http-post.vala rygel-http-request.vala rygel-http-response.vala rygel-http-server.vala rygel-http-time-seek.vala rygel-http-transcode-handler.vala rygel-import-resource.vala rygel-object-creator.vala rygel-reference-creator.vala rygel-item-destroyer.vala rygel-item-updater.vala rygel-object-removal-queue.vala rygel-last-change-entry.vala rygel-last-change-obj-add.vala rygel-last-change-obj-del.vala rygel-last-change-obj-mod.vala rygel-last-change-st-done.vala rygel-last-change.vala rygel-m3u-playlist.vala rygel-media-query-action.vala rygel-media-receiver-registrar.vala rygel-panasonic-hacks.vala rygel-samsung-tv-hacks.vala rygel-seek-hacks.vala rygel-search-criteria-parser.vala rygel-search.vala rygel-serializer.vala rygel-source-connection-manager.vala rygel-subtitle-manager.vala rygel-thumbnailer.vala rygel-wmp-hacks.vala rygel-xbmc-hacks.vala rygel-xbox-hacks.vala rygel-data-sink.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_server_2_0_la_VALAFLAGS) $(VALAFLAGS) -C rygel-audio-item.vala rygel-dlna-profile.vala rygel-image-item.vala rygel-logical-expression.vala rygel-media-art-store.vala rygel-media-objects.vala rygel-music-item.vala rygel-photo-item.vala rygel-relational-expression.vala rygel-simple-container.vala rygel-subtitle.vala rygel-thumbnail.vala rygel-video-item.vala rygel-media-container.vala rygel-media-item.vala rygel-media-object.vala rygel-media-server-plugin.vala rygel-search-expression.vala rygel-searchable-container.vala rygel-trackable-container.vala rygel-trackable-item.vala rygel-transcode-manager.vala rygel-transcoder.vala rygel-visual-item.vala rygel-writable-container.vala rygel-media-server.vala rygel-media-engine.vala rygel-http-seek.vala rygel-data-source.vala rygel-updatable-object.vala rygel-playlist-item.vala rygel-browse.vala rygel-client-hacks.vala rygel-content-directory.vala rygel-dbus-thumbnailer.vala rygel-engine-loader.vala rygel-http-byte-seek.vala rygel-http-get-handler.vala rygel-http-get.vala rygel-http-identity-handler.vala rygel-http-playlist-handler.vala rygel-http-item-uri.vala rygel-http-post.vala rygel-http-request.vala rygel-http-response.vala rygel-http-server.vala rygel-http-time-seek.vala rygel-http-transcode-handler.vala rygel-import-resource.vala rygel-object-creator.vala rygel-reference-creator.vala rygel-item-destroyer.vala rygel-item-updater.vala rygel-object-removal-queue.vala rygel-last-change-entry.vala rygel-last-change-obj-add.vala rygel-last-change-obj-del.vala rygel-last-change-obj-mod.vala rygel-last-change-st-done.vala rygel-last-change.vala rygel-media-query-action.vala rygel-media-receiver-registrar.vala rygel-panasonic-hacks.vala rygel-samsung-tv-hacks.vala rygel-seek-hacks.vala rygel-search-criteria-parser.vala rygel-search.vala rygel-serializer.vala rygel-source-connection-manager.vala rygel-subtitle-manager.vala rygel-thumbnailer.vala rygel-wmp-hacks.vala rygel-xbmc-hacks.vala rygel-xbox-hacks.vala rygel-data-sink.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_server_2_0_la_VALAFLAGS) $(VALAFLAGS) -C rygel-audio-item.vala rygel-dlna-profile.vala rygel-image-item.vala rygel-logical-expression.vala rygel-media-art-store.vala rygel-media-objects.vala rygel-music-item.vala rygel-photo-item.vala rygel-relational-expression.vala rygel-simple-container.vala rygel-subtitle.vala rygel-thumbnail.vala rygel-video-item.vala rygel-media-container.vala rygel-media-item.vala rygel-media-object.vala rygel-media-server-plugin.vala rygel-search-expression.vala rygel-searchable-container.vala rygel-trackable-container.vala rygel-trackable-item.vala rygel-transcode-manager.vala rygel-transcoder.vala rygel-visual-item.vala rygel-writable-container.vala rygel-media-server.vala rygel-media-engine.vala rygel-http-seek.vala rygel-data-source.vala rygel-updatable-object.vala rygel-playlist-item.vala rygel-browse.vala rygel-client-hacks.vala rygel-content-directory.vala rygel-dbus-thumbnailer.vala rygel-engine-loader.vala rygel-http-byte-seek.vala rygel-http-get-handler.vala rygel-http-get.vala rygel-http-identity-handler.vala rygel-http-playlist-handler.vala rygel-http-item-uri.vala rygel-http-post.vala rygel-http-request.vala rygel-http-response.vala rygel-http-server.vala rygel-http-time-seek.vala rygel-http-transcode-handler.vala rygel-import-resource.vala rygel-object-creator.vala rygel-reference-creator.vala rygel-item-destroyer.vala rygel-item-updater.vala rygel-object-removal-queue.vala rygel-last-change-entry.vala rygel-last-change-obj-add.vala rygel-last-change-obj-del.vala rygel-last-change-obj-mod.vala rygel-last-change-st-done.vala rygel-last-change.vala rygel-m3u-playlist.vala rygel-media-query-action.vala rygel-media-receiver-registrar.vala rygel-panasonic-hacks.vala rygel-samsung-tv-hacks.vala rygel-seek-hacks.vala rygel-search-criteria-parser.vala rygel-search.vala rygel-serializer.vala rygel-source-connection-manager.vala rygel-subtitle-manager.vala rygel-thumbnailer.vala rygel-wmp-hacks.vala rygel-xbmc-hacks.vala rygel-xbox-hacks.vala rygel-data-sink.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
@@ -1958,6 +1977,7 @@ maintainer-clean-generic:
 	-rm -f rygel-last-change-st-done.c
 	-rm -f rygel-last-change.c
 	-rm -f rygel-logical-expression.c
+	-rm -f rygel-m3u-playlist.c
 	-rm -f rygel-media-art-store.c
 	-rm -f rygel-media-container.c
 	-rm -f rygel-media-engine.c
@@ -2096,9 +2116,6 @@ uninstall-am: uninstall-libLTLIBRARIES \
 
 @UNINSTALLED_TRUE@install: all-am
 @UNINSTALLED_TRUE@	@echo "You called configure with --enable-uninstalled. Cannot install"
-	$(RYGEL_COMMON_VALAFLAGS_PKG) \
-	$(RYGEL_DEBUG_VALAFLAGS) \
-	$(COVERAGE_VALAFLAGS)
 
 vala-clean:
 	rm -f `find . -name "*.stamp"`

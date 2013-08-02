@@ -251,8 +251,17 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
         }
 
         if (didl_object.restricted) {
-            throw new ContentDirectoryError.INVALID_ARGS
+            throw new ContentDirectoryError.BAD_METADATA
                                         (_("Cannot create restricted item"));
+        }
+
+        // Handle DIDL_S items...
+        if (this.didl_object.upnp_class == "object.item") {
+            var resources = this.didl_object.get_resources ();
+            if (resources != null &&
+                resources.data.protocol_info.dlna_profile == "DIDL_S") {
+                this.didl_object.upnp_class = PlaylistItem.UPNP_CLASS;
+            }
         }
     }
 
@@ -345,10 +354,23 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
         }
 
         if (media_object == null || !(media_object is MediaContainer)) {
-            throw new ContentDirectoryError.NO_SUCH_OBJECT
-                                        (_("No such object"));
-        } else if (!(OCMFlags.UPLOAD in media_object.ocm_flags) ||
-                   !(media_object is WritableContainer)) {
+            throw new ContentDirectoryError.NO_SUCH_CONTAINER
+                                        (_("No such container"));
+        }
+
+        if (!(media_object is WritableContainer)) {
+            throw new ContentDirectoryError.RESTRICTED_PARENT
+                                        (_(" %%% Object creation in %s not allowed"),
+                                         media_object.id);
+        }
+
+        // If the object to be created is an item, ocm_flags must contain
+        // OCMFlags.UPLOAD, it it's a container, ocm_flags must contain
+        // OCMFlags.CREATE_CONTAINER
+        if (!((this.didl_object is DIDLLiteItem &&
+            (OCMFlags.UPLOAD in media_object.ocm_flags)) ||
+           (this.didl_object is DIDLLiteContainer &&
+            (OCMFlags.CREATE_CONTAINER in media_object.ocm_flags)))) {
             throw new ContentDirectoryError.RESTRICTED_PARENT
                                         (_("Object creation in %s not allowed"),
                                          media_object.id);
@@ -544,6 +566,7 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
             return new MusicItem (id, parent, title);
         case PlaylistItem.UPNP_CLASS:
             return new PlaylistItem (id, parent, title);
+        case MediaContainer.UPNP_CLASS:
         case MediaContainer.STORAGE_FOLDER:
             return new BaseMediaContainer (id, parent, title, 0);
         case MediaContainer.PLAYLIST:
@@ -681,6 +704,8 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
         }
         debug ("Finished waiting for new object to appear under container '%s'",
                container.id);
+
+        this.object = object;
     }
 
     /**

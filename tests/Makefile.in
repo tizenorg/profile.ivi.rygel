@@ -68,12 +68,13 @@ DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	rygel-http-seek_object-creator.c rygel-http-seek_time-seek.c \
 	rygel-http-time-seek-test.c rygel-http-time-seek.c \
 	rygel-http-time-seek_http-get.c rygel-icon-info.c \
-	rygel-media-art-store.c rygel-media-engine-test.c \
-	rygel-media-engine.c rygel-object-creator-test.c \
-	rygel-object-creator.c rygel-playbin-renderer-test.c \
-	rygel-regression.c rygel-relational-expression.c \
-	rygel-search-expression.c rygel-searchable-container-test.c \
-	rygel-searchable-container.c rygel-serializer_object-creator.c \
+	rygel-m3u-playlist_object-creator.c rygel-media-art-store.c \
+	rygel-media-engine-test.c rygel-media-engine.c \
+	rygel-object-creator-test.c rygel-object-creator.c \
+	rygel-playbin-renderer-test.c rygel-regression.c \
+	rygel-relational-expression.c rygel-search-expression.c \
+	rygel-searchable-container-test.c rygel-searchable-container.c \
+	rygel-serializer_object-creator.c \
 	rygel-state-machine_http-get.c rygel-state-machine_http-post.c \
 	rygel-state-machine_http-response.c \
 	rygel-state-machine_object-creator.c rygel-thumbnail.c \
@@ -118,7 +119,7 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/intltool.m4 \
 	$(top_srcdir)/m4/vala.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-mkinstalldirs = $(SHELL) $(top_srcdir)/build-aux/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
@@ -266,7 +267,8 @@ am_rygel_object_creator_test_OBJECTS =  \
 	rygel_object_creator_test-rygel-relational-expression.$(OBJEXT) \
 	rygel_object_creator_test-rygel-search-expression.$(OBJEXT) \
 	rygel_object_creator_test-rygel-media-engine.$(OBJEXT) \
-	rygel_object_creator_test-rygel-serializer_object-creator.$(OBJEXT)
+	rygel_object_creator_test-rygel-serializer_object-creator.$(OBJEXT) \
+	rygel_object_creator_test-rygel-m3u-playlist_object-creator.$(OBJEXT)
 rygel_object_creator_test_OBJECTS =  \
 	$(am_rygel_object_creator_test_OBJECTS)
 rygel_object_creator_test_DEPENDENCIES = $(am__DEPENDENCIES_2)
@@ -682,7 +684,10 @@ RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS = \
 # Note: This must always be the last one in *_VALAFLAGS,
 # because the -g needs to be at the end of VALAFLAGS to not break make dist.
 RYGEL_COMMON_VALAFLAGS = \
-	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS)
+	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS) \
+	$(RYGEL_COMMON_VALAFLAGS_PKG) \
+	$(COVERAGE_VALAFLAGS) \
+	$(RYGEL_DEBUG_VALAFLAGS)
 
 TESTS = $(check_PROGRAMS)
 EXTRA_DIST = $(srcdir)/data/test-data.dat
@@ -843,7 +848,8 @@ rygel_object_creator_test_SOURCES = rygel-object-creator-test.vala \
 				  rygel-relational-expression.vala \
 				  rygel-search-expression.vala \
 				  rygel-media-engine.vala \
-				  rygel-serializer_object-creator.vala
+				  rygel-serializer_object-creator.vala \
+				  rygel-m3u-playlist_object-creator.vala
 
 rygel_object_creator_test_VALAFLAGS = \
 	$(test_valaflags) \
@@ -1090,6 +1096,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-data-source.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-dlna-profile.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-http-seek_object-creator.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-m3u-playlist_object-creator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-media-engine.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-object-creator-test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-object-creator.Po@am__quote@
@@ -1728,6 +1735,20 @@ rygel_object_creator_test-rygel-serializer_object-creator.obj: rygel-serializer_
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-serializer_object-creator.obj `if test -f 'rygel-serializer_object-creator.c'; then $(CYGPATH_W) 'rygel-serializer_object-creator.c'; else $(CYGPATH_W) '$(srcdir)/rygel-serializer_object-creator.c'; fi`
 
+rygel_object_creator_test-rygel-m3u-playlist_object-creator.o: rygel-m3u-playlist_object-creator.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-m3u-playlist_object-creator.o -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-m3u-playlist_object-creator.Tpo -c -o rygel_object_creator_test-rygel-m3u-playlist_object-creator.o `test -f 'rygel-m3u-playlist_object-creator.c' || echo '$(srcdir)/'`rygel-m3u-playlist_object-creator.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-m3u-playlist_object-creator.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-m3u-playlist_object-creator.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-m3u-playlist_object-creator.c' object='rygel_object_creator_test-rygel-m3u-playlist_object-creator.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-m3u-playlist_object-creator.o `test -f 'rygel-m3u-playlist_object-creator.c' || echo '$(srcdir)/'`rygel-m3u-playlist_object-creator.c
+
+rygel_object_creator_test-rygel-m3u-playlist_object-creator.obj: rygel-m3u-playlist_object-creator.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-m3u-playlist_object-creator.obj -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-m3u-playlist_object-creator.Tpo -c -o rygel_object_creator_test-rygel-m3u-playlist_object-creator.obj `if test -f 'rygel-m3u-playlist_object-creator.c'; then $(CYGPATH_W) 'rygel-m3u-playlist_object-creator.c'; else $(CYGPATH_W) '$(srcdir)/rygel-m3u-playlist_object-creator.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-m3u-playlist_object-creator.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-m3u-playlist_object-creator.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-m3u-playlist_object-creator.c' object='rygel_object_creator_test-rygel-m3u-playlist_object-creator.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-m3u-playlist_object-creator.obj `if test -f 'rygel-m3u-playlist_object-creator.c'; then $(CYGPATH_W) 'rygel-m3u-playlist_object-creator.c'; else $(CYGPATH_W) '$(srcdir)/rygel-m3u-playlist_object-creator.c'; fi`
+
 rygel_playbin_renderer_test-rygel-playbin-renderer-test.o: rygel-playbin-renderer-test.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_playbin_renderer_test_CFLAGS) $(CFLAGS) -MT rygel_playbin_renderer_test-rygel-playbin-renderer-test.o -MD -MP -MF $(DEPDIR)/rygel_playbin_renderer_test-rygel-playbin-renderer-test.Tpo -c -o rygel_playbin_renderer_test-rygel-playbin-renderer-test.o `test -f 'rygel-playbin-renderer-test.c' || echo '$(srcdir)/'`rygel-playbin-renderer-test.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_playbin_renderer_test-rygel-playbin-renderer-test.Tpo $(DEPDIR)/rygel_playbin_renderer_test-rygel-playbin-renderer-test.Po
@@ -1894,9 +1915,14 @@ $(srcdir)/rygel-serializer_object-creator.c: $(srcdir)/rygel_object_creator_test
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_object_creator_test_vala.stamp; \
 	fi
-$(srcdir)/rygel_object_creator_test_vala.stamp: rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-search-expression.vala rygel-media-engine.vala rygel-serializer_object-creator.vala
+$(srcdir)/rygel-m3u-playlist_object-creator.c: $(srcdir)/rygel_object_creator_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_object_creator_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_object_creator_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_object_creator_test_vala.stamp: rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-search-expression.vala rygel-media-engine.vala rygel-serializer_object-creator.vala rygel-m3u-playlist_object-creator.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_object_creator_test_VALAFLAGS) $(VALAFLAGS) -C rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-search-expression.vala rygel-media-engine.vala rygel-serializer_object-creator.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_object_creator_test_VALAFLAGS) $(VALAFLAGS) -C rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-search-expression.vala rygel-media-engine.vala rygel-serializer_object-creator.vala rygel-m3u-playlist_object-creator.vala
 	$(AM_V_at)mv -f $@-t $@
 $(srcdir)/rygel-media-engine-test.c: $(srcdir)/rygel_media_engine_test_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/rygel_media_engine_test_vala.stamp; fi
@@ -2388,6 +2414,7 @@ maintainer-clean-generic:
 	-rm -f rygel-http-time-seek.c
 	-rm -f rygel-http-time-seek_http-get.c
 	-rm -f rygel-icon-info.c
+	-rm -f rygel-m3u-playlist_object-creator.c
 	-rm -f rygel-media-art-store.c
 	-rm -f rygel-media-engine-test.c
 	-rm -f rygel-media-engine.c
@@ -2512,9 +2539,6 @@ uninstall-am:
 
 @UNINSTALLED_TRUE@install: all-am
 @UNINSTALLED_TRUE@	@echo "You called configure with --enable-uninstalled. Cannot install"
-	$(RYGEL_COMMON_VALAFLAGS_PKG) \
-	$(RYGEL_DEBUG_VALAFLAGS) \
-	$(COVERAGE_VALAFLAGS)
 
 vala-clean:
 	rm -f `find . -name "*.stamp"`

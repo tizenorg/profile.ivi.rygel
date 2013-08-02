@@ -108,7 +108,7 @@ public abstract class Rygel.MediaContainer : MediaObject {
     public signal void sub_tree_updates_finished (MediaObject sub_tree_root);
 
     public int child_count { get; set construct; }
-    protected int empty_child_count;
+    protected int empty_child_count { get; set; }
     public int all_child_count {
         get {
             return this.child_count + this.empty_child_count;
@@ -116,7 +116,8 @@ public abstract class Rygel.MediaContainer : MediaObject {
     }
     public uint32 update_id;
     public int64 storage_used;
-    public bool create_mode_enabled;
+
+    public bool create_mode_enabled { get; set; }
 
     // This is an uint32 in UPnP. SystemUpdateID should reach uint32.MAX way
     // before this variable and cause a SystemResetProcedure.
@@ -124,7 +125,7 @@ public abstract class Rygel.MediaContainer : MediaObject {
 
     public string sort_criteria { set; get; default = DEFAULT_SORT_CRITERIA; }
 
-    internal override OCMFlags ocm_flags {
+    public override OCMFlags ocm_flags {
         get {
             if (!(this is WritableContainer) || this.uris.size == 0) {
                 return OCMFlags.NONE;
@@ -201,7 +202,7 @@ public abstract class Rygel.MediaContainer : MediaObject {
         this.update_id = 0;
         this.storage_used = -1;
         this.total_deleted_child_count = 0;
-        this.upnp_class = STORAGE_FOLDER;
+        this.upnp_class = UPNP_CLASS;
         this.create_mode_enabled = false;
 
         this.container_updated.connect (on_container_updated);
@@ -285,7 +286,10 @@ public abstract class Rygel.MediaContainer : MediaObject {
         didl_container.child_count = this.child_count;
         didl_container.upnp_class = this.upnp_class;
         didl_container.searchable = this is SearchableContainer;
-        didl_container.storage_used = this.storage_used;
+        if (this.upnp_class == STORAGE_FOLDER) {
+            didl_container.storage_used = this.storage_used;
+        }
+
         if (this is TrackableContainer) {
             didl_container.container_update_id = this.update_id;
             didl_container.update_id = this.object_update_id;
@@ -293,7 +297,8 @@ public abstract class Rygel.MediaContainer : MediaObject {
                                         (uint) this.total_deleted_child_count;
         }
 
-        if (this.parent == null && (this is SearchableContainer)) {
+        // If the container is searchable then it must add search class parameters.
+        if (this is SearchableContainer) {
             (this as SearchableContainer).serialize_search_parameters
                                         (didl_container);
         }
@@ -310,6 +315,15 @@ public abstract class Rygel.MediaContainer : MediaObject {
             didl_container.restricted = true;
         }
 
+        this.add_resources (http_server, didl_container);
+
+        return didl_container;
+    }
+
+    internal void add_resources (Rygel.HTTPServer http_server,
+                                 DIDLLiteContainer didl_container)
+                                 throws Error {
+        // Add resource with container contents serialized to DIDL_S playlist
         var uri = new HTTPItemURI (this,
                                    http_server,
                                    -1,
@@ -318,11 +332,24 @@ public abstract class Rygel.MediaContainer : MediaObject {
                                    "DIDL_S");
         uri.extension = "xml";
 
-        this.add_resource (didl_container,
-                           uri.to_string (),
-                           http_server.get_protocol ());
+        var res = this.add_resource (didl_container,
+                                     uri.to_string (),
+                                     http_server.get_protocol ());
+        if (res != null) {
+            res.protocol_info.mime_type = "text/xml";
+            res.protocol_info.dlna_profile = "DIDL_S";
+        }
 
-        return didl_container;
+        // Add resource with container contents serialized to M3U playlist
+        uri = new HTTPItemURI (this, http_server, -1, -1, null, "M3U");
+        uri.extension = "m3u";
+
+        res = this.add_resource (didl_container,
+                                 uri.to_string (),
+                                 http_server.get_protocol ());
+        if (res != null) {
+            res.protocol_info.mime_type = "audio/x-mpegurl";
+        }
     }
 
     internal override DIDLLiteResource add_resource
@@ -331,29 +358,29 @@ public abstract class Rygel.MediaContainer : MediaObject {
                                          string         protocol,
                                          string?        import_uri = null)
                                          throws Error {
-        if (this.child_count > 0) {
-            var res = base.add_resource (didl_object,
-                                         uri,
-                                         protocol,
-                                         import_uri);
-
-            if (uri != null) {
-                res.uri = uri;
-            }
-
-            var protocol_info = new ProtocolInfo ();
-            protocol_info.mime_type = "text/xml";
-            protocol_info.dlna_profile = "DIDL_S";
-            protocol_info.protocol = protocol;
-            protocol_info.dlna_flags = DLNAFlags.DLNA_V15 |
-                                       DLNAFlags.CONNECTION_STALL |
-                                       DLNAFlags.BACKGROUND_TRANSFER_MODE;
-            res.protocol_info = protocol_info;
-
-            return res;
+        if (this.child_count <= 0) {
+            return null as DIDLLiteResource;
         }
 
-        return null as DIDLLiteResource;
+        var res = base.add_resource (didl_object,
+                                     uri,
+                                     protocol,
+                                     import_uri);
+
+        if (uri != null) {
+            res.uri = uri;
+        }
+
+        var protocol_info = new ProtocolInfo ();
+        protocol_info.mime_type = "";
+        protocol_info.protocol = protocol;
+        protocol_info.dlna_flags = DLNAFlags.DLNA_V15 |
+                                   DLNAFlags.CONNECTION_STALL |
+                                   DLNAFlags.BACKGROUND_TRANSFER_MODE |
+                                   DLNAFlags.INTERACTIVE_TRANSFER_MODE;
+        res.protocol_info = protocol_info;
+
+        return res;
     }
 
     /**

@@ -43,7 +43,7 @@ public class Rygel.ClientHacks {
         }
     }
 
-    public void apply (MediaItem? item) {
+    public void apply (MediaObject? item) {
     }
 
     public bool force_seek () {
@@ -383,7 +383,9 @@ internal class Rygel.HTTPIdentityHandler : Rygel.HTTPGetHandler {
 }
 
 internal class Rygel.HTTPPlaylistHandler : Rygel.HTTPGetHandler {
-    public HTTPPlaylistHandler (Cancellable cancellable) {}
+    public HTTPPlaylistHandler (string? arg, Cancellable cancellable) {}
+
+    public static bool is_supported (string? arg) { return true; }
 }
 
 public abstract class Rygel.MediaItem : Rygel.MediaObject {

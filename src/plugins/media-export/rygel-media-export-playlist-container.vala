@@ -50,30 +50,6 @@ internal class Rygel.MediaExport.PlaylistContainer : DBContainer,
         this.uris.add (PlaylistContainer.URI);
     }
 
-    public async string add_reference (Rygel.MediaObject object,
-                                       Cancellable?      cancellable)
-                                       throws Error {
-        if (object is MediaContainer) {
-            throw new WritableContainerError.NOT_IMPLEMENTED
-                                        ("Cannot create references to containers");
-        }
-
-        object.parent = this;
-
-        // If the original is already a ref_id, point to the original item as
-        // we should not daisy-chain reference items.
-        if (object.ref_id == null) {
-            object.ref_id = object.id;
-        }
-        object.id = UUID.get ();
-
-        var cache = MediaCache.get_default ();
-        cache.save_item (object as MediaItem);
-
-        return object.id;
-    }
-
-
     public async void add_item (Rygel.MediaItem item,
                                 Cancellable?    cancellable)
                                 throws Error {
@@ -82,12 +58,17 @@ internal class Rygel.MediaExport.PlaylistContainer : DBContainer,
                                          this.id);
     }
 
+    public virtual async string add_reference (MediaObject  object,
+                                               Cancellable? cancellable)
+                                               throws Error {
+        return MediaCache.get_default ().create_reference (object, this);
+    }
+
     public async void remove_item (string id,
                                    Cancellable?    cancellable)
                                    throws Error {
-        throw new WritableContainerError.NOT_IMPLEMENTED
-                                        (_("Can't remove items in %s"),
-                                         this.id);
+        this.media_db.remove_by_id (id);
+        this.updated ();
     }
 
     public async void add_container (Rygel.MediaContainer container,

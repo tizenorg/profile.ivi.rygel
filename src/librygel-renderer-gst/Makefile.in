@@ -67,7 +67,7 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/intltool.m4 \
 	$(top_srcdir)/m4/vala.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-mkinstalldirs = $(SHELL) $(top_srcdir)/build-aux/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
@@ -460,7 +460,10 @@ RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS = \
 # Note: This must always be the last one in *_VALAFLAGS,
 # because the -g needs to be at the end of VALAFLAGS to not break make dist.
 RYGEL_COMMON_VALAFLAGS = \
-	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS)
+	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS) \
+	$(RYGEL_COMMON_VALAFLAGS_PKG) \
+	$(COVERAGE_VALAFLAGS) \
+	$(RYGEL_DEBUG_VALAFLAGS)
 
 LIBRYGEL_RENDERER_GST_VAPI_SOURCE_FILES = \
 	rygel-playbin-player.vala \
@@ -897,9 +900,6 @@ uninstall-am: uninstall-libLTLIBRARIES \
 
 @UNINSTALLED_TRUE@install: all-am
 @UNINSTALLED_TRUE@	@echo "You called configure with --enable-uninstalled. Cannot install"
-	$(RYGEL_COMMON_VALAFLAGS_PKG) \
-	$(RYGEL_DEBUG_VALAFLAGS) \
-	$(COVERAGE_VALAFLAGS)
 
 vala-clean:
 	rm -f `find . -name "*.stamp"`

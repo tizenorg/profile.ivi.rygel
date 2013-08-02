@@ -4,7 +4,7 @@
   <chapters>
     <sub name="Overview" link="overview.html">
       <sub name="" link="overview.html#overview">
-        <sub name="Basic Usage" link="overview.html#idp8450256"/>
+        <sub name="Basic Usage" link="overview.html#idp8317472"/>
       </sub>
     </sub>
     <sub name="librygel-core API Reference" link="api-main-list-c.html">
@@ -96,11 +96,18 @@
     <keyword type="struct" name="struct RygelDBusInterfaceIface" link="RygelDBusInterface.html#RygelDBusInterfaceIface"/>
     <keyword type="macro" name="RYGEL_TYPE_DESCRIPTION_FILE" link="RygelDescriptionFile.html#RYGEL-TYPE-DESCRIPTION-FILE:CAPS"/>
     <keyword type="function" name="rygel_description_file_set_device_type ()" link="RygelDescriptionFile.html#rygel-description-file-set-device-type"/>
+    <keyword type="function" name="rygel_description_file_set_model_description ()" link="RygelDescriptionFile.html#rygel-description-file-set-model-description"/>
     <keyword type="function" name="rygel_description_file_set_model_name ()" link="RygelDescriptionFile.html#rygel-description-file-set-model-name"/>
     <keyword type="function" name="rygel_description_file_set_model_number ()" link="RygelDescriptionFile.html#rygel-description-file-set-model-number"/>
     <keyword type="function" name="rygel_description_file_set_friendly_name ()" link="RygelDescriptionFile.html#rygel-description-file-set-friendly-name"/>
     <keyword type="function" name="rygel_description_file_get_friendly_name ()" link="RygelDescriptionFile.html#rygel-description-file-get-friendly-name"/>
+    <keyword type="function" name="rygel_description_file_set_udn ()" link="RygelDescriptionFile.html#rygel-description-file-set-udn"/>
+    <keyword type="function" name="rygel_description_file_get_udn ()" link="RygelDescriptionFile.html#rygel-description-file-get-udn"/>
     <keyword type="function" name="rygel_description_file_set_dlna_caps ()" link="RygelDescriptionFile.html#rygel-description-file-set-dlna-caps"/>
+    <keyword type="function" name="rygel_description_file_clear_service_list ()" link="RygelDescriptionFile.html#rygel-description-file-clear-service-list"/>
+    <keyword type="function" name="rygel_description_file_add_service ()" link="RygelDescriptionFile.html#rygel-description-file-add-service"/>
+    <keyword type="function" name="rygel_description_file_clear_icon_list ()" link="RygelDescriptionFile.html#rygel-description-file-clear-icon-list"/>
+    <keyword type="function" name="rygel_description_file_add_icon ()" link="RygelDescriptionFile.html#rygel-description-file-add-icon"/>
     <keyword type="function" name="rygel_description_file_modify_service_type ()" link="RygelDescriptionFile.html#rygel-description-file-modify-service-type"/>
     <keyword type="function" name="rygel_description_file_save ()" link="RygelDescriptionFile.html#rygel-description-file-save"/>
     <keyword type="function" name="rygel_description_file_new ()" link="RygelDescriptionFile.html#rygel-description-file-new"/>

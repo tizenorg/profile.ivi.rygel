@@ -124,7 +124,7 @@ Start producing the data.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>offsets</code></em> :</span></p></td>
-<td>optional limits of the stream for partial streaming. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+<td> .  optional limits of the stream for partial streaming. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -283,6 +283,10 @@ Emitted when the source has produced some data.
 <td>length of the <em class="parameter"><code>data</code></em> array</td>
 </tr>
 <tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
 <td>user data set when the signal handler was connected.</td>
 </tr>
@@ -336,6 +340,10 @@ Emitted when the source encounters a problem during data generation.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>data_source</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> instance that received the signal</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>

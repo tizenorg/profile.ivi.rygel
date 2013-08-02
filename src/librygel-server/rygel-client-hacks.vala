@@ -86,7 +86,7 @@ internal abstract class Rygel.ClientHacks : GLib.Object {
     public virtual void translate_container_id (MediaQueryAction action,
                                                 ref string       container_id) {}
 
-    public virtual void apply (MediaItem item) {}
+    public virtual void apply (MediaObject object) {}
 
     public virtual void filter_sort_criteria (ref string sort_criteria) {}
 
@@ -119,16 +119,16 @@ internal abstract class Rygel.ClientHacks : GLib.Object {
             agent = client_agent_cache.get (address.get_physical ());
         }
 
-        if (agent == null || !(this.agent_regex.match (agent))) {
-            throw new ClientHacksError.NA (_("Not Applicable"));
-        }
-
         if (agent != null) {
             var address = message.get_address ();
             if (client_agent_cache == null) {
                 client_agent_cache = new HashMap<string, string>();
             }
             client_agent_cache.set (address.get_physical (), agent);
+        }
+
+        if (agent == null || !(this.agent_regex.match (agent))) {
+            throw new ClientHacksError.NA (_("Not Applicable"));
         }
     }
 }

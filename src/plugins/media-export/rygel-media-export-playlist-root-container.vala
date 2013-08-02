@@ -19,6 +19,7 @@
  */
 
 using Gee;
+using GUPnP;
 
 /**
  * Special class for the toplevel virtual container which aggregates all
@@ -31,13 +32,15 @@ using Gee;
  */
 internal class Rygel.MediaExport.PlaylistRootContainer : Rygel.WritableContainer,
                                                          DBContainer {
+    internal static const string ID = "virtual-parent:" +
+                                      Rygel.PlaylistItem.UPNP_CLASS;
     internal static const string URI = WritableContainer.WRITABLE_SCHEME +
                                        "playlist-root";
     public ArrayList<string> create_classes { get; set; }
 
-    public PlaylistRootContainer (string id, string title) {
-        Object (id : id,
-                title : title,
+    public PlaylistRootContainer () {
+        Object (id : ID,
+                title : _("Playlists"),
                 parent : null,
                 child_count : 0);
     }
@@ -47,11 +50,22 @@ internal class Rygel.MediaExport.PlaylistRootContainer : Rygel.WritableContainer
 
         // We don't support adding real folders here, just playlist container
         this.create_classes = new ArrayList<string> ();
-        this.create_classes.add (Rygel.MediaContainer.PLAYLIST);
+        this.create_classes.add (Rygel.MediaContainer.UPNP_CLASS);
 
         // Need to add an URI otherwise core doesn't mark the container as
         // writable
         this.uris.add (PlaylistRootContainer.URI);
+    }
+
+    public override OCMFlags ocm_flags {
+        get {
+            var flags = base.ocm_flags;
+
+            // This container does not allow upload
+            flags &= ~(OCMFlags.UPLOAD | OCMFlags.UPLOAD_DESTROYABLE);
+
+            return flags;
+        }
     }
 
     public async void add_item (Rygel.MediaItem item,
@@ -73,12 +87,15 @@ internal class Rygel.MediaExport.PlaylistRootContainer : Rygel.WritableContainer
     public async void add_container (Rygel.MediaContainer container,
                                      Cancellable?         cancellable)
                                      throws Error {
-        if (container.upnp_class != Rygel.MediaContainer.PLAYLIST) {
+        if (container.upnp_class != Rygel.MediaContainer.PLAYLIST &&
+            container.upnp_class != Rygel.MediaContainer.UPNP_CLASS) {
             throw new WritableContainerError.NOT_IMPLEMENTED
                                         (_("upnp:class not supported in %s"),
                                          this.id);
         }
+
         container.id = "playlist:" + UUID.get ();
+        container.upnp_class = Rygel.MediaContainer.PLAYLIST;
 
         this.media_db.save_container (container);
         this.media_db.make_object_guarded (container);

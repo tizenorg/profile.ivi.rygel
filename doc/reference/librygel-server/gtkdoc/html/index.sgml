@@ -138,7 +138,11 @@
 <ANCHOR id="RYGEL-MEDIA-CONTAINER-ALBUM-SORT-CRITERIA:CAPS" href="librygel-server/RygelMediaContainer.html#RYGEL-MEDIA-CONTAINER-ALBUM-SORT-CRITERIA:CAPS">
 <ANCHOR id="rygel-media-container-get-child-count" href="librygel-server/RygelMediaContainer.html#rygel-media-container-get-child-count">
 <ANCHOR id="rygel-media-container-set-child-count" href="librygel-server/RygelMediaContainer.html#rygel-media-container-set-child-count">
+<ANCHOR id="rygel-media-container-get-empty-child-count" href="librygel-server/RygelMediaContainer.html#rygel-media-container-get-empty-child-count">
+<ANCHOR id="rygel-media-container-set-empty-child-count" href="librygel-server/RygelMediaContainer.html#rygel-media-container-set-empty-child-count">
 <ANCHOR id="rygel-media-container-get-all-child-count" href="librygel-server/RygelMediaContainer.html#rygel-media-container-get-all-child-count">
+<ANCHOR id="rygel-media-container-get-create-mode-enabled" href="librygel-server/RygelMediaContainer.html#rygel-media-container-get-create-mode-enabled">
+<ANCHOR id="rygel-media-container-set-create-mode-enabled" href="librygel-server/RygelMediaContainer.html#rygel-media-container-set-create-mode-enabled">
 <ANCHOR id="rygel-media-container-get-sort-criteria" href="librygel-server/RygelMediaContainer.html#rygel-media-container-get-sort-criteria">
 <ANCHOR id="rygel-media-container-set-sort-criteria" href="librygel-server/RygelMediaContainer.html#rygel-media-container-set-sort-criteria">
 <ANCHOR id="RygelMediaContainer-struct" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer-struct">
@@ -182,6 +186,8 @@
 <ANCHOR id="rygel-media-item-add-resources" href="librygel-server/RygelMediaItem.html#rygel-media-item-add-resources">
 <ANCHOR id="rygel-media-item-get-date" href="librygel-server/RygelMediaItem.html#rygel-media-item-get-date">
 <ANCHOR id="rygel-media-item-set-date" href="librygel-server/RygelMediaItem.html#rygel-media-item-set-date">
+<ANCHOR id="rygel-media-item-get-creator" href="librygel-server/RygelMediaItem.html#rygel-media-item-get-creator">
+<ANCHOR id="rygel-media-item-set-creator" href="librygel-server/RygelMediaItem.html#rygel-media-item-set-creator">
 <ANCHOR id="rygel-media-item-get-mime-type" href="librygel-server/RygelMediaItem.html#rygel-media-item-get-mime-type">
 <ANCHOR id="rygel-media-item-set-mime-type" href="librygel-server/RygelMediaItem.html#rygel-media-item-set-mime-type">
 <ANCHOR id="rygel-media-item-get-dlna-profile" href="librygel-server/RygelMediaItem.html#rygel-media-item-get-dlna-profile">
@@ -232,6 +238,7 @@
 <ANCHOR id="rygel-media-object-set-parent-ref" href="librygel-server/RygelMediaObject.html#rygel-media-object-set-parent-ref">
 <ANCHOR id="rygel-media-object-get-title" href="librygel-server/RygelMediaObject.html#rygel-media-object-get-title">
 <ANCHOR id="rygel-media-object-set-title" href="librygel-server/RygelMediaObject.html#rygel-media-object-set-title">
+<ANCHOR id="rygel-media-object-get-ocm-flags" href="librygel-server/RygelMediaObject.html#rygel-media-object-get-ocm-flags">
 <ANCHOR id="RygelMediaObject-struct" href="librygel-server/RygelMediaObject.html#RygelMediaObject-struct">
 <ANCHOR id="RygelMediaObjectClass" href="librygel-server/RygelMediaObject.html#RygelMediaObjectClass">
 <ANCHOR id="RygelMediaObject.property-details" href="librygel-server/RygelMediaObject.html#RygelMediaObject.property-details">
@@ -319,8 +326,6 @@
 <ANCHOR id="RYGEL-TYPE-PHOTO-ITEM:CAPS" href="librygel-server/RygelPhotoItem.html#RYGEL-TYPE-PHOTO-ITEM:CAPS">
 <ANCHOR id="RYGEL-PHOTO-ITEM-UPNP-CLASS:CAPS" href="librygel-server/RygelPhotoItem.html#RYGEL-PHOTO-ITEM-UPNP-CLASS:CAPS">
 <ANCHOR id="rygel-photo-item-new" href="librygel-server/RygelPhotoItem.html#rygel-photo-item-new">
-<ANCHOR id="rygel-photo-item-get-creator" href="librygel-server/RygelPhotoItem.html#rygel-photo-item-get-creator">
-<ANCHOR id="rygel-photo-item-set-creator" href="librygel-server/RygelPhotoItem.html#rygel-photo-item-set-creator">
 <ANCHOR id="RygelPhotoItem-struct" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem-struct">
 <ANCHOR id="RygelPhotoItemClass" href="librygel-server/RygelPhotoItem.html#RygelPhotoItemClass">
 <ANCHOR id="RygelPhotoItem.property-details" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem.property-details">
