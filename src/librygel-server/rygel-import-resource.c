@@ -212,11 +212,13 @@ typedef enum  {
 	RYGEL_CONTENT_DIRECTORY_ERROR_REQUIRED_TAG = 704,
 	RYGEL_CONTENT_DIRECTORY_ERROR_READ_ONLY_TAG = 705,
 	RYGEL_CONTENT_DIRECTORY_ERROR_PARAMETER_MISMATCH = 706,
+	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SEARCH_CRITERIA = 708,
 	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SORT_CRITERIA = 709,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_CONTAINER = 710,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_OBJECT = 711,
 	RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA = 712,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_PARENT = 713,
+	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_FILE_TRANSFER = 717,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_DESTINATION_RESOURCE = 718,
 	RYGEL_CONTENT_DIRECTORY_ERROR_CANT_PROCESS = 720,
 	RYGEL_CONTENT_DIRECTORY_ERROR_OUTDATED_OBJECT_METADATA = 728,
@@ -259,54 +261,51 @@ struct _RygelImportResourceRunData {
 	const gchar* _tmp10_;
 	GError* _tmp11_;
 	const gchar* _tmp12_;
-	gint code;
-	GError* _tmp13_;
+	GUPnPServiceAction* _tmp13_;
 	GError* _tmp14_;
 	gint _tmp15_;
-	GUPnPServiceAction* _tmp16_;
-	gint _tmp17_;
-	GError* _tmp18_;
-	const gchar* _tmp19_;
+	GError* _tmp16_;
+	const gchar* _tmp17_;
 	RygelObjectRemovalQueue* queue;
-	RygelObjectRemovalQueue* _tmp20_;
-	RygelObjectRemovalQueue* _tmp21_;
-	RygelMediaItem* _tmp22_;
+	RygelObjectRemovalQueue* _tmp18_;
+	RygelObjectRemovalQueue* _tmp19_;
+	RygelMediaItem* _tmp20_;
 	GFile* source_file;
-	RygelMediaItem* _tmp23_;
-	GeeArrayList* _tmp24_;
-	gpointer _tmp25_;
-	gchar* _tmp26_;
-	GFile* _tmp27_;
+	RygelMediaItem* _tmp21_;
+	GeeArrayList* _tmp22_;
+	gpointer _tmp23_;
+	gchar* _tmp24_;
+	GFile* _tmp25_;
+	GFile* _tmp26_;
+	GFileOutputStream* _tmp27_;
 	GFile* _tmp28_;
-	GFileOutputStream* _tmp29_;
-	GFile* _tmp30_;
-	GCancellable* _tmp31_;
-	GCancellable* _tmp32_;
-	GFileOutputStream* _tmp33_;
+	GCancellable* _tmp29_;
+	GCancellable* _tmp30_;
+	GFileOutputStream* _tmp31_;
 	SoupMessage* message;
-	const gchar* _tmp34_;
+	const gchar* _tmp32_;
+	SoupMessage* _tmp33_;
+	SoupMessage* _tmp34_;
 	SoupMessage* _tmp35_;
 	SoupMessage* _tmp36_;
 	SoupMessage* _tmp37_;
 	SoupMessage* _tmp38_;
-	SoupMessage* _tmp39_;
-	SoupMessage* _tmp40_;
-	SoupMessageBody* _tmp41_;
-	SoupSession* _tmp42_;
-	SoupMessage* _tmp43_;
-	SoupMessage* _tmp44_;
-	const gchar* _tmp45_;
-	RygelMediaItem* _tmp46_;
-	GeeArrayList* _tmp47_;
-	gpointer _tmp48_;
-	gchar* _tmp49_;
+	SoupMessageBody* _tmp39_;
+	SoupSession* _tmp40_;
+	SoupMessage* _tmp41_;
+	SoupMessage* _tmp42_;
+	const gchar* _tmp43_;
+	RygelMediaItem* _tmp44_;
+	GeeArrayList* _tmp45_;
+	gpointer _tmp46_;
+	gchar* _tmp47_;
 	GError* err;
-	GError* _tmp50_;
-	const gchar* _tmp51_;
-	RygelObjectRemovalQueue* _tmp52_;
-	RygelMediaItem* _tmp53_;
-	GCancellable* _tmp54_;
-	GCancellable* _tmp55_;
+	GError* _tmp48_;
+	const gchar* _tmp49_;
+	RygelObjectRemovalQueue* _tmp50_;
+	RygelMediaItem* _tmp51_;
+	GCancellable* _tmp52_;
+	GCancellable* _tmp53_;
 	GError * _inner_error_;
 };
 
@@ -341,45 +340,49 @@ struct _RygelImportResourceFetchItemData {
 	RygelImportResource* self;
 	RygelMediaItem* result;
 	RygelHTTPItemURI* uri;
-	const gchar* _tmp0_;
-	RygelHTTPServer* _tmp1_;
-	RygelHTTPItemURI* _tmp2_;
-	RygelMediaObject* media_object;
-	RygelMediaContainer* _tmp3_;
-	RygelHTTPItemURI* _tmp4_;
+	RygelHTTPItemURI* _tmp0_;
+	const gchar* _tmp1_;
+	RygelHTTPServer* _tmp2_;
+	RygelHTTPItemURI* _tmp3_;
+	GError* _error_;
+	GError* _tmp4_;
 	const gchar* _tmp5_;
-	const gchar* _tmp6_;
-	RygelMediaObject* _tmp7_;
-	gchar* msg;
-	gboolean _tmp8_;
-	gboolean _tmp9_;
+	GError* _tmp6_;
+	RygelMediaObject* media_object;
+	RygelMediaContainer* _tmp7_;
+	const gchar* _tmp8_;
+	const gchar* _tmp9_;
 	RygelMediaObject* _tmp10_;
-	RygelMediaObject* _tmp11_;
+	gchar* msg;
+	gboolean _tmp11_;
 	gboolean _tmp12_;
 	RygelMediaObject* _tmp13_;
-	RygelMediaContainer* _tmp14_;
-	RygelMediaContainer* _tmp15_;
-	gboolean _tmp16_;
-	const gchar* _tmp17_;
-	const gchar* _tmp18_;
-	gchar* _tmp19_;
-	RygelMediaObject* _tmp20_;
-	gboolean _tmp21_;
-	gboolean _tmp22_;
-	const gchar* _tmp23_;
-	RygelMediaObject* _tmp24_;
-	const gchar* _tmp25_;
+	RygelMediaObject* _tmp14_;
+	gboolean _tmp15_;
+	RygelMediaObject* _tmp16_;
+	RygelMediaContainer* _tmp17_;
+	RygelMediaContainer* _tmp18_;
+	gboolean _tmp19_;
+	const gchar* _tmp20_;
+	const gchar* _tmp21_;
+	gchar* _tmp22_;
+	RygelMediaObject* _tmp23_;
+	gboolean _tmp24_;
+	gboolean _tmp25_;
 	const gchar* _tmp26_;
-	gchar* _tmp27_;
-	RygelMediaObject* _tmp28_;
-	GeeArrayList* _tmp29_;
-	gint _tmp30_;
-	gint _tmp31_;
-	const gchar* _tmp32_;
-	const gchar* _tmp33_;
-	GError* _tmp34_;
-	RygelMediaObject* _tmp35_;
-	RygelMediaItem* _tmp36_;
+	RygelMediaObject* _tmp27_;
+	const gchar* _tmp28_;
+	const gchar* _tmp29_;
+	gchar* _tmp30_;
+	RygelMediaObject* _tmp31_;
+	GeeArrayList* _tmp32_;
+	gint _tmp33_;
+	gint _tmp34_;
+	const gchar* _tmp35_;
+	const gchar* _tmp36_;
+	GError* _tmp37_;
+	RygelMediaObject* _tmp38_;
+	RygelMediaItem* _tmp39_;
 	GError * _inner_error_;
 };
 
@@ -465,14 +468,14 @@ GType rygel_transfer_status_get_type (void) {
 static void _vala_GUPnPServiceAction_free (GUPnPServiceAction* self) {
 #line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_boxed_free (gupnp_service_action_get_type (), self);
-#line 469 "rygel-import-resource.c"
+#line 472 "rygel-import-resource.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 476 "rygel-import-resource.c"
+#line 479 "rygel-import-resource.c"
 }
 
 
@@ -485,14 +488,14 @@ static void __lambda4_ (RygelImportResource* self) {
 	_tmp1_ = _tmp0_;
 #line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_cancellable_cancel (_tmp1_);
-#line 489 "rygel-import-resource.c"
+#line 492 "rygel-import-resource.c"
 }
 
 
 static void ___lambda4__g_cancellable_cancelled (GCancellable* _sender, gpointer self) {
 #line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	__lambda4_ (self);
-#line 496 "rygel-import-resource.c"
+#line 499 "rygel-import-resource.c"
 }
 
 
@@ -584,14 +587,14 @@ RygelImportResource* rygel_import_resource_construct (GType object_type, RygelCo
 	__vala_GUPnPServiceAction_free0 (action);
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	return self;
-#line 588 "rygel-import-resource.c"
+#line 591 "rygel-import-resource.c"
 }
 
 
 RygelImportResource* rygel_import_resource_new (RygelContentDirectory* content_dir, GUPnPServiceAction* action) {
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	return rygel_import_resource_construct (RYGEL_TYPE_IMPORT_RESOURCE, content_dir, action);
-#line 595 "rygel-import-resource.c"
+#line 598 "rygel-import-resource.c"
 }
 
 
@@ -602,7 +605,7 @@ static void rygel_import_resource_real_run_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_slice_free (RygelImportResourceRunData, _data_);
-#line 606 "rygel-import-resource.c"
+#line 609 "rygel-import-resource.c"
 }
 
 
@@ -624,7 +627,7 @@ static void rygel_import_resource_real_run (RygelStateMachine* base, GAsyncReady
 	_data_->self = _tmp0_;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	rygel_import_resource_real_run_co (_data_);
-#line 628 "rygel-import-resource.c"
+#line 631 "rygel-import-resource.c"
 }
 
 
@@ -632,7 +635,7 @@ static void rygel_import_resource_real_run_finish (RygelStateMachine* base, GAsy
 	RygelImportResourceRunData* _data_;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 636 "rygel-import-resource.c"
+#line 639 "rygel-import-resource.c"
 }
 
 
@@ -646,44 +649,44 @@ static void rygel_import_resource_run_ready (GObject* source_object, GAsyncResul
 	_data_->_res_ = _res_;
 #line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	rygel_import_resource_real_run_co (_data_);
-#line 650 "rygel-import-resource.c"
+#line 653 "rygel-import-resource.c"
 }
 
 
 static void _rygel_import_resource_got_chunk_cb_soup_message_got_chunk (SoupMessage* _sender, SoupBuffer* chunk, gpointer self) {
-#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	rygel_import_resource_got_chunk_cb (self, _sender, chunk);
-#line 657 "rygel-import-resource.c"
+#line 660 "rygel-import-resource.c"
 }
 
 
 static void _rygel_import_resource_got_body_cb_soup_message_got_body (SoupMessage* _sender, gpointer self) {
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	rygel_import_resource_got_body_cb (self, _sender);
-#line 664 "rygel-import-resource.c"
+#line 667 "rygel-import-resource.c"
 }
 
 
 static void _rygel_import_resource_got_headers_cb_soup_message_got_headers (SoupMessage* _sender, gpointer self) {
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	rygel_import_resource_got_headers_cb (self, _sender);
-#line 671 "rygel-import-resource.c"
+#line 674 "rygel-import-resource.c"
 }
 
 
 static void _rygel_import_resource_finished_cb_soup_message_finished (SoupMessage* _sender, gpointer self) {
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	rygel_import_resource_finished_cb (self, _sender);
-#line 678 "rygel-import-resource.c"
+#line 681 "rygel-import-resource.c"
 }
 
 
 static gboolean _rygel_import_resource_real_run_co_gsource_func (gpointer self) {
 	gboolean result;
 	result = rygel_import_resource_real_run_co (self);
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	return result;
-#line 687 "rygel-import-resource.c"
+#line 690 "rygel-import-resource.c"
 }
 
 
@@ -692,28 +695,28 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 	switch (_data_->_state_) {
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case 0:
-#line 696 "rygel-import-resource.c"
+#line 699 "rygel-import-resource.c"
 		goto _state_0;
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case 1:
-#line 700 "rygel-import-resource.c"
+#line 703 "rygel-import-resource.c"
 		goto _state_1;
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case 2:
-#line 704 "rygel-import-resource.c"
+#line 707 "rygel-import-resource.c"
 		goto _state_2;
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case 3:
-#line 708 "rygel-import-resource.c"
+#line 711 "rygel-import-resource.c"
 		goto _state_3;
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case 4:
-#line 712 "rygel-import-resource.c"
+#line 715 "rygel-import-resource.c"
 		goto _state_4;
 		default:
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_assert_not_reached ();
-#line 717 "rygel-import-resource.c"
+#line 720 "rygel-import-resource.c"
 	}
 	_state_0:
 #line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
@@ -722,7 +725,7 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 	_data_->_tmp0_ = _data_->self->priv->action;
 #line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	gupnp_service_action_get (_data_->_tmp0_, "SourceURI", G_TYPE_STRING, &_data_->self->source_uri, "DestinationURI", G_TYPE_STRING, &_data_->self->destination_uri, NULL);
-#line 726 "rygel-import-resource.c"
+#line 729 "rygel-import-resource.c"
 	{
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp1_ = NULL;
@@ -736,8 +739,8 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 			_data_->_tmp2_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, "Must provide source URI");
 #line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_data_->_inner_error_ = _data_->_tmp2_;
-#line 740 "rygel-import-resource.c"
-			goto __catch46_g_error;
+#line 743 "rygel-import-resource.c"
+			goto __catch48_g_error;
 		}
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp3_ = NULL;
@@ -751,8 +754,8 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 			_data_->_tmp4_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_DESTINATION_RESOURCE, "Must provide destination URI");
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_data_->_inner_error_ = _data_->_tmp4_;
-#line 755 "rygel-import-resource.c"
-			goto __catch46_g_error;
+#line 758 "rygel-import-resource.c"
+			goto __catch48_g_error;
 		}
 #line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp5_ = NULL;
@@ -770,7 +773,7 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		rygel_import_resource_fetch_item (_data_->self, rygel_import_resource_run_ready, _data_);
 #line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return FALSE;
-#line 774 "rygel-import-resource.c"
+#line 777 "rygel-import-resource.c"
 		_state_1:
 #line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp8_ = NULL;
@@ -780,17 +783,17 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		_data_->_tmp7_ = _data_->_tmp8_;
 #line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 784 "rygel-import-resource.c"
-			goto __catch46_g_error;
+#line 787 "rygel-import-resource.c"
+			goto __catch48_g_error;
 		}
 #line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_object_unref0 (_data_->self->priv->item);
 #line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->self->priv->item = _data_->_tmp7_;
-#line 791 "rygel-import-resource.c"
+#line 794 "rygel-import-resource.c"
 	}
-	goto __finally46;
-	__catch46_g_error:
+	goto __finally48;
+	__catch48_g_error:
 	{
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -814,69 +817,51 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		_data_->_tmp12_ = _data_->_tmp11_->message;
 #line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_warning (_data_->_tmp9_, _data_->_tmp10_, _data_->_tmp12_);
-#line 129 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp13_ = NULL;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp13_ = _data_->self->priv->action;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp14_ = NULL;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp14_ = _data_->_error_;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp15_ = 0;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp15_ = _data_->_tmp14_->code;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp16_ = NULL;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp16_ = _data_->_error_;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp17_ = NULL;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp17_ = _data_->_tmp16_->message;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		gupnp_service_action_return_error (_data_->_tmp13_, (guint) _data_->_tmp15_, _data_->_tmp17_);
 #line 129 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp13_ = _data_->_error_;
-#line 129 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		if (_data_->_tmp13_->domain == RYGEL_CONTENT_DIRECTORY_ERROR) {
+		_data_->self->status = RYGEL_TRANSFER_STATUS_ERROR;
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp14_ = NULL;
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp14_ = _data_->_error_;
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp15_ = 0;
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp15_ = _data_->_tmp14_->code;
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->code = _data_->_tmp15_;
-#line 834 "rygel-import-resource.c"
+		g_signal_emit_by_name ((RygelStateMachine*) _data_->self, "completed");
+#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_error_free0 (_data_->_error_);
+#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		if (_data_->_state_ == 0) {
+#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 853 "rygel-import-resource.c"
 		} else {
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->code = 719;
-#line 838 "rygel-import-resource.c"
-		}
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp16_ = NULL;
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp16_ = _data_->self->priv->action;
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp17_ = 0;
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp17_ = _data_->code;
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp18_ = NULL;
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp18_ = _data_->_error_;
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp19_ = NULL;
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp19_ = _data_->_tmp18_->message;
-#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		gupnp_service_action_return_error (_data_->_tmp16_, (guint) _data_->_tmp17_, _data_->_tmp19_);
-#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->self->status = RYGEL_TRANSFER_STATUS_ERROR;
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_signal_emit_by_name ((RygelStateMachine*) _data_->self, "completed");
-#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_g_error_free0 (_data_->_error_);
-#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		if (_data_->_state_ == 0) {
-#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 868 "rygel-import-resource.c"
-		} else {
-#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 872 "rygel-import-resource.c"
+#line 857 "rygel-import-resource.c"
 		}
-#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_object_unref (_data_->_async_result);
-#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return FALSE;
-#line 878 "rygel-import-resource.c"
+#line 863 "rygel-import-resource.c"
 	}
-	__finally46:
+	__finally48:
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
@@ -885,263 +870,263 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 		g_clear_error (&_data_->_inner_error_);
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return FALSE;
-#line 889 "rygel-import-resource.c"
+#line 874 "rygel-import-resource.c"
 	}
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp18_ = NULL;
+#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp18_ = rygel_object_removal_queue_get_default ();
+#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->queue = _data_->_tmp18_;
+#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp19_ = NULL;
+#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp19_ = _data_->queue;
+#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_data_->_tmp20_ = NULL;
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp20_ = rygel_object_removal_queue_get_default ();
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->queue = _data_->_tmp20_;
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp21_ = NULL;
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp21_ = _data_->queue;
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp22_ = NULL;
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp22_ = _data_->self->priv->item;
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	rygel_object_removal_queue_dequeue (_data_->_tmp21_, (RygelMediaObject*) _data_->_tmp22_);
-#line 907 "rygel-import-resource.c"
+#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp20_ = _data_->self->priv->item;
+#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	rygel_object_removal_queue_dequeue (_data_->_tmp19_, (RygelMediaObject*) _data_->_tmp20_);
+#line 892 "rygel-import-resource.c"
 	{
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp21_ = NULL;
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp21_ = _data_->self->priv->item;
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp22_ = NULL;
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp22_ = ((RygelMediaObject*) _data_->_tmp21_)->uris;
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp23_ = NULL;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp23_ = _data_->self->priv->item;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp23_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp22_, 0);
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp24_ = NULL;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp24_ = ((RygelMediaObject*) _data_->_tmp23_)->uris;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp24_ = (gchar*) _data_->_tmp23_;
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp25_ = NULL;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp25_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp24_, 0);
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp25_ = g_file_new_for_uri (_data_->_tmp24_);
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp26_ = NULL;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp26_ = (gchar*) _data_->_tmp25_;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp27_ = NULL;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp27_ = g_file_new_for_uri (_data_->_tmp26_);
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp26_ = _data_->_tmp25_;
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_free0 (_data_->_tmp24_);
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->source_file = _data_->_tmp26_;
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp28_ = NULL;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp28_ = _data_->_tmp27_;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_g_free0 (_data_->_tmp26_);
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->source_file = _data_->_tmp28_;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp28_ = _data_->source_file;
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp29_ = NULL;
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp29_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp30_ = NULL;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp30_ = _data_->source_file;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp31_ = NULL;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp31_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp32_ = NULL;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp32_ = _data_->_tmp31_;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp30_ = _data_->_tmp29_;
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_state_ = 2;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_file_replace_async (_data_->_tmp30_, NULL, FALSE, G_FILE_CREATE_PRIVATE, G_PRIORITY_DEFAULT, _data_->_tmp32_, rygel_import_resource_run_ready, _data_);
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_file_replace_async (_data_->_tmp28_, NULL, FALSE, G_FILE_CREATE_PRIVATE, G_PRIORITY_DEFAULT, _data_->_tmp30_, rygel_import_resource_run_ready, _data_);
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return FALSE;
-#line 955 "rygel-import-resource.c"
+#line 940 "rygel-import-resource.c"
 		_state_2:
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp33_ = NULL;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp33_ = g_file_replace_finish (_data_->_tmp30_, _data_->_res_, &_data_->_inner_error_);
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp29_ = _data_->_tmp33_;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp31_ = NULL;
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp31_ = g_file_replace_finish (_data_->_tmp28_, _data_->_res_, &_data_->_inner_error_);
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp27_ = _data_->_tmp31_;
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_g_object_unref0 (_data_->source_file);
-#line 967 "rygel-import-resource.c"
-			goto __catch47_g_error;
+#line 952 "rygel-import-resource.c"
+			goto __catch49_g_error;
 		}
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_object_unref0 (_data_->self->priv->output_stream);
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->self->priv->output_stream = _data_->_tmp29_;
-#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->self->priv->output_stream = _data_->_tmp27_;
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp32_ = NULL;
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp32_ = _data_->self->source_uri;
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp33_ = NULL;
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp33_ = soup_message_new ("GET", _data_->_tmp32_);
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->message = _data_->_tmp33_;
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp34_ = NULL;
-#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp34_ = _data_->self->source_uri;
-#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp34_ = _data_->message;
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_signal_connect_object (_data_->_tmp34_, "got-chunk", (GCallback) _rygel_import_resource_got_chunk_cb_soup_message_got_chunk, _data_->self, 0);
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp35_ = NULL;
-#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp35_ = soup_message_new ("GET", _data_->_tmp34_);
-#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->message = _data_->_tmp35_;
-#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp35_ = _data_->message;
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_signal_connect_object (_data_->_tmp35_, "got-body", (GCallback) _rygel_import_resource_got_body_cb_soup_message_got_body, _data_->self, 0);
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp36_ = NULL;
-#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp36_ = _data_->message;
-#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_signal_connect_object (_data_->_tmp36_, "got-chunk", (GCallback) _rygel_import_resource_got_chunk_cb_soup_message_got_chunk, _data_->self, 0);
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_signal_connect_object (_data_->_tmp36_, "got-headers", (GCallback) _rygel_import_resource_got_headers_cb_soup_message_got_headers, _data_->self, 0);
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp37_ = NULL;
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp37_ = _data_->message;
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_signal_connect_object (_data_->_tmp37_, "got-body", (GCallback) _rygel_import_resource_got_body_cb_soup_message_got_body, _data_->self, 0);
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_signal_connect_object (_data_->_tmp37_, "finished", (GCallback) _rygel_import_resource_finished_cb_soup_message_finished, _data_->self, 0);
+#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp38_ = NULL;
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp38_ = _data_->message;
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_signal_connect_object (_data_->_tmp38_, "got-headers", (GCallback) _rygel_import_resource_got_headers_cb_soup_message_got_headers, _data_->self, 0);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp39_ = NULL;
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp39_ = _data_->message;
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_signal_connect_object (_data_->_tmp39_, "finished", (GCallback) _rygel_import_resource_finished_cb_soup_message_finished, _data_->self, 0);
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp40_ = NULL;
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp40_ = _data_->message;
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp41_ = NULL;
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp41_ = _data_->_tmp40_->response_body;
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		soup_message_body_set_accumulate (_data_->_tmp41_, FALSE);
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp39_ = _data_->_tmp38_->response_body;
+#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		soup_message_body_set_accumulate (_data_->_tmp39_, FALSE);
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		(_data_->self->priv->run_callback_target_destroy_notify == NULL) ? NULL : (_data_->self->priv->run_callback_target_destroy_notify (_data_->self->priv->run_callback_target), NULL);
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->self->priv->run_callback = NULL;
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->self->priv->run_callback_target = NULL;
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->self->priv->run_callback_target_destroy_notify = NULL;
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->self->priv->run_callback = _rygel_import_resource_real_run_co_gsource_func;
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->self->priv->run_callback_target = _data_;
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->self->priv->run_callback_target_destroy_notify = NULL;
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp40_ = NULL;
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp40_ = _data_->self->priv->session;
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp41_ = NULL;
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp41_ = _data_->message;
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp42_ = NULL;
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp42_ = _data_->self->priv->session;
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp42_ = _g_object_ref0 (_data_->_tmp41_);
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		soup_session_queue_message (_data_->_tmp40_, _data_->_tmp42_, NULL, NULL);
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp43_ = NULL;
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp43_ = _data_->message;
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp43_ = _data_->self->source_uri;
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp44_ = NULL;
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp44_ = _g_object_ref0 (_data_->_tmp43_);
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		soup_session_queue_message (_data_->_tmp42_, _data_->_tmp44_, NULL, NULL);
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp44_ = _data_->self->priv->item;
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp45_ = NULL;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp45_ = _data_->self->source_uri;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp45_ = ((RygelMediaObject*) _data_->_tmp44_)->uris;
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp46_ = NULL;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp46_ = _data_->self->priv->item;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp46_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp45_, 0);
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp47_ = NULL;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp47_ = ((RygelMediaObject*) _data_->_tmp46_)->uris;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp48_ = NULL;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp48_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp47_, 0);
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp49_ = NULL;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp49_ = (gchar*) _data_->_tmp48_;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_debug ("rygel-import-resource.vala:162: Importing resource from %s to %s", _data_->_tmp45_, _data_->_tmp49_);
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_g_free0 (_data_->_tmp49_);
-#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp47_ = (gchar*) _data_->_tmp46_;
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_debug ("rygel-import-resource.vala:155: Importing resource from %s to %s", _data_->_tmp43_, _data_->_tmp47_);
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_free0 (_data_->_tmp47_);
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_state_ = 3;
-#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return FALSE;
-#line 1074 "rygel-import-resource.c"
+#line 1059 "rygel-import-resource.c"
 		_state_3:
 		;
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_object_unref0 (_data_->message);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_object_unref0 (_data_->source_file);
-#line 1081 "rygel-import-resource.c"
+#line 1066 "rygel-import-resource.c"
 	}
-	goto __finally47;
-	__catch47_g_error:
+	goto __finally49;
+	__catch49_g_error:
 	{
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->err = _data_->_inner_error_;
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_inner_error_ = NULL;
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp50_ = NULL;
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp50_ = _data_->err;
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp51_ = NULL;
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp51_ = _data_->_tmp50_->message;
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_warning ("rygel-import-resource.vala:168: %s", _data_->_tmp51_);
-#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp48_ = NULL;
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp48_ = _data_->err;
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp49_ = NULL;
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp49_ = _data_->_tmp48_->message;
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_warning ("rygel-import-resource.vala:161: %s", _data_->_tmp49_);
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->self->status = RYGEL_TRANSFER_STATUS_ERROR;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp50_ = NULL;
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp50_ = _data_->queue;
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp51_ = NULL;
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp51_ = _data_->self->priv->item;
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp52_ = NULL;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp52_ = _data_->queue;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp52_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_tmp53_ = NULL;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp53_ = _data_->self->priv->item;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp54_ = NULL;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp54_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp55_ = NULL;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp55_ = _data_->_tmp54_;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp53_ = _data_->_tmp52_;
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_data_->_state_ = 4;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		rygel_object_removal_queue_remove_now (_data_->_tmp52_, (RygelMediaObject*) _data_->_tmp53_, _data_->_tmp55_, rygel_import_resource_run_ready, _data_);
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		rygel_object_removal_queue_remove_now (_data_->_tmp50_, (RygelMediaObject*) _data_->_tmp51_, _data_->_tmp53_, rygel_import_resource_run_ready, _data_);
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return FALSE;
-#line 1124 "rygel-import-resource.c"
+#line 1109 "rygel-import-resource.c"
 		_state_4:
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		rygel_object_removal_queue_remove_now_finish (_data_->_tmp52_, _data_->_res_);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		rygel_object_removal_queue_remove_now_finish (_data_->_tmp50_, _data_->_res_);
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_error_free0 (_data_->err);
-#line 1130 "rygel-import-resource.c"
+#line 1115 "rygel-import-resource.c"
 	}
-	__finally47:
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	__finally49:
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_data_->_inner_error_ != NULL) {
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_object_unref0 (_data_->queue);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _data_->_inner_error_->message, g_quark_to_string (_data_->_inner_error_->domain), _data_->_inner_error_->code);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_clear_error (&_data_->_inner_error_);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return FALSE;
-#line 1143 "rygel-import-resource.c"
+#line 1128 "rygel-import-resource.c"
 	}
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_signal_emit_by_name ((RygelStateMachine*) _data_->self, "completed");
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_g_object_unref0 (_data_->queue);
@@ -1149,17 +1134,17 @@ static gboolean rygel_import_resource_real_run_co (RygelImportResourceRunData* _
 	if (_data_->_state_ == 0) {
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1153 "rygel-import-resource.c"
+#line 1138 "rygel-import-resource.c"
 	} else {
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1157 "rygel-import-resource.c"
+#line 1142 "rygel-import-resource.c"
 	}
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_object_unref (_data_->_async_result);
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	return FALSE;
-#line 1163 "rygel-import-resource.c"
+#line 1148 "rygel-import-resource.c"
 }
 
 
@@ -1172,7 +1157,7 @@ static void rygel_import_resource_fetch_item_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_slice_free (RygelImportResourceFetchItemData, _data_);
-#line 1176 "rygel-import-resource.c"
+#line 1161 "rygel-import-resource.c"
 }
 
 
@@ -1191,7 +1176,7 @@ static void rygel_import_resource_fetch_item (RygelImportResource* self, GAsyncR
 	_data_->self = _tmp0_;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	rygel_import_resource_fetch_item_co (_data_);
-#line 1195 "rygel-import-resource.c"
+#line 1180 "rygel-import-resource.c"
 }
 
 
@@ -1202,7 +1187,7 @@ static RygelMediaItem* rygel_import_resource_fetch_item_finish (RygelImportResou
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return NULL;
-#line 1206 "rygel-import-resource.c"
+#line 1191 "rygel-import-resource.c"
 	}
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
@@ -1212,358 +1197,395 @@ static RygelMediaItem* rygel_import_resource_fetch_item_finish (RygelImportResou
 	_data_->result = NULL;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	return result;
-#line 1216 "rygel-import-resource.c"
+#line 1201 "rygel-import-resource.c"
 }
 
 
 static void rygel_import_resource_fetch_item_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_) {
 	RygelImportResourceFetchItemData* _data_;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_data_ = _user_data_;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_data_->_source_object_ = source_object;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_data_->_res_ = _res_;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	rygel_import_resource_fetch_item_co (_data_);
-#line 1230 "rygel-import-resource.c"
+#line 1215 "rygel-import-resource.c"
 }
 
 
 static gboolean rygel_import_resource_fetch_item_co (RygelImportResourceFetchItemData* _data_) {
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	switch (_data_->_state_) {
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case 0:
-#line 1239 "rygel-import-resource.c"
+#line 1224 "rygel-import-resource.c"
 		goto _state_0;
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case 1:
-#line 1243 "rygel-import-resource.c"
+#line 1228 "rygel-import-resource.c"
 		goto _state_1;
 		default:
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_assert_not_reached ();
-#line 1248 "rygel-import-resource.c"
+#line 1233 "rygel-import-resource.c"
 	}
 	_state_0:
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp0_ = NULL;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp0_ = _data_->self->destination_uri;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp1_ = NULL;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp1_ = _data_->self->priv->http_server;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp2_ = NULL;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp2_ = rygel_http_item_uri_new_from_string (_data_->_tmp0_, _data_->_tmp1_, &_data_->_inner_error_);
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->uri = _data_->_tmp2_;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	if (_data_->_inner_error_ != NULL) {
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_error_free (_data_->_inner_error_);
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		if (_data_->_state_ == 0) {
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1275 "rygel-import-resource.c"
-		} else {
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			g_simple_async_result_complete (_data_->_async_result);
-#line 1279 "rygel-import-resource.c"
+	{
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp1_ = NULL;
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp1_ = _data_->self->destination_uri;
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp2_ = NULL;
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp2_ = _data_->self->priv->http_server;
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp3_ = NULL;
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp3_ = rygel_http_item_uri_new_from_string (_data_->_tmp1_, _data_->_tmp2_, &_data_->_inner_error_);
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp0_ = _data_->_tmp3_;
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		if (_data_->_inner_error_ != NULL) {
+#line 1253 "rygel-import-resource.c"
+			goto __catch50_g_error;
 		}
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_object_unref (_data_->_async_result);
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		return FALSE;
-#line 1285 "rygel-import-resource.c"
-	}
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp3_ = NULL;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp3_ = _data_->self->priv->root_container;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp4_ = NULL;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp4_ = _data_->uri;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp5_ = NULL;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp5_ = rygel_http_item_uri_get_item_id (_data_->_tmp4_);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp6_ = NULL;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp6_ = _data_->_tmp5_;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_state_ = 1;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	rygel_media_container_find_object (_data_->_tmp3_, _data_->_tmp6_, NULL, rygel_import_resource_fetch_item_ready, _data_);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	return FALSE;
-#line 1309 "rygel-import-resource.c"
-	_state_1:
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp7_ = NULL;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp7_ = rygel_media_container_find_object_finish (_data_->_tmp3_, _data_->_res_, &_data_->_inner_error_);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->media_object = _data_->_tmp7_;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	if (_data_->_inner_error_ != NULL) {
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_error_free (_data_->_inner_error_);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_object_unref0 (_data_->uri);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->uri = _data_->_tmp0_;
+#line 1260 "rygel-import-resource.c"
+	}
+	goto __finally50;
+	__catch50_g_error:
+	{
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_error_ = _data_->_inner_error_;
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_inner_error_ = NULL;
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp4_ = NULL;
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp4_ = _data_->_error_;
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp5_ = NULL;
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp5_ = _data_->_tmp4_->message;
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp6_ = NULL;
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp6_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_DESTINATION_RESOURCE, _data_->_tmp5_);
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_inner_error_ = _data_->_tmp6_;
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_error_free0 (_data_->_error_);
+#line 1285 "rygel-import-resource.c"
+		goto __finally50;
+	}
+	__finally50:
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	if (_data_->_inner_error_ != NULL) {
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_error_free (_data_->_inner_error_);
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_object_unref0 (_data_->uri);
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_data_->_state_ == 0) {
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1329 "rygel-import-resource.c"
+#line 1301 "rygel-import-resource.c"
 		} else {
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 1333 "rygel-import-resource.c"
+#line 1305 "rygel-import-resource.c"
 		}
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_object_unref (_data_->_async_result);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return FALSE;
-#line 1339 "rygel-import-resource.c"
+#line 1311 "rygel-import-resource.c"
 	}
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->msg = NULL;
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp7_ = NULL;
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp7_ = _data_->self->priv->root_container;
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp8_ = NULL;
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp8_ = rygel_http_item_uri_get_item_id (_data_->uri);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp9_ = NULL;
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp9_ = _data_->_tmp8_;
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_state_ = 1;
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	rygel_media_container_find_object (_data_->_tmp7_, _data_->_tmp9_, NULL, rygel_import_resource_fetch_item_ready, _data_);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	return FALSE;
+#line 1331 "rygel-import-resource.c"
+	_state_1:
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_data_->_tmp10_ = NULL;
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp10_ = _data_->media_object;
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	if (_data_->_tmp10_ == NULL) {
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp9_ = TRUE;
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp10_ = rygel_media_container_find_object_finish (_data_->_tmp7_, _data_->_res_, &_data_->_inner_error_);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->media_object = _data_->_tmp10_;
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	if (_data_->_inner_error_ != NULL) {
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_error_free (_data_->_inner_error_);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_object_unref0 (_data_->uri);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		if (_data_->_state_ == 0) {
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			g_simple_async_result_complete_in_idle (_data_->_async_result);
 #line 1351 "rygel-import-resource.c"
-	} else {
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp11_ = NULL;
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp11_ = _data_->media_object;
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp9_ = !G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp11_, RYGEL_TYPE_MEDIA_ITEM);
-#line 1359 "rygel-import-resource.c"
-	}
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp12_ = FALSE;
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp12_ = _data_->_tmp9_;
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	if (_data_->_tmp12_) {
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp8_ = TRUE;
-#line 1369 "rygel-import-resource.c"
-	} else {
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp13_ = NULL;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp13_ = _data_->media_object;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp14_ = NULL;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp14_ = rygel_media_object_get_parent (_data_->_tmp13_);
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp15_ = NULL;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp15_ = _data_->_tmp14_;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp8_ = !G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp15_, RYGEL_TYPE_WRITABLE_CONTAINER);
-#line 1385 "rygel-import-resource.c"
-	}
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp16_ = FALSE;
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp16_ = _data_->_tmp8_;
-#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	if (_data_->_tmp16_) {
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp17_ = NULL;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp17_ = _ ("URI '%s' invalid for importing contents to");
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp18_ = NULL;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp18_ = _data_->self->destination_uri;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp19_ = NULL;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp19_ = g_strdup_printf (_data_->_tmp17_, _data_->_tmp18_);
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_g_free0 (_data_->msg);
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->msg = _data_->_tmp19_;
-#line 1409 "rygel-import-resource.c"
-	} else {
-#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp20_ = NULL;
-#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp20_ = _data_->media_object;
-#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp21_ = FALSE;
-#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp21_ = rygel_media_item_get_place_holder (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp20_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp20_) : NULL);
-#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp22_ = FALSE;
-#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp22_ = _data_->_tmp21_;
-#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		if (!_data_->_tmp22_) {
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp23_ = NULL;
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp23_ = _ ("Pushing data to non-empty item '%s' not allowed");
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp24_ = NULL;
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp24_ = _data_->media_object;
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp25_ = NULL;
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp25_ = rygel_media_object_get_id (_data_->_tmp24_);
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp26_ = NULL;
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp26_ = _data_->_tmp25_;
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp27_ = NULL;
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp27_ = g_strdup_printf (_data_->_tmp23_, _data_->_tmp26_);
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_g_free0 (_data_->msg);
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->msg = _data_->_tmp27_;
-#line 1449 "rygel-import-resource.c"
 		} else {
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			g_simple_async_result_complete (_data_->_async_result);
+#line 1355 "rygel-import-resource.c"
+		}
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_object_unref (_data_->_async_result);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		return FALSE;
+#line 1361 "rygel-import-resource.c"
+	}
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->msg = NULL;
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp13_ = NULL;
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp13_ = _data_->media_object;
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	if (_data_->_tmp13_ == NULL) {
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp12_ = TRUE;
+#line 1373 "rygel-import-resource.c"
+	} else {
+#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp14_ = NULL;
+#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp14_ = _data_->media_object;
+#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp12_ = !G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp14_, RYGEL_TYPE_MEDIA_ITEM);
+#line 1381 "rygel-import-resource.c"
+	}
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp15_ = FALSE;
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp15_ = _data_->_tmp12_;
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	if (_data_->_tmp15_) {
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp11_ = TRUE;
+#line 1391 "rygel-import-resource.c"
+	} else {
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp16_ = NULL;
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp16_ = _data_->media_object;
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp17_ = NULL;
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp17_ = rygel_media_object_get_parent (_data_->_tmp16_);
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp18_ = NULL;
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp18_ = _data_->_tmp17_;
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp11_ = !G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp18_, RYGEL_TYPE_WRITABLE_CONTAINER);
+#line 1407 "rygel-import-resource.c"
+	}
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp19_ = FALSE;
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp19_ = _data_->_tmp11_;
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	if (_data_->_tmp19_) {
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp20_ = NULL;
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp20_ = _ ("URI '%s' invalid for importing contents to");
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp21_ = NULL;
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp21_ = _data_->self->destination_uri;
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp22_ = NULL;
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp22_ = g_strdup_printf (_data_->_tmp20_, _data_->_tmp21_);
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_free0 (_data_->msg);
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->msg = _data_->_tmp22_;
+#line 1431 "rygel-import-resource.c"
+	} else {
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp23_ = NULL;
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp23_ = _data_->media_object;
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp24_ = FALSE;
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp24_ = rygel_media_item_get_place_holder (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp23_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp23_) : NULL);
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp25_ = FALSE;
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp25_ = _data_->_tmp24_;
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		if (!_data_->_tmp25_) {
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp26_ = NULL;
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp26_ = _ ("Pushing data to non-empty item '%s' not allowed");
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp27_ = NULL;
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp27_ = _data_->media_object;
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_data_->_tmp28_ = NULL;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp28_ = _data_->media_object;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp28_ = rygel_media_object_get_id (_data_->_tmp27_);
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_data_->_tmp29_ = NULL;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp29_ = _data_->_tmp28_->uris;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp30_ = 0;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp30_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp29_);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp31_ = 0;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_data_->_tmp31_ = _data_->_tmp30_;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			if (_data_->_tmp31_ < 1) {
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-				g_assert_not_reached ();
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp29_ = _data_->_tmp28_;
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp30_ = NULL;
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp30_ = g_strdup_printf (_data_->_tmp26_, _data_->_tmp29_);
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_g_free0 (_data_->msg);
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->msg = _data_->_tmp30_;
 #line 1471 "rygel-import-resource.c"
+		} else {
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp31_ = NULL;
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp31_ = _data_->media_object;
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp32_ = NULL;
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp32_ = _data_->_tmp31_->uris;
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp33_ = 0;
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp33_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp32_);
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp34_ = 0;
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_data_->_tmp34_ = _data_->_tmp33_;
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			if (_data_->_tmp34_ < 1) {
+#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+				g_assert_not_reached ();
+#line 1493 "rygel-import-resource.c"
 			}
 		}
 	}
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp32_ = NULL;
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp32_ = _data_->msg;
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	if (_data_->_tmp32_ != NULL) {
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp33_ = NULL;
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp33_ = _data_->msg;
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp34_ = NULL;
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_tmp34_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _data_->_tmp33_);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_data_->_inner_error_ = _data_->_tmp34_;
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_error_free (_data_->_inner_error_);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_g_free0 (_data_->msg);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_g_object_unref0 (_data_->media_object);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_g_object_unref0 (_data_->uri);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		if (_data_->_state_ == 0) {
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1505 "rygel-import-resource.c"
-		} else {
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			g_simple_async_result_complete (_data_->_async_result);
-#line 1509 "rygel-import-resource.c"
-		}
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_object_unref (_data_->_async_result);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		return FALSE;
-#line 1515 "rygel-import-resource.c"
-	}
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_data_->_tmp35_ = NULL;
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp35_ = _data_->media_object;
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp36_ = NULL;
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->_tmp36_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp35_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp35_) : NULL);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_data_->result = _data_->_tmp36_;
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_g_free0 (_data_->msg);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_g_object_unref0 (_data_->media_object);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	_g_object_unref0 (_data_->uri);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	if (_data_->_state_ == 0) {
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp35_ = _data_->msg;
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	if (_data_->_tmp35_ != NULL) {
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp36_ = NULL;
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp36_ = _data_->msg;
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp37_ = NULL;
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_tmp37_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _data_->_tmp36_);
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_data_->_inner_error_ = _data_->_tmp37_;
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_error_free (_data_->_inner_error_);
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_free0 (_data_->msg);
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_object_unref0 (_data_->media_object);
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_g_object_unref0 (_data_->uri);
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		if (_data_->_state_ == 0) {
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1527 "rygel-import-resource.c"
+		} else {
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			g_simple_async_result_complete (_data_->_async_result);
+#line 1531 "rygel-import-resource.c"
+		}
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_object_unref (_data_->_async_result);
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		return FALSE;
 #line 1537 "rygel-import-resource.c"
-	} else {
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_simple_async_result_complete (_data_->_async_result);
-#line 1541 "rygel-import-resource.c"
 	}
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	g_object_unref (_data_->_async_result);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-	return FALSE;
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp38_ = NULL;
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp38_ = _data_->media_object;
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp39_ = NULL;
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->_tmp39_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp38_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp38_) : NULL);
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_data_->result = _data_->_tmp39_;
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_g_free0 (_data_->msg);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_g_object_unref0 (_data_->media_object);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_g_object_unref0 (_data_->uri);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_data_->_state_ == 0) {
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1557 "rygel-import-resource.c"
+#line 1559 "rygel-import-resource.c"
 	} else {
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1561 "rygel-import-resource.c"
+#line 1563 "rygel-import-resource.c"
 	}
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_object_unref (_data_->_async_result);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	return FALSE;
-#line 1567 "rygel-import-resource.c"
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_g_free0 (_data_->msg);
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_g_object_unref0 (_data_->media_object);
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	_g_object_unref0 (_data_->uri);
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	if (_data_->_state_ == 0) {
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1579 "rygel-import-resource.c"
+	} else {
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_simple_async_result_complete (_data_->_async_result);
+#line 1583 "rygel-import-resource.c"
+	}
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	g_object_unref (_data_->_async_result);
+#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	return FALSE;
+#line 1589 "rygel-import-resource.c"
 }
 
 
@@ -1577,55 +1599,55 @@ static void rygel_import_resource_got_headers_cb (RygelImportResource* self, Sou
 	guint _tmp6_ = 0U;
 	gboolean _tmp10_ = FALSE;
 	GError * _inner_error_ = NULL;
-#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (self != NULL);
-#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (message != NULL);
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp0_ = message;
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp1_ = _tmp0_->response_headers;
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp2_ = soup_message_headers_get_content_length (_tmp1_);
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	self->bytes_total = _tmp2_;
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp4_ = message;
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_object_get (_tmp4_, "status-code", &_tmp5_, NULL);
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp6_ = _tmp5_;
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_tmp6_ >= ((guint) 200)) {
-#line 1601 "rygel-import-resource.c"
+#line 1623 "rygel-import-resource.c"
 		SoupMessage* _tmp7_ = NULL;
 		guint _tmp8_ = 0U;
 		guint _tmp9_ = 0U;
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp7_ = message;
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_object_get (_tmp7_, "status-code", &_tmp8_, NULL);
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp9_ = _tmp8_;
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp3_ = _tmp9_ <= ((guint) 299);
-#line 1613 "rygel-import-resource.c"
+#line 1635 "rygel-import-resource.c"
 	} else {
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp3_ = FALSE;
-#line 1617 "rygel-import-resource.c"
+#line 1639 "rygel-import-resource.c"
 	}
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp10_ = _tmp3_;
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_tmp10_) {
-#line 1623 "rygel-import-resource.c"
+#line 1645 "rygel-import-resource.c"
 		GUPnPServiceAction* _tmp11_ = NULL;
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp11_ = self->priv->action;
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		gupnp_service_action_return (_tmp11_);
-#line 1629 "rygel-import-resource.c"
+#line 1651 "rygel-import-resource.c"
 	} else {
 		gchar* phrase = NULL;
 		SoupMessage* _tmp24_ = NULL;
@@ -1636,9 +1658,9 @@ static void rygel_import_resource_got_headers_cb (RygelImportResource* self, Sou
 		SoupMessage* _tmp29_ = NULL;
 		guint _tmp30_ = 0U;
 		guint _tmp31_ = 0U;
-#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		self->status = RYGEL_TRANSFER_STATUS_ERROR;
-#line 1642 "rygel-import-resource.c"
+#line 1664 "rygel-import-resource.c"
 		{
 			GFileOutputStream* _tmp12_ = NULL;
 			GCancellable* _tmp13_ = NULL;
@@ -1653,121 +1675,121 @@ static void rygel_import_resource_got_headers_cb (RygelImportResource* self, Sou
 			GFile* _tmp21_ = NULL;
 			GCancellable* _tmp22_ = NULL;
 			GCancellable* _tmp23_ = NULL;
-#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp12_ = self->priv->output_stream;
-#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp13_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) self);
-#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp14_ = _tmp13_;
-#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			g_output_stream_close ((GOutputStream*) _tmp12_, _tmp14_, &_inner_error_);
-#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			if (_inner_error_ != NULL) {
-#line 1667 "rygel-import-resource.c"
-				goto __catch48_g_error;
-			}
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp15_ = self->priv->item;
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp16_ = ((RygelMediaObject*) _tmp15_)->uris;
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp17_ = gee_abstract_list_get ((GeeAbstractList*) _tmp16_, 0);
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp18_ = (gchar*) _tmp17_;
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp19_ = g_file_new_for_uri (_tmp18_);
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp20_ = _tmp19_;
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_g_free0 (_tmp18_);
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			file = _tmp20_;
-#line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp21_ = file;
-#line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp22_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) self);
-#line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp23_ = _tmp22_;
-#line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			g_file_delete (_tmp21_, _tmp23_, &_inner_error_);
-#line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			if (_inner_error_ != NULL) {
-#line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-				_g_object_unref0 (file);
-#line 1698 "rygel-import-resource.c"
-				goto __catch48_g_error;
-			}
 #line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp12_ = self->priv->output_stream;
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp13_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) self);
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp14_ = _tmp13_;
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			g_output_stream_close ((GOutputStream*) _tmp12_, _tmp14_, &_inner_error_);
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			if (_inner_error_ != NULL) {
+#line 1689 "rygel-import-resource.c"
+				goto __catch51_g_error;
+			}
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp15_ = self->priv->item;
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp16_ = ((RygelMediaObject*) _tmp15_)->uris;
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp17_ = gee_abstract_list_get ((GeeAbstractList*) _tmp16_, 0);
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp18_ = (gchar*) _tmp17_;
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp19_ = g_file_new_for_uri (_tmp18_);
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp20_ = _tmp19_;
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_g_free0 (_tmp18_);
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			file = _tmp20_;
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp21_ = file;
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp22_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) self);
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp23_ = _tmp22_;
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			g_file_delete (_tmp21_, _tmp23_, &_inner_error_);
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			if (_inner_error_ != NULL) {
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+				_g_object_unref0 (file);
+#line 1720 "rygel-import-resource.c"
+				goto __catch51_g_error;
+			}
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_g_object_unref0 (file);
-#line 1703 "rygel-import-resource.c"
+#line 1725 "rygel-import-resource.c"
 		}
-		goto __finally48;
-		__catch48_g_error:
+		goto __finally51;
+		__catch51_g_error:
 		{
 			GError* _error_ = NULL;
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_error_ = _inner_error_;
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_inner_error_ = NULL;
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_g_error_free0 (_error_);
-#line 1715 "rygel-import-resource.c"
+#line 1737 "rygel-import-resource.c"
 		}
-		__finally48:
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		__finally51:
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_inner_error_ != NULL) {
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			g_clear_error (&_inner_error_);
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			return;
-#line 1726 "rygel-import-resource.c"
-		}
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_tmp24_ = message;
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_object_get (_tmp24_, "status-code", &_tmp25_, NULL);
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_tmp26_ = _tmp25_;
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_tmp27_ = soup_status_get_phrase (_tmp26_);
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_tmp28_ = g_strdup (_tmp27_);
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		phrase = _tmp28_;
-#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_tmp29_ = message;
-#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_object_get (_tmp29_, "status-code", &_tmp30_, NULL);
-#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		_tmp31_ = _tmp30_;
-#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		if (_tmp31_ == ((guint) 404)) {
 #line 1748 "rygel-import-resource.c"
+		}
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_tmp24_ = message;
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_object_get (_tmp24_, "status-code", &_tmp25_, NULL);
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_tmp26_ = _tmp25_;
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_tmp27_ = soup_status_get_phrase (_tmp26_);
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_tmp28_ = g_strdup (_tmp27_);
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		phrase = _tmp28_;
+#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_tmp29_ = message;
+#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_object_get (_tmp29_, "status-code", &_tmp30_, NULL);
+#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		_tmp31_ = _tmp30_;
+#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		if (_tmp31_ == ((guint) 404)) {
+#line 1770 "rygel-import-resource.c"
 			GUPnPServiceAction* _tmp32_ = NULL;
 			const gchar* _tmp33_ = NULL;
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_tmp32_ = self->priv->action;
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_tmp33_ = phrase;
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			gupnp_service_action_return_error (_tmp32_, (guint) 714, _tmp33_);
-#line 1757 "rygel-import-resource.c"
+#line 1779 "rygel-import-resource.c"
 		} else {
 			GUPnPServiceAction* _tmp34_ = NULL;
 			const gchar* _tmp35_ = NULL;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_tmp34_ = self->priv->action;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_tmp35_ = phrase;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			gupnp_service_action_return_error (_tmp34_, (guint) 715, _tmp35_);
-#line 1767 "rygel-import-resource.c"
+#line 1789 "rygel-import-resource.c"
 		}
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_free0 (phrase);
-#line 1771 "rygel-import-resource.c"
+#line 1793 "rygel-import-resource.c"
 	}
 }
 
@@ -1777,21 +1799,21 @@ static void rygel_import_resource_got_chunk_cb (RygelImportResource* self, SoupM
 	SoupBuffer* _tmp1_ = NULL;
 	gsize _tmp2_ = 0UL;
 	GError * _inner_error_ = NULL;
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (self != NULL);
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (message != NULL);
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (buffer != NULL);
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp0_ = self->bytes_copied;
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp1_ = buffer;
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp2_ = _tmp1_->length;
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	self->bytes_copied = _tmp0_ + _tmp2_;
-#line 1795 "rygel-import-resource.c"
+#line 1817 "rygel-import-resource.c"
 	{
 		gsize bytes_written = 0UL;
 		GFileOutputStream* _tmp3_ = NULL;
@@ -1801,30 +1823,30 @@ static void rygel_import_resource_got_chunk_cb (RygelImportResource* self, SoupM
 		GCancellable* _tmp6_ = NULL;
 		GCancellable* _tmp7_ = NULL;
 		gsize _tmp8_ = 0UL;
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp3_ = self->priv->output_stream;
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp4_ = buffer;
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp5_ = _tmp4_->data;
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp5__length1 = (gint) _tmp4_->length;
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp6_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) self);
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp7_ = _tmp6_;
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_output_stream_write_all ((GOutputStream*) _tmp3_, _tmp5_, (gsize) _tmp5__length1, &_tmp8_, _tmp7_, &_inner_error_);
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		bytes_written = _tmp8_;
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_inner_error_ != NULL) {
-#line 1823 "rygel-import-resource.c"
-			goto __catch49_g_error;
+#line 1845 "rygel-import-resource.c"
+			goto __catch52_g_error;
 		}
 	}
-	goto __finally49;
-	__catch49_g_error:
+	goto __finally52;
+	__catch52_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp9_ = NULL;
@@ -1832,48 +1854,48 @@ static void rygel_import_resource_got_chunk_cb (RygelImportResource* self, SoupM
 		GError* _tmp11_ = NULL;
 		SoupSession* _tmp12_ = NULL;
 		SoupMessage* _tmp13_ = NULL;
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_error_ = _inner_error_;
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_inner_error_ = NULL;
-#line 233 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp9_ = _error_;
-#line 233 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp10_ = _tmp9_->message;
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_warning ("rygel-import-resource.vala:232: %s", _tmp10_);
 #line 233 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_warning ("rygel-import-resource.vala:233: %s", _tmp10_);
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp11_ = _error_;
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 233 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (g_error_matches (_tmp11_, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
-#line 235 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			self->status = RYGEL_TRANSFER_STATUS_STOPPED;
-#line 1852 "rygel-import-resource.c"
+#line 1874 "rygel-import-resource.c"
 		} else {
-#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 236 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			self->status = RYGEL_TRANSFER_STATUS_ERROR;
-#line 1856 "rygel-import-resource.c"
+#line 1878 "rygel-import-resource.c"
 		}
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp12_ = self->priv->session;
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp13_ = message;
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		soup_session_cancel_message (_tmp12_, _tmp13_, (guint) SOUP_STATUS_CANCELLED);
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_error_free0 (_error_);
-#line 1866 "rygel-import-resource.c"
+#line 1888 "rygel-import-resource.c"
 	}
-	__finally49:
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	__finally52:
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_inner_error_ != NULL) {
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_clear_error (&_inner_error_);
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return;
-#line 1877 "rygel-import-resource.c"
+#line 1899 "rygel-import-resource.c"
 	}
 }
 
@@ -1881,35 +1903,35 @@ static void rygel_import_resource_got_chunk_cb (RygelImportResource* self, SoupM
 static void rygel_import_resource_got_body_cb (RygelImportResource* self, SoupMessage* message) {
 	gint64 _tmp0_ = 0LL;
 	GError * _inner_error_ = NULL;
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (self != NULL);
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (message != NULL);
-#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp0_ = self->bytes_total;
-#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_tmp0_ == ((gint64) 0)) {
-#line 1893 "rygel-import-resource.c"
+#line 1915 "rygel-import-resource.c"
 		gint64 _tmp1_ = 0LL;
-#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp1_ = self->bytes_copied;
-#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		self->bytes_total = _tmp1_;
-#line 1899 "rygel-import-resource.c"
+#line 1921 "rygel-import-resource.c"
 	} else {
 		gint64 _tmp2_ = 0LL;
 		gint64 _tmp3_ = 0LL;
-#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp2_ = self->bytes_total;
-#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp3_ = self->bytes_copied;
-#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_tmp2_ != _tmp3_) {
-#line 248 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			self->status = RYGEL_TRANSFER_STATUS_ERROR;
-#line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			return;
-#line 1913 "rygel-import-resource.c"
+#line 1935 "rygel-import-resource.c"
 		}
 	}
 	{
@@ -1917,60 +1939,60 @@ static void rygel_import_resource_got_body_cb (RygelImportResource* self, SoupMe
 		GCancellable* _tmp5_ = NULL;
 		GCancellable* _tmp6_ = NULL;
 		RygelTransferStatus _tmp7_ = 0;
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp4_ = self->priv->output_stream;
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp5_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) self);
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp6_ = _tmp5_;
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_output_stream_close ((GOutputStream*) _tmp4_, _tmp6_, &_inner_error_);
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_inner_error_ != NULL) {
-#line 1931 "rygel-import-resource.c"
-			goto __catch50_g_error;
+#line 1953 "rygel-import-resource.c"
+			goto __catch53_g_error;
 		}
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp7_ = self->status;
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_tmp7_ == RYGEL_TRANSFER_STATUS_IN_PROGRESS) {
-#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			self->status = RYGEL_TRANSFER_STATUS_COMPLETED;
-#line 1940 "rygel-import-resource.c"
+#line 1962 "rygel-import-resource.c"
 		}
 	}
-	goto __finally50;
-	__catch50_g_error:
+	goto __finally53;
+	__catch53_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp8_ = NULL;
 		const gchar* _tmp9_ = NULL;
-#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_error_ = _inner_error_;
-#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_inner_error_ = NULL;
-#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp8_ = _error_;
-#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp9_ = _tmp8_->message;
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+		g_warning ("rygel-import-resource.vala:258: %s", _tmp9_);
 #line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-		g_warning ("rygel-import-resource.vala:259: %s", _tmp9_);
-#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		self->status = RYGEL_TRANSFER_STATUS_ERROR;
-#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_g_error_free0 (_error_);
-#line 1963 "rygel-import-resource.c"
+#line 1985 "rygel-import-resource.c"
 	}
-	__finally50:
-#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+	__finally53:
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_inner_error_ != NULL) {
-#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_clear_error (&_inner_error_);
-#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		return;
-#line 1974 "rygel-import-resource.c"
+#line 1996 "rygel-import-resource.c"
 	}
 }
 
@@ -1979,51 +2001,51 @@ static void rygel_import_resource_finished_cb (RygelImportResource* self, SoupMe
 	RygelTransferStatus _tmp0_ = 0;
 	GSourceFunc _tmp16_ = NULL;
 	void* _tmp16__target = NULL;
-#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (self != NULL);
-#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_return_if_fail (message != NULL);
-#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp0_ = self->status;
-#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	if (_tmp0_ == RYGEL_TRANSFER_STATUS_IN_PROGRESS) {
-#line 1991 "rygel-import-resource.c"
+#line 2013 "rygel-import-resource.c"
 		gboolean _tmp1_ = FALSE;
 		SoupMessage* _tmp2_ = NULL;
 		guint _tmp3_ = 0U;
 		guint _tmp4_ = 0U;
 		gboolean _tmp8_ = FALSE;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp2_ = message;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		g_object_get (_tmp2_, "status-code", &_tmp3_, NULL);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp4_ = _tmp3_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (_tmp4_ >= ((guint) 200)) {
-#line 2005 "rygel-import-resource.c"
+#line 2027 "rygel-import-resource.c"
 			SoupMessage* _tmp5_ = NULL;
 			guint _tmp6_ = 0U;
 			guint _tmp7_ = 0U;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_tmp5_ = message;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			g_object_get (_tmp5_, "status-code", &_tmp6_, NULL);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_tmp7_ = _tmp6_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_tmp1_ = _tmp7_ <= ((guint) 299);
-#line 2017 "rygel-import-resource.c"
+#line 2039 "rygel-import-resource.c"
 		} else {
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_tmp1_ = FALSE;
-#line 2021 "rygel-import-resource.c"
+#line 2043 "rygel-import-resource.c"
 		}
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		_tmp8_ = _tmp1_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		if (!_tmp8_) {
-#line 2027 "rygel-import-resource.c"
+#line 2049 "rygel-import-resource.c"
 			gchar* phrase = NULL;
 			SoupMessage* _tmp9_ = NULL;
 			guint _tmp10_ = 0U;
@@ -2032,38 +2054,38 @@ static void rygel_import_resource_finished_cb (RygelImportResource* self, SoupMe
 			gchar* _tmp13_ = NULL;
 			GUPnPServiceAction* _tmp14_ = NULL;
 			const gchar* _tmp15_ = NULL;
-#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			self->status = RYGEL_TRANSFER_STATUS_ERROR;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp9_ = message;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			g_object_get (_tmp9_, "status-code", &_tmp10_, NULL);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp11_ = _tmp10_;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp12_ = soup_status_get_phrase (_tmp11_);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp13_ = g_strdup (_tmp12_);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			phrase = _tmp13_;
-#line 270 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp14_ = self->priv->action;
-#line 270 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			_tmp15_ = phrase;
-#line 270 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
-			gupnp_service_action_return_error (_tmp14_, (guint) 714, _tmp15_);
 #line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			self->status = RYGEL_TRANSFER_STATUS_ERROR;
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp9_ = message;
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			g_object_get (_tmp9_, "status-code", &_tmp10_, NULL);
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp11_ = _tmp10_;
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp12_ = soup_status_get_phrase (_tmp11_);
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp13_ = g_strdup (_tmp12_);
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			phrase = _tmp13_;
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp14_ = self->priv->action;
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			_tmp15_ = phrase;
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+			gupnp_service_action_return_error (_tmp14_, (guint) 714, _tmp15_);
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			_g_free0 (phrase);
-#line 2058 "rygel-import-resource.c"
+#line 2080 "rygel-import-resource.c"
 		}
 	}
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp16_ = self->priv->run_callback;
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp16__target = self->priv->run_callback_target;
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	_tmp16_ (_tmp16__target);
-#line 2067 "rygel-import-resource.c"
+#line 2089 "rygel-import-resource.c"
 }
 
 
@@ -2078,44 +2100,44 @@ const gchar* rygel_import_resource_get_status_as_string (RygelImportResource* se
 	switch (_tmp0_) {
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case RYGEL_TRANSFER_STATUS_COMPLETED:
-#line 2082 "rygel-import-resource.c"
+#line 2104 "rygel-import-resource.c"
 		{
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			result = "COMPLETED";
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			return result;
-#line 2088 "rygel-import-resource.c"
+#line 2110 "rygel-import-resource.c"
 		}
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case RYGEL_TRANSFER_STATUS_ERROR:
-#line 2092 "rygel-import-resource.c"
+#line 2114 "rygel-import-resource.c"
 		{
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			result = "ERROR";
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			return result;
-#line 2098 "rygel-import-resource.c"
+#line 2120 "rygel-import-resource.c"
 		}
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case RYGEL_TRANSFER_STATUS_IN_PROGRESS:
-#line 2102 "rygel-import-resource.c"
+#line 2124 "rygel-import-resource.c"
 		{
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			result = "IN_PROGRESS";
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			return result;
-#line 2108 "rygel-import-resource.c"
+#line 2130 "rygel-import-resource.c"
 		}
 		default:
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		case RYGEL_TRANSFER_STATUS_STOPPED:
-#line 2113 "rygel-import-resource.c"
+#line 2135 "rygel-import-resource.c"
 		{
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			result = "STOPPED";
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 			return result;
-#line 2119 "rygel-import-resource.c"
+#line 2141 "rygel-import-resource.c"
 		}
 	}
 }
@@ -2133,7 +2155,7 @@ static GCancellable* rygel_import_resource_real_get_cancellable (RygelStateMachi
 	result = _tmp0_;
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	return result;
-#line 2137 "rygel-import-resource.c"
+#line 2159 "rygel-import-resource.c"
 }
 
 
@@ -2153,7 +2175,7 @@ static void rygel_import_resource_real_set_cancellable (RygelStateMachine* base,
 	self->priv->_cancellable = _tmp1_;
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_object_notify ((GObject *) self, "cancellable");
-#line 2157 "rygel-import-resource.c"
+#line 2179 "rygel-import-resource.c"
 }
 
 
@@ -2172,7 +2194,7 @@ static void rygel_import_resource_class_init (RygelImportResourceClass * klass) 
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_IMPORT_RESOURCE_STATUS_AS_STRING, g_param_spec_string ("status-as-string", "status-as-string", "status-as-string", NULL, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_IMPORT_RESOURCE_CANCELLABLE, g_param_spec_object ("cancellable", "cancellable", "cancellable", g_cancellable_get_type (), G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 2176 "rygel-import-resource.c"
+#line 2198 "rygel-import-resource.c"
 }
 
 
@@ -2187,14 +2209,14 @@ static void rygel_import_resource_rygel_state_machine_interface_init (RygelState
 	iface->get_cancellable = rygel_import_resource_real_get_cancellable;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	iface->set_cancellable = rygel_import_resource_real_set_cancellable;
-#line 2191 "rygel-import-resource.c"
+#line 2213 "rygel-import-resource.c"
 }
 
 
 static void rygel_import_resource_instance_init (RygelImportResource * self) {
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	self->priv = RYGEL_IMPORT_RESOURCE_GET_PRIVATE (self);
-#line 2198 "rygel-import-resource.c"
+#line 2220 "rygel-import-resource.c"
 }
 
 
@@ -2230,7 +2252,7 @@ static void rygel_import_resource_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->output_stream);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 	G_OBJECT_CLASS (rygel_import_resource_parent_class)->finalize (obj);
-#line 2234 "rygel-import-resource.c"
+#line 2256 "rygel-import-resource.c"
 }
 
 
@@ -2268,13 +2290,13 @@ static void _vala_rygel_import_resource_get_property (GObject * object, guint pr
 		g_value_set_object (value, rygel_state_machine_get_cancellable ((RygelStateMachine*) self));
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		break;
-#line 2272 "rygel-import-resource.c"
+#line 2294 "rygel-import-resource.c"
 		default:
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		break;
-#line 2278 "rygel-import-resource.c"
+#line 2300 "rygel-import-resource.c"
 	}
 }
 
@@ -2290,13 +2312,13 @@ static void _vala_rygel_import_resource_set_property (GObject * object, guint pr
 		rygel_state_machine_set_cancellable ((RygelStateMachine*) self, g_value_get_object (value));
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		break;
-#line 2294 "rygel-import-resource.c"
+#line 2316 "rygel-import-resource.c"
 		default:
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-import-resource.vala"
 		break;
-#line 2300 "rygel-import-resource.c"
+#line 2322 "rygel-import-resource.c"
 	}
 }
 

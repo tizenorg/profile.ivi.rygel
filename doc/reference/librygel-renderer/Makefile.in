@@ -393,6 +393,7 @@ RYGEL_DOCBUILD_MODULE = rygel-renderer
 @ENABLE_VALADOC_TRUE@LIBRYGEL_RENDERER_VAPI_SOURCE_FILES = \
 @ENABLE_VALADOC_TRUE@	rygel-media-renderer-plugin.vala \
 @ENABLE_VALADOC_TRUE@	rygel-media-player.vala \
+@ENABLE_VALADOC_TRUE@	rygel-dlna-profile.vala \
 @ENABLE_VALADOC_TRUE@	rygel-media-renderer.vala
 
 @ENABLE_VALADOC_TRUE@LIBRYGEL_RENDERER_NONVAPI_SOURCE_FILES = \

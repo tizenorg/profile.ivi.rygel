@@ -533,11 +533,11 @@ static void ___lambda14_ (Block5Data* _data5_) {
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 		if (_inner_error_ != NULL) {
 #line 536 "rygel-http-playlist-handler.c"
-			goto __catch30_g_error;
+			goto __catch32_g_error;
 		}
 	}
-	goto __finally30;
-	__catch30_g_error:
+	goto __finally32;
+	__catch32_g_error:
 	{
 		GError* _error_ = NULL;
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
@@ -548,7 +548,7 @@ static void ___lambda14_ (Block5Data* _data5_) {
 		_g_error_free0 (_error_);
 #line 550 "rygel-http-playlist-handler.c"
 	}
-	__finally30:
+	__finally32:
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 	if (_inner_error_ != NULL) {
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
@@ -886,7 +886,7 @@ static gboolean rygel_playlist_datasource_generate_data_co (RygelPlaylistDatasou
 #line 82 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 			_g_free0 (_data_->sort_criteria);
 #line 889 "rygel-http-playlist-handler.c"
-			goto __catch31_g_error;
+			goto __catch33_g_error;
 		}
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 		_data_->_tmp11_ = NULL;
@@ -931,7 +931,7 @@ static gboolean rygel_playlist_datasource_generate_data_co (RygelPlaylistDatasou
 #line 89 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 				_g_free0 (_data_->sort_criteria);
 #line 934 "rygel-http-playlist-handler.c"
-				goto __catch31_g_error;
+				goto __catch33_g_error;
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 			_data_->_tmp18_ = NULL;
@@ -1009,8 +1009,8 @@ static gboolean rygel_playlist_datasource_generate_data_co (RygelPlaylistDatasou
 		_g_free0 (_data_->sort_criteria);
 #line 1011 "rygel-http-playlist-handler.c"
 	}
-	goto __finally31;
-	__catch31_g_error:
+	goto __finally33;
+	__catch33_g_error:
 	{
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -1036,7 +1036,7 @@ static gboolean rygel_playlist_datasource_generate_data_co (RygelPlaylistDatasou
 		_g_error_free0 (_data_->_error_);
 #line 1038 "rygel-http-playlist-handler.c"
 	}
-	__finally31:
+	__finally33:
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
@@ -1348,7 +1348,7 @@ static RygelHTTPResponse* rygel_http_playlist_handler_real_render_body (RygelHTT
 #line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 			_g_object_unref0 (source);
 #line 1351 "rygel-http-playlist-handler.c"
-			goto __catch32_g_error;
+			goto __catch34_g_error;
 		}
 #line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 		result = _tmp8_;
@@ -1358,8 +1358,8 @@ static RygelHTTPResponse* rygel_http_playlist_handler_real_render_body (RygelHTT
 		return result;
 #line 1360 "rygel-http-playlist-handler.c"
 	}
-	goto __finally32;
-	__catch32_g_error:
+	goto __finally34;
+	__catch34_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp12_ = NULL;
@@ -1380,9 +1380,9 @@ static RygelHTTPResponse* rygel_http_playlist_handler_real_render_body (RygelHTT
 #line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 		_g_error_free0 (_error_);
 #line 1383 "rygel-http-playlist-handler.c"
-		goto __finally32;
+		goto __finally34;
 	}
-	__finally32:
+	__finally34:
 #line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 	if (_inner_error_->domain == RYGEL_HTTP_REQUEST_ERROR) {
 #line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
@@ -1444,7 +1444,7 @@ static GUPnPDIDLLiteResource* rygel_http_playlist_handler_real_add_resource (Ryg
 #line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 		if (_inner_error_ != NULL) {
 #line 1447 "rygel-http-playlist-handler.c"
-			goto __catch33_g_error;
+			goto __catch35_g_error;
 		}
 #line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 		result = _tmp3_;
@@ -1454,8 +1454,8 @@ static GUPnPDIDLLiteResource* rygel_http_playlist_handler_real_add_resource (Ryg
 		return result;
 #line 1456 "rygel-http-playlist-handler.c"
 	}
-	goto __finally33;
-	__catch33_g_error:
+	goto __finally35;
+	__catch35_g_error:
 	{
 		GError* _error_ = NULL;
 		gpointer _tmp8_ = NULL;
@@ -1478,7 +1478,7 @@ static GUPnPDIDLLiteResource* rygel_http_playlist_handler_real_add_resource (Ryg
 		return result;
 #line 1480 "rygel-http-playlist-handler.c"
 	}
-	__finally33:
+	__finally35:
 #line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"
 	_g_free0 (protocol);
 #line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-playlist-handler.vala"

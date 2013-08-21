@@ -2,9 +2,9 @@
  * generated from rygel-trackable-container.vala, do not modify */
 
 /*
- * Copyright (C) 2012 Intel Corporation.
+ * Copyright (C) 2012,2013 Intel Corporation.
  *
- * Author: Jens Georg <jensg@openismus.come
+ * Author: Jens Georg <jensg@openismus.com>
  *
  * Rygel is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -126,25 +126,31 @@ struct _RygelTrackableContainerClearData {
 	GSimpleAsyncResult* _async_result;
 	RygelTrackableContainer* self;
 	RygelMediaObjects* children;
-	RygelMediaObjects* _tmp0_;
-	RygelMediaObjects* _tmp1_;
-	RygelMediaObjects* _child_list;
+	const gchar* _tmp0_;
+	const gchar* _tmp1_;
 	RygelMediaObjects* _tmp2_;
 	RygelMediaObjects* _tmp3_;
-	gint _child_size;
+	RygelMediaObjects* _child_list;
 	RygelMediaObjects* _tmp4_;
-	gint _tmp5_;
-	gint _tmp6_;
-	gint _child_index;
+	RygelMediaObjects* _tmp5_;
+	gint _child_size;
+	RygelMediaObjects* _tmp6_;
 	gint _tmp7_;
 	gint _tmp8_;
+	gint _child_index;
 	gint _tmp9_;
-	RygelMediaObject* child;
-	RygelMediaObjects* _tmp10_;
+	gint _tmp10_;
 	gint _tmp11_;
-	gpointer _tmp12_;
-	RygelMediaObject* _tmp13_;
+	RygelMediaObject* child;
+	RygelMediaObjects* _tmp12_;
+	gint _tmp13_;
+	gpointer _tmp14_;
+	RygelMediaObject* _tmp15_;
 	GError* _error_;
+	const gchar* _tmp16_;
+	const gchar* _tmp17_;
+	GError* _tmp18_;
+	const gchar* _tmp19_;
 	GError * _inner_error_;
 };
 
@@ -233,9 +239,11 @@ static gboolean rygel_trackable_container_clear_co (RygelTrackableContainerClear
 GType rygel_media_objects_get_type (void) G_GNUC_CONST;
 void rygel_media_container_get_children (RygelMediaContainer* self, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 RygelMediaObjects* rygel_media_container_get_children_finish (RygelMediaContainer* self, GAsyncResult* _res_, GError** error);
+const gchar* rygel_media_container_get_sort_criteria (RygelMediaContainer* self);
 static void rygel_trackable_container_clear_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
 void rygel_trackable_container_remove_child_tracked (RygelTrackableContainer* self, RygelMediaObject* object, GAsyncReadyCallback _callback_, gpointer _user_data_);
 void rygel_trackable_container_remove_child_tracked_finish (RygelTrackableContainer* self, GAsyncResult* _res_);
+const gchar* rygel_media_object_get_id (RygelMediaObject* self);
 void rygel_trackable_container_add_child (RygelTrackableContainer* self, RygelMediaObject* object, GAsyncReadyCallback _callback_, gpointer _user_data_);
 void rygel_trackable_container_add_child_finish (RygelTrackableContainer* self, GAsyncResult* _res_);
 static void rygel_trackable_container_add_child_tracked_data_free (gpointer _data);
@@ -269,14 +277,14 @@ static void rygel_trackable_container_clear_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_slice_free (RygelTrackableContainerClearData, _data_);
-#line 273 "rygel-trackable-container.c"
+#line 281 "rygel-trackable-container.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 280 "rygel-trackable-container.c"
+#line 288 "rygel-trackable-container.c"
 }
 
 
@@ -295,7 +303,7 @@ void rygel_trackable_container_clear (RygelTrackableContainer* self, GAsyncReady
 	_data_->self = _tmp0_;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_trackable_container_clear_co (_data_);
-#line 299 "rygel-trackable-container.c"
+#line 307 "rygel-trackable-container.c"
 }
 
 
@@ -303,7 +311,7 @@ void rygel_trackable_container_clear_finish (RygelTrackableContainer* self, GAsy
 	RygelTrackableContainerClearData* _data_;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 307 "rygel-trackable-container.c"
+#line 315 "rygel-trackable-container.c"
 }
 
 
@@ -317,7 +325,7 @@ static void rygel_trackable_container_clear_ready (GObject* source_object, GAsyn
 	_data_->_res_ = _res_;
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_trackable_container_clear_co (_data_);
-#line 321 "rygel-trackable-container.c"
+#line 329 "rygel-trackable-container.c"
 }
 
 
@@ -326,154 +334,162 @@ static gboolean rygel_trackable_container_clear_co (RygelTrackableContainerClear
 	switch (_data_->_state_) {
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		case 0:
-#line 330 "rygel-trackable-container.c"
+#line 338 "rygel-trackable-container.c"
 		goto _state_0;
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		case 1:
-#line 334 "rygel-trackable-container.c"
+#line 342 "rygel-trackable-container.c"
 		goto _state_1;
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		case 2:
-#line 338 "rygel-trackable-container.c"
+#line 346 "rygel-trackable-container.c"
 		goto _state_2;
 		default:
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		g_assert_not_reached ();
-#line 343 "rygel-trackable-container.c"
+#line 351 "rygel-trackable-container.c"
 	}
 	_state_0:
 	{
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		_data_->_state_ = 1;
-#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		rygel_media_container_get_children ((RygelMediaContainer*) _data_->self, (guint) 0, (guint) 0, "", NULL, rygel_trackable_container_clear_ready, _data_);
-#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		return FALSE;
-#line 353 "rygel-trackable-container.c"
-		_state_1:
-#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp0_ = NULL;
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		_data_->_tmp0_ = rygel_media_container_get_children_finish ((RygelMediaContainer*) _data_->self, _data_->_res_, &_data_->_inner_error_);
+		_data_->_tmp0_ = rygel_media_container_get_sort_criteria ((RygelMediaContainer*) _data_->self);
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		_data_->children = _data_->_tmp0_;
+		_data_->_tmp1_ = NULL;
+#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp1_ = _data_->_tmp0_;
+#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_state_ = 1;
+#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		rygel_media_container_get_children ((RygelMediaContainer*) _data_->self, (guint) 0, (guint) (-1), _data_->_tmp1_, NULL, rygel_trackable_container_clear_ready, _data_);
+#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		return FALSE;
+#line 369 "rygel-trackable-container.c"
+		_state_1:
+#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp2_ = NULL;
+#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp2_ = rygel_media_container_get_children_finish ((RygelMediaContainer*) _data_->self, _data_->_res_, &_data_->_inner_error_);
+#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->children = _data_->_tmp2_;
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 363 "rygel-trackable-container.c"
+#line 379 "rygel-trackable-container.c"
 			goto __catch14_g_error;
 		}
-#line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		_data_->_tmp1_ = NULL;
-#line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		_data_->_tmp1_ = _data_->children;
-#line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		if (_data_->_tmp1_ == NULL) {
-#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp3_ = NULL;
+#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp3_ = _data_->children;
+#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		if (_data_->_tmp3_ == NULL) {
+#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 			_g_object_unref0 (_data_->children);
-#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 			if (_data_->_state_ == 0) {
-#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 378 "rygel-trackable-container.c"
+#line 394 "rygel-trackable-container.c"
 			} else {
-#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				g_simple_async_result_complete (_data_->_async_result);
-#line 382 "rygel-trackable-container.c"
+#line 398 "rygel-trackable-container.c"
 			}
-#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 			g_object_unref (_data_->_async_result);
-#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 			return FALSE;
-#line 388 "rygel-trackable-container.c"
+#line 404 "rygel-trackable-container.c"
 		}
 		{
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp2_ = NULL;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp2_ = _data_->children;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp3_ = NULL;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp3_ = _g_object_ref0 (_data_->_tmp2_);
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_child_list = _data_->_tmp3_;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 			_data_->_tmp4_ = NULL;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp4_ = _data_->_child_list;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp5_ = 0;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp5_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp4_);
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp6_ = 0;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_tmp6_ = _data_->_tmp5_;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-			_data_->_child_size = _data_->_tmp6_;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp4_ = _data_->children;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp5_ = NULL;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp5_ = _g_object_ref0 (_data_->_tmp4_);
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_child_list = _data_->_tmp5_;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp6_ = NULL;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp6_ = _data_->_child_list;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp7_ = 0;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp7_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp6_);
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp8_ = 0;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_tmp8_ = _data_->_tmp7_;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+			_data_->_child_size = _data_->_tmp8_;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 			_data_->_child_index = -1;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 			while (TRUE) {
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp7_ = 0;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp7_ = _data_->_child_index;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_child_index = _data_->_tmp7_ + 1;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp8_ = 0;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp8_ = _data_->_child_index;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				_data_->_tmp9_ = 0;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp9_ = _data_->_child_size;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				if (!(_data_->_tmp8_ < _data_->_tmp9_)) {
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-					break;
-#line 437 "rygel-trackable-container.c"
-				}
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp10_ = NULL;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp10_ = _data_->_child_list;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp9_ = _data_->_child_index;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_child_index = _data_->_tmp9_ + 1;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp10_ = 0;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp10_ = _data_->_child_index;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				_data_->_tmp11_ = 0;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp11_ = _data_->_child_index;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp11_ = _data_->_child_size;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				if (!(_data_->_tmp10_ < _data_->_tmp11_)) {
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+					break;
+#line 453 "rygel-trackable-container.c"
+				}
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				_data_->_tmp12_ = NULL;
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp12_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp10_, _data_->_tmp11_);
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->child = (RygelMediaObject*) _data_->_tmp12_;
-#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp13_ = NULL;
-#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				_data_->_tmp13_ = _data_->child;
-#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp12_ = _data_->_child_list;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp13_ = 0;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp13_ = _data_->_child_index;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp14_ = NULL;
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp14_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp12_, _data_->_tmp13_);
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->child = (RygelMediaObject*) _data_->_tmp14_;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp15_ = NULL;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				_data_->_tmp15_ = _data_->child;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				_data_->_state_ = 2;
-#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-				rygel_trackable_container_remove_child_tracked (_data_->self, _data_->_tmp13_, rygel_trackable_container_clear_ready, _data_);
-#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+				rygel_trackable_container_remove_child_tracked (_data_->self, _data_->_tmp15_, rygel_trackable_container_clear_ready, _data_);
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				return FALSE;
-#line 463 "rygel-trackable-container.c"
+#line 479 "rygel-trackable-container.c"
 				_state_2:
-#line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				rygel_trackable_container_remove_child_tracked_finish (_data_->self, _data_->_res_);
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 				_g_object_unref0 (_data_->child);
-#line 469 "rygel-trackable-container.c"
+#line 485 "rygel-trackable-container.c"
 			}
-#line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 			_g_object_unref0 (_data_->_child_list);
-#line 473 "rygel-trackable-container.c"
+#line 489 "rygel-trackable-container.c"
 		}
 #line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_g_object_unref0 (_data_->children);
-#line 477 "rygel-trackable-container.c"
+#line 493 "rygel-trackable-container.c"
 	}
 	goto __finally14;
 	__catch14_g_error:
@@ -482,9 +498,28 @@ static gboolean rygel_trackable_container_clear_co (RygelTrackableContainerClear
 		_data_->_error_ = _data_->_inner_error_;
 #line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_inner_error_ = NULL;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp16_ = NULL;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp16_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->self);
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp17_ = NULL;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp17_ = _data_->_tmp16_;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp18_ = NULL;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp18_ = _data_->_error_;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp19_ = NULL;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		_data_->_tmp19_ = _data_->_tmp18_->message;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		g_warning ("rygel-trackable-container.vala:49: Failed to clear trackable container" \
+" %s: %s", _data_->_tmp17_, _data_->_tmp19_);
 #line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_g_error_free0 (_data_->_error_);
-#line 488 "rygel-trackable-container.c"
+#line 522 "rygel-trackable-container.c"
 	}
 	__finally14:
 #line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
@@ -495,37 +530,37 @@ static gboolean rygel_trackable_container_clear_co (RygelTrackableContainerClear
 		g_clear_error (&_data_->_inner_error_);
 #line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		return FALSE;
-#line 499 "rygel-trackable-container.c"
+#line 533 "rygel-trackable-container.c"
 	}
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	if (_data_->_state_ == 0) {
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 505 "rygel-trackable-container.c"
+#line 539 "rygel-trackable-container.c"
 	} else {
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 509 "rygel-trackable-container.c"
+#line 543 "rygel-trackable-container.c"
 	}
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_object_unref (_data_->_async_result);
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return FALSE;
-#line 515 "rygel-trackable-container.c"
+#line 549 "rygel-trackable-container.c"
 }
 
 
 void rygel_trackable_container_add_child (RygelTrackableContainer* self, RygelMediaObject* object, GAsyncReadyCallback _callback_, gpointer _user_data_) {
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	RYGEL_TRACKABLE_CONTAINER_GET_INTERFACE (self)->add_child (self, object, _callback_, _user_data_);
-#line 522 "rygel-trackable-container.c"
+#line 556 "rygel-trackable-container.c"
 }
 
 
 void rygel_trackable_container_add_child_finish (RygelTrackableContainer* self, GAsyncResult* _res_) {
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	RYGEL_TRACKABLE_CONTAINER_GET_INTERFACE (self)->add_child_finish (self, _res_);
-#line 529 "rygel-trackable-container.c"
+#line 563 "rygel-trackable-container.c"
 }
 
 
@@ -538,7 +573,7 @@ static void rygel_trackable_container_add_child_tracked_data_free (gpointer _dat
 	_g_object_unref0 (_data_->self);
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_slice_free (RygelTrackableContainerAddChildTrackedData, _data_);
-#line 542 "rygel-trackable-container.c"
+#line 576 "rygel-trackable-container.c"
 }
 
 
@@ -567,7 +602,7 @@ void rygel_trackable_container_add_child_tracked (RygelTrackableContainer* self,
 	_data_->object = _tmp2_;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_trackable_container_add_child_tracked_co (_data_);
-#line 571 "rygel-trackable-container.c"
+#line 605 "rygel-trackable-container.c"
 }
 
 
@@ -575,7 +610,7 @@ void rygel_trackable_container_add_child_tracked_finish (RygelTrackableContainer
 	RygelTrackableContainerAddChildTrackedData* _data_;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 579 "rygel-trackable-container.c"
+#line 613 "rygel-trackable-container.c"
 }
 
 
@@ -588,118 +623,118 @@ void rygel_trackable_container_add_child_tracked_finish (RygelTrackableContainer
      */
 static void rygel_trackable_container_add_child_tracked_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_) {
 	RygelTrackableContainerAddChildTrackedData* _data_;
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_ = _user_data_;
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_source_object_ = source_object;
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_res_ = _res_;
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_trackable_container_add_child_tracked_co (_data_);
-#line 600 "rygel-trackable-container.c"
+#line 634 "rygel-trackable-container.c"
 }
 
 
 static gboolean rygel_trackable_container_add_child_tracked_co (RygelTrackableContainerAddChildTrackedData* _data_) {
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	switch (_data_->_state_) {
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		case 0:
-#line 609 "rygel-trackable-container.c"
+#line 643 "rygel-trackable-container.c"
 		goto _state_0;
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		case 1:
-#line 613 "rygel-trackable-container.c"
+#line 647 "rygel-trackable-container.c"
 		goto _state_1;
 		default:
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		g_assert_not_reached ();
-#line 618 "rygel-trackable-container.c"
+#line 652 "rygel-trackable-container.c"
 	}
 	_state_0:
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp0_ = NULL;
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp0_ = _data_->object;
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_state_ = 1;
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_trackable_container_add_child (_data_->self, _data_->_tmp0_, rygel_trackable_container_add_child_tracked_ready, _data_);
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return FALSE;
-#line 631 "rygel-trackable-container.c"
+#line 665 "rygel-trackable-container.c"
 	_state_1:
-#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_trackable_container_add_child_finish (_data_->self, _data_->_res_);
-#line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp1_ = NULL;
-#line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp1_ = _data_->object;
-#line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_media_container_updated ((RygelMediaContainer*) _data_->self, _data_->_tmp1_, RYGEL_OBJECT_EVENT_TYPE_ADDED, FALSE);
-#line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 75 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_media_container_updated ((RygelMediaContainer*) _data_->self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
-#line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp2_ = NULL;
-#line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp2_ = _data_->object;
-#line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp2_, RYGEL_TYPE_TRACKABLE_CONTAINER)) {
-#line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp3_ = NULL;
-#line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp3_ = _data_->object;
-#line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp4_ = NULL;
-#line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp4_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp3_, RYGEL_TYPE_TRACKABLE_CONTAINER) ? ((RygelTrackableContainer*) _data_->_tmp3_) : NULL);
-#line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->trackable = _data_->_tmp4_;
-#line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp5_ = NULL;
-#line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp5_ = _data_->trackable;
-#line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		rygel_trackable_container_thaw_events (_data_->_tmp5_);
-#line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_g_object_unref0 (_data_->trackable);
-#line 667 "rygel-trackable-container.c"
+#line 701 "rygel-trackable-container.c"
 	}
-#line 75 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 82 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp6_ = NULL;
-#line 75 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 82 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp6_ = _data_->object;
-#line 75 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 82 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_signal_emit_by_name (_data_->self, "child-added", _data_->_tmp6_);
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	if (_data_->_state_ == 0) {
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 679 "rygel-trackable-container.c"
+#line 713 "rygel-trackable-container.c"
 	} else {
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 683 "rygel-trackable-container.c"
+#line 717 "rygel-trackable-container.c"
 	}
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_object_unref (_data_->_async_result);
-#line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return FALSE;
-#line 689 "rygel-trackable-container.c"
+#line 723 "rygel-trackable-container.c"
 }
 
 
 void rygel_trackable_container_remove_child (RygelTrackableContainer* self, RygelMediaObject* object, GAsyncReadyCallback _callback_, gpointer _user_data_) {
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	RYGEL_TRACKABLE_CONTAINER_GET_INTERFACE (self)->remove_child (self, object, _callback_, _user_data_);
-#line 696 "rygel-trackable-container.c"
+#line 730 "rygel-trackable-container.c"
 }
 
 
 void rygel_trackable_container_remove_child_finish (RygelTrackableContainer* self, GAsyncResult* _res_) {
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	RYGEL_TRACKABLE_CONTAINER_GET_INTERFACE (self)->remove_child_finish (self, _res_);
-#line 703 "rygel-trackable-container.c"
+#line 737 "rygel-trackable-container.c"
 }
 
 
@@ -712,7 +747,7 @@ static void rygel_trackable_container_remove_child_tracked_data_free (gpointer _
 	_g_object_unref0 (_data_->self);
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_slice_free (RygelTrackableContainerRemoveChildTrackedData, _data_);
-#line 716 "rygel-trackable-container.c"
+#line 750 "rygel-trackable-container.c"
 }
 
 
@@ -741,7 +776,7 @@ void rygel_trackable_container_remove_child_tracked (RygelTrackableContainer* se
 	_data_->object = _tmp2_;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_trackable_container_remove_child_tracked_co (_data_);
-#line 745 "rygel-trackable-container.c"
+#line 779 "rygel-trackable-container.c"
 }
 
 
@@ -749,7 +784,7 @@ void rygel_trackable_container_remove_child_tracked_finish (RygelTrackableContai
 	RygelTrackableContainerRemoveChildTrackedData* _data_;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 753 "rygel-trackable-container.c"
+#line 787 "rygel-trackable-container.c"
 }
 
 
@@ -762,122 +797,122 @@ void rygel_trackable_container_remove_child_tracked_finish (RygelTrackableContai
      */
 static void rygel_trackable_container_remove_child_tracked_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_) {
 	RygelTrackableContainerRemoveChildTrackedData* _data_;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_ = _user_data_;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_source_object_ = source_object;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_res_ = _res_;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	rygel_trackable_container_remove_child_tracked_co (_data_);
-#line 774 "rygel-trackable-container.c"
+#line 808 "rygel-trackable-container.c"
 }
 
 
 static gboolean rygel_trackable_container_remove_child_tracked_co (RygelTrackableContainerRemoveChildTrackedData* _data_) {
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	switch (_data_->_state_) {
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		case 0:
-#line 783 "rygel-trackable-container.c"
+#line 817 "rygel-trackable-container.c"
 		goto _state_0;
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		case 1:
-#line 787 "rygel-trackable-container.c"
+#line 821 "rygel-trackable-container.c"
 		goto _state_1;
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		case 2:
-#line 791 "rygel-trackable-container.c"
+#line 825 "rygel-trackable-container.c"
 		goto _state_2;
 		default:
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		g_assert_not_reached ();
-#line 796 "rygel-trackable-container.c"
+#line 830 "rygel-trackable-container.c"
 	}
 	_state_0:
-#line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp0_ = NULL;
-#line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_data_->_tmp0_ = _data_->object;
-#line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp0_, RYGEL_TYPE_TRACKABLE_CONTAINER)) {
-#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp1_ = NULL;
-#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp1_ = _data_->object;
-#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp2_ = NULL;
-#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp2_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp1_, RYGEL_TYPE_TRACKABLE_CONTAINER) ? ((RygelTrackableContainer*) _data_->_tmp1_) : NULL);
-#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->trackable = _data_->_tmp2_;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp3_ = NULL;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_tmp3_ = _data_->trackable;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_data_->_state_ = 1;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		rygel_trackable_container_clear (_data_->_tmp3_, rygel_trackable_container_remove_child_tracked_ready, _data_);
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		return FALSE;
-#line 825 "rygel-trackable-container.c"
+#line 859 "rygel-trackable-container.c"
 		_state_1:
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		rygel_trackable_container_clear_finish (_data_->_tmp3_, _data_->_res_);
-#line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		_g_object_unref0 (_data_->trackable);
-#line 831 "rygel-trackable-container.c"
+#line 865 "rygel-trackable-container.c"
 	}
-#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_tmp4_ = NULL;
-#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_tmp4_ = _data_->object;
-#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_state_ = 2;
-#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	rygel_trackable_container_remove_child (_data_->self, _data_->_tmp4_, rygel_trackable_container_remove_child_tracked_ready, _data_);
-#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	return FALSE;
-#line 843 "rygel-trackable-container.c"
-	_state_2:
-#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	rygel_trackable_container_remove_child_finish (_data_->self, _data_->_res_);
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_tmp5_ = NULL;
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_tmp5_ = _data_->object;
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	rygel_media_container_updated ((RygelMediaContainer*) _data_->self, _data_->_tmp5_, RYGEL_OBJECT_EVENT_TYPE_DELETED, FALSE);
-#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_tmp6_ = 0LL;
-#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_tmp6_ = ((RygelMediaContainer*) _data_->self)->total_deleted_child_count;
-#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	((RygelMediaContainer*) _data_->self)->total_deleted_child_count = _data_->_tmp6_ + 1;
 #line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	rygel_media_container_updated ((RygelMediaContainer*) _data_->self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_tmp7_ = NULL;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	_data_->_tmp7_ = _data_->object;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	g_signal_emit_by_name (_data_->self, "child-removed", _data_->_tmp7_);
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	if (_data_->_state_ == 0) {
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 871 "rygel-trackable-container.c"
-	} else {
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-		g_simple_async_result_complete (_data_->_async_result);
-#line 875 "rygel-trackable-container.c"
-	}
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
-	g_object_unref (_data_->_async_result);
-#line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_tmp4_ = NULL;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_tmp4_ = _data_->object;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_state_ = 2;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	rygel_trackable_container_remove_child (_data_->self, _data_->_tmp4_, rygel_trackable_container_remove_child_tracked_ready, _data_);
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return FALSE;
-#line 881 "rygel-trackable-container.c"
+#line 877 "rygel-trackable-container.c"
+	_state_2:
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	rygel_trackable_container_remove_child_finish (_data_->self, _data_->_res_);
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_tmp5_ = NULL;
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_tmp5_ = _data_->object;
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	rygel_media_container_updated ((RygelMediaContainer*) _data_->self, _data_->_tmp5_, RYGEL_OBJECT_EVENT_TYPE_DELETED, FALSE);
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_tmp6_ = 0LL;
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_tmp6_ = ((RygelMediaContainer*) _data_->self)->total_deleted_child_count;
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	((RygelMediaContainer*) _data_->self)->total_deleted_child_count = _data_->_tmp6_ + 1;
+#line 113 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	rygel_media_container_updated ((RygelMediaContainer*) _data_->self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
+#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_tmp7_ = NULL;
+#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	_data_->_tmp7_ = _data_->object;
+#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	g_signal_emit_by_name (_data_->self, "child-removed", _data_->_tmp7_);
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	if (_data_->_state_ == 0) {
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 905 "rygel-trackable-container.c"
+	} else {
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+		g_simple_async_result_complete (_data_->_async_result);
+#line 909 "rygel-trackable-container.c"
+	}
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	g_object_unref (_data_->_async_result);
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+	return FALSE;
+#line 915 "rygel-trackable-container.c"
 }
 
 
@@ -965,29 +1000,29 @@ static gchar* uuid_get (void) {
 	id = (g_free (id), NULL);
 #line 15 "../../src/librygel-core/uuid.vapi"
 	return result;
-#line 969 "rygel-trackable-container.c"
+#line 1003 "rygel-trackable-container.c"
 }
 
 
 static gchar* rygel_trackable_container_real_get_service_reset_token (RygelTrackableContainer* self) {
 	gchar* result = NULL;
 	gchar* _tmp0_ = NULL;
-#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	_tmp0_ = uuid_get ();
-#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	result = _tmp0_;
-#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return result;
-#line 982 "rygel-trackable-container.c"
+#line 1016 "rygel-trackable-container.c"
 }
 
 
 gchar* rygel_trackable_container_get_service_reset_token (RygelTrackableContainer* self) {
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return RYGEL_TRACKABLE_CONTAINER_GET_INTERFACE (self)->get_service_reset_token (self);
-#line 991 "rygel-trackable-container.c"
+#line 1025 "rygel-trackable-container.c"
 }
 
 
@@ -1000,18 +1035,18 @@ gchar* rygel_trackable_container_get_service_reset_token (RygelTrackableContaine
      * @param token the new service reset token.
      */
 static void rygel_trackable_container_real_set_service_reset_token (RygelTrackableContainer* self, const gchar* token) {
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_return_if_fail (token != NULL);
-#line 1006 "rygel-trackable-container.c"
+#line 1040 "rygel-trackable-container.c"
 }
 
 
 void rygel_trackable_container_set_service_reset_token (RygelTrackableContainer* self, const gchar* token) {
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_return_if_fail (self != NULL);
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	RYGEL_TRACKABLE_CONTAINER_GET_INTERFACE (self)->set_service_reset_token (self, token);
-#line 1015 "rygel-trackable-container.c"
+#line 1049 "rygel-trackable-container.c"
 }
 
 
@@ -1034,20 +1069,20 @@ void rygel_trackable_container_set_service_reset_token (RygelTrackableContainer*
      */
 static guint32 rygel_trackable_container_real_get_system_update_id (RygelTrackableContainer* self) {
 	guint32 result = 0U;
-#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	result = (guint32) 0;
-#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return result;
-#line 1042 "rygel-trackable-container.c"
+#line 1076 "rygel-trackable-container.c"
 }
 
 
 guint32 rygel_trackable_container_get_system_update_id (RygelTrackableContainer* self) {
-#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	g_return_val_if_fail (self != NULL, 0U);
-#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
+#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 	return RYGEL_TRACKABLE_CONTAINER_GET_INTERFACE (self)->get_system_update_id (self);
-#line 1051 "rygel-trackable-container.c"
+#line 1085 "rygel-trackable-container.c"
 }
 
 
@@ -1072,7 +1107,7 @@ static void rygel_trackable_container_base_init (RygelTrackableContainerIface * 
 		iface->set_service_reset_token = rygel_trackable_container_real_set_service_reset_token;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-trackable-container.vala"
 		iface->get_system_update_id = rygel_trackable_container_real_get_system_update_id;
-#line 1076 "rygel-trackable-container.c"
+#line 1110 "rygel-trackable-container.c"
 	}
 }
 

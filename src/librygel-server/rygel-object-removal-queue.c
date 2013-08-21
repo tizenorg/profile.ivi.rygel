@@ -623,7 +623,7 @@ static gboolean rygel_object_removal_queue_remove_now_co (RygelObjectRemovalQueu
 #line 79 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-object-removal-queue.vala"
 			if (_data_->_inner_error_ != NULL) {
 #line 626 "rygel-object-removal-queue.c"
-				goto __catch60_g_error;
+				goto __catch64_g_error;
 			}
 		} else {
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-object-removal-queue.vala"
@@ -659,7 +659,7 @@ static gboolean rygel_object_removal_queue_remove_now_co (RygelObjectRemovalQueu
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-object-removal-queue.vala"
 			if (_data_->_inner_error_ != NULL) {
 #line 662 "rygel-object-removal-queue.c"
-				goto __catch60_g_error;
+				goto __catch64_g_error;
 			}
 		}
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-object-removal-queue.vala"
@@ -678,8 +678,8 @@ static gboolean rygel_object_removal_queue_remove_now_co (RygelObjectRemovalQueu
 		g_debug ("rygel-object-removal-queue.vala:84: Auto-destroyed object '%s'!", _data_->_tmp21_);
 #line 680 "rygel-object-removal-queue.c"
 	}
-	goto __finally60;
-	__catch60_g_error:
+	goto __finally64;
+	__catch64_g_error:
 	{
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-object-removal-queue.vala"
 		_data_->err = _data_->_inner_error_;
@@ -712,7 +712,7 @@ static gboolean rygel_object_removal_queue_remove_now_co (RygelObjectRemovalQueu
 		_g_error_free0 (_data_->err);
 #line 713 "rygel-object-removal-queue.c"
 	}
-	__finally60:
+	__finally64:
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-object-removal-queue.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-object-removal-queue.vala"

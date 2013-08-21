@@ -556,7 +556,7 @@ static gboolean rygel_search_criteria_parser_real_run_co (RygelSearchCriteriaPar
 #line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-search-criteria-parser.vala"
 		if (_data_->_inner_error_ != NULL) {
 #line 559 "rygel-search-criteria-parser.c"
-			goto __catch65_g_error;
+			goto __catch69_g_error;
 		}
 #line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-search-criteria-parser.vala"
 		_rygel_search_expression_unref0 (_data_->self->expression);
@@ -564,8 +564,8 @@ static gboolean rygel_search_criteria_parser_real_run_co (RygelSearchCriteriaPar
 		_data_->self->expression = _data_->_tmp7_;
 #line 566 "rygel-search-criteria-parser.c"
 	}
-	goto __finally65;
-	__catch65_g_error:
+	goto __finally69;
+	__catch69_g_error:
 	{
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-search-criteria-parser.vala"
 		_data_->err = _data_->_inner_error_;
@@ -587,7 +587,7 @@ static gboolean rygel_search_criteria_parser_real_run_co (RygelSearchCriteriaPar
 		_g_error_free0 (_data_->err);
 #line 589 "rygel-search-criteria-parser.c"
 	}
-	__finally65:
+	__finally69:
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-search-criteria-parser.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-search-criteria-parser.vala"

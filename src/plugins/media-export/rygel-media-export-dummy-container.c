@@ -96,6 +96,8 @@ struct _RygelMediaExportTrackableDbContainer {
 
 struct _RygelMediaExportTrackableDbContainerClass {
 	RygelMediaExportDBContainerClass parent_class;
+	void (*remove_child) (RygelMediaExportTrackableDbContainer* self, RygelMediaObject* object, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	void (*remove_child_finish) (RygelMediaExportTrackableDbContainer* self, GAsyncResult* _res_);
 	gchar* (*get_service_reset_token) (RygelMediaExportTrackableDbContainer* self);
 	void (*set_service_reset_token) (RygelMediaExportTrackableDbContainer* self, const gchar* token);
 	guint32 (*get_system_update_id) (RygelMediaExportTrackableDbContainer* self);
@@ -143,7 +145,7 @@ static void rygel_media_export_dummy_container_finalize (GObject* obj);
 static gpointer _g_object_ref0 (gpointer self) {
 #line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 147 "rygel-media-export-dummy-container.c"
+#line 149 "rygel-media-export-dummy-container.c"
 }
 
 
@@ -244,7 +246,7 @@ RygelMediaExportDummyContainer* rygel_media_export_dummy_container_construct (GT
 	gee_abstract_collection_add ((GeeAbstractCollection*) _tmp16_, _tmp19_);
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	_g_free0 (_tmp19_);
-#line 248 "rygel-media-export-dummy-container.c"
+#line 250 "rygel-media-export-dummy-container.c"
 	{
 		GeeArrayList* _tmp20_ = NULL;
 		const gchar* _tmp21_ = NULL;
@@ -263,8 +265,8 @@ RygelMediaExportDummyContainer* rygel_media_export_dummy_container_construct (GT
 		_tmp20_ = _tmp23_;
 #line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 		if (_inner_error_ != NULL) {
-#line 267 "rygel-media-export-dummy-container.c"
-			goto __catch37_g_error;
+#line 269 "rygel-media-export-dummy-container.c"
+			goto __catch39_g_error;
 		}
 #line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 		_g_object_unref0 (self->children);
@@ -278,10 +280,10 @@ RygelMediaExportDummyContainer* rygel_media_export_dummy_container_construct (GT
 		_tmp26_ = _tmp25_;
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 		rygel_media_container_set_child_count ((RygelMediaContainer*) self, _tmp26_);
-#line 282 "rygel-media-export-dummy-container.c"
+#line 284 "rygel-media-export-dummy-container.c"
 	}
-	goto __finally37;
-	__catch37_g_error:
+	goto __finally39;
+	__catch39_g_error:
 	{
 		GError* _error_ = NULL;
 		GeeArrayList* _tmp27_ = NULL;
@@ -299,9 +301,9 @@ RygelMediaExportDummyContainer* rygel_media_export_dummy_container_construct (GT
 		rygel_media_container_set_child_count ((RygelMediaContainer*) self, 0);
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 		_g_error_free0 (_error_);
-#line 303 "rygel-media-export-dummy-container.c"
+#line 305 "rygel-media-export-dummy-container.c"
 	}
-	__finally37:
+	__finally39:
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	if (_inner_error_ != NULL) {
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
@@ -312,20 +314,20 @@ RygelMediaExportDummyContainer* rygel_media_export_dummy_container_construct (GT
 		g_clear_error (&_inner_error_);
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 		return NULL;
-#line 316 "rygel-media-export-dummy-container.c"
+#line 318 "rygel-media-export-dummy-container.c"
 	}
 #line 26 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	_g_object_unref0 (cache);
 #line 26 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	return self;
-#line 322 "rygel-media-export-dummy-container.c"
+#line 324 "rygel-media-export-dummy-container.c"
 }
 
 
 RygelMediaExportDummyContainer* rygel_media_export_dummy_container_new (GFile* file, RygelMediaContainer* parent) {
 #line 26 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	return rygel_media_export_dummy_container_construct (RYGEL_MEDIA_EXPORT_TYPE_DUMMY_CONTAINER, file, parent);
-#line 329 "rygel-media-export-dummy-container.c"
+#line 331 "rygel-media-export-dummy-container.c"
 }
 
 
@@ -350,7 +352,7 @@ void rygel_media_export_dummy_container_seen (RygelMediaExportDummyContainer* se
 	gee_collection_remove ((GeeCollection*) _tmp0_, _tmp3_);
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	_g_free0 (_tmp3_);
-#line 354 "rygel-media-export-dummy-container.c"
+#line 356 "rygel-media-export-dummy-container.c"
 }
 
 
@@ -359,7 +361,7 @@ static void rygel_media_export_dummy_container_class_init (RygelMediaExportDummy
 	rygel_media_export_dummy_container_parent_class = g_type_class_peek_parent (klass);
 #line 22 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_export_dummy_container_finalize;
-#line 363 "rygel-media-export-dummy-container.c"
+#line 365 "rygel-media-export-dummy-container.c"
 }
 
 
@@ -377,7 +379,7 @@ static void rygel_media_export_dummy_container_finalize (GObject* obj) {
 	_g_object_unref0 (self->children);
 #line 22 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-dummy-container.vala"
 	G_OBJECT_CLASS (rygel_media_export_dummy_container_parent_class)->finalize (obj);
-#line 381 "rygel-media-export-dummy-container.c"
+#line 383 "rygel-media-export-dummy-container.c"
 }
 
 

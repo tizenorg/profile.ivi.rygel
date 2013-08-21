@@ -68,13 +68,13 @@ DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	rygel-http-seek_object-creator.c rygel-http-seek_time-seek.c \
 	rygel-http-time-seek-test.c rygel-http-time-seek.c \
 	rygel-http-time-seek_http-get.c rygel-icon-info.c \
-	rygel-m3u-playlist_object-creator.c rygel-media-art-store.c \
-	rygel-media-engine-test.c rygel-media-engine.c \
+	rygel-logical-expression.c rygel-m3u-playlist_object-creator.c \
+	rygel-media-art-store.c rygel-media-engine-test.c \
 	rygel-object-creator-test.c rygel-object-creator.c \
 	rygel-playbin-renderer-test.c rygel-regression.c \
-	rygel-relational-expression.c rygel-search-expression.c \
-	rygel-searchable-container-test.c rygel-searchable-container.c \
-	rygel-serializer_object-creator.c \
+	rygel-relational-expression.c rygel-search-criteria-parser.c \
+	rygel-search-expression.c rygel-searchable-container-test.c \
+	rygel-searchable-container.c rygel-serializer_object-creator.c \
 	rygel-state-machine_http-get.c rygel-state-machine_http-post.c \
 	rygel-state-machine_http-response.c \
 	rygel-state-machine_object-creator.c rygel-thumbnail.c \
@@ -265,8 +265,9 @@ am_rygel_object_creator_test_OBJECTS =  \
 	rygel_object_creator_test-rygel-http-seek_object-creator.$(OBJEXT) \
 	rygel_object_creator_test-rygel-state-machine_object-creator.$(OBJEXT) \
 	rygel_object_creator_test-rygel-relational-expression.$(OBJEXT) \
+	rygel_object_creator_test-rygel-logical-expression.$(OBJEXT) \
 	rygel_object_creator_test-rygel-search-expression.$(OBJEXT) \
-	rygel_object_creator_test-rygel-media-engine.$(OBJEXT) \
+	rygel_object_creator_test-rygel-search-criteria-parser.$(OBJEXT) \
 	rygel_object_creator_test-rygel-serializer_object-creator.$(OBJEXT) \
 	rygel_object_creator_test-rygel-m3u-playlist_object-creator.$(OBJEXT)
 rygel_object_creator_test_OBJECTS =  \
@@ -846,8 +847,9 @@ rygel_object_creator_test_SOURCES = rygel-object-creator-test.vala \
 				  rygel-http-seek_object-creator.vala \
 				  rygel-state-machine_object-creator.vala \
 				  rygel-relational-expression.vala \
+				  rygel-logical-expression.vala \
 				  rygel-search-expression.vala \
-				  rygel-media-engine.vala \
+				  rygel-search-criteria-parser.vala \
 				  rygel-serializer_object-creator.vala \
 				  rygel-m3u-playlist_object-creator.vala
 
@@ -1096,11 +1098,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-data-source.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-dlna-profile.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-http-seek_object-creator.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-logical-expression.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-m3u-playlist_object-creator.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-media-engine.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-object-creator-test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-object-creator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-relational-expression.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-search-criteria-parser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-search-expression.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-serializer_object-creator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rygel_object_creator_test-rygel-state-machine_object-creator.Po@am__quote@
@@ -1693,6 +1696,20 @@ rygel_object_creator_test-rygel-relational-expression.obj: rygel-relational-expr
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-relational-expression.obj `if test -f 'rygel-relational-expression.c'; then $(CYGPATH_W) 'rygel-relational-expression.c'; else $(CYGPATH_W) '$(srcdir)/rygel-relational-expression.c'; fi`
 
+rygel_object_creator_test-rygel-logical-expression.o: rygel-logical-expression.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-logical-expression.o -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-logical-expression.Tpo -c -o rygel_object_creator_test-rygel-logical-expression.o `test -f 'rygel-logical-expression.c' || echo '$(srcdir)/'`rygel-logical-expression.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-logical-expression.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-logical-expression.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-logical-expression.c' object='rygel_object_creator_test-rygel-logical-expression.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-logical-expression.o `test -f 'rygel-logical-expression.c' || echo '$(srcdir)/'`rygel-logical-expression.c
+
+rygel_object_creator_test-rygel-logical-expression.obj: rygel-logical-expression.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-logical-expression.obj -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-logical-expression.Tpo -c -o rygel_object_creator_test-rygel-logical-expression.obj `if test -f 'rygel-logical-expression.c'; then $(CYGPATH_W) 'rygel-logical-expression.c'; else $(CYGPATH_W) '$(srcdir)/rygel-logical-expression.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-logical-expression.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-logical-expression.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-logical-expression.c' object='rygel_object_creator_test-rygel-logical-expression.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-logical-expression.obj `if test -f 'rygel-logical-expression.c'; then $(CYGPATH_W) 'rygel-logical-expression.c'; else $(CYGPATH_W) '$(srcdir)/rygel-logical-expression.c'; fi`
+
 rygel_object_creator_test-rygel-search-expression.o: rygel-search-expression.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-search-expression.o -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-search-expression.Tpo -c -o rygel_object_creator_test-rygel-search-expression.o `test -f 'rygel-search-expression.c' || echo '$(srcdir)/'`rygel-search-expression.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-search-expression.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-search-expression.Po
@@ -1707,19 +1724,19 @@ rygel_object_creator_test-rygel-search-expression.obj: rygel-search-expression.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-search-expression.obj `if test -f 'rygel-search-expression.c'; then $(CYGPATH_W) 'rygel-search-expression.c'; else $(CYGPATH_W) '$(srcdir)/rygel-search-expression.c'; fi`
 
-rygel_object_creator_test-rygel-media-engine.o: rygel-media-engine.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-media-engine.o -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-media-engine.Tpo -c -o rygel_object_creator_test-rygel-media-engine.o `test -f 'rygel-media-engine.c' || echo '$(srcdir)/'`rygel-media-engine.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-media-engine.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-media-engine.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-media-engine.c' object='rygel_object_creator_test-rygel-media-engine.o' libtool=no @AMDEPBACKSLASH@
+rygel_object_creator_test-rygel-search-criteria-parser.o: rygel-search-criteria-parser.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-search-criteria-parser.o -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-search-criteria-parser.Tpo -c -o rygel_object_creator_test-rygel-search-criteria-parser.o `test -f 'rygel-search-criteria-parser.c' || echo '$(srcdir)/'`rygel-search-criteria-parser.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-search-criteria-parser.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-search-criteria-parser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-search-criteria-parser.c' object='rygel_object_creator_test-rygel-search-criteria-parser.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-media-engine.o `test -f 'rygel-media-engine.c' || echo '$(srcdir)/'`rygel-media-engine.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-search-criteria-parser.o `test -f 'rygel-search-criteria-parser.c' || echo '$(srcdir)/'`rygel-search-criteria-parser.c
 
-rygel_object_creator_test-rygel-media-engine.obj: rygel-media-engine.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-media-engine.obj -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-media-engine.Tpo -c -o rygel_object_creator_test-rygel-media-engine.obj `if test -f 'rygel-media-engine.c'; then $(CYGPATH_W) 'rygel-media-engine.c'; else $(CYGPATH_W) '$(srcdir)/rygel-media-engine.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-media-engine.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-media-engine.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-media-engine.c' object='rygel_object_creator_test-rygel-media-engine.obj' libtool=no @AMDEPBACKSLASH@
+rygel_object_creator_test-rygel-search-criteria-parser.obj: rygel-search-criteria-parser.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-search-criteria-parser.obj -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-search-criteria-parser.Tpo -c -o rygel_object_creator_test-rygel-search-criteria-parser.obj `if test -f 'rygel-search-criteria-parser.c'; then $(CYGPATH_W) 'rygel-search-criteria-parser.c'; else $(CYGPATH_W) '$(srcdir)/rygel-search-criteria-parser.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/rygel_object_creator_test-rygel-search-criteria-parser.Tpo $(DEPDIR)/rygel_object_creator_test-rygel-search-criteria-parser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-search-criteria-parser.c' object='rygel_object_creator_test-rygel-search-criteria-parser.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-media-engine.obj `if test -f 'rygel-media-engine.c'; then $(CYGPATH_W) 'rygel-media-engine.c'; else $(CYGPATH_W) '$(srcdir)/rygel-media-engine.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -c -o rygel_object_creator_test-rygel-search-criteria-parser.obj `if test -f 'rygel-search-criteria-parser.c'; then $(CYGPATH_W) 'rygel-search-criteria-parser.c'; else $(CYGPATH_W) '$(srcdir)/rygel-search-criteria-parser.c'; fi`
 
 rygel_object_creator_test-rygel-serializer_object-creator.o: rygel-serializer_object-creator.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_object_creator_test_CFLAGS) $(CFLAGS) -MT rygel_object_creator_test-rygel-serializer_object-creator.o -MD -MP -MF $(DEPDIR)/rygel_object_creator_test-rygel-serializer_object-creator.Tpo -c -o rygel_object_creator_test-rygel-serializer_object-creator.o `test -f 'rygel-serializer_object-creator.c' || echo '$(srcdir)/'`rygel-serializer_object-creator.c
@@ -1900,12 +1917,17 @@ $(srcdir)/rygel-relational-expression.c: $(srcdir)/rygel_object_creator_test_val
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_object_creator_test_vala.stamp; \
 	fi
+$(srcdir)/rygel-logical-expression.c: $(srcdir)/rygel_object_creator_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_object_creator_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_object_creator_test_vala.stamp; \
+	fi
 $(srcdir)/rygel-search-expression.c: $(srcdir)/rygel_object_creator_test_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/rygel_object_creator_test_vala.stamp; fi
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_object_creator_test_vala.stamp; \
 	fi
-$(srcdir)/rygel-media-engine.c: $(srcdir)/rygel_object_creator_test_vala.stamp
+$(srcdir)/rygel-search-criteria-parser.c: $(srcdir)/rygel_object_creator_test_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/rygel_object_creator_test_vala.stamp; fi
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_object_creator_test_vala.stamp; \
@@ -1920,9 +1942,9 @@ $(srcdir)/rygel-m3u-playlist_object-creator.c: $(srcdir)/rygel_object_creator_te
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_object_creator_test_vala.stamp; \
 	fi
-$(srcdir)/rygel_object_creator_test_vala.stamp: rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-search-expression.vala rygel-media-engine.vala rygel-serializer_object-creator.vala rygel-m3u-playlist_object-creator.vala
+$(srcdir)/rygel_object_creator_test_vala.stamp: rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-logical-expression.vala rygel-search-expression.vala rygel-search-criteria-parser.vala rygel-serializer_object-creator.vala rygel-m3u-playlist_object-creator.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_object_creator_test_VALAFLAGS) $(VALAFLAGS) -C rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-search-expression.vala rygel-media-engine.vala rygel-serializer_object-creator.vala rygel-m3u-playlist_object-creator.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_object_creator_test_VALAFLAGS) $(VALAFLAGS) -C rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-logical-expression.vala rygel-search-expression.vala rygel-search-criteria-parser.vala rygel-serializer_object-creator.vala rygel-m3u-playlist_object-creator.vala
 	$(AM_V_at)mv -f $@-t $@
 $(srcdir)/rygel-media-engine-test.c: $(srcdir)/rygel_media_engine_test_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/rygel_media_engine_test_vala.stamp; fi
@@ -2414,15 +2436,16 @@ maintainer-clean-generic:
 	-rm -f rygel-http-time-seek.c
 	-rm -f rygel-http-time-seek_http-get.c
 	-rm -f rygel-icon-info.c
+	-rm -f rygel-logical-expression.c
 	-rm -f rygel-m3u-playlist_object-creator.c
 	-rm -f rygel-media-art-store.c
 	-rm -f rygel-media-engine-test.c
-	-rm -f rygel-media-engine.c
 	-rm -f rygel-object-creator-test.c
 	-rm -f rygel-object-creator.c
 	-rm -f rygel-playbin-renderer-test.c
 	-rm -f rygel-regression.c
 	-rm -f rygel-relational-expression.c
+	-rm -f rygel-search-criteria-parser.c
 	-rm -f rygel-search-expression.c
 	-rm -f rygel-searchable-container-test.c
 	-rm -f rygel-searchable-container.c

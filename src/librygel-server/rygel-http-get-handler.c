@@ -479,7 +479,7 @@ static void rygel_http_get_handler_real_add_response_headers (RygelHTTPGetHandle
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-get-handler.vala"
 		if (_inner_error_ != NULL) {
 #line 482 "rygel-http-get-handler.c"
-			goto __catch27_g_error;
+			goto __catch29_g_error;
 		}
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-get-handler.vala"
 		if (resource != NULL) {
@@ -553,8 +553,8 @@ static void rygel_http_get_handler_real_add_response_headers (RygelHTTPGetHandle
 		_g_object_unref0 (resource);
 #line 555 "rygel-http-get-handler.c"
 	}
-	goto __finally27;
-	__catch27_g_error:
+	goto __finally29;
+	__catch29_g_error:
 	{
 		GError* err = NULL;
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-get-handler.vala"
@@ -567,7 +567,7 @@ static void rygel_http_get_handler_real_add_response_headers (RygelHTTPGetHandle
 		_g_error_free0 (err);
 #line 569 "rygel-http-get-handler.c"
 	}
-	__finally27:
+	__finally29:
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-get-handler.vala"
 	if (_inner_error_ != NULL) {
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-get-handler.vala"

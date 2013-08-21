@@ -740,12 +740,12 @@ static void rygel_dbus_thumbnailer_on_activatable_names (RygelDbusThumbnailer* s
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
 			if (_inner_error_->domain == G_DBUS_ERROR) {
 #line 742 "rygel-dbus-thumbnailer.c"
-				goto __catch23_g_dbus_error;
+				goto __catch25_g_dbus_error;
 			}
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
 			if (_inner_error_->domain == G_IO_ERROR) {
 #line 747 "rygel-dbus-thumbnailer.c"
-				goto __catch23_g_io_error;
+				goto __catch25_g_io_error;
 			}
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -775,12 +775,12 @@ static void rygel_dbus_thumbnailer_on_activatable_names (RygelDbusThumbnailer* s
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
 				if (_inner_error_->domain == G_DBUS_ERROR) {
 #line 777 "rygel-dbus-thumbnailer.c"
-					goto __catch23_g_dbus_error;
+					goto __catch25_g_dbus_error;
 				}
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
 				if (_inner_error_->domain == G_IO_ERROR) {
 #line 782 "rygel-dbus-thumbnailer.c"
-					goto __catch23_g_io_error;
+					goto __catch25_g_io_error;
 				}
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
 				names = (_vala_array_free (names, names_length1, (GDestroyNotify) g_free), NULL);
@@ -809,8 +809,8 @@ static void rygel_dbus_thumbnailer_on_activatable_names (RygelDbusThumbnailer* s
 		names = (_vala_array_free (names, names_length1, (GDestroyNotify) g_free), NULL);
 #line 810 "rygel-dbus-thumbnailer.c"
 	}
-	goto __finally23;
-	__catch23_g_dbus_error:
+	goto __finally25;
+	__catch25_g_dbus_error:
 	{
 		GError* _error_ = NULL;
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
@@ -821,8 +821,8 @@ static void rygel_dbus_thumbnailer_on_activatable_names (RygelDbusThumbnailer* s
 		_g_error_free0 (_error_);
 #line 822 "rygel-dbus-thumbnailer.c"
 	}
-	goto __finally23;
-	__catch23_g_io_error:
+	goto __finally25;
+	__catch25_g_io_error:
 	{
 		GError* io_error = NULL;
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
@@ -833,7 +833,7 @@ static void rygel_dbus_thumbnailer_on_activatable_names (RygelDbusThumbnailer* s
 		_g_error_free0 (io_error);
 #line 834 "rygel-dbus-thumbnailer.c"
 	}
-	__finally23:
+	__finally25:
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"
 	if (_inner_error_ != NULL) {
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-dbus-thumbnailer.vala"

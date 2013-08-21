@@ -318,7 +318,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 320 "rygel-media-export-query-container-factory.c"
-				goto __catch51_g_regex_error;
+				goto __catch52_g_regex_error;
 			}
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -343,7 +343,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 345 "rygel-media-export-query-container-factory.c"
-				goto __catch51_g_regex_error;
+				goto __catch52_g_regex_error;
 			}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			_g_regex_unref0 (regex);
@@ -363,8 +363,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		return result;
 #line 364 "rygel-media-export-query-container-factory.c"
 	}
-	goto __finally51;
-	__catch51_g_regex_error:
+	goto __finally52;
+	__catch52_g_regex_error:
 	{
 		GError* e = NULL;
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -377,7 +377,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_error_free0 (e);
 #line 378 "rygel-media-export-query-container-factory.c"
 	}
-	__finally51:
+	__finally52:
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	if (_inner_error_ != NULL) {
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"

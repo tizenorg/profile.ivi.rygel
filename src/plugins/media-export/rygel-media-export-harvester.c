@@ -813,7 +813,7 @@ static void rygel_media_export_harvester_on_file_changed (RygelMediaExportHarves
 #line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 				if (_inner_error_ != NULL) {
 #line 816 "rygel-media-export-harvester.c"
-					goto __catch58_g_error;
+					goto __catch59_g_error;
 				}
 #line 151 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 				break;
@@ -840,8 +840,8 @@ static void rygel_media_export_harvester_on_file_changed (RygelMediaExportHarves
 			}
 		}
 	}
-	goto __finally58;
-	__catch58_g_error:
+	goto __finally59;
+	__catch59_g_error:
 	{
 		GError* _error_ = NULL;
 #line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
@@ -852,7 +852,7 @@ static void rygel_media_export_harvester_on_file_changed (RygelMediaExportHarves
 		_g_error_free0 (_error_);
 #line 854 "rygel-media-export-harvester.c"
 	}
-	__finally58:
+	__finally59:
 #line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 	if (_inner_error_ != NULL) {
 #line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
@@ -914,7 +914,7 @@ static void rygel_media_export_harvester_on_file_added (RygelMediaExportHarveste
 #line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 			_g_object_unref0 (cache);
 #line 916 "rygel-media-export-harvester.c"
-			goto __catch59_g_error;
+			goto __catch60_g_error;
 		}
 #line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 		_tmp8_ = g_file_info_get_file_type (info);
@@ -976,7 +976,7 @@ static void rygel_media_export_harvester_on_file_added (RygelMediaExportHarveste
 #line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
 #line 978 "rygel-media-export-harvester.c"
-						goto __catch60_rygel_media_export_database_error;
+						goto __catch61_rygel_media_export_database_error;
 					}
 #line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 					_g_free0 (id);
@@ -1012,8 +1012,8 @@ static void rygel_media_export_harvester_on_file_added (RygelMediaExportHarveste
 				_g_object_unref0 (parent_container);
 #line 1013 "rygel-media-export-harvester.c"
 			}
-			goto __finally60;
-			__catch60_rygel_media_export_database_error:
+			goto __finally61;
+			__catch61_rygel_media_export_database_error:
 			{
 				GError* _error_ = NULL;
 				const gchar* _tmp22_ = NULL;
@@ -1038,7 +1038,7 @@ static void rygel_media_export_harvester_on_file_added (RygelMediaExportHarveste
 				_g_error_free0 (_error_);
 #line 1039 "rygel-media-export-harvester.c"
 			}
-			__finally60:
+			__finally61:
 #line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 			if (_inner_error_ != NULL) {
 #line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
@@ -1048,7 +1048,7 @@ static void rygel_media_export_harvester_on_file_added (RygelMediaExportHarveste
 #line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 				_g_object_unref0 (cache);
 #line 1050 "rygel-media-export-harvester.c"
-				goto __catch59_g_error;
+				goto __catch60_g_error;
 			}
 #line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 			_g_free0 (id);
@@ -1076,8 +1076,8 @@ static void rygel_media_export_harvester_on_file_added (RygelMediaExportHarveste
 		_g_object_unref0 (cache);
 #line 1076 "rygel-media-export-harvester.c"
 	}
-	goto __finally59;
-	__catch59_g_error:
+	goto __finally60;
+	__catch60_g_error:
 	{
 		GError* _error_ = NULL;
 		const gchar* _tmp29_ = NULL;
@@ -1110,7 +1110,7 @@ static void rygel_media_export_harvester_on_file_added (RygelMediaExportHarveste
 		_g_error_free0 (_error_);
 #line 1110 "rygel-media-export-harvester.c"
 	}
-	__finally59:
+	__finally60:
 #line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 	if (_inner_error_ != NULL) {
 #line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
@@ -1202,7 +1202,7 @@ static void rygel_media_export_harvester_on_file_removed (RygelMediaExportHarves
 #line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 			_g_free0 (id);
 #line 1203 "rygel-media-export-harvester.c"
-			goto __catch61_g_error;
+			goto __catch62_g_error;
 		}
 #line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 		_tmp14_ = NULL;
@@ -1259,8 +1259,8 @@ static void rygel_media_export_harvester_on_file_removed (RygelMediaExportHarves
 		_g_free0 (id);
 #line 1259 "rygel-media-export-harvester.c"
 	}
-	goto __finally61;
-	__catch61_g_error:
+	goto __finally62;
+	__catch62_g_error:
 	{
 		GError* _error_ = NULL;
 		const gchar* _tmp23_ = NULL;
@@ -1282,7 +1282,7 @@ static void rygel_media_export_harvester_on_file_removed (RygelMediaExportHarves
 		_g_error_free0 (_error_);
 #line 1282 "rygel-media-export-harvester.c"
 	}
-	__finally61:
+	__finally62:
 #line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"
 	if (_inner_error_ != NULL) {
 #line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvester.vala"

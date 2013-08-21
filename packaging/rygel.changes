@@ -1,3 +1,6 @@
+* Wed Aug 21 2013 Regis Merlino <regis.merlino@intel.com>
+- Update rygel to 0.19.5 (540620c)
+
 * Fri Aug 02 2013 Regis Merlino <regis.merlino@intel.com>
 - Add systemd service script
 - Update to Rygel v0.19.4

@@ -719,7 +719,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 722 "rygel-xbox-hacks.c"
-				goto __catch69_g_regex_error;
+				goto __catch73_g_regex_error;
 			}
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -744,7 +744,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 747 "rygel-xbox-hacks.c"
-				goto __catch69_g_regex_error;
+				goto __catch73_g_regex_error;
 			}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			_g_regex_unref0 (regex);
@@ -764,8 +764,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		return result;
 #line 766 "rygel-xbox-hacks.c"
 	}
-	goto __finally69;
-	__catch69_g_regex_error:
+	goto __finally73;
+	__catch73_g_regex_error:
 	{
 		GError* e = NULL;
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -778,7 +778,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_error_free0 (e);
 #line 780 "rygel-xbox-hacks.c"
 	}
-	__finally69:
+	__finally73:
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	if (_inner_error_ != NULL) {
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"

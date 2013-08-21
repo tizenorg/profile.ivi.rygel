@@ -1075,7 +1075,7 @@ gboolean rygel_http_time_seek_needed (RygelHTTPGet* request) {
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-time-seek.vala"
 		if (_inner_error_ != NULL) {
 #line 1078 "rygel-http-time-seek.c"
-			goto __catch44_g_error;
+			goto __catch46_g_error;
 		}
 #line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-time-seek.vala"
 		_tmp3_ = rygel_client_hacks_force_seek (hack);
@@ -1085,8 +1085,8 @@ gboolean rygel_http_time_seek_needed (RygelHTTPGet* request) {
 		_g_object_unref0 (hack);
 #line 1087 "rygel-http-time-seek.c"
 	}
-	goto __finally44;
-	__catch44_g_error:
+	goto __finally46;
+	__catch46_g_error:
 	{
 		GError* _error_ = NULL;
 #line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-time-seek.vala"
@@ -1097,7 +1097,7 @@ gboolean rygel_http_time_seek_needed (RygelHTTPGet* request) {
 		_g_error_free0 (_error_);
 #line 1099 "rygel-http-time-seek.c"
 	}
-	__finally44:
+	__finally46:
 #line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-time-seek.vala"
 	if (_inner_error_ != NULL) {
 #line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-time-seek.vala"

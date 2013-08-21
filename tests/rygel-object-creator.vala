@@ -145,6 +145,12 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
                                          container.id);
             }
 
+            if (this.didl_object is DIDLLiteContainer &&
+                !this.validate_create_class (container)) {
+                throw new ContentDirectoryError.BAD_METADATA
+                                   (_("upnp:createClass value not supported"));
+            }
+
             yield this.create_object_from_didl (container);
             if (this.object is MediaItem) {
                 yield container.add_item (this.object as MediaItem,
@@ -191,8 +197,8 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
 
         if (this.container_id == null) {
             // Sorry we can't do anything without ContainerID
-            throw new ContentDirectoryError.NO_SUCH_OBJECT
-                                        (_("No such object"));
+            throw new ContentDirectoryError.INVALID_ARGS
+                                        (_("Missing ContainerID argument"));
         }
     }
 
@@ -281,6 +287,44 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
         }
     }
 
+    private async SearchExpression build_create_class_expression
+                                        (SearchExpression expression) {
+        // Take create-classes into account
+        if (!(this.didl_object is DIDLLiteContainer)) {
+            return expression;
+        }
+
+        var didl_container = this.didl_object as DIDLLiteContainer;
+        var create_classes = didl_container.get_create_classes ();
+        if (create_classes == null) {
+            return expression;
+        }
+
+        var builder = new StringBuilder ("(");
+        foreach (var create_class in create_classes) {
+            builder.append_printf ("(upnp:createClass derivedfrom \"%s\") AND",
+                                   create_class);
+        }
+
+        // remove dangeling AND
+        builder.truncate (builder.len - 3);
+        builder.append (")");
+
+        try {
+            var parser = new Rygel.SearchCriteriaParser (builder.str);
+            yield parser.run ();
+
+            var rel = new LogicalExpression ();
+            rel.operand1 = expression;
+            rel.op = LogicalOperator.AND;
+            rel.operand2 = parser.expression;
+
+            return rel;
+        } catch (Error error) {
+            assert_not_reached ();
+        }
+    }
+
     /**
      * Find a container that can create items matching the UPnP class of the
      * requested item.
@@ -305,11 +349,16 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
         expression.op = SearchCriteriaOp.DERIVED_FROM;
         expression.operand1 = "upnp:createClass";
 
+        // Add container's create classes to the search expression if there
+        // are some
+        var search_expression = yield this.build_create_class_expression
+                                        (expression);
+
         while (upnp_class != "object") {
             expression.operand2 = upnp_class;
 
             uint total_matches;
-            var result = yield root_container.search (expression,
+            var result = yield root_container.search (search_expression,
                                                       0,
                                                       1,
                                                       out total_matches,
@@ -391,6 +440,23 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
 
         this.action.return ();
         this.completed ();
+    }
+
+    private bool validate_create_class (WritableContainer container) {
+        var didl_cont = this.didl_object as DIDLLiteContainer;
+        var create_classes = didl_cont.get_create_classes ();
+
+        if (create_classes == null) {
+            return true;
+        }
+
+        foreach (var create_class in create_classes) {
+            if (!container.can_create (create_class)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void handle_error (Error error) {
@@ -720,7 +786,8 @@ internal class Rygel.ObjectCreator: GLib.Object, Rygel.StateMachine {
     private bool is_profile_valid (string profile) {
         unowned GLib.List<DLNAProfile> profiles, result;
 
-        profiles = MediaEngine.get_default ().get_dlna_profiles ();
+        var plugin = this.content_dir.root_device.resource_factory as MediaServerPlugin;
+        profiles = plugin.upload_profiles;
         var p = new DLNAProfile (profile, "");
 
         result = profiles.find_custom (p, DLNAProfile.compare_by_name);

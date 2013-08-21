@@ -497,7 +497,7 @@ GeeArrayList* rygel_subtitle_manager_get_subtitles (RygelSubtitleManager* self, 
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-subtitle-manager.vala"
 					if (_inner_error_ != NULL) {
 #line 500 "rygel-subtitle-manager.c"
-						goto __catch66_g_error;
+						goto __catch70_g_error;
 					}
 #line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-subtitle-manager.vala"
 					_tmp29_ = info;
@@ -572,8 +572,8 @@ GeeArrayList* rygel_subtitle_manager_get_subtitles (RygelSubtitleManager* self, 
 					_g_object_unref0 (info);
 #line 574 "rygel-subtitle-manager.c"
 				}
-				goto __finally66;
-				__catch66_g_error:
+				goto __finally70;
+				__catch70_g_error:
 				{
 					GError* err = NULL;
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-subtitle-manager.vala"
@@ -584,7 +584,7 @@ GeeArrayList* rygel_subtitle_manager_get_subtitles (RygelSubtitleManager* self, 
 					_g_error_free0 (err);
 #line 586 "rygel-subtitle-manager.c"
 				}
-				__finally66:
+				__finally70:
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-subtitle-manager.vala"
 				if (_inner_error_ != NULL) {
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-subtitle-manager.vala"

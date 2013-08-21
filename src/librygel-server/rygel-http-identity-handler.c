@@ -607,7 +607,7 @@ static RygelHTTPResponse* rygel_http_identity_handler_real_render_body (RygelHTT
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-identity-handler.vala"
 		if (_inner_error_ != NULL) {
 #line 610 "rygel-http-identity-handler.c"
-			goto __catch29_g_error;
+			goto __catch31_g_error;
 		}
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-identity-handler.vala"
 		result = _tmp0_;
@@ -615,8 +615,8 @@ static RygelHTTPResponse* rygel_http_identity_handler_real_render_body (RygelHTT
 		return result;
 #line 617 "rygel-http-identity-handler.c"
 	}
-	goto __finally29;
-	__catch29_g_error:
+	goto __finally31;
+	__catch31_g_error:
 	{
 		GError* err = NULL;
 		GError* _tmp3_ = NULL;
@@ -637,9 +637,9 @@ static RygelHTTPResponse* rygel_http_identity_handler_real_render_body (RygelHTT
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-identity-handler.vala"
 		_g_error_free0 (err);
 #line 640 "rygel-http-identity-handler.c"
-		goto __finally29;
+		goto __finally31;
 	}
-	__finally29:
+	__finally31:
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-identity-handler.vala"
 	if (_inner_error_->domain == RYGEL_HTTP_REQUEST_ERROR) {
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-identity-handler.vala"

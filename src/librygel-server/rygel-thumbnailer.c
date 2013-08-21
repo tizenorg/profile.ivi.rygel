@@ -196,7 +196,7 @@ static RygelThumbnailer* rygel_thumbnailer_construct (GType object_type, GError*
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"
 		if (_inner_error_ != NULL) {
 #line 199 "rygel-thumbnailer.c"
-			goto __catch67_g_error;
+			goto __catch71_g_error;
 		}
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"
 		_g_object_unref0 (self->priv->thumbler);
@@ -208,8 +208,8 @@ static RygelThumbnailer* rygel_thumbnailer_construct (GType object_type, GError*
 		g_signal_connect_object (_tmp9_, "ready", (GCallback) _rygel_thumbnailer_on_dbus_thumbnailer_ready_rygel_dbus_thumbnailer_ready, self, 0);
 #line 210 "rygel-thumbnailer.c"
 	}
-	goto __finally67;
-	__catch67_g_error:
+	goto __finally71;
+	__catch71_g_error:
 	{
 		GError* _error_ = NULL;
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"
@@ -220,7 +220,7 @@ static RygelThumbnailer* rygel_thumbnailer_construct (GType object_type, GError*
 		_g_error_free0 (_error_);
 #line 222 "rygel-thumbnailer.c"
 	}
-	__finally67:
+	__finally71:
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"
 	if (_inner_error_ != NULL) {
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"
@@ -285,7 +285,7 @@ RygelThumbnailer* rygel_thumbnailer_get_default (void) {
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"
 				if (_inner_error_->domain == THUMBNAILER_ERROR) {
 #line 288 "rygel-thumbnailer.c"
-					goto __catch68_thumbnailer_error;
+					goto __catch72_thumbnailer_error;
 				}
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -301,8 +301,8 @@ RygelThumbnailer* rygel_thumbnailer_get_default (void) {
 			rygel_thumbnailer_thumbnailer = _tmp1_;
 #line 303 "rygel-thumbnailer.c"
 		}
-		goto __finally68;
-		__catch68_thumbnailer_error:
+		goto __finally72;
+		__catch72_thumbnailer_error:
 		{
 			GError* err = NULL;
 			const gchar* _tmp3_ = NULL;
@@ -324,7 +324,7 @@ RygelThumbnailer* rygel_thumbnailer_get_default (void) {
 			_g_error_free0 (err);
 #line 326 "rygel-thumbnailer.c"
 		}
-		__finally68:
+		__finally72:
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"
 		if (_inner_error_ != NULL) {
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-thumbnailer.vala"

@@ -46,6 +46,8 @@
 <pre class="synopsis">#define             <a class="link" href="RygelPlaybinPlayer.html#RYGEL-PLAYBIN-TYPE-PLAYER:CAPS" title="RYGEL_PLAYBIN_TYPE_PLAYER">RYGEL_PLAYBIN_TYPE_PLAYER</a>
 <a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinPlayer"><span class="returnvalue">RygelPlaybinPlayer</span></a> * <a class="link" href="RygelPlaybinPlayer.html#rygel-playbin-player-new-wrap" title="rygel_playbin_player_new_wrap ()">rygel_playbin_player_new_wrap</a>      (<em class="parameter"><code><a href="../gstreamer-1.0/GstElement.html"><span class="type">GstElement</span></a> *playbin</code></em>);
 <a href="../gstreamer-1.0/GstElement.html"><span class="returnvalue">GstElement</span></a> *        <a class="link" href="RygelPlaybinPlayer.html#rygel-playbin-player-get-playbin" title="rygel_playbin_player_get_playbin ()">rygel_playbin_player_get_playbin</a>    (<em class="parameter"><code><a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinPlayer"><span class="type">RygelPlaybinPlayer</span></a> *self</code></em>);
+<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="RygelPlaybinPlayer.html#rygel-playbin-player-get-supported-profiles" title="rygel_playbin_player_get_supported_profiles ()">rygel_playbin_player_get_supported_profiles</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinPlayer"><span class="type">RygelPlaybinPlayer</span></a> *self</code></em>);
 <a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinPlayer"><span class="returnvalue">RygelPlaybinPlayer</span></a> * <a class="link" href="RygelPlaybinPlayer.html#rygel-playbin-player-get-default" title="rygel_playbin_player_get_default ()">rygel_playbin_player_get_default</a>   (<em class="parameter"><code><span class="type">void</span></code></em>);
 struct              <a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer-struct" title="struct RygelPlaybinPlayer">RygelPlaybinPlayer</a>;
 struct              <a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayerClass" title="struct RygelPlaybinPlayerClass">RygelPlaybinPlayerClass</a>;
@@ -77,6 +79,7 @@ RygelPlaybinPlayer implements
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-state" title='The "playback-state" property'>playback-state</a>"           <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin" title='The "playbin" property'>playbin</a>"                  <a href="../gstreamer-1.0/GstElement.html"><span class="type">GstElement</span></a>*           : Read
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--position" title='The "position" property'>position</a>"                 <span class="type">gint64</span>                : Read
+  "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles" title='The "supported-profiles" property'>supported-profiles</a>"       <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--uri" title='The "uri" property'>uri</a>"                      <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--volume" title='The "volume" property'>volume</a>"                   <a href="../glib/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a>               : Read / Write
 </pre>
@@ -128,6 +131,28 @@ Get and return the current value of the <a class="link" href="RygelPlaybinPlayer
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>the value of the <a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin" title='The "playbin" property'><span class="type">"playbin"</span></a> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-playbin-player-get-supported-profiles"></a><h3>rygel_playbin_player_get_supported_profiles ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             rygel_playbin_player_get_supported_profiles
+                                                        (<em class="parameter"><code><a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinPlayer"><span class="type">RygelPlaybinPlayer</span></a> *self</code></em>);</pre>
+<p>
+Get and return the current value of the <a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinPlayer"><span class="type">RygelPlaybinPlayer</span></a> instance to query</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the value of the <a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property</td>
 </tr>
 </tbody>
 </table></div>
@@ -237,6 +262,12 @@ The class structure for <a class="link" href="RygelPlaybinPlayer.html#RYGEL-PLAY
 <pre class="programlisting">  "position"                 <span class="type">gint64</span>                : Read</pre>
 <p>position.</p>
 <p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="RygelPlaybinPlayer--supported-profiles"></a><h3>The <code class="literal">"supported-profiles"</code> property</h3>
+<pre class="programlisting">  "supported-profiles"       <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read</pre>
+<p>supported-profiles.</p>
 </div>
 <hr>
 <div class="refsect2">

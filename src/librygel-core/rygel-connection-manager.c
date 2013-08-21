@@ -330,15 +330,16 @@ static void rygel_connection_manager_get_current_connection_info_cb (RygelConnec
 	gchar* connection_id = NULL;
 	GUPnPServiceAction* _tmp0_ = NULL;
 	gboolean _tmp1_ = FALSE;
-	const gchar* _tmp2_ = NULL;
-	gboolean _tmp4_ = FALSE;
-	GUPnPServiceAction* _tmp7_ = NULL;
-	guint _tmp8_ = 0U;
-	GUPnPServiceAction* _tmp11_ = NULL;
-	gint _tmp12_ = 0;
-	gint _tmp13_ = 0;
-	const gchar* _tmp14_ = NULL;
-	GUPnPServiceAction* _tmp15_ = NULL;
+	gboolean _tmp2_ = FALSE;
+	const gchar* _tmp3_ = NULL;
+	gboolean _tmp6_ = FALSE;
+	gboolean _tmp12_ = FALSE;
+	const gchar* _tmp15_ = NULL;
+	GUPnPServiceAction* _tmp18_ = NULL;
+	gint _tmp19_ = 0;
+	gint _tmp20_ = 0;
+	const gchar* _tmp21_ = NULL;
+	GUPnPServiceAction* _tmp22_ = NULL;
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
 	g_return_if_fail (self != NULL);
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
@@ -350,77 +351,114 @@ static void rygel_connection_manager_get_current_connection_info_cb (RygelConnec
 #line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
 	gupnp_service_action_get (_tmp0_, "ConnectionID", G_TYPE_STRING, &connection_id, NULL);
 #line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp2_ = connection_id;
+	_tmp3_ = connection_id;
 #line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	if (_tmp2_ == NULL) {
+	if (_tmp3_ == NULL) {
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp2_ = TRUE;
+#line 360 "rygel-connection-manager.c"
+	} else {
+		GUPnPServiceAction* _tmp4_ = NULL;
+		guint _tmp5_ = 0U;
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp4_ = action;
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp5_ = gupnp_service_action_get_argument_count (_tmp4_);
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp2_ = _tmp5_ != ((guint) 1);
+#line 370 "rygel-connection-manager.c"
+	}
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	_tmp6_ = _tmp2_;
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	if (_tmp6_) {
 #line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
 		_tmp1_ = TRUE;
-#line 359 "rygel-connection-manager.c"
+#line 378 "rygel-connection-manager.c"
 	} else {
-		const gchar* _tmp3_ = NULL;
-#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		_tmp3_ = connection_id;
-#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		_tmp1_ = g_strcmp0 (_tmp3_, "0") != 0;
-#line 366 "rygel-connection-manager.c"
-	}
-#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp4_ = _tmp1_;
-#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	if (_tmp4_) {
-#line 372 "rygel-connection-manager.c"
-		GUPnPServiceAction* _tmp5_ = NULL;
-		const gchar* _tmp6_ = NULL;
+		gboolean _tmp7_ = FALSE;
+		const gchar* _tmp8_ = NULL;
+		gboolean _tmp11_ = FALSE;
 #line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		_tmp5_ = action;
+		_tmp8_ = connection_id;
 #line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		_tmp6_ = _ ("Invalid connection reference");
+		if (g_strcmp0 (_tmp8_, "0") != 0) {
+#line 387 "rygel-connection-manager.c"
+			const gchar* _tmp9_ = NULL;
+			gint _tmp10_ = 0;
 #line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		gupnp_service_action_return_error (_tmp5_, (guint) 706, _tmp6_);
-#line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		_g_free0 (connection_id);
-#line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		return;
-#line 385 "rygel-connection-manager.c"
-	}
-#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp7_ = action;
-#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp8_ = gupnp_service_action_get_argument_count (_tmp7_);
-#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	if (_tmp8_ != ((guint) 1)) {
-#line 393 "rygel-connection-manager.c"
-		GUPnPServiceAction* _tmp9_ = NULL;
-		const gchar* _tmp10_ = NULL;
-#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		_tmp9_ = action;
-#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		_tmp10_ = _ ("Invalid argument");
-#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		gupnp_service_action_return_error (_tmp9_, (guint) 402, _tmp10_);
-#line 129 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		_g_free0 (connection_id);
-#line 129 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-		return;
+			_tmp9_ = connection_id;
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+			_tmp10_ = atoi (_tmp9_);
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+			_tmp7_ = _tmp10_ == 0;
+#line 396 "rygel-connection-manager.c"
+		} else {
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+			_tmp7_ = FALSE;
+#line 400 "rygel-connection-manager.c"
+		}
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp11_ = _tmp7_;
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp1_ = _tmp11_;
 #line 406 "rygel-connection-manager.c"
 	}
-#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp11_ = action;
-#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp12_ = self->rcs_id;
-#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp13_ = self->av_transport_id;
-#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp14_ = self->direction;
-#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	gupnp_service_action_set (_tmp11_, "RcsID", G_TYPE_INT, _tmp12_, "AVTransportID", G_TYPE_INT, _tmp13_, "ProtocolInfo", G_TYPE_STRING, "", "PeerConnectionManager", G_TYPE_STRING, "", "PeerConnectionID", G_TYPE_INT, -1, "Direction", G_TYPE_STRING, _tmp14_, "Status", G_TYPE_STRING, "OK", NULL);
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	_tmp15_ = action;
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
-	gupnp_service_action_return (_tmp15_);
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	_tmp12_ = _tmp1_;
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	if (_tmp12_) {
+#line 412 "rygel-connection-manager.c"
+		GUPnPServiceAction* _tmp13_ = NULL;
+		const gchar* _tmp14_ = NULL;
+#line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp13_ = action;
+#line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp14_ = _ ("Invalid argument");
+#line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		gupnp_service_action_return_error (_tmp13_, (guint) 402, _tmp14_);
+#line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_g_free0 (connection_id);
+#line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		return;
+#line 425 "rygel-connection-manager.c"
+	}
+#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	_tmp15_ = connection_id;
+#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	if (g_strcmp0 (_tmp15_, "0") != 0) {
+#line 431 "rygel-connection-manager.c"
+		GUPnPServiceAction* _tmp16_ = NULL;
+		const gchar* _tmp17_ = NULL;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp16_ = action;
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_tmp17_ = _ ("Invalid connection reference");
+#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		gupnp_service_action_return_error (_tmp16_, (guint) 706, _tmp17_);
+#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		_g_free0 (connection_id);
+#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+		return;
+#line 444 "rygel-connection-manager.c"
+	}
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	_tmp18_ = action;
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	_tmp19_ = self->rcs_id;
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	_tmp20_ = self->av_transport_id;
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	_tmp21_ = self->direction;
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	gupnp_service_action_set (_tmp18_, "RcsID", G_TYPE_INT, _tmp19_, "AVTransportID", G_TYPE_INT, _tmp20_, "ProtocolInfo", G_TYPE_STRING, "", "PeerConnectionManager", G_TYPE_STRING, "", "PeerConnectionID", G_TYPE_INT, -1, "Direction", G_TYPE_STRING, _tmp21_, "Status", G_TYPE_STRING, "OK", NULL);
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	_tmp22_ = action;
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
+	gupnp_service_action_return (_tmp22_);
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
 	_g_free0 (connection_id);
-#line 424 "rygel-connection-manager.c"
+#line 462 "rygel-connection-manager.c"
 }
 
 
@@ -430,14 +468,14 @@ RygelConnectionManager* rygel_connection_manager_construct (GType object_type) {
 	self = (RygelConnectionManager*) g_object_new (object_type, NULL);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
 	return self;
-#line 434 "rygel-connection-manager.c"
+#line 472 "rygel-connection-manager.c"
 }
 
 
 RygelConnectionManager* rygel_connection_manager_new (void) {
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
 	return rygel_connection_manager_construct (RYGEL_TYPE_CONNECTION_MANAGER);
-#line 441 "rygel-connection-manager.c"
+#line 479 "rygel-connection-manager.c"
 }
 
 
@@ -448,7 +486,7 @@ static void rygel_connection_manager_class_init (RygelConnectionManagerClass * k
 	G_OBJECT_CLASS (klass)->constructed = rygel_connection_manager_real_constructed;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_connection_manager_finalize;
-#line 452 "rygel-connection-manager.c"
+#line 490 "rygel-connection-manager.c"
 }
 
 
@@ -470,7 +508,7 @@ static void rygel_connection_manager_finalize (GObject* obj) {
 	_g_free0 (self->direction);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-core/rygel-connection-manager.vala"
 	G_OBJECT_CLASS (rygel_connection_manager_parent_class)->finalize (obj);
-#line 474 "rygel-connection-manager.c"
+#line 512 "rygel-connection-manager.c"
 }
 
 

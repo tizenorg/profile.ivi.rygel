@@ -182,7 +182,7 @@ RygelMediaExportMediaCacheUpgrader* rygel_media_export_media_cache_upgrader_cons
 gboolean rygel_media_export_media_cache_upgrader_needs_upgrade (RygelMediaExportMediaCacheUpgrader* self, gint* current_version, GError** error);
 GQuark rygel_media_export_database_error_quark (void);
 gint rygel_media_export_database_query_value (RygelMediaExportDatabase* self, const gchar* sql, GValue* args, int args_length1, GError** error);
-#define RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION "15"
+#define RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION "16"
 void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCacheUpgrader* self, GError** error);
 void rygel_media_export_database_begin (RygelMediaExportDatabase* self, GError** error);
 void rygel_media_export_database_exec (RygelMediaExportDatabase* self, const gchar* sql, GValue* arguments, int arguments_length1, GError** error);
@@ -205,6 +205,7 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaExportMediaCacheUpgrader* self);
 static void rygel_media_export_media_cache_upgrader_update_v13_v14 (RygelMediaExportMediaCacheUpgrader* self);
 static void rygel_media_export_media_cache_upgrader_update_v14_v15 (RygelMediaExportMediaCacheUpgrader* self);
+static void rygel_media_export_media_cache_upgrader_update_v15_v16 (RygelMediaExportMediaCacheUpgrader* self);
 static void rygel_media_export_media_cache_upgrader_force_reindex (RygelMediaExportMediaCacheUpgrader* self, GError** error);
 GType rygel_media_export_database_cursor_get_type (void) G_GNUC_CONST;
 RygelMediaExportDatabaseCursor* rygel_media_export_database_exec_cursor (RygelMediaExportDatabase* self, const gchar* sql, GValue* arguments, int arguments_length1, GError** error);
@@ -245,14 +246,14 @@ RygelMediaExportMediaCacheUpgrader* rygel_media_export_media_cache_upgrader_cons
 	self->priv->sql = _tmp1_;
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return self;
-#line 249 "rygel-media-export-media-cache-upgrader.c"
+#line 250 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
 RygelMediaExportMediaCacheUpgrader* rygel_media_export_media_cache_upgrader_new (RygelMediaExportDatabase* database, RygelMediaExportSQLFactory* sql) {
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return rygel_media_export_media_cache_upgrader_construct (RYGEL_MEDIA_EXPORT_TYPE_MEDIA_CACHE_UPGRADER, database, sql);
-#line 256 "rygel-media-export-media-cache-upgrader.c"
+#line 257 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -279,7 +280,7 @@ gboolean rygel_media_export_media_cache_upgrader_needs_upgrade (RygelMediaExport
 		g_propagate_error (error, _inner_error_);
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		return FALSE;
-#line 283 "rygel-media-export-media-cache-upgrader.c"
+#line 284 "rygel-media-export-media-cache-upgrader.c"
 	}
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	_vala_current_version = _tmp0_;
@@ -293,11 +294,11 @@ gboolean rygel_media_export_media_cache_upgrader_needs_upgrade (RygelMediaExport
 	if (current_version) {
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		*current_version = _vala_current_version;
-#line 297 "rygel-media-export-media-cache-upgrader.c"
+#line 298 "rygel-media-export-media-cache-upgrader.c"
 	}
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return result;
-#line 301 "rygel-media-export-media-cache-upgrader.c"
+#line 302 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -321,13 +322,13 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 		g_propagate_error (error, _inner_error_);
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		return;
-#line 325 "rygel-media-export-media-cache-upgrader.c"
+#line 326 "rygel-media-export-media-cache-upgrader.c"
 	}
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	_tmp2_ = matching_schema_count;
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (_tmp2_ == 0) {
-#line 331 "rygel-media-export-media-cache-upgrader.c"
+#line 332 "rygel-media-export-media-cache-upgrader.c"
 		{
 			RygelMediaExportDatabase* _tmp3_ = NULL;
 			RygelMediaExportDatabase* _tmp4_ = NULL;
@@ -345,8 +346,8 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 			rygel_media_export_database_begin (_tmp3_, &_inner_error_);
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 348 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch20_g_error;
+#line 349 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch21_g_error;
 			}
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp4_ = self->priv->database;
@@ -354,8 +355,8 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 			rygel_media_export_database_exec (_tmp4_, "DELETE FROM Object WHERE upnp_id IN (" "SELECT DISTINCT object_fk FROM meta_data)", NULL, 0, &_inner_error_);
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 357 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch20_g_error;
+#line 358 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch21_g_error;
 			}
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp5_ = self->priv->database;
@@ -363,8 +364,8 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 			rygel_media_export_database_exec (_tmp5_, "DROP TABLE Meta_Data", NULL, 0, &_inner_error_);
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 366 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch20_g_error;
+#line 367 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch21_g_error;
 			}
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp6_ = self->priv->database;
@@ -376,8 +377,8 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 			rygel_media_export_database_exec (_tmp6_, _tmp8_, NULL, 0, &_inner_error_);
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 379 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch20_g_error;
+#line 380 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch21_g_error;
 			}
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp9_ = self->priv->database;
@@ -385,12 +386,12 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 			rygel_media_export_database_commit (_tmp9_, &_inner_error_);
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 388 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch20_g_error;
+#line 389 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch21_g_error;
 			}
 		}
-		goto __finally20;
-		__catch20_g_error:
+		goto __finally21;
+		__catch21_g_error:
 		{
 			GError* _error_ = NULL;
 			RygelMediaExportDatabase* _tmp10_ = NULL;
@@ -420,16 +421,16 @@ void rygel_media_export_media_cache_upgrader_fix_schema (RygelMediaExportMediaCa
 			_g_free0 (_tmp14_);
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_error_free0 (_error_);
-#line 423 "rygel-media-export-media-cache-upgrader.c"
+#line 424 "rygel-media-export-media-cache-upgrader.c"
 		}
-		__finally20:
+		__finally21:
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_propagate_error (error, _inner_error_);
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 432 "rygel-media-export-media-cache-upgrader.c"
+#line 433 "rygel-media-export-media-cache-upgrader.c"
 		}
 	}
 }
@@ -439,7 +440,7 @@ void rygel_media_export_media_cache_upgrader_ensure_indices (RygelMediaExportMed
 	GError * _inner_error_ = NULL;
 #line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 442 "rygel-media-export-media-cache-upgrader.c"
+#line 443 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportSQLFactory* _tmp1_ = NULL;
@@ -455,17 +456,17 @@ void rygel_media_export_media_cache_upgrader_ensure_indices (RygelMediaExportMed
 		rygel_media_export_database_exec (_tmp0_, _tmp2_, NULL, 0, &_inner_error_);
 #line 75 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 458 "rygel-media-export-media-cache-upgrader.c"
-			goto __catch21_g_error;
+#line 459 "rygel-media-export-media-cache-upgrader.c"
+			goto __catch22_g_error;
 		}
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp3_);
-#line 465 "rygel-media-export-media-cache-upgrader.c"
+#line 466 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally21;
-	__catch21_g_error:
+	goto __finally22;
+	__catch22_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp4_ = NULL;
@@ -490,9 +491,9 @@ void rygel_media_export_media_cache_upgrader_ensure_indices (RygelMediaExportMed
 		_g_free0 (_tmp7_);
 #line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 493 "rygel-media-export-media-cache-upgrader.c"
+#line 494 "rygel-media-export-media-cache-upgrader.c"
 	}
-	__finally21:
+	__finally22:
 #line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (_inner_error_ != NULL) {
 #line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
@@ -501,7 +502,7 @@ void rygel_media_export_media_cache_upgrader_ensure_indices (RygelMediaExportMed
 		g_clear_error (&_inner_error_);
 #line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		return;
-#line 504 "rygel-media-export-media-cache-upgrader.c"
+#line 505 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
@@ -520,7 +521,7 @@ void rygel_media_export_media_cache_upgrader_upgrade (RygelMediaExportMediaCache
 	current_version = _tmp0_;
 #line 86 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	while (TRUE) {
-#line 522 "rygel-media-export-media-cache-upgrader.c"
+#line 523 "rygel-media-export-media-cache-upgrader.c"
 		gint _tmp1_ = 0;
 		gint _tmp2_ = 0;
 		RygelMediaExportDatabase* _tmp3_ = NULL;
@@ -534,7 +535,7 @@ void rygel_media_export_media_cache_upgrader_upgrade (RygelMediaExportMediaCache
 		if (!(_tmp1_ < _tmp2_)) {
 #line 86 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			break;
-#line 536 "rygel-media-export-media-cache-upgrader.c"
+#line 537 "rygel-media-export-media-cache-upgrader.c"
 		}
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
@@ -542,7 +543,7 @@ void rygel_media_export_media_cache_upgrader_upgrade (RygelMediaExportMediaCache
 		if (_tmp3_ == NULL) {
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			break;
-#line 544 "rygel-media-export-media-cache-upgrader.c"
+#line 545 "rygel-media-export-media-cache-upgrader.c"
 		}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = old_version;
@@ -550,140 +551,150 @@ void rygel_media_export_media_cache_upgrader_upgrade (RygelMediaExportMediaCache
 		switch (_tmp4_) {
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 3:
-#line 552 "rygel-media-export-media-cache-upgrader.c"
+#line 553 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 93 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v3_v4 (self);
 #line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 558 "rygel-media-export-media-cache-upgrader.c"
+#line 559 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 4:
-#line 562 "rygel-media-export-media-cache-upgrader.c"
+#line 563 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v4_v5 (self);
 #line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 568 "rygel-media-export-media-cache-upgrader.c"
+#line 569 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 5:
-#line 572 "rygel-media-export-media-cache-upgrader.c"
+#line 573 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v5_v6 (self);
 #line 100 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 578 "rygel-media-export-media-cache-upgrader.c"
+#line 579 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 6:
-#line 582 "rygel-media-export-media-cache-upgrader.c"
+#line 583 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v6_v7 (self);
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 588 "rygel-media-export-media-cache-upgrader.c"
+#line 589 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 7:
-#line 592 "rygel-media-export-media-cache-upgrader.c"
+#line 593 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v7_v8 (self);
 #line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 598 "rygel-media-export-media-cache-upgrader.c"
+#line 599 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 8:
-#line 602 "rygel-media-export-media-cache-upgrader.c"
+#line 603 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v8_v9 (self);
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 608 "rygel-media-export-media-cache-upgrader.c"
+#line 609 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 9:
-#line 612 "rygel-media-export-media-cache-upgrader.c"
+#line 613 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v9_v10 (self);
 #line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 618 "rygel-media-export-media-cache-upgrader.c"
+#line 619 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 10:
-#line 622 "rygel-media-export-media-cache-upgrader.c"
+#line 623 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v10_v11 (self);
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 628 "rygel-media-export-media-cache-upgrader.c"
+#line 629 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 11:
-#line 632 "rygel-media-export-media-cache-upgrader.c"
+#line 633 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v11_v12 (self);
 #line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 638 "rygel-media-export-media-cache-upgrader.c"
+#line 639 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 12:
-#line 642 "rygel-media-export-media-cache-upgrader.c"
+#line 643 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v12_v13 (self);
 #line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 648 "rygel-media-export-media-cache-upgrader.c"
+#line 649 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 13:
-#line 652 "rygel-media-export-media-cache-upgrader.c"
+#line 653 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v13_v14 (self);
 #line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 658 "rygel-media-export-media-cache-upgrader.c"
+#line 659 "rygel-media-export-media-cache-upgrader.c"
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			case 14:
-#line 662 "rygel-media-export-media-cache-upgrader.c"
+#line 663 "rygel-media-export-media-cache-upgrader.c"
 			{
 #line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_media_cache_upgrader_update_v14_v15 (self);
 #line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 668 "rygel-media-export-media-cache-upgrader.c"
+#line 669 "rygel-media-export-media-cache-upgrader.c"
+			}
+#line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			case 15:
+#line 673 "rygel-media-export-media-cache-upgrader.c"
+			{
+#line 129 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+				rygel_media_export_media_cache_upgrader_update_v15_v16 (self);
+#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+				break;
+#line 679 "rygel-media-export-media-cache-upgrader.c"
 			}
 			default:
 			{
-#line 129 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-				g_warning ("rygel-media-export-media-cache-upgrader.vala:129: Cannot upgrade");
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+				g_warning ("rygel-media-export-media-cache-upgrader.vala:132: Cannot upgrade");
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				self->priv->database = NULL;
-#line 131 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 678 "rygel-media-export-media-cache-upgrader.c"
+#line 689 "rygel-media-export-media-cache-upgrader.c"
 			}
 		}
-#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = old_version;
-#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		old_version = _tmp5_ + 1;
-#line 685 "rygel-media-export-media-cache-upgrader.c"
+#line 696 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
@@ -691,29 +702,29 @@ void rygel_media_export_media_cache_upgrader_upgrade (RygelMediaExportMediaCache
 static void rygel_media_export_media_cache_upgrader_force_reindex (RygelMediaExportMediaCacheUpgrader* self, GError** error) {
 	RygelMediaExportDatabase* _tmp0_ = NULL;
 	GError * _inner_error_ = NULL;
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	_tmp0_ = self->priv->database;
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	rygel_media_export_database_exec (_tmp0_, "UPDATE Object SET timestamp = 0", NULL, 0, &_inner_error_);
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (_inner_error_ != NULL) {
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_propagate_error (error, _inner_error_);
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 707 "rygel-media-export-media-cache-upgrader.c"
+#line 718 "rygel-media-export-media-cache-upgrader.c"
 		} else {
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 715 "rygel-media-export-media-cache-upgrader.c"
+#line 726 "rygel-media-export-media-cache-upgrader.c"
 		}
 	}
 }
@@ -721,9 +732,9 @@ static void rygel_media_export_media_cache_upgrader_force_reindex (RygelMediaExp
 
 static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 725 "rygel-media-export-media-cache-upgrader.c"
+#line 736 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -739,262 +750,262 @@ static void rygel_media_export_media_cache_upgrader_update_v3_v4 (RygelMediaExpo
 		const gchar* _tmp11_ = NULL;
 		RygelMediaExportDatabase* _tmp12_ = NULL;
 		RygelMediaExportDatabase* _tmp13_ = NULL;
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 749 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 760 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 758 "rygel-media-export-media-cache-upgrader.c"
+#line 769 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE Meta_Data RENAME TO _Meta_Data", NULL, 0, &_inner_error_);
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 768 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 779 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 777 "rygel-media-export-media-cache-upgrader.c"
+#line 788 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->sql;
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = rygel_media_export_sql_factory_make (_tmp3_, RYGEL_MEDIA_EXPORT_SQL_STRING_TABLE_METADATA);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, _tmp4_, NULL, 0, &_inner_error_);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 791 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 802 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 800 "rygel-media-export-media-cache-upgrader.c"
+#line 811 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp5_, "INSERT INTO meta_data (size, mime_type, " "duration, width, height, class, author, album, " "date, bitrate, sample_freq, bits_per_sample, " "channels, track, color_depth, object_fk) SELECT " "size, mime_type, duration, width, height, class, " "author, album, date, bitrate, sample_freq, " "bits_per_sample, channels, track, color_depth, " "o.upnp_id FROM _Meta_Data JOIN object o " "ON id = o.metadata_fk", NULL, 0, &_inner_error_);
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 810 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 821 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 819 "rygel-media-export-media-cache-upgrader.c"
+#line 830 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp6_, "DROP TABLE _Meta_Data", NULL, 0, &_inner_error_);
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 829 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 840 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 838 "rygel-media-export-media-cache-upgrader.c"
+#line 849 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp7_, RYGEL_MEDIA_EXPORT_MEDIA_CACHE_UPGRADER_UPDATE_V3_V4_STRING_3, NULL, 0, &_inner_error_);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 848 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 859 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 857 "rygel-media-export-media-cache-upgrader.c"
+#line 868 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = self->priv->database;
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp8_, RYGEL_MEDIA_EXPORT_MEDIA_CACHE_UPGRADER_UPDATE_V3_V4_STRING_4, NULL, 0, &_inner_error_);
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 867 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 878 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 876 "rygel-media-export-media-cache-upgrader.c"
+#line 887 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = self->priv->database;
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp10_ = self->priv->sql;
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp11_ = rygel_media_export_sql_factory_make (_tmp10_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_COMMON);
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp9_, _tmp11_, NULL, 0, &_inner_error_);
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 890 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 901 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 899 "rygel-media-export-media-cache-upgrader.c"
+#line 910 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp12_ = self->priv->database;
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp12_, "UPDATE schema_info SET version = '4'", NULL, 0, &_inner_error_);
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 909 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 920 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 918 "rygel-media-export-media-cache-upgrader.c"
+#line 929 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp13_ = self->priv->database;
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp13_, &_inner_error_);
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 928 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch22_rygel_media_export_database_error;
+#line 939 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch23_rygel_media_export_database_error;
 			}
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 937 "rygel-media-export-media-cache-upgrader.c"
+#line 948 "rygel-media-export-media-cache-upgrader.c"
 		}
 	}
-	goto __finally22;
-	__catch22_rygel_media_export_database_error:
+	goto __finally23;
+	__catch23_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp14_ = NULL;
 		GError* _tmp15_ = NULL;
 		const gchar* _tmp16_ = NULL;
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp14_ = self->priv->database;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp14_);
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp15_ = _error_;
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp16_ = _tmp15_->message;
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:163: Database upgrade fai" \
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:166: Database upgrade fai" \
 "led: %s", _tmp16_);
-#line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 965 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally22:
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 976 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally23:
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 987 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void _vala_GValue_array_free (GValue* array, gint array_length) {
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (array != NULL) {
-#line 984 "rygel-media-export-media-cache-upgrader.c"
+#line 995 "rygel-media-export-media-cache-upgrader.c"
 		int i;
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		for (i = 0; i < array_length; i = i + 1) {
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_value_unset (&array[i]);
-#line 990 "rygel-media-export-media-cache-upgrader.c"
+#line 1001 "rygel-media-export-media-cache-upgrader.c"
 		}
 	}
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_free (array);
-#line 995 "rygel-media-export-media-cache-upgrader.c"
+#line 1006 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -1002,13 +1013,13 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 	GeeQueue* queue = NULL;
 	GeeLinkedList* _tmp0_ = NULL;
 	GError * _inner_error_ = NULL;
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	_tmp0_ = gee_linked_list_new (G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free, NULL, NULL, NULL);
-#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	queue = (GeeQueue*) _tmp0_;
-#line 1009 "rygel-media-export-media-cache-upgrader.c"
+#line 1020 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp1_ = NULL;
 		RygelMediaExportDatabase* _tmp2_ = NULL;
@@ -1036,210 +1047,210 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 		RygelMediaExportDatabase* _tmp46_ = NULL;
 		RygelMediaExportDatabase* _tmp47_ = NULL;
 		RygelMediaExportDatabase* _tmp48_ = NULL;
-#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp1_, &_inner_error_);
-#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1045 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1056 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1067 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "DROP TRIGGER IF EXISTS trgr_delete_children", NULL, 0, &_inner_error_);
-#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1066 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1077 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1088 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->sql;
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = rygel_media_export_sql_factory_make (_tmp4_, RYGEL_MEDIA_EXPORT_SQL_STRING_TABLE_CLOSURE);
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp3_, _tmp5_, NULL, 0, &_inner_error_);
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1091 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1102 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1113 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp6_, "ALTER TABLE Object RENAME TO _Object", NULL, 0, &_inner_error_);
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1112 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1123 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1134 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp7_, "CREATE TABLE Object AS SELECT * FROM _Object", NULL, 0, &_inner_error_);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1133 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1144 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1155 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = self->priv->database;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp8_, "DELETE FROM Object", NULL, 0, &_inner_error_);
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1154 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1165 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1176 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = self->priv->database;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp10_ = self->priv->sql;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp11_ = rygel_media_export_sql_factory_make (_tmp10_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp9_, _tmp11_, NULL, 0, &_inner_error_);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1179 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1190 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1201 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp12_ = self->priv->database;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp12_, "INSERT INTO _Object (upnp_id, type_fk, title, " "timestamp) VALUES ('0', 0, 'Root', 0)", NULL, 0, &_inner_error_);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1200 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1211 "rygel-media-export-media-cache-upgrader.c"
-		}
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		_tmp13_ = self->priv->database;
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		rygel_media_export_database_exec (_tmp13_, "INSERT INTO Object (upnp_id, type_fk, title, " "timestamp) VALUES ('0', 0, 'Root', 0)", NULL, 0, &_inner_error_);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		if (_inner_error_ != NULL) {
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1221 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1232 "rygel-media-export-media-cache-upgrader.c"
+#line 1222 "rygel-media-export-media-cache-upgrader.c"
 		}
 #line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		_tmp14_ = queue;
+		_tmp13_ = self->priv->database;
 #line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_exec (_tmp13_, "INSERT INTO Object (upnp_id, type_fk, title, " "timestamp) VALUES ('0', 0, 'Root', 0)", NULL, 0, &_inner_error_);
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 1232 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1243 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp14_ = queue;
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		gee_queue_offer (_tmp14_, "0");
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		while (TRUE) {
-#line 1240 "rygel-media-export-media-cache-upgrader.c"
+#line 1251 "rygel-media-export-media-cache-upgrader.c"
 			GeeQueue* _tmp15_ = NULL;
 			gboolean _tmp16_ = FALSE;
 			gboolean _tmp17_ = FALSE;
@@ -1258,80 +1269,80 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 			RygelMediaExportDatabase* _tmp35_ = NULL;
 			GValue* _tmp36_ = NULL;
 			gint _tmp36__length1 = 0;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp15_ = queue;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp16_ = gee_collection_get_is_empty ((GeeCollection*) _tmp15_);
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp17_ = _tmp16_;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (!(!_tmp17_)) {
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 1269 "rygel-media-export-media-cache-upgrader.c"
+#line 1280 "rygel-media-export-media-cache-upgrader.c"
 			}
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp18_ = queue;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp19_ = gee_queue_poll (_tmp18_);
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_value_init (&_tmp20_, G_TYPE_STRING);
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_value_take_string (&_tmp20_, (gchar*) _tmp19_);
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp21_ = g_new0 (GValue, 1);
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp21_[0] = _tmp20_;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			args = _tmp21_;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			args_length1 = 1;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_args_size_ = args_length1;
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp22_ = self->priv->database;
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp23_ = args;
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp23__length1 = args_length1;
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp24_ = rygel_media_export_database_exec_cursor (_tmp22_, "SELECT upnp_id FROM _Object WHERE " "parent = ?", _tmp23_, _tmp23__length1, &_inner_error_);
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			cursor = _tmp24_;
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1305 "rygel-media-export-media-cache-upgrader.c"
-					goto __catch23_rygel_media_export_database_error;
+#line 1316 "rygel-media-export-media-cache-upgrader.c"
+					goto __catch24_rygel_media_export_database_error;
 				}
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (queue);
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_clear_error (&_inner_error_);
-#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				return;
-#line 1318 "rygel-media-export-media-cache-upgrader.c"
+#line 1329 "rygel-media-export-media-cache-upgrader.c"
 			}
 			{
 				RygelMediaExportDatabaseCursorIterator* _statement_it = NULL;
 				RygelMediaExportDatabaseCursor* _tmp25_ = NULL;
 				RygelMediaExportDatabaseCursorIterator* _tmp26_ = NULL;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp25_ = cursor;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp26_ = rygel_media_export_database_cursor_iterator (_tmp25_);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_statement_it = _tmp26_;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				while (TRUE) {
-#line 1332 "rygel-media-export-media-cache-upgrader.c"
+#line 1343 "rygel-media-export-media-cache-upgrader.c"
 					gboolean _tmp27_ = FALSE;
 					RygelMediaExportDatabaseCursorIterator* _tmp28_ = NULL;
 					gboolean _tmp29_ = FALSE;
@@ -1341,348 +1352,348 @@ static void rygel_media_export_media_cache_upgrader_update_v4_v5 (RygelMediaExpo
 					GeeQueue* _tmp32_ = NULL;
 					sqlite3_stmt* _tmp33_ = NULL;
 					const gchar* _tmp34_ = NULL;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp28_ = _statement_it;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp29_ = rygel_media_export_database_cursor_iterator_next (_tmp28_, &_inner_error_);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp27_ = _tmp29_;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (_inner_error_ != NULL) {
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (cursor);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1358 "rygel-media-export-media-cache-upgrader.c"
-							goto __catch23_rygel_media_export_database_error;
+#line 1369 "rygel-media-export-media-cache-upgrader.c"
+							goto __catch24_rygel_media_export_database_error;
 						}
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (cursor);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (queue);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						g_clear_error (&_inner_error_);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						return;
-#line 1375 "rygel-media-export-media-cache-upgrader.c"
+#line 1386 "rygel-media-export-media-cache-upgrader.c"
 					}
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (!_tmp27_) {
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						break;
-#line 1381 "rygel-media-export-media-cache-upgrader.c"
+#line 1392 "rygel-media-export-media-cache-upgrader.c"
 					}
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp30_ = _statement_it;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp31_ = rygel_media_export_database_cursor_iterator_get (_tmp30_, &_inner_error_);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					statement = _tmp31_;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (_inner_error_ != NULL) {
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (cursor);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1399 "rygel-media-export-media-cache-upgrader.c"
-							goto __catch23_rygel_media_export_database_error;
+#line 1410 "rygel-media-export-media-cache-upgrader.c"
+							goto __catch24_rygel_media_export_database_error;
 						}
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (cursor);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (queue);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						g_clear_error (&_inner_error_);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						return;
-#line 1416 "rygel-media-export-media-cache-upgrader.c"
+#line 1427 "rygel-media-export-media-cache-upgrader.c"
 					}
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp32_ = queue;
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp33_ = statement;
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp34_ = sqlite3_column_text (_tmp33_, 0);
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					gee_queue_offer (_tmp32_, _tmp34_);
-#line 1426 "rygel-media-export-media-cache-upgrader.c"
+#line 1437 "rygel-media-export-media-cache-upgrader.c"
 				}
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 1430 "rygel-media-export-media-cache-upgrader.c"
+#line 1441 "rygel-media-export-media-cache-upgrader.c"
 			}
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp35_ = self->priv->database;
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp36_ = args;
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp36__length1 = args_length1;
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			rygel_media_export_database_exec (_tmp35_, "INSERT INTO Object SELECT * FROM _OBJECT " "WHERE parent = ?", _tmp36_, _tmp36__length1, &_inner_error_);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (cursor);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1448 "rygel-media-export-media-cache-upgrader.c"
-					goto __catch23_rygel_media_export_database_error;
+#line 1459 "rygel-media-export-media-cache-upgrader.c"
+					goto __catch24_rygel_media_export_database_error;
 				}
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (cursor);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (queue);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_clear_error (&_inner_error_);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				return;
-#line 1463 "rygel-media-export-media-cache-upgrader.c"
+#line 1474 "rygel-media-export-media-cache-upgrader.c"
 			}
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (cursor);
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 1469 "rygel-media-export-media-cache-upgrader.c"
+#line 1480 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp37_ = self->priv->database;
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp37_, "DROP TABLE Object", NULL, 0, &_inner_error_);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1479 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 199 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1490 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1501 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp38_ = self->priv->database;
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp38_, "ALTER TABLE _Object RENAME TO Object", NULL, 0, &_inner_error_);
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1500 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1511 "rygel-media-export-media-cache-upgrader.c"
-		}
+				goto __catch24_rygel_media_export_database_error;
+			}
 #line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1522 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp39_ = self->priv->database;
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp40_ = self->priv->sql;
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp41_ = rygel_media_export_sql_factory_make (_tmp40_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp39_, _tmp41_, NULL, 0, &_inner_error_);
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1525 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1536 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1547 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp42_ = self->priv->database;
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp43_ = self->priv->sql;
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp44_ = rygel_media_export_sql_factory_make (_tmp43_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp42_, _tmp44_, NULL, 0, &_inner_error_);
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1550 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1561 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1572 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp45_ = self->priv->database;
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp45_, "UPDATE schema_info SET version = '5'", NULL, 0, &_inner_error_);
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1571 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1582 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1593 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp46_ = self->priv->database;
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp46_, &_inner_error_);
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1592 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
-			}
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 1603 "rygel-media-export-media-cache-upgrader.c"
-		}
-#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		_tmp47_ = self->priv->database;
-#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		rygel_media_export_database_exec (_tmp47_, "VACUUM", NULL, 0, &_inner_error_);
-#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		if (_inner_error_ != NULL) {
-#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1613 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch23_rygel_media_export_database_error;
+				goto __catch24_rygel_media_export_database_error;
 			}
-#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 207 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1624 "rygel-media-export-media-cache-upgrader.c"
+#line 1614 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp47_ = self->priv->database;
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_exec (_tmp47_, "VACUUM", NULL, 0, &_inner_error_);
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 1624 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch24_rygel_media_export_database_error;
+			}
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 1635 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp48_ = self->priv->database;
-#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp48_);
-#line 1630 "rygel-media-export-media-cache-upgrader.c"
+#line 1641 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally23;
-	__catch23_rygel_media_export_database_error:
+	goto __finally24;
+	__catch24_rygel_media_export_database_error:
 	{
 		GError* err = NULL;
 		RygelMediaExportDatabase* _tmp49_ = NULL;
 		GError* _tmp50_ = NULL;
 		const gchar* _tmp51_ = NULL;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		err = _inner_error_;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp49_ = self->priv->database;
-#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp49_);
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp50_ = err;
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp51_ = _tmp50_->message;
-#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:211: Database upgrade fai" \
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:214: Database upgrade fai" \
 "led: %s", _tmp51_);
-#line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (err);
-#line 1657 "rygel-media-export-media-cache-upgrader.c"
+#line 1668 "rygel-media-export-media-cache-upgrader.c"
 	}
-	__finally23:
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	__finally24:
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (_inner_error_ != NULL) {
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_object_unref0 (queue);
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		g_clear_error (&_inner_error_);
-#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		return;
-#line 1670 "rygel-media-export-media-cache-upgrader.c"
+#line 1681 "rygel-media-export-media-cache-upgrader.c"
 	}
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 171 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	_g_object_unref0 (queue);
-#line 1674 "rygel-media-export-media-cache-upgrader.c"
+#line 1685 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 1682 "rygel-media-export-media-cache-upgrader.c"
+#line 1693 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -1695,249 +1706,249 @@ static void rygel_media_export_media_cache_upgrader_update_v5_v6 (RygelMediaExpo
 		RygelMediaExportDatabase* _tmp8_ = NULL;
 		RygelMediaExportDatabase* _tmp9_ = NULL;
 		RygelMediaExportDatabase* _tmp10_ = NULL;
-#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1703 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1714 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1712 "rygel-media-export-media-cache-upgrader.c"
+#line 1723 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "DROP TABLE object_type", NULL, 0, &_inner_error_);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1722 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1733 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1731 "rygel-media-export-media-cache-upgrader.c"
+#line 1742 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "DROP TRIGGER IF EXISTS trgr_delete_uris", NULL, 0, &_inner_error_);
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1741 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1752 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1750 "rygel-media-export-media-cache-upgrader.c"
+#line 1761 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp3_, "ALTER TABLE Object ADD COLUMN uri TEXT", NULL, 0, &_inner_error_);
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1760 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1771 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1769 "rygel-media-export-media-cache-upgrader.c"
+#line 1780 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->database;
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp4_, "UPDATE Object SET uri = (SELECT uri " "FROM uri WHERE Uri.object_fk == Object.upnp_id LIMIT 1)", NULL, 0, &_inner_error_);
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1779 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1790 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1788 "rygel-media-export-media-cache-upgrader.c"
+#line 1799 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp5_, "DROP INDEX IF EXISTS idx_uri_fk", NULL, 0, &_inner_error_);
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1798 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1809 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1807 "rygel-media-export-media-cache-upgrader.c"
+#line 1818 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp6_, "DROP TABLE Uri", NULL, 0, &_inner_error_);
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1817 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1828 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 225 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1826 "rygel-media-export-media-cache-upgrader.c"
+#line 1837 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp7_, "UPDATE schema_info SET version = '6'", NULL, 0, &_inner_error_);
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1836 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1847 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1845 "rygel-media-export-media-cache-upgrader.c"
+#line 1856 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = self->priv->database;
-#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp8_, &_inner_error_);
-#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1855 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1866 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1864 "rygel-media-export-media-cache-upgrader.c"
+#line 1875 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = self->priv->database;
-#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp9_, "VACUUM", NULL, 0, &_inner_error_);
-#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1874 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch24_rygel_media_export_database_error;
+#line 1885 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch25_rygel_media_export_database_error;
 			}
-#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1883 "rygel-media-export-media-cache-upgrader.c"
+#line 1894 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp10_ = self->priv->database;
-#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp10_);
-#line 1889 "rygel-media-export-media-cache-upgrader.c"
+#line 1900 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally24;
-	__catch24_rygel_media_export_database_error:
+	goto __finally25;
+	__catch25_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp11_ = NULL;
 		GError* _tmp12_ = NULL;
 		const gchar* _tmp13_ = NULL;
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp11_ = self->priv->database;
-#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp11_);
-#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 235 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp12_ = _error_;
-#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 235 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp13_ = _tmp12_->message;
-#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:232: Database upgrade fai" \
+#line 235 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:235: Database upgrade fai" \
 "led: %s", _tmp13_);
-#line 233 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 236 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 1916 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally24:
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 217 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 1927 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally25:
+#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 1938 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 1936 "rygel-media-export-media-cache-upgrader.c"
+#line 1947 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -1945,171 +1956,171 @@ static void rygel_media_export_media_cache_upgrader_update_v6_v7 (RygelMediaExpo
 		RygelMediaExportDatabase* _tmp3_ = NULL;
 		RygelMediaExportDatabase* _tmp4_ = NULL;
 		RygelMediaExportDatabase* _tmp5_ = NULL;
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1952 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch25_rygel_media_export_database_error;
+#line 1963 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch26_rygel_media_export_database_error;
 			}
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1961 "rygel-media-export-media-cache-upgrader.c"
+#line 1972 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE meta_data ADD COLUMN dlna_profile TEXT", NULL, 0, &_inner_error_);
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1971 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch25_rygel_media_export_database_error;
+#line 1982 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch26_rygel_media_export_database_error;
 			}
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1980 "rygel-media-export-media-cache-upgrader.c"
+#line 1991 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "UPDATE schema_info SET version = '7'", NULL, 0, &_inner_error_);
-#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1990 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch25_rygel_media_export_database_error;
+#line 2001 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch26_rygel_media_export_database_error;
 			}
-#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 1999 "rygel-media-export-media-cache-upgrader.c"
+#line 2010 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_media_cache_upgrader_force_reindex (self, &_inner_error_);
-#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2007 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch25_rygel_media_export_database_error;
+#line 2018 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch26_rygel_media_export_database_error;
 			}
-#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2016 "rygel-media-export-media-cache-upgrader.c"
+#line 2027 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp3_, &_inner_error_);
-#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2026 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch25_rygel_media_export_database_error;
+#line 2037 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch26_rygel_media_export_database_error;
 			}
-#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2035 "rygel-media-export-media-cache-upgrader.c"
+#line 2046 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->database;
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp4_, "VACUUM", NULL, 0, &_inner_error_);
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2045 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch25_rygel_media_export_database_error;
+#line 2056 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch26_rygel_media_export_database_error;
 			}
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2054 "rygel-media-export-media-cache-upgrader.c"
+#line 2065 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 248 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 245 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 248 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp5_);
-#line 2060 "rygel-media-export-media-cache-upgrader.c"
+#line 2071 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally25;
-	__catch25_rygel_media_export_database_error:
+	goto __finally26;
+	__catch26_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp6_ = NULL;
 		GError* _tmp7_ = NULL;
 		const gchar* _tmp8_ = NULL;
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp6_);
-#line 248 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = _error_;
-#line 248 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = _tmp7_->message;
-#line 248 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:248: Database upgrade fai" \
+#line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:251: Database upgrade fai" \
 "led: %s", _tmp8_);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 2087 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally25:
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 2098 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally26:
+#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 241 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 2109 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 2107 "rygel-media-export-media-cache-upgrader.c"
+#line 2118 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -2118,190 +2129,190 @@ static void rygel_media_export_media_cache_upgrader_update_v7_v8 (RygelMediaExpo
 		RygelMediaExportDatabase* _tmp4_ = NULL;
 		RygelMediaExportDatabase* _tmp5_ = NULL;
 		RygelMediaExportDatabase* _tmp6_ = NULL;
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2124 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch26_rygel_media_export_database_error;
+#line 2135 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch27_rygel_media_export_database_error;
 			}
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2133 "rygel-media-export-media-cache-upgrader.c"
+#line 2144 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE object ADD COLUMN flags TEXT", NULL, 0, &_inner_error_);
-#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2143 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch26_rygel_media_export_database_error;
+#line 2154 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch27_rygel_media_export_database_error;
 			}
-#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2152 "rygel-media-export-media-cache-upgrader.c"
+#line 2163 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "ALTER TABLE meta_data ADD COLUMN genre TEXT", NULL, 0, &_inner_error_);
-#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2162 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch26_rygel_media_export_database_error;
+#line 2173 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch27_rygel_media_export_database_error;
 			}
-#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2171 "rygel-media-export-media-cache-upgrader.c"
+#line 2182 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp3_, "UPDATE schema_info SET version = '8'", NULL, 0, &_inner_error_);
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2181 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch26_rygel_media_export_database_error;
+#line 2192 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch27_rygel_media_export_database_error;
 			}
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2190 "rygel-media-export-media-cache-upgrader.c"
+#line 2201 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_media_cache_upgrader_force_reindex (self, &_inner_error_);
-#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2198 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch26_rygel_media_export_database_error;
+#line 2209 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch27_rygel_media_export_database_error;
 			}
-#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 259 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2207 "rygel-media-export-media-cache-upgrader.c"
+#line 2218 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->database;
-#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp4_, &_inner_error_);
-#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2217 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch26_rygel_media_export_database_error;
+#line 2228 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch27_rygel_media_export_database_error;
 			}
-#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 263 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2226 "rygel-media-export-media-cache-upgrader.c"
+#line 2237 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp5_, "VACUUM", NULL, 0, &_inner_error_);
-#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2236 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch26_rygel_media_export_database_error;
+#line 2247 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch27_rygel_media_export_database_error;
 			}
-#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 261 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2245 "rygel-media-export-media-cache-upgrader.c"
+#line 2256 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp6_);
-#line 2251 "rygel-media-export-media-cache-upgrader.c"
+#line 2262 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally26;
-	__catch26_rygel_media_export_database_error:
+	goto __finally27;
+	__catch27_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp7_ = NULL;
 		GError* _tmp8_ = NULL;
 		const gchar* _tmp9_ = NULL;
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp7_);
-#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = _error_;
-#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = _tmp8_->message;
-#line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:265: Database upgrade fai" \
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:268: Database upgrade fai" \
 "led: %s", _tmp9_);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 2278 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally26:
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 2289 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally27:
+#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 257 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 2300 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 270 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 2298 "rygel-media-export-media-cache-upgrader.c"
+#line 2309 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -2318,271 +2329,271 @@ static void rygel_media_export_media_cache_upgrader_update_v8_v9 (RygelMediaExpo
 		RygelMediaExportDatabase* _tmp12_ = NULL;
 		RygelMediaExportDatabase* _tmp13_ = NULL;
 		RygelMediaExportDatabase* _tmp14_ = NULL;
-#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2323 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2334 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2332 "rygel-media-export-media-cache-upgrader.c"
+#line 2343 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "DROP TRIGGER trgr_update_closure", NULL, 0, &_inner_error_);
-#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2342 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2353 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2351 "rygel-media-export-media-cache-upgrader.c"
+#line 2362 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "DROP TRIGGER trgr_delete_closure", NULL, 0, &_inner_error_);
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2361 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2372 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2370 "rygel-media-export-media-cache-upgrader.c"
+#line 2381 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 278 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 278 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp3_, "ALTER TABLE Closure RENAME TO _Closure", NULL, 0, &_inner_error_);
-#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 278 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 278 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2380 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2391 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 278 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 278 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 278 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2389 "rygel-media-export-media-cache-upgrader.c"
+#line 2400 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->database;
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->sql;
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = rygel_media_export_sql_factory_make (_tmp5_, RYGEL_MEDIA_EXPORT_SQL_STRING_TABLE_CLOSURE);
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp4_, _tmp6_, NULL, 0, &_inner_error_);
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2403 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2414 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2412 "rygel-media-export-media-cache-upgrader.c"
+#line 2423 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp7_, "INSERT INTO Closure (ancestor, " "descendant, depth) SELECT DISTINCT " "ancestor, descendant, depth FROM " "_Closure", NULL, 0, &_inner_error_);
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2422 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2433 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2431 "rygel-media-export-media-cache-upgrader.c"
+#line 2442 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = self->priv->database;
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = self->priv->sql;
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp10_ = rygel_media_export_sql_factory_make (_tmp9_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp8_, _tmp10_, NULL, 0, &_inner_error_);
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2445 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2456 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 281 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2454 "rygel-media-export-media-cache-upgrader.c"
+#line 2465 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp11_ = self->priv->database;
-#line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp11_, "DROP TABLE _Closure", NULL, 0, &_inner_error_);
-#line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2464 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2475 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2473 "rygel-media-export-media-cache-upgrader.c"
+#line 2484 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 283 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp12_ = self->priv->database;
-#line 283 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp12_, "UPDATE schema_info SET version = '9'", NULL, 0, &_inner_error_);
-#line 283 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 283 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2483 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2494 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 283 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 283 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 283 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2492 "rygel-media-export-media-cache-upgrader.c"
+#line 2503 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp13_ = self->priv->database;
-#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp13_, &_inner_error_);
-#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2502 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2513 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2511 "rygel-media-export-media-cache-upgrader.c"
+#line 2522 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp14_ = self->priv->database;
-#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp14_, "VACUUM", NULL, 0, &_inner_error_);
-#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2521 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch27_rygel_media_export_database_error;
+#line 2532 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch28_rygel_media_export_database_error;
 			}
-#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 2530 "rygel-media-export-media-cache-upgrader.c"
+#line 2541 "rygel-media-export-media-cache-upgrader.c"
 		}
 	}
-	goto __finally27;
-	__catch27_rygel_media_export_database_error:
+	goto __finally28;
+	__catch28_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp15_ = NULL;
 		GError* _tmp16_ = NULL;
 		const gchar* _tmp17_ = NULL;
-#line 271 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 271 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 290 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp15_ = self->priv->database;
-#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 290 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp15_);
-#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 291 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp16_ = _error_;
-#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 291 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp17_ = _tmp16_->message;
-#line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:288: Database upgrade fai" \
+#line 291 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:291: Database upgrade fai" \
 "led: %s", _tmp17_);
-#line 289 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 271 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 2558 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally27:
-#line 271 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 271 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 271 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 271 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 2569 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally28:
+#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 2580 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 2578 "rygel-media-export-media-cache-upgrader.c"
+#line 2589 "rygel-media-export-media-cache-upgrader.c"
 	{
 		GeeLinkedList* queue = NULL;
 		GeeLinkedList* _tmp0_ = NULL;
@@ -2628,430 +2639,430 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 		RygelMediaExportDatabase* _tmp62_ = NULL;
 		RygelMediaExportDatabase* _tmp63_ = NULL;
 		RygelMediaExportDatabase* _tmp64_ = NULL;
-#line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 299 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = gee_linked_list_new (G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free, NULL, NULL, NULL);
-#line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 299 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		queue = _tmp0_;
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp1_, &_inner_error_);
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2638 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2649 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2660 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "DELETE FROM Object WHERE upnp_id LIKE '" RYGEL_MEDIA_EXPORT_QUERY_CONTAINER_PREFIX "%'", NULL, 0, &_inner_error_);
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2661 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2672 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2683 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp3_, "DROP TRIGGER trgr_update_closure", NULL, 0, &_inner_error_);
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2684 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 300 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2695 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2706 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->database;
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp4_, "DROP TRIGGER trgr_delete_closure", NULL, 0, &_inner_error_);
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2707 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 301 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2718 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2729 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp5_, "DROP INDEX idx_parent", NULL, 0, &_inner_error_);
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2730 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2741 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2752 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp6_, "DROP INDEX idx_meta_data_fk", NULL, 0, &_inner_error_);
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2753 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2764 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2775 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp7_, "DROP INDEX IF EXISTS idx_closure", NULL, 0, &_inner_error_);
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2776 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2787 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2798 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = self->priv->database;
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp8_, "DROP TABLE Closure", NULL, 0, &_inner_error_);
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2799 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2810 "rygel-media-export-media-cache-upgrader.c"
-		}
+				goto __catch29_rygel_media_export_database_error;
+			}
 #line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2821 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = self->priv->database;
-#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp9_, "DROP TRIGGER trgr_delete_metadata", NULL, 0, &_inner_error_);
-#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2822 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2833 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2844 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp10_ = self->priv->database;
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp11_ = _ (RYGEL_MEDIA_EXPORT_ROOT_CONTAINER_FILESYSTEM_FOLDER_NAME);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp12_ = g_strconcat ("INSERT OR REPLACE INTO Object (parent, upnp_id, " "type_fk, title, timestamp) VALUES " "('0', '" RYGEL_MEDIA_EXPORT_ROOT_CONTAINER_FILESYSTEM_FOLDER_ID "', 0, '", _tmp11_, NULL);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp13_ = _tmp12_;
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp14_ = g_strconcat (_tmp13_, "', 0)", NULL);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp15_ = _tmp14_;
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp10_, _tmp15_, NULL, 0, &_inner_error_);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_free0 (_tmp15_);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_free0 (_tmp13_);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2859 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2870 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2881 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp16_ = self->priv->database;
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp16_, "UPDATE Object SET parent = '" RYGEL_MEDIA_EXPORT_ROOT_CONTAINER_FILESYSTEM_FOLDER_ID "' WHERE parent = '0' AND upnp_id " "NOT LIKE 'virtual-%' AND upnp_id " "<> '" RYGEL_MEDIA_EXPORT_ROOT_CONTAINER_FILESYSTEM_FOLDER_ID "'", NULL, 0, &_inner_error_);
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2882 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2893 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2904 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp17_ = self->priv->database;
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp17_, "ALTER TABLE Object RENAME TO _Object", NULL, 0, &_inner_error_);
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2905 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2916 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2927 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp18_ = self->priv->database;
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp18_, "CREATE TABLE Object AS SELECT * FROM _Object", NULL, 0, &_inner_error_);
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2928 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2939 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2950 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp19_ = self->priv->database;
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp19_, "DELETE FROM Object", NULL, 0, &_inner_error_);
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2951 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2962 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 2973 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp20_ = self->priv->database;
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp21_ = self->priv->sql;
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp22_ = rygel_media_export_sql_factory_make (_tmp21_, RYGEL_MEDIA_EXPORT_SQL_STRING_TABLE_CLOSURE);
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp20_, _tmp22_, NULL, 0, &_inner_error_);
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 2978 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 2989 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3000 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp23_ = self->priv->database;
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp24_ = self->priv->sql;
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp25_ = rygel_media_export_sql_factory_make (_tmp24_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp23_, _tmp25_, NULL, 0, &_inner_error_);
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3005 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3016 "rygel-media-export-media-cache-upgrader.c"
-		}
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		_tmp26_ = self->priv->database;
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		rygel_media_export_database_exec (_tmp26_, "INSERT INTO Closure (ancestor, descendant, " "depth) VALUES ('0','0',0)", NULL, 0, &_inner_error_);
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		if (_inner_error_ != NULL) {
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3028 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
+				goto __catch29_rygel_media_export_database_error;
 			}
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3039 "rygel-media-export-media-cache-upgrader.c"
+#line 3027 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		_tmp27_ = queue;
-#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		gee_queue_offer ((GeeQueue*) _tmp27_, "0");
 #line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp26_ = self->priv->database;
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_exec (_tmp26_, "INSERT INTO Closure (ancestor, descendant, " "depth) VALUES ('0','0',0)", NULL, 0, &_inner_error_);
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 3039 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3050 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp27_ = queue;
+#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		gee_queue_offer ((GeeQueue*) _tmp27_, "0");
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		while (TRUE) {
-#line 3047 "rygel-media-export-media-cache-upgrader.c"
+#line 3058 "rygel-media-export-media-cache-upgrader.c"
 			GeeLinkedList* _tmp28_ = NULL;
 			gboolean _tmp29_ = FALSE;
 			gboolean _tmp30_ = FALSE;
@@ -3070,82 +3081,82 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 			RygelMediaExportDatabase* _tmp48_ = NULL;
 			GValue* _tmp49_ = NULL;
 			gint _tmp49__length1 = 0;
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp28_ = queue;
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp29_ = gee_collection_get_is_empty ((GeeCollection*) _tmp28_);
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp30_ = _tmp29_;
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (!(!_tmp30_)) {
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				break;
-#line 3076 "rygel-media-export-media-cache-upgrader.c"
+#line 3087 "rygel-media-export-media-cache-upgrader.c"
 			}
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp31_ = queue;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp32_ = gee_queue_poll ((GeeQueue*) _tmp31_);
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_value_init (&_tmp33_, G_TYPE_STRING);
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_value_take_string (&_tmp33_, (gchar*) _tmp32_);
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp34_ = g_new0 (GValue, 1);
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp34_[0] = _tmp33_;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			args = _tmp34_;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			args_length1 = 1;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_args_size_ = args_length1;
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp35_ = self->priv->database;
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp36_ = args;
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp36__length1 = args_length1;
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp37_ = rygel_media_export_database_exec_cursor (_tmp35_, "SELECT upnp_id FROM _Object WHERE " "parent = ?", _tmp36_, _tmp36__length1, &_inner_error_);
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			cursor = _tmp37_;
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (queue);
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3114 "rygel-media-export-media-cache-upgrader.c"
-					goto __catch28_rygel_media_export_database_error;
+#line 3125 "rygel-media-export-media-cache-upgrader.c"
+					goto __catch29_rygel_media_export_database_error;
 				}
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (queue);
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_clear_error (&_inner_error_);
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				return;
-#line 3127 "rygel-media-export-media-cache-upgrader.c"
+#line 3138 "rygel-media-export-media-cache-upgrader.c"
 			}
 			{
 				RygelMediaExportDatabaseCursorIterator* _statement_it = NULL;
 				RygelMediaExportDatabaseCursor* _tmp38_ = NULL;
 				RygelMediaExportDatabaseCursorIterator* _tmp39_ = NULL;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp38_ = cursor;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp39_ = rygel_media_export_database_cursor_iterator (_tmp38_);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_statement_it = _tmp39_;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				while (TRUE) {
-#line 3141 "rygel-media-export-media-cache-upgrader.c"
+#line 3152 "rygel-media-export-media-cache-upgrader.c"
 					gboolean _tmp40_ = FALSE;
 					RygelMediaExportDatabaseCursorIterator* _tmp41_ = NULL;
 					gboolean _tmp42_ = FALSE;
@@ -3155,392 +3166,392 @@ static void rygel_media_export_media_cache_upgrader_update_v9_v10 (RygelMediaExp
 					GeeLinkedList* _tmp45_ = NULL;
 					sqlite3_stmt* _tmp46_ = NULL;
 					const gchar* _tmp47_ = NULL;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp41_ = _statement_it;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp42_ = rygel_media_export_database_cursor_iterator_next (_tmp41_, &_inner_error_);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp40_ = _tmp42_;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (_inner_error_ != NULL) {
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (cursor);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (queue);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3169 "rygel-media-export-media-cache-upgrader.c"
-							goto __catch28_rygel_media_export_database_error;
+#line 3180 "rygel-media-export-media-cache-upgrader.c"
+							goto __catch29_rygel_media_export_database_error;
 						}
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (cursor);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (queue);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						g_clear_error (&_inner_error_);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						return;
-#line 3186 "rygel-media-export-media-cache-upgrader.c"
+#line 3197 "rygel-media-export-media-cache-upgrader.c"
 					}
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (!_tmp40_) {
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						break;
-#line 3192 "rygel-media-export-media-cache-upgrader.c"
+#line 3203 "rygel-media-export-media-cache-upgrader.c"
 					}
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp43_ = _statement_it;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp44_ = rygel_media_export_database_cursor_iterator_get (_tmp43_, &_inner_error_);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					statement = _tmp44_;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (_inner_error_ != NULL) {
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (cursor);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (queue);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3212 "rygel-media-export-media-cache-upgrader.c"
-							goto __catch28_rygel_media_export_database_error;
+#line 3223 "rygel-media-export-media-cache-upgrader.c"
+							goto __catch29_rygel_media_export_database_error;
 						}
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (cursor);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						_g_object_unref0 (queue);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						g_clear_error (&_inner_error_);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 						return;
-#line 3229 "rygel-media-export-media-cache-upgrader.c"
+#line 3240 "rygel-media-export-media-cache-upgrader.c"
 					}
-#line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp45_ = queue;
-#line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp46_ = statement;
-#line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_tmp47_ = sqlite3_column_text (_tmp46_, 0);
-#line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					gee_queue_offer ((GeeQueue*) _tmp45_, _tmp47_);
-#line 3239 "rygel-media-export-media-cache-upgrader.c"
+#line 3250 "rygel-media-export-media-cache-upgrader.c"
 				}
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 3243 "rygel-media-export-media-cache-upgrader.c"
+#line 3254 "rygel-media-export-media-cache-upgrader.c"
 			}
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp48_ = self->priv->database;
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp49_ = args;
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp49__length1 = args_length1;
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			rygel_media_export_database_exec (_tmp48_, "INSERT INTO Object SELECT * FROM _Object " "WHERE parent = ?", _tmp49_, _tmp49__length1, &_inner_error_);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_ != NULL) {
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (cursor);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (queue);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3263 "rygel-media-export-media-cache-upgrader.c"
-					goto __catch28_rygel_media_export_database_error;
+#line 3274 "rygel-media-export-media-cache-upgrader.c"
+					goto __catch29_rygel_media_export_database_error;
 				}
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (cursor);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_object_unref0 (queue);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_clear_error (&_inner_error_);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				return;
-#line 3278 "rygel-media-export-media-cache-upgrader.c"
+#line 3289 "rygel-media-export-media-cache-upgrader.c"
 			}
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (cursor);
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 3284 "rygel-media-export-media-cache-upgrader.c"
+#line 3295 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp50_ = self->priv->database;
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp50_, "DROP TABLE Object", NULL, 0, &_inner_error_);
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3296 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 346 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3307 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3318 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp51_ = self->priv->database;
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp51_, "ALTER TABLE _Object RENAME TO Object", NULL, 0, &_inner_error_);
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3319 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3330 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3341 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp52_ = self->priv->database;
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp53_ = self->priv->sql;
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp54_ = rygel_media_export_sql_factory_make (_tmp53_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp52_, _tmp54_, NULL, 0, &_inner_error_);
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3346 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3357 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3368 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp55_ = self->priv->database;
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp56_ = self->priv->sql;
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp57_ = rygel_media_export_sql_factory_make (_tmp56_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_COMMON);
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp55_, _tmp57_, NULL, 0, &_inner_error_);
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3373 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3384 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3395 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp58_ = self->priv->database;
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp59_ = self->priv->sql;
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp60_ = rygel_media_export_sql_factory_make (_tmp59_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp58_, _tmp60_, NULL, 0, &_inner_error_);
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3400 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3411 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3422 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp61_ = self->priv->database;
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp61_, "UPDATE schema_info SET version = '10'", NULL, 0, &_inner_error_);
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3423 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3434 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3445 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp62_ = self->priv->database;
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp62_, &_inner_error_);
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3446 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
-			}
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3457 "rygel-media-export-media-cache-upgrader.c"
-		}
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		_tmp63_ = self->priv->database;
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		rygel_media_export_database_exec (_tmp63_, "VACUUM", NULL, 0, &_inner_error_);
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		if (_inner_error_ != NULL) {
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (queue);
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3469 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch28_rygel_media_export_database_error;
+				goto __catch29_rygel_media_export_database_error;
 			}
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (queue);
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3480 "rygel-media-export-media-cache-upgrader.c"
+#line 3468 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp63_ = self->priv->database;
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_exec (_tmp63_, "VACUUM", NULL, 0, &_inner_error_);
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 3480 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch29_rygel_media_export_database_error;
+			}
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (queue);
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3491 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp64_ = self->priv->database;
-#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp64_);
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_object_unref0 (queue);
-#line 3488 "rygel-media-export-media-cache-upgrader.c"
+#line 3499 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally28;
-	__catch28_rygel_media_export_database_error:
+	goto __finally29;
+	__catch29_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp65_ = NULL;
 		GError* _tmp66_ = NULL;
 		const gchar* _tmp67_ = NULL;
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 359 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp65_ = self->priv->database;
-#line 356 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 359 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp65_);
-#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 360 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp66_ = _error_;
-#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 360 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp67_ = _tmp66_->message;
-#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:357: Database upgrade fai" \
+#line 360 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:360: Database upgrade fai" \
 "led: %s", _tmp67_);
-#line 358 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 361 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 3515 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally28:
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 3526 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally29:
+#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 3537 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 362 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 3535 "rygel-media-export-media-cache-upgrader.c"
+#line 3546 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -3549,164 +3560,164 @@ static void rygel_media_export_media_cache_upgrader_update_v10_v11 (RygelMediaEx
 		RygelMediaExportDatabase* _tmp4_ = NULL;
 		RygelMediaExportDatabase* _tmp5_ = NULL;
 		RygelMediaExportDatabase* _tmp6_ = NULL;
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3552 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch29_rygel_media_export_database_error;
+#line 3563 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch30_rygel_media_export_database_error;
 			}
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3561 "rygel-media-export-media-cache-upgrader.c"
+#line 3572 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE Meta_Data " "   ADD COLUMN disc INTEGER", NULL, 0, &_inner_error_);
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		if (_inner_error_ != NULL) {
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3571 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch29_rygel_media_export_database_error;
-			}
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
-#line 3580 "rygel-media-export-media-cache-upgrader.c"
-		}
 #line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 3582 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch30_rygel_media_export_database_error;
+			}
+#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 3591 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "UPDATE Object SET timestamp = 0 WHERE " "  upnp_id IN (" "SELECT object_fk FROM Meta_Data WHERE " "  class LIKE 'object.item.audioItem.%')", NULL, 0, &_inner_error_);
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3590 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch29_rygel_media_export_database_error;
+#line 3601 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch30_rygel_media_export_database_error;
 			}
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3599 "rygel-media-export-media-cache-upgrader.c"
+#line 3610 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp3_, "UPDATE schema_info SET version = '11'", NULL, 0, &_inner_error_);
-#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3609 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch29_rygel_media_export_database_error;
+#line 3620 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch30_rygel_media_export_database_error;
 			}
-#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3618 "rygel-media-export-media-cache-upgrader.c"
+#line 3629 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->database;
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp4_, &_inner_error_);
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3628 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch29_rygel_media_export_database_error;
+#line 3639 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch30_rygel_media_export_database_error;
 			}
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3637 "rygel-media-export-media-cache-upgrader.c"
+#line 3648 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 374 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 374 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp5_, "VACUUM", NULL, 0, &_inner_error_);
-#line 374 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 374 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3647 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch29_rygel_media_export_database_error;
+#line 3658 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch30_rygel_media_export_database_error;
 			}
-#line 374 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 374 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 374 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3656 "rygel-media-export-media-cache-upgrader.c"
+#line 3667 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp6_);
-#line 3662 "rygel-media-export-media-cache-upgrader.c"
+#line 3673 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally29;
-	__catch29_rygel_media_export_database_error:
+	goto __finally30;
+	__catch30_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp7_ = NULL;
 		GError* _tmp8_ = NULL;
 		const gchar* _tmp9_ = NULL;
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 380 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 380 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp7_);
-#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = _error_;
-#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = _tmp8_->message;
-#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:378: Database upgrade fai" \
+#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:381: Database upgrade fai" \
 "led: %s", _tmp9_);
-#line 379 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 3689 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally29:
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 3700 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally30:
+#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 3711 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
@@ -3787,22 +3798,22 @@ static gchar* uuid_get (void) {
 	id = (g_free (id), NULL);
 #line 15 "../../../src/librygel-core/uuid.vapi"
 	return result;
-#line 3781 "rygel-media-export-media-cache-upgrader.c"
+#line 3792 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 3788 "rygel-media-export-media-cache-upgrader.c"
+#line 3799 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 383 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 386 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 3796 "rygel-media-export-media-cache-upgrader.c"
+#line 3807 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -3826,199 +3837,199 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 		RygelMediaExportDatabase* _tmp47_ = NULL;
 		RygelMediaExportDatabase* _tmp48_ = NULL;
 		RygelMediaExportDatabase* _tmp49_ = NULL;
-#line 385 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 385 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 385 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 385 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3828 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 3839 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 385 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 385 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 385 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3837 "rygel-media-export-media-cache-upgrader.c"
+#line 3848 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 386 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 386 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE schema_info " "ADD COLUMN reset_token TEXT", NULL, 0, &_inner_error_);
-#line 386 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 386 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3847 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 3858 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 386 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 386 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 386 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3856 "rygel-media-export-media-cache-upgrader.c"
+#line 3867 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = uuid_get ();
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = _tmp3_;
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = g_strconcat ("UPDATE schema_info SET reset_token = '", _tmp4_, NULL);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = _tmp5_;
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = g_strconcat (_tmp6_, "'", NULL);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = _tmp7_;
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, _tmp8_, NULL, 0, &_inner_error_);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_free0 (_tmp8_);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_free0 (_tmp6_);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_free0 (_tmp4_);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3884 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 3895 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3893 "rygel-media-export-media-cache-upgrader.c"
+#line 3904 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = self->priv->database;
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp9_, "UPDATE schema_info SET version = '12'", NULL, 0, &_inner_error_);
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3903 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 3914 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3912 "rygel-media-export-media-cache-upgrader.c"
+#line 3923 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 394 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp10_ = self->priv->database;
-#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 394 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp10_, "ALTER TABLE object " "ADD COLUMN object_update_id INTEGER", NULL, 0, &_inner_error_);
-#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 394 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 394 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3922 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 3933 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 394 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 394 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 394 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3931 "rygel-media-export-media-cache-upgrader.c"
+#line 3942 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp11_ = self->priv->database;
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp11_, "ALTER TABLE object " "ADD COLUMN deleted_child_count INTEGER", NULL, 0, &_inner_error_);
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3941 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 3952 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3950 "rygel-media-export-media-cache-upgrader.c"
+#line 3961 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp12_ = self->priv->database;
-#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp12_, "ALTER TABLE object " "ADD COLUMN container_update_id INTEGER", NULL, 0, &_inner_error_);
-#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3960 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 3971 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 3969 "rygel-media-export-media-cache-upgrader.c"
+#line 3980 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 397 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp13_ = gee_array_list_new (G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free, NULL, NULL, NULL);
-#line 397 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		ids = _tmp13_;
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp14_ = self->priv->database;
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp15_ = rygel_media_export_database_exec_cursor (_tmp14_, "SELECT upnp_id FROM object", NULL, 0, &_inner_error_);
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		cursor = _tmp15_;
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (ids);
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 3987 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
-			}
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_g_object_unref0 (ids);
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			g_clear_error (&_inner_error_);
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			return;
 #line 3998 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
+			}
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_g_object_unref0 (ids);
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 4009 "rygel-media-export-media-cache-upgrader.c"
 		}
 		{
 			RygelMediaExportDatabaseCursorIterator* _statement_it = NULL;
 			RygelMediaExportDatabaseCursor* _tmp16_ = NULL;
 			RygelMediaExportDatabaseCursorIterator* _tmp17_ = NULL;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp16_ = cursor;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp17_ = rygel_media_export_database_cursor_iterator (_tmp16_);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_statement_it = _tmp17_;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			while (TRUE) {
-#line 4012 "rygel-media-export-media-cache-upgrader.c"
+#line 4023 "rygel-media-export-media-cache-upgrader.c"
 				gboolean _tmp18_ = FALSE;
 				RygelMediaExportDatabaseCursorIterator* _tmp19_ = NULL;
 				gboolean _tmp20_ = FALSE;
@@ -4028,95 +4039,95 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 				GeeArrayList* _tmp23_ = NULL;
 				sqlite3_stmt* _tmp24_ = NULL;
 				const gchar* _tmp25_ = NULL;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp19_ = _statement_it;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp20_ = rygel_media_export_database_cursor_iterator_next (_tmp19_, &_inner_error_);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp18_ = _tmp20_;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (_inner_error_ != NULL) {
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (cursor);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (ids);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4038 "rygel-media-export-media-cache-upgrader.c"
-						goto __catch30_rygel_media_export_database_error;
+#line 4049 "rygel-media-export-media-cache-upgrader.c"
+						goto __catch31_rygel_media_export_database_error;
 					}
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (cursor);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (ids);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					g_clear_error (&_inner_error_);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					return;
-#line 4053 "rygel-media-export-media-cache-upgrader.c"
+#line 4064 "rygel-media-export-media-cache-upgrader.c"
 				}
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (!_tmp18_) {
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					break;
-#line 4059 "rygel-media-export-media-cache-upgrader.c"
+#line 4070 "rygel-media-export-media-cache-upgrader.c"
 				}
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp21_ = _statement_it;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp22_ = rygel_media_export_database_cursor_iterator_get (_tmp21_, &_inner_error_);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				statement = _tmp22_;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (_inner_error_ != NULL) {
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (cursor);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (ids);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4077 "rygel-media-export-media-cache-upgrader.c"
-						goto __catch30_rygel_media_export_database_error;
+#line 4088 "rygel-media-export-media-cache-upgrader.c"
+						goto __catch31_rygel_media_export_database_error;
 					}
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (cursor);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (ids);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					g_clear_error (&_inner_error_);
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					return;
-#line 4092 "rygel-media-export-media-cache-upgrader.c"
+#line 4103 "rygel-media-export-media-cache-upgrader.c"
 				}
-#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-				_tmp23_ = ids;
-#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-				_tmp24_ = statement;
-#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-				_tmp25_ = sqlite3_column_text (_tmp24_, 0);
-#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-				gee_abstract_collection_add ((GeeAbstractCollection*) _tmp23_, _tmp25_);
-#line 4102 "rygel-media-export-media-cache-upgrader.c"
-			}
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-			_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
-#line 4106 "rygel-media-export-media-cache-upgrader.c"
-		}
 #line 404 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+				_tmp23_ = ids;
+#line 404 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+				_tmp24_ = statement;
+#line 404 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+				_tmp25_ = sqlite3_column_text (_tmp24_, 0);
+#line 404 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+				gee_abstract_collection_add ((GeeAbstractCollection*) _tmp23_, _tmp25_);
+#line 4113 "rygel-media-export-media-cache-upgrader.c"
+			}
+#line 403 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			_rygel_media_export_database_cursor_iterator_unref0 (_statement_it);
+#line 4117 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 407 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		count = (guint32) 1;
-#line 4110 "rygel-media-export-media-cache-upgrader.c"
+#line 4121 "rygel-media-export-media-cache-upgrader.c"
 		{
 			GeeArrayList* _id_list = NULL;
 			GeeArrayList* _tmp26_ = NULL;
@@ -4126,25 +4137,25 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 			gint _tmp29_ = 0;
 			gint _tmp30_ = 0;
 			gint _id_index = 0;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp26_ = ids;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp27_ = _g_object_ref0 (_tmp26_);
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_id_list = _tmp27_;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp28_ = _id_list;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp29_ = gee_abstract_collection_get_size ((GeeCollection*) _tmp28_);
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_tmp30_ = _tmp29_;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_id_size = _tmp30_;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_id_index = -1;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			while (TRUE) {
-#line 4138 "rygel-media-export-media-cache-upgrader.c"
+#line 4149 "rygel-media-export-media-cache-upgrader.c"
 				gint _tmp31_ = 0;
 				gint _tmp32_ = 0;
 				gint _tmp33_ = 0;
@@ -4166,228 +4177,228 @@ static void rygel_media_export_media_cache_upgrader_update_v11_v12 (RygelMediaEx
 				RygelMediaExportDatabase* _tmp45_ = NULL;
 				GValue* _tmp46_ = NULL;
 				gint _tmp46__length1 = 0;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp31_ = _id_index;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_id_index = _tmp31_ + 1;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp32_ = _id_index;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp33_ = _id_size;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (!(_tmp32_ < _tmp33_)) {
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					break;
-#line 4172 "rygel-media-export-media-cache-upgrader.c"
+#line 4183 "rygel-media-export-media-cache-upgrader.c"
 				}
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp34_ = _id_list;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp35_ = _id_index;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp36_ = gee_abstract_list_get ((GeeAbstractList*) _tmp34_, _tmp35_);
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				id = (gchar*) _tmp36_;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp37_ = count;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_value_init (&_tmp38_, G_TYPE_UINT);
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_value_set_uint (&_tmp38_, _tmp37_);
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp39_ = count;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_value_init (&_tmp40_, G_TYPE_UINT);
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_value_set_uint (&_tmp40_, _tmp39_);
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp41_ = id;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_value_init (&_tmp42_, G_TYPE_STRING);
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				g_value_set_string (&_tmp42_, _tmp41_);
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp43_ = g_new0 (GValue, 3);
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp43_[0] = _tmp38_;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp43_[1] = _tmp40_;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp43_[2] = _tmp42_;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = _tmp43_;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args_length1 = 3;
-#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_args_size_ = args_length1;
-#line 407 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 410 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp44_ = count;
-#line 407 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 410 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				count = _tmp44_ + 1;
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp45_ = self->priv->database;
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp46_ = args;
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_tmp46__length1 = args_length1;
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				rygel_media_export_database_exec (_tmp45_, "UPDATE object SET " "container_update_id = ?, " "object_update_id = ?, " "deleted_child_count = 0 " "WHERE upnp_id = ?", _tmp46_, _tmp46__length1, &_inner_error_);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				if (_inner_error_ != NULL) {
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_free0 (id);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (_id_list);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (cursor);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (ids);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4240 "rygel-media-export-media-cache-upgrader.c"
-						goto __catch30_rygel_media_export_database_error;
+#line 4251 "rygel-media-export-media-cache-upgrader.c"
+						goto __catch31_rygel_media_export_database_error;
 					}
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_free0 (id);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (_id_list);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (cursor);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					_g_object_unref0 (ids);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					g_clear_error (&_inner_error_);
-#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 					return;
-#line 4259 "rygel-media-export-media-cache-upgrader.c"
+#line 4270 "rygel-media-export-media-cache-upgrader.c"
 				}
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				args = (_vala_GValue_array_free (args, args_length1), NULL);
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 				_g_free0 (id);
-#line 4265 "rygel-media-export-media-cache-upgrader.c"
+#line 4276 "rygel-media-export-media-cache-upgrader.c"
 			}
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 408 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (_id_list);
-#line 4269 "rygel-media-export-media-cache-upgrader.c"
+#line 4280 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp47_ = self->priv->database;
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp47_, &_inner_error_);
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (cursor);
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (ids);
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4283 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 4294 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (cursor);
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (ids);
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4296 "rygel-media-export-media-cache-upgrader.c"
+#line 4307 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp48_ = self->priv->database;
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp48_, "VACUUM", NULL, 0, &_inner_error_);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (cursor);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (ids);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4310 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch30_rygel_media_export_database_error;
+#line 4321 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch31_rygel_media_export_database_error;
 			}
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (cursor);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			_g_object_unref0 (ids);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4323 "rygel-media-export-media-cache-upgrader.c"
+#line 4334 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 418 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 421 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp49_ = self->priv->database;
-#line 418 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 421 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp49_);
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_object_unref0 (cursor);
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_object_unref0 (ids);
-#line 4333 "rygel-media-export-media-cache-upgrader.c"
+#line 4344 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally30;
-	__catch30_rygel_media_export_database_error:
+	goto __finally31;
+	__catch31_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp50_ = NULL;
 		GError* _tmp51_ = NULL;
 		const gchar* _tmp52_ = NULL;
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 423 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp50_ = self->priv->database;
-#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 423 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp50_);
-#line 421 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 424 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp51_ = _error_;
-#line 421 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 424 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp52_ = _tmp51_->message;
-#line 421 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:421: Database upgrade fai" \
+#line 424 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:424: Database upgrade fai" \
 "led: %s", _tmp52_);
-#line 422 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 425 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 4360 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally30:
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 4371 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally31:
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 4382 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 426 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 4380 "rygel-media-export-media-cache-upgrader.c"
+#line 4391 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -4417,471 +4428,471 @@ static void rygel_media_export_media_cache_upgrader_update_v12_v13 (RygelMediaEx
 		RygelMediaExportDatabase* _tmp25_ = NULL;
 		RygelMediaExportDatabase* _tmp26_ = NULL;
 		RygelMediaExportDatabase* _tmp27_ = NULL;
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4418 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4429 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4427 "rygel-media-export-media-cache-upgrader.c"
+#line 4438 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "CREATE TEMPORARY TABLE object_backup(parent TEXT CONSTRAINT parent_fk_" \
 "id " "REFERENCES Object(upnp_id), " "upnp_id TEXT PRIMARY KEY, " "type_fk INTEGER, " "title TEXT NOT NULL, " "timestamp INTEGER NOT NULL, " "uri TEXT, " "object_update_id INTEGER, " "deleted_child_count INTEGER, " "container_update_id INTEGER)", NULL, 0, &_inner_error_);
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4437 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4448 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4446 "rygel-media-export-media-cache-upgrader.c"
+#line 4457 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "INSERT INTO object_backup SELECT " "parent, upnp_id, type_fk, title, " "timestamp, uri, object_update_id, " "deleted_child_count, container_update_id " "FROM object", NULL, 0, &_inner_error_);
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4456 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4467 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4465 "rygel-media-export-media-cache-upgrader.c"
+#line 4476 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp3_, "DROP TRIGGER IF EXISTS trgr_update_closure", NULL, 0, &_inner_error_);
-#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4475 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4486 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4484 "rygel-media-export-media-cache-upgrader.c"
+#line 4495 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->database;
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp4_, "DROP TRIGGER IF EXISTS trgr_delete_closure", NULL, 0, &_inner_error_);
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4494 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4505 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4503 "rygel-media-export-media-cache-upgrader.c"
+#line 4514 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp5_, "DROP TRIGGER IF EXISTS trgr_delete_metadata", NULL, 0, &_inner_error_);
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4513 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4524 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4522 "rygel-media-export-media-cache-upgrader.c"
+#line 4533 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp6_, "DROP INDEX IF EXISTS idx_parent", NULL, 0, &_inner_error_);
-#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4532 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4543 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4541 "rygel-media-export-media-cache-upgrader.c"
+#line 4552 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp7_, "DROP INDEX IF EXISTS idx_object_upnp_id", NULL, 0, &_inner_error_);
-#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4551 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4562 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4560 "rygel-media-export-media-cache-upgrader.c"
+#line 4571 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = self->priv->database;
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp8_, "DROP INDEX IF EXISTS idx_uri", NULL, 0, &_inner_error_);
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4570 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4581 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4579 "rygel-media-export-media-cache-upgrader.c"
+#line 4590 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = self->priv->database;
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp9_, "DROP TABLE object", NULL, 0, &_inner_error_);
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4589 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4600 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4598 "rygel-media-export-media-cache-upgrader.c"
+#line 4609 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp10_ = self->priv->database;
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp10_, "CREATE TABLE object " "(parent TEXT CONSTRAINT parent_fk_id " "REFERENCES Object(upnp_id), " "upnp_id TEXT PRIMARY KEY, " "type_fk INTEGER, " "title TEXT NOT NULL, " "timestamp INTEGER NOT NULL, " "uri TEXT, " "object_update_id INTEGER, " "deleted_child_count INTEGER, " "container_update_id INTEGER)", NULL, 0, &_inner_error_);
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4608 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4619 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4617 "rygel-media-export-media-cache-upgrader.c"
+#line 4628 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp11_ = self->priv->database;
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp11_, "INSERT INTO object SELECT parent, " "upnp_id, type_fk, title, timestamp, " "uri, object_update_id, " "deleted_child_count, container_update_id " "FROM object_backup", NULL, 0, &_inner_error_);
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4627 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4638 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4636 "rygel-media-export-media-cache-upgrader.c"
+#line 4647 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 467 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp12_ = self->priv->database;
-#line 467 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp12_, "DROP TABLE object_backup", NULL, 0, &_inner_error_);
-#line 467 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 467 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4646 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4657 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 467 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 467 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 467 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4655 "rygel-media-export-media-cache-upgrader.c"
+#line 4666 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp13_ = self->priv->database;
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp13_, "ALTER TABLE object " "ADD COLUMN is_guarded INTEGER", NULL, 0, &_inner_error_);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4665 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4676 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4674 "rygel-media-export-media-cache-upgrader.c"
+#line 4685 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp14_ = self->priv->database;
-#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp14_, "UPDATE object SET is_guarded = 0", NULL, 0, &_inner_error_);
-#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4684 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4695 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4693 "rygel-media-export-media-cache-upgrader.c"
+#line 4704 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp15_ = self->priv->database;
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp15_, "UPDATE schema_info SET version = '13'", NULL, 0, &_inner_error_);
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4703 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4714 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4712 "rygel-media-export-media-cache-upgrader.c"
+#line 4723 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp16_ = self->priv->database;
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp17_ = self->priv->sql;
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp18_ = rygel_media_export_sql_factory_make (_tmp17_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_COMMON);
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp16_, _tmp18_, NULL, 0, &_inner_error_);
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4726 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4737 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4735 "rygel-media-export-media-cache-upgrader.c"
+#line 4746 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp19_ = self->priv->database;
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp20_ = self->priv->sql;
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp21_ = rygel_media_export_sql_factory_make (_tmp20_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_CLOSURE);
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp19_, _tmp21_, NULL, 0, &_inner_error_);
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4749 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4760 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4758 "rygel-media-export-media-cache-upgrader.c"
+#line 4769 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp22_ = self->priv->database;
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp23_ = self->priv->sql;
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp24_ = rygel_media_export_sql_factory_make (_tmp23_, RYGEL_MEDIA_EXPORT_SQL_STRING_INDEX_COMMON);
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp22_, _tmp24_, NULL, 0, &_inner_error_);
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4772 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4783 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4781 "rygel-media-export-media-cache-upgrader.c"
+#line 4792 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp25_ = self->priv->database;
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp25_, &_inner_error_);
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4791 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4802 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4800 "rygel-media-export-media-cache-upgrader.c"
+#line 4811 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp26_ = self->priv->database;
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp26_, "VACUUM", NULL, 0, &_inner_error_);
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4810 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch31_rygel_media_export_database_error;
+#line 4821 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch32_rygel_media_export_database_error;
 			}
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4819 "rygel-media-export-media-cache-upgrader.c"
+#line 4830 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 481 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 484 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp27_ = self->priv->database;
-#line 481 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 484 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp27_);
-#line 4825 "rygel-media-export-media-cache-upgrader.c"
+#line 4836 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally31;
-	__catch31_rygel_media_export_database_error:
+	goto __finally32;
+	__catch32_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp28_ = NULL;
 		GError* _tmp29_ = NULL;
 		const gchar* _tmp30_ = NULL;
-#line 427 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 427 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 486 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp28_ = self->priv->database;
-#line 483 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 486 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp28_);
-#line 484 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 487 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp29_ = _error_;
-#line 484 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 487 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp30_ = _tmp29_->message;
-#line 484 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:484: Database upgrade fai" \
+#line 487 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:487: Database upgrade fai" \
 "led: %s", _tmp30_);
-#line 485 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 488 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 427 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 4852 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally31:
-#line 427 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 427 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 427 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 427 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 4863 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally32:
+#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 4874 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v13_v14 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 489 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 492 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 4872 "rygel-media-export-media-cache-upgrader.c"
+#line 4883 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -4892,177 +4903,177 @@ static void rygel_media_export_media_cache_upgrader_update_v13_v14 (RygelMediaEx
 		RygelMediaExportDatabase* _tmp6_ = NULL;
 		RygelMediaExportDatabase* _tmp7_ = NULL;
 		RygelMediaExportDatabase* _tmp8_ = NULL;
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 494 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 494 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 494 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 494 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4891 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch32_rygel_media_export_database_error;
+#line 4902 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch33_rygel_media_export_database_error;
 			}
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 494 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 494 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 494 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4900 "rygel-media-export-media-cache-upgrader.c"
+#line 4911 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE Object ADD COLUMN reference_id " "DEFAULT NULL", NULL, 0, &_inner_error_);
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4910 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch32_rygel_media_export_database_error;
+#line 4921 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch33_rygel_media_export_database_error;
 			}
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4919 "rygel-media-export-media-cache-upgrader.c"
+#line 4930 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->sql;
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = rygel_media_export_sql_factory_make (_tmp3_, RYGEL_MEDIA_EXPORT_SQL_STRING_TRIGGER_REFERENCE);
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, _tmp4_, NULL, 0, &_inner_error_);
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4933 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch32_rygel_media_export_database_error;
+#line 4944 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch33_rygel_media_export_database_error;
 			}
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4942 "rygel-media-export-media-cache-upgrader.c"
+#line 4953 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp5_, "UPDATE schema_info SET version = '14'", NULL, 0, &_inner_error_);
-#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4952 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch32_rygel_media_export_database_error;
+#line 4963 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch33_rygel_media_export_database_error;
 			}
-#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4961 "rygel-media-export-media-cache-upgrader.c"
+#line 4972 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp6_, &_inner_error_);
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4971 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch32_rygel_media_export_database_error;
+#line 4982 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch33_rygel_media_export_database_error;
 			}
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4980 "rygel-media-export-media-cache-upgrader.c"
+#line 4991 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 499 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = self->priv->database;
-#line 499 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp7_, "VACUUM", NULL, 0, &_inner_error_);
-#line 499 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 499 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 4990 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch32_rygel_media_export_database_error;
+#line 5001 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch33_rygel_media_export_database_error;
 			}
-#line 499 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 499 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 499 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 4999 "rygel-media-export-media-cache-upgrader.c"
+#line 5010 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = self->priv->database;
-#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp8_);
-#line 5005 "rygel-media-export-media-cache-upgrader.c"
+#line 5016 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally32;
-	__catch32_rygel_media_export_database_error:
+	goto __finally33;
+	__catch33_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp9_ = NULL;
 		GError* _tmp10_ = NULL;
 		const gchar* _tmp11_ = NULL;
-#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 505 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp9_ = self->priv->database;
-#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 505 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp9_);
-#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp10_ = _error_;
-#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp11_ = _tmp10_->message;
-#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:503: Database upgrade fai" \
+#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:506: Database upgrade fai" \
 "led: %s", _tmp11_);
-#line 504 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 507 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 5032 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally32:
-#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 5043 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally33:
+#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 5054 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
 
 static void rygel_media_export_media_cache_upgrader_update_v14_v15 (RygelMediaExportMediaCacheUpgrader* self) {
 	GError * _inner_error_ = NULL;
-#line 508 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_return_if_fail (self != NULL);
-#line 5052 "rygel-media-export-media-cache-upgrader.c"
+#line 5063 "rygel-media-export-media-cache-upgrader.c"
 	{
 		RygelMediaExportDatabase* _tmp0_ = NULL;
 		RygelMediaExportDatabase* _tmp1_ = NULL;
@@ -5070,145 +5081,300 @@ static void rygel_media_export_media_cache_upgrader_update_v14_v15 (RygelMediaEx
 		RygelMediaExportDatabase* _tmp3_ = NULL;
 		RygelMediaExportDatabase* _tmp4_ = NULL;
 		RygelMediaExportDatabase* _tmp5_ = NULL;
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp0_ = self->priv->database;
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 5068 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch33_rygel_media_export_database_error;
+#line 5079 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch34_rygel_media_export_database_error;
 			}
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 5077 "rygel-media-export-media-cache-upgrader.c"
+#line 5088 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp1_ = self->priv->database;
-#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp1_, "ALTER TABLE Meta_Data " "   ADD COLUMN creator TEXT", NULL, 0, &_inner_error_);
-#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 5087 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch33_rygel_media_export_database_error;
+#line 5098 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch34_rygel_media_export_database_error;
 			}
-#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 5096 "rygel-media-export-media-cache-upgrader.c"
+#line 5107 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp2_ = self->priv->database;
-#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp2_, "UPDATE schema_info SET version = '15'", NULL, 0, &_inner_error_);
-#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 5106 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch33_rygel_media_export_database_error;
+#line 5117 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch34_rygel_media_export_database_error;
 			}
-#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 5115 "rygel-media-export-media-cache-upgrader.c"
+#line 5126 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp3_ = self->priv->database;
-#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_commit (_tmp3_, &_inner_error_);
-#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 5125 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch33_rygel_media_export_database_error;
+#line 5136 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch34_rygel_media_export_database_error;
 			}
-#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 514 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 5134 "rygel-media-export-media-cache-upgrader.c"
+#line 5145 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp4_ = self->priv->database;
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_exec (_tmp4_, "VACUUM", NULL, 0, &_inner_error_);
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (_inner_error_ != NULL) {
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 5144 "rygel-media-export-media-cache-upgrader.c"
-				goto __catch33_rygel_media_export_database_error;
+#line 5155 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch34_rygel_media_export_database_error;
 			}
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			g_clear_error (&_inner_error_);
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return;
-#line 5153 "rygel-media-export-media-cache-upgrader.c"
+#line 5164 "rygel-media-export-media-cache-upgrader.c"
 		}
-#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp5_ = self->priv->database;
-#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_analyze (_tmp5_);
-#line 5159 "rygel-media-export-media-cache-upgrader.c"
+#line 5170 "rygel-media-export-media-cache-upgrader.c"
 	}
-	goto __finally33;
-	__catch33_rygel_media_export_database_error:
+	goto __finally34;
+	__catch34_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		RygelMediaExportDatabase* _tmp6_ = NULL;
 		GError* _tmp7_ = NULL;
 		const gchar* _tmp8_ = NULL;
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_error_ = _inner_error_;
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_inner_error_ = NULL;
-#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 521 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp6_ = self->priv->database;
-#line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 521 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_database_rollback (_tmp6_);
-#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 522 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp7_ = _error_;
-#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 522 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_tmp8_ = _tmp7_->message;
-#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_warning ("rygel-media-export-media-cache-upgrader.vala:519: Database upgrade fai" \
+#line 522 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:522: Database upgrade fai" \
 "led: %s", _tmp8_);
-#line 520 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 523 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		self->priv->database = NULL;
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		_g_error_free0 (_error_);
-#line 5186 "rygel-media-export-media-cache-upgrader.c"
-	}
-	__finally33:
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-	if (_inner_error_ != NULL) {
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		g_clear_error (&_inner_error_);
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
-		return;
 #line 5197 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally34:
+#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 5208 "rygel-media-export-media-cache-upgrader.c"
+	}
+}
+
+
+static void rygel_media_export_media_cache_upgrader_update_v15_v16 (RygelMediaExportMediaCacheUpgrader* self) {
+	GError * _inner_error_ = NULL;
+#line 527 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	g_return_if_fail (self != NULL);
+#line 5217 "rygel-media-export-media-cache-upgrader.c"
+	{
+		RygelMediaExportDatabase* _tmp0_ = NULL;
+		RygelMediaExportDatabase* _tmp1_ = NULL;
+		RygelMediaExportDatabase* _tmp2_ = NULL;
+		RygelMediaExportDatabase* _tmp3_ = NULL;
+		RygelMediaExportDatabase* _tmp4_ = NULL;
+		RygelMediaExportDatabase* _tmp5_ = NULL;
+#line 529 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp0_ = self->priv->database;
+#line 529 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_begin (_tmp0_, &_inner_error_);
+#line 529 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 529 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 5233 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch35_rygel_media_export_database_error;
+			}
+#line 529 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 529 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 529 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 5242 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 530 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp1_ = self->priv->database;
+#line 530 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_exec (_tmp1_, "INSERT INTO meta_data (size, mime_type, " "class, object_fk) SELECT 0, " "'inode/directory', 'object.container', " "o.upnp_id FROM object AS o WHERE " "o.type_fk=0;", NULL, 0, &_inner_error_);
+#line 530 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 530 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 5252 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch35_rygel_media_export_database_error;
+			}
+#line 530 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 530 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 530 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 5261 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 535 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp2_ = self->priv->database;
+#line 535 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_exec (_tmp2_, "UPDATE schema_info SET version = '16'", NULL, 0, &_inner_error_);
+#line 535 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 535 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 5271 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch35_rygel_media_export_database_error;
+			}
+#line 535 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 535 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 535 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 5280 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 536 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp3_ = self->priv->database;
+#line 536 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_commit (_tmp3_, &_inner_error_);
+#line 536 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 536 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 5290 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch35_rygel_media_export_database_error;
+			}
+#line 536 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 536 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 536 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 5299 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 537 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp4_ = self->priv->database;
+#line 537 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_exec (_tmp4_, "VACUUM", NULL, 0, &_inner_error_);
+#line 537 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		if (_inner_error_ != NULL) {
+#line 537 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
+#line 5309 "rygel-media-export-media-cache-upgrader.c"
+				goto __catch35_rygel_media_export_database_error;
+			}
+#line 537 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 537 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			g_clear_error (&_inner_error_);
+#line 537 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+			return;
+#line 5318 "rygel-media-export-media-cache-upgrader.c"
+		}
+#line 538 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp5_ = self->priv->database;
+#line 538 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_analyze (_tmp5_);
+#line 5324 "rygel-media-export-media-cache-upgrader.c"
+	}
+	goto __finally35;
+	__catch35_rygel_media_export_database_error:
+	{
+		GError* _error_ = NULL;
+		RygelMediaExportDatabase* _tmp6_ = NULL;
+		GError* _tmp7_ = NULL;
+		const gchar* _tmp8_ = NULL;
+#line 528 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_error_ = _inner_error_;
+#line 528 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_inner_error_ = NULL;
+#line 540 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp6_ = self->priv->database;
+#line 540 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		rygel_media_export_database_rollback (_tmp6_);
+#line 541 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp7_ = _error_;
+#line 541 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_tmp8_ = _tmp7_->message;
+#line 541 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_warning ("rygel-media-export-media-cache-upgrader.vala:541: Database upgrade fai" \
+"led: %s", _tmp8_);
+#line 542 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		self->priv->database = NULL;
+#line 528 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		_g_error_free0 (_error_);
+#line 5351 "rygel-media-export-media-cache-upgrader.c"
+	}
+	__finally35:
+#line 528 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+	if (_inner_error_ != NULL) {
+#line 528 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+#line 528 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		g_clear_error (&_inner_error_);
+#line 528 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
+		return;
+#line 5362 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
@@ -5216,7 +5382,7 @@ static void rygel_media_export_media_cache_upgrader_update_v14_v15 (RygelMediaEx
 static void rygel_media_export_value_media_cache_upgrader_init (GValue* value) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	value->data[0].v_pointer = NULL;
-#line 5205 "rygel-media-export-media-cache-upgrader.c"
+#line 5370 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5225,7 +5391,7 @@ static void rygel_media_export_value_media_cache_upgrader_free_value (GValue* va
 	if (value->data[0].v_pointer) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_media_cache_upgrader_unref (value->data[0].v_pointer);
-#line 5214 "rygel-media-export-media-cache-upgrader.c"
+#line 5379 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
@@ -5235,11 +5401,11 @@ static void rygel_media_export_value_media_cache_upgrader_copy_value (const GVal
 	if (src_value->data[0].v_pointer) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		dest_value->data[0].v_pointer = rygel_media_export_media_cache_upgrader_ref (src_value->data[0].v_pointer);
-#line 5224 "rygel-media-export-media-cache-upgrader.c"
+#line 5389 "rygel-media-export-media-cache-upgrader.c"
 	} else {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		dest_value->data[0].v_pointer = NULL;
-#line 5228 "rygel-media-export-media-cache-upgrader.c"
+#line 5393 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
@@ -5247,37 +5413,37 @@ static void rygel_media_export_value_media_cache_upgrader_copy_value (const GVal
 static gpointer rygel_media_export_value_media_cache_upgrader_peek_pointer (const GValue* value) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return value->data[0].v_pointer;
-#line 5236 "rygel-media-export-media-cache-upgrader.c"
+#line 5401 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
 static gchar* rygel_media_export_value_media_cache_upgrader_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (collect_values[0].v_pointer) {
-#line 5243 "rygel-media-export-media-cache-upgrader.c"
+#line 5408 "rygel-media-export-media-cache-upgrader.c"
 		RygelMediaExportMediaCacheUpgrader* object;
 		object = collect_values[0].v_pointer;
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		if (object->parent_instance.g_class == NULL) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 5250 "rygel-media-export-media-cache-upgrader.c"
+#line 5415 "rygel-media-export-media-cache-upgrader.c"
 		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 5254 "rygel-media-export-media-cache-upgrader.c"
+#line 5419 "rygel-media-export-media-cache-upgrader.c"
 		}
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		value->data[0].v_pointer = rygel_media_export_media_cache_upgrader_ref (object);
-#line 5258 "rygel-media-export-media-cache-upgrader.c"
+#line 5423 "rygel-media-export-media-cache-upgrader.c"
 	} else {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		value->data[0].v_pointer = NULL;
-#line 5262 "rygel-media-export-media-cache-upgrader.c"
+#line 5427 "rygel-media-export-media-cache-upgrader.c"
 	}
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return NULL;
-#line 5266 "rygel-media-export-media-cache-upgrader.c"
+#line 5431 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5288,25 +5454,25 @@ static gchar* rygel_media_export_value_media_cache_upgrader_lcopy_value (const G
 	if (!object_p) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 5277 "rygel-media-export-media-cache-upgrader.c"
+#line 5442 "rygel-media-export-media-cache-upgrader.c"
 	}
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (!value->data[0].v_pointer) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		*object_p = NULL;
-#line 5283 "rygel-media-export-media-cache-upgrader.c"
+#line 5448 "rygel-media-export-media-cache-upgrader.c"
 	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		*object_p = value->data[0].v_pointer;
-#line 5287 "rygel-media-export-media-cache-upgrader.c"
+#line 5452 "rygel-media-export-media-cache-upgrader.c"
 	} else {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		*object_p = rygel_media_export_media_cache_upgrader_ref (value->data[0].v_pointer);
-#line 5291 "rygel-media-export-media-cache-upgrader.c"
+#line 5456 "rygel-media-export-media-cache-upgrader.c"
 	}
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return NULL;
-#line 5295 "rygel-media-export-media-cache-upgrader.c"
+#line 5460 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5320,7 +5486,7 @@ GParamSpec* rygel_media_export_param_spec_media_cache_upgrader (const gchar* nam
 	G_PARAM_SPEC (spec)->value_type = object_type;
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return G_PARAM_SPEC (spec);
-#line 5309 "rygel-media-export-media-cache-upgrader.c"
+#line 5474 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5329,7 +5495,7 @@ gpointer rygel_media_export_value_get_media_cache_upgrader (const GValue* value)
 	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, RYGEL_MEDIA_EXPORT_TYPE_MEDIA_CACHE_UPGRADER), NULL);
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return value->data[0].v_pointer;
-#line 5318 "rygel-media-export-media-cache-upgrader.c"
+#line 5483 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5349,17 +5515,17 @@ void rygel_media_export_value_set_media_cache_upgrader (GValue* value, gpointer 
 		value->data[0].v_pointer = v_object;
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_media_cache_upgrader_ref (value->data[0].v_pointer);
-#line 5338 "rygel-media-export-media-cache-upgrader.c"
+#line 5503 "rygel-media-export-media-cache-upgrader.c"
 	} else {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		value->data[0].v_pointer = NULL;
-#line 5342 "rygel-media-export-media-cache-upgrader.c"
+#line 5507 "rygel-media-export-media-cache-upgrader.c"
 	}
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (old) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_media_cache_upgrader_unref (old);
-#line 5348 "rygel-media-export-media-cache-upgrader.c"
+#line 5513 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
@@ -5378,17 +5544,17 @@ void rygel_media_export_value_take_media_cache_upgrader (GValue* value, gpointer
 		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		value->data[0].v_pointer = v_object;
-#line 5367 "rygel-media-export-media-cache-upgrader.c"
+#line 5532 "rygel-media-export-media-cache-upgrader.c"
 	} else {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		value->data[0].v_pointer = NULL;
-#line 5371 "rygel-media-export-media-cache-upgrader.c"
+#line 5536 "rygel-media-export-media-cache-upgrader.c"
 	}
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	if (old) {
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		rygel_media_export_media_cache_upgrader_unref (old);
-#line 5377 "rygel-media-export-media-cache-upgrader.c"
+#line 5542 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 
@@ -5400,7 +5566,7 @@ static void rygel_media_export_media_cache_upgrader_class_init (RygelMediaExport
 	RYGEL_MEDIA_EXPORT_MEDIA_CACHE_UPGRADER_CLASS (klass)->finalize = rygel_media_export_media_cache_upgrader_finalize;
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	g_type_class_add_private (klass, sizeof (RygelMediaExportMediaCacheUpgraderPrivate));
-#line 5389 "rygel-media-export-media-cache-upgrader.c"
+#line 5554 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5409,7 +5575,7 @@ static void rygel_media_export_media_cache_upgrader_instance_init (RygelMediaExp
 	self->priv = RYGEL_MEDIA_EXPORT_MEDIA_CACHE_UPGRADER_GET_PRIVATE (self);
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	self->ref_count = 1;
-#line 5398 "rygel-media-export-media-cache-upgrader.c"
+#line 5563 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5417,7 +5583,7 @@ static void rygel_media_export_media_cache_upgrader_finalize (RygelMediaExportMe
 	RygelMediaExportMediaCacheUpgrader * self;
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_MEDIA_EXPORT_TYPE_MEDIA_CACHE_UPGRADER, RygelMediaExportMediaCacheUpgrader);
-#line 5406 "rygel-media-export-media-cache-upgrader.c"
+#line 5571 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5442,7 +5608,7 @@ gpointer rygel_media_export_media_cache_upgrader_ref (gpointer instance) {
 	g_atomic_int_inc (&self->ref_count);
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 	return instance;
-#line 5431 "rygel-media-export-media-cache-upgrader.c"
+#line 5596 "rygel-media-export-media-cache-upgrader.c"
 }
 
 
@@ -5455,7 +5621,7 @@ void rygel_media_export_media_cache_upgrader_unref (gpointer instance) {
 		RYGEL_MEDIA_EXPORT_MEDIA_CACHE_UPGRADER_GET_CLASS (self)->finalize (self);
 #line 24 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-media-cache-upgrader.vala"
 		g_type_free_instance ((GTypeInstance *) self);
-#line 5444 "rygel-media-export-media-cache-upgrader.c"
+#line 5609 "rygel-media-export-media-cache-upgrader.c"
 	}
 }
 

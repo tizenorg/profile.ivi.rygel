@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gee.h>
+#include <glib/gi18n-lib.h>
 
 
 #define RYGEL_MEDIA_EXPORT_TYPE_DB_CONTAINER (rygel_media_export_db_container_get_type ())
@@ -122,47 +123,49 @@ struct _RygelMediaExportLeafQueryContainerGetChildrenData {
 	RygelMediaObjects* result;
 	guint total_matches;
 	RygelMediaObjects* children;
-	guint _tmp0_;
-	guint _tmp1_;
-	const gchar* _tmp2_;
-	GCancellable* _tmp3_;
+	RygelMediaExportMediaCache* _tmp0_;
+	RygelSearchExpression* _tmp1_;
+	RygelSearchExpression* _tmp2_;
+	const gchar* _tmp3_;
 	guint _tmp4_;
-	RygelMediaObjects* _tmp5_;
-	RygelMediaObjects* _child_list;
-	RygelMediaObjects* _tmp6_;
-	gint _child_size;
+	guint _tmp5_;
+	guint _tmp6_;
 	RygelMediaObjects* _tmp7_;
-	gint _tmp8_;
-	gint _tmp9_;
-	gint _child_index;
+	RygelMediaObjects* _child_list;
+	RygelMediaObjects* _tmp8_;
+	gint _child_size;
+	RygelMediaObjects* _tmp9_;
 	gint _tmp10_;
 	gint _tmp11_;
+	gint _child_index;
 	gint _tmp12_;
-	RygelMediaObject* child;
-	RygelMediaObjects* _tmp13_;
+	gint _tmp13_;
 	gint _tmp14_;
-	gpointer _tmp15_;
+	RygelMediaObject* child;
+	RygelMediaObjects* _tmp15_;
+	gint _tmp16_;
+	gpointer _tmp17_;
 	gchar* container_id;
-	const gchar* _tmp16_;
-	const gchar* _tmp17_;
-	gchar* _tmp18_;
-	gchar* _tmp19_;
+	const gchar* _tmp18_;
+	const gchar* _tmp19_;
 	gchar* _tmp20_;
 	gchar* _tmp21_;
-	RygelMediaObject* _tmp22_;
-	RygelMediaObject* _tmp23_;
-	const gchar* _tmp24_;
-	const gchar* _tmp25_;
-	RygelMediaObject* _tmp26_;
+	gchar* _tmp22_;
+	gchar* _tmp23_;
+	RygelMediaObject* _tmp24_;
+	RygelMediaObject* _tmp25_;
+	const gchar* _tmp26_;
 	const gchar* _tmp27_;
-	gchar* _tmp28_;
-	gchar* _tmp29_;
-	RygelMediaObject* _tmp30_;
-	const gchar* _tmp31_;
-	const gchar* _tmp32_;
-	gchar* _tmp33_;
-	gchar* _tmp34_;
-	RygelMediaObject* _tmp35_;
+	RygelMediaObject* _tmp28_;
+	const gchar* _tmp29_;
+	gchar* _tmp30_;
+	gchar* _tmp31_;
+	RygelMediaObject* _tmp32_;
+	const gchar* _tmp33_;
+	const gchar* _tmp34_;
+	gchar* _tmp35_;
+	gchar* _tmp36_;
+	RygelMediaObject* _tmp37_;
 	GError * _inner_error_;
 };
 
@@ -181,14 +184,12 @@ RygelMediaExportLeafQueryContainer* rygel_media_export_leaf_query_container_cons
 static void rygel_media_export_leaf_query_container_real_get_children_data_free (gpointer _data);
 static void rygel_media_export_leaf_query_container_real_get_children (RygelMediaContainer* base, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 static gboolean rygel_media_export_leaf_query_container_real_get_children_co (RygelMediaExportLeafQueryContainerGetChildrenData* _data_);
-void rygel_media_export_db_container_search (RygelMediaExportDBContainer* self, RygelSearchExpression* expression, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
-RygelMediaObjects* rygel_media_export_db_container_search_finish (RygelMediaExportDBContainer* self, GAsyncResult* _res_, guint* total_matches, GError** error);
-static void rygel_media_export_leaf_query_container_get_children_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_);
+RygelMediaObjects* rygel_media_export_media_cache_get_objects_by_search_expression (RygelMediaExportMediaCache* self, RygelSearchExpression* expression, const gchar* container_id, const gchar* sort_criteria, guint offset, guint max_count, guint* total_matches, GError** error);
+RygelSearchExpression* rygel_media_export_query_container_get_expression (RygelMediaExportQueryContainer* self);
 #define RYGEL_MEDIA_EXPORT_QUERY_CONTAINER_ITEM_PREFIX "virtual-id:"
 #define RYGEL_MEDIA_EXPORT_QUERY_CONTAINER_PREFIX "virtual-container:"
 static gint rygel_media_export_leaf_query_container_real_count_children (RygelMediaExportDBContainer* base);
 glong rygel_media_export_media_cache_get_object_count_by_search_expression (RygelMediaExportMediaCache* self, RygelSearchExpression* expression, const gchar* container_id, GError** error);
-RygelSearchExpression* rygel_media_export_query_container_get_expression (RygelMediaExportQueryContainer* self);
 
 
 RygelMediaExportLeafQueryContainer* rygel_media_export_leaf_query_container_construct (GType object_type, RygelSearchExpression* expression, const gchar* id, const gchar* name) {
@@ -212,14 +213,14 @@ RygelMediaExportLeafQueryContainer* rygel_media_export_leaf_query_container_cons
 	self = (RygelMediaExportLeafQueryContainer*) g_object_new (object_type, "id", _tmp0_, "title", _tmp1_, "parent", NULL, "child-count", 0, "expression", _tmp2_, NULL);
 #line 22 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	return self;
-#line 216 "rygel-media-export-leaf-query-container.c"
+#line 217 "rygel-media-export-leaf-query-container.c"
 }
 
 
 RygelMediaExportLeafQueryContainer* rygel_media_export_leaf_query_container_new (RygelSearchExpression* expression, const gchar* id, const gchar* name) {
 #line 22 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	return rygel_media_export_leaf_query_container_construct (RYGEL_MEDIA_EXPORT_TYPE_LEAF_QUERY_CONTAINER, expression, id, name);
-#line 223 "rygel-media-export-leaf-query-container.c"
+#line 224 "rygel-media-export-leaf-query-container.c"
 }
 
 
@@ -236,14 +237,14 @@ static void rygel_media_export_leaf_query_container_real_get_children_data_free 
 	_g_object_unref0 (_data_->self);
 #line 21 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	g_slice_free (RygelMediaExportLeafQueryContainerGetChildrenData, _data_);
-#line 240 "rygel-media-export-leaf-query-container.c"
+#line 241 "rygel-media-export-leaf-query-container.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 21 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 247 "rygel-media-export-leaf-query-container.c"
+#line 248 "rygel-media-export-leaf-query-container.c"
 }
 
 
@@ -295,7 +296,7 @@ static void rygel_media_export_leaf_query_container_real_get_children (RygelMedi
 	_data_->cancellable = _tmp6_;
 #line 21 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	rygel_media_export_leaf_query_container_real_get_children_co (_data_);
-#line 299 "rygel-media-export-leaf-query-container.c"
+#line 300 "rygel-media-export-leaf-query-container.c"
 }
 
 
@@ -306,7 +307,7 @@ static RygelMediaObjects* rygel_media_export_leaf_query_container_real_get_child
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 21 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		return NULL;
-#line 310 "rygel-media-export-leaf-query-container.c"
+#line 311 "rygel-media-export-leaf-query-container.c"
 	}
 #line 21 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
@@ -316,21 +317,7 @@ static RygelMediaObjects* rygel_media_export_leaf_query_container_real_get_child
 	_data_->result = NULL;
 #line 21 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	return result;
-#line 320 "rygel-media-export-leaf-query-container.c"
-}
-
-
-static void rygel_media_export_leaf_query_container_get_children_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_) {
-	RygelMediaExportLeafQueryContainerGetChildrenData* _data_;
-#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_ = _user_data_;
-#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_source_object_ = source_object;
-#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_res_ = _res_;
-#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	rygel_media_export_leaf_query_container_real_get_children_co (_data_);
-#line 334 "rygel-media-export-leaf-query-container.c"
+#line 321 "rygel-media-export-leaf-query-container.c"
 }
 
 
@@ -343,7 +330,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 	g_return_val_if_fail (old != NULL, NULL);
 #line 1242 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	g_return_val_if_fail (replacement != NULL, NULL);
-#line 347 "rygel-media-export-leaf-query-container.c"
+#line 334 "rygel-media-export-leaf-query-container.c"
 	{
 		GRegex* regex = NULL;
 		const gchar* _tmp0_ = NULL;
@@ -373,8 +360,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		if (_inner_error_ != NULL) {
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-#line 377 "rygel-media-export-leaf-query-container.c"
-				goto __catch54_g_regex_error;
+#line 364 "rygel-media-export-leaf-query-container.c"
+				goto __catch55_g_regex_error;
 			}
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -382,7 +369,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 			g_clear_error (&_inner_error_);
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			return NULL;
-#line 386 "rygel-media-export-leaf-query-container.c"
+#line 373 "rygel-media-export-leaf-query-container.c"
 		}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		_tmp6_ = regex;
@@ -398,8 +385,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 			_g_regex_unref0 (regex);
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-#line 402 "rygel-media-export-leaf-query-container.c"
-				goto __catch54_g_regex_error;
+#line 389 "rygel-media-export-leaf-query-container.c"
+				goto __catch55_g_regex_error;
 			}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			_g_regex_unref0 (regex);
@@ -409,7 +396,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 			g_clear_error (&_inner_error_);
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			return NULL;
-#line 413 "rygel-media-export-leaf-query-container.c"
+#line 400 "rygel-media-export-leaf-query-container.c"
 		}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		result = _tmp5_;
@@ -417,10 +404,10 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_regex_unref0 (regex);
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		return result;
-#line 421 "rygel-media-export-leaf-query-container.c"
+#line 408 "rygel-media-export-leaf-query-container.c"
 	}
-	goto __finally54;
-	__catch54_g_regex_error:
+	goto __finally55;
+	__catch55_g_regex_error:
 	{
 		GError* e = NULL;
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -431,9 +418,9 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_assert_not_reached ();
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		_g_error_free0 (e);
-#line 435 "rygel-media-export-leaf-query-container.c"
+#line 422 "rygel-media-export-leaf-query-container.c"
 	}
-	__finally54:
+	__finally55:
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	if (_inner_error_ != NULL) {
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -442,7 +429,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_clear_error (&_inner_error_);
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		return NULL;
-#line 446 "rygel-media-export-leaf-query-container.c"
+#line 433 "rygel-media-export-leaf-query-container.c"
 	}
 }
 
@@ -452,52 +439,48 @@ static gboolean rygel_media_export_leaf_query_container_real_get_children_co (Ry
 	switch (_data_->_state_) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		case 0:
-#line 456 "rygel-media-export-leaf-query-container.c"
+#line 443 "rygel-media-export-leaf-query-container.c"
 		goto _state_0;
-#line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		case 1:
-#line 460 "rygel-media-export-leaf-query-container.c"
-		goto _state_1;
 		default:
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		g_assert_not_reached ();
-#line 465 "rygel-media-export-leaf-query-container.c"
+#line 448 "rygel-media-export-leaf-query-container.c"
 	}
 	_state_0:
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_tmp0_ = 0U;
+	_data_->_tmp0_ = NULL;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_tmp0_ = _data_->offset;
+	_data_->_tmp0_ = ((RygelMediaExportDBContainer*) _data_->self)->media_db;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_tmp1_ = 0U;
+	_data_->_tmp1_ = NULL;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_tmp1_ = _data_->max_count;
+	_data_->_tmp1_ = rygel_media_export_query_container_get_expression ((RygelMediaExportQueryContainer*) _data_->self);
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	_data_->_tmp2_ = NULL;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_tmp2_ = _data_->sort_criteria;
+	_data_->_tmp2_ = _data_->_tmp1_;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	_data_->_tmp3_ = NULL;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_tmp3_ = _data_->cancellable;
+	_data_->_tmp3_ = _data_->sort_criteria;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	_data_->_tmp4_ = 0U;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_state_ = 1;
+	_data_->_tmp4_ = _data_->offset;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	rygel_media_export_db_container_search ((RygelMediaExportDBContainer*) _data_->self, NULL, _data_->_tmp0_, _data_->_tmp1_, _data_->_tmp2_, _data_->_tmp3_, rygel_media_export_leaf_query_container_get_children_ready, _data_);
+	_data_->_tmp5_ = 0U;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	return FALSE;
-#line 492 "rygel-media-export-leaf-query-container.c"
-	_state_1:
+	_data_->_tmp5_ = _data_->max_count;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_tmp5_ = NULL;
+	_data_->_tmp6_ = 0U;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->_tmp5_ = rygel_media_export_db_container_search_finish ((RygelMediaExportDBContainer*) _data_->self, _data_->_res_, &_data_->_tmp4_, &_data_->_inner_error_);
+	_data_->_tmp7_ = NULL;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->total_matches = _data_->_tmp4_;
+	_data_->_tmp7_ = rygel_media_export_media_cache_get_objects_by_search_expression (_data_->_tmp0_, _data_->_tmp2_, "0", _data_->_tmp3_, _data_->_tmp4_, _data_->_tmp5_, &_data_->_tmp6_, &_data_->_inner_error_);
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-	_data_->children = _data_->_tmp5_;
+	_data_->total_matches = _data_->_tmp6_;
+#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+	_data_->children = _data_->_tmp7_;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
@@ -508,196 +491,196 @@ static gboolean rygel_media_export_leaf_query_container_real_get_children_co (Ry
 		if (_data_->_state_ == 0) {
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 512 "rygel-media-export-leaf-query-container.c"
+#line 495 "rygel-media-export-leaf-query-container.c"
 		} else {
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 516 "rygel-media-export-leaf-query-container.c"
+#line 499 "rygel-media-export-leaf-query-container.c"
 		}
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		g_object_unref (_data_->_async_result);
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		return FALSE;
-#line 522 "rygel-media-export-leaf-query-container.c"
+#line 505 "rygel-media-export-leaf-query-container.c"
 	}
 	{
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_tmp6_ = NULL;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_tmp6_ = _g_object_ref0 (_data_->children);
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_child_list = _data_->_tmp6_;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_tmp7_ = NULL;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_tmp7_ = _data_->_child_list;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_tmp8_ = 0;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_tmp8_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp7_);
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_tmp9_ = 0;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_tmp9_ = _data_->_tmp8_;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-		_data_->_child_size = _data_->_tmp9_;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_tmp8_ = NULL;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_tmp8_ = _g_object_ref0 (_data_->children);
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_child_list = _data_->_tmp8_;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_tmp9_ = NULL;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_tmp9_ = _data_->_child_list;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_tmp10_ = 0;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_tmp10_ = gee_abstract_collection_get_size ((GeeCollection*) _data_->_tmp9_);
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_tmp11_ = 0;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_tmp11_ = _data_->_tmp10_;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_data_->_child_size = _data_->_tmp11_;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_data_->_child_index = -1;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		while (TRUE) {
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp10_ = 0;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp10_ = _data_->_child_index;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_child_index = _data_->_tmp10_ + 1;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp11_ = 0;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp11_ = _data_->_child_index;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp12_ = 0;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp12_ = _data_->_child_size;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			if (!(_data_->_tmp11_ < _data_->_tmp12_)) {
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-				break;
-#line 567 "rygel-media-export-leaf-query-container.c"
-			}
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp13_ = NULL;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp13_ = _data_->_child_list;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp12_ = _data_->_child_index;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_child_index = _data_->_tmp12_ + 1;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp13_ = 0;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp13_ = _data_->_child_index;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp14_ = 0;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp14_ = _data_->_child_index;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp14_ = _data_->_child_size;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			if (!(_data_->_tmp13_ < _data_->_tmp14_)) {
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+				break;
+#line 550 "rygel-media-export-leaf-query-container.c"
+			}
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp15_ = NULL;
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp15_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp13_, _data_->_tmp14_);
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->child = (RygelMediaObject*) _data_->_tmp15_;
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp16_ = NULL;
+			_data_->_tmp15_ = _data_->_child_list;
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp16_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->self);
+			_data_->_tmp16_ = 0;
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp16_ = _data_->_child_index;
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp17_ = NULL;
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp17_ = _data_->_tmp16_;
+			_data_->_tmp17_ = gee_abstract_list_get ((GeeAbstractList*) _data_->_tmp15_, _data_->_tmp16_);
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->child = (RygelMediaObject*) _data_->_tmp17_;
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp18_ = NULL;
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp18_ = string_replace (_data_->_tmp17_, RYGEL_MEDIA_EXPORT_QUERY_CONTAINER_PREFIX, "");
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp18_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->self);
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp19_ = NULL;
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp19_ = _data_->_tmp18_;
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp20_ = NULL;
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp20_ = g_strconcat (RYGEL_MEDIA_EXPORT_QUERY_CONTAINER_ITEM_PREFIX, _data_->_tmp19_, NULL);
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp20_ = string_replace (_data_->_tmp19_, RYGEL_MEDIA_EXPORT_QUERY_CONTAINER_PREFIX, "");
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp21_ = NULL;
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp21_ = _data_->_tmp20_;
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_g_free0 (_data_->_tmp19_);
-#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->container_id = _data_->_tmp21_;
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp22_ = NULL;
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp22_ = _data_->child;
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp22_ = g_strconcat (RYGEL_MEDIA_EXPORT_QUERY_CONTAINER_ITEM_PREFIX, _data_->_tmp21_, NULL);
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp23_ = NULL;
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp23_ = _data_->child;
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp23_ = _data_->_tmp22_;
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_g_free0 (_data_->_tmp21_);
+#line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->container_id = _data_->_tmp23_;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp24_ = NULL;
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp24_ = rygel_media_object_get_id (_data_->_tmp23_);
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp24_ = _data_->child;
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp25_ = NULL;
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp25_ = _data_->_tmp24_;
-#line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			rygel_media_object_set_ref_id (_data_->_tmp22_, _data_->_tmp25_);
+#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp25_ = _data_->child;
 #line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp26_ = NULL;
 #line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp26_ = _data_->child;
+			_data_->_tmp26_ = rygel_media_object_get_id (_data_->_tmp25_);
 #line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp27_ = NULL;
 #line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp27_ = _data_->container_id;
+			_data_->_tmp27_ = _data_->_tmp26_;
 #line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			rygel_media_object_set_ref_id (_data_->_tmp24_, _data_->_tmp27_);
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp28_ = NULL;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp28_ = g_strconcat (_data_->_tmp27_, ":", NULL);
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp28_ = _data_->child;
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp29_ = NULL;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp29_ = _data_->_tmp28_;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp29_ = _data_->container_id;
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp30_ = NULL;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp30_ = _data_->child;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp30_ = g_strconcat (_data_->_tmp29_, ":", NULL);
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp31_ = NULL;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp31_ = rygel_media_object_get_ref_id (_data_->_tmp30_);
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp31_ = _data_->_tmp30_;
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp32_ = NULL;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp32_ = _data_->_tmp31_;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp32_ = _data_->child;
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp33_ = NULL;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp33_ = g_strconcat (_data_->_tmp29_, _data_->_tmp32_, NULL);
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp33_ = rygel_media_object_get_ref_id (_data_->_tmp32_);
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp34_ = NULL;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp34_ = _data_->_tmp33_;
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			rygel_media_object_set_id (_data_->_tmp26_, _data_->_tmp34_);
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_g_free0 (_data_->_tmp34_);
-#line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_g_free0 (_data_->_tmp29_);
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_data_->_tmp35_ = NULL;
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			_data_->_tmp35_ = _data_->child;
+			_data_->_tmp35_ = g_strconcat (_data_->_tmp31_, _data_->_tmp34_, NULL);
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
-			rygel_media_object_set_parent (_data_->_tmp35_, (RygelMediaContainer*) _data_->self);
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp36_ = NULL;
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp36_ = _data_->_tmp35_;
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			rygel_media_object_set_id (_data_->_tmp28_, _data_->_tmp36_);
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_g_free0 (_data_->_tmp36_);
+#line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_g_free0 (_data_->_tmp31_);
+#line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp37_ = NULL;
+#line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			_data_->_tmp37_ = _data_->child;
+#line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+			rygel_media_object_set_parent_ref (_data_->_tmp37_, (RygelMediaContainer*) _data_->self);
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_g_free0 (_data_->container_id);
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 			_g_object_unref0 (_data_->child);
-#line 681 "rygel-media-export-leaf-query-container.c"
+#line 664 "rygel-media-export-leaf-query-container.c"
 		}
-#line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_g_object_unref0 (_data_->_child_list);
-#line 685 "rygel-media-export-leaf-query-container.c"
+#line 668 "rygel-media-export-leaf-query-container.c"
 	}
-#line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	_data_->result = _data_->children;
-#line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	if (_data_->_state_ == 0) {
-#line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 693 "rygel-media-export-leaf-query-container.c"
+#line 676 "rygel-media-export-leaf-query-container.c"
 	} else {
-#line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 697 "rygel-media-export-leaf-query-container.c"
+#line 680 "rygel-media-export-leaf-query-container.c"
 	}
-#line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	g_object_unref (_data_->_async_result);
-#line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	return FALSE;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	_g_object_unref0 (_data_->children);
@@ -705,17 +688,17 @@ static gboolean rygel_media_export_leaf_query_container_real_get_children_co (Ry
 	if (_data_->_state_ == 0) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 709 "rygel-media-export-leaf-query-container.c"
+#line 692 "rygel-media-export-leaf-query-container.c"
 	} else {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 713 "rygel-media-export-leaf-query-container.c"
+#line 696 "rygel-media-export-leaf-query-container.c"
 	}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	g_object_unref (_data_->_async_result);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	return FALSE;
-#line 719 "rygel-media-export-leaf-query-container.c"
+#line 702 "rygel-media-export-leaf-query-container.c"
 }
 
 
@@ -723,60 +706,71 @@ static gint rygel_media_export_leaf_query_container_real_count_children (RygelMe
 	RygelMediaExportLeafQueryContainer * self;
 	gint result = 0;
 	GError * _inner_error_ = NULL;
-#line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	self = (RygelMediaExportLeafQueryContainer*) base;
-#line 729 "rygel-media-export-leaf-query-container.c"
+#line 712 "rygel-media-export-leaf-query-container.c"
 	{
 		glong _tmp0_ = 0L;
 		RygelMediaExportMediaCache* _tmp1_ = NULL;
 		RygelSearchExpression* _tmp2_ = NULL;
 		RygelSearchExpression* _tmp3_ = NULL;
 		glong _tmp4_ = 0L;
-#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_tmp1_ = ((RygelMediaExportDBContainer*) self)->media_db;
-#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_tmp2_ = rygel_media_export_query_container_get_expression ((RygelMediaExportQueryContainer*) self);
-#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_tmp3_ = _tmp2_;
-#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_tmp4_ = rygel_media_export_media_cache_get_object_count_by_search_expression (_tmp1_, _tmp3_, NULL, &_inner_error_);
-#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_tmp0_ = _tmp4_;
-#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		if (_inner_error_ != NULL) {
-#line 748 "rygel-media-export-leaf-query-container.c"
-			goto __catch55_g_error;
+#line 731 "rygel-media-export-leaf-query-container.c"
+			goto __catch56_g_error;
 		}
-#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		result = (gint) _tmp0_;
-#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		return result;
-#line 755 "rygel-media-export-leaf-query-container.c"
+#line 738 "rygel-media-export-leaf-query-container.c"
 	}
-	goto __finally55;
-	__catch55_g_error:
+	goto __finally56;
+	__catch56_g_error:
 	{
 		GError* _error_ = NULL;
-#line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		const gchar* _tmp5_ = NULL;
+		GError* _tmp6_ = NULL;
+		const gchar* _tmp7_ = NULL;
+#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_error_ = _inner_error_;
-#line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_inner_error_ = NULL;
-#line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_tmp5_ = _ ("Failed to get child count of query container: %s");
+#line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_tmp6_ = _error_;
+#line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		_tmp7_ = _tmp6_->message;
+#line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+		g_warning (_tmp5_, _tmp7_);
+#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		result = 0;
-#line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		_g_error_free0 (_error_);
-#line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 		return result;
-#line 771 "rygel-media-export-leaf-query-container.c"
+#line 765 "rygel-media-export-leaf-query-container.c"
 	}
-	__finally55:
-#line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+	__finally56:
+#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
-#line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	g_clear_error (&_inner_error_);
-#line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
+#line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	return 0;
-#line 780 "rygel-media-export-leaf-query-container.c"
+#line 774 "rygel-media-export-leaf-query-container.c"
 }
 
 
@@ -789,7 +783,7 @@ static void rygel_media_export_leaf_query_container_class_init (RygelMediaExport
 	RYGEL_MEDIA_CONTAINER_CLASS (klass)->get_children_finish = rygel_media_export_leaf_query_container_real_get_children_finish;
 #line 21 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-leaf-query-container.vala"
 	RYGEL_MEDIA_EXPORT_DB_CONTAINER_CLASS (klass)->count_children = rygel_media_export_leaf_query_container_real_count_children;
-#line 793 "rygel-media-export-leaf-query-container.c"
+#line 787 "rygel-media-export-leaf-query-container.c"
 }
 
 

@@ -641,11 +641,11 @@ static gboolean rygel_http_response_real_run_co (RygelHttpResponseRunData* _data
 #line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-response.vala"
 		if (_data_->_inner_error_ != NULL) {
 #line 644 "rygel-http-response.c"
-			goto __catch43_g_error;
+			goto __catch45_g_error;
 		}
 	}
-	goto __finally43;
-	__catch43_g_error:
+	goto __finally45;
+	__catch45_g_error:
 	{
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-response.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -657,7 +657,7 @@ static gboolean rygel_http_response_real_run_co (RygelHttpResponseRunData* _data
 		_g_error_free0 (_data_->_error_);
 #line 659 "rygel-http-response.c"
 	}
-	__finally43:
+	__finally45:
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-response.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-response.vala"

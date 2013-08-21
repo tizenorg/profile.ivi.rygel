@@ -422,7 +422,7 @@ static void rygel_panasonic_hacks_real_apply (RygelClientHacks* base, RygelMedia
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 					if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 425 "rygel-panasonic-hacks.c"
-						goto __catch63_g_regex_error;
+						goto __catch67_g_regex_error;
 					}
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 					_rygel_icon_info_unref0 (thumbnail);
@@ -459,7 +459,7 @@ static void rygel_panasonic_hacks_real_apply (RygelClientHacks* base, RygelMedia
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 					if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 462 "rygel-panasonic-hacks.c"
-						goto __catch63_g_regex_error;
+						goto __catch67_g_regex_error;
 					}
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 					_rygel_icon_info_unref0 (thumbnail);
@@ -483,8 +483,8 @@ static void rygel_panasonic_hacks_real_apply (RygelClientHacks* base, RygelMedia
 				_tmp28_->dlna_profile = _tmp23_;
 #line 485 "rygel-panasonic-hacks.c"
 			}
-			goto __finally63;
-			__catch63_g_regex_error:
+			goto __finally67;
+			__catch67_g_regex_error:
 			{
 				GError* _error_ = NULL;
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
@@ -497,7 +497,7 @@ static void rygel_panasonic_hacks_real_apply (RygelClientHacks* base, RygelMedia
 				_g_error_free0 (_error_);
 #line 499 "rygel-panasonic-hacks.c"
 			}
-			__finally63:
+			__finally67:
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 			if (_inner_error_ != NULL) {
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
@@ -551,7 +551,7 @@ static void rygel_panasonic_hacks_class_init (RygelPanasonicHacksClass * klass) 
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 554 "rygel-panasonic-hacks.c"
-				goto __catch64_g_regex_error;
+				goto __catch68_g_regex_error;
 			}
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -572,7 +572,7 @@ static void rygel_panasonic_hacks_class_init (RygelPanasonicHacksClass * klass) 
 #line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 575 "rygel-panasonic-hacks.c"
-				goto __catch64_g_regex_error;
+				goto __catch68_g_regex_error;
 			}
 #line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -586,8 +586,8 @@ static void rygel_panasonic_hacks_class_init (RygelPanasonicHacksClass * klass) 
 		rygel_panasonic_hacks_dlna_regex = _tmp2_;
 #line 588 "rygel-panasonic-hacks.c"
 	}
-	goto __finally64;
-	__catch64_g_regex_error:
+	goto __finally68;
+	__catch68_g_regex_error:
 	{
 		GError* _error_ = NULL;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
@@ -600,7 +600,7 @@ static void rygel_panasonic_hacks_class_init (RygelPanasonicHacksClass * klass) 
 		_g_error_free0 (_error_);
 #line 602 "rygel-panasonic-hacks.c"
 	}
-	__finally64:
+	__finally68:
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"
 	if (_inner_error_ != NULL) {
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-panasonic-hacks.vala"

@@ -31,6 +31,7 @@
     <keyword type="macro" name="RYGEL_PLAYBIN_TYPE_PLAYER" link="RygelPlaybinPlayer.html#RYGEL-PLAYBIN-TYPE-PLAYER:CAPS"/>
     <keyword type="function" name="rygel_playbin_player_new_wrap ()" link="RygelPlaybinPlayer.html#rygel-playbin-player-new-wrap"/>
     <keyword type="function" name="rygel_playbin_player_get_playbin ()" link="RygelPlaybinPlayer.html#rygel-playbin-player-get-playbin"/>
+    <keyword type="function" name="rygel_playbin_player_get_supported_profiles ()" link="RygelPlaybinPlayer.html#rygel-playbin-player-get-supported-profiles"/>
     <keyword type="function" name="rygel_playbin_player_get_default ()" link="RygelPlaybinPlayer.html#rygel-playbin-player-get-default"/>
     <keyword type="struct" name="struct RygelPlaybinPlayer" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer-struct"/>
     <keyword type="struct" name="struct RygelPlaybinPlayerClass" link="RygelPlaybinPlayer.html#RygelPlaybinPlayerClass"/>
@@ -44,6 +45,7 @@
     <keyword type="property" name="The &quot;playback-state&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-state"/>
     <keyword type="property" name="The &quot;playbin&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin"/>
     <keyword type="property" name="The &quot;position&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--position"/>
+    <keyword type="property" name="The &quot;supported-profiles&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles"/>
     <keyword type="property" name="The &quot;uri&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--uri"/>
     <keyword type="property" name="The &quot;volume&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--volume"/>
   </functions>

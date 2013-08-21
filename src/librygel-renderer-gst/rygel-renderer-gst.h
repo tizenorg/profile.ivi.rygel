@@ -60,6 +60,7 @@ RygelPlaybinPlayer* rygel_playbin_player_new_wrap (GstElement* playbin);
 RygelPlaybinPlayer* rygel_playbin_player_construct_wrap (GType object_type, GstElement* playbin);
 RygelPlaybinPlayer* rygel_playbin_player_get_default (void);
 GstElement* rygel_playbin_player_get_playbin (RygelPlaybinPlayer* self);
+GList* rygel_playbin_player_get_supported_profiles (RygelPlaybinPlayer* self);
 GType rygel_playbin_renderer_get_type (void) G_GNUC_CONST;
 RygelPlaybinRenderer* rygel_playbin_renderer_new (const gchar* title);
 RygelPlaybinRenderer* rygel_playbin_renderer_construct (GType object_type, const gchar* title);

@@ -634,6 +634,8 @@ struct _RygelMediaExportTrackableDbContainer {
 
 struct _RygelMediaExportTrackableDbContainerClass {
 	RygelMediaExportDBContainerClass parent_class;
+	void (*remove_child) (RygelMediaExportTrackableDbContainer* self, RygelMediaObject* object, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	void (*remove_child_finish) (RygelMediaExportTrackableDbContainer* self, GAsyncResult* _res_);
 	gchar* (*get_service_reset_token) (RygelMediaExportTrackableDbContainer* self);
 	void (*set_service_reset_token) (RygelMediaExportTrackableDbContainer* self, const gchar* token);
 	guint32 (*get_system_update_id) (RygelMediaExportTrackableDbContainer* self);
@@ -854,7 +856,7 @@ GType rygel_media_export_plugin_get_type (void) G_GNUC_CONST;
 RygelMediaExportPlugin* rygel_media_export_plugin_new (GError** error);
 RygelMediaExportPlugin* rygel_media_export_plugin_construct (GType object_type, GError** error);
 GQuark rygel_media_export_database_error_quark (void);
-gint rygel_media_export_utf8_collate_str (const gchar* a, const gchar* b);
+gint rygel_media_export_utf8_collate_str (guint8* a, int a_length1, guint8* b, int b_length1);
 GType rygel_media_export_sqlite_wrapper_get_type (void) G_GNUC_CONST;
 GType rygel_media_export_database_get_type (void) G_GNUC_CONST;
 RygelMediaExportDatabase* rygel_media_export_database_new (const gchar* name, GError** error);
@@ -901,7 +903,7 @@ RygelMediaObjects* rygel_media_export_db_container_search_finish (RygelMediaExpo
 GType rygel_media_export_detail_column_get_type (void) G_GNUC_CONST;
 GType rygel_media_export_sql_string_get_type (void) G_GNUC_CONST;
 GType rygel_media_export_sql_factory_get_type (void) G_GNUC_CONST;
-#define RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION "15"
+#define RYGEL_MEDIA_EXPORT_SQL_FACTORY_SCHEMA_VERSION "16"
 #define RYGEL_MEDIA_EXPORT_SQL_FACTORY_CREATE_META_DATA_TABLE_STRING "CREATE TABLE meta_data (size INTEGER NOT NULL, " "mime_type TEXT NOT NULL, " "dlna_profile TEXT, " "duration INTEGER, " "width INTEGER, " "height INTEGER, " "class TEXT NOT NULL, " "creator TEXT, " "author TEXT, " "album TEXT, " "genre TEXT, " "date TEXT, " "bitrate INTEGER, " "sample_freq INTEGER, " "bits_per_sample INTEGER, " "channels INTEGER, " "track INTEGER, " "disc INTEGER, " "color_depth INTEGER, " "object_fk TEXT UNIQUE CONSTRAINT " "object_fk_id REFERENCES Object(upnp_id) " "ON DELETE CASCADE);"
 const gchar* rygel_media_export_sql_factory_make (RygelMediaExportSQLFactory* self, RygelMediaExportSQLString query);
 RygelMediaExportSQLFactory* rygel_media_export_sql_factory_new (void);
@@ -931,8 +933,8 @@ glong rygel_media_export_media_cache_get_object_count_by_filter (RygelMediaExpor
 RygelMediaObjects* rygel_media_export_media_cache_get_objects_by_filter (RygelMediaExportMediaCache* self, const gchar* filter, GValueArray* args, const gchar* container_id, const gchar* sort_criteria, glong offset, glong max_count, GError** error);
 void rygel_media_export_media_cache_debug_statistics (RygelMediaExportMediaCache* self);
 GeeArrayList* rygel_media_export_media_cache_get_child_ids (RygelMediaExportMediaCache* self, const gchar* container_id, GError** error);
-GeeList* rygel_media_export_media_cache_get_meta_data_column_by_filter (RygelMediaExportMediaCache* self, const gchar* column, const gchar* filter, GValueArray* args, glong offset, glong max_count, GError** error);
-GeeList* rygel_media_export_media_cache_get_object_attribute_by_search_expression (RygelMediaExportMediaCache* self, const gchar* attribute, RygelSearchExpression* expression, glong offset, guint max_count, GError** error);
+GeeList* rygel_media_export_media_cache_get_meta_data_column_by_filter (RygelMediaExportMediaCache* self, const gchar* column, const gchar* filter, GValueArray* args, glong offset, const gchar* sort_criteria, glong max_count, gboolean add_all_container, GError** error);
+GeeList* rygel_media_export_media_cache_get_object_attribute_by_search_expression (RygelMediaExportMediaCache* self, const gchar* attribute, RygelSearchExpression* expression, const gchar* sort_criteria, glong offset, guint max_count, gboolean add_all_container, GError** error);
 gchar* rygel_media_export_media_cache_get_reset_token (RygelMediaExportMediaCache* self);
 void rygel_media_export_media_cache_save_reset_token (RygelMediaExportMediaCache* self, const gchar* token);
 void rygel_media_export_media_cache_drop_virtual_folders (RygelMediaExportMediaCache* self);
@@ -1089,6 +1091,8 @@ RygelMediaExportPlaylistItem* rygel_media_export_playlist_item_new (const gchar*
 RygelMediaExportPlaylistItem* rygel_media_export_playlist_item_construct (GType object_type, const gchar* id, RygelMediaContainer* parent, const gchar* title, const gchar* upnp_class);
 RygelMediaExportTrackableDbContainer* rygel_media_export_trackable_db_container_new (const gchar* id, const gchar* title);
 RygelMediaExportTrackableDbContainer* rygel_media_export_trackable_db_container_construct (GType object_type, const gchar* id, const gchar* title);
+void rygel_media_export_trackable_db_container_remove_child (RygelMediaExportTrackableDbContainer* self, RygelMediaObject* object, GAsyncReadyCallback _callback_, gpointer _user_data_);
+void rygel_media_export_trackable_db_container_remove_child_finish (RygelMediaExportTrackableDbContainer* self, GAsyncResult* _res_);
 gchar* rygel_media_export_trackable_db_container_get_service_reset_token (RygelMediaExportTrackableDbContainer* self);
 void rygel_media_export_trackable_db_container_set_service_reset_token (RygelMediaExportTrackableDbContainer* self, const gchar* token);
 guint32 rygel_media_export_trackable_db_container_get_system_update_id (RygelMediaExportTrackableDbContainer* self);

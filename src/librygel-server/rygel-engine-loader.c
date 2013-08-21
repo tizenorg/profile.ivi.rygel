@@ -164,7 +164,7 @@ static void rygel_engine_loader_real_constructed (GObject* base) {
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
 			_g_object_unref0 (config);
 #line 167 "rygel-engine-loader.c"
-			goto __catch24_g_error;
+			goto __catch26_g_error;
 		}
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
 		_g_free0 (self->priv->engine_name);
@@ -178,8 +178,8 @@ static void rygel_engine_loader_real_constructed (GObject* base) {
 		_g_object_unref0 (config);
 #line 180 "rygel-engine-loader.c"
 	}
-	goto __finally24;
-	__catch24_g_error:
+	goto __finally26;
+	__catch26_g_error:
 	{
 		GError* _error_ = NULL;
 #line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
@@ -190,7 +190,7 @@ static void rygel_engine_loader_real_constructed (GObject* base) {
 		_g_error_free0 (_error_);
 #line 192 "rygel-engine-loader.c"
 	}
-	__finally24:
+	__finally26:
 #line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
 	if (_inner_error_ != NULL) {
 #line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
@@ -471,7 +471,7 @@ static gchar* rygel_engine_loader_get_config (void) {
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
 		if (_inner_error_ != NULL) {
 #line 474 "rygel-engine-loader.c"
-			goto __catch25_g_error;
+			goto __catch27_g_error;
 		}
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
 		_g_free0 (path);
@@ -479,8 +479,8 @@ static gchar* rygel_engine_loader_get_config (void) {
 		path = _tmp2_;
 #line 481 "rygel-engine-loader.c"
 	}
-	goto __finally25;
-	__catch25_g_error:
+	goto __finally27;
+	__catch27_g_error:
 	{
 		GError* _error_ = NULL;
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
@@ -491,7 +491,7 @@ static gchar* rygel_engine_loader_get_config (void) {
 		_g_error_free0 (_error_);
 #line 493 "rygel-engine-loader.c"
 	}
-	__finally25:
+	__finally27:
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"
 	if (_inner_error_ != NULL) {
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-engine-loader.vala"

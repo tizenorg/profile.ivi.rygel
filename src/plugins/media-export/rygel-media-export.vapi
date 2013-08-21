@@ -97,8 +97,8 @@ namespace Rygel {
 			public Rygel.MediaObjects get_objects_by_filter (string filter, GLib.ValueArray args, string? container_id, string sort_criteria, long offset, long max_count) throws GLib.Error;
 			public void debug_statistics ();
 			public Gee.ArrayList<string> get_child_ids (string container_id) throws Rygel.MediaExport.DatabaseError;
-			public Gee.List<string> get_meta_data_column_by_filter (string column, string filter, GLib.ValueArray args, long offset, long max_count) throws GLib.Error;
-			public Gee.List<string> get_object_attribute_by_search_expression (string attribute, Rygel.SearchExpression? expression, long offset, uint max_count) throws GLib.Error;
+			public Gee.List<string> get_meta_data_column_by_filter (string column, string filter, GLib.ValueArray args, long offset, string sort_criteria, long max_count, bool add_all_container) throws GLib.Error;
+			public Gee.List<string> get_object_attribute_by_search_expression (string attribute, Rygel.SearchExpression? expression, string sort_criteria, long offset, uint max_count, bool add_all_container) throws GLib.Error;
 			public string get_reset_token ();
 			public void save_reset_token (string token);
 			public void drop_virtual_folders ();
@@ -226,6 +226,7 @@ namespace Rygel {
 			public virtual async void add_item (Rygel.MediaItem item, GLib.Cancellable? cancellable) throws GLib.Error;
 			public virtual async string add_reference (Rygel.MediaObject object, GLib.Cancellable? cancellable) throws GLib.Error;
 			public virtual async void add_container (Rygel.MediaContainer container, GLib.Cancellable? cancellable) throws GLib.Error;
+			protected override async void remove_child (Rygel.MediaObject object);
 			public virtual async void remove_item (string id, GLib.Cancellable? cancellable) throws GLib.Error;
 			public virtual async void remove_container (string id, GLib.Cancellable? cancellable) throws GLib.Error;
 		}
@@ -243,6 +244,7 @@ namespace Rygel {
 			public PlaylistContainer (string id, string title);
 			public override void constructed ();
 			public virtual async string add_reference (Rygel.MediaObject object, GLib.Cancellable? cancellable) throws GLib.Error;
+			public override GUPnP.OCMFlags ocm_flags { get; }
 		}
 		[CCode (cheader_filename = "rygel-media-export-internal.h")]
 		internal class MusicItem : Rygel.MusicItem, Rygel.UpdatableObject, Rygel.MediaExport.UpdatableObject, Rygel.TrackableItem {
@@ -265,6 +267,7 @@ namespace Rygel {
 		public class TrackableDbContainer : Rygel.MediaExport.DBContainer, Rygel.TrackableContainer {
 			public TrackableDbContainer (string id, string title);
 			public override void constructed ();
+			protected virtual async void remove_child (Rygel.MediaObject object);
 			public virtual string get_service_reset_token ();
 			public virtual void set_service_reset_token (string token);
 			public virtual uint32 get_system_update_id ();
@@ -364,7 +367,7 @@ namespace Rygel {
 			UNSUPPORTED_SEARCH
 		}
 		[CCode (cheader_filename = "rygel-media-export-internal.h")]
-		internal extern static int utf8_collate_str (string a, string b);
+		internal extern static int utf8_collate_str (uint8[] a, uint8[] b);
 	}
 	[CCode (cheader_filename = "rygel-media-export-internal.h")]
 	internal class NullContainer : Rygel.MediaContainer {

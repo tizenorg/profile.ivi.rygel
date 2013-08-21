@@ -28,6 +28,7 @@
 #include <rygel-core.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gst/gst.h>
 #include <rygel-renderer.h>
 
 
@@ -54,37 +55,48 @@ RygelPlaybinPlugin* rygel_playbin_plugin_construct (GType object_type);
 void module_init (RygelPluginLoader* loader) {
 	RygelPluginLoader* _tmp0_ = NULL;
 	gboolean _tmp1_ = FALSE;
+	gchar** args = NULL;
+	gint args_length1 = 0;
+	gint _args_size_ = 0;
 	RygelPlaybinPlugin* plugin = NULL;
 	RygelPlaybinPlugin* _tmp2_ = NULL;
 	RygelPluginLoader* _tmp3_ = NULL;
 	RygelPlaybinPlugin* _tmp4_ = NULL;
-#line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+#line 26 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
 	g_return_if_fail (loader != NULL);
-#line 26 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
-	_tmp0_ = loader;
-#line 26 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
-	_tmp1_ = rygel_plugin_loader_plugin_disabled (_tmp0_, RYGEL_PLAYBIN_PLUGIN_NAME);
-#line 26 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
-	if (_tmp1_) {
 #line 27 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
-		g_message ("rygel-playbin-module.vala:27: Plugin '%s' disabled by user, ignoring..", RYGEL_PLAYBIN_PLUGIN_NAME);
-#line 30 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+	_tmp0_ = loader;
+#line 27 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+	_tmp1_ = rygel_plugin_loader_plugin_disabled (_tmp0_, RYGEL_PLAYBIN_PLUGIN_NAME);
+#line 27 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+	if (_tmp1_) {
+#line 28 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+		g_message ("rygel-playbin-module.vala:28: Plugin '%s' disabled by user, ignoring..", RYGEL_PLAYBIN_PLUGIN_NAME);
+#line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
 		return;
-#line 74 "rygel-playbin-module.c"
+#line 78 "rygel-playbin-module.c"
 	}
-#line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+#line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+	args = NULL;
+#line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+	args_length1 = 0;
+#line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+	_args_size_ = args_length1;
+#line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+	gst_init (&args_length1, &args);
+#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
 	_tmp2_ = rygel_playbin_plugin_new ();
-#line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
 	plugin = _tmp2_;
-#line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
 	_tmp3_ = loader;
-#line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
 	_tmp4_ = plugin;
-#line 35 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
 	rygel_plugin_loader_add_plugin (_tmp3_, (RygelPlugin*) _tmp4_);
-#line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
+#line 26 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-module.vala"
 	_g_object_unref0 (plugin);
-#line 88 "rygel-playbin-module.c"
+#line 100 "rygel-playbin-module.c"
 }
 
 

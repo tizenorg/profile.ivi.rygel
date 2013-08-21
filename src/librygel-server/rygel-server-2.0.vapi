@@ -148,6 +148,8 @@ namespace Rygel {
 		public override void apply_hacks (Rygel.RootDevice device, string description_path) throws GLib.Error;
 		public override void constructed ();
 		public Rygel.MediaContainer root_container { get; construct; }
+		public GLib.List<Rygel.DLNAProfile> supported_profiles { get; set construct; }
+		public GLib.List<Rygel.DLNAProfile> upload_profiles { get; set construct; }
 	}
 	[CCode (cheader_filename = "rygel-server.h")]
 	public class MusicItem : Rygel.AudioItem {

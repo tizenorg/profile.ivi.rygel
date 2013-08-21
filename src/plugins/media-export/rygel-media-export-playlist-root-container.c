@@ -869,21 +869,23 @@ static gboolean rygel_media_export_playlist_root_container_real_add_container_co
 	_data_->_tmp21_ = _data_->container;
 #line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	rygel_media_export_media_cache_make_object_guarded (_data_->_tmp20_, (RygelMediaObject*) _data_->_tmp21_, TRUE);
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+	rygel_media_container_updated ((RygelMediaContainer*) _data_->self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	if (_data_->_state_ == 0) {
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 877 "rygel-media-export-playlist-root-container.c"
+#line 879 "rygel-media-export-playlist-root-container.c"
 	} else {
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 881 "rygel-media-export-playlist-root-container.c"
+#line 883 "rygel-media-export-playlist-root-container.c"
 	}
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	g_object_unref (_data_->_async_result);
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	return FALSE;
-#line 887 "rygel-media-export-playlist-root-container.c"
+#line 889 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -898,7 +900,7 @@ static void rygel_media_export_playlist_root_container_real_remove_container_dat
 	_g_object_unref0 (_data_->self);
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	g_slice_free (RygelMediaExportPlaylistRootContainerRemoveContainerData, _data_);
-#line 902 "rygel-media-export-playlist-root-container.c"
+#line 904 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -940,7 +942,7 @@ static void rygel_media_export_playlist_root_container_real_remove_container (Ry
 	_data_->cancellable = _tmp4_;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	rygel_media_export_playlist_root_container_real_remove_container_co (_data_);
-#line 944 "rygel-media-export-playlist-root-container.c"
+#line 946 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -950,74 +952,76 @@ static void rygel_media_export_playlist_root_container_real_remove_container_fin
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		return;
-#line 954 "rygel-media-export-playlist-root-container.c"
+#line 956 "rygel-media-export-playlist-root-container.c"
 	}
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 958 "rygel-media-export-playlist-root-container.c"
+#line 960 "rygel-media-export-playlist-root-container.c"
 }
 
 
 static gboolean rygel_media_export_playlist_root_container_real_remove_container_co (RygelMediaExportPlaylistRootContainerRemoveContainerData* _data_) {
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	switch (_data_->_state_) {
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		case 0:
-#line 967 "rygel-media-export-playlist-root-container.c"
+#line 969 "rygel-media-export-playlist-root-container.c"
 		goto _state_0;
 		default:
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		g_assert_not_reached ();
-#line 972 "rygel-media-export-playlist-root-container.c"
+#line 974 "rygel-media-export-playlist-root-container.c"
 	}
 	_state_0:
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	_data_->_tmp0_ = NULL;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	_data_->_tmp0_ = ((RygelMediaExportDBContainer*) _data_->self)->media_db;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	_data_->_tmp1_ = NULL;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	_data_->_tmp1_ = _data_->id;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	rygel_media_export_media_cache_remove_by_id (_data_->_tmp0_, _data_->_tmp1_, &_data_->_inner_error_);
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	if (_data_->_inner_error_ != NULL) {
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		g_error_free (_data_->_inner_error_);
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		if (_data_->_state_ == 0) {
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 995 "rygel-media-export-playlist-root-container.c"
+#line 997 "rygel-media-export-playlist-root-container.c"
 		} else {
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 999 "rygel-media-export-playlist-root-container.c"
+#line 1001 "rygel-media-export-playlist-root-container.c"
 		}
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		g_object_unref (_data_->_async_result);
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		return FALSE;
-#line 1005 "rygel-media-export-playlist-root-container.c"
+#line 1007 "rygel-media-export-playlist-root-container.c"
 	}
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+	rygel_media_container_updated ((RygelMediaContainer*) _data_->self, NULL, RYGEL_OBJECT_EVENT_TYPE_MODIFIED, FALSE);
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	if (_data_->_state_ == 0) {
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1011 "rygel-media-export-playlist-root-container.c"
-	} else {
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
-		g_simple_async_result_complete (_data_->_async_result);
 #line 1015 "rygel-media-export-playlist-root-container.c"
+	} else {
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+		g_simple_async_result_complete (_data_->_async_result);
+#line 1019 "rygel-media-export-playlist-root-container.c"
 	}
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	g_object_unref (_data_->_async_result);
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	return FALSE;
-#line 1021 "rygel-media-export-playlist-root-container.c"
+#line 1025 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -1033,7 +1037,7 @@ static GeeArrayList* rygel_media_export_playlist_root_container_real_get_create_
 	result = _tmp0_;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	return result;
-#line 1037 "rygel-media-export-playlist-root-container.c"
+#line 1041 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -1053,7 +1057,7 @@ static void rygel_media_export_playlist_root_container_real_set_create_classes (
 	self->priv->_create_classes = _tmp1_;
 #line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	g_object_notify ((GObject *) self, "create-classes");
-#line 1057 "rygel-media-export-playlist-root-container.c"
+#line 1061 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -1080,7 +1084,7 @@ static GUPnPOCMFlags rygel_media_export_playlist_root_container_real_get_ocm_fla
 	result = _tmp2_;
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	return result;
-#line 1084 "rygel-media-export-playlist-root-container.c"
+#line 1088 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -1103,7 +1107,7 @@ static void rygel_media_export_playlist_root_container_class_init (RygelMediaExp
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_EXPORT_PLAYLIST_ROOT_CONTAINER_CREATE_CLASSES, g_param_spec_object ("create-classes", "create-classes", "create-classes", GEE_TYPE_ARRAY_LIST, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_EXPORT_PLAYLIST_ROOT_CONTAINER_OCM_FLAGS, g_param_spec_flags ("ocm-flags", "ocm-flags", "ocm-flags", gupnp_ocm_flags_get_type (), 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 1107 "rygel-media-export-playlist-root-container.c"
+#line 1111 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -1130,14 +1134,14 @@ static void rygel_media_export_playlist_root_container_rygel_writable_container_
 	iface->get_create_classes = rygel_media_export_playlist_root_container_real_get_create_classes;
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	iface->set_create_classes = rygel_media_export_playlist_root_container_real_set_create_classes;
-#line 1134 "rygel-media-export-playlist-root-container.c"
+#line 1138 "rygel-media-export-playlist-root-container.c"
 }
 
 
 static void rygel_media_export_playlist_root_container_instance_init (RygelMediaExportPlaylistRootContainer * self) {
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	self->priv = RYGEL_MEDIA_EXPORT_PLAYLIST_ROOT_CONTAINER_GET_PRIVATE (self);
-#line 1141 "rygel-media-export-playlist-root-container.c"
+#line 1145 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -1149,7 +1153,7 @@ static void rygel_media_export_playlist_root_container_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->_create_classes);
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 	G_OBJECT_CLASS (rygel_media_export_playlist_root_container_parent_class)->finalize (obj);
-#line 1153 "rygel-media-export-playlist-root-container.c"
+#line 1157 "rygel-media-export-playlist-root-container.c"
 }
 
 
@@ -1193,13 +1197,13 @@ static void _vala_rygel_media_export_playlist_root_container_get_property (GObje
 		g_value_set_flags (value, rygel_media_object_get_ocm_flags ((RygelMediaObject*) self));
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		break;
-#line 1197 "rygel-media-export-playlist-root-container.c"
+#line 1201 "rygel-media-export-playlist-root-container.c"
 		default:
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		break;
-#line 1203 "rygel-media-export-playlist-root-container.c"
+#line 1207 "rygel-media-export-playlist-root-container.c"
 	}
 }
 
@@ -1215,13 +1219,13 @@ static void _vala_rygel_media_export_playlist_root_container_set_property (GObje
 		rygel_writable_container_set_create_classes ((RygelWritableContainer*) self, g_value_get_object (value));
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		break;
-#line 1219 "rygel-media-export-playlist-root-container.c"
+#line 1223 "rygel-media-export-playlist-root-container.c"
 		default:
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 33 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-playlist-root-container.vala"
 		break;
-#line 1225 "rygel-media-export-playlist-root-container.c"
+#line 1229 "rygel-media-export-playlist-root-container.c"
 	}
 }
 

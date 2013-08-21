@@ -26,6 +26,8 @@
                   <a href="#RygelMediaRendererPlugin.description" class="shortcut">Description</a>
                    | 
                   <a href="#RygelMediaRendererPlugin.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#RygelMediaRendererPlugin.properties" class="shortcut">Properties</a>
 </td></tr>
 </table>
 <div class="refentry">
@@ -49,6 +51,11 @@
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *title</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *description</code></em>,
                                                          <em class="parameter"><code><span class="type">RygelPluginCapabilities</span> capabilities</code></em>);
+<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-supported-profiles" title="rygel_media_renderer_plugin_get_supported_profiles ()">rygel_media_renderer_plugin_get_supported_profiles</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-set-supported-profiles" title="rygel_media_renderer_plugin_set_supported_profiles ()">rygel_media_renderer_plugin_set_supported_profiles</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *value</code></em>);
 struct              <a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin-struct" title="struct RygelMediaRendererPlugin">RygelMediaRendererPlugin</a>;
 struct              <a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPluginClass" title="struct RygelMediaRendererPluginClass">RygelMediaRendererPluginClass</a>;
 </pre>
@@ -60,6 +67,12 @@ struct              <a class="link" href="RygelMediaRendererPlugin.html#RygelMed
    +----GUPnPResourceFactory
          +----RygelPlugin
                +----RygelMediaRendererPlugin
+</pre>
+</div>
+<div class="refsect1">
+<a name="RygelMediaRendererPlugin.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles" title='The "supported-profiles" property'>supported-profiles</a>"       <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct
 </pre>
 </div>
 <div class="refsect1">
@@ -145,6 +158,51 @@ Create an instance of the plugin.
 </div>
 <hr>
 <div class="refsect2">
+<a name="rygel-media-renderer-plugin-get-supported-profiles"></a><h3>rygel_media_renderer_plugin_get_supported_profiles ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             rygel_media_renderer_plugin_get_supported_profiles
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> *self</code></em>);</pre>
+<p>
+Get and return the current value of the <a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> instance to query</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the value of the <a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-media-renderer-plugin-set-supported-profiles"></a><h3>rygel_media_renderer_plugin_set_supported_profiles ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                rygel_media_renderer_plugin_set_supported_profiles
+                                                        (<em class="parameter"><code><a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *value</code></em>);</pre>
+<p>
+Set the value of the <a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property to <em class="parameter"><code>value</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> instance to modify</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>the new value of the <a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
 <a name="RygelMediaRendererPlugin-struct"></a><h3>struct RygelMediaRendererPlugin</h3>
 <pre class="programlisting">struct RygelMediaRendererPlugin;</pre>
 <p>
@@ -182,6 +240,14 @@ The class structure for <a class="link" href="RygelMediaRendererPlugin.html#RYGE
 </tr>
 </tbody>
 </table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="RygelMediaRendererPlugin.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="RygelMediaRendererPlugin--supported-profiles"></a><h3>The <code class="literal">"supported-profiles"</code> property</h3>
+<pre class="programlisting">  "supported-profiles"       <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct</pre>
+<p>supported-profiles.</p>
 </div>
 </div>
 </div>

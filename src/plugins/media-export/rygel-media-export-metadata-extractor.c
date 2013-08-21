@@ -223,7 +223,7 @@ void rygel_media_export_metadata_extractor_extract (RygelMediaExportMetadataExtr
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 			if (_inner_error_ != NULL) {
 #line 226 "rygel-media-export-metadata-extractor.c"
-				goto __catch34_g_error;
+				goto __catch36_g_error;
 			}
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 			_g_object_unref0 (self->priv->discoverer);
@@ -231,8 +231,8 @@ void rygel_media_export_metadata_extractor_extract (RygelMediaExportMetadataExtr
 			self->priv->discoverer = _tmp8_;
 #line 233 "rygel-media-export-metadata-extractor.c"
 		}
-		goto __finally34;
-		__catch34_g_error:
+		goto __finally36;
+		__catch36_g_error:
 		{
 			GError* _error_ = NULL;
 			GFile* _tmp11_ = NULL;
@@ -255,7 +255,7 @@ void rygel_media_export_metadata_extractor_extract (RygelMediaExportMetadataExtr
 			return;
 #line 256 "rygel-media-export-metadata-extractor.c"
 		}
-		__finally34:
+		__finally36:
 #line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 		if (_inner_error_ != NULL) {
 #line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
@@ -501,7 +501,7 @@ static void rygel_media_export_metadata_extractor_extract_basic_information (Ryg
 #line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 		if (_inner_error_ != NULL) {
 #line 501 "rygel-media-export-metadata-extractor.c"
-			goto __catch35_g_error;
+			goto __catch37_g_error;
 		}
 #line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 		_g_object_unref0 (file_info);
@@ -509,8 +509,8 @@ static void rygel_media_export_metadata_extractor_extract_basic_information (Ryg
 		file_info = _tmp0_;
 #line 508 "rygel-media-export-metadata-extractor.c"
 	}
-	goto __finally35;
-	__catch35_g_error:
+	goto __finally37;
+	__catch37_g_error:
 	{
 		GError* _error_ = NULL;
 		gchar* uri = NULL;
@@ -564,7 +564,7 @@ static void rygel_media_export_metadata_extractor_extract_basic_information (Ryg
 		return;
 #line 562 "rygel-media-export-metadata-extractor.c"
 	}
-	__finally35:
+	__finally37:
 #line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 	if (_inner_error_ != NULL) {
 #line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
@@ -642,14 +642,14 @@ static void rygel_media_export_metadata_extractor_on_config_changed (RygelMediaE
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 		if (_inner_error_ != NULL) {
 #line 641 "rygel-media-export-metadata-extractor.c"
-			goto __catch36_g_error;
+			goto __catch38_g_error;
 		}
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 		self->priv->extract_metadata = _tmp4_;
 #line 646 "rygel-media-export-metadata-extractor.c"
 	}
-	goto __finally36;
-	__catch36_g_error:
+	goto __finally38;
+	__catch38_g_error:
 	{
 		GError* _error_ = NULL;
 #line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
@@ -662,7 +662,7 @@ static void rygel_media_export_metadata_extractor_on_config_changed (RygelMediaE
 		_g_error_free0 (_error_);
 #line 660 "rygel-media-export-metadata-extractor.c"
 	}
-	__finally36:
+	__finally38:
 #line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"
 	if (_inner_error_ != NULL) {
 #line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-metadata-extractor.vala"

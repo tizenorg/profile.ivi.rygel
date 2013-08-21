@@ -519,7 +519,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			contents = (g_free (contents), NULL);
 #line 522 "rygel-media-export-item-factory.c"
-			goto __catch66_g_error;
+			goto __catch67_g_error;
 		}
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		if (!_tmp0_) {
@@ -760,8 +760,8 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 		return result;
 #line 762 "rygel-media-export-item-factory.c"
 	}
-	goto __finally66;
-	__catch66_g_error:
+	goto __finally67;
+	__catch67_g_error:
 	{
 		GError* e = NULL;
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -776,7 +776,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 		return result;
 #line 778 "rygel-media-export-item-factory.c"
 	}
-	__finally66:
+	__finally67:
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -1785,7 +1785,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 #line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				if (_inner_error_ != NULL) {
 #line 1788 "rygel-media-export-item-factory.c"
-					goto __catch67_g_error;
+					goto __catch68_g_error;
 				}
 #line 289 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp54_ = writer;
@@ -1801,8 +1801,8 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 				_g_object_unref0 (writer);
 #line 1803 "rygel-media-export-item-factory.c"
 			}
-			goto __finally67;
-			__catch67_g_error:
+			goto __finally68;
+			__catch68_g_error:
 			{
 				GError* _error_ = NULL;
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -1813,7 +1813,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 				_g_error_free0 (_error_);
 #line 1815 "rygel-media-export-item-factory.c"
 			}
-			__finally67:
+			__finally68:
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			if (_inner_error_ != NULL) {
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"

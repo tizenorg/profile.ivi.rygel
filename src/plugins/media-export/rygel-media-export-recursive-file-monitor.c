@@ -476,7 +476,7 @@ static gboolean rygel_media_export_recursive_file_monitor_add_co (RygelMediaExpo
 #line 82 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 		if (_data_->_inner_error_ != NULL) {
 #line 478 "rygel-media-export-recursive-file-monitor.c"
-			goto __catch56_g_error;
+			goto __catch57_g_error;
 		}
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 		_data_->_tmp5_ = NULL;
@@ -507,7 +507,7 @@ static gboolean rygel_media_export_recursive_file_monitor_add_co (RygelMediaExpo
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 				_g_object_unref0 (_data_->info);
 #line 509 "rygel-media-export-recursive-file-monitor.c"
-				goto __catch56_g_error;
+				goto __catch57_g_error;
 			}
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 			_data_->_tmp10_ = NULL;
@@ -537,8 +537,8 @@ static gboolean rygel_media_export_recursive_file_monitor_add_co (RygelMediaExpo
 		_g_object_unref0 (_data_->info);
 #line 538 "rygel-media-export-recursive-file-monitor.c"
 	}
-	goto __finally56;
-	__catch56_g_error:
+	goto __finally57;
+	__catch57_g_error:
 	{
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 		_data_->err = _data_->_inner_error_;
@@ -568,7 +568,7 @@ static gboolean rygel_media_export_recursive_file_monitor_add_co (RygelMediaExpo
 		_g_error_free0 (_data_->err);
 #line 569 "rygel-media-export-recursive-file-monitor.c"
 	}
-	__finally56:
+	__finally57:
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
@@ -720,14 +720,14 @@ static void rygel_media_export_recursive_file_monitor_on_config_changed (RygelMe
 #line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 		if (_inner_error_ != NULL) {
 #line 722 "rygel-media-export-recursive-file-monitor.c"
-			goto __catch57_g_error;
+			goto __catch58_g_error;
 		}
 #line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 		self->priv->monitor_changes = _tmp4_;
 #line 727 "rygel-media-export-recursive-file-monitor.c"
 	}
-	goto __finally57;
-	__catch57_g_error:
+	goto __finally58;
+	__catch58_g_error:
 	{
 		GError* _error_ = NULL;
 #line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
@@ -738,7 +738,7 @@ static void rygel_media_export_recursive_file_monitor_on_config_changed (RygelMe
 		_g_error_free0 (_error_);
 #line 739 "rygel-media-export-recursive-file-monitor.c"
 	}
-	__finally57:
+	__finally58:
 #line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"
 	if (_inner_error_ != NULL) {
 #line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-recursive-file-monitor.vala"

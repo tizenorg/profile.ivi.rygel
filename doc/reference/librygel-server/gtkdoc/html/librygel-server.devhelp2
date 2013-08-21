@@ -4,7 +4,7 @@
   <chapters>
     <sub name="Overview" link="overview.html">
       <sub name="" link="overview.html#overview">
-        <sub name="Basic Usage" link="overview.html#idp8813344"/>
+        <sub name="Basic Usage" link="overview.html#idp62318352"/>
       </sub>
     </sub>
     <sub name="Implementing Servers" link="implementing-servers.html">
@@ -155,6 +155,8 @@
     <keyword type="enum" name="enum RygelObjectEventType" link="RygelMediaContainer.html#RygelObjectEventType-enum"/>
     <keyword type="property" name="The &quot;all-child-count&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--all-child-count"/>
     <keyword type="property" name="The &quot;child-count&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--child-count"/>
+    <keyword type="property" name="The &quot;create-mode-enabled&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled"/>
+    <keyword type="property" name="The &quot;empty-child-count&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--empty-child-count"/>
     <keyword type="property" name="The &quot;ocm-flags&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--ocm-flags"/>
     <keyword type="property" name="The &quot;sort-criteria&quot; property" link="RygelMediaContainer.html#RygelMediaContainer--sort-criteria"/>
     <keyword type="signal" name="The &quot;container-updated&quot; signal" link="RygelMediaContainer.html#RygelMediaContainer-container-updated"/>
@@ -191,6 +193,7 @@
     <keyword type="function" name="rygel_media_item_set_description ()" link="RygelMediaItem.html#rygel-media-item-set-description"/>
     <keyword type="struct" name="struct RygelMediaItem" link="RygelMediaItem.html#RygelMediaItem-struct"/>
     <keyword type="struct" name="struct RygelMediaItemClass" link="RygelMediaItem.html#RygelMediaItemClass"/>
+    <keyword type="property" name="The &quot;creator&quot; property" link="RygelMediaItem.html#RygelMediaItem--creator"/>
     <keyword type="property" name="The &quot;date&quot; property" link="RygelMediaItem.html#RygelMediaItem--date"/>
     <keyword type="property" name="The &quot;description&quot; property" link="RygelMediaItem.html#RygelMediaItem--description"/>
     <keyword type="property" name="The &quot;dlna-profile&quot; property" link="RygelMediaItem.html#RygelMediaItem--dlna-profile"/>
@@ -247,9 +250,15 @@
     <keyword type="property" name="The &quot;root-container&quot; property" link="RygelMediaServer.html#RygelMediaServer--root-container"/>
     <keyword type="macro" name="RYGEL_TYPE_MEDIA_SERVER_PLUGIN" link="RygelMediaServerPlugin.html#RYGEL-TYPE-MEDIA-SERVER-PLUGIN:CAPS"/>
     <keyword type="function" name="rygel_media_server_plugin_get_root_container ()" link="RygelMediaServerPlugin.html#rygel-media-server-plugin-get-root-container"/>
+    <keyword type="function" name="rygel_media_server_plugin_get_upload_profiles ()" link="RygelMediaServerPlugin.html#rygel-media-server-plugin-get-upload-profiles"/>
+    <keyword type="function" name="rygel_media_server_plugin_set_upload_profiles ()" link="RygelMediaServerPlugin.html#rygel-media-server-plugin-set-upload-profiles"/>
+    <keyword type="function" name="rygel_media_server_plugin_get_supported_profiles ()" link="RygelMediaServerPlugin.html#rygel-media-server-plugin-get-supported-profiles"/>
+    <keyword type="function" name="rygel_media_server_plugin_set_supported_profiles ()" link="RygelMediaServerPlugin.html#rygel-media-server-plugin-set-supported-profiles"/>
     <keyword type="struct" name="struct RygelMediaServerPlugin" link="RygelMediaServerPlugin.html#RygelMediaServerPlugin-struct"/>
     <keyword type="struct" name="struct RygelMediaServerPluginClass" link="RygelMediaServerPlugin.html#RygelMediaServerPluginClass"/>
     <keyword type="property" name="The &quot;root-container&quot; property" link="RygelMediaServerPlugin.html#RygelMediaServerPlugin--root-container"/>
+    <keyword type="property" name="The &quot;supported-profiles&quot; property" link="RygelMediaServerPlugin.html#RygelMediaServerPlugin--supported-profiles"/>
+    <keyword type="property" name="The &quot;upload-profiles&quot; property" link="RygelMediaServerPlugin.html#RygelMediaServerPlugin--upload-profiles"/>
     <keyword type="macro" name="RYGEL_TYPE_MUSIC_ITEM" link="RygelMusicItem.html#RYGEL-TYPE-MUSIC-ITEM:CAPS"/>
     <keyword type="function" name="rygel_music_item_lookup_album_art ()" link="RygelMusicItem.html#rygel-music-item-lookup-album-art"/>
     <keyword type="macro" name="RYGEL_MUSIC_ITEM_UPNP_CLASS" link="RygelMusicItem.html#RYGEL-MUSIC-ITEM-UPNP-CLASS:CAPS"/>
@@ -276,7 +285,6 @@
     <keyword type="function" name="rygel_photo_item_new ()" link="RygelPhotoItem.html#rygel-photo-item-new"/>
     <keyword type="struct" name="struct RygelPhotoItem" link="RygelPhotoItem.html#RygelPhotoItem-struct"/>
     <keyword type="struct" name="struct RygelPhotoItemClass" link="RygelPhotoItem.html#RygelPhotoItemClass"/>
-    <keyword type="property" name="The &quot;creator&quot; property" link="RygelPhotoItem.html#RygelPhotoItem--creator"/>
     <keyword type="macro" name="RYGEL_TYPE_RELATIONAL_EXPRESSION" link="RygelRelationalExpression.html#RYGEL-TYPE-RELATIONAL-EXPRESSION:CAPS"/>
     <keyword type="function" name="rygel_relational_expression_compare_string ()" link="RygelRelationalExpression.html#rygel-relational-expression-compare-string"/>
     <keyword type="function" name="rygel_relational_expression_compare_int ()" link="RygelRelationalExpression.html#rygel-relational-expression-compare-int"/>

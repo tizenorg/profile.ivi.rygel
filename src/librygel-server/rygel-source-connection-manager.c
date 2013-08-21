@@ -31,9 +31,9 @@
 #include <rygel-core.h>
 #include <gee.h>
 #include <libgupnp-av/gupnp-av.h>
+#include <libgupnp/gupnp.h>
 #include <stdlib.h>
 #include <string.h>
-#include <libgupnp/gupnp.h>
 #include <gio/gio.h>
 
 
@@ -70,6 +70,16 @@ typedef struct _RygelTranscodeManagerClass RygelTranscodeManagerClass;
 typedef struct _RygelHTTPServer RygelHTTPServer;
 typedef struct _RygelHTTPServerClass RygelHTTPServerClass;
 
+#define RYGEL_TYPE_MEDIA_SERVER_PLUGIN (rygel_media_server_plugin_get_type ())
+#define RYGEL_MEDIA_SERVER_PLUGIN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_MEDIA_SERVER_PLUGIN, RygelMediaServerPlugin))
+#define RYGEL_MEDIA_SERVER_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_MEDIA_SERVER_PLUGIN, RygelMediaServerPluginClass))
+#define RYGEL_IS_MEDIA_SERVER_PLUGIN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_MEDIA_SERVER_PLUGIN))
+#define RYGEL_IS_MEDIA_SERVER_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_MEDIA_SERVER_PLUGIN))
+#define RYGEL_MEDIA_SERVER_PLUGIN_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_MEDIA_SERVER_PLUGIN, RygelMediaServerPluginClass))
+
+typedef struct _RygelMediaServerPlugin RygelMediaServerPlugin;
+typedef struct _RygelMediaServerPluginClass RygelMediaServerPluginClass;
+
 #define RYGEL_TYPE_DLNA_PROFILE (rygel_dlna_profile_get_type ())
 #define RYGEL_DLNA_PROFILE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_DLNA_PROFILE, RygelDLNAProfile))
 #define RYGEL_DLNA_PROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_DLNA_PROFILE, RygelDLNAProfileClass))
@@ -79,16 +89,6 @@ typedef struct _RygelHTTPServerClass RygelHTTPServerClass;
 
 typedef struct _RygelDLNAProfile RygelDLNAProfile;
 typedef struct _RygelDLNAProfileClass RygelDLNAProfileClass;
-
-#define RYGEL_TYPE_MEDIA_ENGINE (rygel_media_engine_get_type ())
-#define RYGEL_MEDIA_ENGINE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_MEDIA_ENGINE, RygelMediaEngine))
-#define RYGEL_MEDIA_ENGINE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_MEDIA_ENGINE, RygelMediaEngineClass))
-#define RYGEL_IS_MEDIA_ENGINE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_MEDIA_ENGINE))
-#define RYGEL_IS_MEDIA_ENGINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_MEDIA_ENGINE))
-#define RYGEL_MEDIA_ENGINE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_MEDIA_ENGINE, RygelMediaEngineClass))
-
-typedef struct _RygelMediaEngine RygelMediaEngine;
-typedef struct _RygelMediaEngineClass RygelMediaEngineClass;
 typedef struct _RygelDLNAProfilePrivate RygelDLNAProfilePrivate;
 #define _rygel_dlna_profile_unref0(var) ((var == NULL) ? NULL : (var = (rygel_dlna_profile_unref (var), NULL)))
 
@@ -172,6 +172,7 @@ GType rygel_transcode_manager_get_type (void) G_GNUC_CONST;
 GType rygel_http_server_get_type (void) G_GNUC_CONST;
 static RygelHTTPServer* rygel_source_connection_manager_get_http_server (RygelSourceConnectionManager* self);
 GeeArrayList* rygel_transcode_manager_get_protocol_info (RygelTranscodeManager* self);
+GType rygel_media_server_plugin_get_type (void) G_GNUC_CONST;
 gpointer rygel_dlna_profile_ref (gpointer instance);
 void rygel_dlna_profile_unref (gpointer instance);
 GParamSpec* rygel_param_spec_dlna_profile (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
@@ -179,9 +180,7 @@ void rygel_value_set_dlna_profile (GValue* value, gpointer v_object);
 void rygel_value_take_dlna_profile (GValue* value, gpointer v_object);
 gpointer rygel_value_get_dlna_profile (const GValue* value);
 GType rygel_dlna_profile_get_type (void) G_GNUC_CONST;
-GType rygel_media_engine_get_type (void) G_GNUC_CONST;
-RygelMediaEngine* rygel_media_engine_get_default (void);
-GList* rygel_media_engine_get_dlna_profiles (RygelMediaEngine* self);
+GList* rygel_media_server_plugin_get_supported_profiles (RygelMediaServerPlugin* self);
 gchar* rygel_transcode_manager_get_protocol (RygelTranscodeManager* self);
 GType rygel_content_directory_get_type (void) G_GNUC_CONST;
 GType rygel_media_object_get_type (void) G_GNUC_CONST;
@@ -207,7 +206,7 @@ static void rygel_source_connection_manager_real_constructed (GObject* base) {
 	_g_free0 (((RygelConnectionManager*) self)->direction);
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	((RygelConnectionManager*) self)->direction = _tmp0_;
-#line 211 "rygel-source-connection-manager.c"
+#line 210 "rygel-source-connection-manager.c"
 	{
 		GeeArrayList* _protocol_info_list = NULL;
 		GeeArrayList* _tmp1_ = NULL;
@@ -232,7 +231,7 @@ static void rygel_source_connection_manager_real_constructed (GObject* base) {
 		_protocol_info_index = -1;
 #line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 		while (TRUE) {
-#line 236 "rygel-source-connection-manager.c"
+#line 235 "rygel-source-connection-manager.c"
 			gint _tmp5_ = 0;
 			gint _tmp6_ = 0;
 			gint _tmp7_ = 0;
@@ -258,7 +257,7 @@ static void rygel_source_connection_manager_real_constructed (GObject* base) {
 			if (!(_tmp6_ < _tmp7_)) {
 #line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 				break;
-#line 262 "rygel-source-connection-manager.c"
+#line 261 "rygel-source-connection-manager.c"
 			}
 #line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 			_tmp8_ = _protocol_info_list;
@@ -272,7 +271,7 @@ static void rygel_source_connection_manager_real_constructed (GObject* base) {
 			_tmp11_ = ((RygelConnectionManager*) self)->source_protocol_info;
 #line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 			if (g_strcmp0 (_tmp11_, "") != 0) {
-#line 276 "rygel-source-connection-manager.c"
+#line 275 "rygel-source-connection-manager.c"
 				const gchar* _tmp12_ = NULL;
 				gchar* _tmp13_ = NULL;
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
@@ -283,7 +282,7 @@ static void rygel_source_connection_manager_real_constructed (GObject* base) {
 				_g_free0 (((RygelConnectionManager*) self)->source_protocol_info);
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 				((RygelConnectionManager*) self)->source_protocol_info = _tmp13_;
-#line 287 "rygel-source-connection-manager.c"
+#line 286 "rygel-source-connection-manager.c"
 			}
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 			_tmp14_ = ((RygelConnectionManager*) self)->source_protocol_info;
@@ -303,19 +302,26 @@ static void rygel_source_connection_manager_real_constructed (GObject* base) {
 			_g_free0 (_tmp17_);
 #line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 			_g_object_unref0 (protocol_info);
-#line 307 "rygel-source-connection-manager.c"
+#line 306 "rygel-source-connection-manager.c"
 		}
 #line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 		_g_object_unref0 (_protocol_info_list);
-#line 311 "rygel-source-connection-manager.c"
+#line 310 "rygel-source-connection-manager.c"
 	}
+}
+
+
+static gpointer _g_object_ref0 (gpointer self) {
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	return self ? g_object_ref (self) : NULL;
+#line 318 "rygel-source-connection-manager.c"
 }
 
 
 static gpointer _rygel_dlna_profile_ref0 (gpointer self) {
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	return self ? rygel_dlna_profile_ref (self) : NULL;
-#line 319 "rygel-source-connection-manager.c"
+#line 325 "rygel-source-connection-manager.c"
 }
 
 
@@ -326,15 +332,22 @@ static GeeArrayList* rygel_source_connection_manager_get_protocol_info (RygelSou
 	GeeArrayList* protocol_infos = NULL;
 	RygelHTTPServer* _tmp1_ = NULL;
 	GeeArrayList* _tmp2_ = NULL;
+	RygelMediaServerPlugin* plugin = NULL;
+	GUPnPRootDevice* _tmp3_ = NULL;
+	GUPnPRootDevice* _tmp4_ = NULL;
+	GUPnPRootDevice* _tmp5_ = NULL;
+	GUPnPResourceFactory* _tmp6_ = NULL;
+	GUPnPResourceFactory* _tmp7_ = NULL;
+	RygelMediaServerPlugin* _tmp8_ = NULL;
+	RygelMediaServerPlugin* _tmp9_ = NULL;
 	GList* profiles = NULL;
-	RygelMediaEngine* _tmp3_ = NULL;
-	RygelMediaEngine* _tmp4_ = NULL;
-	GList* _tmp5_ = NULL;
-	GList* _tmp6_ = NULL;
+	RygelMediaServerPlugin* _tmp10_ = NULL;
+	GList* _tmp11_ = NULL;
+	GList* _tmp12_ = NULL;
 	gchar* protocol = NULL;
-	RygelHTTPServer* _tmp7_ = NULL;
-	gchar* _tmp8_ = NULL;
-	GList* _tmp9_ = NULL;
+	RygelHTTPServer* _tmp13_ = NULL;
+	gchar* _tmp14_ = NULL;
+	GList* _tmp15_ = NULL;
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	g_return_val_if_fail (self != NULL, NULL);
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
@@ -348,105 +361,119 @@ static GeeArrayList* rygel_source_connection_manager_get_protocol_info (RygelSou
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	protocol_infos = _tmp2_;
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	_tmp3_ = rygel_media_engine_get_default ();
+	g_object_get ((GUPnPService*) self, "root-device", &_tmp3_, NULL);
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	_tmp4_ = _tmp3_;
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	_tmp5_ = rygel_media_engine_get_dlna_profiles (_tmp4_);
+	_tmp5_ = _tmp4_;
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	_tmp6_ = _tmp5_;
+	_tmp6_ = gupnp_device_info_get_resource_factory ((GUPnPDeviceInfo*) _tmp5_);
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	_g_object_unref0 (_tmp4_);
+	_tmp7_ = _tmp6_;
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	profiles = _tmp6_;
+	_tmp8_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp7_, RYGEL_TYPE_MEDIA_SERVER_PLUGIN) ? ((RygelMediaServerPlugin*) _tmp7_) : NULL);
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	_tmp9_ = _tmp8_;
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	_g_object_unref0 (_tmp5_);
+#line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	plugin = _tmp9_;
+#line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	_tmp10_ = plugin;
+#line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	_tmp11_ = rygel_media_server_plugin_get_supported_profiles (_tmp10_);
+#line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	_tmp12_ = _tmp11_;
+#line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	profiles = _tmp12_;
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	_tmp7_ = server;
+	_tmp13_ = server;
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	_tmp8_ = rygel_transcode_manager_get_protocol ((RygelTranscodeManager*) _tmp7_);
+	_tmp14_ = rygel_transcode_manager_get_protocol ((RygelTranscodeManager*) _tmp13_);
 #line 57 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	protocol = _tmp8_;
+	protocol = _tmp14_;
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	_tmp9_ = profiles;
-#line 371 "rygel-source-connection-manager.c"
+	_tmp15_ = profiles;
+#line 398 "rygel-source-connection-manager.c"
 	{
 		GList* profile_collection = NULL;
 		GList* profile_it = NULL;
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-		profile_collection = _tmp9_;
+		profile_collection = _tmp15_;
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 		for (profile_it = profile_collection; profile_it != NULL; profile_it = profile_it->next) {
-#line 379 "rygel-source-connection-manager.c"
-			RygelDLNAProfile* _tmp10_ = NULL;
+#line 406 "rygel-source-connection-manager.c"
+			RygelDLNAProfile* _tmp16_ = NULL;
 			RygelDLNAProfile* profile = NULL;
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-			_tmp10_ = _rygel_dlna_profile_ref0 ((RygelDLNAProfile*) profile_it->data);
+			_tmp16_ = _rygel_dlna_profile_ref0 ((RygelDLNAProfile*) profile_it->data);
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-			profile = _tmp10_;
-#line 386 "rygel-source-connection-manager.c"
+			profile = _tmp16_;
+#line 413 "rygel-source-connection-manager.c"
 			{
 				GUPnPProtocolInfo* protocol_info = NULL;
-				GUPnPProtocolInfo* _tmp11_ = NULL;
-				GUPnPProtocolInfo* _tmp12_ = NULL;
-				const gchar* _tmp13_ = NULL;
-				GUPnPProtocolInfo* _tmp14_ = NULL;
-				RygelDLNAProfile* _tmp15_ = NULL;
-				const gchar* _tmp16_ = NULL;
 				GUPnPProtocolInfo* _tmp17_ = NULL;
-				RygelDLNAProfile* _tmp18_ = NULL;
+				GUPnPProtocolInfo* _tmp18_ = NULL;
 				const gchar* _tmp19_ = NULL;
-				GeeArrayList* _tmp20_ = NULL;
-				GUPnPProtocolInfo* _tmp21_ = NULL;
-				gboolean _tmp22_ = FALSE;
+				GUPnPProtocolInfo* _tmp20_ = NULL;
+				RygelDLNAProfile* _tmp21_ = NULL;
+				const gchar* _tmp22_ = NULL;
+				GUPnPProtocolInfo* _tmp23_ = NULL;
+				RygelDLNAProfile* _tmp24_ = NULL;
+				const gchar* _tmp25_ = NULL;
+				GeeArrayList* _tmp26_ = NULL;
+				GUPnPProtocolInfo* _tmp27_ = NULL;
+				gboolean _tmp28_ = FALSE;
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp11_ = gupnp_protocol_info_new ();
+				_tmp17_ = gupnp_protocol_info_new ();
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				protocol_info = _tmp11_;
+				protocol_info = _tmp17_;
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp12_ = protocol_info;
+				_tmp18_ = protocol_info;
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp13_ = protocol;
+				_tmp19_ = protocol;
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				gupnp_protocol_info_set_protocol (_tmp12_, _tmp13_);
+				gupnp_protocol_info_set_protocol (_tmp18_, _tmp19_);
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp14_ = protocol_info;
+				_tmp20_ = protocol_info;
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp15_ = profile;
+				_tmp21_ = profile;
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp16_ = _tmp15_->mime;
+				_tmp22_ = _tmp21_->mime;
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				gupnp_protocol_info_set_mime_type (_tmp14_, _tmp16_);
+				gupnp_protocol_info_set_mime_type (_tmp20_, _tmp22_);
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp17_ = protocol_info;
+				_tmp23_ = protocol_info;
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp18_ = profile;
+				_tmp24_ = profile;
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp19_ = _tmp18_->name;
+				_tmp25_ = _tmp24_->name;
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				gupnp_protocol_info_set_dlna_profile (_tmp17_, _tmp19_);
+				gupnp_protocol_info_set_dlna_profile (_tmp23_, _tmp25_);
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp20_ = protocol_infos;
+				_tmp26_ = protocol_infos;
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp21_ = protocol_info;
+				_tmp27_ = protocol_info;
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				_tmp22_ = gee_abstract_collection_contains ((GeeAbstractCollection*) _tmp20_, _tmp21_);
+				_tmp28_ = gee_abstract_collection_contains ((GeeAbstractCollection*) _tmp26_, _tmp27_);
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-				if (!_tmp22_) {
-#line 435 "rygel-source-connection-manager.c"
-					GeeArrayList* _tmp23_ = NULL;
-					GUPnPProtocolInfo* _tmp24_ = NULL;
+				if (!_tmp28_) {
+#line 462 "rygel-source-connection-manager.c"
+					GeeArrayList* _tmp29_ = NULL;
+					GUPnPProtocolInfo* _tmp30_ = NULL;
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-					_tmp23_ = protocol_infos;
+					_tmp29_ = protocol_infos;
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-					_tmp24_ = protocol_info;
+					_tmp30_ = protocol_info;
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-					gee_abstract_list_insert ((GeeAbstractList*) _tmp23_, 0, _tmp24_);
-#line 444 "rygel-source-connection-manager.c"
+					gee_abstract_list_insert ((GeeAbstractList*) _tmp29_, 0, _tmp30_);
+#line 471 "rygel-source-connection-manager.c"
 				}
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 				_g_object_unref0 (protocol_info);
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 				_rygel_dlna_profile_unref0 (profile);
-#line 450 "rygel-source-connection-manager.c"
+#line 477 "rygel-source-connection-manager.c"
 			}
 		}
 	}
@@ -455,17 +482,12 @@ static GeeArrayList* rygel_source_connection_manager_get_protocol_info (RygelSou
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	_g_free0 (protocol);
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
+	_g_object_unref0 (plugin);
+#line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	_g_object_unref0 (server);
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	return result;
-#line 462 "rygel-source-connection-manager.c"
-}
-
-
-static gpointer _g_object_ref0 (gpointer self) {
-#line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
-	return self ? g_object_ref (self) : NULL;
-#line 469 "rygel-source-connection-manager.c"
+#line 491 "rygel-source-connection-manager.c"
 }
 
 
@@ -485,7 +507,7 @@ static RygelHTTPServer* rygel_source_connection_manager_get_http_server (RygelSo
 	_tmp1_ = _tmp0_;
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	root_device = G_TYPE_CHECK_INSTANCE_CAST (_tmp1_, RYGEL_TYPE_ROOT_DEVICE, RygelRootDevice);
-#line 489 "rygel-source-connection-manager.c"
+#line 511 "rygel-source-connection-manager.c"
 	{
 		GeeArrayList* _service_list = NULL;
 		RygelRootDevice* _tmp2_ = NULL;
@@ -519,7 +541,7 @@ static RygelHTTPServer* rygel_source_connection_manager_get_http_server (RygelSo
 		_service_index = -1;
 #line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 		while (TRUE) {
-#line 523 "rygel-source-connection-manager.c"
+#line 545 "rygel-source-connection-manager.c"
 			gint _tmp9_ = 0;
 			gint _tmp10_ = 0;
 			gint _tmp11_ = 0;
@@ -542,7 +564,7 @@ static RygelHTTPServer* rygel_source_connection_manager_get_http_server (RygelSo
 			if (!(_tmp10_ < _tmp11_)) {
 #line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 				break;
-#line 546 "rygel-source-connection-manager.c"
+#line 568 "rygel-source-connection-manager.c"
 			}
 #line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 			_tmp12_ = _service_list;
@@ -560,7 +582,7 @@ static RygelHTTPServer* rygel_source_connection_manager_get_http_server (RygelSo
 			_tmp17_ = g_type_is_a (_tmp16_, RYGEL_TYPE_CONTENT_DIRECTORY);
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 			if (_tmp17_) {
-#line 564 "rygel-source-connection-manager.c"
+#line 586 "rygel-source-connection-manager.c"
 				RygelContentDirectory* content_directory = NULL;
 				GUPnPServiceInfo* _tmp18_ = NULL;
 				RygelContentDirectory* _tmp19_ = NULL;
@@ -585,15 +607,15 @@ static RygelHTTPServer* rygel_source_connection_manager_get_http_server (RygelSo
 				server = _tmp22_;
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 				_g_object_unref0 (content_directory);
-#line 589 "rygel-source-connection-manager.c"
+#line 611 "rygel-source-connection-manager.c"
 			}
 #line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 			_g_object_unref0 (service);
-#line 593 "rygel-source-connection-manager.c"
+#line 615 "rygel-source-connection-manager.c"
 		}
 #line 80 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 		_g_object_unref0 (_service_list);
-#line 597 "rygel-source-connection-manager.c"
+#line 619 "rygel-source-connection-manager.c"
 	}
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	result = server;
@@ -601,7 +623,7 @@ static RygelHTTPServer* rygel_source_connection_manager_get_http_server (RygelSo
 	_g_object_unref0 (root_device);
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	return result;
-#line 605 "rygel-source-connection-manager.c"
+#line 627 "rygel-source-connection-manager.c"
 }
 
 
@@ -611,14 +633,14 @@ RygelSourceConnectionManager* rygel_source_connection_manager_construct (GType o
 	self = (RygelSourceConnectionManager*) rygel_connection_manager_construct (object_type);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	return self;
-#line 615 "rygel-source-connection-manager.c"
+#line 637 "rygel-source-connection-manager.c"
 }
 
 
 RygelSourceConnectionManager* rygel_source_connection_manager_new (void) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	return rygel_source_connection_manager_construct (RYGEL_TYPE_SOURCE_CONNECTION_MANAGER);
-#line 622 "rygel-source-connection-manager.c"
+#line 644 "rygel-source-connection-manager.c"
 }
 
 
@@ -627,7 +649,7 @@ static void rygel_source_connection_manager_class_init (RygelSourceConnectionMan
 	rygel_source_connection_manager_parent_class = g_type_class_peek_parent (klass);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-source-connection-manager.vala"
 	G_OBJECT_CLASS (klass)->constructed = rygel_source_connection_manager_real_constructed;
-#line 631 "rygel-source-connection-manager.c"
+#line 653 "rygel-source-connection-manager.c"
 }
 
 

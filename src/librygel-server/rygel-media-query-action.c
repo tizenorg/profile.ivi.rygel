@@ -261,11 +261,13 @@ typedef enum  {
 	RYGEL_CONTENT_DIRECTORY_ERROR_REQUIRED_TAG = 704,
 	RYGEL_CONTENT_DIRECTORY_ERROR_READ_ONLY_TAG = 705,
 	RYGEL_CONTENT_DIRECTORY_ERROR_PARAMETER_MISMATCH = 706,
+	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SEARCH_CRITERIA = 708,
 	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SORT_CRITERIA = 709,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_CONTAINER = 710,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_OBJECT = 711,
 	RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA = 712,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_PARENT = 713,
+	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_FILE_TRANSFER = 717,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_DESTINATION_RESOURCE = 718,
 	RYGEL_CONTENT_DIRECTORY_ERROR_CANT_PROCESS = 720,
 	RYGEL_CONTENT_DIRECTORY_ERROR_OUTDATED_OBJECT_METADATA = 728,
@@ -294,8 +296,11 @@ struct _RygelMediaQueryActionFetchMediaObjectData {
 	RygelMediaObject* _tmp11_;
 	RygelMediaObject* _tmp12_;
 	const gchar* _tmp13_;
-	GError* _tmp14_;
-	const gchar* _tmp15_;
+	const gchar* _tmp14_;
+	GError* _tmp15_;
+	const gchar* _tmp16_;
+	GError* _tmp17_;
+	const gchar* _tmp18_;
 	GError * _inner_error_;
 };
 
@@ -362,14 +367,14 @@ static gint _vala_array_length (gpointer array);
 static void _vala_GUPnPServiceAction_free (GUPnPServiceAction* self) {
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_boxed_free (gupnp_service_action_get_type (), self);
-#line 366 "rygel-media-query-action.c"
+#line 371 "rygel-media-query-action.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 373 "rygel-media-query-action.c"
+#line 378 "rygel-media-query-action.c"
 }
 
 
@@ -440,7 +445,7 @@ RygelMediaQueryAction* rygel_media_query_action_construct (GType object_type, Ry
 	_g_object_unref0 (self->serializer);
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	self->serializer = _tmp11_;
-#line 444 "rygel-media-query-action.c"
+#line 449 "rygel-media-query-action.c"
 	{
 		RygelClientHacks* _tmp12_ = NULL;
 		GUPnPServiceAction* _tmp13_ = NULL;
@@ -464,25 +469,25 @@ RygelMediaQueryAction* rygel_media_query_action_construct (GType object_type, Ry
 		_tmp12_ = _tmp17_;
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		if (_inner_error_ != NULL) {
-#line 468 "rygel-media-query-action.c"
-			goto __catch61_g_error;
+#line 473 "rygel-media-query-action.c"
+			goto __catch65_g_error;
 		}
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_g_object_unref0 (self->hacks);
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		self->hacks = _tmp12_;
-#line 475 "rygel-media-query-action.c"
+#line 480 "rygel-media-query-action.c"
 	}
-	goto __finally61;
-	__catch61_g_error:
+	goto __finally65;
+	__catch65_g_error:
 	{
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_clear_error (&_inner_error_);
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_inner_error_ = NULL;
-#line 484 "rygel-media-query-action.c"
+#line 489 "rygel-media-query-action.c"
 	}
-	__finally61:
+	__finally65:
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	if (_inner_error_ != NULL) {
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
@@ -493,13 +498,13 @@ RygelMediaQueryAction* rygel_media_query_action_construct (GType object_type, Ry
 		g_clear_error (&_inner_error_);
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return NULL;
-#line 497 "rygel-media-query-action.c"
+#line 502 "rygel-media-query-action.c"
 	}
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	__vala_GUPnPServiceAction_free0 (action);
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	return self;
-#line 503 "rygel-media-query-action.c"
+#line 508 "rygel-media-query-action.c"
 }
 
 
@@ -510,7 +515,7 @@ static void rygel_media_query_action_real_run_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_slice_free (RygelMediaQueryActionRunData, _data_);
-#line 514 "rygel-media-query-action.c"
+#line 519 "rygel-media-query-action.c"
 }
 
 
@@ -532,7 +537,7 @@ static void rygel_media_query_action_real_run (RygelStateMachine* base, GAsyncRe
 	_data_->self = _tmp0_;
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	rygel_media_query_action_real_run_co (_data_);
-#line 536 "rygel-media-query-action.c"
+#line 541 "rygel-media-query-action.c"
 }
 
 
@@ -540,7 +545,7 @@ static void rygel_media_query_action_real_run_finish (RygelStateMachine* base, G
 	RygelMediaQueryActionRunData* _data_;
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 544 "rygel-media-query-action.c"
+#line 549 "rygel-media-query-action.c"
 }
 
 
@@ -554,7 +559,7 @@ static void rygel_media_query_action_run_ready (GObject* source_object, GAsyncRe
 	_data_->_res_ = _res_;
 #line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	rygel_media_query_action_real_run_co (_data_);
-#line 558 "rygel-media-query-action.c"
+#line 563 "rygel-media-query-action.c"
 }
 
 
@@ -563,20 +568,20 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 	switch (_data_->_state_) {
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		case 0:
-#line 567 "rygel-media-query-action.c"
+#line 572 "rygel-media-query-action.c"
 		goto _state_0;
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		case 1:
-#line 571 "rygel-media-query-action.c"
+#line 576 "rygel-media-query-action.c"
 		goto _state_1;
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		case 2:
-#line 575 "rygel-media-query-action.c"
+#line 580 "rygel-media-query-action.c"
 		goto _state_2;
 		default:
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_assert_not_reached ();
-#line 580 "rygel-media-query-action.c"
+#line 585 "rygel-media-query-action.c"
 	}
 	_state_0:
 	{
@@ -584,8 +589,8 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		rygel_media_query_action_parse_args (_data_->self, &_data_->_inner_error_);
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 588 "rygel-media-query-action.c"
-			goto __catch62_g_error;
+#line 593 "rygel-media-query-action.c"
+			goto __catch66_g_error;
 		}
 #line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_state_ = 1;
@@ -593,7 +598,7 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		rygel_media_query_action_fetch_media_object (_data_->self, rygel_media_query_action_run_ready, _data_);
 #line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return FALSE;
-#line 597 "rygel-media-query-action.c"
+#line 602 "rygel-media-query-action.c"
 		_state_1:
 #line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp0_ = NULL;
@@ -603,8 +608,8 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		_data_->media_object = _data_->_tmp0_;
 #line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 607 "rygel-media-query-action.c"
-			goto __catch62_g_error;
+#line 612 "rygel-media-query-action.c"
+			goto __catch66_g_error;
 		}
 #line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp1_ = NULL;
@@ -616,7 +621,7 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		rygel_media_query_action_fetch_results (_data_->self, _data_->_tmp1_, rygel_media_query_action_run_ready, _data_);
 #line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return FALSE;
-#line 620 "rygel-media-query-action.c"
+#line 625 "rygel-media-query-action.c"
 		_state_2:
 #line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp2_ = NULL;
@@ -628,8 +633,8 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		if (_data_->_inner_error_ != NULL) {
 #line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			_g_object_unref0 (_data_->media_object);
-#line 632 "rygel-media-query-action.c"
-			goto __catch62_g_error;
+#line 637 "rygel-media-query-action.c"
+			goto __catch66_g_error;
 		}
 #line 75 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp3_ = NULL;
@@ -661,7 +666,7 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 			_data_->_tmp8_ = G_TYPE_CHECK_INSTANCE_CAST (_data_->_tmp7_, RYGEL_TYPE_MEDIA_CONTAINER, RygelMediaContainer)->update_id;
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			_data_->self->update_id = (guint) _data_->_tmp8_;
-#line 665 "rygel-media-query-action.c"
+#line 670 "rygel-media-query-action.c"
 		} else {
 #line 79 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			_data_->_tmp9_ = 0U;
@@ -669,7 +674,7 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 			_data_->_tmp9_ = G_MAXUINT32;
 #line 79 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			_data_->self->update_id = (guint) _data_->_tmp9_;
-#line 673 "rygel-media-query-action.c"
+#line 678 "rygel-media-query-action.c"
 		}
 #line 83 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp10_ = NULL;
@@ -695,8 +700,8 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 			_g_object_unref0 (_data_->results);
 #line 83 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			_g_object_unref0 (_data_->media_object);
-#line 699 "rygel-media-query-action.c"
-			goto __catch62_g_error;
+#line 704 "rygel-media-query-action.c"
+			goto __catch66_g_error;
 		}
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		rygel_media_query_action_conclude (_data_->self);
@@ -704,10 +709,10 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		_g_object_unref0 (_data_->results);
 #line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_g_object_unref0 (_data_->media_object);
-#line 708 "rygel-media-query-action.c"
+#line 713 "rygel-media-query-action.c"
 	}
-	goto __finally62;
-	__catch62_g_error:
+	goto __finally66;
+	__catch66_g_error:
 	{
 #line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->err = _data_->_inner_error_;
@@ -721,9 +726,9 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		rygel_media_query_action_handle_error (_data_->self, _data_->_tmp14_);
 #line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_g_error_free0 (_data_->err);
-#line 725 "rygel-media-query-action.c"
+#line 730 "rygel-media-query-action.c"
 	}
-	__finally62:
+	__finally66:
 #line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
@@ -732,23 +737,23 @@ static gboolean rygel_media_query_action_real_run_co (RygelMediaQueryActionRunDa
 		g_clear_error (&_data_->_inner_error_);
 #line 69 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return FALSE;
-#line 736 "rygel-media-query-action.c"
+#line 741 "rygel-media-query-action.c"
 	}
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	if (_data_->_state_ == 0) {
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 742 "rygel-media-query-action.c"
+#line 747 "rygel-media-query-action.c"
 	} else {
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 746 "rygel-media-query-action.c"
+#line 751 "rygel-media-query-action.c"
 	}
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_object_unref (_data_->_async_result);
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	return FALSE;
-#line 752 "rygel-media-query-action.c"
+#line 757 "rygel-media-query-action.c"
 }
 
 
@@ -756,145 +761,188 @@ static void rygel_media_query_action_real_parse_args (RygelMediaQueryAction* sel
 	gint64 index = 0LL;
 	gint64 requested_count = 0LL;
 	GUPnPServiceAction* _tmp0_ = NULL;
-	const gchar* _tmp1_ = NULL;
-	const gchar* _tmp2_ = NULL;
-	gboolean _tmp5_ = FALSE;
-	gint64 _tmp6_ = 0LL;
-	gboolean _tmp8_ = FALSE;
-	gint64 _tmp11_ = 0LL;
-	gint64 _tmp12_ = 0LL;
-	const gchar* _tmp13_ = NULL;
-	gboolean _tmp14_ = FALSE;
-	RygelClientHacks* _tmp15_ = NULL;
-	gboolean _tmp17_ = FALSE;
-	RygelClientHacks* _tmp19_ = NULL;
+	guint _tmp1_ = 0U;
+	GUPnPServiceAction* _tmp4_ = NULL;
+	const gchar* _tmp5_ = NULL;
+	const gchar* _tmp6_ = NULL;
+	gboolean _tmp9_ = FALSE;
+	gint64 _tmp10_ = 0LL;
+	gboolean _tmp12_ = FALSE;
+	const gchar* _tmp15_ = NULL;
+	gint64 _tmp18_ = 0LL;
+	gint64 _tmp19_ = 0LL;
+	const gchar* _tmp20_ = NULL;
+	gboolean _tmp21_ = FALSE;
+	RygelClientHacks* _tmp22_ = NULL;
+	gboolean _tmp24_ = FALSE;
+	RygelClientHacks* _tmp26_ = NULL;
 	GError * _inner_error_ = NULL;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp0_ = self->action;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp1_ = self->object_id_arg;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	gupnp_service_action_get (_tmp0_, _tmp1_, G_TYPE_STRING, &self->object_id, "Filter", G_TYPE_STRING, &self->filter, "StartingIndex", G_TYPE_INT64, &index, "RequestedCount", G_TYPE_INT64, &requested_count, "SortCriteria", G_TYPE_STRING, &self->sort_criteria, NULL);
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp2_ = self->object_id;
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (_tmp2_ == NULL) {
-#line 783 "rygel-media-query-action.c"
-		const gchar* _tmp3_ = NULL;
-		GError* _tmp4_ = NULL;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp3_ = _ ("No such object");
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp4_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_OBJECT, _tmp3_);
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_inner_error_ = _tmp4_;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp1_ = gupnp_service_action_get_argument_count (_tmp0_);
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_tmp1_ != ((guint) 6)) {
+#line 787 "rygel-media-query-action.c"
+		const gchar* _tmp2_ = NULL;
+		GError* _tmp3_ = NULL;
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp2_ = _ ("Invalid number of arguments");
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp3_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _tmp2_);
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_inner_error_ = _tmp3_;
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_propagate_error (error, _inner_error_);
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return;
-#line 796 "rygel-media-query-action.c"
+#line 800 "rygel-media-query-action.c"
 	}
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp6_ = index;
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (_tmp6_ < ((gint64) 0)) {
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp5_ = TRUE;
-#line 804 "rygel-media-query-action.c"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp4_ = self->action;
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp5_ = self->object_id_arg;
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	gupnp_service_action_get (_tmp4_, _tmp5_, G_TYPE_STRING, &self->object_id, "Filter", G_TYPE_STRING, &self->filter, "StartingIndex", G_TYPE_INT64, &index, "RequestedCount", G_TYPE_INT64, &requested_count, "SortCriteria", G_TYPE_STRING, &self->sort_criteria, NULL);
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp6_ = self->object_id;
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_tmp6_ == NULL) {
+#line 812 "rygel-media-query-action.c"
+		const gchar* _tmp7_ = NULL;
+		GError* _tmp8_ = NULL;
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp7_ = _ ("ObjectID argument missing");
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp8_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _tmp7_);
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_inner_error_ = _tmp8_;
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		g_propagate_error (error, _inner_error_);
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		return;
+#line 825 "rygel-media-query-action.c"
+	}
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp10_ = index;
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_tmp10_ < ((gint64) 0)) {
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp9_ = TRUE;
+#line 833 "rygel-media-query-action.c"
 	} else {
-		gint64 _tmp7_ = 0LL;
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp7_ = requested_count;
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp5_ = _tmp7_ < ((gint64) 0);
-#line 811 "rygel-media-query-action.c"
+		gint64 _tmp11_ = 0LL;
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp11_ = requested_count;
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp9_ = _tmp11_ < ((gint64) 0);
+#line 840 "rygel-media-query-action.c"
 	}
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp8_ = _tmp5_;
-#line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (_tmp8_) {
-#line 817 "rygel-media-query-action.c"
-		const gchar* _tmp9_ = NULL;
-		GError* _tmp10_ = NULL;
-#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp9_ = _ ("Invalid range");
-#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp10_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _tmp9_);
-#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_inner_error_ = _tmp10_;
-#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp12_ = _tmp9_;
+#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_tmp12_) {
+#line 846 "rygel-media-query-action.c"
+		const gchar* _tmp13_ = NULL;
+		GError* _tmp14_ = NULL;
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp13_ = _ ("Invalid range");
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp14_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _tmp13_);
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_inner_error_ = _tmp14_;
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_propagate_error (error, _inner_error_);
-#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return;
-#line 830 "rygel-media-query-action.c"
-	}
-#line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp11_ = index;
-#line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	self->index = (guint) _tmp11_;
-#line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp12_ = requested_count;
-#line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	self->requested_count = (guint) _tmp12_;
-#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp13_ = self->sort_criteria;
-#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (g_strcmp0 (_tmp13_, "") == 0) {
-#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_g_free0 (self->sort_criteria);
-#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		self->sort_criteria = NULL;
-#line 848 "rygel-media-query-action.c"
+#line 859 "rygel-media-query-action.c"
 	}
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp15_ = self->hacks;
+	_tmp15_ = self->filter;
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (_tmp15_ != NULL) {
-#line 854 "rygel-media-query-action.c"
+	if (_tmp15_ == NULL) {
+#line 865 "rygel-media-query-action.c"
 		const gchar* _tmp16_ = NULL;
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp16_ = self->sort_criteria;
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp14_ = _tmp16_ != NULL;
-#line 860 "rygel-media-query-action.c"
-	} else {
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp14_ = FALSE;
-#line 864 "rygel-media-query-action.c"
-	}
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp17_ = _tmp14_;
-#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (_tmp17_) {
-#line 870 "rygel-media-query-action.c"
-		RygelClientHacks* _tmp18_ = NULL;
+		GError* _tmp17_ = NULL;
 #line 131 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp18_ = self->hacks;
+		_tmp16_ = _ ("Missing filter");
 #line 131 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		rygel_client_hacks_filter_sort_criteria (_tmp18_, &self->sort_criteria);
-#line 876 "rygel-media-query-action.c"
-	}
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	rygel_media_query_action_validate_sort_criteria (self, &_inner_error_);
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (_inner_error_ != NULL) {
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp17_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _tmp16_);
+#line 131 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_inner_error_ = _tmp17_;
+#line 131 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_propagate_error (error, _inner_error_);
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 131 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return;
-#line 886 "rygel-media-query-action.c"
+#line 878 "rygel-media-query-action.c"
 	}
-#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	_tmp19_ = self->hacks;
-#line 136 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (_tmp19_ != NULL) {
-#line 892 "rygel-media-query-action.c"
-		RygelClientHacks* _tmp20_ = NULL;
+#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp18_ = index;
+#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	self->index = (guint) _tmp18_;
+#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp19_ = requested_count;
+#line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	self->requested_count = (guint) _tmp19_;
 #line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_tmp20_ = self->hacks;
+	_tmp20_ = self->sort_criteria;
 #line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		rygel_client_hacks_translate_container_id (_tmp20_, self, &self->object_id);
-#line 898 "rygel-media-query-action.c"
+	if (g_strcmp0 (_tmp20_, "") == 0) {
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_g_free0 (self->sort_criteria);
+#line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		self->sort_criteria = NULL;
+#line 896 "rygel-media-query-action.c"
+	}
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp22_ = self->hacks;
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_tmp22_ != NULL) {
+#line 902 "rygel-media-query-action.c"
+		const gchar* _tmp23_ = NULL;
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp23_ = self->sort_criteria;
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp21_ = _tmp23_ != NULL;
+#line 908 "rygel-media-query-action.c"
+	} else {
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp21_ = FALSE;
+#line 912 "rygel-media-query-action.c"
+	}
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp24_ = _tmp21_;
+#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_tmp24_) {
+#line 918 "rygel-media-query-action.c"
+		RygelClientHacks* _tmp25_ = NULL;
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp25_ = self->hacks;
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		rygel_client_hacks_filter_sort_criteria (_tmp25_, &self->sort_criteria);
+#line 924 "rygel-media-query-action.c"
+	}
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	rygel_media_query_action_validate_sort_criteria (self, &_inner_error_);
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_inner_error_ != NULL) {
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		g_propagate_error (error, _inner_error_);
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		return;
+#line 934 "rygel-media-query-action.c"
+	}
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	_tmp26_ = self->hacks;
+#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_tmp26_ != NULL) {
+#line 940 "rygel-media-query-action.c"
+		RygelClientHacks* _tmp27_ = NULL;
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_tmp27_ = self->hacks;
+#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		rygel_client_hacks_translate_container_id (_tmp27_, self, &self->object_id);
+#line 946 "rygel-media-query-action.c"
 	}
 }
 
@@ -904,7 +952,7 @@ void rygel_media_query_action_parse_args (RygelMediaQueryAction* self, GError** 
 	g_return_if_fail (self != NULL);
 #line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	RYGEL_MEDIA_QUERY_ACTION_GET_CLASS (self)->parse_args (self, error);
-#line 908 "rygel-media-query-action.c"
+#line 956 "rygel-media-query-action.c"
 }
 
 
@@ -939,7 +987,7 @@ static gchar* string_slice (const gchar* self, glong start, glong end) {
 	_tmp2_ = start;
 #line 1192 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	if (_tmp2_ < ((glong) 0)) {
-#line 943 "rygel-media-query-action.c"
+#line 991 "rygel-media-query-action.c"
 		glong _tmp3_ = 0L;
 		glong _tmp4_ = 0L;
 #line 1193 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -948,13 +996,13 @@ static gchar* string_slice (const gchar* self, glong start, glong end) {
 		_tmp4_ = start;
 #line 1193 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		start = _tmp3_ + _tmp4_;
-#line 952 "rygel-media-query-action.c"
+#line 1000 "rygel-media-query-action.c"
 	}
 #line 1195 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	_tmp5_ = end;
 #line 1195 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	if (_tmp5_ < ((glong) 0)) {
-#line 958 "rygel-media-query-action.c"
+#line 1006 "rygel-media-query-action.c"
 		glong _tmp6_ = 0L;
 		glong _tmp7_ = 0L;
 #line 1196 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -963,13 +1011,13 @@ static gchar* string_slice (const gchar* self, glong start, glong end) {
 		_tmp7_ = end;
 #line 1196 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		end = _tmp6_ + _tmp7_;
-#line 967 "rygel-media-query-action.c"
+#line 1015 "rygel-media-query-action.c"
 	}
 #line 1198 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	_tmp9_ = start;
 #line 1198 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	if (_tmp9_ >= ((glong) 0)) {
-#line 973 "rygel-media-query-action.c"
+#line 1021 "rygel-media-query-action.c"
 		glong _tmp10_ = 0L;
 		glong _tmp11_ = 0L;
 #line 1198 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -978,11 +1026,11 @@ static gchar* string_slice (const gchar* self, glong start, glong end) {
 		_tmp11_ = string_length;
 #line 1198 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		_tmp8_ = _tmp10_ <= _tmp11_;
-#line 982 "rygel-media-query-action.c"
+#line 1030 "rygel-media-query-action.c"
 	} else {
 #line 1198 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		_tmp8_ = FALSE;
-#line 986 "rygel-media-query-action.c"
+#line 1034 "rygel-media-query-action.c"
 	}
 #line 1198 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	_tmp12_ = _tmp8_;
@@ -992,7 +1040,7 @@ static gchar* string_slice (const gchar* self, glong start, glong end) {
 	_tmp14_ = end;
 #line 1199 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	if (_tmp14_ >= ((glong) 0)) {
-#line 996 "rygel-media-query-action.c"
+#line 1044 "rygel-media-query-action.c"
 		glong _tmp15_ = 0L;
 		glong _tmp16_ = 0L;
 #line 1199 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -1001,11 +1049,11 @@ static gchar* string_slice (const gchar* self, glong start, glong end) {
 		_tmp16_ = string_length;
 #line 1199 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		_tmp13_ = _tmp15_ <= _tmp16_;
-#line 1005 "rygel-media-query-action.c"
+#line 1053 "rygel-media-query-action.c"
 	} else {
 #line 1199 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		_tmp13_ = FALSE;
-#line 1009 "rygel-media-query-action.c"
+#line 1057 "rygel-media-query-action.c"
 	}
 #line 1199 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	_tmp17_ = _tmp13_;
@@ -1029,7 +1077,7 @@ static gchar* string_slice (const gchar* self, glong start, glong end) {
 	result = _tmp23_;
 #line 1201 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	return result;
-#line 1033 "rygel-media-query-action.c"
+#line 1081 "rygel-media-query-action.c"
 }
 
 
@@ -1048,94 +1096,94 @@ static void rygel_media_query_action_validate_sort_criteria (RygelMediaQueryActi
 	gchar** _tmp10_ = NULL;
 	gint _tmp10__length1 = 0;
 	GError * _inner_error_ = NULL;
-#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_return_if_fail (self != NULL);
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp0_ = self->sort_criteria;
-#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	if (_tmp0_ == NULL) {
-#line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return;
-#line 1060 "rygel-media-query-action.c"
+#line 1108 "rygel-media-query-action.c"
 	}
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp1_ = gee_hash_set_new (G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free, NULL, NULL, NULL, NULL, NULL, NULL);
-#line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	supported_props = _tmp1_;
-#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp2_ = self->sort_criteria;
-#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp4_ = _tmp3_ = g_strsplit (_tmp2_, ",", 0);
-#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	requested_sort_props = _tmp4_;
-#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	requested_sort_props_length1 = _vala_array_length (_tmp3_);
-#line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_requested_sort_props_size_ = requested_sort_props_length1;
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp6_ = _tmp5_ = g_strsplit (RYGEL_MEDIA_OBJECTS_SORT_CAPS, ",", 0);
-#line 1078 "rygel-media-query-action.c"
+#line 1126 "rygel-media-query-action.c"
 	{
 		gchar** property_collection = NULL;
 		gint property_collection_length1 = 0;
 		gint _property_collection_size_ = 0;
 		gint property_it = 0;
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		property_collection = _tmp6_;
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		property_collection_length1 = _vala_array_length (_tmp5_);
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		for (property_it = 0; property_it < _vala_array_length (_tmp5_); property_it = property_it + 1) {
-#line 1090 "rygel-media-query-action.c"
+#line 1138 "rygel-media-query-action.c"
 			gchar* _tmp7_ = NULL;
 			gchar* property = NULL;
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			_tmp7_ = g_strdup (property_collection[property_it]);
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			property = _tmp7_;
-#line 1097 "rygel-media-query-action.c"
+#line 1145 "rygel-media-query-action.c"
 			{
 				GeeHashSet* _tmp8_ = NULL;
 				const gchar* _tmp9_ = NULL;
-#line 151 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp8_ = supported_props;
-#line 151 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp9_ = property;
-#line 151 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				gee_abstract_collection_add ((GeeAbstractCollection*) _tmp8_, _tmp9_);
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_g_free0 (property);
-#line 1109 "rygel-media-query-action.c"
+#line 1157 "rygel-media-query-action.c"
 			}
 		}
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		property_collection = (_vala_array_free (property_collection, property_collection_length1, (GDestroyNotify) g_free), NULL);
-#line 1114 "rygel-media-query-action.c"
+#line 1162 "rygel-media-query-action.c"
 	}
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp10_ = requested_sort_props;
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp10__length1 = requested_sort_props_length1;
-#line 1120 "rygel-media-query-action.c"
+#line 1168 "rygel-media-query-action.c"
 	{
 		gchar** property_collection = NULL;
 		gint property_collection_length1 = 0;
 		gint _property_collection_size_ = 0;
 		gint property_it = 0;
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		property_collection = _tmp10_;
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		property_collection_length1 = _tmp10__length1;
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		for (property_it = 0; property_it < _tmp10__length1; property_it = property_it + 1) {
-#line 1132 "rygel-media-query-action.c"
+#line 1180 "rygel-media-query-action.c"
 			gchar* _tmp11_ = NULL;
 			gchar* property = NULL;
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			_tmp11_ = g_strdup (property_collection[property_it]);
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			property = _tmp11_;
-#line 1139 "rygel-media-query-action.c"
+#line 1187 "rygel-media-query-action.c"
 			{
 				gboolean _tmp12_ = FALSE;
 				const gchar* _tmp13_ = NULL;
@@ -1150,119 +1198,119 @@ static void rygel_media_query_action_validate_sort_criteria (RygelMediaQueryActi
 				gchar* _tmp26_ = NULL;
 				gboolean _tmp27_ = FALSE;
 				gboolean _tmp28_ = FALSE;
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp13_ = property;
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp14_ = g_str_has_prefix (_tmp13_, "+");
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				if (_tmp14_) {
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_tmp12_ = TRUE;
-#line 1162 "rygel-media-query-action.c"
+#line 1210 "rygel-media-query-action.c"
 				} else {
 					const gchar* _tmp15_ = NULL;
 					gboolean _tmp16_ = FALSE;
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_tmp15_ = property;
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_tmp16_ = g_str_has_prefix (_tmp15_, "-");
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_tmp12_ = _tmp16_;
-#line 1172 "rygel-media-query-action.c"
+#line 1220 "rygel-media-query-action.c"
 				}
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp17_ = _tmp12_;
-#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 166 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				if (!_tmp17_) {
-#line 1178 "rygel-media-query-action.c"
+#line 1226 "rygel-media-query-action.c"
 					const gchar* _tmp18_ = NULL;
 					GError* _tmp19_ = NULL;
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_tmp18_ = property;
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_tmp19_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SORT_CRITERIA, "%s is missing + or - modifier", _tmp18_);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_inner_error_ = _tmp19_;
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					g_propagate_error (error, _inner_error_);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_g_free0 (property);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					requested_sort_props = (_vala_array_free (requested_sort_props, requested_sort_props_length1, (GDestroyNotify) g_free), NULL);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_g_object_unref0 (supported_props);
-#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					return;
-#line 1197 "rygel-media-query-action.c"
+#line 1245 "rygel-media-query-action.c"
 				}
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp20_ = supported_props;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp21_ = property;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp22_ = property;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp23_ = strlen (_tmp22_);
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp24_ = _tmp23_;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp25_ = string_slice (_tmp21_, (glong) 1, (glong) _tmp24_);
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp26_ = _tmp25_;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp27_ = gee_abstract_collection_contains ((GeeAbstractCollection*) _tmp20_, _tmp26_);
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_tmp28_ = !_tmp27_;
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_g_free0 (_tmp26_);
-#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				if (_tmp28_) {
-#line 1221 "rygel-media-query-action.c"
+#line 1269 "rygel-media-query-action.c"
 					const gchar* _tmp29_ = NULL;
 					GError* _tmp30_ = NULL;
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_tmp29_ = property;
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_tmp30_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SORT_CRITERIA, "%s is invalid or not supported", _tmp29_);
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_inner_error_ = _tmp30_;
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					g_propagate_error (error, _inner_error_);
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_g_free0 (property);
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					requested_sort_props = (_vala_array_free (requested_sort_props, requested_sort_props_length1, (GDestroyNotify) g_free), NULL);
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					_g_object_unref0 (supported_props);
-#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 					return;
-#line 1240 "rygel-media-query-action.c"
+#line 1288 "rygel-media-query-action.c"
 				}
-#line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 				_g_free0 (property);
-#line 1244 "rygel-media-query-action.c"
+#line 1292 "rygel-media-query-action.c"
 			}
 		}
 	}
-#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	requested_sort_props = (_vala_array_free (requested_sort_props, requested_sort_props_length1, (GDestroyNotify) g_free), NULL);
-#line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_g_object_unref0 (supported_props);
-#line 1252 "rygel-media-query-action.c"
+#line 1300 "rygel-media-query-action.c"
 }
 
 
 void rygel_media_query_action_fetch_results (RygelMediaQueryAction* self, RygelMediaObject* media_object, GAsyncReadyCallback _callback_, gpointer _user_data_) {
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	RYGEL_MEDIA_QUERY_ACTION_GET_CLASS (self)->fetch_results (self, media_object, _callback_, _user_data_);
-#line 1259 "rygel-media-query-action.c"
+#line 1307 "rygel-media-query-action.c"
 }
 
 
 RygelMediaObjects* rygel_media_query_action_fetch_results_finish (RygelMediaQueryAction* self, GAsyncResult* _res_, GError** error) {
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	return RYGEL_MEDIA_QUERY_ACTION_GET_CLASS (self)->fetch_results_finish (self, _res_, error);
-#line 1266 "rygel-media-query-action.c"
+#line 1314 "rygel-media-query-action.c"
 }
 
 
@@ -1275,7 +1323,7 @@ static void rygel_media_query_action_fetch_media_object_data_free (gpointer _dat
 	_g_object_unref0 (_data_->self);
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_slice_free (RygelMediaQueryActionFetchMediaObjectData, _data_);
-#line 1279 "rygel-media-query-action.c"
+#line 1327 "rygel-media-query-action.c"
 }
 
 
@@ -1294,7 +1342,7 @@ static void rygel_media_query_action_fetch_media_object (RygelMediaQueryAction* 
 	_data_->self = _tmp0_;
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	rygel_media_query_action_fetch_media_object_co (_data_);
-#line 1298 "rygel-media-query-action.c"
+#line 1346 "rygel-media-query-action.c"
 }
 
 
@@ -1305,7 +1353,7 @@ static RygelMediaObject* rygel_media_query_action_fetch_media_object_finish (Ryg
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return NULL;
-#line 1309 "rygel-media-query-action.c"
+#line 1357 "rygel-media-query-action.c"
 	}
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
@@ -1315,220 +1363,259 @@ static RygelMediaObject* rygel_media_query_action_fetch_media_object_finish (Ryg
 	_data_->result = NULL;
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	return result;
-#line 1319 "rygel-media-query-action.c"
+#line 1367 "rygel-media-query-action.c"
 }
 
 
 static void rygel_media_query_action_fetch_media_object_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_) {
 	RygelMediaQueryActionFetchMediaObjectData* _data_;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_ = _user_data_;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_source_object_ = source_object;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_res_ = _res_;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	rygel_media_query_action_fetch_media_object_co (_data_);
-#line 1333 "rygel-media-query-action.c"
+#line 1381 "rygel-media-query-action.c"
 }
 
 
 static gboolean rygel_media_query_action_fetch_media_object_co (RygelMediaQueryActionFetchMediaObjectData* _data_) {
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	switch (_data_->_state_) {
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		case 0:
-#line 1342 "rygel-media-query-action.c"
+#line 1390 "rygel-media-query-action.c"
 		goto _state_0;
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		case 1:
-#line 1346 "rygel-media-query-action.c"
+#line 1394 "rygel-media-query-action.c"
 		goto _state_1;
 		default:
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_assert_not_reached ();
-#line 1351 "rygel-media-query-action.c"
+#line 1399 "rygel-media-query-action.c"
 	}
 	_state_0:
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_tmp0_ = NULL;
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_tmp0_ = _data_->self->object_id;
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_tmp1_ = NULL;
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_tmp1_ = _data_->self->root_container;
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_tmp2_ = NULL;
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_tmp2_ = rygel_media_object_get_id ((RygelMediaObject*) _data_->_tmp1_);
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_tmp3_ = NULL;
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_data_->_tmp3_ = _data_->_tmp2_;
-#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	if (g_strcmp0 (_data_->_tmp0_, _data_->_tmp3_) == 0) {
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp4_ = NULL;
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp4_ = _data_->self->root_container;
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp5_ = NULL;
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->_tmp5_ = _g_object_ref0 ((RygelMediaObject*) _data_->_tmp4_);
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_data_->result = _data_->_tmp5_;
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		if (_data_->_state_ == 0) {
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1386 "rygel-media-query-action.c"
+#line 1434 "rygel-media-query-action.c"
 		} else {
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 1390 "rygel-media-query-action.c"
+#line 1438 "rygel-media-query-action.c"
 		}
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		g_object_unref (_data_->_async_result);
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		return FALSE;
-#line 1396 "rygel-media-query-action.c"
-	} else {
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp6_ = NULL;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp6_ = _data_->self->object_id;
-#line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		g_debug ("rygel-media-query-action.vala:177: searching for object '%s'..", _data_->_tmp6_);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp7_ = NULL;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp7_ = _data_->self->root_container;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp8_ = NULL;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp8_ = _data_->self->object_id;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp9_ = NULL;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp9_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp10_ = NULL;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp10_ = _data_->_tmp9_;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_state_ = 1;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		rygel_media_container_find_object (_data_->_tmp7_, _data_->_tmp8_, _data_->_tmp10_, rygel_media_query_action_fetch_media_object_ready, _data_);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		return FALSE;
-#line 1426 "rygel-media-query-action.c"
-		_state_1:
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp11_ = NULL;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp11_ = rygel_media_container_find_object_finish (_data_->_tmp7_, _data_->_res_, &_data_->_inner_error_);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->media_object = _data_->_tmp11_;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		if (_data_->_inner_error_ != NULL) {
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			g_error_free (_data_->_inner_error_);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			if (_data_->_state_ == 0) {
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-				g_simple_async_result_complete_in_idle (_data_->_async_result);
 #line 1444 "rygel-media-query-action.c"
-			} else {
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-				g_simple_async_result_complete (_data_->_async_result);
-#line 1448 "rygel-media-query-action.c"
-			}
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			g_object_unref (_data_->_async_result);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			return FALSE;
-#line 1454 "rygel-media-query-action.c"
-		}
-#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp12_ = NULL;
-#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp12_ = _data_->media_object;
-#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		if (_data_->_tmp12_ == NULL) {
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			_data_->_tmp13_ = NULL;
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			_data_->_tmp13_ = _ ("No such object");
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			_data_->_tmp14_ = NULL;
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			_data_->_tmp14_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_OBJECT, _data_->_tmp13_);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			_data_->_inner_error_ = _data_->_tmp14_;
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			g_error_free (_data_->_inner_error_);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			_g_object_unref0 (_data_->media_object);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			if (_data_->_state_ == 0) {
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-				g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1482 "rygel-media-query-action.c"
-			} else {
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-				g_simple_async_result_complete (_data_->_async_result);
-#line 1486 "rygel-media-query-action.c"
-			}
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			g_object_unref (_data_->_async_result);
-#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			return FALSE;
-#line 1492 "rygel-media-query-action.c"
-		}
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp15_ = NULL;
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->_tmp15_ = _data_->self->object_id;
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		g_debug ("rygel-media-query-action.vala:184: object '%s' found.", _data_->_tmp15_);
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		_data_->result = _data_->media_object;
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		if (_data_->_state_ == 0) {
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1506 "rygel-media-query-action.c"
-		} else {
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-			g_simple_async_result_complete (_data_->_async_result);
-#line 1510 "rygel-media-query-action.c"
-		}
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		g_object_unref (_data_->_async_result);
-#line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		return FALSE;
-#line 1516 "rygel-media-query-action.c"
-	}
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-	if (_data_->_state_ == 0) {
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1522 "rygel-media-query-action.c"
 	} else {
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
-		g_simple_async_result_complete (_data_->_async_result);
-#line 1526 "rygel-media-query-action.c"
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp6_ = NULL;
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp6_ = _data_->self->object_id;
+#line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		g_debug ("rygel-media-query-action.vala:188: searching for object '%s'..", _data_->_tmp6_);
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp7_ = NULL;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp7_ = _data_->self->root_container;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp8_ = NULL;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp8_ = _data_->self->object_id;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp9_ = NULL;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp9_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp10_ = NULL;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp10_ = _data_->_tmp9_;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_state_ = 1;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		rygel_media_container_find_object (_data_->_tmp7_, _data_->_tmp8_, _data_->_tmp10_, rygel_media_query_action_fetch_media_object_ready, _data_);
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		return FALSE;
+#line 1474 "rygel-media-query-action.c"
+		_state_1:
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp11_ = NULL;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp11_ = rygel_media_container_find_object_finish (_data_->_tmp7_, _data_->_res_, &_data_->_inner_error_);
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->media_object = _data_->_tmp11_;
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		if (_data_->_inner_error_ != NULL) {
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			g_error_free (_data_->_inner_error_);
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			if (_data_->_state_ == 0) {
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1492 "rygel-media-query-action.c"
+			} else {
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				g_simple_async_result_complete (_data_->_async_result);
+#line 1496 "rygel-media-query-action.c"
+			}
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			g_object_unref (_data_->_async_result);
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			return FALSE;
+#line 1502 "rygel-media-query-action.c"
+		}
+#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp12_ = NULL;
+#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp12_ = _data_->media_object;
+#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		if (_data_->_tmp12_ == NULL) {
+#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			_data_->_tmp13_ = NULL;
+#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			_data_->_tmp13_ = _data_->self->object_id_arg;
+#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			if (g_strcmp0 (_data_->_tmp13_, "ObjectID") == 0) {
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_tmp14_ = NULL;
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_tmp14_ = _ ("No such object");
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_tmp15_ = NULL;
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_tmp15_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_OBJECT, _data_->_tmp14_);
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_inner_error_ = _data_->_tmp15_;
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				g_error_free (_data_->_inner_error_);
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_g_object_unref0 (_data_->media_object);
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				if (_data_->_state_ == 0) {
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+					g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1536 "rygel-media-query-action.c"
+				} else {
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+					g_simple_async_result_complete (_data_->_async_result);
+#line 1540 "rygel-media-query-action.c"
+				}
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				g_object_unref (_data_->_async_result);
+#line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				return FALSE;
+#line 1546 "rygel-media-query-action.c"
+			} else {
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_tmp16_ = NULL;
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_tmp16_ = _ ("No such container");
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_tmp17_ = NULL;
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_tmp17_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_CONTAINER, _data_->_tmp16_);
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_data_->_inner_error_ = _data_->_tmp17_;
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				g_error_free (_data_->_inner_error_);
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				_g_object_unref0 (_data_->media_object);
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				if (_data_->_state_ == 0) {
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+					g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1568 "rygel-media-query-action.c"
+				} else {
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+					g_simple_async_result_complete (_data_->_async_result);
+#line 1572 "rygel-media-query-action.c"
+				}
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				g_object_unref (_data_->_async_result);
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+				return FALSE;
+#line 1578 "rygel-media-query-action.c"
+			}
+		}
+#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp18_ = NULL;
+#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->_tmp18_ = _data_->self->object_id;
+#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		g_debug ("rygel-media-query-action.vala:200: object '%s' found.", _data_->_tmp18_);
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		_data_->result = _data_->media_object;
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		if (_data_->_state_ == 0) {
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1593 "rygel-media-query-action.c"
+		} else {
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+			g_simple_async_result_complete (_data_->_async_result);
+#line 1597 "rygel-media-query-action.c"
+		}
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		g_object_unref (_data_->_async_result);
+#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		return FALSE;
+#line 1603 "rygel-media-query-action.c"
 	}
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+	if (_data_->_state_ == 0) {
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1609 "rygel-media-query-action.c"
+	} else {
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+		g_simple_async_result_complete (_data_->_async_result);
+#line 1613 "rygel-media-query-action.c"
+	}
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_object_unref (_data_->_async_result);
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	return FALSE;
-#line 1532 "rygel-media-query-action.c"
+#line 1619 "rygel-media-query-action.c"
 }
 
 
@@ -1546,109 +1633,109 @@ static void rygel_media_query_action_conclude (RygelMediaQueryAction* self) {
 	guint _tmp10_ = 0U;
 	guint _tmp11_ = 0U;
 	GUPnPServiceAction* _tmp12_ = NULL;
-#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_return_if_fail (self != NULL);
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp0_ = self->serializer;
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp1_ = self->filter;
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	rygel_serializer_filter (_tmp0_, _tmp1_);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp2_ = self->serializer;
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp3_ = rygel_serializer_get_string (_tmp2_);
-#line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	didl = _tmp3_;
-#line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp4_ = self->update_id;
-#line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp5_ = G_MAXUINT32;
-#line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	if (_tmp4_ == ((guint) _tmp5_)) {
-#line 1570 "rygel-media-query-action.c"
+#line 1657 "rygel-media-query-action.c"
 		guint32 _tmp6_ = 0U;
-#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp6_ = self->system_update_id;
-#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		self->update_id = (guint) _tmp6_;
-#line 1576 "rygel-media-query-action.c"
+#line 1663 "rygel-media-query-action.c"
 	}
-#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp7_ = self->action;
-#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp8_ = didl;
-#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp9_ = self->number_returned;
-#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp10_ = self->total_matches;
-#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp11_ = self->update_id;
-#line 202 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	gupnp_service_action_set (_tmp7_, "Result", G_TYPE_STRING, _tmp8_, "NumberReturned", G_TYPE_UINT, _tmp9_, "TotalMatches", G_TYPE_UINT, _tmp10_, "UpdateID", G_TYPE_UINT, _tmp11_, NULL);
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp12_ = self->action;
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	gupnp_service_action_return (_tmp12_);
-#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_signal_emit_by_name ((RygelStateMachine*) self, "completed");
-#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_g_free0 (didl);
-#line 1598 "rygel-media-query-action.c"
+#line 1685 "rygel-media-query-action.c"
 }
 
 
 static void rygel_media_query_action_real_handle_error (RygelMediaQueryAction* self, GError* _error_) {
 	GError* _tmp0_ = NULL;
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 236 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	_tmp0_ = _error_;
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 236 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	if (_tmp0_->domain == RYGEL_CONTENT_DIRECTORY_ERROR) {
-#line 1608 "rygel-media-query-action.c"
+#line 1695 "rygel-media-query-action.c"
 		GUPnPServiceAction* _tmp1_ = NULL;
 		GError* _tmp2_ = NULL;
 		gint _tmp3_ = 0;
 		GError* _tmp4_ = NULL;
 		const gchar* _tmp5_ = NULL;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp1_ = self->action;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp2_ = _error_;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp3_ = _tmp2_->code;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp4_ = _error_;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp5_ = _tmp4_->message;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		gupnp_service_action_return_error (_tmp1_, (guint) _tmp3_, _tmp5_);
-#line 1626 "rygel-media-query-action.c"
+#line 1713 "rygel-media-query-action.c"
 	} else {
 		GUPnPServiceAction* _tmp6_ = NULL;
 		GError* _tmp7_ = NULL;
 		const gchar* _tmp8_ = NULL;
-#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp6_ = self->action;
-#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp7_ = _error_;
-#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		_tmp8_ = _tmp7_->message;
-#line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		gupnp_service_action_return_error (_tmp6_, (guint) 701, _tmp8_);
-#line 1639 "rygel-media-query-action.c"
+#line 1726 "rygel-media-query-action.c"
 	}
-#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_signal_emit_by_name ((RygelStateMachine*) self, "completed");
-#line 1643 "rygel-media-query-action.c"
+#line 1730 "rygel-media-query-action.c"
 }
 
 
 void rygel_media_query_action_handle_error (RygelMediaQueryAction* self, GError* _error_) {
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 235 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_return_if_fail (self != NULL);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
+#line 235 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	RYGEL_MEDIA_QUERY_ACTION_GET_CLASS (self)->handle_error (self, _error_);
-#line 1652 "rygel-media-query-action.c"
+#line 1739 "rygel-media-query-action.c"
 }
 
 
@@ -1664,7 +1751,7 @@ static GCancellable* rygel_media_query_action_real_get_cancellable (RygelStateMa
 	result = _tmp0_;
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	return result;
-#line 1668 "rygel-media-query-action.c"
+#line 1755 "rygel-media-query-action.c"
 }
 
 
@@ -1684,7 +1771,7 @@ static void rygel_media_query_action_real_set_cancellable (RygelStateMachine* ba
 	self->priv->_cancellable = _tmp1_;
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_object_notify ((GObject *) self, "cancellable");
-#line 1688 "rygel-media-query-action.c"
+#line 1775 "rygel-media-query-action.c"
 }
 
 
@@ -1705,7 +1792,7 @@ static void rygel_media_query_action_class_init (RygelMediaQueryActionClass * kl
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_query_action_finalize;
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_QUERY_ACTION_CANCELLABLE, g_param_spec_object ("cancellable", "cancellable", "cancellable", g_cancellable_get_type (), G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 1709 "rygel-media-query-action.c"
+#line 1796 "rygel-media-query-action.c"
 }
 
 
@@ -1720,14 +1807,14 @@ static void rygel_media_query_action_rygel_state_machine_interface_init (RygelSt
 	iface->get_cancellable = rygel_media_query_action_real_get_cancellable;
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	iface->set_cancellable = rygel_media_query_action_real_set_cancellable;
-#line 1724 "rygel-media-query-action.c"
+#line 1811 "rygel-media-query-action.c"
 }
 
 
 static void rygel_media_query_action_instance_init (RygelMediaQueryAction * self) {
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	self->priv = RYGEL_MEDIA_QUERY_ACTION_GET_PRIVATE (self);
-#line 1731 "rygel-media-query-action.c"
+#line 1818 "rygel-media-query-action.c"
 }
 
 
@@ -1759,7 +1846,7 @@ static void rygel_media_query_action_finalize (GObject* obj) {
 	_g_free0 (self->object_id_arg);
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 	G_OBJECT_CLASS (rygel_media_query_action_parent_class)->finalize (obj);
-#line 1763 "rygel-media-query-action.c"
+#line 1850 "rygel-media-query-action.c"
 }
 
 
@@ -1791,13 +1878,13 @@ static void _vala_rygel_media_query_action_get_property (GObject * object, guint
 		g_value_set_object (value, rygel_state_machine_get_cancellable ((RygelStateMachine*) self));
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		break;
-#line 1795 "rygel-media-query-action.c"
+#line 1882 "rygel-media-query-action.c"
 		default:
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		break;
-#line 1801 "rygel-media-query-action.c"
+#line 1888 "rygel-media-query-action.c"
 	}
 }
 
@@ -1813,13 +1900,13 @@ static void _vala_rygel_media_query_action_set_property (GObject * object, guint
 		rygel_state_machine_set_cancellable ((RygelStateMachine*) self, g_value_get_object (value));
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		break;
-#line 1817 "rygel-media-query-action.c"
+#line 1904 "rygel-media-query-action.c"
 		default:
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 29 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-query-action.vala"
 		break;
-#line 1823 "rygel-media-query-action.c"
+#line 1910 "rygel-media-query-action.c"
 	}
 }
 

@@ -581,7 +581,7 @@ static RygelHTTPResponse* rygel_http_transcode_handler_real_render_body (RygelHT
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-transcode-handler.vala"
 		if (_inner_error_ != NULL) {
 #line 584 "rygel-http-transcode-handler.c"
-			goto __catch45_g_error;
+			goto __catch47_g_error;
 		}
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-transcode-handler.vala"
 		_g_object_unref0 (src);
@@ -598,7 +598,7 @@ static RygelHTTPResponse* rygel_http_transcode_handler_real_render_body (RygelHT
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-transcode-handler.vala"
 		if (_inner_error_ != NULL) {
 #line 601 "rygel-http-transcode-handler.c"
-			goto __catch45_g_error;
+			goto __catch47_g_error;
 		}
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-transcode-handler.vala"
 		result = _tmp18_;
@@ -610,8 +610,8 @@ static RygelHTTPResponse* rygel_http_transcode_handler_real_render_body (RygelHT
 		return result;
 #line 612 "rygel-http-transcode-handler.c"
 	}
-	goto __finally45;
-	__catch45_g_error:
+	goto __finally47;
+	__catch47_g_error:
 	{
 		GError* err = NULL;
 		GError* _tmp22_ = NULL;
@@ -632,9 +632,9 @@ static RygelHTTPResponse* rygel_http_transcode_handler_real_render_body (RygelHT
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-transcode-handler.vala"
 		_g_error_free0 (err);
 #line 635 "rygel-http-transcode-handler.c"
-		goto __finally45;
+		goto __finally47;
 	}
-	__finally45:
+	__finally47:
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-transcode-handler.vala"
 	if (_inner_error_->domain == RYGEL_HTTP_REQUEST_ERROR) {
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-transcode-handler.vala"

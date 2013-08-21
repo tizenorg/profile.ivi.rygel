@@ -129,6 +129,8 @@ RygelMediaContainer is required by
 <pre class="synopsis">
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--all-child-count" title='The "all-child-count" property'>all-child-count</a>"          <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--child-count" title='The "child-count" property'>child-count</a>"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write / Construct
+  "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled" title='The "create-mode-enabled" property'>create-mode-enabled</a>"      <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--empty-child-count" title='The "empty-child-count" property'>empty-child-count</a>"        <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--ocm-flags" title='The "ocm-flags" property'>ocm-flags</a>"                <span class="type">GUPnPOCMFlags</span>         : Read
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--sort-criteria" title='The "sort-criteria" property'>sort-criteria</a>"            <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
 </pre>
@@ -478,7 +480,7 @@ Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaCo
 <pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_media_container_get_empty_child_count
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);</pre>
 <p>
-Get and return the current value of the <span class="type">"empty-child-count"</span> property.
+Get and return the current value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--empty-child-count" title='The "empty-child-count" property'><span class="type">"empty-child-count"</span></a> property.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -489,7 +491,7 @@ Get and return the current value of the <span class="type">"empty-child-count"</
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the value of the <span class="type">"empty-child-count"</span> property</td>
+<td>the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--empty-child-count" title='The "empty-child-count" property'><span class="type">"empty-child-count"</span></a> property</td>
 </tr>
 </tbody>
 </table></div>
@@ -501,7 +503,7 @@ Get and return the current value of the <span class="type">"empty-child-count"</
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
-Set the value of the <span class="type">"empty-child-count"</span> property to <em class="parameter"><code>value</code></em>.
+Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--empty-child-count" title='The "empty-child-count" property'><span class="type">"empty-child-count"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -512,7 +514,7 @@ Set the value of the <span class="type">"empty-child-count"</span> property to <
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>the new value of the <span class="type">"empty-child-count"</span> property</td>
+<td>the new value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--empty-child-count" title='The "empty-child-count" property'><span class="type">"empty-child-count"</span></a> property</td>
 </tr>
 </tbody>
 </table></div>
@@ -545,7 +547,7 @@ Get and return the current value of the <a class="link" href="RygelMediaContaine
 <pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_media_container_get_create_mode_enabled
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>);</pre>
 <p>
-Get and return the current value of the <span class="type">"create-mode-enabled"</span> property.
+Get and return the current value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled" title='The "create-mode-enabled" property'><span class="type">"create-mode-enabled"</span></a> property.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -556,7 +558,7 @@ Get and return the current value of the <span class="type">"create-mode-enabled"
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the value of the <span class="type">"create-mode-enabled"</span> property</td>
+<td>the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled" title='The "create-mode-enabled" property'><span class="type">"create-mode-enabled"</span></a> property</td>
 </tr>
 </tbody>
 </table></div>
@@ -568,7 +570,7 @@ Get and return the current value of the <span class="type">"create-mode-enabled"
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
 <p>
-Set the value of the <span class="type">"create-mode-enabled"</span> property to <em class="parameter"><code>value</code></em>.
+Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled" title='The "create-mode-enabled" property'><span class="type">"create-mode-enabled"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -579,7 +581,7 @@ Set the value of the <span class="type">"create-mode-enabled"</span> property to
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>the new value of the <span class="type">"create-mode-enabled"</span> property</td>
+<td>the new value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled" title='The "create-mode-enabled" property'><span class="type">"create-mode-enabled"</span></a> property</td>
 </tr>
 </tbody>
 </table></div>
@@ -716,6 +718,20 @@ The class structure for <a class="link" href="RygelMediaContainer.html#RYGEL-TYP
 <a name="RygelMediaContainer--child-count"></a><h3>The <code class="literal">"child-count"</code> property</h3>
 <pre class="programlisting">  "child-count"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write / Construct</pre>
 <p>child-count.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="RygelMediaContainer--create-mode-enabled"></a><h3>The <code class="literal">"create-mode-enabled"</code> property</h3>
+<pre class="programlisting">  "create-mode-enabled"      <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>create-mode-enabled.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="RygelMediaContainer--empty-child-count"></a><h3>The <code class="literal">"empty-child-count"</code> property</h3>
+<pre class="programlisting">  "empty-child-count"        <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>empty-child-count.</p>
 <p>Default value: 0</p>
 </div>
 <hr>

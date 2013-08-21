@@ -4,7 +4,7 @@
   <chapters>
     <sub name="Overview" link="overview.html">
       <sub name="" link="overview.html#overview">
-        <sub name="Basic Usage" link="overview.html#idp7463376"/>
+        <sub name="Basic Usage" link="overview.html#idp7077952"/>
       </sub>
     </sub>
     <sub name="Implementing Renderers" link="implementing-renderers.html">
@@ -30,8 +30,11 @@
     <keyword type="function" name="rygel_media_renderer_plugin_get_player ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-player"/>
     <keyword type="function" name="rygel_media_renderer_plugin_get_protocol_info ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-protocol-info"/>
     <keyword type="function" name="rygel_media_renderer_plugin_new ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-new"/>
+    <keyword type="function" name="rygel_media_renderer_plugin_get_supported_profiles ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-supported-profiles"/>
+    <keyword type="function" name="rygel_media_renderer_plugin_set_supported_profiles ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-set-supported-profiles"/>
     <keyword type="struct" name="struct RygelMediaRendererPlugin" link="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin-struct"/>
     <keyword type="struct" name="struct RygelMediaRendererPluginClass" link="RygelMediaRendererPlugin.html#RygelMediaRendererPluginClass"/>
+    <keyword type="property" name="The &quot;supported-profiles&quot; property" link="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles"/>
     <keyword type="macro" name="RYGEL_TYPE_MEDIA_RENDERER" link="RygelMediaRenderer.html#RYGEL-TYPE-MEDIA-RENDERER:CAPS"/>
     <keyword type="function" name="rygel_media_renderer_new ()" link="RygelMediaRenderer.html#rygel-media-renderer-new"/>
     <keyword type="struct" name="struct RygelMediaRenderer" link="RygelMediaRenderer.html#RygelMediaRenderer-struct"/>

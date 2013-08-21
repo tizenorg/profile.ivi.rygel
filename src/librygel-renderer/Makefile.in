@@ -57,7 +57,7 @@ DIST_COMMON = $(librygel_renderer_include_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/filelist.am $(top_srcdir)/common.am \
 	librygel_renderer_2_0_la_vala.stamp rygel-av-transport.c \
-	rygel-changelog.c rygel-media-player.c \
+	rygel-changelog.c rygel-dlna-profile.c rygel-media-player.c \
 	rygel-media-renderer-plugin.c rygel-media-renderer.c \
 	rygel-player-controller.c rygel-renderer.h \
 	rygel-rendering-control.c rygel-sink-connection-manager.c \
@@ -111,6 +111,7 @@ librygel_renderer_2_0_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 am__objects_1 =  \
 	librygel_renderer_2_0_la-rygel-media-renderer-plugin.lo \
 	librygel_renderer_2_0_la-rygel-media-player.lo \
+	librygel_renderer_2_0_la-rygel-dlna-profile.lo \
 	librygel_renderer_2_0_la-rygel-media-renderer.lo
 am__objects_2 = librygel_renderer_2_0_la-rygel-av-transport.lo \
 	librygel_renderer_2_0_la-rygel-player-controller.lo \
@@ -480,6 +481,7 @@ RYGEL_COMMON_VALAFLAGS = \
 LIBRYGEL_RENDERER_VAPI_SOURCE_FILES = \
 	rygel-media-renderer-plugin.vala \
 	rygel-media-player.vala \
+	rygel-dlna-profile.vala \
 	rygel-media-renderer.vala
 
 LIBRYGEL_RENDERER_NONVAPI_SOURCE_FILES = \
@@ -598,6 +600,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_renderer_2_0_la-rygel-av-transport.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_renderer_2_0_la-rygel-changelog.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_renderer_2_0_la-rygel-dlna-profile.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_renderer_2_0_la-rygel-media-player.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_renderer_2_0_la-rygel-media-renderer-plugin.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_renderer_2_0_la-rygel-media-renderer.Plo@am__quote@
@@ -641,6 +644,13 @@ librygel_renderer_2_0_la-rygel-media-player.lo: rygel-media-player.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-media-player.c' object='librygel_renderer_2_0_la-rygel-media-player.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_renderer_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_renderer_2_0_la-rygel-media-player.lo `test -f 'rygel-media-player.c' || echo '$(srcdir)/'`rygel-media-player.c
+
+librygel_renderer_2_0_la-rygel-dlna-profile.lo: rygel-dlna-profile.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_renderer_2_0_la_CFLAGS) $(CFLAGS) -MT librygel_renderer_2_0_la-rygel-dlna-profile.lo -MD -MP -MF $(DEPDIR)/librygel_renderer_2_0_la-rygel-dlna-profile.Tpo -c -o librygel_renderer_2_0_la-rygel-dlna-profile.lo `test -f 'rygel-dlna-profile.c' || echo '$(srcdir)/'`rygel-dlna-profile.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_renderer_2_0_la-rygel-dlna-profile.Tpo $(DEPDIR)/librygel_renderer_2_0_la-rygel-dlna-profile.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-dlna-profile.c' object='librygel_renderer_2_0_la-rygel-dlna-profile.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_renderer_2_0_la_CFLAGS) $(CFLAGS) -c -o librygel_renderer_2_0_la-rygel-dlna-profile.lo `test -f 'rygel-dlna-profile.c' || echo '$(srcdir)/'`rygel-dlna-profile.c
 
 librygel_renderer_2_0_la-rygel-media-renderer.lo: rygel-media-renderer.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_renderer_2_0_la_CFLAGS) $(CFLAGS) -MT librygel_renderer_2_0_la-rygel-media-renderer.lo -MD -MP -MF $(DEPDIR)/librygel_renderer_2_0_la-rygel-media-renderer.Tpo -c -o librygel_renderer_2_0_la-rygel-media-renderer.lo `test -f 'rygel-media-renderer.c' || echo '$(srcdir)/'`rygel-media-renderer.c
@@ -707,6 +717,11 @@ $(srcdir)/rygel-media-player.c: $(srcdir)/librygel_renderer_2_0_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_renderer_2_0_la_vala.stamp; \
 	fi
+$(srcdir)/rygel-dlna-profile.c: $(srcdir)/librygel_renderer_2_0_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/librygel_renderer_2_0_la_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_renderer_2_0_la_vala.stamp; \
+	fi
 $(srcdir)/rygel-media-renderer.c: $(srcdir)/librygel_renderer_2_0_la_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/librygel_renderer_2_0_la_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -752,9 +767,9 @@ $(srcdir)/rygel-renderer.h: $(srcdir)/librygel_renderer_2_0_la_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_renderer_2_0_la_vala.stamp; \
 	fi
-$(srcdir)/librygel_renderer_2_0_la_vala.stamp: rygel-media-renderer-plugin.vala rygel-media-player.vala rygel-media-renderer.vala rygel-av-transport.vala rygel-player-controller.vala rygel-rendering-control.vala rygel-sink-connection-manager.vala rygel-time-utils.vala rygel-changelog.vala rygel-volume.vala
+$(srcdir)/librygel_renderer_2_0_la_vala.stamp: rygel-media-renderer-plugin.vala rygel-media-player.vala rygel-dlna-profile.vala rygel-media-renderer.vala rygel-av-transport.vala rygel-player-controller.vala rygel-rendering-control.vala rygel-sink-connection-manager.vala rygel-time-utils.vala rygel-changelog.vala rygel-volume.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_renderer_2_0_la_VALAFLAGS) $(VALAFLAGS) -C rygel-media-renderer-plugin.vala rygel-media-player.vala rygel-media-renderer.vala rygel-av-transport.vala rygel-player-controller.vala rygel-rendering-control.vala rygel-sink-connection-manager.vala rygel-time-utils.vala rygel-changelog.vala rygel-volume.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_renderer_2_0_la_VALAFLAGS) $(VALAFLAGS) -C rygel-media-renderer-plugin.vala rygel-media-player.vala rygel-dlna-profile.vala rygel-media-renderer.vala rygel-av-transport.vala rygel-player-controller.vala rygel-rendering-control.vala rygel-sink-connection-manager.vala rygel-time-utils.vala rygel-changelog.vala rygel-volume.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
@@ -927,6 +942,7 @@ maintainer-clean-generic:
 	-rm -f librygel_renderer_2_0_la_vala.stamp
 	-rm -f rygel-av-transport.c
 	-rm -f rygel-changelog.c
+	-rm -f rygel-dlna-profile.c
 	-rm -f rygel-media-player.c
 	-rm -f rygel-media-renderer-plugin.c
 	-rm -f rygel-media-renderer.c

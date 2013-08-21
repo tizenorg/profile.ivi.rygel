@@ -392,7 +392,7 @@ RygelHTTPRequest* rygel_http_request_construct (GType object_type, RygelHTTPServ
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 		if (_inner_error_ != NULL) {
 #line 395 "rygel-http-request.c"
-			goto __catch41_g_error;
+			goto __catch43_g_error;
 		}
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 		_g_object_unref0 (self->hack);
@@ -400,8 +400,8 @@ RygelHTTPRequest* rygel_http_request_construct (GType object_type, RygelHTTPServ
 		self->hack = _tmp14_;
 #line 402 "rygel-http-request.c"
 	}
-	goto __finally41;
-	__catch41_g_error:
+	goto __finally43;
+	__catch43_g_error:
 	{
 		GError* _error_ = NULL;
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
@@ -412,7 +412,7 @@ RygelHTTPRequest* rygel_http_request_construct (GType object_type, RygelHTTPServ
 		_g_error_free0 (_error_);
 #line 414 "rygel-http-request.c"
 	}
-	__finally41:
+	__finally43:
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 	if (_inner_error_ != NULL) {
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
@@ -546,7 +546,7 @@ static gboolean rygel_http_request_real_run_co (RygelHttpRequestRunData* _data_)
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 		if (_data_->_inner_error_ != NULL) {
 #line 549 "rygel-http-request.c"
-			goto __catch42_g_error;
+			goto __catch44_g_error;
 		}
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 		_g_object_unref0 (_data_->self->uri);
@@ -565,7 +565,7 @@ static gboolean rygel_http_request_real_run_co (RygelHttpRequestRunData* _data_)
 #line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 		if (_data_->_inner_error_ != NULL) {
 #line 568 "rygel-http-request.c"
-			goto __catch42_g_error;
+			goto __catch44_g_error;
 		}
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 		_data_->_state_ = 2;
@@ -580,11 +580,11 @@ static gboolean rygel_http_request_real_run_co (RygelHttpRequestRunData* _data_)
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 		if (_data_->_inner_error_ != NULL) {
 #line 583 "rygel-http-request.c"
-			goto __catch42_g_error;
+			goto __catch44_g_error;
 		}
 	}
-	goto __finally42;
-	__catch42_g_error:
+	goto __finally44;
+	__catch44_g_error:
 	{
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -600,7 +600,7 @@ static gboolean rygel_http_request_real_run_co (RygelHttpRequestRunData* _data_)
 		_g_error_free0 (_data_->_error_);
 #line 602 "rygel-http-request.c"
 	}
-	__finally42:
+	__finally44:
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-request.vala"

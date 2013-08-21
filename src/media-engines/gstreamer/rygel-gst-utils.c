@@ -59,7 +59,6 @@ typedef struct _RygelGstUtilsPrivate RygelGstUtilsPrivate;
 #define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 #define _gst_mini_object_unref0(var) ((var == NULL) ? NULL : (var = (gst_mini_object_unref (var), NULL)))
 #define __g_list_free__g_object_unref0_0(var) ((var == NULL) ? NULL : (var = (_g_list_free__g_object_unref0_ (var), NULL)))
-#define __vala_GstStructure_free0(var) ((var == NULL) ? NULL : (var = (_vala_GstStructure_free (var), NULL)))
 typedef struct _RygelParamSpecGstUtils RygelParamSpecGstUtils;
 
 typedef enum  {
@@ -105,8 +104,6 @@ GstElement* rygel_gst_utils_get_rtp_depayloader (GstCaps* caps);
 static gboolean rygel_gst_utils_need_rtp_depayloader (GstCaps* caps);
 static void _g_object_unref0_ (gpointer var);
 static void _g_list_free__g_object_unref0_ (GList* self);
-static GstStructure* _vala_GstStructure_copy (GstStructure* self);
-static void _vala_GstStructure_free (GstStructure* self);
 RygelGstUtils* rygel_gst_utils_construct (GType object_type);
 static void rygel_gst_utils_finalize (RygelGstUtils* obj);
 
@@ -119,7 +116,7 @@ GQuark rygel_gst_error_quark (void) {
 static gpointer _g_object_ref0 (gpointer self) {
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 123 "rygel-gst-utils.c"
+#line 120 "rygel-gst-utils.c"
 }
 
 
@@ -148,7 +145,7 @@ GstElement* rygel_gst_utils_create_element (const gchar* factoryname, const gcha
 	_tmp4_ = element;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	if (_tmp4_ == NULL) {
-#line 152 "rygel-gst-utils.c"
+#line 149 "rygel-gst-utils.c"
 		const gchar* _tmp5_ = NULL;
 		const gchar* _tmp6_ = NULL;
 		GError* _tmp7_ = NULL;
@@ -166,13 +163,13 @@ GstElement* rygel_gst_utils_create_element (const gchar* factoryname, const gcha
 		_g_object_unref0 (element);
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		return NULL;
-#line 170 "rygel-gst-utils.c"
+#line 167 "rygel-gst-utils.c"
 	}
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	result = element;
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return result;
-#line 176 "rygel-gst-utils.c"
+#line 173 "rygel-gst-utils.c"
 }
 
 
@@ -185,7 +182,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 	g_return_val_if_fail (old != NULL, NULL);
 #line 1242 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	g_return_val_if_fail (replacement != NULL, NULL);
-#line 189 "rygel-gst-utils.c"
+#line 186 "rygel-gst-utils.c"
 	{
 		GRegex* regex = NULL;
 		const gchar* _tmp0_ = NULL;
@@ -215,7 +212,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		if (_inner_error_ != NULL) {
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-#line 219 "rygel-gst-utils.c"
+#line 216 "rygel-gst-utils.c"
 				goto __catch3_g_regex_error;
 			}
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -224,7 +221,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 			g_clear_error (&_inner_error_);
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			return NULL;
-#line 228 "rygel-gst-utils.c"
+#line 225 "rygel-gst-utils.c"
 		}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		_tmp6_ = regex;
@@ -240,7 +237,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 			_g_regex_unref0 (regex);
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
-#line 244 "rygel-gst-utils.c"
+#line 241 "rygel-gst-utils.c"
 				goto __catch3_g_regex_error;
 			}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -251,7 +248,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 			g_clear_error (&_inner_error_);
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			return NULL;
-#line 255 "rygel-gst-utils.c"
+#line 252 "rygel-gst-utils.c"
 		}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		result = _tmp5_;
@@ -259,7 +256,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_regex_unref0 (regex);
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		return result;
-#line 263 "rygel-gst-utils.c"
+#line 260 "rygel-gst-utils.c"
 	}
 	goto __finally3;
 	__catch3_g_regex_error:
@@ -273,7 +270,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_assert_not_reached ();
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		_g_error_free0 (e);
-#line 277 "rygel-gst-utils.c"
+#line 274 "rygel-gst-utils.c"
 	}
 	__finally3:
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -284,7 +281,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		g_clear_error (&_inner_error_);
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 		return NULL;
-#line 288 "rygel-gst-utils.c"
+#line 285 "rygel-gst-utils.c"
 	}
 }
 
@@ -292,14 +289,14 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 static inline void _dynamic_set_blocksize5 (GstElement* obj, glong value) {
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	g_object_set (obj, "blocksize", value, NULL);
-#line 296 "rygel-gst-utils.c"
+#line 293 "rygel-gst-utils.c"
 }
 
 
 static inline void _dynamic_set_tcp_timeout6 (GstElement* obj, gint64 value) {
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	g_object_set (obj, "tcp-timeout", value, NULL);
-#line 303 "rygel-gst-utils.c"
+#line 300 "rygel-gst-utils.c"
 }
 
 
@@ -308,7 +305,7 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 	GError * _inner_error_ = NULL;
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	g_return_val_if_fail (uri != NULL, NULL);
-#line 312 "rygel-gst-utils.c"
+#line 309 "rygel-gst-utils.c"
 	{
 		GstElement* src = NULL;
 		const gchar* _tmp0_ = NULL;
@@ -325,7 +322,7 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 		_tmp1_ = g_str_has_prefix (_tmp0_, "gst-launch://");
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		if (_tmp1_) {
-#line 329 "rygel-gst-utils.c"
+#line 326 "rygel-gst-utils.c"
 			gchar* description = NULL;
 			const gchar* _tmp2_ = NULL;
 			gchar* _tmp3_ = NULL;
@@ -350,7 +347,7 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 				_g_free0 (description);
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 				_g_object_unref0 (src);
-#line 354 "rygel-gst-utils.c"
+#line 351 "rygel-gst-utils.c"
 				goto __catch2_g_error;
 			}
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
@@ -359,7 +356,7 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 			src = (GstElement*) _tmp4_;
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			_g_free0 (description);
-#line 363 "rygel-gst-utils.c"
+#line 360 "rygel-gst-utils.c"
 		} else {
 			GstElement* _tmp7_ = NULL;
 			const gchar* _tmp8_ = NULL;
@@ -375,7 +372,7 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 			if (_inner_error_ != NULL) {
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 				_g_object_unref0 (src);
-#line 379 "rygel-gst-utils.c"
+#line 376 "rygel-gst-utils.c"
 				goto __catch2_g_error;
 			}
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
@@ -384,7 +381,7 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 			_g_object_unref0 (src);
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			src = _tmp10_;
-#line 388 "rygel-gst-utils.c"
+#line 385 "rygel-gst-utils.c"
 		}
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		_tmp11_ = src;
@@ -394,13 +391,13 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 		_tmp13_ = g_object_class_find_property (_tmp12_, "blocksize");
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		if (_tmp13_ != NULL) {
-#line 398 "rygel-gst-utils.c"
+#line 395 "rygel-gst-utils.c"
 			GstElement* _tmp14_ = NULL;
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			_tmp14_ = src;
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			_dynamic_set_blocksize5 (_tmp14_, (glong) 65536);
-#line 404 "rygel-gst-utils.c"
+#line 401 "rygel-gst-utils.c"
 		}
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		_tmp15_ = src;
@@ -410,19 +407,19 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 		_tmp17_ = g_object_class_find_property (_tmp16_, "tcp-timeout");
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		if (_tmp17_ != NULL) {
-#line 414 "rygel-gst-utils.c"
+#line 411 "rygel-gst-utils.c"
 			GstElement* _tmp18_ = NULL;
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			_tmp18_ = src;
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			_dynamic_set_tcp_timeout6 (_tmp18_, (gint64) 60000000);
-#line 420 "rygel-gst-utils.c"
+#line 417 "rygel-gst-utils.c"
 		}
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		result = src;
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		return result;
-#line 426 "rygel-gst-utils.c"
+#line 423 "rygel-gst-utils.c"
 	}
 	goto __finally2;
 	__catch2_g_error:
@@ -438,7 +435,7 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 		_g_error_free0 (_error_);
 #line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		return result;
-#line 442 "rygel-gst-utils.c"
+#line 439 "rygel-gst-utils.c"
 	}
 	__finally2:
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
@@ -447,7 +444,7 @@ GstElement* rygel_gst_utils_create_source_for_uri (const gchar* uri) {
 	g_clear_error (&_inner_error_);
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return NULL;
-#line 451 "rygel-gst-utils.c"
+#line 448 "rygel-gst-utils.c"
 }
 
 
@@ -531,7 +528,7 @@ void rygel_gst_utils_dump_encoding_profile (GstEncodingProfile* profile, gint in
 	_gst_mini_object_unref0 (_tmp17_);
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	if (_tmp18_) {
-#line 535 "rygel-gst-utils.c"
+#line 532 "rygel-gst-utils.c"
 		const gchar* _tmp19_ = NULL;
 		gchar* _tmp20_ = NULL;
 		gchar* _tmp21_ = NULL;
@@ -564,13 +561,13 @@ void rygel_gst_utils_dump_encoding_profile (GstEncodingProfile* profile, gint in
 		_gst_mini_object_unref0 (_tmp24_);
 #line 82 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		_g_free0 (_tmp21_);
-#line 568 "rygel-gst-utils.c"
+#line 565 "rygel-gst-utils.c"
 	}
 #line 86 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	_tmp27_ = profile;
 #line 86 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	if (G_TYPE_CHECK_INSTANCE_TYPE (_tmp27_, gst_encoding_container_profile_get_type ())) {
-#line 574 "rygel-gst-utils.c"
+#line 571 "rygel-gst-utils.c"
 		GstEncodingContainerProfile* container = NULL;
 		GstEncodingProfile* _tmp28_ = NULL;
 		GstEncodingContainerProfile* _tmp29_ = NULL;
@@ -586,7 +583,7 @@ void rygel_gst_utils_dump_encoding_profile (GstEncodingProfile* profile, gint in
 		_tmp30_ = container;
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		_tmp31_ = gst_encoding_container_profile_get_profiles (_tmp30_);
-#line 590 "rygel-gst-utils.c"
+#line 587 "rygel-gst-utils.c"
 		{
 			GList* subprofile_collection = NULL;
 			GList* subprofile_it = NULL;
@@ -594,14 +591,14 @@ void rygel_gst_utils_dump_encoding_profile (GstEncodingProfile* profile, gint in
 			subprofile_collection = _tmp31_;
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			for (subprofile_it = subprofile_collection; subprofile_it != NULL; subprofile_it = subprofile_it->next) {
-#line 598 "rygel-gst-utils.c"
+#line 595 "rygel-gst-utils.c"
 				GstEncodingProfile* _tmp32_ = NULL;
 				GstEncodingProfile* subprofile = NULL;
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 				_tmp32_ = _g_object_ref0 ((GstEncodingProfile*) subprofile_it->data);
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 				subprofile = _tmp32_;
-#line 605 "rygel-gst-utils.c"
+#line 602 "rygel-gst-utils.c"
 				{
 					GstEncodingProfile* _tmp33_ = NULL;
 					gint _tmp34_ = 0;
@@ -613,24 +610,24 @@ void rygel_gst_utils_dump_encoding_profile (GstEncodingProfile* profile, gint in
 					rygel_gst_utils_dump_encoding_profile (_tmp33_, _tmp34_ + 4);
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 					_g_object_unref0 (subprofile);
-#line 617 "rygel-gst-utils.c"
+#line 614 "rygel-gst-utils.c"
 				}
 			}
 		}
 #line 86 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		_g_object_unref0 (container);
-#line 623 "rygel-gst-utils.c"
+#line 620 "rygel-gst-utils.c"
 	}
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	_g_free0 (indent_s);
-#line 627 "rygel-gst-utils.c"
+#line 624 "rygel-gst-utils.c"
 }
 
 
 static void _g_object_unref0_ (gpointer var) {
 #line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	(var == NULL) ? NULL : (var = (g_object_unref (var), NULL));
-#line 634 "rygel-gst-utils.c"
+#line 631 "rygel-gst-utils.c"
 }
 
 
@@ -639,7 +636,7 @@ static void _g_list_free__g_object_unref0_ (GList* self) {
 	g_list_foreach (self, (GFunc) _g_object_unref0_, NULL);
 #line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	g_list_free (self);
-#line 643 "rygel-gst-utils.c"
+#line 640 "rygel-gst-utils.c"
 }
 
 
@@ -670,7 +667,7 @@ GstElement* rygel_gst_utils_get_rtp_depayloader (GstCaps* caps) {
 		result = NULL;
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		return result;
-#line 674 "rygel-gst-utils.c"
+#line 671 "rygel-gst-utils.c"
 	}
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	_tmp2_ = gst_element_factory_list_get_elements ((GstElementFactoryListType) GST_ELEMENT_FACTORY_TYPE_DEPAYLOADER, GST_RANK_NONE);
@@ -696,7 +693,7 @@ GstElement* rygel_gst_utils_get_rtp_depayloader (GstCaps* caps) {
 		__g_list_free__g_object_unref0_0 (features);
 #line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		return result;
-#line 700 "rygel-gst-utils.c"
+#line 697 "rygel-gst-utils.c"
 	}
 #line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	_tmp7_ = features;
@@ -712,7 +709,7 @@ GstElement* rygel_gst_utils_get_rtp_depayloader (GstCaps* caps) {
 	_g_free0 (_tmp10_);
 #line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	if (_tmp11_) {
-#line 716 "rygel-gst-utils.c"
+#line 713 "rygel-gst-utils.c"
 		GList* _tmp12_ = NULL;
 		GList* _tmp13_ = NULL;
 #line 113 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
@@ -721,7 +718,7 @@ GstElement* rygel_gst_utils_get_rtp_depayloader (GstCaps* caps) {
 		_tmp13_ = _tmp12_->next;
 #line 113 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		if (_tmp13_ != NULL) {
-#line 725 "rygel-gst-utils.c"
+#line 722 "rygel-gst-utils.c"
 			GList* _tmp14_ = NULL;
 			GList* _tmp15_ = NULL;
 			gconstpointer _tmp16_ = NULL;
@@ -743,7 +740,7 @@ GstElement* rygel_gst_utils_get_rtp_depayloader (GstCaps* caps) {
 			__g_list_free__g_object_unref0_0 (features);
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			return result;
-#line 747 "rygel-gst-utils.c"
+#line 744 "rygel-gst-utils.c"
 		}
 #line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		result = NULL;
@@ -751,7 +748,7 @@ GstElement* rygel_gst_utils_get_rtp_depayloader (GstCaps* caps) {
 		__g_list_free__g_object_unref0_0 (features);
 #line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		return result;
-#line 755 "rygel-gst-utils.c"
+#line 752 "rygel-gst-utils.c"
 	} else {
 		GList* _tmp19_ = NULL;
 		gconstpointer _tmp20_ = NULL;
@@ -771,32 +768,11 @@ GstElement* rygel_gst_utils_get_rtp_depayloader (GstCaps* caps) {
 		__g_list_free__g_object_unref0_0 (features);
 #line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		return result;
-#line 775 "rygel-gst-utils.c"
+#line 772 "rygel-gst-utils.c"
 	}
 #line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	__g_list_free__g_object_unref0_0 (features);
-#line 779 "rygel-gst-utils.c"
-}
-
-
-static GstStructure* _vala_GstStructure_copy (GstStructure* self) {
-#line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
-	return g_boxed_copy (gst_structure_get_type (), self);
-#line 786 "rygel-gst-utils.c"
-}
-
-
-static gpointer __vala_GstStructure_copy0 (gpointer self) {
-#line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
-	return self ? _vala_GstStructure_copy (self) : NULL;
-#line 793 "rygel-gst-utils.c"
-}
-
-
-static void _vala_GstStructure_free (GstStructure* self) {
-#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
-	g_boxed_free (gst_structure_get_type (), self);
-#line 800 "rygel-gst-utils.c"
+#line 776 "rygel-gst-utils.c"
 }
 
 
@@ -805,8 +781,7 @@ static gboolean rygel_gst_utils_need_rtp_depayloader (GstCaps* caps) {
 	GstStructure* structure = NULL;
 	GstCaps* _tmp0_ = NULL;
 	GstStructure* _tmp1_ = NULL;
-	GstStructure* _tmp2_ = NULL;
-	const gchar* _tmp3_ = NULL;
+	const gchar* _tmp2_ = NULL;
 #line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	g_return_val_if_fail (caps != NULL, FALSE);
 #line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
@@ -814,18 +789,14 @@ static gboolean rygel_gst_utils_need_rtp_depayloader (GstCaps* caps) {
 #line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	_tmp1_ = gst_caps_get_structure (_tmp0_, (guint) 0);
 #line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
-	_tmp2_ = __vala_GstStructure_copy0 (_tmp1_);
-#line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
-	structure = _tmp2_;
+	structure = _tmp1_;
 #line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
-	_tmp3_ = gst_structure_get_name (structure);
+	_tmp2_ = gst_structure_get_name (structure);
 #line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
-	result = g_strcmp0 (_tmp3_, "application/x-rtp") == 0;
-#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
-	__vala_GstStructure_free0 (structure);
+	result = g_strcmp0 (_tmp2_, "application/x-rtp") == 0;
 #line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return result;
-#line 829 "rygel-gst-utils.c"
+#line 800 "rygel-gst-utils.c"
 }
 
 
@@ -835,14 +806,14 @@ RygelGstUtils* rygel_gst_utils_construct (GType object_type) {
 	self = (RygelGstUtils*) g_type_create_instance (object_type);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return self;
-#line 839 "rygel-gst-utils.c"
+#line 810 "rygel-gst-utils.c"
 }
 
 
 static void rygel_value_gst_utils_init (GValue* value) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	value->data[0].v_pointer = NULL;
-#line 846 "rygel-gst-utils.c"
+#line 817 "rygel-gst-utils.c"
 }
 
 
@@ -851,7 +822,7 @@ static void rygel_value_gst_utils_free_value (GValue* value) {
 	if (value->data[0].v_pointer) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		rygel_gst_utils_unref (value->data[0].v_pointer);
-#line 855 "rygel-gst-utils.c"
+#line 826 "rygel-gst-utils.c"
 	}
 }
 
@@ -861,11 +832,11 @@ static void rygel_value_gst_utils_copy_value (const GValue* src_value, GValue* d
 	if (src_value->data[0].v_pointer) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		dest_value->data[0].v_pointer = rygel_gst_utils_ref (src_value->data[0].v_pointer);
-#line 865 "rygel-gst-utils.c"
+#line 836 "rygel-gst-utils.c"
 	} else {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		dest_value->data[0].v_pointer = NULL;
-#line 869 "rygel-gst-utils.c"
+#line 840 "rygel-gst-utils.c"
 	}
 }
 
@@ -873,37 +844,37 @@ static void rygel_value_gst_utils_copy_value (const GValue* src_value, GValue* d
 static gpointer rygel_value_gst_utils_peek_pointer (const GValue* value) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return value->data[0].v_pointer;
-#line 877 "rygel-gst-utils.c"
+#line 848 "rygel-gst-utils.c"
 }
 
 
 static gchar* rygel_value_gst_utils_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	if (collect_values[0].v_pointer) {
-#line 884 "rygel-gst-utils.c"
+#line 855 "rygel-gst-utils.c"
 		RygelGstUtils* object;
 		object = collect_values[0].v_pointer;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		if (object->parent_instance.g_class == NULL) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 891 "rygel-gst-utils.c"
+#line 862 "rygel-gst-utils.c"
 		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 895 "rygel-gst-utils.c"
+#line 866 "rygel-gst-utils.c"
 		}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		value->data[0].v_pointer = rygel_gst_utils_ref (object);
-#line 899 "rygel-gst-utils.c"
+#line 870 "rygel-gst-utils.c"
 	} else {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		value->data[0].v_pointer = NULL;
-#line 903 "rygel-gst-utils.c"
+#line 874 "rygel-gst-utils.c"
 	}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return NULL;
-#line 907 "rygel-gst-utils.c"
+#line 878 "rygel-gst-utils.c"
 }
 
 
@@ -914,25 +885,25 @@ static gchar* rygel_value_gst_utils_lcopy_value (const GValue* value, guint n_co
 	if (!object_p) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 918 "rygel-gst-utils.c"
+#line 889 "rygel-gst-utils.c"
 	}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	if (!value->data[0].v_pointer) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		*object_p = NULL;
-#line 924 "rygel-gst-utils.c"
+#line 895 "rygel-gst-utils.c"
 	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		*object_p = value->data[0].v_pointer;
-#line 928 "rygel-gst-utils.c"
+#line 899 "rygel-gst-utils.c"
 	} else {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		*object_p = rygel_gst_utils_ref (value->data[0].v_pointer);
-#line 932 "rygel-gst-utils.c"
+#line 903 "rygel-gst-utils.c"
 	}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return NULL;
-#line 936 "rygel-gst-utils.c"
+#line 907 "rygel-gst-utils.c"
 }
 
 
@@ -946,7 +917,7 @@ GParamSpec* rygel_param_spec_gst_utils (const gchar* name, const gchar* nick, co
 	G_PARAM_SPEC (spec)->value_type = object_type;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return G_PARAM_SPEC (spec);
-#line 950 "rygel-gst-utils.c"
+#line 921 "rygel-gst-utils.c"
 }
 
 
@@ -955,7 +926,7 @@ gpointer rygel_value_get_gst_utils (const GValue* value) {
 	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, RYGEL_TYPE_GST_UTILS), NULL);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return value->data[0].v_pointer;
-#line 959 "rygel-gst-utils.c"
+#line 930 "rygel-gst-utils.c"
 }
 
 
@@ -975,17 +946,17 @@ void rygel_value_set_gst_utils (GValue* value, gpointer v_object) {
 		value->data[0].v_pointer = v_object;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		rygel_gst_utils_ref (value->data[0].v_pointer);
-#line 979 "rygel-gst-utils.c"
+#line 950 "rygel-gst-utils.c"
 	} else {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		value->data[0].v_pointer = NULL;
-#line 983 "rygel-gst-utils.c"
+#line 954 "rygel-gst-utils.c"
 	}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	if (old) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		rygel_gst_utils_unref (old);
-#line 989 "rygel-gst-utils.c"
+#line 960 "rygel-gst-utils.c"
 	}
 }
 
@@ -1004,17 +975,17 @@ void rygel_value_take_gst_utils (GValue* value, gpointer v_object) {
 		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		value->data[0].v_pointer = v_object;
-#line 1008 "rygel-gst-utils.c"
+#line 979 "rygel-gst-utils.c"
 	} else {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		value->data[0].v_pointer = NULL;
-#line 1012 "rygel-gst-utils.c"
+#line 983 "rygel-gst-utils.c"
 	}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	if (old) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		rygel_gst_utils_unref (old);
-#line 1018 "rygel-gst-utils.c"
+#line 989 "rygel-gst-utils.c"
 	}
 }
 
@@ -1024,14 +995,14 @@ static void rygel_gst_utils_class_init (RygelGstUtilsClass * klass) {
 	rygel_gst_utils_parent_class = g_type_class_peek_parent (klass);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	RYGEL_GST_UTILS_CLASS (klass)->finalize = rygel_gst_utils_finalize;
-#line 1028 "rygel-gst-utils.c"
+#line 999 "rygel-gst-utils.c"
 }
 
 
 static void rygel_gst_utils_instance_init (RygelGstUtils * self) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	self->ref_count = 1;
-#line 1035 "rygel-gst-utils.c"
+#line 1006 "rygel-gst-utils.c"
 }
 
 
@@ -1039,7 +1010,7 @@ static void rygel_gst_utils_finalize (RygelGstUtils* obj) {
 	RygelGstUtils * self;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_GST_UTILS, RygelGstUtils);
-#line 1043 "rygel-gst-utils.c"
+#line 1014 "rygel-gst-utils.c"
 }
 
 
@@ -1064,7 +1035,7 @@ gpointer rygel_gst_utils_ref (gpointer instance) {
 	g_atomic_int_inc (&self->ref_count);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 	return instance;
-#line 1068 "rygel-gst-utils.c"
+#line 1039 "rygel-gst-utils.c"
 }
 
 
@@ -1077,7 +1048,7 @@ void rygel_gst_utils_unref (gpointer instance) {
 		RYGEL_GST_UTILS_GET_CLASS (self)->finalize (self);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/media-engines/gstreamer/rygel-gst-utils.vala"
 		g_type_free_instance ((GTypeInstance *) self);
-#line 1081 "rygel-gst-utils.c"
+#line 1052 "rygel-gst-utils.c"
 	}
 }
 

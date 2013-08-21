@@ -77,7 +77,7 @@ typedef struct _RygelMediaItemClass RygelMediaItemClass;
 typedef struct _RygelWritableContainerAddReferenceData RygelWritableContainerAddReferenceData;
 
 typedef enum  {
-	RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED
+	RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED = 602
 } RygelWritableContainerError;
 #define RYGEL_WRITABLE_CONTAINER_ERROR rygel_writable_container_error_quark ()
 struct _RygelWritableContainerIface {

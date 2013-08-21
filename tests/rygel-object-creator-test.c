@@ -89,6 +89,28 @@ typedef struct _RygelObjectRemovalQueuePrivate RygelObjectRemovalQueuePrivate;
 
 typedef struct _RygelMediaObject RygelMediaObject;
 typedef struct _RygelMediaObjectClass RygelMediaObjectClass;
+
+#define RYGEL_TYPE_MEDIA_SERVER_PLUGIN (rygel_media_server_plugin_get_type ())
+#define RYGEL_MEDIA_SERVER_PLUGIN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_MEDIA_SERVER_PLUGIN, RygelMediaServerPlugin))
+#define RYGEL_MEDIA_SERVER_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_MEDIA_SERVER_PLUGIN, RygelMediaServerPluginClass))
+#define RYGEL_IS_MEDIA_SERVER_PLUGIN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_MEDIA_SERVER_PLUGIN))
+#define RYGEL_IS_MEDIA_SERVER_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_MEDIA_SERVER_PLUGIN))
+#define RYGEL_MEDIA_SERVER_PLUGIN_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_MEDIA_SERVER_PLUGIN, RygelMediaServerPluginClass))
+
+typedef struct _RygelMediaServerPlugin RygelMediaServerPlugin;
+typedef struct _RygelMediaServerPluginClass RygelMediaServerPluginClass;
+typedef struct _RygelMediaServerPluginPrivate RygelMediaServerPluginPrivate;
+
+#define RYGEL_TYPE_DLNA_PROFILE (rygel_dlna_profile_get_type ())
+#define RYGEL_DLNA_PROFILE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_DLNA_PROFILE, RygelDLNAProfile))
+#define RYGEL_DLNA_PROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_DLNA_PROFILE, RygelDLNAProfileClass))
+#define RYGEL_IS_DLNA_PROFILE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_DLNA_PROFILE))
+#define RYGEL_IS_DLNA_PROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_DLNA_PROFILE))
+#define RYGEL_DLNA_PROFILE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_DLNA_PROFILE, RygelDLNAProfileClass))
+
+typedef struct _RygelDLNAProfile RygelDLNAProfile;
+typedef struct _RygelDLNAProfileClass RygelDLNAProfileClass;
+#define __g_list_free__rygel_dlna_profile_unref0_0(var) ((var == NULL) ? NULL : (var = (_g_list_free__rygel_dlna_profile_unref0_ (var), NULL)))
 typedef struct _RygelMediaObjectPrivate RygelMediaObjectPrivate;
 
 #define RYGEL_TYPE_MEDIA_OBJECTS (rygel_media_objects_get_type ())
@@ -217,6 +239,17 @@ typedef struct _RygelPlaylistItem RygelPlaylistItem;
 typedef struct _RygelPlaylistItemClass RygelPlaylistItemClass;
 typedef struct _RygelPlaylistItemPrivate RygelPlaylistItemPrivate;
 
+#define RYGEL_TYPE_ROOT_DEVICE (rygel_root_device_get_type ())
+#define RYGEL_ROOT_DEVICE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_ROOT_DEVICE, RygelRootDevice))
+#define RYGEL_ROOT_DEVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_ROOT_DEVICE, RygelRootDeviceClass))
+#define RYGEL_IS_ROOT_DEVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_ROOT_DEVICE))
+#define RYGEL_IS_ROOT_DEVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_ROOT_DEVICE))
+#define RYGEL_ROOT_DEVICE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_ROOT_DEVICE, RygelRootDeviceClass))
+
+typedef struct _RygelRootDevice RygelRootDevice;
+typedef struct _RygelRootDeviceClass RygelRootDeviceClass;
+typedef struct _RygelRootDevicePrivate RygelRootDevicePrivate;
+
 #define RYGEL_TYPE_CONTENT_DIRECTORY (rygel_content_directory_get_type ())
 #define RYGEL_CONTENT_DIRECTORY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_CONTENT_DIRECTORY, RygelContentDirectory))
 #define RYGEL_CONTENT_DIRECTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_CONTENT_DIRECTORY, RygelContentDirectoryClass))
@@ -282,69 +315,6 @@ typedef struct _RygelTranscoderClass RygelTranscoderClass;
 typedef struct _RygelTranscoderPrivate RygelTranscoderPrivate;
 typedef struct _RygelParamSpecTranscoder RygelParamSpecTranscoder;
 
-#define RYGEL_TYPE_MEDIA_ENGINE (rygel_media_engine_get_type ())
-#define RYGEL_MEDIA_ENGINE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_MEDIA_ENGINE, RygelMediaEngine))
-#define RYGEL_MEDIA_ENGINE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_MEDIA_ENGINE, RygelMediaEngineClass))
-#define RYGEL_IS_MEDIA_ENGINE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_MEDIA_ENGINE))
-#define RYGEL_IS_MEDIA_ENGINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_MEDIA_ENGINE))
-#define RYGEL_MEDIA_ENGINE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_MEDIA_ENGINE, RygelMediaEngineClass))
-
-typedef struct _RygelMediaEngine RygelMediaEngine;
-typedef struct _RygelMediaEngineClass RygelMediaEngineClass;
-typedef struct _RygelMediaEnginePrivate RygelMediaEnginePrivate;
-
-#define RYGEL_TYPE_DLNA_PROFILE (rygel_dlna_profile_get_type ())
-#define RYGEL_DLNA_PROFILE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_DLNA_PROFILE, RygelDLNAProfile))
-#define RYGEL_DLNA_PROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_DLNA_PROFILE, RygelDLNAProfileClass))
-#define RYGEL_IS_DLNA_PROFILE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_DLNA_PROFILE))
-#define RYGEL_IS_DLNA_PROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_DLNA_PROFILE))
-#define RYGEL_DLNA_PROFILE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_DLNA_PROFILE, RygelDLNAProfileClass))
-
-typedef struct _RygelDLNAProfile RygelDLNAProfile;
-typedef struct _RygelDLNAProfileClass RygelDLNAProfileClass;
-
-#define RYGEL_TYPE_DATA_SOURCE (rygel_data_source_get_type ())
-#define RYGEL_DATA_SOURCE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_DATA_SOURCE, RygelDataSource))
-#define RYGEL_IS_DATA_SOURCE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_DATA_SOURCE))
-#define RYGEL_DATA_SOURCE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), RYGEL_TYPE_DATA_SOURCE, RygelDataSourceIface))
-
-typedef struct _RygelDataSource RygelDataSource;
-typedef struct _RygelDataSourceIface RygelDataSourceIface;
-
-#define RYGEL_TYPE_HTTP_SEEK (rygel_http_seek_get_type ())
-#define RYGEL_HTTP_SEEK(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_HTTP_SEEK, RygelHTTPSeek))
-#define RYGEL_HTTP_SEEK_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_HTTP_SEEK, RygelHTTPSeekClass))
-#define RYGEL_IS_HTTP_SEEK(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_HTTP_SEEK))
-#define RYGEL_IS_HTTP_SEEK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_HTTP_SEEK))
-#define RYGEL_HTTP_SEEK_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_HTTP_SEEK, RygelHTTPSeekClass))
-
-typedef struct _RygelHTTPSeek RygelHTTPSeek;
-typedef struct _RygelHTTPSeekClass RygelHTTPSeekClass;
-
-#define RYGEL_TYPE_TEST_MEDIA_ENGINE (rygel_test_media_engine_get_type ())
-#define RYGEL_TEST_MEDIA_ENGINE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_TEST_MEDIA_ENGINE, RygelTestMediaEngine))
-#define RYGEL_TEST_MEDIA_ENGINE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_TEST_MEDIA_ENGINE, RygelTestMediaEngineClass))
-#define RYGEL_IS_TEST_MEDIA_ENGINE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_TEST_MEDIA_ENGINE))
-#define RYGEL_IS_TEST_MEDIA_ENGINE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_TEST_MEDIA_ENGINE))
-#define RYGEL_TEST_MEDIA_ENGINE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_TEST_MEDIA_ENGINE, RygelTestMediaEngineClass))
-
-typedef struct _RygelTestMediaEngine RygelTestMediaEngine;
-typedef struct _RygelTestMediaEngineClass RygelTestMediaEngineClass;
-typedef struct _RygelTestMediaEnginePrivate RygelTestMediaEnginePrivate;
-#define __g_list_free__rygel_dlna_profile_unref0_0(var) ((var == NULL) ? NULL : (var = (_g_list_free__rygel_dlna_profile_unref0_ (var), NULL)))
-
-#define RYGEL_TYPE_ENGINE_LOADER (rygel_engine_loader_get_type ())
-#define RYGEL_ENGINE_LOADER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_ENGINE_LOADER, RygelEngineLoader))
-#define RYGEL_ENGINE_LOADER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_ENGINE_LOADER, RygelEngineLoaderClass))
-#define RYGEL_IS_ENGINE_LOADER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_ENGINE_LOADER))
-#define RYGEL_IS_ENGINE_LOADER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_ENGINE_LOADER))
-#define RYGEL_ENGINE_LOADER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_ENGINE_LOADER, RygelEngineLoaderClass))
-
-typedef struct _RygelEngineLoader RygelEngineLoader;
-typedef struct _RygelEngineLoaderClass RygelEngineLoaderClass;
-typedef struct _RygelEngineLoaderPrivate RygelEngineLoaderPrivate;
-typedef struct _RygelParamSpecEngineLoader RygelParamSpecEngineLoader;
-
 #define RYGEL_TYPE_HTTP_OBJECT_CREATOR_TEST (rygel_http_object_creator_test_get_type ())
 #define RYGEL_HTTP_OBJECT_CREATOR_TEST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_HTTP_OBJECT_CREATOR_TEST, RygelHTTPObjectCreatorTest))
 #define RYGEL_HTTP_OBJECT_CREATOR_TEST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_HTTP_OBJECT_CREATOR_TEST, RygelHTTPObjectCreatorTestClass))
@@ -408,6 +378,16 @@ struct _RygelObjectRemovalQueue {
 };
 
 struct _RygelObjectRemovalQueueClass {
+	GObjectClass parent_class;
+};
+
+struct _RygelMediaServerPlugin {
+	GObject parent_instance;
+	RygelMediaServerPluginPrivate * priv;
+	GList* upload_profiles;
+};
+
+struct _RygelMediaServerPluginClass {
 	GObjectClass parent_class;
 };
 
@@ -538,12 +518,23 @@ struct _RygelPlaylistItemClass {
 	RygelMediaItemClass parent_class;
 };
 
+struct _RygelRootDevice {
+	GObject parent_instance;
+	RygelRootDevicePrivate * priv;
+	RygelMediaServerPlugin* resource_factory;
+};
+
+struct _RygelRootDeviceClass {
+	GObjectClass parent_class;
+};
+
 struct _RygelContentDirectory {
 	GObject parent_instance;
 	RygelContentDirectoryPrivate * priv;
 	GCancellable* cancellable;
 	RygelMediaContainer* root_container;
 	RygelHTTPServer* http_server;
+	RygelRootDevice* root_device;
 };
 
 struct _RygelContentDirectoryClass {
@@ -694,54 +685,6 @@ struct _RygelParamSpecTranscoder {
 	GParamSpec parent_instance;
 };
 
-struct _RygelDataSourceIface {
-	GTypeInterface parent_iface;
-	void (*start) (RygelDataSource* self, RygelHTTPSeek* offsets, GError** error);
-	void (*freeze) (RygelDataSource* self);
-	void (*thaw) (RygelDataSource* self);
-	void (*stop) (RygelDataSource* self);
-};
-
-struct _RygelMediaEngine {
-	GObject parent_instance;
-	RygelMediaEnginePrivate * priv;
-};
-
-struct _RygelMediaEngineClass {
-	GObjectClass parent_class;
-	GList* (*get_dlna_profiles) (RygelMediaEngine* self);
-	GList* (*get_transcoders) (RygelMediaEngine* self);
-	RygelDataSource* (*create_data_source) (RygelMediaEngine* self, const gchar* uri);
-};
-
-struct _RygelTestMediaEngine {
-	RygelMediaEngine parent_instance;
-	RygelTestMediaEnginePrivate * priv;
-};
-
-struct _RygelTestMediaEngineClass {
-	RygelMediaEngineClass parent_class;
-};
-
-struct _RygelTestMediaEnginePrivate {
-	GList* dlna_profiles;
-};
-
-struct _RygelEngineLoader {
-	GTypeInstance parent_instance;
-	volatile int ref_count;
-	RygelEngineLoaderPrivate * priv;
-};
-
-struct _RygelEngineLoaderClass {
-	GTypeClass parent_class;
-	void (*finalize) (RygelEngineLoader *self);
-};
-
-struct _RygelParamSpecEngineLoader {
-	GParamSpec parent_instance;
-};
-
 struct _RygelHTTPObjectCreatorTest {
 	GObject parent_instance;
 	RygelHTTPObjectCreatorTestPrivate * priv;
@@ -783,6 +726,7 @@ struct _Block3Data {
 static gpointer rygel_service_action_parent_class = NULL;
 static gpointer rygel_http_server_parent_class = NULL;
 static gpointer rygel_object_removal_queue_parent_class = NULL;
+static gpointer rygel_media_server_plugin_parent_class = NULL;
 static gpointer rygel_media_object_parent_class = NULL;
 static gpointer rygel_media_item_parent_class = NULL;
 static gpointer rygel_music_item_parent_class = NULL;
@@ -791,14 +735,13 @@ static gpointer rygel_image_item_parent_class = NULL;
 static gpointer rygel_video_item_parent_class = NULL;
 static gpointer rygel_photo_item_parent_class = NULL;
 static gpointer rygel_playlist_item_parent_class = NULL;
+static gpointer rygel_root_device_parent_class = NULL;
 static gpointer rygel_content_directory_parent_class = NULL;
 static gpointer rygel_media_container_parent_class = NULL;
 static gpointer rygel_media_objects_parent_class = NULL;
 static gpointer rygel_writable_container_parent_class = NULL;
 static gpointer rygel_searchable_container_parent_class = NULL;
 static gpointer rygel_transcoder_parent_class = NULL;
-static gpointer rygel_test_media_engine_parent_class = NULL;
-static gpointer rygel_engine_loader_parent_class = NULL;
 static gpointer rygel_http_object_creator_test_parent_class = NULL;
 
 #define DIDL_ITEM "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" \
@@ -843,6 +786,22 @@ RygelObjectRemovalQueue* rygel_object_removal_queue_new (void);
 RygelObjectRemovalQueue* rygel_object_removal_queue_construct (GType object_type);
 GType rygel_media_object_get_type (void) G_GNUC_CONST;
 void rygel_object_removal_queue_queue (RygelObjectRemovalQueue* self, RygelMediaObject* object, GCancellable* cancellable);
+GType rygel_media_server_plugin_get_type (void) G_GNUC_CONST;
+gpointer rygel_dlna_profile_ref (gpointer instance);
+void rygel_dlna_profile_unref (gpointer instance);
+GParamSpec* rygel_param_spec_dlna_profile (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
+void rygel_value_set_dlna_profile (GValue* value, gpointer v_object);
+void rygel_value_take_dlna_profile (GValue* value, gpointer v_object);
+gpointer rygel_value_get_dlna_profile (const GValue* value);
+GType rygel_dlna_profile_get_type (void) G_GNUC_CONST;
+enum  {
+	RYGEL_MEDIA_SERVER_PLUGIN_DUMMY_PROPERTY
+};
+static void _rygel_dlna_profile_unref0_ (gpointer var);
+static void _g_list_free__rygel_dlna_profile_unref0_ (GList* self);
+RygelMediaServerPlugin* rygel_media_server_plugin_new (void);
+RygelMediaServerPlugin* rygel_media_server_plugin_construct (GType object_type);
+static void rygel_media_server_plugin_finalize (GObject* obj);
 GType rygel_media_objects_get_type (void) G_GNUC_CONST;
 GType rygel_media_container_get_type (void) G_GNUC_CONST;
 #define RYGEL_MEDIA_OBJECT_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), RYGEL_TYPE_MEDIA_OBJECT, RygelMediaObjectPrivate))
@@ -929,6 +888,13 @@ enum  {
 #define RYGEL_PLAYLIST_ITEM_UPNP_CLASS "object.item.playlistItem"
 RygelPlaylistItem* rygel_playlist_item_new (const gchar* id, RygelMediaContainer* parent, const gchar* title);
 RygelPlaylistItem* rygel_playlist_item_construct (GType object_type, const gchar* id, RygelMediaContainer* parent, const gchar* title);
+GType rygel_root_device_get_type (void) G_GNUC_CONST;
+enum  {
+	RYGEL_ROOT_DEVICE_DUMMY_PROPERTY
+};
+RygelRootDevice* rygel_root_device_new (void);
+RygelRootDevice* rygel_root_device_construct (GType object_type);
+static void rygel_root_device_finalize (GObject* obj);
 GType rygel_content_directory_get_type (void) G_GNUC_CONST;
 enum  {
 	RYGEL_CONTENT_DIRECTORY_DUMMY_PROPERTY
@@ -1019,44 +985,6 @@ enum  {
 RygelTranscoder* rygel_transcoder_new (void);
 RygelTranscoder* rygel_transcoder_construct (GType object_type);
 static void rygel_transcoder_finalize (RygelTranscoder* obj);
-GType rygel_media_engine_get_type (void) G_GNUC_CONST;
-gpointer rygel_dlna_profile_ref (gpointer instance);
-void rygel_dlna_profile_unref (gpointer instance);
-GParamSpec* rygel_param_spec_dlna_profile (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
-void rygel_value_set_dlna_profile (GValue* value, gpointer v_object);
-void rygel_value_take_dlna_profile (GValue* value, gpointer v_object);
-gpointer rygel_value_get_dlna_profile (const GValue* value);
-GType rygel_dlna_profile_get_type (void) G_GNUC_CONST;
-GType rygel_http_seek_get_type (void) G_GNUC_CONST;
-GType rygel_data_source_get_type (void) G_GNUC_CONST;
-GType rygel_test_media_engine_get_type (void) G_GNUC_CONST;
-#define RYGEL_TEST_MEDIA_ENGINE_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), RYGEL_TYPE_TEST_MEDIA_ENGINE, RygelTestMediaEnginePrivate))
-enum  {
-	RYGEL_TEST_MEDIA_ENGINE_DUMMY_PROPERTY
-};
-static void _rygel_dlna_profile_unref0_ (gpointer var);
-static void _g_list_free__rygel_dlna_profile_unref0_ (GList* self);
-static GList* rygel_test_media_engine_real_get_dlna_profiles (RygelMediaEngine* base);
-static GList* rygel_test_media_engine_real_get_transcoders (RygelMediaEngine* base);
-static RygelDataSource* rygel_test_media_engine_real_create_data_source (RygelMediaEngine* base, const gchar* uri);
-RygelTestMediaEngine* rygel_test_media_engine_new (void);
-RygelTestMediaEngine* rygel_test_media_engine_construct (GType object_type);
-RygelMediaEngine* rygel_media_engine_construct (GType object_type);
-static void rygel_test_media_engine_finalize (GObject* obj);
-gpointer rygel_engine_loader_ref (gpointer instance);
-void rygel_engine_loader_unref (gpointer instance);
-GParamSpec* rygel_param_spec_engine_loader (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags);
-void rygel_value_set_engine_loader (GValue* value, gpointer v_object);
-void rygel_value_take_engine_loader (GValue* value, gpointer v_object);
-gpointer rygel_value_get_engine_loader (const GValue* value);
-GType rygel_engine_loader_get_type (void) G_GNUC_CONST;
-enum  {
-	RYGEL_ENGINE_LOADER_DUMMY_PROPERTY
-};
-RygelEngineLoader* rygel_engine_loader_new (void);
-RygelEngineLoader* rygel_engine_loader_construct (GType object_type);
-RygelMediaEngine* rygel_engine_loader_load_engine (RygelEngineLoader* self);
-static void rygel_engine_loader_finalize (RygelEngineLoader* obj);
 void log_func (const gchar* domain, GLogLevelFlags flags, const gchar* message);
 GType rygel_http_object_creator_test_get_type (void) G_GNUC_CONST;
 #define RYGEL_HTTP_OBJECT_CREATOR_TEST_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), RYGEL_TYPE_HTTP_OBJECT_CREATOR_TEST, RygelHTTPObjectCreatorTestPrivate))
@@ -1117,21 +1045,21 @@ RygelServiceAction* rygel_service_action_construct (GType object_type, const gch
 	self->elements = _tmp3_;
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 1106 "rygel-object-creator-test.c"
+#line 1034 "rygel-object-creator-test.c"
 }
 
 
 RygelServiceAction* rygel_service_action_new (const gchar* container_id, const gchar* elements) {
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_service_action_construct (RYGEL_TYPE_SERVICE_ACTION, container_id, elements);
-#line 1113 "rygel-object-creator-test.c"
+#line 1041 "rygel-object-creator-test.c"
 }
 
 
 void rygel_service_action_return (RygelServiceAction* self) {
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 1120 "rygel-object-creator-test.c"
+#line 1048 "rygel-object-creator-test.c"
 }
 
 
@@ -1155,7 +1083,7 @@ void rygel_service_action_return_error (RygelServiceAction* self, gint code, con
 	_g_free0 (self->error_message);
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->error_message = _tmp2_;
-#line 1144 "rygel-object-creator-test.c"
+#line 1072 "rygel-object-creator-test.c"
 }
 
 
@@ -1212,21 +1140,21 @@ void rygel_service_action_get (RygelServiceAction* self, const gchar* arg1_name,
 	if (arg1_val) {
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		*arg1_val = _vala_arg1_val;
-#line 1201 "rygel-object-creator-test.c"
+#line 1129 "rygel-object-creator-test.c"
 	} else {
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_g_free0 (_vala_arg1_val);
-#line 1205 "rygel-object-creator-test.c"
+#line 1133 "rygel-object-creator-test.c"
 	}
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (arg2_val) {
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		*arg2_val = _vala_arg2_val;
-#line 1211 "rygel-object-creator-test.c"
+#line 1139 "rygel-object-creator-test.c"
 	} else {
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_g_free0 (_vala_arg2_val);
-#line 1215 "rygel-object-creator-test.c"
+#line 1143 "rygel-object-creator-test.c"
 	}
 }
 
@@ -1262,7 +1190,7 @@ void rygel_service_action_set (RygelServiceAction* self, const gchar* arg1_name,
 	_tmp3_ = arg2_type;
 #line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp3_ == G_TYPE_STRING, "arg2_type == typeof (string)");
-#line 1251 "rygel-object-creator-test.c"
+#line 1179 "rygel-object-creator-test.c"
 }
 
 
@@ -1271,7 +1199,7 @@ static void rygel_service_action_class_init (RygelServiceActionClass * klass) {
 	rygel_service_action_parent_class = g_type_class_peek_parent (klass);
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_service_action_finalize;
-#line 1260 "rygel-object-creator-test.c"
+#line 1188 "rygel-object-creator-test.c"
 }
 
 
@@ -1291,7 +1219,7 @@ static void rygel_service_action_finalize (GObject* obj) {
 	_g_free0 (self->elements);
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_service_action_parent_class)->finalize (obj);
-#line 1280 "rygel-object-creator-test.c"
+#line 1208 "rygel-object-creator-test.c"
 }
 
 
@@ -1313,21 +1241,21 @@ RygelHTTPServer* rygel_http_server_construct (GType object_type) {
 	self = (RygelHTTPServer*) g_object_new (object_type, NULL);
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 1302 "rygel-object-creator-test.c"
+#line 1230 "rygel-object-creator-test.c"
 }
 
 
 RygelHTTPServer* rygel_http_server_new (void) {
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_http_server_construct (RYGEL_TYPE_HTTP_SERVER);
-#line 1309 "rygel-object-creator-test.c"
+#line 1237 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_http_server_class_init (RygelHTTPServerClass * klass) {
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_server_parent_class = g_type_class_peek_parent (klass);
-#line 1316 "rygel-object-creator-test.c"
+#line 1244 "rygel-object-creator-test.c"
 }
 
 
@@ -1356,7 +1284,7 @@ RygelObjectRemovalQueue* rygel_object_removal_queue_get_default (void) {
 	result = _tmp0_;
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 1345 "rygel-object-creator-test.c"
+#line 1273 "rygel-object-creator-test.c"
 }
 
 
@@ -1365,7 +1293,7 @@ void rygel_object_removal_queue_queue (RygelObjectRemovalQueue* self, RygelMedia
 	g_return_if_fail (self != NULL);
 #line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (object != NULL);
-#line 1354 "rygel-object-creator-test.c"
+#line 1282 "rygel-object-creator-test.c"
 }
 
 
@@ -1375,21 +1303,21 @@ RygelObjectRemovalQueue* rygel_object_removal_queue_construct (GType object_type
 	self = (RygelObjectRemovalQueue*) g_object_new (object_type, NULL);
 #line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 1364 "rygel-object-creator-test.c"
+#line 1292 "rygel-object-creator-test.c"
 }
 
 
 RygelObjectRemovalQueue* rygel_object_removal_queue_new (void) {
 #line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_object_removal_queue_construct (RYGEL_TYPE_OBJECT_REMOVAL_QUEUE);
-#line 1371 "rygel-object-creator-test.c"
+#line 1299 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_object_removal_queue_class_init (RygelObjectRemovalQueueClass * klass) {
 #line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_object_removal_queue_parent_class = g_type_class_peek_parent (klass);
-#line 1378 "rygel-object-creator-test.c"
+#line 1306 "rygel-object-creator-test.c"
 }
 
 
@@ -1409,55 +1337,128 @@ GType rygel_object_removal_queue_get_type (void) {
 }
 
 
+static void _rygel_dlna_profile_unref0_ (gpointer var) {
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	(var == NULL) ? NULL : (var = (rygel_dlna_profile_unref (var), NULL));
+#line 1329 "rygel-object-creator-test.c"
+}
+
+
+static void _g_list_free__rygel_dlna_profile_unref0_ (GList* self) {
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	g_list_foreach (self, (GFunc) _rygel_dlna_profile_unref0_, NULL);
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	g_list_free (self);
+#line 1338 "rygel-object-creator-test.c"
+}
+
+
+RygelMediaServerPlugin* rygel_media_server_plugin_construct (GType object_type) {
+	RygelMediaServerPlugin * self = NULL;
+#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	self = (RygelMediaServerPlugin*) g_object_new (object_type, NULL);
+#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	return self;
+#line 1348 "rygel-object-creator-test.c"
+}
+
+
+RygelMediaServerPlugin* rygel_media_server_plugin_new (void) {
+#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	return rygel_media_server_plugin_construct (RYGEL_TYPE_MEDIA_SERVER_PLUGIN);
+#line 1355 "rygel-object-creator-test.c"
+}
+
+
+static void rygel_media_server_plugin_class_init (RygelMediaServerPluginClass * klass) {
+#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	rygel_media_server_plugin_parent_class = g_type_class_peek_parent (klass);
+#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	G_OBJECT_CLASS (klass)->finalize = rygel_media_server_plugin_finalize;
+#line 1364 "rygel-object-creator-test.c"
+}
+
+
+static void rygel_media_server_plugin_instance_init (RygelMediaServerPlugin * self) {
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	self->upload_profiles = NULL;
+#line 1371 "rygel-object-creator-test.c"
+}
+
+
+static void rygel_media_server_plugin_finalize (GObject* obj) {
+	RygelMediaServerPlugin * self;
+#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_MEDIA_SERVER_PLUGIN, RygelMediaServerPlugin);
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	__g_list_free__rygel_dlna_profile_unref0_0 (self->upload_profiles);
+#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	G_OBJECT_CLASS (rygel_media_server_plugin_parent_class)->finalize (obj);
+#line 1383 "rygel-object-creator-test.c"
+}
+
+
+GType rygel_media_server_plugin_get_type (void) {
+	static volatile gsize rygel_media_server_plugin_type_id__volatile = 0;
+	if (g_once_init_enter (&rygel_media_server_plugin_type_id__volatile)) {
+		static const GTypeInfo g_define_type_info = { sizeof (RygelMediaServerPluginClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) rygel_media_server_plugin_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (RygelMediaServerPlugin), 0, (GInstanceInitFunc) rygel_media_server_plugin_instance_init, NULL };
+		GType rygel_media_server_plugin_type_id;
+		rygel_media_server_plugin_type_id = g_type_register_static (G_TYPE_OBJECT, "RygelMediaServerPlugin", &g_define_type_info, 0);
+		g_once_init_leave (&rygel_media_server_plugin_type_id__volatile, rygel_media_server_plugin_type_id);
+	}
+	return rygel_media_server_plugin_type_id__volatile;
+}
+
+
 void rygel_media_object_add_uri (RygelMediaObject* self, const gchar* uri) {
 	GeeArrayList* _tmp0_ = NULL;
 	const gchar* _tmp1_ = NULL;
-#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (uri != NULL);
-#line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = self->uris;
-#line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = uri;
-#line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 127 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	gee_abstract_collection_add ((GeeAbstractCollection*) _tmp0_, _tmp1_);
-#line 1411 "rygel-object-creator-test.c"
+#line 1412 "rygel-object-creator-test.c"
 }
 
 
 void rygel_media_object_serialize (RygelMediaObject* self, RygelSerializer* serializer, RygelHTTPServer* server) {
-#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (serializer != NULL);
-#line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (server != NULL);
-#line 1422 "rygel-object-creator-test.c"
+#line 1423 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_object_real_get_children_data_free (gpointer _data) {
 	RygelMediaObjectGetChildrenData* _data_;
 	_data_ = _data;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (_data_->sort_criteria);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->result);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->self);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_slice_free (RygelMediaObjectGetChildrenData, _data_);
-#line 1439 "rygel-object-creator-test.c"
+#line 1440 "rygel-object-creator-test.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 1446 "rygel-object-creator-test.c"
+#line 1447 "rygel-object-creator-test.c"
 }
 
 
@@ -1470,142 +1471,142 @@ static void rygel_media_object_real_get_children (RygelMediaObject* self, guint 
 	gchar* _tmp4_ = NULL;
 	GCancellable* _tmp5_ = NULL;
 	GCancellable* _tmp6_ = NULL;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_slice_new0 (RygelMediaObjectGetChildrenData);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_media_object_real_get_children);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_media_object_real_get_children_data_free);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = _g_object_ref0 (self);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->self = _tmp0_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = offset;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->offset = _tmp1_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = max_count;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->max_count = _tmp2_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = sort_criteria;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = g_strdup (_tmp3_);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (_data_->sort_criteria);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->sort_criteria = _tmp4_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp5_ = cancellable;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp6_ = _g_object_ref0 (_tmp5_);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->cancellable = _tmp6_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_object_real_get_children_co (_data_);
-#line 1495 "rygel-object-creator-test.c"
+#line 1496 "rygel-object-creator-test.c"
 }
 
 
 static RygelMediaObjects* rygel_media_object_real_get_children_finish (RygelMediaObject* self, GAsyncResult* _res_, GError** error) {
 	RygelMediaObjects* result;
 	RygelMediaObjectGetChildrenData* _data_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		return NULL;
-#line 1506 "rygel-object-creator-test.c"
+#line 1507 "rygel-object-creator-test.c"
 	}
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _data_->result;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = NULL;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 1516 "rygel-object-creator-test.c"
+#line 1517 "rygel-object-creator-test.c"
 }
 
 
 static gboolean rygel_media_object_real_get_children_co (RygelMediaObjectGetChildrenData* _data_) {
-#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (_data_->_state_) {
-#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 0:
-#line 1525 "rygel-object-creator-test.c"
+#line 1526 "rygel-object-creator-test.c"
 		goto _state_0;
 		default:
-#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_assert_not_reached ();
-#line 1530 "rygel-object-creator-test.c"
+#line 1531 "rygel-object-creator-test.c"
 	}
 	_state_0:
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = NULL;
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1539 "rygel-object-creator-test.c"
+#line 1540 "rygel-object-creator-test.c"
 	} else {
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1543 "rygel-object-creator-test.c"
+#line 1544 "rygel-object-creator-test.c"
 	}
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 139 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1553 "rygel-object-creator-test.c"
+#line 1554 "rygel-object-creator-test.c"
 	} else {
-#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1557 "rygel-object-creator-test.c"
+#line 1558 "rygel-object-creator-test.c"
 	}
-#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 128 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 1563 "rygel-object-creator-test.c"
+#line 1564 "rygel-object-creator-test.c"
 }
 
 
 void rygel_media_object_get_children (RygelMediaObject* self, guint offset, guint max_count, const gchar* sort_criteria, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_MEDIA_OBJECT_GET_CLASS (self)->get_children (self, offset, max_count, sort_criteria, cancellable, _callback_, _user_data_);
-#line 1570 "rygel-object-creator-test.c"
+#line 1571 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaObjects* rygel_media_object_get_children_finish (RygelMediaObject* self, GAsyncResult* _res_, GError** error) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return RYGEL_MEDIA_OBJECT_GET_CLASS (self)->get_children_finish (self, _res_, error);
-#line 1577 "rygel-object-creator-test.c"
+#line 1578 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_object_real_find_object_data_free (gpointer _data) {
 	RygelMediaObjectFindObjectData* _data_;
 	_data_ = _data;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (_data_->id);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->result);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->self);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_slice_free (RygelMediaObjectFindObjectData, _data_);
-#line 1594 "rygel-object-creator-test.c"
+#line 1595 "rygel-object-creator-test.c"
 }
 
 
@@ -1616,287 +1617,287 @@ static void rygel_media_object_real_find_object (RygelMediaObject* self, const g
 	gchar* _tmp2_ = NULL;
 	GCancellable* _tmp3_ = NULL;
 	GCancellable* _tmp4_ = NULL;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_slice_new0 (RygelMediaObjectFindObjectData);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_media_object_real_find_object);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_media_object_real_find_object_data_free);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = _g_object_ref0 (self);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->self = _tmp0_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = id;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = g_strdup (_tmp1_);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (_data_->id);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->id = _tmp2_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = cancellable;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = _g_object_ref0 (_tmp3_);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->cancellable = _tmp4_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_object_real_find_object_co (_data_);
-#line 1633 "rygel-object-creator-test.c"
+#line 1634 "rygel-object-creator-test.c"
 }
 
 
 static RygelMediaObject* rygel_media_object_real_find_object_finish (RygelMediaObject* self, GAsyncResult* _res_, GError** error) {
 	RygelMediaObject* result;
 	RygelMediaObjectFindObjectData* _data_;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		return NULL;
-#line 1644 "rygel-object-creator-test.c"
+#line 1645 "rygel-object-creator-test.c"
 	}
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _data_->result;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = NULL;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 1654 "rygel-object-creator-test.c"
+#line 1655 "rygel-object-creator-test.c"
 }
 
 
 static gboolean rygel_media_object_real_find_object_co (RygelMediaObjectFindObjectData* _data_) {
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (_data_->_state_) {
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 0:
-#line 1663 "rygel-object-creator-test.c"
+#line 1664 "rygel-object-creator-test.c"
 		goto _state_0;
 		default:
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_assert_not_reached ();
-#line 1668 "rygel-object-creator-test.c"
+#line 1669 "rygel-object-creator-test.c"
 	}
 	_state_0:
-#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = NULL;
-#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1677 "rygel-object-creator-test.c"
+#line 1678 "rygel-object-creator-test.c"
 	} else {
-#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1681 "rygel-object-creator-test.c"
+#line 1682 "rygel-object-creator-test.c"
 	}
-#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 145 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1691 "rygel-object-creator-test.c"
+#line 1692 "rygel-object-creator-test.c"
 	} else {
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1695 "rygel-object-creator-test.c"
+#line 1696 "rygel-object-creator-test.c"
 	}
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 1701 "rygel-object-creator-test.c"
+#line 1702 "rygel-object-creator-test.c"
 }
 
 
 void rygel_media_object_find_object (RygelMediaObject* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_MEDIA_OBJECT_GET_CLASS (self)->find_object (self, id, cancellable, _callback_, _user_data_);
-#line 1708 "rygel-object-creator-test.c"
+#line 1709 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaObject* rygel_media_object_find_object_finish (RygelMediaObject* self, GAsyncResult* _res_, GError** error) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return RYGEL_MEDIA_OBJECT_GET_CLASS (self)->find_object_finish (self, _res_, error);
-#line 1715 "rygel-object-creator-test.c"
+#line 1716 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaObject* rygel_media_object_construct (GType object_type) {
 	RygelMediaObject * self = NULL;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelMediaObject*) g_object_new (object_type, NULL);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 1725 "rygel-object-creator-test.c"
+#line 1726 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaObject* rygel_media_object_new (void) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_media_object_construct (RYGEL_TYPE_MEDIA_OBJECT);
-#line 1732 "rygel-object-creator-test.c"
+#line 1733 "rygel-object-creator-test.c"
 }
 
 
 const gchar* rygel_media_object_get_id (RygelMediaObject* self) {
 	const gchar* result;
 	const gchar* _tmp0_ = NULL;
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = self->priv->_id;
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _tmp0_;
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 1747 "rygel-object-creator-test.c"
+#line 1748 "rygel-object-creator-test.c"
 }
 
 
 void rygel_media_object_set_id (RygelMediaObject* self, const gchar* value) {
 	const gchar* _tmp0_ = NULL;
 	gchar* _tmp1_ = NULL;
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = value;
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = g_strdup (_tmp0_);
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (self->priv->_id);
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->_id = _tmp1_;
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_notify ((GObject *) self, "id");
-#line 1766 "rygel-object-creator-test.c"
+#line 1767 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaContainer* rygel_media_object_get_parent (RygelMediaObject* self) {
 	RygelMediaContainer* result;
 	RygelMediaContainer* _tmp0_ = NULL;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = self->priv->_parent;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _tmp0_;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 1781 "rygel-object-creator-test.c"
+#line 1782 "rygel-object-creator-test.c"
 }
 
 
 void rygel_media_object_set_parent (RygelMediaObject* self, RygelMediaContainer* value) {
 	RygelMediaContainer* _tmp0_ = NULL;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = value;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->_parent = _tmp0_;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 119 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_notify ((GObject *) self, "parent");
-#line 1795 "rygel-object-creator-test.c"
+#line 1796 "rygel-object-creator-test.c"
 }
 
 
 const gchar* rygel_media_object_get_title (RygelMediaObject* self) {
 	const gchar* result;
 	const gchar* _tmp0_ = NULL;
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (self != NULL, NULL);
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = self->priv->_title;
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _tmp0_;
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 1810 "rygel-object-creator-test.c"
+#line 1811 "rygel-object-creator-test.c"
 }
 
 
 void rygel_media_object_set_title (RygelMediaObject* self, const gchar* value) {
 	const gchar* _tmp0_ = NULL;
 	gchar* _tmp1_ = NULL;
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = value;
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = g_strdup (_tmp0_);
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (self->priv->_title);
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->_title = _tmp1_;
-#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_notify ((GObject *) self, "title");
-#line 1829 "rygel-object-creator-test.c"
+#line 1830 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_object_class_init (RygelMediaObjectClass * klass) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_object_parent_class = g_type_class_peek_parent (klass);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_type_class_add_private (klass, sizeof (RygelMediaObjectPrivate));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_MEDIA_OBJECT_CLASS (klass)->get_children = rygel_media_object_real_get_children;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_MEDIA_OBJECT_CLASS (klass)->get_children_finish = rygel_media_object_real_get_children_finish;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_MEDIA_OBJECT_CLASS (klass)->find_object = rygel_media_object_real_find_object;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_MEDIA_OBJECT_CLASS (klass)->find_object_finish = rygel_media_object_real_find_object_finish;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_rygel_media_object_get_property;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_rygel_media_object_set_property;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_object_finalize;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_OBJECT_ID, g_param_spec_string ("id", "id", "id", NULL, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_OBJECT_PARENT, g_param_spec_object ("parent", "parent", "parent", RYGEL_TYPE_MEDIA_CONTAINER, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_OBJECT_TITLE, g_param_spec_string ("title", "title", "title", NULL, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 1858 "rygel-object-creator-test.c"
+#line 1859 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_object_instance_init (RygelMediaObject * self) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv = RYGEL_MEDIA_OBJECT_GET_PRIVATE (self);
-#line 1865 "rygel-object-creator-test.c"
+#line 1866 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_object_finalize (GObject* obj) {
 	RygelMediaObject * self;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_MEDIA_OBJECT, RygelMediaObject);
-#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_free0 (self->priv->_id);
-#line 113 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_free0 (self->ref_id);
-#line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_free0 (self->upnp_class);
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_free0 (self->priv->_title);
+	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_MEDIA_OBJECT, RygelMediaObject);
+#line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_free0 (self->priv->_id);
 #line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_free0 (self->ref_id);
+#line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_free0 (self->upnp_class);
+#line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_free0 (self->priv->_title);
+#line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (self->uris);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_media_object_parent_class)->finalize (obj);
-#line 1885 "rygel-object-creator-test.c"
+#line 1886 "rygel-object-creator-test.c"
 }
 
 
@@ -1915,33 +1916,33 @@ GType rygel_media_object_get_type (void) {
 static void _vala_rygel_media_object_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	RygelMediaObject * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, RYGEL_TYPE_MEDIA_OBJECT, RygelMediaObject);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (property_id) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case RYGEL_MEDIA_OBJECT_ID:
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_value_set_string (value, rygel_media_object_get_id (self));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case RYGEL_MEDIA_OBJECT_PARENT:
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_value_set_object (value, rygel_media_object_get_parent (self));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case RYGEL_MEDIA_OBJECT_TITLE:
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_value_set_string (value, rygel_media_object_get_title (self));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 1924 "rygel-object-creator-test.c"
+#line 1925 "rygel-object-creator-test.c"
 		default:
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 1930 "rygel-object-creator-test.c"
+#line 1931 "rygel-object-creator-test.c"
 	}
 }
 
@@ -1949,45 +1950,45 @@ static void _vala_rygel_media_object_get_property (GObject * object, guint prope
 static void _vala_rygel_media_object_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	RygelMediaObject * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, RYGEL_TYPE_MEDIA_OBJECT, RygelMediaObject);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (property_id) {
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case RYGEL_MEDIA_OBJECT_ID:
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		rygel_media_object_set_id (self, g_value_get_string (value));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case RYGEL_MEDIA_OBJECT_PARENT:
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		rygel_media_object_set_parent (self, g_value_get_object (value));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case RYGEL_MEDIA_OBJECT_TITLE:
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		rygel_media_object_set_title (self, g_value_get_string (value));
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 1958 "rygel-object-creator-test.c"
+#line 1959 "rygel-object-creator-test.c"
 		default:
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 1964 "rygel-object-creator-test.c"
+#line 1965 "rygel-object-creator-test.c"
 	}
 }
 
 
 static void rygel_trackable_container_base_init (RygelTrackableContainerIface * iface) {
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	static gboolean initialized = FALSE;
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (!initialized) {
-#line 144 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		initialized = TRUE;
-#line 1976 "rygel-object-creator-test.c"
+#line 1977 "rygel-object-creator-test.c"
 	}
 }
 
@@ -2006,13 +2007,13 @@ GType rygel_trackable_container_get_type (void) {
 
 
 static void rygel_trackable_item_base_init (RygelTrackableItemIface * iface) {
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	static gboolean initialized = FALSE;
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (!initialized) {
-#line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		initialized = TRUE;
-#line 2001 "rygel-object-creator-test.c"
+#line 2002 "rygel-object-creator-test.c"
 	}
 }
 
@@ -2035,45 +2036,45 @@ RygelMediaItem* rygel_media_item_construct (GType object_type, const gchar* id, 
 	const gchar* _tmp0_ = NULL;
 	RygelMediaContainer* _tmp1_ = NULL;
 	const gchar* _tmp2_ = NULL;
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (id != NULL, NULL);
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (parent != NULL, NULL);
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (title != NULL, NULL);
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelMediaItem*) rygel_media_object_construct (object_type);
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = id;
-#line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_object_set_id ((RygelMediaObject*) self, _tmp0_);
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = parent;
-#line 159 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_object_set_parent ((RygelMediaObject*) self, _tmp1_);
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = title;
-#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_object_set_title ((RygelMediaObject*) self, _tmp2_);
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2046 "rygel-object-creator-test.c"
+#line 2047 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaItem* rygel_media_item_new (const gchar* id, RygelMediaContainer* parent, const gchar* title) {
-#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 162 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_media_item_construct (RYGEL_TYPE_MEDIA_ITEM, id, parent, title);
-#line 2053 "rygel-object-creator-test.c"
+#line 2054 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_item_class_init (RygelMediaItemClass * klass) {
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_item_parent_class = g_type_class_peek_parent (klass);
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_item_finalize;
-#line 2062 "rygel-object-creator-test.c"
+#line 2063 "rygel-object-creator-test.c"
 }
 
 
@@ -2083,17 +2084,17 @@ static void rygel_media_item_instance_init (RygelMediaItem * self) {
 
 static void rygel_media_item_finalize (GObject* obj) {
 	RygelMediaItem * self;
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_MEDIA_ITEM, RygelMediaItem);
-#line 151 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_free0 (self->dlna_profile);
-#line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_free0 (self->mime_type);
 #line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_MEDIA_ITEM, RygelMediaItem);
+#line 156 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_free0 (self->dlna_profile);
+#line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_free0 (self->mime_type);
+#line 160 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (self->date);
-#line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_media_item_parent_class)->finalize (obj);
-#line 2082 "rygel-object-creator-test.c"
+#line 2083 "rygel-object-creator-test.c"
 }
 
 
@@ -2114,37 +2115,37 @@ RygelMusicItem* rygel_music_item_construct (GType object_type, const gchar* id, 
 	const gchar* _tmp0_ = NULL;
 	RygelMediaContainer* _tmp1_ = NULL;
 	const gchar* _tmp2_ = NULL;
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (id != NULL, NULL);
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (parent != NULL, NULL);
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (title != NULL, NULL);
-#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = id;
-#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = parent;
-#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = title;
-#line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelMusicItem*) rygel_audio_item_construct (object_type, _tmp0_, _tmp1_, _tmp2_);
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2119 "rygel-object-creator-test.c"
+#line 2120 "rygel-object-creator-test.c"
 }
 
 
 RygelMusicItem* rygel_music_item_new (const gchar* id, RygelMediaContainer* parent, const gchar* title) {
-#line 168 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_music_item_construct (RYGEL_TYPE_MUSIC_ITEM, id, parent, title);
-#line 2126 "rygel-object-creator-test.c"
+#line 2127 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_music_item_class_init (RygelMusicItemClass * klass) {
-#line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_music_item_parent_class = g_type_class_peek_parent (klass);
-#line 2133 "rygel-object-creator-test.c"
+#line 2134 "rygel-object-creator-test.c"
 }
 
 
@@ -2169,39 +2170,39 @@ RygelAudioItem* rygel_audio_item_construct (GType object_type, const gchar* id, 
 	const gchar* _tmp0_ = NULL;
 	RygelMediaContainer* _tmp1_ = NULL;
 	const gchar* _tmp2_ = NULL;
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (id != NULL, NULL);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (parent != NULL, NULL);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (title != NULL, NULL);
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = id;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = parent;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = title;
-#line 179 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelAudioItem*) rygel_media_item_construct (object_type, _tmp0_, _tmp1_, _tmp2_);
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2174 "rygel-object-creator-test.c"
+#line 2175 "rygel-object-creator-test.c"
 }
 
 
 RygelAudioItem* rygel_audio_item_new (const gchar* id, RygelMediaContainer* parent, const gchar* title) {
-#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_audio_item_construct (RYGEL_TYPE_AUDIO_ITEM, id, parent, title);
-#line 2181 "rygel-object-creator-test.c"
+#line 2182 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_audio_item_class_init (RygelAudioItemClass * klass) {
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_audio_item_parent_class = g_type_class_peek_parent (klass);
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_audio_item_finalize;
-#line 2190 "rygel-object-creator-test.c"
+#line 2191 "rygel-object-creator-test.c"
 }
 
 
@@ -2211,15 +2212,15 @@ static void rygel_audio_item_instance_init (RygelAudioItem * self) {
 
 static void rygel_audio_item_finalize (GObject* obj) {
 	RygelAudioItem * self;
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_AUDIO_ITEM, RygelAudioItem);
-#line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (self->artist);
-#line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (self->album);
-#line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_audio_item_parent_class)->finalize (obj);
-#line 2208 "rygel-object-creator-test.c"
+#line 2209 "rygel-object-creator-test.c"
 }
 
 
@@ -2240,37 +2241,37 @@ RygelImageItem* rygel_image_item_construct (GType object_type, const gchar* id, 
 	const gchar* _tmp0_ = NULL;
 	RygelMediaContainer* _tmp1_ = NULL;
 	const gchar* _tmp2_ = NULL;
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (id != NULL, NULL);
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (parent != NULL, NULL);
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (title != NULL, NULL);
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = id;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = parent;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = title;
-#line 185 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelImageItem*) rygel_media_item_construct (object_type, _tmp0_, _tmp1_, _tmp2_);
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2245 "rygel-object-creator-test.c"
+#line 2246 "rygel-object-creator-test.c"
 }
 
 
 RygelImageItem* rygel_image_item_new (const gchar* id, RygelMediaContainer* parent, const gchar* title) {
-#line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_image_item_construct (RYGEL_TYPE_IMAGE_ITEM, id, parent, title);
-#line 2252 "rygel-object-creator-test.c"
+#line 2253 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_image_item_class_init (RygelImageItemClass * klass) {
-#line 182 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_image_item_parent_class = g_type_class_peek_parent (klass);
-#line 2259 "rygel-object-creator-test.c"
+#line 2260 "rygel-object-creator-test.c"
 }
 
 
@@ -2295,37 +2296,37 @@ RygelVideoItem* rygel_video_item_construct (GType object_type, const gchar* id, 
 	const gchar* _tmp0_ = NULL;
 	RygelMediaContainer* _tmp1_ = NULL;
 	const gchar* _tmp2_ = NULL;
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (id != NULL, NULL);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (parent != NULL, NULL);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (title != NULL, NULL);
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = id;
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = parent;
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = title;
-#line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelVideoItem*) rygel_media_item_construct (object_type, _tmp0_, _tmp1_, _tmp2_);
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2300 "rygel-object-creator-test.c"
+#line 2301 "rygel-object-creator-test.c"
 }
 
 
 RygelVideoItem* rygel_video_item_new (const gchar* id, RygelMediaContainer* parent, const gchar* title) {
-#line 191 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_video_item_construct (RYGEL_TYPE_VIDEO_ITEM, id, parent, title);
-#line 2307 "rygel-object-creator-test.c"
+#line 2308 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_video_item_class_init (RygelVideoItemClass * klass) {
-#line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_video_item_parent_class = g_type_class_peek_parent (klass);
-#line 2314 "rygel-object-creator-test.c"
+#line 2315 "rygel-object-creator-test.c"
 }
 
 
@@ -2350,39 +2351,39 @@ RygelPhotoItem* rygel_photo_item_construct (GType object_type, const gchar* id, 
 	const gchar* _tmp0_ = NULL;
 	RygelMediaContainer* _tmp1_ = NULL;
 	const gchar* _tmp2_ = NULL;
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (id != NULL, NULL);
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (parent != NULL, NULL);
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (title != NULL, NULL);
-#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = id;
-#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = parent;
-#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = title;
-#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelPhotoItem*) rygel_media_item_construct (object_type, _tmp0_, _tmp1_, _tmp2_);
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2355 "rygel-object-creator-test.c"
+#line 2356 "rygel-object-creator-test.c"
 }
 
 
 RygelPhotoItem* rygel_photo_item_new (const gchar* id, RygelMediaContainer* parent, const gchar* title) {
-#line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_photo_item_construct (RYGEL_TYPE_PHOTO_ITEM, id, parent, title);
-#line 2362 "rygel-object-creator-test.c"
+#line 2363 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_photo_item_class_init (RygelPhotoItemClass * klass) {
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_photo_item_parent_class = g_type_class_peek_parent (klass);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_photo_item_finalize;
-#line 2371 "rygel-object-creator-test.c"
+#line 2372 "rygel-object-creator-test.c"
 }
 
 
@@ -2392,13 +2393,13 @@ static void rygel_photo_item_instance_init (RygelPhotoItem * self) {
 
 static void rygel_photo_item_finalize (GObject* obj) {
 	RygelPhotoItem * self;
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_PHOTO_ITEM, RygelPhotoItem);
-#line 198 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (self->creator);
-#line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_photo_item_parent_class)->finalize (obj);
-#line 2387 "rygel-object-creator-test.c"
+#line 2388 "rygel-object-creator-test.c"
 }
 
 
@@ -2419,37 +2420,37 @@ RygelPlaylistItem* rygel_playlist_item_construct (GType object_type, const gchar
 	const gchar* _tmp0_ = NULL;
 	RygelMediaContainer* _tmp1_ = NULL;
 	const gchar* _tmp2_ = NULL;
-#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (id != NULL, NULL);
-#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (parent != NULL, NULL);
-#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (title != NULL, NULL);
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = id;
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = parent;
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = title;
-#line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelPlaylistItem*) rygel_media_item_construct (object_type, _tmp0_, _tmp1_, _tmp2_);
-#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2424 "rygel-object-creator-test.c"
+#line 2425 "rygel-object-creator-test.c"
 }
 
 
 RygelPlaylistItem* rygel_playlist_item_new (const gchar* id, RygelMediaContainer* parent, const gchar* title) {
-#line 208 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_playlist_item_construct (RYGEL_TYPE_PLAYLIST_ITEM, id, parent, title);
-#line 2431 "rygel-object-creator-test.c"
+#line 2432 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_playlist_item_class_init (RygelPlaylistItemClass * klass) {
-#line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_playlist_item_parent_class = g_type_class_peek_parent (klass);
-#line 2438 "rygel-object-creator-test.c"
+#line 2439 "rygel-object-creator-test.c"
 }
 
 
@@ -2469,29 +2470,97 @@ GType rygel_playlist_item_get_type (void) {
 }
 
 
+RygelRootDevice* rygel_root_device_construct (GType object_type) {
+	RygelRootDevice * self = NULL;
+	RygelMediaServerPlugin* _tmp0_ = NULL;
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	self = (RygelRootDevice*) g_object_new (object_type, NULL);
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp0_ = rygel_media_server_plugin_new ();
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_object_unref0 (self->resource_factory);
+#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	self->resource_factory = _tmp0_;
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	return self;
+#line 2472 "rygel-object-creator-test.c"
+}
+
+
+RygelRootDevice* rygel_root_device_new (void) {
+#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	return rygel_root_device_construct (RYGEL_TYPE_ROOT_DEVICE);
+#line 2479 "rygel-object-creator-test.c"
+}
+
+
+static void rygel_root_device_class_init (RygelRootDeviceClass * klass) {
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	rygel_root_device_parent_class = g_type_class_peek_parent (klass);
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	G_OBJECT_CLASS (klass)->finalize = rygel_root_device_finalize;
+#line 2488 "rygel-object-creator-test.c"
+}
+
+
+static void rygel_root_device_instance_init (RygelRootDevice * self) {
+}
+
+
+static void rygel_root_device_finalize (GObject* obj) {
+	RygelRootDevice * self;
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_ROOT_DEVICE, RygelRootDevice);
+#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_object_unref0 (self->resource_factory);
+#line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	G_OBJECT_CLASS (rygel_root_device_parent_class)->finalize (obj);
+#line 2504 "rygel-object-creator-test.c"
+}
+
+
+GType rygel_root_device_get_type (void) {
+	static volatile gsize rygel_root_device_type_id__volatile = 0;
+	if (g_once_init_enter (&rygel_root_device_type_id__volatile)) {
+		static const GTypeInfo g_define_type_info = { sizeof (RygelRootDeviceClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) rygel_root_device_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (RygelRootDevice), 0, (GInstanceInitFunc) rygel_root_device_instance_init, NULL };
+		GType rygel_root_device_type_id;
+		rygel_root_device_type_id = g_type_register_static (G_TYPE_OBJECT, "RygelRootDevice", &g_define_type_info, 0);
+		g_once_init_leave (&rygel_root_device_type_id__volatile, rygel_root_device_type_id);
+	}
+	return rygel_root_device_type_id__volatile;
+}
+
+
 RygelContentDirectory* rygel_content_directory_construct (GType object_type) {
 	RygelContentDirectory * self = NULL;
-#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	RygelRootDevice* _tmp0_ = NULL;
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelContentDirectory*) g_object_new (object_type, NULL);
-#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 233 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp0_ = rygel_root_device_new ();
+#line 233 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_object_unref0 (self->root_device);
+#line 233 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	self->root_device = _tmp0_;
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2464 "rygel-object-creator-test.c"
+#line 2533 "rygel-object-creator-test.c"
 }
 
 
 RygelContentDirectory* rygel_content_directory_new (void) {
-#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_content_directory_construct (RYGEL_TYPE_CONTENT_DIRECTORY);
-#line 2471 "rygel-object-creator-test.c"
+#line 2540 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_content_directory_class_init (RygelContentDirectoryClass * klass) {
-#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_content_directory_parent_class = g_type_class_peek_parent (klass);
-#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_content_directory_finalize;
-#line 2480 "rygel-object-creator-test.c"
+#line 2549 "rygel-object-creator-test.c"
 }
 
 
@@ -2501,17 +2570,19 @@ static void rygel_content_directory_instance_init (RygelContentDirectory * self)
 
 static void rygel_content_directory_finalize (GObject* obj) {
 	RygelContentDirectory * self;
-#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_CONTENT_DIRECTORY, RygelContentDirectory);
-#line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 227 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (self->cancellable);
-#line 215 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 228 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (self->root_container);
-#line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (self->http_server);
-#line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_object_unref0 (self->root_device);
+#line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_content_directory_parent_class)->finalize (obj);
-#line 2500 "rygel-object-creator-test.c"
+#line 2571 "rygel-object-creator-test.c"
 }
 
 
@@ -2530,17 +2601,17 @@ GType rygel_content_directory_get_type (void) {
 static void rygel_media_container_real_find_object_data_free (gpointer _data) {
 	RygelMediaContainerFindObjectData* _data_;
 	_data_ = _data;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (_data_->id);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->result);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->self);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_slice_free (RygelMediaContainerFindObjectData, _data_);
-#line 2529 "rygel-object-creator-test.c"
+#line 2600 "rygel-object-creator-test.c"
 }
 
 
@@ -2552,84 +2623,84 @@ static void rygel_media_container_real_find_object (RygelMediaObject* base, cons
 	gchar* _tmp2_ = NULL;
 	GCancellable* _tmp3_ = NULL;
 	GCancellable* _tmp4_ = NULL;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelMediaContainer*) base;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_slice_new0 (RygelMediaContainerFindObjectData);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_media_container_real_find_object);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_media_container_real_find_object_data_free);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = _g_object_ref0 (self);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->self = _tmp0_;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = id;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = g_strdup (_tmp1_);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (_data_->id);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->id = _tmp2_;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = cancellable;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = _g_object_ref0 (_tmp3_);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->cancellable = _tmp4_;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_container_real_find_object_co (_data_);
-#line 2571 "rygel-object-creator-test.c"
+#line 2642 "rygel-object-creator-test.c"
 }
 
 
 static RygelMediaObject* rygel_media_container_real_find_object_finish (RygelMediaObject* base, GAsyncResult* _res_, GError** error) {
 	RygelMediaObject* result;
 	RygelMediaContainerFindObjectData* _data_;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		return NULL;
-#line 2582 "rygel-object-creator-test.c"
+#line 2653 "rygel-object-creator-test.c"
 	}
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _data_->result;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = NULL;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 2592 "rygel-object-creator-test.c"
+#line 2663 "rygel-object-creator-test.c"
 }
 
 
 static Block1Data* block1_data_ref (Block1Data* _data1_) {
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_atomic_int_inc (&_data1_->_ref_count_);
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return _data1_;
-#line 2601 "rygel-object-creator-test.c"
+#line 2672 "rygel-object-creator-test.c"
 }
 
 
 static void block1_data_unref (void * _userdata_) {
 	Block1Data* _data1_;
 	_data1_ = (Block1Data*) _userdata_;
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (g_atomic_int_dec_and_test (&_data1_->_ref_count_)) {
-#line 2610 "rygel-object-creator-test.c"
+#line 2681 "rygel-object-creator-test.c"
 		RygelMediaContainer * self;
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		self = _data1_->self;
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_g_object_unref0 (self);
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_slice_free (Block1Data, _data1_);
-#line 2618 "rygel-object-creator-test.c"
+#line 2689 "rygel-object-creator-test.c"
 	}
 }
 
@@ -2637,212 +2708,212 @@ static void block1_data_unref (void * _userdata_) {
 static gboolean __lambda2_ (Block1Data* _data1_) {
 	RygelMediaContainer * self;
 	gboolean result = FALSE;
-#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = _data1_->self;
-#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_container_real_find_object_co (_data1_->_async_data_);
-#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = FALSE;
-#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 2634 "rygel-object-creator-test.c"
+#line 2705 "rygel-object-creator-test.c"
 }
 
 
 static gboolean ___lambda2__gsource_func (gpointer self) {
 	gboolean result;
 	result = __lambda2_ (self);
-#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 2643 "rygel-object-creator-test.c"
+#line 2714 "rygel-object-creator-test.c"
 }
 
 
 static gboolean rygel_media_container_real_find_object_co (RygelMediaContainerFindObjectData* _data_) {
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (_data_->_state_) {
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 0:
-#line 2652 "rygel-object-creator-test.c"
+#line 2723 "rygel-object-creator-test.c"
 		goto _state_0;
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 1:
-#line 2656 "rygel-object-creator-test.c"
+#line 2727 "rygel-object-creator-test.c"
 		goto _state_1;
 		default:
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_assert_not_reached ();
-#line 2661 "rygel-object-creator-test.c"
+#line 2732 "rygel-object-creator-test.c"
 	}
 	_state_0:
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data1_ = g_slice_new0 (Block1Data);
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data1_->_ref_count_ = 1;
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data1_->self = g_object_ref (_data_->self);
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data1_->_async_data_ = _data_;
-#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, ___lambda2__gsource_func, block1_data_ref (_data_->_data1_), block1_data_unref);
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_state_ = 1;
-#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 256 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 2678 "rygel-object-creator-test.c"
+#line 2749 "rygel-object-creator-test.c"
 	_state_1:
 	;
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp0_ = NULL;
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp0_ = _data_->self->found_object;
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp1_ = NULL;
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp1_ = _g_object_ref0 (_data_->_tmp0_);
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = _data_->_tmp1_;
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	block1_data_unref (_data_->_data1_);
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data1_ = NULL;
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 2699 "rygel-object-creator-test.c"
+#line 2770 "rygel-object-creator-test.c"
 	} else {
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 2703 "rygel-object-creator-test.c"
+#line 2774 "rygel-object-creator-test.c"
 	}
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	block1_data_unref (_data_->_data1_);
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data1_ = NULL;
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 2717 "rygel-object-creator-test.c"
+#line 2788 "rygel-object-creator-test.c"
 	} else {
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 2721 "rygel-object-creator-test.c"
+#line 2792 "rygel-object-creator-test.c"
 	}
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 2727 "rygel-object-creator-test.c"
+#line 2798 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaContainer* rygel_media_container_construct (GType object_type) {
 	RygelMediaContainer * self = NULL;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelMediaContainer*) rygel_media_object_construct (object_type);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2737 "rygel-object-creator-test.c"
+#line 2808 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaContainer* rygel_media_container_new (void) {
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_media_container_construct (RYGEL_TYPE_MEDIA_CONTAINER);
-#line 2744 "rygel-object-creator-test.c"
+#line 2815 "rygel-object-creator-test.c"
 }
 
 
 gint rygel_media_container_get_child_count (RygelMediaContainer* self) {
 	gint result;
 	gint _tmp0_ = 0;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (self != NULL, 0);
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = self->priv->_child_count;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _tmp0_;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 2759 "rygel-object-creator-test.c"
+#line 2830 "rygel-object-creator-test.c"
 }
 
 
 void rygel_media_container_set_child_count (RygelMediaContainer* self, gint value) {
 	gint _tmp0_ = 0;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = value;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->_child_count = _tmp0_;
-#line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 239 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_notify ((GObject *) self, "child-count");
-#line 2773 "rygel-object-creator-test.c"
+#line 2844 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_container_class_init (RygelMediaContainerClass * klass) {
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_container_parent_class = g_type_class_peek_parent (klass);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_type_class_add_private (klass, sizeof (RygelMediaContainerPrivate));
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_MEDIA_OBJECT_CLASS (klass)->find_object = rygel_media_container_real_find_object;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_MEDIA_OBJECT_CLASS (klass)->find_object_finish = rygel_media_container_real_find_object_finish;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->get_property = _vala_rygel_media_container_get_property;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->set_property = _vala_rygel_media_container_set_property;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_container_finalize;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_CONTAINER_CHILD_COUNT, g_param_spec_int ("child-count", "child-count", "child-count", G_MININT, G_MAXINT, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_signal_new ("container_updated", RYGEL_TYPE_MEDIA_CONTAINER, G_SIGNAL_RUN_LAST, 0, NULL, NULL, g_cclosure_marshal_VOID__OBJECT, G_TYPE_NONE, 1, RYGEL_TYPE_MEDIA_CONTAINER);
-#line 2796 "rygel-object-creator-test.c"
+#line 2867 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_container_instance_init (RygelMediaContainer * self) {
 	GeeArrayList* _tmp0_ = NULL;
 	gchar* _tmp1_ = NULL;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv = RYGEL_MEDIA_CONTAINER_GET_PRIVATE (self);
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = gee_array_list_new (G_TYPE_STRING, (GBoxedCopyFunc) g_strdup, g_free, NULL, NULL, NULL);
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->create_classes = _tmp0_;
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = g_strdup ("+dc:title");
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->sort_criteria = _tmp1_;
-#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->found_object = NULL;
-#line 2815 "rygel-object-creator-test.c"
+#line 2886 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_container_finalize (GObject* obj) {
 	RygelMediaContainer * self;
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_MEDIA_CONTAINER, RygelMediaContainer);
-#line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 238 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (self->create_classes);
-#line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (self->sort_criteria);
-#line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (self->found_object);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_media_container_parent_class)->finalize (obj);
-#line 2831 "rygel-object-creator-test.c"
+#line 2902 "rygel-object-creator-test.c"
 }
 
 
@@ -2861,21 +2932,21 @@ GType rygel_media_container_get_type (void) {
 static void _vala_rygel_media_container_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec) {
 	RygelMediaContainer * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, RYGEL_TYPE_MEDIA_CONTAINER, RygelMediaContainer);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (property_id) {
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case RYGEL_MEDIA_CONTAINER_CHILD_COUNT:
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_value_set_int (value, rygel_media_container_get_child_count (self));
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 2858 "rygel-object-creator-test.c"
+#line 2929 "rygel-object-creator-test.c"
 		default:
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 2864 "rygel-object-creator-test.c"
+#line 2935 "rygel-object-creator-test.c"
 	}
 }
 
@@ -2883,46 +2954,46 @@ static void _vala_rygel_media_container_get_property (GObject * object, guint pr
 static void _vala_rygel_media_container_set_property (GObject * object, guint property_id, const GValue * value, GParamSpec * pspec) {
 	RygelMediaContainer * self;
 	self = G_TYPE_CHECK_INSTANCE_CAST (object, RYGEL_TYPE_MEDIA_CONTAINER, RygelMediaContainer);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (property_id) {
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case RYGEL_MEDIA_CONTAINER_CHILD_COUNT:
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		rygel_media_container_set_child_count (self, g_value_get_int (value));
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 2880 "rygel-object-creator-test.c"
+#line 2951 "rygel-object-creator-test.c"
 		default:
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-#line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		break;
-#line 2886 "rygel-object-creator-test.c"
+#line 2957 "rygel-object-creator-test.c"
 	}
 }
 
 
 RygelMediaObjects* rygel_media_objects_construct (GType object_type) {
 	RygelMediaObjects * self = NULL;
-#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelMediaObjects*) gee_array_list_construct (object_type, RYGEL_TYPE_MEDIA_OBJECT, (GBoxedCopyFunc) g_object_ref, g_object_unref, NULL, NULL, NULL);
-#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 2897 "rygel-object-creator-test.c"
+#line 2968 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaObjects* rygel_media_objects_new (void) {
-#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_media_objects_construct (RYGEL_TYPE_MEDIA_OBJECTS);
-#line 2904 "rygel-object-creator-test.c"
+#line 2975 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_media_objects_class_init (RygelMediaObjectsClass * klass) {
-#line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 264 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_media_objects_parent_class = g_type_class_peek_parent (klass);
-#line 2911 "rygel-object-creator-test.c"
+#line 2982 "rygel-object-creator-test.c"
 }
 
 
@@ -2947,36 +3018,36 @@ gboolean rygel_writable_container_can_create (RygelWritableContainer* self, cons
 	GeeArrayList* _tmp0_ = NULL;
 	const gchar* _tmp1_ = NULL;
 	gboolean _tmp2_ = FALSE;
-#line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (upnp_class != NULL, FALSE);
-#line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = ((RygelMediaContainer*) self)->create_classes;
-#line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = upnp_class;
-#line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = gee_abstract_collection_contains ((GeeAbstractCollection*) _tmp0_, _tmp1_);
-#line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _tmp2_;
-#line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 2950 "rygel-object-creator-test.c"
+#line 3021 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_writable_container_get_writable_data_free (gpointer _data) {
 	RygelWritableContainerGetWritableData* _data_;
 	_data_ = _data;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->result);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->self);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_slice_free (RygelWritableContainerGetWritableData, _data_);
-#line 2965 "rygel-object-creator-test.c"
+#line 3036 "rygel-object-creator-test.c"
 }
 
 
@@ -2985,108 +3056,108 @@ void rygel_writable_container_get_writable (RygelWritableContainer* self, GCance
 	RygelWritableContainer* _tmp0_ = NULL;
 	GCancellable* _tmp1_ = NULL;
 	GCancellable* _tmp2_ = NULL;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_slice_new0 (RygelWritableContainerGetWritableData);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_writable_container_get_writable);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_writable_container_get_writable_data_free);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = _g_object_ref0 (self);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->self = _tmp0_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = cancellable;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = _g_object_ref0 (_tmp1_);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->cancellable = _tmp2_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_writable_container_get_writable_co (_data_);
-#line 2994 "rygel-object-creator-test.c"
+#line 3065 "rygel-object-creator-test.c"
 }
 
 
 GFile* rygel_writable_container_get_writable_finish (RygelWritableContainer* self, GAsyncResult* _res_) {
 	GFile* result;
 	RygelWritableContainerGetWritableData* _data_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _data_->result;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = NULL;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 3009 "rygel-object-creator-test.c"
+#line 3080 "rygel-object-creator-test.c"
 }
 
 
 static gboolean rygel_writable_container_get_writable_co (RygelWritableContainerGetWritableData* _data_) {
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (_data_->_state_) {
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 0:
-#line 3018 "rygel-object-creator-test.c"
+#line 3089 "rygel-object-creator-test.c"
 		goto _state_0;
 		default:
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_assert_not_reached ();
-#line 3023 "rygel-object-creator-test.c"
+#line 3094 "rygel-object-creator-test.c"
 	}
 	_state_0:
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp0_ = NULL;
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp0_ = g_file_new_for_commandline_arg ("/tmp");
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = _data_->_tmp0_;
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 3036 "rygel-object-creator-test.c"
+#line 3107 "rygel-object-creator-test.c"
 	} else {
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 3040 "rygel-object-creator-test.c"
+#line 3111 "rygel-object-creator-test.c"
 	}
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 255 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 3050 "rygel-object-creator-test.c"
+#line 3121 "rygel-object-creator-test.c"
 	} else {
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 3054 "rygel-object-creator-test.c"
+#line 3125 "rygel-object-creator-test.c"
 	}
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 3060 "rygel-object-creator-test.c"
+#line 3131 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_writable_container_add_item_data_free (gpointer _data) {
 	RygelWritableContainerAddItemData* _data_;
 	_data_ = _data;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->item);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->self);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_slice_free (RygelWritableContainerAddItemData, _data_);
-#line 3075 "rygel-object-creator-test.c"
+#line 3146 "rygel-object-creator-test.c"
 }
 
 
@@ -3097,89 +3168,89 @@ void rygel_writable_container_add_item (RygelWritableContainer* self, RygelMedia
 	RygelMediaItem* _tmp2_ = NULL;
 	GCancellable* _tmp3_ = NULL;
 	GCancellable* _tmp4_ = NULL;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_slice_new0 (RygelWritableContainerAddItemData);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_writable_container_add_item);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_writable_container_add_item_data_free);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = _g_object_ref0 (self);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->self = _tmp0_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = item;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = _g_object_ref0 (_tmp1_);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->item);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->item = _tmp2_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = cancellable;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = _g_object_ref0 (_tmp3_);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->cancellable = _tmp4_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_writable_container_add_item_co (_data_);
-#line 3114 "rygel-object-creator-test.c"
+#line 3185 "rygel-object-creator-test.c"
 }
 
 
 void rygel_writable_container_add_item_finish (RygelWritableContainer* self, GAsyncResult* _res_) {
 	RygelWritableContainerAddItemData* _data_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 3122 "rygel-object-creator-test.c"
+#line 3193 "rygel-object-creator-test.c"
 }
 
 
 static gboolean rygel_writable_container_add_item_co (RygelWritableContainerAddItemData* _data_) {
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (_data_->_state_) {
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 0:
-#line 3131 "rygel-object-creator-test.c"
+#line 3202 "rygel-object-creator-test.c"
 		goto _state_0;
 		default:
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_assert_not_reached ();
-#line 3136 "rygel-object-creator-test.c"
+#line 3207 "rygel-object-creator-test.c"
 	}
 	_state_0:
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 3143 "rygel-object-creator-test.c"
+#line 3214 "rygel-object-creator-test.c"
 	} else {
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 3147 "rygel-object-creator-test.c"
+#line 3218 "rygel-object-creator-test.c"
 	}
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 258 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 3153 "rygel-object-creator-test.c"
+#line 3224 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_writable_container_add_container_data_free (gpointer _data) {
 	RygelWritableContainerAddContainerData* _data_;
 	_data_ = _data;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->container);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->self);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_slice_free (RygelWritableContainerAddContainerData, _data_);
-#line 3168 "rygel-object-creator-test.c"
+#line 3239 "rygel-object-creator-test.c"
 }
 
 
@@ -3190,98 +3261,98 @@ void rygel_writable_container_add_container (RygelWritableContainer* self, Rygel
 	RygelMediaContainer* _tmp2_ = NULL;
 	GCancellable* _tmp3_ = NULL;
 	GCancellable* _tmp4_ = NULL;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_slice_new0 (RygelWritableContainerAddContainerData);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_writable_container_add_container);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_writable_container_add_container_data_free);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = _g_object_ref0 (self);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->self = _tmp0_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = container;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = _g_object_ref0 (_tmp1_);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->container);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->container = _tmp2_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = cancellable;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = _g_object_ref0 (_tmp3_);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->cancellable = _tmp4_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_writable_container_add_container_co (_data_);
-#line 3207 "rygel-object-creator-test.c"
+#line 3278 "rygel-object-creator-test.c"
 }
 
 
 void rygel_writable_container_add_container_finish (RygelWritableContainer* self, GAsyncResult* _res_) {
 	RygelWritableContainerAddContainerData* _data_;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 3215 "rygel-object-creator-test.c"
+#line 3286 "rygel-object-creator-test.c"
 }
 
 
 static gboolean rygel_writable_container_add_container_co (RygelWritableContainerAddContainerData* _data_) {
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (_data_->_state_) {
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 0:
-#line 3224 "rygel-object-creator-test.c"
+#line 3295 "rygel-object-creator-test.c"
 		goto _state_0;
 		default:
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_assert_not_reached ();
-#line 3229 "rygel-object-creator-test.c"
+#line 3300 "rygel-object-creator-test.c"
 	}
 	_state_0:
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 3236 "rygel-object-creator-test.c"
+#line 3307 "rygel-object-creator-test.c"
 	} else {
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 3240 "rygel-object-creator-test.c"
+#line 3311 "rygel-object-creator-test.c"
 	}
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 262 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 3246 "rygel-object-creator-test.c"
+#line 3317 "rygel-object-creator-test.c"
 }
 
 
 RygelWritableContainer* rygel_writable_container_construct (GType object_type) {
 	RygelWritableContainer * self = NULL;
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelWritableContainer*) rygel_media_container_construct (object_type);
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 3256 "rygel-object-creator-test.c"
+#line 3327 "rygel-object-creator-test.c"
 }
 
 
 RygelWritableContainer* rygel_writable_container_new (void) {
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_writable_container_construct (RYGEL_TYPE_WRITABLE_CONTAINER);
-#line 3263 "rygel-object-creator-test.c"
+#line 3334 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_writable_container_class_init (RygelWritableContainerClass * klass) {
-#line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_writable_container_parent_class = g_type_class_peek_parent (klass);
-#line 3270 "rygel-object-creator-test.c"
+#line 3341 "rygel-object-creator-test.c"
 }
 
 
@@ -3304,26 +3375,26 @@ GType rygel_writable_container_get_type (void) {
 static void rygel_searchable_container_search_data_free (gpointer _data) {
 	RygelSearchableContainerSearchData* _data_;
 	_data_ = _data;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_rygel_search_expression_unref0 (_data_->expression);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (_data_->soer_criteria);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->result);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->self);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_slice_free (RygelSearchableContainerSearchData, _data_);
-#line 3305 "rygel-object-creator-test.c"
+#line 3376 "rygel-object-creator-test.c"
 }
 
 
 static gpointer _rygel_search_expression_ref0 (gpointer self) {
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self ? rygel_search_expression_ref (self) : NULL;
-#line 3312 "rygel-object-creator-test.c"
+#line 3383 "rygel-object-creator-test.c"
 }
 
 
@@ -3338,98 +3409,98 @@ void rygel_searchable_container_search (RygelSearchableContainer* self, RygelSea
 	gchar* _tmp6_ = NULL;
 	GCancellable* _tmp7_ = NULL;
 	GCancellable* _tmp8_ = NULL;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_slice_new0 (RygelSearchableContainerSearchData);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_async_result = g_simple_async_result_new (G_OBJECT (self), _callback_, _user_data_, rygel_searchable_container_search);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_simple_async_result_set_op_res_gpointer (_data_->_async_result, _data_, rygel_searchable_container_search_data_free);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = _g_object_ref0 (self);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->self = _tmp0_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = expression;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = _rygel_search_expression_ref0 (_tmp1_);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_rygel_search_expression_unref0 (_data_->expression);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->expression = _tmp2_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = offset;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->offset = _tmp3_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = count;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->count = _tmp4_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp5_ = soer_criteria;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp6_ = g_strdup (_tmp5_);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (_data_->soer_criteria);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->soer_criteria = _tmp6_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp7_ = cancellable;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp8_ = _g_object_ref0 (_tmp7_);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_data_->cancellable);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->cancellable = _tmp8_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_searchable_container_search_co (_data_);
-#line 3371 "rygel-object-creator-test.c"
+#line 3442 "rygel-object-creator-test.c"
 }
 
 
 RygelMediaObjects* rygel_searchable_container_search_finish (RygelSearchableContainer* self, GAsyncResult* _res_, gint* total_matches) {
 	RygelMediaObjects* result;
 	RygelSearchableContainerSearchData* _data_;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (total_matches) {
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		*total_matches = _data_->total_matches;
-#line 3384 "rygel-object-creator-test.c"
+#line 3455 "rygel-object-creator-test.c"
 	}
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = _data_->result;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = NULL;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 3392 "rygel-object-creator-test.c"
+#line 3463 "rygel-object-creator-test.c"
 }
 
 
 static Block2Data* block2_data_ref (Block2Data* _data2_) {
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_atomic_int_inc (&_data2_->_ref_count_);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return _data2_;
-#line 3401 "rygel-object-creator-test.c"
+#line 3472 "rygel-object-creator-test.c"
 }
 
 
 static void block2_data_unref (void * _userdata_) {
 	Block2Data* _data2_;
 	_data2_ = (Block2Data*) _userdata_;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (g_atomic_int_dec_and_test (&_data2_->_ref_count_)) {
-#line 3410 "rygel-object-creator-test.c"
+#line 3481 "rygel-object-creator-test.c"
 		RygelSearchableContainer * self;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		self = _data2_->self;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_g_object_unref0 (self);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_slice_free (Block2Data, _data2_);
-#line 3418 "rygel-object-creator-test.c"
+#line 3489 "rygel-object-creator-test.c"
 	}
 }
 
@@ -3437,158 +3508,158 @@ static void block2_data_unref (void * _userdata_) {
 static gboolean __lambda3_ (Block2Data* _data2_) {
 	RygelSearchableContainer * self;
 	gboolean result = FALSE;
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = _data2_->self;
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_searchable_container_search_co (_data2_->_async_data_);
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = FALSE;
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 3434 "rygel-object-creator-test.c"
+#line 3505 "rygel-object-creator-test.c"
 }
 
 
 static gboolean ___lambda3__gsource_func (gpointer self) {
 	gboolean result;
 	result = __lambda3_ (self);
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 3443 "rygel-object-creator-test.c"
+#line 3514 "rygel-object-creator-test.c"
 }
 
 
 static gboolean rygel_searchable_container_search_co (RygelSearchableContainerSearchData* _data_) {
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	switch (_data_->_state_) {
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 0:
-#line 3452 "rygel-object-creator-test.c"
+#line 3523 "rygel-object-creator-test.c"
 		goto _state_0;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		case 1:
-#line 3456 "rygel-object-creator-test.c"
+#line 3527 "rygel-object-creator-test.c"
 		goto _state_1;
 		default:
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_assert_not_reached ();
-#line 3461 "rygel-object-creator-test.c"
+#line 3532 "rygel-object-creator-test.c"
 	}
 	_state_0:
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data2_ = g_slice_new0 (Block2Data);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data2_->_ref_count_ = 1;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data2_->self = g_object_ref (_data_->self);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data2_->_async_data_ = _data_;
-#line 275 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 293 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->total_matches = 0;
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, ___lambda3__gsource_func, block2_data_ref (_data_->_data2_), block2_data_unref);
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_state_ = 1;
-#line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 3480 "rygel-object-creator-test.c"
+#line 3551 "rygel-object-creator-test.c"
 	_state_1:
 	;
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp0_ = NULL;
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp0_ = _data_->self->result;
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp1_ = NULL;
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_tmp1_ = _g_object_ref0 (_data_->_tmp0_);
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->result = _data_->_tmp1_;
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	block2_data_unref (_data_->_data2_);
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data2_ = NULL;
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 3501 "rygel-object-creator-test.c"
+#line 3572 "rygel-object-creator-test.c"
 	} else {
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 3505 "rygel-object-creator-test.c"
+#line 3576 "rygel-object-creator-test.c"
 	}
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	block2_data_unref (_data_->_data2_);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data_->_data2_ = NULL;
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_data_->_state_ == 0) {
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 3519 "rygel-object-creator-test.c"
+#line 3590 "rygel-object-creator-test.c"
 	} else {
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 3523 "rygel-object-creator-test.c"
+#line 3594 "rygel-object-creator-test.c"
 	}
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_object_unref (_data_->_async_result);
-#line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return FALSE;
-#line 3529 "rygel-object-creator-test.c"
+#line 3600 "rygel-object-creator-test.c"
 }
 
 
 RygelSearchableContainer* rygel_searchable_container_construct (GType object_type) {
 	RygelSearchableContainer * self = NULL;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelSearchableContainer*) rygel_media_container_construct (object_type);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 3539 "rygel-object-creator-test.c"
+#line 3610 "rygel-object-creator-test.c"
 }
 
 
 RygelSearchableContainer* rygel_searchable_container_new (void) {
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_searchable_container_construct (RYGEL_TYPE_SEARCHABLE_CONTAINER);
-#line 3546 "rygel-object-creator-test.c"
+#line 3617 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_searchable_container_class_init (RygelSearchableContainerClass * klass) {
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_searchable_container_parent_class = g_type_class_peek_parent (klass);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_searchable_container_finalize;
-#line 3555 "rygel-object-creator-test.c"
+#line 3626 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_searchable_container_instance_init (RygelSearchableContainer * self) {
 	RygelMediaObjects* _tmp0_ = NULL;
-#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = rygel_media_objects_new ();
-#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->result = _tmp0_;
-#line 3565 "rygel-object-creator-test.c"
+#line 3636 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_searchable_container_finalize (GObject* obj) {
 	RygelSearchableContainer * self;
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_SEARCHABLE_CONTAINER, RygelSearchableContainer);
-#line 267 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (self->result);
-#line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 284 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_searchable_container_parent_class)->finalize (obj);
-#line 3577 "rygel-object-creator-test.c"
+#line 3648 "rygel-object-creator-test.c"
 }
 
 
@@ -3611,222 +3682,222 @@ GQuark rygel_content_directory_error_quark (void) {
 
 RygelTranscoder* rygel_transcoder_construct (GType object_type) {
 	RygelTranscoder* self = NULL;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelTranscoder*) g_type_create_instance (object_type);
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 3604 "rygel-object-creator-test.c"
+#line 3675 "rygel-object-creator-test.c"
 }
 
 
 RygelTranscoder* rygel_transcoder_new (void) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_transcoder_construct (RYGEL_TYPE_TRANSCODER);
-#line 3611 "rygel-object-creator-test.c"
+#line 3682 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_value_transcoder_init (GValue* value) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	value->data[0].v_pointer = NULL;
-#line 3618 "rygel-object-creator-test.c"
+#line 3689 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_value_transcoder_free_value (GValue* value) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (value->data[0].v_pointer) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		rygel_transcoder_unref (value->data[0].v_pointer);
-#line 3627 "rygel-object-creator-test.c"
+#line 3698 "rygel-object-creator-test.c"
 	}
 }
 
 
 static void rygel_value_transcoder_copy_value (const GValue* src_value, GValue* dest_value) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (src_value->data[0].v_pointer) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		dest_value->data[0].v_pointer = rygel_transcoder_ref (src_value->data[0].v_pointer);
-#line 3637 "rygel-object-creator-test.c"
+#line 3708 "rygel-object-creator-test.c"
 	} else {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		dest_value->data[0].v_pointer = NULL;
-#line 3641 "rygel-object-creator-test.c"
+#line 3712 "rygel-object-creator-test.c"
 	}
 }
 
 
 static gpointer rygel_value_transcoder_peek_pointer (const GValue* value) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return value->data[0].v_pointer;
-#line 3649 "rygel-object-creator-test.c"
+#line 3720 "rygel-object-creator-test.c"
 }
 
 
 static gchar* rygel_value_transcoder_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (collect_values[0].v_pointer) {
-#line 3656 "rygel-object-creator-test.c"
+#line 3727 "rygel-object-creator-test.c"
 		RygelTranscoder* object;
 		object = collect_values[0].v_pointer;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		if (object->parent_instance.g_class == NULL) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 3663 "rygel-object-creator-test.c"
+#line 3734 "rygel-object-creator-test.c"
 		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 3667 "rygel-object-creator-test.c"
+#line 3738 "rygel-object-creator-test.c"
 		}
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		value->data[0].v_pointer = rygel_transcoder_ref (object);
-#line 3671 "rygel-object-creator-test.c"
+#line 3742 "rygel-object-creator-test.c"
 	} else {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		value->data[0].v_pointer = NULL;
-#line 3675 "rygel-object-creator-test.c"
+#line 3746 "rygel-object-creator-test.c"
 	}
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return NULL;
-#line 3679 "rygel-object-creator-test.c"
+#line 3750 "rygel-object-creator-test.c"
 }
 
 
 static gchar* rygel_value_transcoder_lcopy_value (const GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
 	RygelTranscoder** object_p;
 	object_p = collect_values[0].v_pointer;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (!object_p) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 3690 "rygel-object-creator-test.c"
+#line 3761 "rygel-object-creator-test.c"
 	}
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (!value->data[0].v_pointer) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		*object_p = NULL;
-#line 3696 "rygel-object-creator-test.c"
+#line 3767 "rygel-object-creator-test.c"
 	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		*object_p = value->data[0].v_pointer;
-#line 3700 "rygel-object-creator-test.c"
+#line 3771 "rygel-object-creator-test.c"
 	} else {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		*object_p = rygel_transcoder_ref (value->data[0].v_pointer);
-#line 3704 "rygel-object-creator-test.c"
+#line 3775 "rygel-object-creator-test.c"
 	}
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return NULL;
-#line 3708 "rygel-object-creator-test.c"
+#line 3779 "rygel-object-creator-test.c"
 }
 
 
 GParamSpec* rygel_param_spec_transcoder (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags) {
 	RygelParamSpecTranscoder* spec;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (g_type_is_a (object_type, RYGEL_TYPE_TRANSCODER), NULL);
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	spec = g_param_spec_internal (G_TYPE_PARAM_OBJECT, name, nick, blurb, flags);
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_PARAM_SPEC (spec)->value_type = object_type;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return G_PARAM_SPEC (spec);
-#line 3722 "rygel-object-creator-test.c"
+#line 3793 "rygel-object-creator-test.c"
 }
 
 
 gpointer rygel_value_get_transcoder (const GValue* value) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, RYGEL_TYPE_TRANSCODER), NULL);
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return value->data[0].v_pointer;
-#line 3731 "rygel-object-creator-test.c"
+#line 3802 "rygel-object-creator-test.c"
 }
 
 
 void rygel_value_set_transcoder (GValue* value, gpointer v_object) {
 	RygelTranscoder* old;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, RYGEL_TYPE_TRANSCODER));
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	old = value->data[0].v_pointer;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (v_object) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, RYGEL_TYPE_TRANSCODER));
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		value->data[0].v_pointer = v_object;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		rygel_transcoder_ref (value->data[0].v_pointer);
-#line 3751 "rygel-object-creator-test.c"
+#line 3822 "rygel-object-creator-test.c"
 	} else {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		value->data[0].v_pointer = NULL;
-#line 3755 "rygel-object-creator-test.c"
+#line 3826 "rygel-object-creator-test.c"
 	}
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (old) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		rygel_transcoder_unref (old);
-#line 3761 "rygel-object-creator-test.c"
+#line 3832 "rygel-object-creator-test.c"
 	}
 }
 
 
 void rygel_value_take_transcoder (GValue* value, gpointer v_object) {
 	RygelTranscoder* old;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, RYGEL_TYPE_TRANSCODER));
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	old = value->data[0].v_pointer;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (v_object) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, RYGEL_TYPE_TRANSCODER));
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		value->data[0].v_pointer = v_object;
-#line 3780 "rygel-object-creator-test.c"
+#line 3851 "rygel-object-creator-test.c"
 	} else {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		value->data[0].v_pointer = NULL;
-#line 3784 "rygel-object-creator-test.c"
+#line 3855 "rygel-object-creator-test.c"
 	}
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (old) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		rygel_transcoder_unref (old);
-#line 3790 "rygel-object-creator-test.c"
+#line 3861 "rygel-object-creator-test.c"
 	}
 }
 
 
 static void rygel_transcoder_class_init (RygelTranscoderClass * klass) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_transcoder_parent_class = g_type_class_peek_parent (klass);
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	RYGEL_TRANSCODER_CLASS (klass)->finalize = rygel_transcoder_finalize;
-#line 3800 "rygel-object-creator-test.c"
+#line 3871 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_transcoder_instance_init (RygelTranscoder * self) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->ref_count = 1;
-#line 3807 "rygel-object-creator-test.c"
+#line 3878 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_transcoder_finalize (RygelTranscoder* obj) {
 	RygelTranscoder * self;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_TRANSCODER, RygelTranscoder);
-#line 3815 "rygel-object-creator-test.c"
+#line 3886 "rygel-object-creator-test.c"
 }
 
 
@@ -3847,426 +3918,24 @@ GType rygel_transcoder_get_type (void) {
 gpointer rygel_transcoder_ref (gpointer instance) {
 	RygelTranscoder* self;
 	self = instance;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_atomic_int_inc (&self->ref_count);
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return instance;
-#line 3840 "rygel-object-creator-test.c"
+#line 3911 "rygel-object-creator-test.c"
 }
 
 
 void rygel_transcoder_unref (gpointer instance) {
 	RygelTranscoder* self;
 	self = instance;
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (g_atomic_int_dec_and_test (&self->ref_count)) {
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		RYGEL_TRANSCODER_GET_CLASS (self)->finalize (self);
-#line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 310 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_type_free_instance ((GTypeInstance *) self);
-#line 3853 "rygel-object-creator-test.c"
-	}
-}
-
-
-static void _rygel_dlna_profile_unref0_ (gpointer var) {
-#line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	(var == NULL) ? NULL : (var = (rygel_dlna_profile_unref (var), NULL));
-#line 3861 "rygel-object-creator-test.c"
-}
-
-
-static void _g_list_free__rygel_dlna_profile_unref0_ (GList* self) {
-#line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_list_foreach (self, (GFunc) _rygel_dlna_profile_unref0_, NULL);
-#line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_list_free (self);
-#line 3870 "rygel-object-creator-test.c"
-}
-
-
-static GList* rygel_test_media_engine_real_get_dlna_profiles (RygelMediaEngine* base) {
-	RygelTestMediaEngine * self;
-	GList* result = NULL;
-	GList* _tmp0_ = NULL;
-#line 298 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = (RygelTestMediaEngine*) base;
-#line 299 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp0_ = self->priv->dlna_profiles;
-#line 299 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	result = _tmp0_;
-#line 299 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return result;
-#line 3886 "rygel-object-creator-test.c"
-}
-
-
-static GList* rygel_test_media_engine_real_get_transcoders (RygelMediaEngine* base) {
-	RygelTestMediaEngine * self;
-	GList* result = NULL;
-#line 302 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = (RygelTestMediaEngine*) base;
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	result = NULL;
-#line 303 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return result;
-#line 3899 "rygel-object-creator-test.c"
-}
-
-
-static RygelDataSource* rygel_test_media_engine_real_create_data_source (RygelMediaEngine* base, const gchar* uri) {
-	RygelTestMediaEngine * self;
-	RygelDataSource* result = NULL;
-#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = (RygelTestMediaEngine*) base;
-#line 306 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_return_val_if_fail (uri != NULL, NULL);
-#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	result = NULL;
-#line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return result;
-#line 3914 "rygel-object-creator-test.c"
-}
-
-
-RygelTestMediaEngine* rygel_test_media_engine_construct (GType object_type) {
-	RygelTestMediaEngine * self = NULL;
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = (RygelTestMediaEngine*) rygel_media_engine_construct (object_type);
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return self;
 #line 3924 "rygel-object-creator-test.c"
-}
-
-
-RygelTestMediaEngine* rygel_test_media_engine_new (void) {
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return rygel_test_media_engine_construct (RYGEL_TYPE_TEST_MEDIA_ENGINE);
-#line 3931 "rygel-object-creator-test.c"
-}
-
-
-static void rygel_test_media_engine_class_init (RygelTestMediaEngineClass * klass) {
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	rygel_test_media_engine_parent_class = g_type_class_peek_parent (klass);
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_type_class_add_private (klass, sizeof (RygelTestMediaEnginePrivate));
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	RYGEL_MEDIA_ENGINE_CLASS (klass)->get_dlna_profiles = rygel_test_media_engine_real_get_dlna_profiles;
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	RYGEL_MEDIA_ENGINE_CLASS (klass)->get_transcoders = rygel_test_media_engine_real_get_transcoders;
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	RYGEL_MEDIA_ENGINE_CLASS (klass)->create_data_source = rygel_test_media_engine_real_create_data_source;
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	G_OBJECT_CLASS (klass)->finalize = rygel_test_media_engine_finalize;
-#line 3948 "rygel-object-creator-test.c"
-}
-
-
-static void rygel_test_media_engine_instance_init (RygelTestMediaEngine * self) {
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self->priv = RYGEL_TEST_MEDIA_ENGINE_GET_PRIVATE (self);
-#line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self->priv->dlna_profiles = NULL;
-#line 3957 "rygel-object-creator-test.c"
-}
-
-
-static void rygel_test_media_engine_finalize (GObject* obj) {
-	RygelTestMediaEngine * self;
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_TEST_MEDIA_ENGINE, RygelTestMediaEngine);
-#line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	__g_list_free__rygel_dlna_profile_unref0_0 (self->priv->dlna_profiles);
-#line 295 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	G_OBJECT_CLASS (rygel_test_media_engine_parent_class)->finalize (obj);
-#line 3969 "rygel-object-creator-test.c"
-}
-
-
-GType rygel_test_media_engine_get_type (void) {
-	static volatile gsize rygel_test_media_engine_type_id__volatile = 0;
-	if (g_once_init_enter (&rygel_test_media_engine_type_id__volatile)) {
-		static const GTypeInfo g_define_type_info = { sizeof (RygelTestMediaEngineClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) rygel_test_media_engine_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (RygelTestMediaEngine), 0, (GInstanceInitFunc) rygel_test_media_engine_instance_init, NULL };
-		GType rygel_test_media_engine_type_id;
-		rygel_test_media_engine_type_id = g_type_register_static (RYGEL_TYPE_MEDIA_ENGINE, "RygelTestMediaEngine", &g_define_type_info, 0);
-		g_once_init_leave (&rygel_test_media_engine_type_id__volatile, rygel_test_media_engine_type_id);
-	}
-	return rygel_test_media_engine_type_id__volatile;
-}
-
-
-RygelEngineLoader* rygel_engine_loader_construct (GType object_type) {
-	RygelEngineLoader* self = NULL;
-#line 312 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = (RygelEngineLoader*) g_type_create_instance (object_type);
-#line 312 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return self;
-#line 3991 "rygel-object-creator-test.c"
-}
-
-
-RygelEngineLoader* rygel_engine_loader_new (void) {
-#line 312 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return rygel_engine_loader_construct (RYGEL_TYPE_ENGINE_LOADER);
-#line 3998 "rygel-object-creator-test.c"
-}
-
-
-RygelMediaEngine* rygel_engine_loader_load_engine (RygelEngineLoader* self) {
-	RygelMediaEngine* result = NULL;
-	RygelTestMediaEngine* _tmp0_ = NULL;
-#line 314 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_return_val_if_fail (self != NULL, NULL);
-#line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp0_ = rygel_test_media_engine_new ();
-#line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	result = (RygelMediaEngine*) _tmp0_;
-#line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return result;
-#line 4013 "rygel-object-creator-test.c"
-}
-
-
-static void rygel_value_engine_loader_init (GValue* value) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	value->data[0].v_pointer = NULL;
-#line 4020 "rygel-object-creator-test.c"
-}
-
-
-static void rygel_value_engine_loader_free_value (GValue* value) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (value->data[0].v_pointer) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		rygel_engine_loader_unref (value->data[0].v_pointer);
-#line 4029 "rygel-object-creator-test.c"
-	}
-}
-
-
-static void rygel_value_engine_loader_copy_value (const GValue* src_value, GValue* dest_value) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (src_value->data[0].v_pointer) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		dest_value->data[0].v_pointer = rygel_engine_loader_ref (src_value->data[0].v_pointer);
-#line 4039 "rygel-object-creator-test.c"
-	} else {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		dest_value->data[0].v_pointer = NULL;
-#line 4043 "rygel-object-creator-test.c"
-	}
-}
-
-
-static gpointer rygel_value_engine_loader_peek_pointer (const GValue* value) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return value->data[0].v_pointer;
-#line 4051 "rygel-object-creator-test.c"
-}
-
-
-static gchar* rygel_value_engine_loader_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (collect_values[0].v_pointer) {
-#line 4058 "rygel-object-creator-test.c"
-		RygelEngineLoader* object;
-		object = collect_values[0].v_pointer;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		if (object->parent_instance.g_class == NULL) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 4065 "rygel-object-creator-test.c"
-		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 4069 "rygel-object-creator-test.c"
-		}
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		value->data[0].v_pointer = rygel_engine_loader_ref (object);
-#line 4073 "rygel-object-creator-test.c"
-	} else {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		value->data[0].v_pointer = NULL;
-#line 4077 "rygel-object-creator-test.c"
-	}
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return NULL;
-#line 4081 "rygel-object-creator-test.c"
-}
-
-
-static gchar* rygel_value_engine_loader_lcopy_value (const GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
-	RygelEngineLoader** object_p;
-	object_p = collect_values[0].v_pointer;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (!object_p) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 4092 "rygel-object-creator-test.c"
-	}
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (!value->data[0].v_pointer) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		*object_p = NULL;
-#line 4098 "rygel-object-creator-test.c"
-	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		*object_p = value->data[0].v_pointer;
-#line 4102 "rygel-object-creator-test.c"
-	} else {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		*object_p = rygel_engine_loader_ref (value->data[0].v_pointer);
-#line 4106 "rygel-object-creator-test.c"
-	}
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return NULL;
-#line 4110 "rygel-object-creator-test.c"
-}
-
-
-GParamSpec* rygel_param_spec_engine_loader (const gchar* name, const gchar* nick, const gchar* blurb, GType object_type, GParamFlags flags) {
-	RygelParamSpecEngineLoader* spec;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_return_val_if_fail (g_type_is_a (object_type, RYGEL_TYPE_ENGINE_LOADER), NULL);
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	spec = g_param_spec_internal (G_TYPE_PARAM_OBJECT, name, nick, blurb, flags);
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	G_PARAM_SPEC (spec)->value_type = object_type;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return G_PARAM_SPEC (spec);
-#line 4124 "rygel-object-creator-test.c"
-}
-
-
-gpointer rygel_value_get_engine_loader (const GValue* value) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, RYGEL_TYPE_ENGINE_LOADER), NULL);
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return value->data[0].v_pointer;
-#line 4133 "rygel-object-creator-test.c"
-}
-
-
-void rygel_value_set_engine_loader (GValue* value, gpointer v_object) {
-	RygelEngineLoader* old;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, RYGEL_TYPE_ENGINE_LOADER));
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	old = value->data[0].v_pointer;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (v_object) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, RYGEL_TYPE_ENGINE_LOADER));
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		value->data[0].v_pointer = v_object;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		rygel_engine_loader_ref (value->data[0].v_pointer);
-#line 4153 "rygel-object-creator-test.c"
-	} else {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		value->data[0].v_pointer = NULL;
-#line 4157 "rygel-object-creator-test.c"
-	}
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (old) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		rygel_engine_loader_unref (old);
-#line 4163 "rygel-object-creator-test.c"
-	}
-}
-
-
-void rygel_value_take_engine_loader (GValue* value, gpointer v_object) {
-	RygelEngineLoader* old;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_return_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, RYGEL_TYPE_ENGINE_LOADER));
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	old = value->data[0].v_pointer;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (v_object) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (v_object, RYGEL_TYPE_ENGINE_LOADER));
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		value->data[0].v_pointer = v_object;
-#line 4182 "rygel-object-creator-test.c"
-	} else {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		value->data[0].v_pointer = NULL;
-#line 4186 "rygel-object-creator-test.c"
-	}
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (old) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		rygel_engine_loader_unref (old);
-#line 4192 "rygel-object-creator-test.c"
-	}
-}
-
-
-static void rygel_engine_loader_class_init (RygelEngineLoaderClass * klass) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	rygel_engine_loader_parent_class = g_type_class_peek_parent (klass);
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	RYGEL_ENGINE_LOADER_CLASS (klass)->finalize = rygel_engine_loader_finalize;
-#line 4202 "rygel-object-creator-test.c"
-}
-
-
-static void rygel_engine_loader_instance_init (RygelEngineLoader * self) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self->ref_count = 1;
-#line 4209 "rygel-object-creator-test.c"
-}
-
-
-static void rygel_engine_loader_finalize (RygelEngineLoader* obj) {
-	RygelEngineLoader * self;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_ENGINE_LOADER, RygelEngineLoader);
-#line 4217 "rygel-object-creator-test.c"
-}
-
-
-GType rygel_engine_loader_get_type (void) {
-	static volatile gsize rygel_engine_loader_type_id__volatile = 0;
-	if (g_once_init_enter (&rygel_engine_loader_type_id__volatile)) {
-		static const GTypeValueTable g_define_type_value_table = { rygel_value_engine_loader_init, rygel_value_engine_loader_free_value, rygel_value_engine_loader_copy_value, rygel_value_engine_loader_peek_pointer, "p", rygel_value_engine_loader_collect_value, "p", rygel_value_engine_loader_lcopy_value };
-		static const GTypeInfo g_define_type_info = { sizeof (RygelEngineLoaderClass), (GBaseInitFunc) NULL, (GBaseFinalizeFunc) NULL, (GClassInitFunc) rygel_engine_loader_class_init, (GClassFinalizeFunc) NULL, NULL, sizeof (RygelEngineLoader), 0, (GInstanceInitFunc) rygel_engine_loader_instance_init, &g_define_type_value_table };
-		static const GTypeFundamentalInfo g_define_type_fundamental_info = { (G_TYPE_FLAG_CLASSED | G_TYPE_FLAG_INSTANTIATABLE | G_TYPE_FLAG_DERIVABLE | G_TYPE_FLAG_DEEP_DERIVABLE) };
-		GType rygel_engine_loader_type_id;
-		rygel_engine_loader_type_id = g_type_register_fundamental (g_type_fundamental_next (), "RygelEngineLoader", &g_define_type_info, &g_define_type_fundamental_info, 0);
-		g_once_init_leave (&rygel_engine_loader_type_id__volatile, rygel_engine_loader_type_id);
-	}
-	return rygel_engine_loader_type_id__volatile;
-}
-
-
-gpointer rygel_engine_loader_ref (gpointer instance) {
-	RygelEngineLoader* self;
-	self = instance;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	g_atomic_int_inc (&self->ref_count);
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	return instance;
-#line 4242 "rygel-object-creator-test.c"
-}
-
-
-void rygel_engine_loader_unref (gpointer instance) {
-	RygelEngineLoader* self;
-	self = instance;
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	if (g_atomic_int_dec_and_test (&self->ref_count)) {
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		RYGEL_ENGINE_LOADER_GET_CLASS (self)->finalize (self);
-#line 311 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-		g_type_free_instance ((GTypeInstance *) self);
-#line 4255 "rygel-object-creator-test.c"
 	}
 }
 
@@ -4279,116 +3948,116 @@ void log_func (const gchar* domain, GLogLevelFlags flags, const gchar* message) 
 	GLogLevelFlags _tmp8_ = 0;
 	gboolean _tmp10_ = FALSE;
 	gboolean _tmp12_ = FALSE;
-#line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 313 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (message != NULL);
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 318 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = message;
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 318 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = g_str_has_prefix (_tmp0_, "Read-only property 'read-only-view' on class");
-#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 318 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_tmp1_) {
-#line 4276 "rygel-object-creator-test.c"
+#line 3945 "rygel-object-creator-test.c"
 		GLogFunc _tmp2_ = NULL;
 		void* _tmp2__target = NULL;
 		const gchar* _tmp3_ = NULL;
 		GLogLevelFlags _tmp4_ = 0;
 		const gchar* _tmp5_ = NULL;
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp2_ = g_log_default_handler;
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp2__target = NULL;
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp3_ = domain;
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp4_ = flags;
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp5_ = message;
-#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp2_ (_tmp3_, _tmp4_, _tmp5_, _tmp2__target);
-#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 321 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		return;
-#line 4296 "rygel-object-creator-test.c"
+#line 3965 "rygel-object-creator-test.c"
 	}
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp8_ = flags;
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if ((_tmp8_ & G_LOG_LEVEL_CRITICAL) == G_LOG_LEVEL_CRITICAL) {
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp7_ = TRUE;
-#line 4304 "rygel-object-creator-test.c"
+#line 3973 "rygel-object-creator-test.c"
 	} else {
 		GLogLevelFlags _tmp9_ = 0;
-#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp9_ = flags;
-#line 331 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp7_ = (_tmp9_ & G_LOG_LEVEL_ERROR) == G_LOG_LEVEL_ERROR;
-#line 4311 "rygel-object-creator-test.c"
+#line 3980 "rygel-object-creator-test.c"
 	}
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp10_ = _tmp7_;
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_tmp10_) {
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp6_ = TRUE;
-#line 4319 "rygel-object-creator-test.c"
+#line 3988 "rygel-object-creator-test.c"
 	} else {
 		GLogLevelFlags _tmp11_ = 0;
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp11_ = flags;
-#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 326 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp6_ = (_tmp11_ & G_LOG_FLAG_FATAL) == G_LOG_FLAG_FATAL;
-#line 4326 "rygel-object-creator-test.c"
+#line 3995 "rygel-object-creator-test.c"
 	}
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp12_ = _tmp6_;
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (_tmp12_) {
-#line 4332 "rygel-object-creator-test.c"
+#line 4001 "rygel-object-creator-test.c"
 		gchar* _tmp13_ = NULL;
 		const gchar* _tmp14_ = NULL;
 		gchar* _tmp15_ = NULL;
 		const gchar* _tmp16_ = NULL;
 		const gchar* _tmp18_ = NULL;
 		const gchar* _tmp19_ = NULL;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp14_ = domain;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp15_ = g_strdup (_tmp14_);
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp13_ = _tmp15_;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp16_ = _tmp13_;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		if (_tmp16_ == NULL) {
-#line 4349 "rygel-object-creator-test.c"
+#line 4018 "rygel-object-creator-test.c"
 			gchar* _tmp17_ = NULL;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 			_tmp17_ = g_strdup ("");
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 			_g_free0 (_tmp13_);
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 			_tmp13_ = _tmp17_;
-#line 4357 "rygel-object-creator-test.c"
+#line 4026 "rygel-object-creator-test.c"
 		}
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp18_ = _tmp13_;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_tmp19_ = message;
-#line 333 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 327 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_print ("======> FAILED: %s: %s\n", _tmp18_, _tmp19_);
-#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 328 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_assert_not_reached ();
-#line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_g_free0 (_tmp13_);
-#line 4369 "rygel-object-creator-test.c"
+#line 4038 "rygel-object-creator-test.c"
 	}
 }
 
 
 static void _log_func_glog_func (const gchar* log_domain, GLogLevelFlags log_levels, const gchar* message, gpointer self) {
-#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	log_func (log_domain, log_levels, message);
-#line 4377 "rygel-object-creator-test.c"
+#line 4046 "rygel-object-creator-test.c"
 }
 
 
@@ -4402,54 +4071,54 @@ gint rygel_http_object_creator_test_main (gchar** args, int args_length1) {
 	GUPnPDIDLLiteItem* _tmp3_ = NULL;
 	GUPnPDIDLLiteContainer* _tmp4_ = NULL;
 	GUPnPDIDLLiteContainer* _tmp5_ = NULL;
-#line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_log_set_default_handler (_log_func_glog_func, NULL);
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = rygel_http_object_creator_test_new ();
-#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 336 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	test = _tmp0_;
-#line 343 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_parse_args (test);
-#line 344 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing (test);
-#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_fetch_container (test);
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = rygel_serializer_new (SERIALIZER_TYPE_GENERIC_DIDL);
-#line 348 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	serializer = _tmp1_;
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 343 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = rygel_serializer_add_item (serializer);
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 343 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = _tmp2_;
-#line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 343 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_tmp3_);
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 344 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = rygel_serializer_add_container (serializer);
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 344 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp5_ = _tmp4_;
-#line 350 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 344 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (_tmp5_);
-#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 345 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_serializer_filter (serializer, "something");
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	result = 0;
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (serializer);
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (test);
-#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return result;
-#line 4429 "rygel-object-creator-test.c"
+#line 4098 "rygel-object-creator-test.c"
 }
 
 
 int main (int argc, char ** argv) {
-#line 340 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_type_init ();
-#line 340 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_http_object_creator_test_main (argv, argc);
-#line 4438 "rygel-object-creator-test.c"
+#line 4107 "rygel-object-creator-test.c"
 }
 
 
@@ -4460,48 +4129,48 @@ RygelHTTPObjectCreatorTest* rygel_http_object_creator_test_construct (GType obje
 	GError* _tmp2_ = NULL;
 	GError* _tmp3_ = NULL;
 	GError* _tmp4_ = NULL;
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = (RygelHTTPObjectCreatorTest*) g_object_new (object_type, NULL);
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 358 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_OBJECT, "");
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 358 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->no_such_object);
-#line 364 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 358 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->no_such_object = _tmp0_;
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 359 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_CONTAINER, "");
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 359 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->no_such_container);
-#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 359 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->no_such_container = _tmp1_;
-#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 360 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_PARENT, "");
-#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 360 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->restricted_parent);
-#line 366 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 360 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->restricted_parent = _tmp2_;
-#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 361 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA, "");
-#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 361 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->bad_metadata);
-#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 361 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->bad_metadata = _tmp3_;
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 362 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, "");
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 362 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->invalid_args);
-#line 368 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 362 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv->invalid_args = _tmp4_;
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return self;
-#line 4483 "rygel-object-creator-test.c"
+#line 4152 "rygel-object-creator-test.c"
 }
 
 
 RygelHTTPObjectCreatorTest* rygel_http_object_creator_test_new (void) {
-#line 363 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return rygel_http_object_creator_test_construct (RYGEL_TYPE_HTTP_OBJECT_CREATOR_TEST);
-#line 4490 "rygel-object-creator-test.c"
+#line 4159 "rygel-object-creator-test.c"
 }
 
 
@@ -4537,105 +4206,105 @@ static void rygel_http_object_creator_test_test_parse_args (RygelHTTPObjectCreat
 	gint _tmp25_ = 0;
 	GError* _tmp26_ = NULL;
 	gint _tmp27_ = 0;
-#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = rygel_content_directory_new ();
-#line 373 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 367 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	content_directory = _tmp0_;
-#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 369 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = rygel_service_action_new (NULL, "");
-#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 369 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	action = _tmp1_;
-#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 370 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = action;
-#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 370 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = _g_object_ref0 (_tmp2_);
-#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 370 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = rygel_object_creator_new (content_directory, _tmp3_);
-#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 370 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	creator = _tmp4_;
-#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp5_ = creator;
-#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_state_machine_run ((RygelStateMachine*) _tmp5_, NULL, NULL);
-#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp6_ = action;
-#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp7_ = _tmp6_->error_code;
-#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp8_ = self->priv->no_such_object;
-#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp8_ = self->priv->invalid_args;
+#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp9_ = _tmp8_->code;
-#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_vala_assert (_tmp7_ == _tmp9_, "action.error_code == no_such_object.code");
-#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 372 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_vala_assert (_tmp7_ == _tmp9_, "action.error_code == invalid_args.code");
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp10_ = rygel_service_action_new ("0", "<!-- This is an XML comment -->");
-#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (action);
-#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 375 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	action = _tmp10_;
-#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp11_ = action;
-#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp12_ = _g_object_ref0 (_tmp11_);
-#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp13_ = rygel_object_creator_new (content_directory, _tmp12_);
-#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (creator);
-#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 376 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	creator = _tmp13_;
-#line 383 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp14_ = creator;
-#line 383 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 377 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_state_machine_run ((RygelStateMachine*) _tmp14_, NULL, NULL);
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp15_ = action;
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp16_ = _tmp15_->error_code;
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp17_ = self->priv->bad_metadata;
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp18_ = _tmp17_->code;
-#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 378 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp16_ == _tmp18_, "action.error_code == bad_metadata.code");
-#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp19_ = rygel_service_action_new ("0", NULL);
-#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (action);
-#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 381 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	action = _tmp19_;
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp20_ = action;
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp21_ = _g_object_ref0 (_tmp20_);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp22_ = rygel_object_creator_new (content_directory, _tmp21_);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (creator);
-#line 388 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 382 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	creator = _tmp22_;
-#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 383 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp23_ = creator;
-#line 389 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 383 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_state_machine_run ((RygelStateMachine*) _tmp23_, NULL, NULL);
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp24_ = action;
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp25_ = _tmp24_->error_code;
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp26_ = self->priv->bad_metadata;
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp27_ = _tmp26_->code;
-#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 384 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp25_ == _tmp27_, "action.error_code == bad_metadata.code");
-#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (creator);
-#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (action);
-#line 371 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 365 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (content_directory);
-#line 4624 "rygel-object-creator-test.c"
+#line 4293 "rygel-object-creator-test.c"
 }
 
 
@@ -4652,47 +4321,47 @@ static void rygel_http_object_creator_test_test_didl_parsing_step (RygelHTTPObje
 	RygelObjectCreator* _tmp5_ = NULL;
 	gint _tmp6_ = 0;
 	gint _tmp7_ = 0;
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = doc;
-#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlDocDumpMemoryEnc (_tmp0_, &_tmp1_, NULL, "UTF-8");
-#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (xml);
-#line 396 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 390 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xml = _tmp1_;
-#line 397 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = rygel_service_action_new ("0", xml);
-#line 397 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 391 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	action = _tmp2_;
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 392 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = rygel_content_directory_new ();
-#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 392 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	content_directory = _tmp3_;
-#line 399 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = _g_object_ref0 (action);
-#line 399 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp5_ = rygel_object_creator_new (content_directory, _tmp4_);
-#line 399 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	creator = _tmp5_;
-#line 400 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 394 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_state_machine_run ((RygelStateMachine*) creator, NULL, NULL);
-#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp6_ = action->error_code;
-#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp7_ = expected_code;
-#line 401 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 395 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp6_ == _tmp7_, "action.error_code == expected_code");
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (creator);
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (content_directory);
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (action);
-#line 393 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 387 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_free0 (xml);
-#line 4681 "rygel-object-creator-test.c"
+#line 4350 "rygel-object-creator-test.c"
 }
 
 
@@ -4754,235 +4423,235 @@ static void rygel_http_object_creator_test_test_didl_parsing (RygelHTTPObjectCre
 	gint _tmp45_ = 0;
 	GError* _tmp46_ = NULL;
 	gint _tmp47_ = 0;
-#line 404 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 399 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = strlen (DIDL_ITEM);
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 399 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = _tmp0_;
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 399 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = xmlReadMemory (DIDL_ITEM, _tmp1_, NULL, NULL, (gint) (XML_PARSE_RECOVER | XML_PARSE_NOBLANKS));
-#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 399 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xml = _tmp2_;
-#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = xml->children;
-#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 405 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	didl_node = _tmp3_;
-#line 412 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = didl_node->children;
-#line 412 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	item_node = _tmp4_;
-#line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 407 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp5_ = rygel_content_directory_new ();
-#line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 407 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	content_directory = _tmp5_;
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 410 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp6_ = rygel_service_action_new ("0", "");
-#line 416 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 410 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	action = _tmp6_;
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp7_ = _g_object_ref0 (action);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp8_ = rygel_object_creator_new (content_directory, _tmp7_);
-#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	creator = _tmp8_;
-#line 418 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 412 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_state_machine_run ((RygelStateMachine*) creator, NULL, NULL);
-#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp9_ = action->error_code;
-#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp10_ = self->priv->bad_metadata;
-#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp11_ = _tmp10_->code;
-#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp9_ == _tmp11_, "action.error_code == bad_metadata.code");
-#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 414 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp12_ = action->error_message;
-#line 420 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 414 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (g_strcmp0 (_tmp12_, "Bad metadata") == 0, "action.error_message == \"Bad metadata\"");
-#line 423 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 417 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlUnlinkNode (item_node);
-#line 424 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 418 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlNodeSetContent (didl_node, "  ");
-#line 425 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp13_ = self->priv->bad_metadata;
-#line 425 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp14_ = _tmp13_->code;
-#line 425 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing_step (self, xml, _tmp14_);
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 422 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp15_ = xmlCopyNode (item_node, 1);
-#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 422 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	tmp = _tmp15_;
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 423 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp16_ = tmp;
-#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 423 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlUnsetProp (_tmp16_, "restricted");
-#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 424 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp17_ = tmp;
-#line 430 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 424 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlAddChild (didl_node, _tmp17_);
-#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 425 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp18_ = self->priv->bad_metadata;
-#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 425 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp19_ = _tmp18_->code;
-#line 431 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 425 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing_step (self, xml, _tmp19_);
-#line 434 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp20_ = tmp;
-#line 434 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 428 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlSetProp (_tmp20_, "restricted", "1");
-#line 435 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp21_ = self->priv->bad_metadata;
-#line 435 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp22_ = _tmp21_->code;
-#line 435 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 429 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing_step (self, xml, _tmp22_);
-#line 438 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp23_ = tmp;
-#line 438 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlUnlinkNode (_tmp23_);
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 433 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp24_ = xmlCopyNode (item_node, 1);
-#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 433 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	tmp = _tmp24_;
-#line 440 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 434 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp25_ = tmp;
-#line 440 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 434 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlSetProp (_tmp25_, "id", "InvalidItemId");
-#line 441 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 435 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp26_ = tmp;
-#line 441 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 435 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlAddChild (didl_node, _tmp26_);
-#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp27_ = self->priv->bad_metadata;
-#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp28_ = _tmp27_->code;
-#line 442 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing_step (self, xml, _tmp28_);
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp29_ = tmp;
-#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 439 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlUnsetProp (_tmp29_, "id");
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 440 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp30_ = self->priv->bad_metadata;
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 440 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp31_ = _tmp30_->code;
-#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 440 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing_step (self, xml, _tmp31_);
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 443 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp32_ = tmp;
-#line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 443 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlUnlinkNode (_tmp32_);
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp33_ = xmlCopyNode (item_node, 1);
-#line 450 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 444 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	tmp = _tmp33_;
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp34_ = tmp;
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp35_ = _tmp34_->children;
-#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	title_node = _tmp35_;
-#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlUnlinkNode (title_node);
-#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp36_ = tmp;
-#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 447 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlAddChild (didl_node, _tmp36_);
-#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp37_ = self->priv->bad_metadata;
-#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp38_ = _tmp37_->code;
-#line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing_step (self, xml, _tmp38_);
-#line 457 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp39_ = tmp;
-#line 457 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlUnlinkNode (_tmp39_);
-#line 458 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp40_ = xmlCopyNode (item_node, 1);
-#line 458 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	tmp = _tmp40_;
-#line 459 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp41_ = tmp;
-#line 459 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp42_ = _tmp41_->children;
-#line 459 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp43_ = _tmp42_->next;
-#line 459 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 453 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	class_node = _tmp43_;
-#line 461 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 455 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlNodeSetContent (class_node, "");
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 456 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp44_ = self->priv->bad_metadata;
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 456 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp45_ = _tmp44_->code;
-#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 456 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing_step (self, xml, _tmp45_);
-#line 464 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 458 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	xmlUnlinkNode (class_node);
-#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 459 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp46_ = self->priv->bad_metadata;
-#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 459 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp47_ = _tmp46_->code;
-#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 459 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_didl_parsing_step (self, xml, _tmp47_);
-#line 404 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (creator);
-#line 404 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (action);
-#line 404 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 398 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (content_directory);
-#line 4923 "rygel-object-creator-test.c"
+#line 4592 "rygel-object-creator-test.c"
 }
 
 
 static Block3Data* block3_data_ref (Block3Data* _data3_) {
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_atomic_int_inc (&_data3_->_ref_count_);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	return _data3_;
-#line 4932 "rygel-object-creator-test.c"
+#line 4601 "rygel-object-creator-test.c"
 }
 
 
 static void block3_data_unref (void * _userdata_) {
 	Block3Data* _data3_;
 	_data3_ = (Block3Data*) _userdata_;
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	if (g_atomic_int_dec_and_test (&_data3_->_ref_count_)) {
-#line 4941 "rygel-object-creator-test.c"
+#line 4610 "rygel-object-creator-test.c"
 		RygelHTTPObjectCreatorTest * self;
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		self = _data3_->self;
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_g_main_loop_unref0 (_data3_->main_loop);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		_g_object_unref0 (self);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 		g_slice_free (Block3Data, _data3_);
-#line 4951 "rygel-object-creator-test.c"
+#line 4620 "rygel-object-creator-test.c"
 	}
 }
 
 
 static void __lambda7_ (Block3Data* _data3_) {
 	RygelHTTPObjectCreatorTest * self;
-#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 464 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = _data3_->self;
-#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 464 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_main_loop_quit (_data3_->main_loop);
-#line 4962 "rygel-object-creator-test.c"
+#line 4631 "rygel-object-creator-test.c"
 }
 
 
 static void ___lambda7__gasync_ready_callback (GObject* source_object, GAsyncResult* res, gpointer self) {
-#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 464 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	__lambda7_ (self);
-#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 464 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	block3_data_unref (self);
-#line 4971 "rygel-object-creator-test.c"
+#line 4640 "rygel-object-creator-test.c"
 }
 
 
@@ -4990,31 +4659,31 @@ static void rygel_http_object_creator_test_test_fetch_container_run (RygelHTTPOb
 	Block3Data* _data3_;
 	GMainLoop* _tmp0_ = NULL;
 	RygelObjectCreator* _tmp1_ = NULL;
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (creator != NULL);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data3_ = g_slice_new0 (Block3Data);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data3_->_ref_count_ = 1;
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data3_->self = g_object_ref (self);
-#line 469 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 463 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = g_main_loop_new (NULL, FALSE);
-#line 469 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 463 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data3_->main_loop = _tmp0_;
-#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 464 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = creator;
-#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 464 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_state_machine_run ((RygelStateMachine*) _tmp1_, ___lambda7__gasync_ready_callback, block3_data_ref (_data3_));
-#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 465 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_main_loop_run (_data3_->main_loop);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	block3_data_unref (_data3_);
-#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 462 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_data3_ = NULL;
-#line 5003 "rygel-object-creator-test.c"
+#line 4672 "rygel-object-creator-test.c"
 }
 
 
@@ -5063,207 +4732,207 @@ static void rygel_http_object_creator_test_test_fetch_container (RygelHTTPObject
 	gint _tmp36_ = 0;
 	GError* _tmp37_ = NULL;
 	gint _tmp38_ = 0;
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_return_if_fail (self != NULL);
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp0_ = rygel_content_directory_new ();
-#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 470 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	content_directory = _tmp0_;
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp1_ = rygel_searchable_container_new ();
-#line 477 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 471 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	root_container = _tmp1_;
-#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 472 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp2_ = _g_object_ref0 ((RygelMediaContainer*) root_container);
-#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 472 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (content_directory->root_container);
-#line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 472 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	content_directory->root_container = _tmp2_;
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp3_ = rygel_service_action_new ("0", DIDL_ITEM);
-#line 479 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 473 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	action = _tmp3_;
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp4_ = _g_object_ref0 (action);
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp5_ = rygel_object_creator_new (content_directory, _tmp4_);
-#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	creator = _tmp5_;
+#line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp6_ = action->error_code;
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp7_ = self->priv->no_such_container;
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp8_ = _tmp7_->code;
+#line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_vala_assert (_tmp6_ == _tmp8_, "action.error_code == no_such_container.code");
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp9_ = rygel_media_object_new ();
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_object_unref0 (((RygelMediaContainer*) root_container)->found_object);
+#line 480 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	((RygelMediaContainer*) root_container)->found_object = _tmp9_;
 #line 481 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
 #line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp6_ = action->error_code;
-#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp7_ = self->priv->no_such_container;
-#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp8_ = _tmp7_->code;
-#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_vala_assert (_tmp6_ == _tmp8_, "action.error_code == no_such_container.code");
-#line 486 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp9_ = rygel_media_object_new ();
-#line 486 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_object_unref0 (((RygelMediaContainer*) root_container)->found_object);
-#line 486 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	((RygelMediaContainer*) root_container)->found_object = _tmp9_;
-#line 487 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
-#line 488 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp10_ = action->error_code;
-#line 488 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp11_ = self->priv->no_such_container;
-#line 488 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp12_ = _tmp11_->code;
-#line 488 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 482 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp10_ == _tmp12_, "action.error_code == no_such_container.code");
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 485 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp13_ = rygel_media_container_new ();
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 485 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (((RygelMediaContainer*) root_container)->found_object);
-#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 485 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	((RygelMediaContainer*) root_container)->found_object = (RygelMediaObject*) _tmp13_;
-#line 492 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 486 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 487 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp14_ = action->error_code;
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 487 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp15_ = self->priv->restricted_parent;
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 487 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp16_ = _tmp15_->code;
-#line 493 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 487 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp14_ == _tmp16_, "action.error_code == restricted_parent.code");
-#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp17_ = ((RygelMediaContainer*) root_container)->found_object;
-#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp18_ = ((RygelMediaContainer*) root_container)->found_object;
-#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp19_ = _tmp18_->ocm_flags;
-#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp18_->ocm_flags = _tmp19_ | GUPNP_OCM_FLAGS_UPLOAD;
-#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 491 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 492 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp20_ = action->error_code;
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 492 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp21_ = self->priv->restricted_parent;
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 492 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp22_ = _tmp21_->code;
-#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 492 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp20_ == _tmp22_, "action.error_code == restricted_parent.code");
-#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp23_ = rygel_writable_container_new ();
-#line 501 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 495 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	container = _tmp23_;
-#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp24_ = ((RygelMediaContainer*) container)->create_classes;
-#line 502 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 496 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	gee_abstract_collection_add ((GeeAbstractCollection*) _tmp24_, "object.item.imageItem.musicTrack");
-#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp25_ = ((RygelMediaObject*) container)->ocm_flags;
-#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	((RygelMediaObject*) container)->ocm_flags = _tmp25_ | GUPNP_OCM_FLAGS_UPLOAD;
-#line 504 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp26_ = _g_object_ref0 ((RygelMediaObject*) container);
-#line 504 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (((RygelMediaContainer*) root_container)->found_object);
-#line 504 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 498 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	((RygelMediaContainer*) root_container)->found_object = _tmp26_;
+#line 499 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp27_ = action->error_code;
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp28_ = self->priv->bad_metadata;
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp29_ = _tmp28_->code;
+#line 500 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_vala_assert (_tmp27_ == _tmp29_, "action.error_code == bad_metadata.code");
+#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp30_ = rygel_media_container_new ();
+#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_object_unref0 (content_directory->root_container);
+#line 503 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	content_directory->root_container = _tmp30_;
+#line 504 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_tmp31_ = g_strdup ("DLNA.ORG_AnyContainer");
+#line 504 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	_g_free0 (action->id);
+#line 504 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+	action->id = _tmp31_;
 #line 505 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
 #line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp27_ = action->error_code;
-#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp28_ = self->priv->bad_metadata;
-#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp29_ = _tmp28_->code;
-#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_vala_assert (_tmp27_ == _tmp29_, "action.error_code == bad_metadata.code");
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp30_ = rygel_media_container_new ();
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_object_unref0 (content_directory->root_container);
-#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	content_directory->root_container = _tmp30_;
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_tmp31_ = g_strdup ("DLNA.ORG_AnyContainer");
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	_g_free0 (action->id);
-#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	action->id = _tmp31_;
-#line 511 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
-	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
-#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp32_ = action->error_code;
-#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp33_ = self->priv->no_such_container;
-#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp34_ = _tmp33_->code;
-#line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 506 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp32_ == _tmp34_, "action.error_code == no_such_container.code");
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp35_ = rygel_searchable_container_new ();
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (content_directory->root_container);
-#line 515 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 509 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	content_directory->root_container = (RygelMediaContainer*) _tmp35_;
-#line 516 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 510 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_test_fetch_container_run (self, creator);
-#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp36_ = action->error_code;
-#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp37_ = self->priv->bad_metadata;
-#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_tmp38_ = _tmp37_->code;
-#line 519 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 513 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_vala_assert (_tmp36_ == _tmp38_, "action.error_code == bad_metadata.code");
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (container);
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (creator);
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (action);
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (root_container);
-#line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 468 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_object_unref0 (content_directory);
-#line 5214 "rygel-object-creator-test.c"
+#line 4883 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_http_object_creator_test_class_init (RygelHTTPObjectCreatorTestClass * klass) {
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	rygel_http_object_creator_test_parent_class = g_type_class_peek_parent (klass);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	g_type_class_add_private (klass, sizeof (RygelHTTPObjectCreatorTestPrivate));
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_http_object_creator_test_finalize;
-#line 5225 "rygel-object-creator-test.c"
+#line 4894 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_http_object_creator_test_instance_init (RygelHTTPObjectCreatorTest * self) {
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self->priv = RYGEL_HTTP_OBJECT_CREATOR_TEST_GET_PRIVATE (self);
-#line 5232 "rygel-object-creator-test.c"
+#line 4901 "rygel-object-creator-test.c"
 }
 
 
 static void rygel_http_object_creator_test_finalize (GObject* obj) {
 	RygelHTTPObjectCreatorTest * self;
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, RYGEL_TYPE_HTTP_OBJECT_CREATOR_TEST, RygelHTTPObjectCreatorTest);
-#line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->no_such_object);
-#line 358 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 352 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->no_such_container);
-#line 359 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->restricted_parent);
-#line 360 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 354 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->bad_metadata);
-#line 361 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 355 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	_g_error_free0 (self->priv->invalid_args);
-#line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
+#line 332 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/tests/rygel-object-creator-test.vala"
 	G_OBJECT_CLASS (rygel_http_object_creator_test_parent_class)->finalize (obj);
-#line 5252 "rygel-object-creator-test.c"
+#line 4921 "rygel-object-creator-test.c"
 }
 
 

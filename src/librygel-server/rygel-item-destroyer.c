@@ -119,6 +119,16 @@ typedef struct _RygelWritableContainerIface RygelWritableContainerIface;
 
 typedef struct _RygelMediaItem RygelMediaItem;
 typedef struct _RygelMediaItemClass RygelMediaItemClass;
+
+#define RYGEL_TYPE_OBJECT_REMOVAL_QUEUE (rygel_object_removal_queue_get_type ())
+#define RYGEL_OBJECT_REMOVAL_QUEUE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RYGEL_TYPE_OBJECT_REMOVAL_QUEUE, RygelObjectRemovalQueue))
+#define RYGEL_OBJECT_REMOVAL_QUEUE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), RYGEL_TYPE_OBJECT_REMOVAL_QUEUE, RygelObjectRemovalQueueClass))
+#define RYGEL_IS_OBJECT_REMOVAL_QUEUE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), RYGEL_TYPE_OBJECT_REMOVAL_QUEUE))
+#define RYGEL_IS_OBJECT_REMOVAL_QUEUE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), RYGEL_TYPE_OBJECT_REMOVAL_QUEUE))
+#define RYGEL_OBJECT_REMOVAL_QUEUE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), RYGEL_TYPE_OBJECT_REMOVAL_QUEUE, RygelObjectRemovalQueueClass))
+
+typedef struct _RygelObjectRemovalQueue RygelObjectRemovalQueue;
+typedef struct _RygelObjectRemovalQueueClass RygelObjectRemovalQueueClass;
 typedef struct _RygelItemDestroyerRemoveObjectData RygelItemDestroyerRemoveObjectData;
 typedef struct _RygelItemDestroyerFetchObjectData RygelItemDestroyerFetchObjectData;
 
@@ -163,11 +173,13 @@ typedef enum  {
 	RYGEL_CONTENT_DIRECTORY_ERROR_REQUIRED_TAG = 704,
 	RYGEL_CONTENT_DIRECTORY_ERROR_READ_ONLY_TAG = 705,
 	RYGEL_CONTENT_DIRECTORY_ERROR_PARAMETER_MISMATCH = 706,
+	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SEARCH_CRITERIA = 708,
 	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SORT_CRITERIA = 709,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_CONTAINER = 710,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_OBJECT = 711,
 	RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA = 712,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_PARENT = 713,
+	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_FILE_TRANSFER = 717,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_DESTINATION_RESOURCE = 718,
 	RYGEL_CONTENT_DIRECTORY_ERROR_CANT_PROCESS = 720,
 	RYGEL_CONTENT_DIRECTORY_ERROR_OUTDATED_OBJECT_METADATA = 728,
@@ -272,6 +284,9 @@ struct _RygelItemDestroyerRemoveObjectData {
 	const gchar* _tmp36_;
 	GCancellable* _tmp37_;
 	GCancellable* _tmp38_;
+	RygelObjectRemovalQueue* _tmp39_;
+	RygelObjectRemovalQueue* _tmp40_;
+	RygelMediaObject* _tmp41_;
 	GError * _inner_error_;
 };
 
@@ -357,6 +372,9 @@ void rygel_media_object_get_writables (RygelMediaObject* self, GCancellable* can
 GeeArrayList* rygel_media_object_get_writables_finish (RygelMediaObject* self, GAsyncResult* _res_, GError** error);
 void rygel_writable_container_remove_container (RygelWritableContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
 void rygel_writable_container_remove_container_finish (RygelWritableContainer* self, GAsyncResult* _res_, GError** error);
+GType rygel_object_removal_queue_get_type (void) G_GNUC_CONST;
+RygelObjectRemovalQueue* rygel_object_removal_queue_get_default (void);
+gboolean rygel_object_removal_queue_dequeue (RygelObjectRemovalQueue* self, RygelMediaObject* object);
 static void rygel_item_destroyer_fetch_object_data_free (gpointer _data);
 static gboolean rygel_item_destroyer_fetch_object_co (RygelItemDestroyerFetchObjectData* _data_);
 void rygel_media_container_find_object (RygelMediaContainer* self, const gchar* id, GCancellable* cancellable, GAsyncReadyCallback _callback_, gpointer _user_data_);
@@ -378,14 +396,14 @@ GQuark rygel_item_destroyer_error_quark (void) {
 static void _vala_GUPnPServiceAction_free (GUPnPServiceAction* self) {
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_boxed_free (gupnp_service_action_get_type (), self);
-#line 382 "rygel-item-destroyer.c"
+#line 400 "rygel-item-destroyer.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 389 "rygel-item-destroyer.c"
+#line 407 "rygel-item-destroyer.c"
 }
 
 
@@ -428,14 +446,14 @@ RygelItemDestroyer* rygel_item_destroyer_construct (GType object_type, RygelCont
 	__vala_GUPnPServiceAction_free0 (action);
 #line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return self;
-#line 432 "rygel-item-destroyer.c"
+#line 450 "rygel-item-destroyer.c"
 }
 
 
 RygelItemDestroyer* rygel_item_destroyer_new (RygelContentDirectory* content_dir, GUPnPServiceAction* action) {
 #line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return rygel_item_destroyer_construct (RYGEL_TYPE_ITEM_DESTROYER, content_dir, action);
-#line 439 "rygel-item-destroyer.c"
+#line 457 "rygel-item-destroyer.c"
 }
 
 
@@ -446,7 +464,7 @@ static void rygel_item_destroyer_real_run_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_slice_free (RygelItemDestroyerRunData, _data_);
-#line 450 "rygel-item-destroyer.c"
+#line 468 "rygel-item-destroyer.c"
 }
 
 
@@ -468,7 +486,7 @@ static void rygel_item_destroyer_real_run (RygelStateMachine* base, GAsyncReadyC
 	_data_->self = _tmp0_;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	rygel_item_destroyer_real_run_co (_data_);
-#line 472 "rygel-item-destroyer.c"
+#line 490 "rygel-item-destroyer.c"
 }
 
 
@@ -476,7 +494,7 @@ static void rygel_item_destroyer_real_run_finish (RygelStateMachine* base, GAsyn
 	RygelItemDestroyerRunData* _data_;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 480 "rygel-item-destroyer.c"
+#line 498 "rygel-item-destroyer.c"
 }
 
 
@@ -490,7 +508,7 @@ static void rygel_item_destroyer_run_ready (GObject* source_object, GAsyncResult
 	_data_->_res_ = _res_;
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	rygel_item_destroyer_real_run_co (_data_);
-#line 494 "rygel-item-destroyer.c"
+#line 512 "rygel-item-destroyer.c"
 }
 
 
@@ -499,16 +517,16 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 	switch (_data_->_state_) {
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 0:
-#line 503 "rygel-item-destroyer.c"
+#line 521 "rygel-item-destroyer.c"
 		goto _state_0;
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 1:
-#line 507 "rygel-item-destroyer.c"
+#line 525 "rygel-item-destroyer.c"
 		goto _state_1;
 		default:
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_assert_not_reached ();
-#line 512 "rygel-item-destroyer.c"
+#line 530 "rygel-item-destroyer.c"
 	}
 	_state_0:
 	{
@@ -534,8 +552,8 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 			_data_->_tmp3_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_ARGS, _data_->_tmp2_);
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_inner_error_ = _data_->_tmp3_;
-#line 538 "rygel-item-destroyer.c"
-			goto __catch56_g_error;
+#line 556 "rygel-item-destroyer.c"
+			goto __catch60_g_error;
 		}
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		_data_->_state_ = 1;
@@ -543,14 +561,14 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 		rygel_item_destroyer_remove_object (_data_->self, rygel_item_destroyer_run_ready, _data_);
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		return FALSE;
-#line 547 "rygel-item-destroyer.c"
+#line 565 "rygel-item-destroyer.c"
 		_state_1:
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		rygel_item_destroyer_remove_object_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 553 "rygel-item-destroyer.c"
-			goto __catch56_g_error;
+#line 571 "rygel-item-destroyer.c"
+			goto __catch60_g_error;
 		}
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		_data_->_tmp4_ = NULL;
@@ -568,10 +586,10 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 		_data_->_tmp6_ = _data_->self->priv->object_id;
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_debug (_data_->_tmp5_, _data_->_tmp6_);
-#line 572 "rygel-item-destroyer.c"
+#line 590 "rygel-item-destroyer.c"
 	}
-	goto __finally56;
-	__catch56_g_error:
+	goto __finally60;
+	__catch60_g_error:
 	{
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -605,7 +623,7 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 			_data_->_tmp12_ = _data_->_tmp11_->message;
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			gupnp_service_action_return_error (_data_->_tmp8_, (guint) _data_->_tmp10_, _data_->_tmp12_);
-#line 609 "rygel-item-destroyer.c"
+#line 627 "rygel-item-destroyer.c"
 		} else {
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp13_ = NULL;
@@ -621,7 +639,7 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 			_data_->_tmp15_ = _data_->_tmp14_->message;
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			gupnp_service_action_return_error (_data_->_tmp13_, (guint) 701, _data_->_tmp15_);
-#line 625 "rygel-item-destroyer.c"
+#line 643 "rygel-item-destroyer.c"
 		}
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		_data_->_tmp16_ = NULL;
@@ -643,9 +661,9 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 		g_warning (_data_->_tmp16_, _data_->_tmp17_, _data_->_tmp19_);
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		_g_error_free0 (_data_->_error_);
-#line 647 "rygel-item-destroyer.c"
+#line 665 "rygel-item-destroyer.c"
 	}
-	__finally56:
+	__finally60:
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
@@ -654,7 +672,7 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 		g_clear_error (&_data_->_inner_error_);
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		return FALSE;
-#line 658 "rygel-item-destroyer.c"
+#line 676 "rygel-item-destroyer.c"
 	}
 #line 73 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_signal_emit_by_name ((RygelStateMachine*) _data_->self, "completed");
@@ -662,17 +680,17 @@ static gboolean rygel_item_destroyer_real_run_co (RygelItemDestroyerRunData* _da
 	if (_data_->_state_ == 0) {
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 666 "rygel-item-destroyer.c"
+#line 684 "rygel-item-destroyer.c"
 	} else {
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 670 "rygel-item-destroyer.c"
+#line 688 "rygel-item-destroyer.c"
 	}
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_object_unref (_data_->_async_result);
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return FALSE;
-#line 676 "rygel-item-destroyer.c"
+#line 694 "rygel-item-destroyer.c"
 }
 
 
@@ -683,7 +701,7 @@ static void rygel_item_destroyer_remove_object_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_slice_free (RygelItemDestroyerRemoveObjectData, _data_);
-#line 687 "rygel-item-destroyer.c"
+#line 705 "rygel-item-destroyer.c"
 }
 
 
@@ -702,7 +720,7 @@ static void rygel_item_destroyer_remove_object (RygelItemDestroyer* self, GAsync
 	_data_->self = _tmp0_;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	rygel_item_destroyer_remove_object_co (_data_);
-#line 706 "rygel-item-destroyer.c"
+#line 724 "rygel-item-destroyer.c"
 }
 
 
@@ -712,11 +730,11 @@ static void rygel_item_destroyer_remove_object_finish (RygelItemDestroyer* self,
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		return;
-#line 716 "rygel-item-destroyer.c"
+#line 734 "rygel-item-destroyer.c"
 	}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 720 "rygel-item-destroyer.c"
+#line 738 "rygel-item-destroyer.c"
 }
 
 
@@ -730,7 +748,7 @@ static void rygel_item_destroyer_remove_object_ready (GObject* source_object, GA
 	_data_->_res_ = _res_;
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	rygel_item_destroyer_remove_object_co (_data_);
-#line 734 "rygel-item-destroyer.c"
+#line 752 "rygel-item-destroyer.c"
 }
 
 
@@ -739,28 +757,28 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 	switch (_data_->_state_) {
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 0:
-#line 743 "rygel-item-destroyer.c"
+#line 761 "rygel-item-destroyer.c"
 		goto _state_0;
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 1:
-#line 747 "rygel-item-destroyer.c"
+#line 765 "rygel-item-destroyer.c"
 		goto _state_1;
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 2:
-#line 751 "rygel-item-destroyer.c"
+#line 769 "rygel-item-destroyer.c"
 		goto _state_2;
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 3:
-#line 755 "rygel-item-destroyer.c"
+#line 773 "rygel-item-destroyer.c"
 		goto _state_3;
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 4:
-#line 759 "rygel-item-destroyer.c"
+#line 777 "rygel-item-destroyer.c"
 		goto _state_4;
 		default:
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_assert_not_reached ();
-#line 764 "rygel-item-destroyer.c"
+#line 782 "rygel-item-destroyer.c"
 	}
 	_state_0:
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
@@ -769,7 +787,7 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 	rygel_item_destroyer_fetch_object (_data_->self, rygel_item_destroyer_remove_object_ready, _data_);
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return FALSE;
-#line 773 "rygel-item-destroyer.c"
+#line 791 "rygel-item-destroyer.c"
 	_state_1:
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp0_ = NULL;
@@ -787,17 +805,17 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 		if (_data_->_state_ == 0) {
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 791 "rygel-item-destroyer.c"
+#line 809 "rygel-item-destroyer.c"
 		} else {
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 795 "rygel-item-destroyer.c"
+#line 813 "rygel-item-destroyer.c"
 		}
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_object_unref (_data_->_async_result);
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		return FALSE;
-#line 801 "rygel-item-destroyer.c"
+#line 819 "rygel-item-destroyer.c"
 	}
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp1_ = NULL;
@@ -845,7 +863,7 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 		rygel_writable_container_remove_item (_data_->_tmp6_, _data_->_tmp7_, _data_->_tmp9_, rygel_item_destroyer_remove_object_ready, _data_);
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		return FALSE;
-#line 849 "rygel-item-destroyer.c"
+#line 867 "rygel-item-destroyer.c"
 		_state_2:
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		rygel_writable_container_remove_item_finish (_data_->_tmp6_, _data_->_res_, &_data_->_inner_error_);
@@ -863,17 +881,17 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 			if (_data_->_state_ == 0) {
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 867 "rygel-item-destroyer.c"
+#line 885 "rygel-item-destroyer.c"
 			} else {
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				g_simple_async_result_complete (_data_->_async_result);
-#line 871 "rygel-item-destroyer.c"
+#line 889 "rygel-item-destroyer.c"
 			}
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			g_object_unref (_data_->_async_result);
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			return FALSE;
-#line 877 "rygel-item-destroyer.c"
+#line 895 "rygel-item-destroyer.c"
 		}
 #line 83 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		_data_->_tmp10_ = NULL;
@@ -907,7 +925,7 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 			rygel_media_object_get_writables (_data_->_tmp13_, _data_->_tmp15_, rygel_item_destroyer_remove_object_ready, _data_);
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			return FALSE;
-#line 911 "rygel-item-destroyer.c"
+#line 929 "rygel-item-destroyer.c"
 			_state_3:
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp16_ = NULL;
@@ -929,17 +947,17 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 				if (_data_->_state_ == 0) {
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 					g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 933 "rygel-item-destroyer.c"
+#line 951 "rygel-item-destroyer.c"
 				} else {
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 					g_simple_async_result_complete (_data_->_async_result);
-#line 937 "rygel-item-destroyer.c"
+#line 955 "rygel-item-destroyer.c"
 				}
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				g_object_unref (_data_->_async_result);
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				return FALSE;
-#line 943 "rygel-item-destroyer.c"
+#line 961 "rygel-item-destroyer.c"
 			}
 			{
 #line 85 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
@@ -988,7 +1006,7 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 					if (!(_data_->_tmp23_ < _data_->_tmp24_)) {
 #line 85 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 						break;
-#line 992 "rygel-item-destroyer.c"
+#line 1010 "rygel-item-destroyer.c"
 					}
 #line 85 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 					_data_->_tmp25_ = NULL;
@@ -1056,30 +1074,30 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 							if (_data_->_state_ == 0) {
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 								g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1060 "rygel-item-destroyer.c"
+#line 1078 "rygel-item-destroyer.c"
 							} else {
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 								g_simple_async_result_complete (_data_->_async_result);
-#line 1064 "rygel-item-destroyer.c"
+#line 1082 "rygel-item-destroyer.c"
 							}
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 							g_object_unref (_data_->_async_result);
 #line 87 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 							return FALSE;
-#line 1070 "rygel-item-destroyer.c"
+#line 1088 "rygel-item-destroyer.c"
 						}
 					}
 #line 85 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 					_g_object_unref0 (_data_->file);
-#line 1075 "rygel-item-destroyer.c"
+#line 1093 "rygel-item-destroyer.c"
 				}
 #line 85 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_g_object_unref0 (_data_->_file_list);
-#line 1079 "rygel-item-destroyer.c"
+#line 1097 "rygel-item-destroyer.c"
 			}
 #line 83 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_g_object_unref0 (_data_->writables);
-#line 1083 "rygel-item-destroyer.c"
+#line 1101 "rygel-item-destroyer.c"
 		}
 	} else {
 #line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
@@ -1104,7 +1122,7 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 		rygel_writable_container_remove_container (_data_->_tmp35_, _data_->_tmp36_, _data_->_tmp38_, rygel_item_destroyer_remove_object_ready, _data_);
 #line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		return FALSE;
-#line 1108 "rygel-item-destroyer.c"
+#line 1126 "rygel-item-destroyer.c"
 		_state_4:
 #line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		rygel_writable_container_remove_container_finish (_data_->_tmp35_, _data_->_res_, &_data_->_inner_error_);
@@ -1122,19 +1140,35 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 			if (_data_->_state_ == 0) {
 #line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1126 "rygel-item-destroyer.c"
+#line 1144 "rygel-item-destroyer.c"
 			} else {
 #line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				g_simple_async_result_complete (_data_->_async_result);
-#line 1130 "rygel-item-destroyer.c"
+#line 1148 "rygel-item-destroyer.c"
 			}
 #line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			g_object_unref (_data_->_async_result);
 #line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			return FALSE;
-#line 1136 "rygel-item-destroyer.c"
+#line 1154 "rygel-item-destroyer.c"
 		}
 	}
+#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_data_->_tmp39_ = NULL;
+#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_data_->_tmp39_ = rygel_object_removal_queue_get_default ();
+#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_data_->_tmp40_ = NULL;
+#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_data_->_tmp40_ = _data_->_tmp39_;
+#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_data_->_tmp41_ = NULL;
+#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_data_->_tmp41_ = _data_->media_object;
+#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	rygel_object_removal_queue_dequeue (_data_->_tmp40_, _data_->_tmp41_);
+#line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_g_object_unref0 (_data_->_tmp40_);
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_g_object_unref0 (_data_->parent);
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
@@ -1143,17 +1177,17 @@ static gboolean rygel_item_destroyer_remove_object_co (RygelItemDestroyerRemoveO
 	if (_data_->_state_ == 0) {
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1147 "rygel-item-destroyer.c"
+#line 1181 "rygel-item-destroyer.c"
 	} else {
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1151 "rygel-item-destroyer.c"
+#line 1185 "rygel-item-destroyer.c"
 	}
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_object_unref (_data_->_async_result);
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return FALSE;
-#line 1157 "rygel-item-destroyer.c"
+#line 1191 "rygel-item-destroyer.c"
 }
 
 
@@ -1166,7 +1200,7 @@ static void rygel_item_destroyer_fetch_object_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_slice_free (RygelItemDestroyerFetchObjectData, _data_);
-#line 1170 "rygel-item-destroyer.c"
+#line 1204 "rygel-item-destroyer.c"
 }
 
 
@@ -1185,7 +1219,7 @@ static void rygel_item_destroyer_fetch_object (RygelItemDestroyer* self, GAsyncR
 	_data_->self = _tmp0_;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	rygel_item_destroyer_fetch_object_co (_data_);
-#line 1189 "rygel-item-destroyer.c"
+#line 1223 "rygel-item-destroyer.c"
 }
 
 
@@ -1196,7 +1230,7 @@ static RygelMediaObject* rygel_item_destroyer_fetch_object_finish (RygelItemDest
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		return NULL;
-#line 1200 "rygel-item-destroyer.c"
+#line 1234 "rygel-item-destroyer.c"
 	}
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
@@ -1206,306 +1240,306 @@ static RygelMediaObject* rygel_item_destroyer_fetch_object_finish (RygelItemDest
 	_data_->result = NULL;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return result;
-#line 1210 "rygel-item-destroyer.c"
+#line 1244 "rygel-item-destroyer.c"
 }
 
 
 static void rygel_item_destroyer_fetch_object_ready (GObject* source_object, GAsyncResult* _res_, gpointer _user_data_) {
 	RygelItemDestroyerFetchObjectData* _data_;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_ = _user_data_;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_source_object_ = source_object;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_res_ = _res_;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	rygel_item_destroyer_fetch_object_co (_data_);
-#line 1224 "rygel-item-destroyer.c"
+#line 1258 "rygel-item-destroyer.c"
 }
 
 
 static gboolean rygel_item_destroyer_fetch_object_co (RygelItemDestroyerFetchObjectData* _data_) {
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	switch (_data_->_state_) {
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 0:
-#line 1233 "rygel-item-destroyer.c"
+#line 1267 "rygel-item-destroyer.c"
 		goto _state_0;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		case 1:
-#line 1237 "rygel-item-destroyer.c"
+#line 1271 "rygel-item-destroyer.c"
 		goto _state_1;
 		default:
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_assert_not_reached ();
-#line 1242 "rygel-item-destroyer.c"
+#line 1276 "rygel-item-destroyer.c"
 	}
 	_state_0:
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp0_ = NULL;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp0_ = _data_->self->priv->content_dir;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp1_ = NULL;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp1_ = _data_->_tmp0_->root_container;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp2_ = NULL;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp2_ = _data_->self->priv->object_id;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp3_ = NULL;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp3_ = rygel_state_machine_get_cancellable ((RygelStateMachine*) _data_->self);
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp4_ = NULL;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp4_ = _data_->_tmp3_;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_state_ = 1;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	rygel_media_container_find_object (_data_->_tmp1_, _data_->_tmp2_, _data_->_tmp4_, rygel_item_destroyer_fetch_object_ready, _data_);
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return FALSE;
-#line 1271 "rygel-item-destroyer.c"
+#line 1305 "rygel-item-destroyer.c"
 	_state_1:
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp5_ = NULL;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->_tmp5_ = rygel_media_container_find_object_finish (_data_->_tmp1_, _data_->_res_, &_data_->_inner_error_);
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->media_object = _data_->_tmp5_;
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	if (_data_->_inner_error_ != NULL) {
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_error_free (_data_->_inner_error_);
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		if (_data_->_state_ == 0) {
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1289 "rygel-item-destroyer.c"
+#line 1323 "rygel-item-destroyer.c"
 		} else {
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 1293 "rygel-item-destroyer.c"
-		}
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		g_object_unref (_data_->_async_result);
-#line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		return FALSE;
-#line 1299 "rygel-item-destroyer.c"
-	}
-#line 100 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-	_data_->_tmp6_ = NULL;
-#line 100 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-	_data_->_tmp6_ = _data_->media_object;
-#line 100 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-	if (_data_->_tmp6_ == NULL) {
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp7_ = NULL;
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp7_ = _ ("No such object");
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp8_ = NULL;
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp8_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_OBJECT, _data_->_tmp7_);
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_inner_error_ = _data_->_tmp8_;
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		g_error_free (_data_->_inner_error_);
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_g_object_unref0 (_data_->media_object);
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		if (_data_->_state_ == 0) {
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			g_simple_async_result_complete_in_idle (_data_->_async_result);
 #line 1327 "rygel-item-destroyer.c"
-		} else {
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			g_simple_async_result_complete (_data_->_async_result);
-#line 1331 "rygel-item-destroyer.c"
 		}
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_object_unref (_data_->_async_result);
-#line 101 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		return FALSE;
-#line 1337 "rygel-item-destroyer.c"
-	} else {
+#line 1333 "rygel-item-destroyer.c"
+	}
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_data_->_tmp6_ = NULL;
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	_data_->_tmp6_ = _data_->media_object;
+#line 102 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+	if (_data_->_tmp6_ == NULL) {
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp9_ = NULL;
+		_data_->_tmp7_ = NULL;
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp9_ = _data_->media_object;
+		_data_->_tmp7_ = _ ("No such object");
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp10_ = 0;
+		_data_->_tmp8_ = NULL;
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp10_ = rygel_media_object_get_ocm_flags (_data_->_tmp9_);
+		_data_->_tmp8_ = g_error_new_literal (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_OBJECT, _data_->_tmp7_);
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp11_ = 0;
+		_data_->_inner_error_ = _data_->_tmp8_;
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		_data_->_tmp11_ = _data_->_tmp10_;
+		g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-		if (!((_data_->_tmp11_ & GUPNP_OCM_FLAGS_DESTROYABLE) == GUPNP_OCM_FLAGS_DESTROYABLE)) {
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp12_ = NULL;
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp12_ = _ ("Removal of object %s not allowed");
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp13_ = NULL;
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp13_ = _data_->media_object;
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp14_ = NULL;
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp14_ = rygel_media_object_get_id (_data_->_tmp13_);
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp15_ = NULL;
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp15_ = _data_->_tmp14_;
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp16_ = NULL;
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_tmp16_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_OBJECT, _data_->_tmp12_, _data_->_tmp15_);
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_data_->_inner_error_ = _data_->_tmp16_;
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			g_error_free (_data_->_inner_error_);
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			_g_object_unref0 (_data_->media_object);
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			if (_data_->_state_ == 0) {
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-				g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1385 "rygel-item-destroyer.c"
-			} else {
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-				g_simple_async_result_complete (_data_->_async_result);
-#line 1389 "rygel-item-destroyer.c"
-			}
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			g_object_unref (_data_->_async_result);
-#line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
-			return FALSE;
-#line 1395 "rygel-item-destroyer.c"
+		g_error_free (_data_->_inner_error_);
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		_g_object_unref0 (_data_->media_object);
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		if (_data_->_state_ == 0) {
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1361 "rygel-item-destroyer.c"
 		} else {
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			g_simple_async_result_complete (_data_->_async_result);
+#line 1365 "rygel-item-destroyer.c"
+		}
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		g_object_unref (_data_->_async_result);
+#line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		return FALSE;
+#line 1371 "rygel-item-destroyer.c"
+	} else {
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		_data_->_tmp9_ = NULL;
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		_data_->_tmp9_ = _data_->media_object;
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		_data_->_tmp10_ = 0;
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		_data_->_tmp10_ = rygel_media_object_get_ocm_flags (_data_->_tmp9_);
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		_data_->_tmp11_ = 0;
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		_data_->_tmp11_ = _data_->_tmp10_;
+#line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+		if (!((_data_->_tmp11_ & GUPNP_OCM_FLAGS_DESTROYABLE) == GUPNP_OCM_FLAGS_DESTROYABLE)) {
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp12_ = NULL;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp12_ = _ ("Removal of object %s not allowed");
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp13_ = NULL;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp13_ = _data_->media_object;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp14_ = NULL;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp14_ = rygel_media_object_get_id (_data_->_tmp13_);
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp15_ = NULL;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp15_ = _data_->_tmp14_;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp16_ = NULL;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_tmp16_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_OBJECT, _data_->_tmp12_, _data_->_tmp15_);
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_data_->_inner_error_ = _data_->_tmp16_;
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			g_error_free (_data_->_inner_error_);
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			_g_object_unref0 (_data_->media_object);
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			if (_data_->_state_ == 0) {
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+				g_simple_async_result_complete_in_idle (_data_->_async_result);
+#line 1419 "rygel-item-destroyer.c"
+			} else {
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+				g_simple_async_result_complete (_data_->_async_result);
+#line 1423 "rygel-item-destroyer.c"
+			}
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			g_object_unref (_data_->_async_result);
+#line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+			return FALSE;
+#line 1429 "rygel-item-destroyer.c"
+		} else {
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp17_ = NULL;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp17_ = _data_->media_object;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp18_ = NULL;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp18_ = rygel_media_object_get_parent (_data_->_tmp17_);
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp19_ = NULL;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp19_ = _data_->_tmp18_;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp20_ = FALSE;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp20_ = rygel_media_object_get_restricted ((RygelMediaObject*) _data_->_tmp19_);
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp21_ = FALSE;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			_data_->_tmp21_ = _data_->_tmp20_;
-#line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 			if (_data_->_tmp21_) {
-#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp22_ = NULL;
-#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp22_ = _ ("Object removal from %s not allowed");
-#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp23_ = NULL;
-#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp23_ = g_strdup (_data_->_tmp22_);
-#line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->msg = _data_->_tmp23_;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp24_ = NULL;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp24_ = _data_->msg;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp25_ = NULL;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp25_ = _data_->media_object;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp26_ = NULL;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp26_ = rygel_media_object_get_id (_data_->_tmp25_);
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp27_ = NULL;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp27_ = _data_->_tmp26_;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp28_ = NULL;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_tmp28_ = g_error_new (RYGEL_CONTENT_DIRECTORY_ERROR, RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_PARENT, _data_->_tmp24_, _data_->_tmp27_);
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_data_->_inner_error_ = _data_->_tmp28_;
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				g_simple_async_result_set_from_error (_data_->_async_result, _data_->_inner_error_);
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				g_error_free (_data_->_inner_error_);
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_g_free0 (_data_->msg);
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				_g_object_unref0 (_data_->media_object);
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				if (_data_->_state_ == 0) {
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 					g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1463 "rygel-item-destroyer.c"
+#line 1497 "rygel-item-destroyer.c"
 				} else {
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 					g_simple_async_result_complete (_data_->_async_result);
-#line 1467 "rygel-item-destroyer.c"
+#line 1501 "rygel-item-destroyer.c"
 				}
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				g_object_unref (_data_->_async_result);
-#line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 				return FALSE;
-#line 1473 "rygel-item-destroyer.c"
+#line 1507 "rygel-item-destroyer.c"
 			}
 		}
 	}
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_data_->result = _data_->media_object;
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	if (_data_->_state_ == 0) {
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1483 "rygel-item-destroyer.c"
+#line 1517 "rygel-item-destroyer.c"
 	} else {
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1487 "rygel-item-destroyer.c"
+#line 1521 "rygel-item-destroyer.c"
 	}
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_object_unref (_data_->_async_result);
-#line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return FALSE;
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	_g_object_unref0 (_data_->media_object);
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	if (_data_->_state_ == 0) {
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1499 "rygel-item-destroyer.c"
+#line 1533 "rygel-item-destroyer.c"
 	} else {
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1503 "rygel-item-destroyer.c"
+#line 1537 "rygel-item-destroyer.c"
 	}
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_object_unref (_data_->_async_result);
-#line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
+#line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return FALSE;
-#line 1509 "rygel-item-destroyer.c"
+#line 1543 "rygel-item-destroyer.c"
 }
 
 
@@ -1521,7 +1555,7 @@ static GCancellable* rygel_item_destroyer_real_get_cancellable (RygelStateMachin
 	result = _tmp0_;
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	return result;
-#line 1525 "rygel-item-destroyer.c"
+#line 1559 "rygel-item-destroyer.c"
 }
 
 
@@ -1541,7 +1575,7 @@ static void rygel_item_destroyer_real_set_cancellable (RygelStateMachine* base, 
 	self->priv->_cancellable = _tmp1_;
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_object_notify ((GObject *) self, "cancellable");
-#line 1545 "rygel-item-destroyer.c"
+#line 1579 "rygel-item-destroyer.c"
 }
 
 
@@ -1558,7 +1592,7 @@ static void rygel_item_destroyer_class_init (RygelItemDestroyerClass * klass) {
 	G_OBJECT_CLASS (klass)->finalize = rygel_item_destroyer_finalize;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_ITEM_DESTROYER_CANCELLABLE, g_param_spec_object ("cancellable", "cancellable", "cancellable", g_cancellable_get_type (), G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 1562 "rygel-item-destroyer.c"
+#line 1596 "rygel-item-destroyer.c"
 }
 
 
@@ -1573,14 +1607,14 @@ static void rygel_item_destroyer_rygel_state_machine_interface_init (RygelStateM
 	iface->get_cancellable = rygel_item_destroyer_real_get_cancellable;
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	iface->set_cancellable = rygel_item_destroyer_real_set_cancellable;
-#line 1577 "rygel-item-destroyer.c"
+#line 1611 "rygel-item-destroyer.c"
 }
 
 
 static void rygel_item_destroyer_instance_init (RygelItemDestroyer * self) {
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	self->priv = RYGEL_ITEM_DESTROYER_GET_PRIVATE (self);
-#line 1584 "rygel-item-destroyer.c"
+#line 1618 "rygel-item-destroyer.c"
 }
 
 
@@ -1598,7 +1632,7 @@ static void rygel_item_destroyer_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->_cancellable);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 	G_OBJECT_CLASS (rygel_item_destroyer_parent_class)->finalize (obj);
-#line 1602 "rygel-item-destroyer.c"
+#line 1636 "rygel-item-destroyer.c"
 }
 
 
@@ -1630,13 +1664,13 @@ static void _vala_rygel_item_destroyer_get_property (GObject * object, guint pro
 		g_value_set_object (value, rygel_state_machine_get_cancellable ((RygelStateMachine*) self));
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		break;
-#line 1634 "rygel-item-destroyer.c"
+#line 1668 "rygel-item-destroyer.c"
 		default:
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		break;
-#line 1640 "rygel-item-destroyer.c"
+#line 1674 "rygel-item-destroyer.c"
 	}
 }
 
@@ -1652,13 +1686,13 @@ static void _vala_rygel_item_destroyer_set_property (GObject * object, guint pro
 		rygel_state_machine_set_cancellable ((RygelStateMachine*) self, g_value_get_object (value));
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		break;
-#line 1656 "rygel-item-destroyer.c"
+#line 1690 "rygel-item-destroyer.c"
 		default:
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 32 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-item-destroyer.vala"
 		break;
-#line 1662 "rygel-item-destroyer.c"
+#line 1696 "rygel-item-destroyer.c"
 	}
 }
 

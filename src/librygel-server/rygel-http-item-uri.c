@@ -915,7 +915,7 @@ RygelHTTPItemURI* rygel_http_item_uri_construct (GType object_type, RygelMediaOb
 #line 94 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-item-uri.vala"
 					if (_inner_error_ != NULL) {
 #line 918 "rygel-http-item-uri.c"
-						goto __catch34_g_error;
+						goto __catch36_g_error;
 					}
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-item-uri.vala"
 					_tmp52_ = tc;
@@ -929,8 +929,8 @@ RygelHTTPItemURI* rygel_http_item_uri_construct (GType object_type, RygelMediaOb
 					_g_object_unref0 (tc);
 #line 931 "rygel-http-item-uri.c"
 				}
-				goto __finally34;
-				__catch34_g_error:
+				goto __finally36;
+				__catch36_g_error:
 				{
 					GError* _error_ = NULL;
 #line 93 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-item-uri.vala"
@@ -941,7 +941,7 @@ RygelHTTPItemURI* rygel_http_item_uri_construct (GType object_type, RygelMediaOb
 					_g_error_free0 (_error_);
 #line 943 "rygel-http-item-uri.c"
 				}
-				__finally34:
+				__finally36:
 #line 93 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-item-uri.vala"
 				if (_inner_error_ != NULL) {
 #line 93 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-item-uri.vala"
@@ -1185,7 +1185,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 1188 "rygel-http-item-uri.c"
-				goto __catch35_g_regex_error;
+				goto __catch37_g_regex_error;
 			}
 #line 1244 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
@@ -1210,7 +1210,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			if (_inner_error_->domain == G_REGEX_ERROR) {
 #line 1213 "rygel-http-item-uri.c"
-				goto __catch35_g_regex_error;
+				goto __catch37_g_regex_error;
 			}
 #line 1245 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 			_g_regex_unref0 (regex);
@@ -1230,8 +1230,8 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		return result;
 #line 1232 "rygel-http-item-uri.c"
 	}
-	goto __finally35;
-	__catch35_g_regex_error:
+	goto __finally37;
+	__catch37_g_regex_error:
 	{
 		GError* e = NULL;
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
@@ -1244,7 +1244,7 @@ static gchar* string_replace (const gchar* self, const gchar* old, const gchar* 
 		_g_error_free0 (e);
 #line 1246 "rygel-http-item-uri.c"
 	}
-	__finally35:
+	__finally37:
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	if (_inner_error_ != NULL) {
 #line 1243 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"

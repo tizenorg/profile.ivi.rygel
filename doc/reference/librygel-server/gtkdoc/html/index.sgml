@@ -151,6 +151,8 @@
 <ANCHOR id="RygelMediaContainer.property-details" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer.property-details">
 <ANCHOR id="RygelMediaContainer--all-child-count" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--all-child-count">
 <ANCHOR id="RygelMediaContainer--child-count" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--child-count">
+<ANCHOR id="RygelMediaContainer--create-mode-enabled" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled">
+<ANCHOR id="RygelMediaContainer--empty-child-count" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--empty-child-count">
 <ANCHOR id="RygelMediaContainer--ocm-flags" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--ocm-flags">
 <ANCHOR id="RygelMediaContainer--sort-criteria" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--sort-criteria">
 <ANCHOR id="RygelMediaContainer.signal-details" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer.signal-details">
@@ -201,6 +203,7 @@
 <ANCHOR id="RygelMediaItem-struct" href="librygel-server/RygelMediaItem.html#RygelMediaItem-struct">
 <ANCHOR id="RygelMediaItemClass" href="librygel-server/RygelMediaItem.html#RygelMediaItemClass">
 <ANCHOR id="RygelMediaItem.property-details" href="librygel-server/RygelMediaItem.html#RygelMediaItem.property-details">
+<ANCHOR id="RygelMediaItem--creator" href="librygel-server/RygelMediaItem.html#RygelMediaItem--creator">
 <ANCHOR id="RygelMediaItem--date" href="librygel-server/RygelMediaItem.html#RygelMediaItem--date">
 <ANCHOR id="RygelMediaItem--description" href="librygel-server/RygelMediaItem.html#RygelMediaItem--description">
 <ANCHOR id="RygelMediaItem--dlna-profile" href="librygel-server/RygelMediaItem.html#RygelMediaItem--dlna-profile">
@@ -284,10 +287,16 @@
 <ANCHOR id="RygelMediaServerPlugin.details" href="librygel-server/RygelMediaServerPlugin.html#RygelMediaServerPlugin.details">
 <ANCHOR id="RYGEL-TYPE-MEDIA-SERVER-PLUGIN:CAPS" href="librygel-server/RygelMediaServerPlugin.html#RYGEL-TYPE-MEDIA-SERVER-PLUGIN:CAPS">
 <ANCHOR id="rygel-media-server-plugin-get-root-container" href="librygel-server/RygelMediaServerPlugin.html#rygel-media-server-plugin-get-root-container">
+<ANCHOR id="rygel-media-server-plugin-get-upload-profiles" href="librygel-server/RygelMediaServerPlugin.html#rygel-media-server-plugin-get-upload-profiles">
+<ANCHOR id="rygel-media-server-plugin-set-upload-profiles" href="librygel-server/RygelMediaServerPlugin.html#rygel-media-server-plugin-set-upload-profiles">
+<ANCHOR id="rygel-media-server-plugin-get-supported-profiles" href="librygel-server/RygelMediaServerPlugin.html#rygel-media-server-plugin-get-supported-profiles">
+<ANCHOR id="rygel-media-server-plugin-set-supported-profiles" href="librygel-server/RygelMediaServerPlugin.html#rygel-media-server-plugin-set-supported-profiles">
 <ANCHOR id="RygelMediaServerPlugin-struct" href="librygel-server/RygelMediaServerPlugin.html#RygelMediaServerPlugin-struct">
 <ANCHOR id="RygelMediaServerPluginClass" href="librygel-server/RygelMediaServerPlugin.html#RygelMediaServerPluginClass">
 <ANCHOR id="RygelMediaServerPlugin.property-details" href="librygel-server/RygelMediaServerPlugin.html#RygelMediaServerPlugin.property-details">
 <ANCHOR id="RygelMediaServerPlugin--root-container" href="librygel-server/RygelMediaServerPlugin.html#RygelMediaServerPlugin--root-container">
+<ANCHOR id="RygelMediaServerPlugin--supported-profiles" href="librygel-server/RygelMediaServerPlugin.html#RygelMediaServerPlugin--supported-profiles">
+<ANCHOR id="RygelMediaServerPlugin--upload-profiles" href="librygel-server/RygelMediaServerPlugin.html#RygelMediaServerPlugin--upload-profiles">
 <ANCHOR id="RygelMusicItem" href="librygel-server/RygelMusicItem.html">
 <ANCHOR id="RygelMusicItem.synopsis" href="librygel-server/RygelMusicItem.html#RygelMusicItem.synopsis">
 <ANCHOR id="RygelMusicItem.object-hierarchy" href="librygel-server/RygelMusicItem.html#RygelMusicItem.object-hierarchy">
@@ -320,7 +329,6 @@
 <ANCHOR id="RygelPhotoItem.synopsis" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem.synopsis">
 <ANCHOR id="RygelPhotoItem.object-hierarchy" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem.object-hierarchy">
 <ANCHOR id="RygelPhotoItem.implemented-interfaces" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem.implemented-interfaces">
-<ANCHOR id="RygelPhotoItem.properties" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem.properties">
 <ANCHOR id="RygelPhotoItem.description" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem.description">
 <ANCHOR id="RygelPhotoItem.details" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem.details">
 <ANCHOR id="RYGEL-TYPE-PHOTO-ITEM:CAPS" href="librygel-server/RygelPhotoItem.html#RYGEL-TYPE-PHOTO-ITEM:CAPS">
@@ -328,8 +336,6 @@
 <ANCHOR id="rygel-photo-item-new" href="librygel-server/RygelPhotoItem.html#rygel-photo-item-new">
 <ANCHOR id="RygelPhotoItem-struct" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem-struct">
 <ANCHOR id="RygelPhotoItemClass" href="librygel-server/RygelPhotoItem.html#RygelPhotoItemClass">
-<ANCHOR id="RygelPhotoItem.property-details" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem.property-details">
-<ANCHOR id="RygelPhotoItem--creator" href="librygel-server/RygelPhotoItem.html#RygelPhotoItem--creator">
 <ANCHOR id="RygelRelationalExpression" href="librygel-server/RygelRelationalExpression.html">
 <ANCHOR id="RygelRelationalExpression.synopsis" href="librygel-server/RygelRelationalExpression.html#RygelRelationalExpression.synopsis">
 <ANCHOR id="RygelRelationalExpression.object-hierarchy" href="librygel-server/RygelRelationalExpression.html#RygelRelationalExpression.object-hierarchy">

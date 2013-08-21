@@ -48,6 +48,7 @@
 typedef struct _RygelPlaybinPlugin RygelPlaybinPlugin;
 typedef struct _RygelPlaybinPluginClass RygelPlaybinPluginClass;
 typedef struct _RygelPlaybinPluginPrivate RygelPlaybinPluginPrivate;
+#define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 
 struct _RygelPlaybinPlugin {
 	RygelMediaRendererPlugin parent_instance;
@@ -68,6 +69,7 @@ enum  {
 #define RYGEL_PLAYBIN_PLUGIN_NAME "Playbin"
 RygelPlaybinPlugin* rygel_playbin_plugin_new (void);
 RygelPlaybinPlugin* rygel_playbin_plugin_construct (GType object_type);
+static void rygel_playbin_plugin_real_constructed (GObject* base);
 static RygelMediaPlayer* rygel_playbin_plugin_real_get_player (RygelMediaRendererPlugin* base);
 
 
@@ -80,14 +82,40 @@ RygelPlaybinPlugin* rygel_playbin_plugin_construct (GType object_type) {
 	self = (RygelPlaybinPlugin*) rygel_media_renderer_plugin_construct (object_type, RYGEL_PLAYBIN_PLUGIN_NAME, _tmp0_, NULL, RYGEL_PLUGIN_CAPABILITIES_NONE);
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
 	return self;
-#line 84 "rygel-playbin-plugin.c"
+#line 86 "rygel-playbin-plugin.c"
 }
 
 
 RygelPlaybinPlugin* rygel_playbin_plugin_new (void) {
 #line 34 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
 	return rygel_playbin_plugin_construct (RYGEL_PLAYBIN_TYPE_PLUGIN);
-#line 91 "rygel-playbin-plugin.c"
+#line 93 "rygel-playbin-plugin.c"
+}
+
+
+static void rygel_playbin_plugin_real_constructed (GObject* base) {
+	RygelPlaybinPlugin * self;
+	RygelPlaybinPlayer* _tmp0_ = NULL;
+	RygelPlaybinPlayer* _tmp1_ = NULL;
+	GList* _tmp2_ = NULL;
+	GList* _tmp3_ = NULL;
+#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	self = (RygelPlaybinPlugin*) base;
+#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	G_OBJECT_CLASS (rygel_playbin_plugin_parent_class)->constructed ((GObject*) G_TYPE_CHECK_INSTANCE_CAST (self, RYGEL_TYPE_MEDIA_RENDERER_PLUGIN, RygelMediaRendererPlugin));
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	_tmp0_ = rygel_playbin_player_get_default ();
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	_tmp1_ = _tmp0_;
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	_tmp2_ = rygel_playbin_player_get_supported_profiles (_tmp1_);
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	_tmp3_ = _tmp2_;
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	rygel_media_renderer_plugin_set_supported_profiles ((RygelMediaRendererPlugin*) self, _tmp3_);
+#line 40 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	_g_object_unref0 (_tmp1_);
+#line 119 "rygel-playbin-plugin.c"
 }
 
 
@@ -95,15 +123,15 @@ static RygelMediaPlayer* rygel_playbin_plugin_real_get_player (RygelMediaRendere
 	RygelPlaybinPlugin * self;
 	RygelMediaPlayer* result = NULL;
 	RygelPlaybinPlayer* _tmp0_ = NULL;
-#line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+#line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
 	self = (RygelPlaybinPlugin*) base;
-#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+#line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
 	_tmp0_ = rygel_playbin_player_get_default ();
-#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+#line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
 	result = (RygelMediaPlayer*) _tmp0_;
-#line 39 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+#line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
 	return result;
-#line 107 "rygel-playbin-plugin.c"
+#line 135 "rygel-playbin-plugin.c"
 }
 
 
@@ -111,8 +139,10 @@ static void rygel_playbin_plugin_class_init (RygelPlaybinPluginClass * klass) {
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
 	rygel_playbin_plugin_parent_class = g_type_class_peek_parent (klass);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
+	G_OBJECT_CLASS (klass)->constructed = rygel_playbin_plugin_real_constructed;
+#line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/playbin/rygel-playbin-plugin.vala"
 	RYGEL_MEDIA_RENDERER_PLUGIN_CLASS (klass)->get_player = rygel_playbin_plugin_real_get_player;
-#line 116 "rygel-playbin-plugin.c"
+#line 146 "rygel-playbin-plugin.c"
 }
 
 

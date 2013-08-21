@@ -645,7 +645,7 @@ struct _RygelTranscoderClass {
 };
 
 typedef enum  {
-	RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED
+	RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED = 602
 } RygelWritableContainerError;
 #define RYGEL_WRITABLE_CONTAINER_ERROR rygel_writable_container_error_quark ()
 struct _RygelWritableContainerIface {
@@ -917,6 +917,10 @@ GUPnPOCMFlags rygel_media_object_get_ocm_flags (RygelMediaObject* self);
 GType rygel_media_server_plugin_get_type (void) G_GNUC_CONST;
 RygelMediaServerPlugin* rygel_media_server_plugin_construct (GType object_type, RygelMediaContainer* root_container, const gchar* name, const gchar* description, RygelPluginCapabilities capabilities);
 RygelMediaContainer* rygel_media_server_plugin_get_root_container (RygelMediaServerPlugin* self);
+GList* rygel_media_server_plugin_get_upload_profiles (RygelMediaServerPlugin* self);
+void rygel_media_server_plugin_set_upload_profiles (RygelMediaServerPlugin* self, GList* value);
+GList* rygel_media_server_plugin_get_supported_profiles (RygelMediaServerPlugin* self);
+void rygel_media_server_plugin_set_supported_profiles (RygelMediaServerPlugin* self, GList* value);
 gboolean rygel_search_expression_satisfied_by (RygelSearchExpression* self, RygelMediaObject* media_object);
 gchar* rygel_search_expression_to_string (RygelSearchExpression* self);
 RygelSearchExpression* rygel_search_expression_construct (GType object_type, GType g_type, GBoxedCopyFunc g_dup_func, GDestroyNotify g_destroy_func, GType h_type, GBoxedCopyFunc h_dup_func, GDestroyNotify h_destroy_func, GType i_type, GBoxedCopyFunc i_dup_func, GDestroyNotify i_destroy_func);

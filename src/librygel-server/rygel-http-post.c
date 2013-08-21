@@ -214,11 +214,13 @@ typedef enum  {
 	RYGEL_CONTENT_DIRECTORY_ERROR_REQUIRED_TAG = 704,
 	RYGEL_CONTENT_DIRECTORY_ERROR_READ_ONLY_TAG = 705,
 	RYGEL_CONTENT_DIRECTORY_ERROR_PARAMETER_MISMATCH = 706,
+	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SEARCH_CRITERIA = 708,
 	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SORT_CRITERIA = 709,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_CONTAINER = 710,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_OBJECT = 711,
 	RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA = 712,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_PARENT = 713,
+	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_FILE_TRANSFER = 717,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_DESTINATION_RESOURCE = 718,
 	RYGEL_CONTENT_DIRECTORY_ERROR_CANT_PROCESS = 720,
 	RYGEL_CONTENT_DIRECTORY_ERROR_OUTDATED_OBJECT_METADATA = 728,
@@ -487,7 +489,7 @@ static void rygel_http_post_finalize (GObject* obj);
 static void _rygel_http_post_on_request_cancelled_gfunc (gconstpointer data, gpointer self) {
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_on_request_cancelled (self);
-#line 491 "rygel-http-post.c"
+#line 493 "rygel-http-post.c"
 }
 
 
@@ -528,14 +530,14 @@ RygelHTTPPost* rygel_http_post_construct (GType object_type, RygelHTTPServer* ht
 	soup_message_body_set_accumulate (_tmp6_, FALSE);
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return self;
-#line 532 "rygel-http-post.c"
+#line 534 "rygel-http-post.c"
 }
 
 
 RygelHTTPPost* rygel_http_post_new (RygelHTTPServer* http_server, SoupServer* server, SoupMessage* msg) {
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return rygel_http_post_construct (RYGEL_TYPE_HTTP_POST, http_server, server, msg);
-#line 539 "rygel-http-post.c"
+#line 541 "rygel-http-post.c"
 }
 
 
@@ -546,14 +548,14 @@ static void rygel_http_post_real_handle_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_slice_free (RygelHttpPostHandleData, _data_);
-#line 550 "rygel-http-post.c"
+#line 552 "rygel-http-post.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 557 "rygel-http-post.c"
+#line 559 "rygel-http-post.c"
 }
 
 
@@ -575,7 +577,7 @@ static void rygel_http_post_real_handle (RygelHTTPRequest* base, GAsyncReadyCall
 	_data_->self = _tmp0_;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_real_handle_co (_data_);
-#line 579 "rygel-http-post.c"
+#line 581 "rygel-http-post.c"
 }
 
 
@@ -585,11 +587,11 @@ static void rygel_http_post_real_handle_finish (RygelHTTPRequest* base, GAsyncRe
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return;
-#line 589 "rygel-http-post.c"
+#line 591 "rygel-http-post.c"
 	}
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 593 "rygel-http-post.c"
+#line 595 "rygel-http-post.c"
 }
 
 
@@ -603,14 +605,14 @@ static void rygel_http_post_handle_ready (GObject* source_object, GAsyncResult* 
 	_data_->_res_ = _res_;
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_real_handle_co (_data_);
-#line 607 "rygel-http-post.c"
+#line 609 "rygel-http-post.c"
 }
 
 
 static gpointer _g_error_copy0 (gpointer self) {
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return self ? g_error_copy (self) : NULL;
-#line 614 "rygel-http-post.c"
+#line 616 "rygel-http-post.c"
 }
 
 
@@ -619,20 +621,20 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 	switch (_data_->_state_) {
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 0:
-#line 623 "rygel-http-post.c"
+#line 625 "rygel-http-post.c"
 		goto _state_0;
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 1:
-#line 627 "rygel-http-post.c"
+#line 629 "rygel-http-post.c"
 		goto _state_1;
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 2:
-#line 631 "rygel-http-post.c"
+#line 633 "rygel-http-post.c"
 		goto _state_2;
 		default:
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_assert_not_reached ();
-#line 636 "rygel-http-post.c"
+#line 638 "rygel-http-post.c"
 	}
 	_state_0:
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -651,7 +653,7 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 	_data_->_tmp2_ = ((RygelHTTPRequest*) _data_->self)->object;
 #line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_object_removal_queue_dequeue (_data_->_tmp1_, _data_->_tmp2_);
-#line 655 "rygel-http-post.c"
+#line 657 "rygel-http-post.c"
 	{
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_data_->_state_ = 1;
@@ -659,18 +661,18 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 		rygel_http_post_handle_real (_data_->self, rygel_http_post_handle_ready, _data_);
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 663 "rygel-http-post.c"
+#line 665 "rygel-http-post.c"
 		_state_1:
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		rygel_http_post_handle_real_finish (_data_->self, _data_->_res_, &_data_->_inner_error_);
 #line 52 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 669 "rygel-http-post.c"
-			goto __catch36_g_error;
+#line 671 "rygel-http-post.c"
+			goto __catch38_g_error;
 		}
 	}
-	goto __finally36;
-	__catch36_g_error:
+	goto __finally38;
+	__catch38_g_error:
 	{
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -698,7 +700,7 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 		rygel_object_removal_queue_remove_now (_data_->_tmp3_, _data_->_tmp4_, _data_->_tmp6_, rygel_http_post_handle_ready, _data_);
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 702 "rygel-http-post.c"
+#line 704 "rygel-http-post.c"
 		_state_2:
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		rygel_object_removal_queue_remove_now_finish (_data_->_tmp3_, _data_->_res_);
@@ -714,10 +716,10 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 		_data_->_inner_error_ = _data_->_tmp8_;
 #line 56 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_g_error_free0 (_data_->_error_);
-#line 718 "rygel-http-post.c"
-		goto __finally36;
+#line 720 "rygel-http-post.c"
+		goto __finally38;
 	}
-	__finally36:
+	__finally38:
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -730,17 +732,17 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 		if (_data_->_state_ == 0) {
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 734 "rygel-http-post.c"
+#line 736 "rygel-http-post.c"
 		} else {
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 738 "rygel-http-post.c"
+#line 740 "rygel-http-post.c"
 		}
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_object_unref (_data_->_async_result);
 #line 51 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 744 "rygel-http-post.c"
+#line 746 "rygel-http-post.c"
 	}
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_g_object_unref0 (_data_->queue);
@@ -748,17 +750,17 @@ static gboolean rygel_http_post_real_handle_co (RygelHttpPostHandleData* _data_)
 	if (_data_->_state_ == 0) {
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 752 "rygel-http-post.c"
+#line 754 "rygel-http-post.c"
 	} else {
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 756 "rygel-http-post.c"
+#line 758 "rygel-http-post.c"
 	}
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_object_unref (_data_->_async_result);
 #line 47 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 762 "rygel-http-post.c"
+#line 764 "rygel-http-post.c"
 }
 
 
@@ -769,7 +771,7 @@ static void rygel_http_post_handle_real_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_slice_free (RygelHttpPostHandleRealData, _data_);
-#line 773 "rygel-http-post.c"
+#line 775 "rygel-http-post.c"
 }
 
 
@@ -788,7 +790,7 @@ static void rygel_http_post_handle_real (RygelHTTPPost* self, GAsyncReadyCallbac
 	_data_->self = _tmp0_;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_handle_real_co (_data_);
-#line 792 "rygel-http-post.c"
+#line 794 "rygel-http-post.c"
 }
 
 
@@ -798,11 +800,11 @@ static void rygel_http_post_handle_real_finish (RygelHTTPPost* self, GAsyncResul
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return;
-#line 802 "rygel-http-post.c"
+#line 804 "rygel-http-post.c"
 	}
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 806 "rygel-http-post.c"
+#line 808 "rygel-http-post.c"
 }
 
 
@@ -816,21 +818,21 @@ static void rygel_http_post_handle_real_ready (GObject* source_object, GAsyncRes
 	_data_->_res_ = _res_;
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_handle_real_co (_data_);
-#line 820 "rygel-http-post.c"
+#line 822 "rygel-http-post.c"
 }
 
 
 static void _rygel_http_post_on_got_chunk_soup_message_got_chunk (SoupMessage* _sender, SoupBuffer* chunk, gpointer self) {
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_on_got_chunk (self, _sender, chunk);
-#line 827 "rygel-http-post.c"
+#line 829 "rygel-http-post.c"
 }
 
 
 static void _rygel_http_post_on_got_body_soup_message_got_body (SoupMessage* _sender, gpointer self) {
 #line 85 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_on_got_body (self, _sender);
-#line 834 "rygel-http-post.c"
+#line 836 "rygel-http-post.c"
 }
 
 
@@ -839,7 +841,7 @@ static gboolean _rygel_http_post_handle_real_co_gsource_func (gpointer self) {
 	result = rygel_http_post_handle_real_co (self);
 #line 88 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return result;
-#line 843 "rygel-http-post.c"
+#line 845 "rygel-http-post.c"
 }
 
 
@@ -848,24 +850,24 @@ static gboolean rygel_http_post_handle_real_co (RygelHttpPostHandleRealData* _da
 	switch (_data_->_state_) {
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 0:
-#line 852 "rygel-http-post.c"
+#line 854 "rygel-http-post.c"
 		goto _state_0;
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 1:
-#line 856 "rygel-http-post.c"
+#line 858 "rygel-http-post.c"
 		goto _state_1;
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 2:
-#line 860 "rygel-http-post.c"
+#line 862 "rygel-http-post.c"
 		goto _state_2;
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 3:
-#line 864 "rygel-http-post.c"
+#line 866 "rygel-http-post.c"
 		goto _state_3;
 		default:
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_assert_not_reached ();
-#line 869 "rygel-http-post.c"
+#line 871 "rygel-http-post.c"
 	}
 	_state_0:
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -924,17 +926,17 @@ static gboolean rygel_http_post_handle_real_co (RygelHttpPostHandleRealData* _da
 		if (_data_->_state_ == 0) {
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 928 "rygel-http-post.c"
+#line 930 "rygel-http-post.c"
 		} else {
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 932 "rygel-http-post.c"
+#line 934 "rygel-http-post.c"
 		}
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_object_unref (_data_->_async_result);
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 938 "rygel-http-post.c"
+#line 940 "rygel-http-post.c"
 	}
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_->_tmp11_ = NULL;
@@ -954,7 +956,7 @@ static gboolean rygel_http_post_handle_real_co (RygelHttpPostHandleRealData* _da
 	rygel_media_object_get_writable ((RygelMediaObject*) (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp11_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp11_) : NULL), _data_->_tmp13_, rygel_http_post_handle_real_ready, _data_);
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 958 "rygel-http-post.c"
+#line 960 "rygel-http-post.c"
 	_state_1:
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_->_tmp14_ = NULL;
@@ -972,17 +974,17 @@ static gboolean rygel_http_post_handle_real_co (RygelHttpPostHandleRealData* _da
 		if (_data_->_state_ == 0) {
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 976 "rygel-http-post.c"
+#line 978 "rygel-http-post.c"
 		} else {
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 980 "rygel-http-post.c"
+#line 982 "rygel-http-post.c"
 		}
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_object_unref (_data_->_async_result);
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 986 "rygel-http-post.c"
+#line 988 "rygel-http-post.c"
 	}
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_g_object_unref0 (_data_->self->priv->file);
@@ -1024,17 +1026,17 @@ static gboolean rygel_http_post_handle_real_co (RygelHttpPostHandleRealData* _da
 		if (_data_->_state_ == 0) {
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1028 "rygel-http-post.c"
+#line 1030 "rygel-http-post.c"
 		} else {
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 1032 "rygel-http-post.c"
+#line 1034 "rygel-http-post.c"
 		}
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_object_unref (_data_->_async_result);
 #line 70 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 1038 "rygel-http-post.c"
+#line 1040 "rygel-http-post.c"
 	}
 #line 75 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_->_tmp21_ = NULL;
@@ -1100,7 +1102,7 @@ static gboolean rygel_http_post_handle_real_co (RygelHttpPostHandleRealData* _da
 	g_file_replace_async (_data_->_tmp31_, NULL, FALSE, G_FILE_CREATE_REPLACE_DESTINATION, G_PRIORITY_LOW, _data_->_tmp33_, rygel_http_post_handle_real_ready, _data_);
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 1104 "rygel-http-post.c"
+#line 1106 "rygel-http-post.c"
 	_state_2:
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_->_tmp34_ = NULL;
@@ -1118,17 +1120,17 @@ static gboolean rygel_http_post_handle_real_co (RygelHttpPostHandleRealData* _da
 		if (_data_->_state_ == 0) {
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1122 "rygel-http-post.c"
+#line 1124 "rygel-http-post.c"
 		} else {
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 1126 "rygel-http-post.c"
+#line 1128 "rygel-http-post.c"
 		}
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_object_unref (_data_->_async_result);
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 1132 "rygel-http-post.c"
+#line 1134 "rygel-http-post.c"
 	}
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_g_object_unref0 (_data_->self->priv->stream);
@@ -1174,24 +1176,24 @@ static gboolean rygel_http_post_handle_real_co (RygelHttpPostHandleRealData* _da
 	_data_->_state_ = 3;
 #line 90 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 1178 "rygel-http-post.c"
+#line 1180 "rygel-http-post.c"
 	_state_3:
 	;
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	if (_data_->_state_ == 0) {
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1185 "rygel-http-post.c"
+#line 1187 "rygel-http-post.c"
 	} else {
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1189 "rygel-http-post.c"
+#line 1191 "rygel-http-post.c"
 	}
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_object_unref (_data_->_async_result);
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 1195 "rygel-http-post.c"
+#line 1197 "rygel-http-post.c"
 }
 
 
@@ -1210,11 +1212,11 @@ static void rygel_http_post_on_got_body (RygelHTTPPost* self, SoupMessage* msg) 
 	if (_tmp0_ != _tmp1_) {
 #line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return;
-#line 1214 "rygel-http-post.c"
+#line 1216 "rygel-http-post.c"
 	}
 #line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_finalize_post (self, NULL, NULL);
-#line 1218 "rygel-http-post.c"
+#line 1220 "rygel-http-post.c"
 }
 
 
@@ -1227,7 +1229,7 @@ static void rygel_http_post_wait_for_item_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_slice_free (RygelHttpPostWaitForItemData, _data_);
-#line 1231 "rygel-http-post.c"
+#line 1233 "rygel-http-post.c"
 }
 
 
@@ -1271,7 +1273,7 @@ static void rygel_http_post_wait_for_item (RygelHTTPPost* self, RygelMediaContai
 	_data_->timeout = _tmp5_;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_wait_for_item_co (_data_);
-#line 1275 "rygel-http-post.c"
+#line 1277 "rygel-http-post.c"
 }
 
 
@@ -1279,7 +1281,7 @@ static void rygel_http_post_wait_for_item_finish (RygelHTTPPost* self, GAsyncRes
 	RygelHttpPostWaitForItemData* _data_;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 1283 "rygel-http-post.c"
+#line 1285 "rygel-http-post.c"
 }
 
 
@@ -1296,7 +1298,7 @@ static Block6Data* block6_data_ref (Block6Data* _data6_) {
 	g_atomic_int_inc (&_data6_->_ref_count_);
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return _data6_;
-#line 1300 "rygel-http-post.c"
+#line 1302 "rygel-http-post.c"
 }
 
 
@@ -1305,7 +1307,7 @@ static void block6_data_unref (void * _userdata_) {
 	_data6_ = (Block6Data*) _userdata_;
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	if (g_atomic_int_dec_and_test (&_data6_->_ref_count_)) {
-#line 1309 "rygel-http-post.c"
+#line 1311 "rygel-http-post.c"
 		RygelHTTPPost * self;
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		self = _data6_->self;
@@ -1315,7 +1317,7 @@ static void block6_data_unref (void * _userdata_) {
 		_g_object_unref0 (self);
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_slice_free (Block6Data, _data6_);
-#line 1319 "rygel-http-post.c"
+#line 1321 "rygel-http-post.c"
 	}
 }
 
@@ -1330,7 +1332,7 @@ static void rygel_http_post_wait_for_item_ready (GObject* source_object, GAsyncR
 	_data_->_res_ = _res_;
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_wait_for_item_co (_data_);
-#line 1334 "rygel-http-post.c"
+#line 1336 "rygel-http-post.c"
 }
 
 
@@ -1339,7 +1341,7 @@ static Block7Data* block7_data_ref (Block7Data* _data7_) {
 	g_atomic_int_inc (&_data7_->_ref_count_);
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return _data7_;
-#line 1343 "rygel-http-post.c"
+#line 1345 "rygel-http-post.c"
 }
 
 
@@ -1348,7 +1350,7 @@ static void block7_data_unref (void * _userdata_) {
 	_data7_ = (Block7Data*) _userdata_;
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	if (g_atomic_int_dec_and_test (&_data7_->_ref_count_)) {
-#line 1352 "rygel-http-post.c"
+#line 1354 "rygel-http-post.c"
 		RygelHTTPPost * self;
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		self = _data7_->_data6_->self;
@@ -1358,7 +1360,7 @@ static void block7_data_unref (void * _userdata_) {
 		_data7_->_data6_ = NULL;
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_slice_free (Block7Data, _data7_);
-#line 1362 "rygel-http-post.c"
+#line 1364 "rygel-http-post.c"
 	}
 }
 
@@ -1391,7 +1393,7 @@ static gboolean ____lambda17_ (Block7Data* _data7_) {
 	result = FALSE;
 #line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return result;
-#line 1394 "rygel-http-post.c"
+#line 1396 "rygel-http-post.c"
 }
 
 
@@ -1400,7 +1402,7 @@ static gboolean _____lambda17__gsource_func (gpointer self) {
 	result = ____lambda17_ (self);
 #line 134 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return result;
-#line 1403 "rygel-http-post.c"
+#line 1405 "rygel-http-post.c"
 }
 
 
@@ -1425,14 +1427,14 @@ static void ____lambda18_ (Block7Data* _data7_) {
 "ainer '%s'", _tmp2_);
 #line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_wait_for_item_co (_data6_->_async_data_);
-#line 1427 "rygel-http-post.c"
+#line 1429 "rygel-http-post.c"
 }
 
 
 static void _____lambda18__rygel_media_container_container_updated (RygelMediaContainer* _sender, RygelMediaContainer* container, RygelMediaObject* object, RygelObjectEventType event_type, gboolean sub_tree_update, gpointer self) {
 #line 143 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	____lambda18_ (self);
-#line 1434 "rygel-http-post.c"
+#line 1436 "rygel-http-post.c"
 }
 
 
@@ -1441,20 +1443,20 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 	switch (_data_->_state_) {
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 0:
-#line 1443 "rygel-http-post.c"
+#line 1445 "rygel-http-post.c"
 		goto _state_0;
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 1:
-#line 1447 "rygel-http-post.c"
+#line 1449 "rygel-http-post.c"
 		goto _state_1;
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 2:
-#line 1451 "rygel-http-post.c"
+#line 1453 "rygel-http-post.c"
 		goto _state_2;
 		default:
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_assert_not_reached ();
-#line 1456 "rygel-http-post.c"
+#line 1458 "rygel-http-post.c"
 	}
 	_state_0:
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -1485,7 +1487,7 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 		if (_data_->_tmp2_ == NULL) {
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_data_->_tmp1_ = TRUE;
-#line 1487 "rygel-http-post.c"
+#line 1489 "rygel-http-post.c"
 		} else {
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_data_->_tmp3_ = NULL;
@@ -1501,7 +1503,7 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			_data_->_tmp5_ = _data_->_tmp4_;
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_data_->_tmp1_ = _data_->_tmp5_;
-#line 1503 "rygel-http-post.c"
+#line 1505 "rygel-http-post.c"
 		}
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_data_->_tmp6_ = FALSE;
@@ -1511,7 +1513,7 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 		if (!_data_->_tmp6_) {
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			break;
-#line 1513 "rygel-http-post.c"
+#line 1515 "rygel-http-post.c"
 		}
 		{
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -1536,7 +1538,7 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			rygel_media_container_find_object (_data_->_tmp8_, _data_->_tmp9_, _data_->_tmp11_, rygel_http_post_wait_for_item_ready, _data_);
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			return FALSE;
-#line 1538 "rygel-http-post.c"
+#line 1540 "rygel-http-post.c"
 			_state_1:
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_data_->_tmp12_ = NULL;
@@ -1546,8 +1548,8 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			_data_->_tmp7_ = _data_->_tmp12_;
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			if (_data_->_inner_error_ != NULL) {
-#line 1548 "rygel-http-post.c"
-				goto __catch37_g_error;
+#line 1550 "rygel-http-post.c"
+				goto __catch39_g_error;
 			}
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_data_->_tmp13_ = NULL;
@@ -1557,16 +1559,16 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			if (_data_->_tmp13_ == NULL) {
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 				_g_object_unref0 (_data_->_tmp7_);
-#line 1559 "rygel-http-post.c"
+#line 1561 "rygel-http-post.c"
 			}
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_g_object_unref0 (_data_->item);
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_data_->item = _data_->_tmp13_;
-#line 1565 "rygel-http-post.c"
+#line 1567 "rygel-http-post.c"
 		}
-		goto __finally37;
-		__catch37_g_error:
+		goto __finally39;
+		__catch39_g_error:
 		{
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_data_->_error_ = _data_->_inner_error_;
@@ -1576,9 +1578,9 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			_g_error_free0 (_data_->_error_);
 #line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			break;
-#line 1578 "rygel-http-post.c"
+#line 1580 "rygel-http-post.c"
 		}
-		__finally37:
+		__finally39:
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		if (_data_->_inner_error_ != NULL) {
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -1593,7 +1595,7 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			g_clear_error (&_data_->_inner_error_);
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			return FALSE;
-#line 1595 "rygel-http-post.c"
+#line 1597 "rygel-http-post.c"
 		}
 #line 126 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_data_->_tmp14_ = NULL;
@@ -1609,7 +1611,7 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			g_warning ("rygel-http-post.vala:127: Item %s disappeared, stop waiting for it", _data_->_tmp15_);
 #line 129 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			break;
-#line 1611 "rygel-http-post.c"
+#line 1613 "rygel-http-post.c"
 		}
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_data_->_tmp16_ = NULL;
@@ -1657,7 +1659,7 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 			_data_->_state_ = 2;
 #line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			return FALSE;
-#line 1659 "rygel-http-post.c"
+#line 1661 "rygel-http-post.c"
 			_state_2:
 			;
 #line 152 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -1682,7 +1684,7 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 				_data_->_tmp26_ = _data_->_data7_->source_id;
 #line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 				g_source_remove (_data_->_tmp26_);
-#line 1684 "rygel-http-post.c"
+#line 1686 "rygel-http-post.c"
 			} else {
 #line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 				block7_data_unref (_data_->_data7_);
@@ -1690,13 +1692,13 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 				_data_->_data7_ = NULL;
 #line 157 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 				break;
-#line 1692 "rygel-http-post.c"
+#line 1694 "rygel-http-post.c"
 			}
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			block7_data_unref (_data_->_data7_);
 #line 132 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			_data_->_data7_ = NULL;
-#line 1698 "rygel-http-post.c"
+#line 1700 "rygel-http-post.c"
 		}
 	}
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -1709,17 +1711,17 @@ static gboolean rygel_http_post_wait_for_item_co (RygelHttpPostWaitForItemData* 
 	if (_data_->_state_ == 0) {
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1711 "rygel-http-post.c"
+#line 1713 "rygel-http-post.c"
 	} else {
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1715 "rygel-http-post.c"
+#line 1717 "rygel-http-post.c"
 	}
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_object_unref (_data_->_async_result);
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 1721 "rygel-http-post.c"
+#line 1723 "rygel-http-post.c"
 }
 
 
@@ -1730,7 +1732,7 @@ static void rygel_http_post_finalize_post_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_slice_free (RygelHttpPostFinalizePostData, _data_);
-#line 1732 "rygel-http-post.c"
+#line 1734 "rygel-http-post.c"
 }
 
 
@@ -1749,7 +1751,7 @@ static void rygel_http_post_finalize_post (RygelHTTPPost* self, GAsyncReadyCallb
 	_data_->self = _tmp0_;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_finalize_post_co (_data_);
-#line 1751 "rygel-http-post.c"
+#line 1753 "rygel-http-post.c"
 }
 
 
@@ -1757,7 +1759,7 @@ static void rygel_http_post_finalize_post_finish (RygelHTTPPost* self, GAsyncRes
 	RygelHttpPostFinalizePostData* _data_;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 1759 "rygel-http-post.c"
+#line 1761 "rygel-http-post.c"
 }
 
 
@@ -1771,7 +1773,7 @@ static void rygel_http_post_finalize_post_ready (GObject* source_object, GAsyncR
 	_data_->_res_ = _res_;
 #line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_finalize_post_co (_data_);
-#line 1773 "rygel-http-post.c"
+#line 1775 "rygel-http-post.c"
 }
 
 
@@ -1780,16 +1782,16 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 	switch (_data_->_state_) {
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 0:
-#line 1782 "rygel-http-post.c"
+#line 1784 "rygel-http-post.c"
 		goto _state_0;
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 1:
-#line 1786 "rygel-http-post.c"
+#line 1788 "rygel-http-post.c"
 		goto _state_1;
 		default:
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_assert_not_reached ();
-#line 1791 "rygel-http-post.c"
+#line 1793 "rygel-http-post.c"
 	}
 	_state_0:
 	{
@@ -1809,12 +1811,12 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		g_output_stream_close (_data_->_tmp0_, _data_->_tmp2_, &_data_->_inner_error_);
 #line 165 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 1811 "rygel-http-post.c"
-			goto __catch38_g_error;
+#line 1813 "rygel-http-post.c"
+			goto __catch40_g_error;
 		}
 	}
-	goto __finally38;
-	__catch38_g_error:
+	goto __finally40;
+	__catch40_g_error:
 	{
 #line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -1838,19 +1840,19 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		if (_data_->_state_ == 0) {
 #line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1840 "rygel-http-post.c"
+#line 1842 "rygel-http-post.c"
 		} else {
 #line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 1844 "rygel-http-post.c"
+#line 1846 "rygel-http-post.c"
 		}
 #line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_object_unref (_data_->_async_result);
 #line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 1850 "rygel-http-post.c"
+#line 1852 "rygel-http-post.c"
 	}
-	__finally38:
+	__finally40:
 #line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -1859,7 +1861,7 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		g_clear_error (&_data_->_inner_error_);
 #line 164 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 1861 "rygel-http-post.c"
+#line 1863 "rygel-http-post.c"
 	}
 #line 173 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_->_tmp4_ = NULL;
@@ -1905,7 +1907,7 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 	_data_->_tmp13_ = _data_->_tmp12_;
 #line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_debug ("Waiting for update signal from container '%s' after pushing" " content to its child item '%s'…", _data_->_tmp10_, _data_->_tmp13_);
-#line 1907 "rygel-http-post.c"
+#line 1909 "rygel-http-post.c"
 	{
 #line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_data_->_tmp14_ = NULL;
@@ -1927,12 +1929,12 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		g_file_move (_data_->_tmp14_, _data_->_tmp15_, G_FILE_COPY_NONE, _data_->_tmp17_, NULL, NULL, &_data_->_inner_error_);
 #line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 1929 "rygel-http-post.c"
-			goto __catch39_g_error;
+#line 1931 "rygel-http-post.c"
+			goto __catch41_g_error;
 		}
 	}
-	goto __finally39;
-	__catch39_g_error:
+	goto __finally41;
+	__catch41_g_error:
 	{
 #line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_data_->move_error = _data_->_inner_error_;
@@ -1994,19 +1996,19 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		if (_data_->_state_ == 0) {
 #line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1996 "rygel-http-post.c"
+#line 1998 "rygel-http-post.c"
 		} else {
 #line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 2000 "rygel-http-post.c"
+#line 2002 "rygel-http-post.c"
 		}
 #line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_object_unref (_data_->_async_result);
 #line 194 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 2006 "rygel-http-post.c"
+#line 2008 "rygel-http-post.c"
 	}
-	__finally39:
+	__finally41:
 #line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -2015,7 +2017,7 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 		g_clear_error (&_data_->_inner_error_);
 #line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return FALSE;
-#line 2017 "rygel-http-post.c"
+#line 2019 "rygel-http-post.c"
 	}
 #line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_->_tmp27_ = NULL;
@@ -2047,7 +2049,7 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 	rygel_http_post_wait_for_item (_data_->self, _data_->_tmp29_, _data_->_tmp32_, (guint) 5, rygel_http_post_finalize_post_ready, _data_);
 #line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 2049 "rygel-http-post.c"
+#line 2051 "rygel-http-post.c"
 	_state_1:
 #line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_wait_for_item_finish (_data_->self, _data_->_res_);
@@ -2077,17 +2079,17 @@ static gboolean rygel_http_post_finalize_post_co (RygelHttpPostFinalizePostData*
 	if (_data_->_state_ == 0) {
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 2079 "rygel-http-post.c"
+#line 2081 "rygel-http-post.c"
 	} else {
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 2083 "rygel-http-post.c"
+#line 2085 "rygel-http-post.c"
 	}
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_object_unref (_data_->_async_result);
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 2089 "rygel-http-post.c"
+#line 2091 "rygel-http-post.c"
 }
 
 
@@ -2099,7 +2101,7 @@ static void rygel_http_post_on_got_chunk (RygelHTTPPost* self, SoupMessage* msg,
 	g_return_if_fail (msg != NULL);
 #line 204 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_return_if_fail (chunk != NULL);
-#line 2101 "rygel-http-post.c"
+#line 2103 "rygel-http-post.c"
 	{
 		GOutputStream* _tmp0_ = NULL;
 		SoupBuffer* _tmp1_ = NULL;
@@ -2123,12 +2125,12 @@ static void rygel_http_post_on_got_chunk (RygelHTTPPost* self, SoupMessage* msg,
 		g_output_stream_write_all (_tmp0_, _tmp2_, (gsize) _tmp2__length1, NULL, _tmp4_, &_inner_error_);
 #line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		if (_inner_error_ != NULL) {
-#line 2125 "rygel-http-post.c"
-			goto __catch40_g_error;
+#line 2127 "rygel-http-post.c"
+			goto __catch42_g_error;
 		}
 	}
-	goto __finally40;
-	__catch40_g_error:
+	goto __finally42;
+	__catch42_g_error:
 	{
 		GError* _error_ = NULL;
 		GError* _tmp5_ = NULL;
@@ -2163,9 +2165,9 @@ static void rygel_http_post_on_got_chunk (RygelHTTPPost* self, SoupMessage* msg,
 		_tmp9_ (_tmp9__target);
 #line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		_g_error_free0 (_error_);
-#line 2165 "rygel-http-post.c"
+#line 2167 "rygel-http-post.c"
 	}
-	__finally40:
+	__finally42:
 #line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	if (_inner_error_ != NULL) {
 #line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -2174,7 +2176,7 @@ static void rygel_http_post_on_got_chunk (RygelHTTPPost* self, SoupMessage* msg,
 		g_clear_error (&_inner_error_);
 #line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		return;
-#line 2176 "rygel-http-post.c"
+#line 2178 "rygel-http-post.c"
 	}
 }
 
@@ -2184,7 +2186,7 @@ static void rygel_http_post_on_request_cancelled (RygelHTTPPost* self) {
 	g_return_if_fail (self != NULL);
 #line 216 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_remove_item (self, NULL, NULL);
-#line 2186 "rygel-http-post.c"
+#line 2188 "rygel-http-post.c"
 }
 
 
@@ -2195,7 +2197,7 @@ static void rygel_http_post_remove_item_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_slice_free (RygelHttpPostRemoveItemData, _data_);
-#line 2197 "rygel-http-post.c"
+#line 2199 "rygel-http-post.c"
 }
 
 
@@ -2214,7 +2216,7 @@ static void rygel_http_post_remove_item (RygelHTTPPost* self, GAsyncReadyCallbac
 	_data_->self = _tmp0_;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_remove_item_co (_data_);
-#line 2216 "rygel-http-post.c"
+#line 2218 "rygel-http-post.c"
 }
 
 
@@ -2222,7 +2224,7 @@ static void rygel_http_post_remove_item_finish (RygelHTTPPost* self, GAsyncResul
 	RygelHttpPostRemoveItemData* _data_;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 2224 "rygel-http-post.c"
+#line 2226 "rygel-http-post.c"
 }
 
 
@@ -2236,7 +2238,7 @@ static void rygel_http_post_remove_item_ready (GObject* source_object, GAsyncRes
 	_data_->_res_ = _res_;
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_http_post_remove_item_co (_data_);
-#line 2238 "rygel-http-post.c"
+#line 2240 "rygel-http-post.c"
 }
 
 
@@ -2245,16 +2247,16 @@ static gboolean rygel_http_post_remove_item_co (RygelHttpPostRemoveItemData* _da
 	switch (_data_->_state_) {
 #line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 0:
-#line 2247 "rygel-http-post.c"
+#line 2249 "rygel-http-post.c"
 		goto _state_0;
 #line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		case 1:
-#line 2251 "rygel-http-post.c"
+#line 2253 "rygel-http-post.c"
 		goto _state_1;
 		default:
 #line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_assert_not_reached ();
-#line 2256 "rygel-http-post.c"
+#line 2258 "rygel-http-post.c"
 	}
 	_state_0:
 #line 220 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
@@ -2273,7 +2275,7 @@ static gboolean rygel_http_post_remove_item_co (RygelHttpPostRemoveItemData* _da
 	rygel_object_removal_queue_remove_now (_data_->queue, (RygelMediaObject*) (G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp1_, RYGEL_TYPE_MEDIA_ITEM) ? ((RygelMediaItem*) _data_->_tmp1_) : NULL), NULL, rygel_http_post_remove_item_ready, _data_);
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 2275 "rygel-http-post.c"
+#line 2277 "rygel-http-post.c"
 	_state_1:
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	rygel_object_removal_queue_remove_now_finish (_data_->queue, _data_->_res_);
@@ -2283,17 +2285,17 @@ static gboolean rygel_http_post_remove_item_co (RygelHttpPostRemoveItemData* _da
 	if (_data_->_state_ == 0) {
 #line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 2285 "rygel-http-post.c"
+#line 2287 "rygel-http-post.c"
 	} else {
 #line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 2289 "rygel-http-post.c"
+#line 2291 "rygel-http-post.c"
 	}
 #line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_object_unref (_data_->_async_result);
 #line 219 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	return FALSE;
-#line 2295 "rygel-http-post.c"
+#line 2297 "rygel-http-post.c"
 }
 
 
@@ -2316,7 +2318,7 @@ static void rygel_http_post_disconnect_message_signals (RygelHTTPPost* self) {
 	g_signal_parse_name ("got-chunk", soup_message_get_type (), &_tmp3_, NULL, FALSE);
 #line 226 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	g_signal_handlers_disconnect_matched (_tmp2_, G_SIGNAL_MATCH_ID | G_SIGNAL_MATCH_FUNC | G_SIGNAL_MATCH_DATA, _tmp3_, 0, NULL, (GCallback) _rygel_http_post_on_got_chunk_soup_message_got_chunk, self);
-#line 2318 "rygel-http-post.c"
+#line 2320 "rygel-http-post.c"
 }
 
 
@@ -2331,14 +2333,14 @@ static void rygel_http_post_class_init (RygelHTTPPostClass * klass) {
 	RYGEL_HTTP_REQUEST_CLASS (klass)->handle_finish = rygel_http_post_real_handle_finish;
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	G_OBJECT_CLASS (klass)->finalize = rygel_http_post_finalize;
-#line 2333 "rygel-http-post.c"
+#line 2335 "rygel-http-post.c"
 }
 
 
 static void rygel_http_post_instance_init (RygelHTTPPost * self) {
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	self->priv = RYGEL_HTTP_POST_GET_PRIVATE (self);
-#line 2340 "rygel-http-post.c"
+#line 2342 "rygel-http-post.c"
 }
 
 
@@ -2362,7 +2364,7 @@ static void rygel_http_post_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->stream);
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-post.vala"
 	G_OBJECT_CLASS (rygel_http_post_parent_class)->finalize (obj);
-#line 2364 "rygel-http-post.c"
+#line 2366 "rygel-http-post.c"
 }
 
 

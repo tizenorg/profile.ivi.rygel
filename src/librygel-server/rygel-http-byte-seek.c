@@ -647,7 +647,7 @@ gboolean rygel_http_byte_seek_needed (RygelHTTPGet* request) {
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-byte-seek.vala"
 		if (_inner_error_ != NULL) {
 #line 650 "rygel-http-byte-seek.c"
-			goto __catch26_g_error;
+			goto __catch28_g_error;
 		}
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-byte-seek.vala"
 		_tmp3_ = rygel_client_hacks_force_seek (hack);
@@ -657,8 +657,8 @@ gboolean rygel_http_byte_seek_needed (RygelHTTPGet* request) {
 		_g_object_unref0 (hack);
 #line 659 "rygel-http-byte-seek.c"
 	}
-	goto __finally26;
-	__catch26_g_error:
+	goto __finally28;
+	__catch28_g_error:
 	{
 		GError* _error_ = NULL;
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-byte-seek.vala"
@@ -669,7 +669,7 @@ gboolean rygel_http_byte_seek_needed (RygelHTTPGet* request) {
 		_g_error_free0 (_error_);
 #line 671 "rygel-http-byte-seek.c"
 	}
-	__finally26:
+	__finally28:
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-byte-seek.vala"
 	if (_inner_error_ != NULL) {
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-http-byte-seek.vala"

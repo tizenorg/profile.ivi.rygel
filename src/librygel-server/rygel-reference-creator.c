@@ -159,11 +159,13 @@ typedef enum  {
 	RYGEL_CONTENT_DIRECTORY_ERROR_REQUIRED_TAG = 704,
 	RYGEL_CONTENT_DIRECTORY_ERROR_READ_ONLY_TAG = 705,
 	RYGEL_CONTENT_DIRECTORY_ERROR_PARAMETER_MISMATCH = 706,
+	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SEARCH_CRITERIA = 708,
 	RYGEL_CONTENT_DIRECTORY_ERROR_INVALID_SORT_CRITERIA = 709,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_CONTAINER = 710,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_OBJECT = 711,
 	RYGEL_CONTENT_DIRECTORY_ERROR_BAD_METADATA = 712,
 	RYGEL_CONTENT_DIRECTORY_ERROR_RESTRICTED_PARENT = 713,
+	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_FILE_TRANSFER = 717,
 	RYGEL_CONTENT_DIRECTORY_ERROR_NO_SUCH_DESTINATION_RESOURCE = 718,
 	RYGEL_CONTENT_DIRECTORY_ERROR_CANT_PROCESS = 720,
 	RYGEL_CONTENT_DIRECTORY_ERROR_OUTDATED_OBJECT_METADATA = 728,
@@ -318,14 +320,14 @@ static void _vala_rygel_reference_creator_set_property (GObject * object, guint 
 static void _vala_GUPnPServiceAction_free (GUPnPServiceAction* self) {
 #line 27 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	g_boxed_free (gupnp_service_action_get_type (), self);
-#line 322 "rygel-reference-creator.c"
+#line 324 "rygel-reference-creator.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 38 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 329 "rygel-reference-creator.c"
+#line 331 "rygel-reference-creator.c"
 }
 
 
@@ -368,14 +370,14 @@ RygelReferenceCreator* rygel_reference_creator_construct (GType object_type, Ryg
 	__vala_GUPnPServiceAction_free0 (action);
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	return self;
-#line 372 "rygel-reference-creator.c"
+#line 374 "rygel-reference-creator.c"
 }
 
 
 RygelReferenceCreator* rygel_reference_creator_new (RygelContentDirectory* content_dir, GUPnPServiceAction* action) {
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	return rygel_reference_creator_construct (RYGEL_TYPE_REFERENCE_CREATOR, content_dir, action);
-#line 379 "rygel-reference-creator.c"
+#line 381 "rygel-reference-creator.c"
 }
 
 
@@ -394,7 +396,7 @@ void rygel_reference_creator_parse_arguments (RygelReferenceCreator* self, GErro
 	_tmp1_ = self->container_id;
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	if (_tmp1_ == NULL) {
-#line 398 "rygel-reference-creator.c"
+#line 400 "rygel-reference-creator.c"
 		const gchar* _tmp2_ = NULL;
 		GError* _tmp3_ = NULL;
 #line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
@@ -407,13 +409,13 @@ void rygel_reference_creator_parse_arguments (RygelReferenceCreator* self, GErro
 		g_propagate_error (error, _inner_error_);
 #line 49 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return;
-#line 411 "rygel-reference-creator.c"
+#line 413 "rygel-reference-creator.c"
 	}
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	_tmp4_ = self->object_id;
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	if (_tmp4_ == NULL) {
-#line 417 "rygel-reference-creator.c"
+#line 419 "rygel-reference-creator.c"
 		const gchar* _tmp5_ = NULL;
 		GError* _tmp6_ = NULL;
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
@@ -426,7 +428,7 @@ void rygel_reference_creator_parse_arguments (RygelReferenceCreator* self, GErro
 		g_propagate_error (error, _inner_error_);
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return;
-#line 430 "rygel-reference-creator.c"
+#line 432 "rygel-reference-creator.c"
 	}
 }
 
@@ -438,7 +440,7 @@ static void rygel_reference_creator_real_run_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	g_slice_free (RygelReferenceCreatorRunData, _data_);
-#line 442 "rygel-reference-creator.c"
+#line 444 "rygel-reference-creator.c"
 }
 
 
@@ -460,7 +462,7 @@ static void rygel_reference_creator_real_run (RygelStateMachine* base, GAsyncRea
 	_data_->self = _tmp0_;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	rygel_reference_creator_real_run_co (_data_);
-#line 464 "rygel-reference-creator.c"
+#line 466 "rygel-reference-creator.c"
 }
 
 
@@ -468,7 +470,7 @@ static void rygel_reference_creator_real_run_finish (RygelStateMachine* base, GA
 	RygelReferenceCreatorRunData* _data_;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 472 "rygel-reference-creator.c"
+#line 474 "rygel-reference-creator.c"
 }
 
 
@@ -482,7 +484,7 @@ static void rygel_reference_creator_run_ready (GObject* source_object, GAsyncRes
 	_data_->_res_ = _res_;
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	rygel_reference_creator_real_run_co (_data_);
-#line 486 "rygel-reference-creator.c"
+#line 488 "rygel-reference-creator.c"
 }
 
 
@@ -491,24 +493,24 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 	switch (_data_->_state_) {
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		case 0:
-#line 495 "rygel-reference-creator.c"
+#line 497 "rygel-reference-creator.c"
 		goto _state_0;
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		case 1:
-#line 499 "rygel-reference-creator.c"
+#line 501 "rygel-reference-creator.c"
 		goto _state_1;
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		case 2:
-#line 503 "rygel-reference-creator.c"
+#line 505 "rygel-reference-creator.c"
 		goto _state_2;
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		case 3:
-#line 507 "rygel-reference-creator.c"
+#line 509 "rygel-reference-creator.c"
 		goto _state_3;
 		default:
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_assert_not_reached ();
-#line 512 "rygel-reference-creator.c"
+#line 514 "rygel-reference-creator.c"
 	}
 	_state_0:
 	{
@@ -516,8 +518,8 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		rygel_reference_creator_parse_arguments (_data_->self, &_data_->_inner_error_);
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 520 "rygel-reference-creator.c"
-			goto __catch55_g_error;
+#line 522 "rygel-reference-creator.c"
+			goto __catch59_g_error;
 		}
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_state_ = 1;
@@ -525,7 +527,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		rygel_reference_creator_fetch_container (_data_->self, rygel_reference_creator_run_ready, _data_);
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return FALSE;
-#line 529 "rygel-reference-creator.c"
+#line 531 "rygel-reference-creator.c"
 		_state_1:
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp0_ = NULL;
@@ -535,8 +537,8 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		_data_->container = _data_->_tmp0_;
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 539 "rygel-reference-creator.c"
-			goto __catch55_g_error;
+#line 541 "rygel-reference-creator.c"
+			goto __catch59_g_error;
 		}
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp1_ = NULL;
@@ -574,7 +576,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		rygel_media_container_find_object (_data_->_tmp4_, _data_->_tmp5_, _data_->_tmp7_, rygel_reference_creator_run_ready, _data_);
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return FALSE;
-#line 578 "rygel-reference-creator.c"
+#line 580 "rygel-reference-creator.c"
 		_state_2:
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp8_ = NULL;
@@ -588,8 +590,8 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 			_g_object_unref0 (_data_->root_container);
 #line 64 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			_g_object_unref0 (_data_->container);
-#line 592 "rygel-reference-creator.c"
-			goto __catch55_g_error;
+#line 594 "rygel-reference-creator.c"
+			goto __catch59_g_error;
 		}
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp9_ = NULL;
@@ -613,8 +615,8 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 			_g_object_unref0 (_data_->root_container);
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			_g_object_unref0 (_data_->container);
-#line 617 "rygel-reference-creator.c"
-			goto __catch55_g_error;
+#line 619 "rygel-reference-creator.c"
+			goto __catch59_g_error;
 		}
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp12_ = NULL;
@@ -638,7 +640,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		rygel_writable_container_add_reference (_data_->_tmp12_, _data_->_tmp13_, _data_->_tmp15_, rygel_reference_creator_run_ready, _data_);
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return FALSE;
-#line 642 "rygel-reference-creator.c"
+#line 644 "rygel-reference-creator.c"
 		_state_3:
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp16_ = NULL;
@@ -654,8 +656,8 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 			_g_object_unref0 (_data_->root_container);
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			_g_object_unref0 (_data_->container);
-#line 658 "rygel-reference-creator.c"
-			goto __catch55_g_error;
+#line 660 "rygel-reference-creator.c"
+			goto __catch59_g_error;
 		}
 #line 74 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp17_ = NULL;
@@ -683,10 +685,10 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		_g_object_unref0 (_data_->root_container);
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_g_object_unref0 (_data_->container);
-#line 687 "rygel-reference-creator.c"
+#line 689 "rygel-reference-creator.c"
 	}
-	goto __finally55;
-	__catch55_g_error:
+	goto __finally59;
+	__catch59_g_error:
 	{
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -720,7 +722,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 			_data_->_tmp25_ = _data_->_tmp24_->message;
 #line 79 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			gupnp_service_action_return_error (_data_->_tmp21_, (guint) _data_->_tmp23_, _data_->_tmp25_);
-#line 724 "rygel-reference-creator.c"
+#line 726 "rygel-reference-creator.c"
 		} else {
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			_data_->_tmp26_ = NULL;
@@ -736,7 +738,7 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 			_data_->_tmp28_ = _data_->_tmp27_->message;
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			gupnp_service_action_return_error (_data_->_tmp26_, (guint) 402, _data_->_tmp28_);
-#line 740 "rygel-reference-creator.c"
+#line 742 "rygel-reference-creator.c"
 		}
 #line 84 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp29_ = NULL;
@@ -764,19 +766,19 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		if (_data_->_state_ == 0) {
 #line 90 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 768 "rygel-reference-creator.c"
+#line 770 "rygel-reference-creator.c"
 		} else {
 #line 90 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 772 "rygel-reference-creator.c"
+#line 774 "rygel-reference-creator.c"
 		}
 #line 90 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_object_unref (_data_->_async_result);
 #line 90 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return FALSE;
-#line 778 "rygel-reference-creator.c"
+#line 780 "rygel-reference-creator.c"
 	}
-	__finally55:
+	__finally59:
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
@@ -785,23 +787,23 @@ static gboolean rygel_reference_creator_real_run_co (RygelReferenceCreatorRunDat
 		g_clear_error (&_data_->_inner_error_);
 #line 60 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return FALSE;
-#line 789 "rygel-reference-creator.c"
+#line 791 "rygel-reference-creator.c"
 	}
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	if (_data_->_state_ == 0) {
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 795 "rygel-reference-creator.c"
+#line 797 "rygel-reference-creator.c"
 	} else {
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 799 "rygel-reference-creator.c"
+#line 801 "rygel-reference-creator.c"
 	}
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	g_object_unref (_data_->_async_result);
 #line 59 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	return FALSE;
-#line 805 "rygel-reference-creator.c"
+#line 807 "rygel-reference-creator.c"
 }
 
 
@@ -814,7 +816,7 @@ static void rygel_reference_creator_fetch_container_data_free (gpointer _data) {
 	_g_object_unref0 (_data_->self);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	g_slice_free (RygelReferenceCreatorFetchContainerData, _data_);
-#line 818 "rygel-reference-creator.c"
+#line 820 "rygel-reference-creator.c"
 }
 
 
@@ -833,7 +835,7 @@ static void rygel_reference_creator_fetch_container (RygelReferenceCreator* self
 	_data_->self = _tmp0_;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	rygel_reference_creator_fetch_container_co (_data_);
-#line 837 "rygel-reference-creator.c"
+#line 839 "rygel-reference-creator.c"
 }
 
 
@@ -844,7 +846,7 @@ static RygelWritableContainer* rygel_reference_creator_fetch_container_finish (R
 	if (g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (_res_), error)) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return NULL;
-#line 848 "rygel-reference-creator.c"
+#line 850 "rygel-reference-creator.c"
 	}
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
@@ -854,7 +856,7 @@ static RygelWritableContainer* rygel_reference_creator_fetch_container_finish (R
 	_data_->result = NULL;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	return result;
-#line 858 "rygel-reference-creator.c"
+#line 860 "rygel-reference-creator.c"
 }
 
 
@@ -878,7 +880,7 @@ static void rygel_reference_creator_fetch_container_ready (GObject* source_objec
 	_data_->_res_ = _res_;
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	rygel_reference_creator_fetch_container_co (_data_);
-#line 882 "rygel-reference-creator.c"
+#line 884 "rygel-reference-creator.c"
 }
 
 
@@ -887,16 +889,16 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 	switch (_data_->_state_) {
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		case 0:
-#line 891 "rygel-reference-creator.c"
+#line 893 "rygel-reference-creator.c"
 		goto _state_0;
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		case 1:
-#line 895 "rygel-reference-creator.c"
+#line 897 "rygel-reference-creator.c"
 		goto _state_1;
 		default:
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_assert_not_reached ();
-#line 900 "rygel-reference-creator.c"
+#line 902 "rygel-reference-creator.c"
 	}
 	_state_0:
 #line 105 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
@@ -937,7 +939,7 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 	rygel_media_container_find_object (_data_->_tmp4_, _data_->_tmp5_, _data_->_tmp7_, rygel_reference_creator_fetch_container_ready, _data_);
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	return FALSE;
-#line 941 "rygel-reference-creator.c"
+#line 943 "rygel-reference-creator.c"
 	_state_1:
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	_data_->_tmp8_ = NULL;
@@ -959,17 +961,17 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 		if (_data_->_state_ == 0) {
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 963 "rygel-reference-creator.c"
+#line 965 "rygel-reference-creator.c"
 		} else {
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 967 "rygel-reference-creator.c"
+#line 969 "rygel-reference-creator.c"
 		}
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_object_unref (_data_->_async_result);
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return FALSE;
-#line 973 "rygel-reference-creator.c"
+#line 975 "rygel-reference-creator.c"
 	}
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	_g_object_unref0 (_data_->media_object);
@@ -983,7 +985,7 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 	if (_data_->_tmp10_ == NULL) {
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp9_ = TRUE;
-#line 987 "rygel-reference-creator.c"
+#line 989 "rygel-reference-creator.c"
 	} else {
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp11_ = NULL;
@@ -991,7 +993,7 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 		_data_->_tmp11_ = _data_->media_object;
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp9_ = !G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp11_, RYGEL_TYPE_MEDIA_CONTAINER);
-#line 995 "rygel-reference-creator.c"
+#line 997 "rygel-reference-creator.c"
 	}
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	_data_->_tmp12_ = FALSE;
@@ -1021,17 +1023,17 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 		if (_data_->_state_ == 0) {
 #line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1025 "rygel-reference-creator.c"
+#line 1027 "rygel-reference-creator.c"
 		} else {
 #line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			g_simple_async_result_complete (_data_->_async_result);
-#line 1029 "rygel-reference-creator.c"
+#line 1031 "rygel-reference-creator.c"
 		}
 #line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_object_unref (_data_->_async_result);
 #line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		return FALSE;
-#line 1035 "rygel-reference-creator.c"
+#line 1037 "rygel-reference-creator.c"
 	} else {
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp16_ = NULL;
@@ -1049,7 +1051,7 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 		if (!((_data_->_tmp18_ & GUPNP_OCM_FLAGS_UPLOAD) == GUPNP_OCM_FLAGS_UPLOAD)) {
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			_data_->_tmp15_ = TRUE;
-#line 1053 "rygel-reference-creator.c"
+#line 1055 "rygel-reference-creator.c"
 		} else {
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			_data_->_tmp19_ = NULL;
@@ -1057,7 +1059,7 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 			_data_->_tmp19_ = _data_->media_object;
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			_data_->_tmp15_ = !G_TYPE_CHECK_INSTANCE_TYPE (_data_->_tmp19_, RYGEL_TYPE_WRITABLE_CONTAINER);
-#line 1061 "rygel-reference-creator.c"
+#line 1063 "rygel-reference-creator.c"
 		}
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		_data_->_tmp20_ = FALSE;
@@ -1099,17 +1101,17 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 			if (_data_->_state_ == 0) {
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 				g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1103 "rygel-reference-creator.c"
+#line 1105 "rygel-reference-creator.c"
 			} else {
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 				g_simple_async_result_complete (_data_->_async_result);
-#line 1107 "rygel-reference-creator.c"
+#line 1109 "rygel-reference-creator.c"
 			}
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			g_object_unref (_data_->_async_result);
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 			return FALSE;
-#line 1113 "rygel-reference-creator.c"
+#line 1115 "rygel-reference-creator.c"
 		}
 	}
 #line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
@@ -1130,11 +1132,11 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 	if (_data_->_state_ == 0) {
 #line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1134 "rygel-reference-creator.c"
+#line 1136 "rygel-reference-creator.c"
 	} else {
 #line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1138 "rygel-reference-creator.c"
+#line 1140 "rygel-reference-creator.c"
 	}
 #line 123 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	g_object_unref (_data_->_async_result);
@@ -1148,17 +1150,17 @@ static gboolean rygel_reference_creator_fetch_container_co (RygelReferenceCreato
 	if (_data_->_state_ == 0) {
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1152 "rygel-reference-creator.c"
+#line 1154 "rygel-reference-creator.c"
 	} else {
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1156 "rygel-reference-creator.c"
+#line 1158 "rygel-reference-creator.c"
 	}
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	g_object_unref (_data_->_async_result);
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	return FALSE;
-#line 1162 "rygel-reference-creator.c"
+#line 1164 "rygel-reference-creator.c"
 }
 
 
@@ -1174,7 +1176,7 @@ static GCancellable* rygel_reference_creator_real_get_cancellable (RygelStateMac
 	result = _tmp0_;
 #line 30 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	return result;
-#line 1178 "rygel-reference-creator.c"
+#line 1180 "rygel-reference-creator.c"
 }
 
 
@@ -1194,7 +1196,7 @@ static void rygel_reference_creator_real_set_cancellable (RygelStateMachine* bas
 	self->priv->_cancellable = _tmp1_;
 #line 30 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	g_object_notify ((GObject *) self, "cancellable");
-#line 1198 "rygel-reference-creator.c"
+#line 1200 "rygel-reference-creator.c"
 }
 
 
@@ -1211,7 +1213,7 @@ static void rygel_reference_creator_class_init (RygelReferenceCreatorClass * kla
 	G_OBJECT_CLASS (klass)->finalize = rygel_reference_creator_finalize;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_REFERENCE_CREATOR_CANCELLABLE, g_param_spec_object ("cancellable", "cancellable", "cancellable", g_cancellable_get_type (), G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 1215 "rygel-reference-creator.c"
+#line 1217 "rygel-reference-creator.c"
 }
 
 
@@ -1226,14 +1228,14 @@ static void rygel_reference_creator_rygel_state_machine_interface_init (RygelSta
 	iface->get_cancellable = rygel_reference_creator_real_get_cancellable;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	iface->set_cancellable = rygel_reference_creator_real_set_cancellable;
-#line 1230 "rygel-reference-creator.c"
+#line 1232 "rygel-reference-creator.c"
 }
 
 
 static void rygel_reference_creator_instance_init (RygelReferenceCreator * self) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	self->priv = RYGEL_REFERENCE_CREATOR_GET_PRIVATE (self);
-#line 1237 "rygel-reference-creator.c"
+#line 1239 "rygel-reference-creator.c"
 }
 
 
@@ -1253,7 +1255,7 @@ static void rygel_reference_creator_finalize (GObject* obj) {
 	_g_free0 (self->object_id);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 	G_OBJECT_CLASS (rygel_reference_creator_parent_class)->finalize (obj);
-#line 1257 "rygel-reference-creator.c"
+#line 1259 "rygel-reference-creator.c"
 }
 
 
@@ -1282,13 +1284,13 @@ static void _vala_rygel_reference_creator_get_property (GObject * object, guint 
 		g_value_set_object (value, rygel_state_machine_get_cancellable ((RygelStateMachine*) self));
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		break;
-#line 1286 "rygel-reference-creator.c"
+#line 1288 "rygel-reference-creator.c"
 		default:
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		break;
-#line 1292 "rygel-reference-creator.c"
+#line 1294 "rygel-reference-creator.c"
 	}
 }
 
@@ -1304,13 +1306,13 @@ static void _vala_rygel_reference_creator_set_property (GObject * object, guint 
 		rygel_state_machine_set_cancellable ((RygelStateMachine*) self, g_value_get_object (value));
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		break;
-#line 1308 "rygel-reference-creator.c"
+#line 1310 "rygel-reference-creator.c"
 		default:
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-reference-creator.vala"
 		break;
-#line 1314 "rygel-reference-creator.c"
+#line 1316 "rygel-reference-creator.c"
 	}
 }
 

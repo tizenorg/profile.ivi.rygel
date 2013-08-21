@@ -20,6 +20,7 @@
 <ANCHOR id="RYGEL-PLAYBIN-TYPE-PLAYER:CAPS" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RYGEL-PLAYBIN-TYPE-PLAYER:CAPS">
 <ANCHOR id="rygel-playbin-player-new-wrap" href="librygel-renderer-gst/RygelPlaybinPlayer.html#rygel-playbin-player-new-wrap">
 <ANCHOR id="rygel-playbin-player-get-playbin" href="librygel-renderer-gst/RygelPlaybinPlayer.html#rygel-playbin-player-get-playbin">
+<ANCHOR id="rygel-playbin-player-get-supported-profiles" href="librygel-renderer-gst/RygelPlaybinPlayer.html#rygel-playbin-player-get-supported-profiles">
 <ANCHOR id="rygel-playbin-player-get-default" href="librygel-renderer-gst/RygelPlaybinPlayer.html#rygel-playbin-player-get-default">
 <ANCHOR id="RygelPlaybinPlayer-struct" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer-struct">
 <ANCHOR id="RygelPlaybinPlayerClass" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayerClass">
@@ -34,6 +35,7 @@
 <ANCHOR id="RygelPlaybinPlayer--playback-state" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-state">
 <ANCHOR id="RygelPlaybinPlayer--playbin" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin">
 <ANCHOR id="RygelPlaybinPlayer--position" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--position">
+<ANCHOR id="RygelPlaybinPlayer--supported-profiles" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles">
 <ANCHOR id="RygelPlaybinPlayer--uri" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--uri">
 <ANCHOR id="RygelPlaybinPlayer--volume" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--volume">
 <ANCHOR id="annotation-glossterm-in" href="librygel-renderer-gst/annotation-glossary.html#annotation-glossterm-in">

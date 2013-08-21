@@ -7,7 +7,7 @@
 
 Name:       rygel
 Summary:    GNOME UPnP/DLNA Media Server
-Version:    0.19.4
+Version:    0.19.5
 Release:    0
 Group:      Applications/Multimedia
 License:    GPLv2

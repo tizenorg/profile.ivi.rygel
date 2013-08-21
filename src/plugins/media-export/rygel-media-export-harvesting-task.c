@@ -241,6 +241,8 @@ struct _RygelMediaExportTrackableDbContainer {
 
 struct _RygelMediaExportTrackableDbContainerClass {
 	RygelMediaExportDBContainerClass parent_class;
+	void (*remove_child) (RygelMediaExportTrackableDbContainer* self, RygelMediaObject* object, GAsyncReadyCallback _callback_, gpointer _user_data_);
+	void (*remove_child_finish) (RygelMediaExportTrackableDbContainer* self, GAsyncResult* _res_);
 	gchar* (*get_service_reset_token) (RygelMediaExportTrackableDbContainer* self);
 	void (*set_service_reset_token) (RygelMediaExportTrackableDbContainer* self, const gchar* token);
 	guint32 (*get_system_update_id) (RygelMediaExportTrackableDbContainer* self);
@@ -384,7 +386,7 @@ static void _vala_rygel_media_export_harvesting_task_set_property (GObject * obj
 static gpointer _g_object_ref0 (gpointer self) {
 #line 31 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 388 "rygel-media-export-harvesting-task.c"
+#line 390 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -423,21 +425,21 @@ FileQueueEntry* file_queue_entry_construct (GType object_type, GFile* file, gboo
 	self->content_type = _tmp4_;
 #line 30 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return self;
-#line 427 "rygel-media-export-harvesting-task.c"
+#line 429 "rygel-media-export-harvesting-task.c"
 }
 
 
 FileQueueEntry* file_queue_entry_new (GFile* file, gboolean known, const gchar* content_type) {
 #line 30 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return file_queue_entry_construct (TYPE_FILE_QUEUE_ENTRY, file, known, content_type);
-#line 434 "rygel-media-export-harvesting-task.c"
+#line 436 "rygel-media-export-harvesting-task.c"
 }
 
 
 static void value_file_queue_entry_init (GValue* value) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	value->data[0].v_pointer = NULL;
-#line 441 "rygel-media-export-harvesting-task.c"
+#line 443 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -446,7 +448,7 @@ static void value_file_queue_entry_free_value (GValue* value) {
 	if (value->data[0].v_pointer) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		file_queue_entry_unref (value->data[0].v_pointer);
-#line 450 "rygel-media-export-harvesting-task.c"
+#line 452 "rygel-media-export-harvesting-task.c"
 	}
 }
 
@@ -456,11 +458,11 @@ static void value_file_queue_entry_copy_value (const GValue* src_value, GValue* 
 	if (src_value->data[0].v_pointer) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		dest_value->data[0].v_pointer = file_queue_entry_ref (src_value->data[0].v_pointer);
-#line 460 "rygel-media-export-harvesting-task.c"
+#line 462 "rygel-media-export-harvesting-task.c"
 	} else {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		dest_value->data[0].v_pointer = NULL;
-#line 464 "rygel-media-export-harvesting-task.c"
+#line 466 "rygel-media-export-harvesting-task.c"
 	}
 }
 
@@ -468,37 +470,37 @@ static void value_file_queue_entry_copy_value (const GValue* src_value, GValue* 
 static gpointer value_file_queue_entry_peek_pointer (const GValue* value) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return value->data[0].v_pointer;
-#line 472 "rygel-media-export-harvesting-task.c"
+#line 474 "rygel-media-export-harvesting-task.c"
 }
 
 
 static gchar* value_file_queue_entry_collect_value (GValue* value, guint n_collect_values, GTypeCValue* collect_values, guint collect_flags) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (collect_values[0].v_pointer) {
-#line 479 "rygel-media-export-harvesting-task.c"
+#line 481 "rygel-media-export-harvesting-task.c"
 		FileQueueEntry* object;
 		object = collect_values[0].v_pointer;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		if (object->parent_instance.g_class == NULL) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			return g_strconcat ("invalid unclassed object pointer for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 486 "rygel-media-export-harvesting-task.c"
+#line 488 "rygel-media-export-harvesting-task.c"
 		} else if (!g_value_type_compatible (G_TYPE_FROM_INSTANCE (object), G_VALUE_TYPE (value))) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			return g_strconcat ("invalid object type `", g_type_name (G_TYPE_FROM_INSTANCE (object)), "' for value type `", G_VALUE_TYPE_NAME (value), "'", NULL);
-#line 490 "rygel-media-export-harvesting-task.c"
+#line 492 "rygel-media-export-harvesting-task.c"
 		}
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		value->data[0].v_pointer = file_queue_entry_ref (object);
-#line 494 "rygel-media-export-harvesting-task.c"
+#line 496 "rygel-media-export-harvesting-task.c"
 	} else {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		value->data[0].v_pointer = NULL;
-#line 498 "rygel-media-export-harvesting-task.c"
+#line 500 "rygel-media-export-harvesting-task.c"
 	}
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return NULL;
-#line 502 "rygel-media-export-harvesting-task.c"
+#line 504 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -509,25 +511,25 @@ static gchar* value_file_queue_entry_lcopy_value (const GValue* value, guint n_c
 	if (!object_p) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return g_strdup_printf ("value location for `%s' passed as NULL", G_VALUE_TYPE_NAME (value));
-#line 513 "rygel-media-export-harvesting-task.c"
+#line 515 "rygel-media-export-harvesting-task.c"
 	}
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (!value->data[0].v_pointer) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		*object_p = NULL;
-#line 519 "rygel-media-export-harvesting-task.c"
+#line 521 "rygel-media-export-harvesting-task.c"
 	} else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		*object_p = value->data[0].v_pointer;
-#line 523 "rygel-media-export-harvesting-task.c"
+#line 525 "rygel-media-export-harvesting-task.c"
 	} else {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		*object_p = file_queue_entry_ref (value->data[0].v_pointer);
-#line 527 "rygel-media-export-harvesting-task.c"
+#line 529 "rygel-media-export-harvesting-task.c"
 	}
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return NULL;
-#line 531 "rygel-media-export-harvesting-task.c"
+#line 533 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -541,7 +543,7 @@ GParamSpec* param_spec_file_queue_entry (const gchar* name, const gchar* nick, c
 	G_PARAM_SPEC (spec)->value_type = object_type;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return G_PARAM_SPEC (spec);
-#line 545 "rygel-media-export-harvesting-task.c"
+#line 547 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -550,7 +552,7 @@ gpointer value_get_file_queue_entry (const GValue* value) {
 	g_return_val_if_fail (G_TYPE_CHECK_VALUE_TYPE (value, TYPE_FILE_QUEUE_ENTRY), NULL);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return value->data[0].v_pointer;
-#line 554 "rygel-media-export-harvesting-task.c"
+#line 556 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -570,17 +572,17 @@ void value_set_file_queue_entry (GValue* value, gpointer v_object) {
 		value->data[0].v_pointer = v_object;
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		file_queue_entry_ref (value->data[0].v_pointer);
-#line 574 "rygel-media-export-harvesting-task.c"
+#line 576 "rygel-media-export-harvesting-task.c"
 	} else {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		value->data[0].v_pointer = NULL;
-#line 578 "rygel-media-export-harvesting-task.c"
+#line 580 "rygel-media-export-harvesting-task.c"
 	}
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (old) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		file_queue_entry_unref (old);
-#line 584 "rygel-media-export-harvesting-task.c"
+#line 586 "rygel-media-export-harvesting-task.c"
 	}
 }
 
@@ -599,17 +601,17 @@ void value_take_file_queue_entry (GValue* value, gpointer v_object) {
 		g_return_if_fail (g_value_type_compatible (G_TYPE_FROM_INSTANCE (v_object), G_VALUE_TYPE (value)));
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		value->data[0].v_pointer = v_object;
-#line 603 "rygel-media-export-harvesting-task.c"
+#line 605 "rygel-media-export-harvesting-task.c"
 	} else {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		value->data[0].v_pointer = NULL;
-#line 607 "rygel-media-export-harvesting-task.c"
+#line 609 "rygel-media-export-harvesting-task.c"
 	}
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (old) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		file_queue_entry_unref (old);
-#line 613 "rygel-media-export-harvesting-task.c"
+#line 615 "rygel-media-export-harvesting-task.c"
 	}
 }
 
@@ -619,14 +621,14 @@ static void file_queue_entry_class_init (FileQueueEntryClass * klass) {
 	file_queue_entry_parent_class = g_type_class_peek_parent (klass);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	FILE_QUEUE_ENTRY_CLASS (klass)->finalize = file_queue_entry_finalize;
-#line 623 "rygel-media-export-harvesting-task.c"
+#line 625 "rygel-media-export-harvesting-task.c"
 }
 
 
 static void file_queue_entry_instance_init (FileQueueEntry * self) {
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	self->ref_count = 1;
-#line 630 "rygel-media-export-harvesting-task.c"
+#line 632 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -638,7 +640,7 @@ static void file_queue_entry_finalize (FileQueueEntry* obj) {
 	_g_object_unref0 (self->file);
 #line 28 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_g_free0 (self->content_type);
-#line 642 "rygel-media-export-harvesting-task.c"
+#line 644 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -663,7 +665,7 @@ gpointer file_queue_entry_ref (gpointer instance) {
 	g_atomic_int_inc (&self->ref_count);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return instance;
-#line 667 "rygel-media-export-harvesting-task.c"
+#line 669 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -676,7 +678,7 @@ void file_queue_entry_unref (gpointer instance) {
 		FILE_QUEUE_ENTRY_GET_CLASS (self)->finalize (self);
 #line 25 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_type_free_instance ((GTypeInstance *) self);
-#line 680 "rygel-media-export-harvesting-task.c"
+#line 682 "rygel-media-export-harvesting-task.c"
 	}
 }
 
@@ -684,7 +686,7 @@ void file_queue_entry_unref (gpointer instance) {
 static void _g_object_unref0_ (gpointer var) {
 #line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	(var == NULL) ? NULL : (var = (g_object_unref (var), NULL));
-#line 688 "rygel-media-export-harvesting-task.c"
+#line 690 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -693,21 +695,21 @@ static void _g_queue_free__g_object_unref0_ (GQueue* self) {
 	g_queue_foreach (self, (GFunc) _g_object_unref0_, NULL);
 #line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_queue_free (self);
-#line 697 "rygel-media-export-harvesting-task.c"
+#line 699 "rygel-media-export-harvesting-task.c"
 }
 
 
 static void _rygel_media_export_harvesting_task_on_extracted_cb_rygel_media_export_metadata_extractor_extraction_done (RygelMediaExportMetadataExtractor* _sender, GFile* file, GstDiscovererInfo* info, GUPnPDLNAProfile* profile, GFileInfo* file_info, gpointer self) {
 #line 66 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_on_extracted_cb (self, file, info, profile, file_info);
-#line 704 "rygel-media-export-harvesting-task.c"
+#line 706 "rygel-media-export-harvesting-task.c"
 }
 
 
 static void _rygel_media_export_harvesting_task_on_extractor_error_cb_rygel_media_export_metadata_extractor_error (RygelMediaExportMetadataExtractor* _sender, GFile* file, GError* err, gpointer self) {
 #line 67 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_on_extractor_error_cb (self, file, err);
-#line 711 "rygel-media-export-harvesting-task.c"
+#line 713 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -791,14 +793,14 @@ RygelMediaExportHarvestingTask* rygel_media_export_harvesting_task_construct (GT
 	self->priv->monitor = _tmp11_;
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return self;
-#line 795 "rygel-media-export-harvesting-task.c"
+#line 797 "rygel-media-export-harvesting-task.c"
 }
 
 
 RygelMediaExportHarvestingTask* rygel_media_export_harvesting_task_new (RygelMediaExportRecursiveFileMonitor* monitor, GFile* file, RygelMediaContainer* parent) {
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return rygel_media_export_harvesting_task_construct (RYGEL_MEDIA_EXPORT_TYPE_HARVESTING_TASK, monitor, file, parent);
-#line 802 "rygel-media-export-harvesting-task.c"
+#line 804 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -823,7 +825,7 @@ void rygel_media_export_harvesting_task_cancel (RygelMediaExportHarvestingTask* 
 	_tmp3_ = _tmp2_;
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_cancellable_cancel (_tmp3_);
-#line 827 "rygel-media-export-harvesting-task.c"
+#line 829 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -834,7 +836,7 @@ static void rygel_media_export_harvesting_task_real_run_data_free (gpointer _dat
 	_g_object_unref0 (_data_->self);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_slice_free (RygelMediaExportHarvestingTaskRunData, _data_);
-#line 838 "rygel-media-export-harvesting-task.c"
+#line 840 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -856,7 +858,7 @@ static void rygel_media_export_harvesting_task_real_run (RygelStateMachine* base
 	_data_->self = _tmp0_;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_real_run_co (_data_);
-#line 860 "rygel-media-export-harvesting-task.c"
+#line 862 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -864,7 +866,7 @@ static void rygel_media_export_harvesting_task_real_run_finish (RygelStateMachin
 	RygelMediaExportHarvestingTaskRunData* _data_;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 868 "rygel-media-export-harvesting-task.c"
+#line 870 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -893,7 +895,7 @@ static void rygel_media_export_harvesting_task_run_ready (GObject* source_object
 	_data_->_res_ = _res_;
 #line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_real_run_co (_data_);
-#line 897 "rygel-media-export-harvesting-task.c"
+#line 899 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -902,16 +904,16 @@ static gboolean rygel_media_export_harvesting_task_real_run_co (RygelMediaExport
 	switch (_data_->_state_) {
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		case 0:
-#line 906 "rygel-media-export-harvesting-task.c"
+#line 908 "rygel-media-export-harvesting-task.c"
 		goto _state_0;
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		case 1:
-#line 910 "rygel-media-export-harvesting-task.c"
+#line 912 "rygel-media-export-harvesting-task.c"
 		goto _state_1;
 		default:
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_assert_not_reached ();
-#line 915 "rygel-media-export-harvesting-task.c"
+#line 917 "rygel-media-export-harvesting-task.c"
 	}
 	_state_0:
 	{
@@ -933,7 +935,7 @@ static gboolean rygel_media_export_harvesting_task_real_run_co (RygelMediaExport
 		g_file_query_info_async (_data_->_tmp0_, RYGEL_MEDIA_EXPORT_HARVESTING_TASK_HARVESTER_ATTRIBUTES, G_FILE_QUERY_INFO_NONE, G_PRIORITY_DEFAULT, _data_->_tmp2_, rygel_media_export_harvesting_task_run_ready, _data_);
 #line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return FALSE;
-#line 937 "rygel-media-export-harvesting-task.c"
+#line 939 "rygel-media-export-harvesting-task.c"
 		_state_1:
 #line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_data_->_tmp3_ = NULL;
@@ -943,8 +945,8 @@ static gboolean rygel_media_export_harvesting_task_real_run_co (RygelMediaExport
 		_data_->info = _data_->_tmp3_;
 #line 98 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 947 "rygel-media-export-harvesting-task.c"
-			goto __catch62_g_error;
+#line 949 "rygel-media-export-harvesting-task.c"
+			goto __catch63_g_error;
 		}
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_data_->_tmp4_ = NULL;
@@ -980,22 +982,22 @@ static gboolean rygel_media_export_harvesting_task_real_run_co (RygelMediaExport
 				_data_->_tmp10_ = _g_object_ref0 (_data_->_tmp9_);
 #line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				g_queue_push_tail (_data_->_tmp8_, _data_->_tmp10_);
-#line 984 "rygel-media-export-harvesting-task.c"
+#line 986 "rygel-media-export-harvesting-task.c"
 			}
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			rygel_media_export_harvesting_task_on_idle (_data_->self);
-#line 988 "rygel-media-export-harvesting-task.c"
+#line 990 "rygel-media-export-harvesting-task.c"
 		} else {
 #line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			g_signal_emit_by_name ((RygelStateMachine*) _data_->self, "completed");
-#line 992 "rygel-media-export-harvesting-task.c"
+#line 994 "rygel-media-export-harvesting-task.c"
 		}
 #line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_g_object_unref0 (_data_->info);
-#line 996 "rygel-media-export-harvesting-task.c"
+#line 998 "rygel-media-export-harvesting-task.c"
 	}
-	goto __finally62;
-	__catch62_g_error:
+	goto __finally63;
+	__catch63_g_error:
 	{
 #line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_data_->_error_ = _data_->_inner_error_;
@@ -1035,7 +1037,7 @@ static gboolean rygel_media_export_harvesting_task_real_run_co (RygelMediaExport
 			g_warning (_data_->_tmp12_, _data_->_tmp15_, _data_->_tmp17_);
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_g_free0 (_data_->_tmp15_);
-#line 1039 "rygel-media-export-harvesting-task.c"
+#line 1041 "rygel-media-export-harvesting-task.c"
 		} else {
 #line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_data_->_tmp18_ = NULL;
@@ -1054,15 +1056,15 @@ static gboolean rygel_media_export_harvesting_task_real_run_co (RygelMediaExport
 "cancelled", _data_->_tmp20_);
 #line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_g_free0 (_data_->_tmp20_);
-#line 1057 "rygel-media-export-harvesting-task.c"
+#line 1059 "rygel-media-export-harvesting-task.c"
 		}
 #line 121 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_signal_emit_by_name ((RygelStateMachine*) _data_->self, "completed");
 #line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_g_error_free0 (_data_->_error_);
-#line 1063 "rygel-media-export-harvesting-task.c"
+#line 1065 "rygel-media-export-harvesting-task.c"
 	}
-	__finally62:
+	__finally63:
 #line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -1071,23 +1073,23 @@ static gboolean rygel_media_export_harvesting_task_real_run_co (RygelMediaExport
 		g_clear_error (&_data_->_inner_error_);
 #line 97 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return FALSE;
-#line 1074 "rygel-media-export-harvesting-task.c"
+#line 1076 "rygel-media-export-harvesting-task.c"
 	}
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_data_->_state_ == 0) {
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1080 "rygel-media-export-harvesting-task.c"
+#line 1082 "rygel-media-export-harvesting-task.c"
 	} else {
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1084 "rygel-media-export-harvesting-task.c"
+#line 1086 "rygel-media-export-harvesting-task.c"
 	}
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_object_unref (_data_->_async_result);
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return FALSE;
-#line 1090 "rygel-media-export-harvesting-task.c"
+#line 1092 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1114,7 +1116,7 @@ static gboolean rygel_media_export_harvesting_task_push_if_changed_or_unknown (R
 	g_return_val_if_fail (file != NULL, FALSE);
 #line 137 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_return_val_if_fail (info != NULL, FALSE);
-#line 1117 "rygel-media-export-harvesting-task.c"
+#line 1119 "rygel-media-export-harvesting-task.c"
 	{
 		gboolean _tmp0_ = FALSE;
 		RygelMediaExportMediaCache* _tmp1_ = NULL;
@@ -1136,12 +1138,12 @@ static gboolean rygel_media_export_harvesting_task_push_if_changed_or_unknown (R
 		_tmp0_ = _tmp5_;
 #line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		if (_inner_error_ != NULL) {
-#line 1139 "rygel-media-export-harvesting-task.c"
-			goto __catch63_g_error;
+#line 1141 "rygel-media-export-harvesting-task.c"
+			goto __catch64_g_error;
 		}
 #line 142 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		if (_tmp0_) {
-#line 1144 "rygel-media-export-harvesting-task.c"
+#line 1146 "rygel-media-export-harvesting-task.c"
 			gint64 mtime = 0LL;
 			GFileInfo* _tmp6_ = NULL;
 			guint64 _tmp7_ = 0ULL;
@@ -1163,7 +1165,7 @@ static gboolean rygel_media_export_harvesting_task_push_if_changed_or_unknown (R
 			if (_tmp9_ > _tmp10_) {
 #line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				_tmp8_ = TRUE;
-#line 1166 "rygel-media-export-harvesting-task.c"
+#line 1168 "rygel-media-export-harvesting-task.c"
 			} else {
 				GFileInfo* _tmp11_ = NULL;
 				gint64 _tmp12_ = 0LL;
@@ -1176,13 +1178,13 @@ static gboolean rygel_media_export_harvesting_task_push_if_changed_or_unknown (R
 				_tmp13_ = size;
 #line 147 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				_tmp8_ = _tmp12_ != _tmp13_;
-#line 1179 "rygel-media-export-harvesting-task.c"
+#line 1181 "rygel-media-export-harvesting-task.c"
 			}
 #line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_tmp14_ = _tmp8_;
 #line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			if (_tmp14_) {
-#line 1185 "rygel-media-export-harvesting-task.c"
+#line 1187 "rygel-media-export-harvesting-task.c"
 				FileQueueEntry* entry = NULL;
 				GFile* _tmp15_ = NULL;
 				GFileInfo* _tmp16_ = NULL;
@@ -1212,7 +1214,7 @@ static gboolean rygel_media_export_harvesting_task_push_if_changed_or_unknown (R
 				_file_queue_entry_unref0 (entry);
 #line 153 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				return result;
-#line 1215 "rygel-media-export-harvesting-task.c"
+#line 1217 "rygel-media-export-harvesting-task.c"
 			}
 		} else {
 			FileQueueEntry* entry = NULL;
@@ -1244,11 +1246,11 @@ static gboolean rygel_media_export_harvesting_task_push_if_changed_or_unknown (R
 			_file_queue_entry_unref0 (entry);
 #line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			return result;
-#line 1247 "rygel-media-export-harvesting-task.c"
+#line 1249 "rygel-media-export-harvesting-task.c"
 		}
 	}
-	goto __finally63;
-	__catch63_g_error:
+	goto __finally64;
+	__catch64_g_error:
 	{
 		GError* _error_ = NULL;
 		const gchar* _tmp27_ = NULL;
@@ -1268,9 +1270,9 @@ static gboolean rygel_media_export_harvesting_task_push_if_changed_or_unknown (R
 		g_warning (_tmp27_, _tmp29_);
 #line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_g_error_free0 (_error_);
-#line 1271 "rygel-media-export-harvesting-task.c"
+#line 1273 "rygel-media-export-harvesting-task.c"
 	}
-	__finally63:
+	__finally64:
 #line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_inner_error_ != NULL) {
 #line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -1279,13 +1281,13 @@ static gboolean rygel_media_export_harvesting_task_push_if_changed_or_unknown (R
 		g_clear_error (&_inner_error_);
 #line 141 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return FALSE;
-#line 1282 "rygel-media-export-harvesting-task.c"
+#line 1284 "rygel-media-export-harvesting-task.c"
 	}
 #line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	result = FALSE;
 #line 167 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return result;
-#line 1288 "rygel-media-export-harvesting-task.c"
+#line 1290 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1313,7 +1315,7 @@ static gboolean rygel_media_export_harvesting_task_process_file (RygelMediaExpor
 		result = FALSE;
 #line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return result;
-#line 1316 "rygel-media-export-harvesting-task.c"
+#line 1318 "rygel-media-export-harvesting-task.c"
 	}
 #line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_tmp2_ = info;
@@ -1321,7 +1323,7 @@ static gboolean rygel_media_export_harvesting_task_process_file (RygelMediaExpor
 	_tmp3_ = g_file_info_get_file_type (_tmp2_);
 #line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_tmp3_ == G_FILE_TYPE_DIRECTORY) {
-#line 1324 "rygel-media-export-harvesting-task.c"
+#line 1326 "rygel-media-export-harvesting-task.c"
 		RygelMediaExportRecursiveFileMonitor* _tmp4_ = NULL;
 		GFile* _tmp5_ = NULL;
 		RygelMediaExportDummyContainer* container = NULL;
@@ -1371,7 +1373,7 @@ static gboolean rygel_media_export_harvesting_task_process_file (RygelMediaExpor
 		if (_tmp15_ == NULL) {
 #line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_tmp14_ = TRUE;
-#line 1374 "rygel-media-export-harvesting-task.c"
+#line 1376 "rygel-media-export-harvesting-task.c"
 		} else {
 			RygelMediaExportDummyContainer* _tmp16_ = NULL;
 			GeeList* _tmp17_ = NULL;
@@ -1395,13 +1397,13 @@ static gboolean rygel_media_export_harvesting_task_process_file (RygelMediaExpor
 			_tmp14_ = !_tmp21_;
 #line 188 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_g_free0 (_tmp20_);
-#line 1398 "rygel-media-export-harvesting-task.c"
+#line 1400 "rygel-media-export-harvesting-task.c"
 		}
 #line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_tmp22_ = _tmp14_;
 #line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		if (_tmp22_) {
-#line 1404 "rygel-media-export-harvesting-task.c"
+#line 1406 "rygel-media-export-harvesting-task.c"
 			RygelMediaContainer* _tmp23_ = NULL;
 			RygelMediaExportDummyContainer* _tmp24_ = NULL;
 #line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -1410,7 +1412,7 @@ static gboolean rygel_media_export_harvesting_task_process_file (RygelMediaExpor
 			_tmp24_ = container;
 #line 189 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			rygel_trackable_container_add_child_tracked (G_TYPE_CHECK_INSTANCE_TYPE (_tmp23_, RYGEL_TYPE_TRACKABLE_CONTAINER) ? ((RygelTrackableContainer*) _tmp23_) : NULL, (RygelMediaObject*) _tmp24_, NULL, NULL);
-#line 1413 "rygel-media-export-harvesting-task.c"
+#line 1415 "rygel-media-export-harvesting-task.c"
 		}
 #line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		result = TRUE;
@@ -1420,7 +1422,7 @@ static gboolean rygel_media_export_harvesting_task_process_file (RygelMediaExpor
 		_g_object_unref0 (container);
 #line 192 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return result;
-#line 1423 "rygel-media-export-harvesting-task.c"
+#line 1425 "rygel-media-export-harvesting-task.c"
 	} else {
 		GFileInfo* _tmp25_ = NULL;
 		gboolean _tmp26_ = FALSE;
@@ -1430,7 +1432,7 @@ static gboolean rygel_media_export_harvesting_task_process_file (RygelMediaExpor
 		_tmp26_ = rygel_media_export_harvester_is_eligible (_tmp25_);
 #line 196 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		if (_tmp26_) {
-#line 1433 "rygel-media-export-harvesting-task.c"
+#line 1435 "rygel-media-export-harvesting-task.c"
 			GFile* _tmp27_ = NULL;
 			GFileInfo* _tmp28_ = NULL;
 			gboolean _tmp29_ = FALSE;
@@ -1444,13 +1446,13 @@ static gboolean rygel_media_export_harvesting_task_process_file (RygelMediaExpor
 			result = _tmp29_;
 #line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			return result;
-#line 1447 "rygel-media-export-harvesting-task.c"
+#line 1449 "rygel-media-export-harvesting-task.c"
 		}
 #line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		result = FALSE;
 #line 200 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return result;
-#line 1453 "rygel-media-export-harvesting-task.c"
+#line 1455 "rygel-media-export-harvesting-task.c"
 	}
 }
 
@@ -1474,7 +1476,7 @@ static gboolean rygel_media_export_harvesting_task_process_children (RygelMediaE
 	if (_tmp1_ == NULL) {
 #line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_tmp0_ = TRUE;
-#line 1477 "rygel-media-export-harvesting-task.c"
+#line 1479 "rygel-media-export-harvesting-task.c"
 	} else {
 		GCancellable* _tmp2_ = NULL;
 		GCancellable* _tmp3_ = NULL;
@@ -1487,7 +1489,7 @@ static gboolean rygel_media_export_harvesting_task_process_children (RygelMediaE
 		_tmp4_ = g_cancellable_is_cancelled (_tmp3_);
 #line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_tmp0_ = _tmp4_;
-#line 1490 "rygel-media-export-harvesting-task.c"
+#line 1492 "rygel-media-export-harvesting-task.c"
 	}
 #line 205 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_tmp5_ = _tmp0_;
@@ -1497,7 +1499,7 @@ static gboolean rygel_media_export_harvesting_task_process_children (RygelMediaE
 		result = FALSE;
 #line 206 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return result;
-#line 1500 "rygel-media-export-harvesting-task.c"
+#line 1502 "rygel-media-export-harvesting-task.c"
 	}
 #line 209 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_tmp6_ = self->priv->containers;
@@ -1511,7 +1513,7 @@ static gboolean rygel_media_export_harvesting_task_process_children (RygelMediaE
 	container = _tmp9_;
 #line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_tmp10_ = list;
-#line 1514 "rygel-media-export-harvesting-task.c"
+#line 1516 "rygel-media-export-harvesting-task.c"
 	{
 		GList* info_collection = NULL;
 		GList* info_it = NULL;
@@ -1519,14 +1521,14 @@ static gboolean rygel_media_export_harvesting_task_process_children (RygelMediaE
 		info_collection = _tmp10_;
 #line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		for (info_it = info_collection; info_it != NULL; info_it = info_it->next) {
-#line 1522 "rygel-media-export-harvesting-task.c"
+#line 1524 "rygel-media-export-harvesting-task.c"
 			GFileInfo* _tmp11_ = NULL;
 			GFileInfo* info = NULL;
 #line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_tmp11_ = _g_object_ref0 ((GFileInfo*) info_it->data);
 #line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			info = _tmp11_;
-#line 1529 "rygel-media-export-harvesting-task.c"
+#line 1531 "rygel-media-export-harvesting-task.c"
 			{
 				GFile* file = NULL;
 				RygelMediaExportDummyContainer* _tmp12_ = NULL;
@@ -1569,7 +1571,7 @@ static gboolean rygel_media_export_harvesting_task_process_children (RygelMediaE
 				_g_object_unref0 (file);
 #line 211 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				_g_object_unref0 (info);
-#line 1572 "rygel-media-export-harvesting-task.c"
+#line 1574 "rygel-media-export-harvesting-task.c"
 			}
 		}
 	}
@@ -1579,7 +1581,7 @@ static gboolean rygel_media_export_harvesting_task_process_children (RygelMediaE
 	_g_object_unref0 (container);
 #line 218 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return result;
-#line 1582 "rygel-media-export-harvesting-task.c"
+#line 1584 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1590,7 +1592,7 @@ static void rygel_media_export_harvesting_task_enumerate_directory_data_free (gp
 	_g_object_unref0 (_data_->self);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_slice_free (RygelMediaExportHarvestingTaskEnumerateDirectoryData, _data_);
-#line 1593 "rygel-media-export-harvesting-task.c"
+#line 1595 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1609,7 +1611,7 @@ static void rygel_media_export_harvesting_task_enumerate_directory (RygelMediaEx
 	_data_->self = _tmp0_;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_enumerate_directory_co (_data_);
-#line 1612 "rygel-media-export-harvesting-task.c"
+#line 1614 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1617,7 +1619,7 @@ static void rygel_media_export_harvesting_task_enumerate_directory_finish (Rygel
 	RygelMediaExportHarvestingTaskEnumerateDirectoryData* _data_;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_data_ = g_simple_async_result_get_op_res_gpointer (G_SIMPLE_ASYNC_RESULT (_res_));
-#line 1620 "rygel-media-export-harvesting-task.c"
+#line 1622 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1631,7 +1633,7 @@ static void rygel_media_export_harvesting_task_enumerate_directory_ready (GObjec
 	_data_->_res_ = _res_;
 #line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_enumerate_directory_co (_data_);
-#line 1634 "rygel-media-export-harvesting-task.c"
+#line 1636 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1640,7 +1642,7 @@ static void _g_list_free__g_object_unref0_ (GList* self) {
 	g_list_foreach (self, (GFunc) _g_object_unref0_, NULL);
 #line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_list_free (self);
-#line 1643 "rygel-media-export-harvesting-task.c"
+#line 1645 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1649,24 +1651,24 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 	switch (_data_->_state_) {
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		case 0:
-#line 1652 "rygel-media-export-harvesting-task.c"
+#line 1654 "rygel-media-export-harvesting-task.c"
 		goto _state_0;
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		case 1:
-#line 1656 "rygel-media-export-harvesting-task.c"
+#line 1658 "rygel-media-export-harvesting-task.c"
 		goto _state_1;
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		case 2:
-#line 1660 "rygel-media-export-harvesting-task.c"
+#line 1662 "rygel-media-export-harvesting-task.c"
 		goto _state_2;
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		case 3:
-#line 1664 "rygel-media-export-harvesting-task.c"
+#line 1666 "rygel-media-export-harvesting-task.c"
 		goto _state_3;
 		default:
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_assert_not_reached ();
-#line 1669 "rygel-media-export-harvesting-task.c"
+#line 1671 "rygel-media-export-harvesting-task.c"
 	}
 	_state_0:
 #line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -1691,7 +1693,7 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 	_data_->_tmp4_ = _g_object_ref0 (_data_->_tmp3_);
 #line 222 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_data_->directory = _data_->_tmp4_;
-#line 1694 "rygel-media-export-harvesting-task.c"
+#line 1696 "rygel-media-export-harvesting-task.c"
 	{
 #line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_data_->_tmp5_ = NULL;
@@ -1711,7 +1713,7 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 		g_file_enumerate_children_async (_data_->_tmp5_, RYGEL_MEDIA_EXPORT_HARVESTING_TASK_HARVESTER_ATTRIBUTES, G_FILE_QUERY_INFO_NONE, G_PRIORITY_DEFAULT, _data_->_tmp7_, rygel_media_export_harvesting_task_enumerate_directory_ready, _data_);
 #line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return FALSE;
-#line 1714 "rygel-media-export-harvesting-task.c"
+#line 1716 "rygel-media-export-harvesting-task.c"
 		_state_1:
 #line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_data_->_tmp8_ = NULL;
@@ -1721,12 +1723,12 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 		_data_->enumerator = _data_->_tmp8_;
 #line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		if (_data_->_inner_error_ != NULL) {
-#line 1724 "rygel-media-export-harvesting-task.c"
-			goto __catch64_g_error;
+#line 1726 "rygel-media-export-harvesting-task.c"
+			goto __catch65_g_error;
 		}
 #line 230 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_data_->list = NULL;
-#line 1729 "rygel-media-export-harvesting-task.c"
+#line 1731 "rygel-media-export-harvesting-task.c"
 		{
 #line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_data_->_tmp9_ = TRUE;
@@ -1750,7 +1752,7 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 					if (!_data_->_tmp12_) {
 #line 235 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 						break;
-#line 1753 "rygel-media-export-harvesting-task.c"
+#line 1755 "rygel-media-export-harvesting-task.c"
 					}
 				}
 #line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -1773,7 +1775,7 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 				g_file_enumerator_next_files_async (_data_->_tmp14_, RYGEL_MEDIA_EXPORT_HARVESTING_TASK_BATCH_SIZE, G_PRIORITY_DEFAULT, _data_->_tmp16_, rygel_media_export_harvesting_task_enumerate_directory_ready, _data_);
 #line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				return FALSE;
-#line 1776 "rygel-media-export-harvesting-task.c"
+#line 1778 "rygel-media-export-harvesting-task.c"
 				_state_2:
 #line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				_data_->_tmp17_ = NULL;
@@ -1787,14 +1789,14 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 					__g_list_free__g_object_unref0_0 (_data_->list);
 #line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 					_g_object_unref0 (_data_->enumerator);
-#line 1790 "rygel-media-export-harvesting-task.c"
-					goto __catch64_g_error;
+#line 1792 "rygel-media-export-harvesting-task.c"
+					goto __catch65_g_error;
 				}
 #line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				__g_list_free__g_object_unref0_0 (_data_->list);
 #line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				_data_->list = _data_->_tmp13_;
-#line 1797 "rygel-media-export-harvesting-task.c"
+#line 1799 "rygel-media-export-harvesting-task.c"
 			}
 		}
 #line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -1815,7 +1817,7 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 		g_file_enumerator_close_async (_data_->_tmp18_, G_PRIORITY_DEFAULT, _data_->_tmp20_, rygel_media_export_harvesting_task_enumerate_directory_ready, _data_);
 #line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return FALSE;
-#line 1818 "rygel-media-export-harvesting-task.c"
+#line 1820 "rygel-media-export-harvesting-task.c"
 		_state_3:
 #line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_file_enumerator_close_finish (_data_->_tmp18_, _data_->_res_, &_data_->_inner_error_);
@@ -1825,17 +1827,17 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 			__g_list_free__g_object_unref0_0 (_data_->list);
 #line 237 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_g_object_unref0 (_data_->enumerator);
-#line 1828 "rygel-media-export-harvesting-task.c"
-			goto __catch64_g_error;
+#line 1830 "rygel-media-export-harvesting-task.c"
+			goto __catch65_g_error;
 		}
 #line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		__g_list_free__g_object_unref0_0 (_data_->list);
 #line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_g_object_unref0 (_data_->enumerator);
-#line 1835 "rygel-media-export-harvesting-task.c"
+#line 1837 "rygel-media-export-harvesting-task.c"
 	}
-	goto __finally64;
-	__catch64_g_error:
+	goto __finally65;
+	__catch65_g_error:
 	{
 #line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_data_->err = _data_->_inner_error_;
@@ -1857,9 +1859,9 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 		g_warning (_data_->_tmp21_, _data_->_tmp23_);
 #line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_g_error_free0 (_data_->err);
-#line 1860 "rygel-media-export-harvesting-task.c"
+#line 1862 "rygel-media-export-harvesting-task.c"
 	}
-	__finally64:
+	__finally65:
 #line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_data_->_inner_error_ != NULL) {
 #line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -1870,7 +1872,7 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 		g_clear_error (&_data_->_inner_error_);
 #line 223 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return FALSE;
-#line 1873 "rygel-media-export-harvesting-task.c"
+#line 1875 "rygel-media-export-harvesting-task.c"
 	}
 #line 242 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_cleanup_database (_data_->self);
@@ -1882,17 +1884,17 @@ static gboolean rygel_media_export_harvesting_task_enumerate_directory_co (Rygel
 	if (_data_->_state_ == 0) {
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_simple_async_result_complete_in_idle (_data_->_async_result);
-#line 1885 "rygel-media-export-harvesting-task.c"
+#line 1887 "rygel-media-export-harvesting-task.c"
 	} else {
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_simple_async_result_complete (_data_->_async_result);
-#line 1889 "rygel-media-export-harvesting-task.c"
+#line 1891 "rygel-media-export-harvesting-task.c"
 	}
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_object_unref (_data_->_async_result);
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return FALSE;
-#line 1895 "rygel-media-export-harvesting-task.c"
+#line 1897 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -1915,7 +1917,7 @@ static void rygel_media_export_harvesting_task_cleanup_database (RygelMediaExpor
 	_tmp3_ = _g_object_ref0 (G_TYPE_CHECK_INSTANCE_TYPE (_tmp2_, RYGEL_MEDIA_EXPORT_TYPE_DUMMY_CONTAINER) ? ((RygelMediaExportDummyContainer*) _tmp2_) : NULL);
 #line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	container = _tmp3_;
-#line 1918 "rygel-media-export-harvesting-task.c"
+#line 1920 "rygel-media-export-harvesting-task.c"
 	{
 		{
 			GeeList* _child_list = NULL;
@@ -1947,7 +1949,7 @@ static void rygel_media_export_harvesting_task_cleanup_database (RygelMediaExpor
 			_child_index = -1;
 #line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			while (TRUE) {
-#line 1950 "rygel-media-export-harvesting-task.c"
+#line 1952 "rygel-media-export-harvesting-task.c"
 				gint _tmp10_ = 0;
 				gint _tmp11_ = 0;
 				gint _tmp12_ = 0;
@@ -1969,7 +1971,7 @@ static void rygel_media_export_harvesting_task_cleanup_database (RygelMediaExpor
 				if (!(_tmp11_ < _tmp12_)) {
 #line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 					break;
-#line 1972 "rygel-media-export-harvesting-task.c"
+#line 1974 "rygel-media-export-harvesting-task.c"
 				}
 #line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				_tmp13_ = _child_list;
@@ -1993,8 +1995,8 @@ static void rygel_media_export_harvesting_task_cleanup_database (RygelMediaExpor
 					_g_object_unref0 (_child_list);
 #line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 					if (_inner_error_->domain == RYGEL_MEDIA_EXPORT_DATABASE_ERROR) {
-#line 1996 "rygel-media-export-harvesting-task.c"
-						goto __catch65_rygel_media_export_database_error;
+#line 1998 "rygel-media-export-harvesting-task.c"
+						goto __catch66_rygel_media_export_database_error;
 					}
 #line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 					_g_free0 (child);
@@ -2008,19 +2010,19 @@ static void rygel_media_export_harvesting_task_cleanup_database (RygelMediaExpor
 					g_clear_error (&_inner_error_);
 #line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 					return;
-#line 2011 "rygel-media-export-harvesting-task.c"
+#line 2013 "rygel-media-export-harvesting-task.c"
 				}
 #line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 				_g_free0 (child);
-#line 2015 "rygel-media-export-harvesting-task.c"
+#line 2017 "rygel-media-export-harvesting-task.c"
 			}
 #line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_g_object_unref0 (_child_list);
-#line 2019 "rygel-media-export-harvesting-task.c"
+#line 2021 "rygel-media-export-harvesting-task.c"
 		}
 	}
-	goto __finally65;
-	__catch65_rygel_media_export_database_error:
+	goto __finally66;
+	__catch66_rygel_media_export_database_error:
 	{
 		GError* _error_ = NULL;
 		const gchar* _tmp18_ = NULL;
@@ -2049,9 +2051,9 @@ static void rygel_media_export_harvesting_task_cleanup_database (RygelMediaExpor
 		g_warning (_tmp18_, _tmp21_, _tmp23_);
 #line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_g_error_free0 (_error_);
-#line 2052 "rygel-media-export-harvesting-task.c"
+#line 2054 "rygel-media-export-harvesting-task.c"
 	}
-	__finally65:
+	__finally66:
 #line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_inner_error_ != NULL) {
 #line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -2062,11 +2064,11 @@ static void rygel_media_export_harvesting_task_cleanup_database (RygelMediaExpor
 		g_clear_error (&_inner_error_);
 #line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return;
-#line 2065 "rygel-media-export-harvesting-task.c"
+#line 2067 "rygel-media-export-harvesting-task.c"
 	}
 #line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_g_object_unref0 (container);
-#line 2069 "rygel-media-export-harvesting-task.c"
+#line 2071 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2094,7 +2096,7 @@ static gboolean rygel_media_export_harvesting_task_on_idle (RygelMediaExportHarv
 		result = FALSE;
 #line 265 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		return result;
-#line 2097 "rygel-media-export-harvesting-task.c"
+#line 2099 "rygel-media-export-harvesting-task.c"
 	}
 #line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_tmp3_ = self->priv->files;
@@ -2104,7 +2106,7 @@ static gboolean rygel_media_export_harvesting_task_on_idle (RygelMediaExportHarv
 	_tmp5_ = _tmp4_;
 #line 268 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (!_tmp5_) {
-#line 2107 "rygel-media-export-harvesting-task.c"
+#line 2109 "rygel-media-export-harvesting-task.c"
 		GeeQueue* _tmp6_ = NULL;
 		gpointer _tmp7_ = NULL;
 		FileQueueEntry* _tmp8_ = NULL;
@@ -2163,7 +2165,7 @@ static gboolean rygel_media_export_harvesting_task_on_idle (RygelMediaExportHarv
 		_file_queue_entry_unref0 (_tmp19_);
 #line 271 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_file_queue_entry_unref0 (_tmp15_);
-#line 2165 "rygel-media-export-harvesting-task.c"
+#line 2167 "rygel-media-export-harvesting-task.c"
 	} else {
 		GQueue* _tmp21_ = NULL;
 		gboolean _tmp22_ = FALSE;
@@ -2175,18 +2177,18 @@ static gboolean rygel_media_export_harvesting_task_on_idle (RygelMediaExportHarv
 		if (!_tmp22_) {
 #line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			rygel_media_export_harvesting_task_enumerate_directory (self, NULL, NULL);
-#line 2177 "rygel-media-export-harvesting-task.c"
+#line 2179 "rygel-media-export-harvesting-task.c"
 		} else {
 #line 277 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			g_signal_emit_by_name ((RygelStateMachine*) self, "completed");
-#line 2181 "rygel-media-export-harvesting-task.c"
+#line 2183 "rygel-media-export-harvesting-task.c"
 		}
 	}
 #line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	result = FALSE;
 #line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return result;
-#line 2188 "rygel-media-export-harvesting-task.c"
+#line 2190 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2216,13 +2218,13 @@ static void rygel_media_export_harvesting_task_on_extracted_cb (RygelMediaExport
 	if (_tmp2_) {
 #line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		g_signal_emit_by_name ((RygelStateMachine*) self, "completed");
-#line 2218 "rygel-media-export-harvesting-task.c"
+#line 2220 "rygel-media-export-harvesting-task.c"
 	}
 #line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_tmp3_ = dlna;
 #line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_tmp3_ == NULL) {
-#line 2224 "rygel-media-export-harvesting-task.c"
+#line 2226 "rygel-media-export-harvesting-task.c"
 		GQueue* _tmp4_ = NULL;
 		gconstpointer _tmp5_ = NULL;
 		GFile* _tmp6_ = NULL;
@@ -2242,7 +2244,7 @@ static void rygel_media_export_harvesting_task_on_extracted_cb (RygelMediaExport
 		_g_object_unref0 (item);
 #line 293 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		item = _tmp8_;
-#line 2244 "rygel-media-export-harvesting-task.c"
+#line 2246 "rygel-media-export-harvesting-task.c"
 	} else {
 		GQueue* _tmp9_ = NULL;
 		gconstpointer _tmp10_ = NULL;
@@ -2269,13 +2271,13 @@ static void rygel_media_export_harvesting_task_on_extracted_cb (RygelMediaExport
 		_g_object_unref0 (item);
 #line 297 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		item = _tmp15_;
-#line 2271 "rygel-media-export-harvesting-task.c"
+#line 2273 "rygel-media-export-harvesting-task.c"
 	}
 #line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_tmp16_ = item;
 #line 304 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_tmp16_ != NULL) {
-#line 2277 "rygel-media-export-harvesting-task.c"
+#line 2279 "rygel-media-export-harvesting-task.c"
 		RygelMediaItem* _tmp17_ = NULL;
 		GQueue* _tmp18_ = NULL;
 		gconstpointer _tmp19_ = NULL;
@@ -2306,13 +2308,13 @@ static void rygel_media_export_harvesting_task_on_extracted_cb (RygelMediaExport
 		_file_queue_entry_unref0 (_tmp22_);
 #line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		if (_tmp24_) {
-#line 2308 "rygel-media-export-harvesting-task.c"
+#line 2310 "rygel-media-export-harvesting-task.c"
 			RygelMediaItem* _tmp25_ = NULL;
 #line 309 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_tmp25_ = item;
 #line 309 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			rygel_media_export_updatable_object_non_overriding_commit (G_TYPE_CHECK_INSTANCE_TYPE (_tmp25_, RYGEL_MEDIA_EXPORT_TYPE_UPDATABLE_OBJECT) ? ((RygelMediaExportUpdatableObject*) _tmp25_) : NULL, NULL, NULL);
-#line 2314 "rygel-media-export-harvesting-task.c"
+#line 2316 "rygel-media-export-harvesting-task.c"
 		} else {
 			RygelTrackableContainer* container = NULL;
 			RygelMediaItem* _tmp26_ = NULL;
@@ -2339,7 +2341,7 @@ static void rygel_media_export_harvesting_task_on_extracted_cb (RygelMediaExport
 			rygel_trackable_container_add_child_tracked (_tmp30_, (RygelMediaObject*) _tmp31_, NULL, NULL);
 #line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 			_g_object_unref0 (container);
-#line 2341 "rygel-media-export-harvesting-task.c"
+#line 2343 "rygel-media-export-harvesting-task.c"
 		}
 	}
 #line 316 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -2354,7 +2356,7 @@ static void rygel_media_export_harvesting_task_on_extracted_cb (RygelMediaExport
 	rygel_media_export_harvesting_task_do_update (self);
 #line 283 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_g_object_unref0 (item);
-#line 2356 "rygel-media-export-harvesting-task.c"
+#line 2358 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2396,7 +2398,7 @@ static void rygel_media_export_harvesting_task_on_extractor_error_cb (RygelMedia
 	_file_queue_entry_unref0 (_tmp7_);
 #line 330 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_do_update (self);
-#line 2397 "rygel-media-export-harvesting-task.c"
+#line 2399 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2421,7 +2423,7 @@ static void rygel_media_export_harvesting_task_do_update (RygelMediaExportHarves
 	_tmp3_ = _tmp2_;
 #line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_tmp3_) {
-#line 2422 "rygel-media-export-harvesting-task.c"
+#line 2424 "rygel-media-export-harvesting-task.c"
 		GQueue* _tmp4_ = NULL;
 		gboolean _tmp5_ = FALSE;
 #line 340 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
@@ -2430,17 +2432,17 @@ static void rygel_media_export_harvesting_task_do_update (RygelMediaExportHarves
 		_tmp5_ = g_queue_is_empty (_tmp4_);
 #line 340 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_tmp0_ = !_tmp5_;
-#line 2431 "rygel-media-export-harvesting-task.c"
+#line 2433 "rygel-media-export-harvesting-task.c"
 	} else {
 #line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_tmp0_ = FALSE;
-#line 2435 "rygel-media-export-harvesting-task.c"
+#line 2437 "rygel-media-export-harvesting-task.c"
 	}
 #line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	_tmp6_ = _tmp0_;
 #line 339 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	if (_tmp6_) {
-#line 2441 "rygel-media-export-harvesting-task.c"
+#line 2443 "rygel-media-export-harvesting-task.c"
 		GQueue* _tmp7_ = NULL;
 		gpointer _tmp8_ = NULL;
 		RygelMediaContainer* _tmp9_ = NULL;
@@ -2452,11 +2454,11 @@ static void rygel_media_export_harvesting_task_do_update (RygelMediaExportHarves
 		_tmp9_ = (RygelMediaContainer*) _tmp8_;
 #line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		_g_object_unref0 (_tmp9_);
-#line 2453 "rygel-media-export-harvesting-task.c"
+#line 2455 "rygel-media-export-harvesting-task.c"
 	}
 #line 344 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	rygel_media_export_harvesting_task_on_idle (self);
-#line 2457 "rygel-media-export-harvesting-task.c"
+#line 2459 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2472,7 +2474,7 @@ static GCancellable* rygel_media_export_harvesting_task_real_get_cancellable (Ry
 	result = _tmp0_;
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	return result;
-#line 2473 "rygel-media-export-harvesting-task.c"
+#line 2475 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2492,7 +2494,7 @@ static void rygel_media_export_harvesting_task_real_set_cancellable (RygelStateM
 	self->priv->_cancellable = _tmp1_;
 #line 48 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_object_notify ((GObject *) self, "cancellable");
-#line 2493 "rygel-media-export-harvesting-task.c"
+#line 2495 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2509,7 +2511,7 @@ static void rygel_media_export_harvesting_task_class_init (RygelMediaExportHarve
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_export_harvesting_task_finalize;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_EXPORT_HARVESTING_TASK_CANCELLABLE, g_param_spec_object ("cancellable", "cancellable", "cancellable", g_cancellable_get_type (), G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
-#line 2510 "rygel-media-export-harvesting-task.c"
+#line 2512 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2524,14 +2526,14 @@ static void rygel_media_export_harvesting_task_rygel_state_machine_interface_ini
 	iface->get_cancellable = rygel_media_export_harvesting_task_real_get_cancellable;
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	iface->set_cancellable = rygel_media_export_harvesting_task_real_set_cancellable;
-#line 2525 "rygel-media-export-harvesting-task.c"
+#line 2527 "rygel-media-export-harvesting-task.c"
 }
 
 
 static void rygel_media_export_harvesting_task_instance_init (RygelMediaExportHarvestingTask * self) {
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	self->priv = RYGEL_MEDIA_EXPORT_HARVESTING_TASK_GET_PRIVATE (self);
-#line 2532 "rygel-media-export-harvesting-task.c"
+#line 2534 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2557,7 +2559,7 @@ static void rygel_media_export_harvesting_task_finalize (GObject* obj) {
 	_g_object_unref0 (self->priv->_cancellable);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 	G_OBJECT_CLASS (rygel_media_export_harvesting_task_parent_class)->finalize (obj);
-#line 2558 "rygel-media-export-harvesting-task.c"
+#line 2560 "rygel-media-export-harvesting-task.c"
 }
 
 
@@ -2586,13 +2588,13 @@ static void _vala_rygel_media_export_harvesting_task_get_property (GObject * obj
 		g_value_set_object (value, rygel_state_machine_get_cancellable ((RygelStateMachine*) self));
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		break;
-#line 2587 "rygel-media-export-harvesting-task.c"
+#line 2589 "rygel-media-export-harvesting-task.c"
 		default:
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		break;
-#line 2593 "rygel-media-export-harvesting-task.c"
+#line 2595 "rygel-media-export-harvesting-task.c"
 	}
 }
 
@@ -2608,13 +2610,13 @@ static void _vala_rygel_media_export_harvesting_task_set_property (GObject * obj
 		rygel_state_machine_set_cancellable ((RygelStateMachine*) self, g_value_get_object (value));
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		break;
-#line 2609 "rygel-media-export-harvesting-task.c"
+#line 2611 "rygel-media-export-harvesting-task.c"
 		default:
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 37 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-harvesting-task.vala"
 		break;
-#line 2615 "rygel-media-export-harvesting-task.c"
+#line 2617 "rygel-media-export-harvesting-task.c"
 	}
 }
 
