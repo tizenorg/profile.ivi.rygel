@@ -219,8 +219,8 @@ RygelXBoxHacks* rygel_xbox_hacks_construct (GType object_type, SoupMessage* mess
 void rygel_xbox_hacks_apply_on_device (RygelXBoxHacks* self, RygelRootDevice* device, const gchar* template_path, GError** error);
 static void rygel_media_server_plugin_set_root_container (RygelMediaServerPlugin* self, RygelMediaContainer* value);
 GList* rygel_media_server_plugin_get_upload_profiles (RygelMediaServerPlugin* self);
-void rygel_media_server_plugin_set_upload_profiles (RygelMediaServerPlugin* self, GList* value);
 GList* rygel_media_server_plugin_get_supported_profiles (RygelMediaServerPlugin* self);
+void rygel_media_server_plugin_set_upload_profiles (RygelMediaServerPlugin* self, GList* value);
 GType rygel_media_engine_get_type (void) G_GNUC_CONST;
 RygelMediaEngine* rygel_media_engine_get_default (void);
 GList* rygel_media_engine_get_dlna_profiles (RygelMediaEngine* self);
@@ -637,7 +637,7 @@ static void rygel_media_server_plugin_set_root_container (RygelMediaServerPlugin
 GList* rygel_media_server_plugin_get_upload_profiles (RygelMediaServerPlugin* self) {
 	GList* result;
 	GList* _tmp0_ = NULL;
-	GList* _tmp2_ = NULL;
+	GList* _tmp3_ = NULL;
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	g_return_val_if_fail (self != NULL, NULL);
 #line 54 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
@@ -646,28 +646,31 @@ GList* rygel_media_server_plugin_get_upload_profiles (RygelMediaServerPlugin* se
 	if (_tmp0_ == NULL) {
 #line 646 "rygel-media-server-plugin.c"
 		GList* _tmp1_ = NULL;
+		GList* _tmp2_ = NULL;
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
-		_tmp1_ = self->priv->_supported_profiles;
+		_tmp1_ = rygel_media_server_plugin_get_supported_profiles (self);
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
-		result = _tmp1_;
+		_tmp2_ = _tmp1_;
+#line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
+		result = _tmp2_;
 #line 55 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		return result;
-#line 654 "rygel-media-server-plugin.c"
+#line 657 "rygel-media-server-plugin.c"
 	}
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
-	_tmp2_ = self->priv->_upload_profiles;
+	_tmp3_ = self->priv->_upload_profiles;
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
-	result = _tmp2_;
+	result = _tmp3_;
 #line 58 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	return result;
-#line 662 "rygel-media-server-plugin.c"
+#line 665 "rygel-media-server-plugin.c"
 }
 
 
 static gpointer _rygel_dlna_profile_ref0 (gpointer self) {
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	return self ? rygel_dlna_profile_ref (self) : NULL;
-#line 669 "rygel-media-server-plugin.c"
+#line 672 "rygel-media-server-plugin.c"
 }
 
 
@@ -681,7 +684,7 @@ void rygel_media_server_plugin_set_upload_profiles (RygelMediaServerPlugin* self
 	self->priv->_upload_profiles = NULL;
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	_tmp0_ = value;
-#line 683 "rygel-media-server-plugin.c"
+#line 686 "rygel-media-server-plugin.c"
 	{
 		GList* profile_collection = NULL;
 		GList* profile_it = NULL;
@@ -689,14 +692,14 @@ void rygel_media_server_plugin_set_upload_profiles (RygelMediaServerPlugin* self
 		profile_collection = _tmp0_;
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		for (profile_it = profile_collection; profile_it != NULL; profile_it = profile_it->next) {
-#line 691 "rygel-media-server-plugin.c"
+#line 694 "rygel-media-server-plugin.c"
 			RygelDLNAProfile* _tmp1_ = NULL;
 			RygelDLNAProfile* profile = NULL;
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 			_tmp1_ = _rygel_dlna_profile_ref0 ((RygelDLNAProfile*) profile_it->data);
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 			profile = _tmp1_;
-#line 698 "rygel-media-server-plugin.c"
+#line 701 "rygel-media-server-plugin.c"
 			{
 				RygelDLNAProfile* _tmp2_ = NULL;
 				RygelDLNAProfile* _tmp3_ = NULL;
@@ -708,13 +711,13 @@ void rygel_media_server_plugin_set_upload_profiles (RygelMediaServerPlugin* self
 				self->priv->_upload_profiles = g_list_append (self->priv->_upload_profiles, _tmp3_);
 #line 63 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 				_rygel_dlna_profile_unref0 (profile);
-#line 710 "rygel-media-server-plugin.c"
+#line 713 "rygel-media-server-plugin.c"
 			}
 		}
 	}
 #line 61 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	g_object_notify ((GObject *) self, "upload-profiles");
-#line 716 "rygel-media-server-plugin.c"
+#line 719 "rygel-media-server-plugin.c"
 }
 
 
@@ -728,7 +731,7 @@ GList* rygel_media_server_plugin_get_supported_profiles (RygelMediaServerPlugin*
 	_tmp0_ = self->priv->_supported_profiles;
 #line 82 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	if (_tmp0_ == NULL) {
-#line 730 "rygel-media-server-plugin.c"
+#line 733 "rygel-media-server-plugin.c"
 		RygelMediaEngine* _tmp1_ = NULL;
 		RygelMediaEngine* _tmp2_ = NULL;
 		GList* _tmp3_ = NULL;
@@ -747,7 +750,7 @@ GList* rygel_media_server_plugin_get_supported_profiles (RygelMediaServerPlugin*
 		result = _tmp4_;
 #line 83 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		return result;
-#line 749 "rygel-media-server-plugin.c"
+#line 752 "rygel-media-server-plugin.c"
 	}
 #line 86 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	_tmp5_ = self->priv->_supported_profiles;
@@ -755,7 +758,7 @@ GList* rygel_media_server_plugin_get_supported_profiles (RygelMediaServerPlugin*
 	result = _tmp5_;
 #line 86 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	return result;
-#line 757 "rygel-media-server-plugin.c"
+#line 760 "rygel-media-server-plugin.c"
 }
 
 
@@ -769,7 +772,7 @@ void rygel_media_server_plugin_set_supported_profiles (RygelMediaServerPlugin* s
 	self->priv->_supported_profiles = NULL;
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	_tmp0_ = value;
-#line 771 "rygel-media-server-plugin.c"
+#line 774 "rygel-media-server-plugin.c"
 	{
 		GList* profile_collection = NULL;
 		GList* profile_it = NULL;
@@ -777,14 +780,14 @@ void rygel_media_server_plugin_set_supported_profiles (RygelMediaServerPlugin* s
 		profile_collection = _tmp0_;
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		for (profile_it = profile_collection; profile_it != NULL; profile_it = profile_it->next) {
-#line 779 "rygel-media-server-plugin.c"
+#line 782 "rygel-media-server-plugin.c"
 			RygelDLNAProfile* _tmp1_ = NULL;
 			RygelDLNAProfile* profile = NULL;
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 			_tmp1_ = _rygel_dlna_profile_ref0 ((RygelDLNAProfile*) profile_it->data);
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 			profile = _tmp1_;
-#line 786 "rygel-media-server-plugin.c"
+#line 789 "rygel-media-server-plugin.c"
 			{
 				RygelDLNAProfile* _tmp2_ = NULL;
 				RygelDLNAProfile* _tmp3_ = NULL;
@@ -796,13 +799,13 @@ void rygel_media_server_plugin_set_supported_profiles (RygelMediaServerPlugin* s
 				self->priv->_supported_profiles = g_list_append (self->priv->_supported_profiles, _tmp3_);
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 				_rygel_dlna_profile_unref0 (profile);
-#line 798 "rygel-media-server-plugin.c"
+#line 801 "rygel-media-server-plugin.c"
 			}
 		}
 	}
 #line 89 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	g_object_notify ((GObject *) self, "supported-profiles");
-#line 804 "rygel-media-server-plugin.c"
+#line 807 "rygel-media-server-plugin.c"
 }
 
 
@@ -823,7 +826,7 @@ static void rygel_media_server_plugin_class_init (RygelMediaServerPluginClass * 
 	G_OBJECT_CLASS (klass)->finalize = rygel_media_server_plugin_finalize;
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_SERVER_PLUGIN_ROOT_CONTAINER, g_param_spec_object ("root-container", "root-container", "root-container", RYGEL_TYPE_MEDIA_CONTAINER, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-#line 825 "rygel-media-server-plugin.c"
+#line 828 "rygel-media-server-plugin.c"
 	/**
 	     * The list of DLNA profiles the MediaServer in this plugin will accept
 	     * files as upload.
@@ -833,7 +836,7 @@ static void rygel_media_server_plugin_class_init (RygelMediaServerPluginClass * 
 	     */
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_SERVER_PLUGIN_UPLOAD_PROFILES, g_param_spec_pointer ("upload-profiles", "upload-profiles", "upload-profiles", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT));
-#line 835 "rygel-media-server-plugin.c"
+#line 838 "rygel-media-server-plugin.c"
 	/**
 	     * The list of DLNA profiles the MediaServer in this plugin will be able
 	     * to serve.
@@ -845,14 +848,14 @@ static void rygel_media_server_plugin_class_init (RygelMediaServerPluginClass * 
 	     */
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_MEDIA_SERVER_PLUGIN_SUPPORTED_PROFILES, g_param_spec_pointer ("supported-profiles", "supported-profiles", "supported-profiles", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT));
-#line 847 "rygel-media-server-plugin.c"
+#line 850 "rygel-media-server-plugin.c"
 }
 
 
 static void rygel_media_server_plugin_instance_init (RygelMediaServerPlugin * self) {
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	self->priv = RYGEL_MEDIA_SERVER_PLUGIN_GET_PRIVATE (self);
-#line 854 "rygel-media-server-plugin.c"
+#line 857 "rygel-media-server-plugin.c"
 }
 
 
@@ -868,7 +871,7 @@ static void rygel_media_server_plugin_finalize (GObject* obj) {
 	__g_list_free__rygel_dlna_profile_unref0_0 (self->priv->_supported_profiles);
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 	G_OBJECT_CLASS (rygel_media_server_plugin_parent_class)->finalize (obj);
-#line 870 "rygel-media-server-plugin.c"
+#line 873 "rygel-media-server-plugin.c"
 }
 
 
@@ -918,13 +921,13 @@ static void _vala_rygel_media_server_plugin_get_property (GObject * object, guin
 		g_value_set_pointer (value, rygel_media_server_plugin_get_supported_profiles (self));
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		break;
-#line 920 "rygel-media-server-plugin.c"
+#line 923 "rygel-media-server-plugin.c"
 		default:
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		break;
-#line 926 "rygel-media-server-plugin.c"
+#line 929 "rygel-media-server-plugin.c"
 	}
 }
 
@@ -952,13 +955,13 @@ static void _vala_rygel_media_server_plugin_set_property (GObject * object, guin
 		rygel_media_server_plugin_set_supported_profiles (self, g_value_get_pointer (value));
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		break;
-#line 954 "rygel-media-server-plugin.c"
+#line 957 "rygel-media-server-plugin.c"
 		default:
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-server/rygel-media-server-plugin.vala"
 		break;
-#line 960 "rygel-media-server-plugin.c"
+#line 963 "rygel-media-server-plugin.c"
 	}
 }
 
