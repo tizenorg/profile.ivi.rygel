@@ -50,9 +50,9 @@ typedef struct _RygelPlaybinPlayerPrivate RygelPlaybinPlayerPrivate;
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 #define _g_free0(var) (var = (g_free (var), NULL))
 #define __g_list_free__rygel_renderer_dlna_profile_unref0_0(var) ((var == NULL) ? NULL : (var = (_g_list_free__rygel_renderer_dlna_profile_unref0_ (var), NULL)))
-#define __vala_GstStructure_free0(var) ((var == NULL) ? NULL : (var = (_vala_GstStructure_free (var), NULL)))
 #define _gst_mini_object_unref0(var) ((var == NULL) ? NULL : (var = (gst_mini_object_unref (var), NULL)))
 #define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
+#define __vala_GstStructure_free0(var) ((var == NULL) ? NULL : (var = (_vala_GstStructure_free (var), NULL)))
 #define _vala_assert(expr, msg) if G_LIKELY (expr) ; else g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, msg);
 
 struct _RygelPlaybinPlayer {
@@ -128,14 +128,13 @@ static gchar** rygel_playbin_player_real_get_mime_types (RygelMediaPlayer* base,
 static gchar** _vala_array_dup2 (gchar** self, int length);
 static gboolean rygel_playbin_player_is_rendering_image (RygelPlaybinPlayer* self);
 static inline GstCaps* _dynamic_get_caps0 (GstElement* obj);
-static GstStructure* _vala_GstStructure_copy (GstStructure* self);
-static void _vala_GstStructure_free (GstStructure* self);
 static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* bus, GstMessage* message);
 static inline gchar* _dynamic_get_current_uri1 (GstElement* obj);
 static inline gchar* _dynamic_get_uri2 (GstElement* obj);
 static gchar* rygel_playbin_player_generate_basic_didl (RygelPlaybinPlayer* self);
 static void rygel_playbin_player_on_source_setup (RygelPlaybinPlayer* self, GstElement* pipeline, GstElement* source);
 static inline void _dynamic_set_extra_headers3 (GstElement* obj, GstStructure* value);
+static void _vala_GstStructure_free (GstStructure* self);
 static void rygel_playbin_player_on_uri_notify (RygelPlaybinPlayer* self, GParamSpec* pspec);
 static inline void _dynamic_set_auto_flush_bus4 (GstElement* obj, gboolean value);
 static void _rygel_playbin_player_on_source_setup_dynamic_source_setup0_ (GstElement* _sender, GstElement* source, gpointer self);
@@ -159,7 +158,7 @@ static const gchar* RYGEL_PLAYBIN_PLAYER_mime_types[42] = {"audio/mpeg", "applic
 static void _rygel_renderer_dlna_profile_unref0_ (gpointer var) {
 #line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	(var == NULL) ? NULL : (var = (rygel_renderer_dlna_profile_unref (var), NULL));
-#line 163 "rygel-playbin-player.c"
+#line 162 "rygel-playbin-player.c"
 }
 
 
@@ -168,7 +167,7 @@ static void _g_list_free__rygel_renderer_dlna_profile_unref0_ (GList* self) {
 	g_list_foreach (self, (GFunc) _rygel_renderer_dlna_profile_unref0_, NULL);
 #line 341 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_list_free (self);
-#line 172 "rygel-playbin-player.c"
+#line 171 "rygel-playbin-player.c"
 }
 
 
@@ -187,14 +186,14 @@ static RygelPlaybinPlayer* rygel_playbin_player_construct (GType object_type) {
 	rygel_playbin_player_setup_playbin (self);
 #line 299 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return self;
-#line 191 "rygel-playbin-player.c"
+#line 190 "rygel-playbin-player.c"
 }
 
 
 static RygelPlaybinPlayer* rygel_playbin_player_new (void) {
 #line 299 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return rygel_playbin_player_construct (RYGEL_PLAYBIN_TYPE_PLAYER);
-#line 198 "rygel-playbin-player.c"
+#line 197 "rygel-playbin-player.c"
 }
 
 
@@ -231,21 +230,21 @@ RygelPlaybinPlayer* rygel_playbin_player_construct_wrap (GType object_type, GstE
 	rygel_playbin_player_setup_playbin (self);
 #line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return self;
-#line 235 "rygel-playbin-player.c"
+#line 234 "rygel-playbin-player.c"
 }
 
 
 RygelPlaybinPlayer* rygel_playbin_player_new_wrap (GstElement* playbin) {
 #line 305 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return rygel_playbin_player_construct_wrap (RYGEL_PLAYBIN_TYPE_PLAYER, playbin);
-#line 242 "rygel-playbin-player.c"
+#line 241 "rygel-playbin-player.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 249 "rygel-playbin-player.c"
+#line 248 "rygel-playbin-player.c"
 }
 
 
@@ -258,7 +257,7 @@ RygelPlaybinPlayer* rygel_playbin_player_get_default (void) {
 	_tmp0_ = rygel_playbin_player_player;
 #line 316 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	if (_tmp0_ == NULL) {
-#line 262 "rygel-playbin-player.c"
+#line 261 "rygel-playbin-player.c"
 		RygelPlaybinPlayer* _tmp1_ = NULL;
 #line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp1_ = rygel_playbin_player_new ();
@@ -266,7 +265,7 @@ RygelPlaybinPlayer* rygel_playbin_player_get_default (void) {
 		_g_object_unref0 (rygel_playbin_player_player);
 #line 317 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		rygel_playbin_player_player = _tmp1_;
-#line 270 "rygel-playbin-player.c"
+#line 269 "rygel-playbin-player.c"
 	}
 #line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_tmp2_ = rygel_playbin_player_player;
@@ -276,7 +275,7 @@ RygelPlaybinPlayer* rygel_playbin_player_get_default (void) {
 	result = _tmp3_;
 #line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 280 "rygel-playbin-player.c"
+#line 279 "rygel-playbin-player.c"
 }
 
 
@@ -298,7 +297,7 @@ static gboolean rygel_playbin_player_real_seek (RygelMediaPlayer* base, gint64 t
 	result = _tmp2_;
 #line 324 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 302 "rygel-playbin-player.c"
+#line 301 "rygel-playbin-player.c"
 }
 
 
@@ -309,17 +308,17 @@ static gchar** _vala_array_dup1 (gchar** self, int length) {
 	result = g_new0 (gchar*, length + 1);
 #line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	for (i = 0; i < length; i++) {
-#line 313 "rygel-playbin-player.c"
+#line 312 "rygel-playbin-player.c"
 		gchar* _tmp0_ = NULL;
 #line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp0_ = g_strdup (self[i]);
 #line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		result[i] = _tmp0_;
-#line 319 "rygel-playbin-player.c"
+#line 318 "rygel-playbin-player.c"
 	}
 #line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 323 "rygel-playbin-player.c"
+#line 322 "rygel-playbin-player.c"
 }
 
 
@@ -344,13 +343,13 @@ static gchar** rygel_playbin_player_real_get_protocols (RygelMediaPlayer* base, 
 	if (result_length1) {
 #line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		*result_length1 = _tmp1__length1;
-#line 348 "rygel-playbin-player.c"
+#line 347 "rygel-playbin-player.c"
 	}
 #line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	result = _tmp1_;
 #line 334 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 354 "rygel-playbin-player.c"
+#line 353 "rygel-playbin-player.c"
 }
 
 
@@ -361,17 +360,17 @@ static gchar** _vala_array_dup2 (gchar** self, int length) {
 	result = g_new0 (gchar*, length + 1);
 #line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	for (i = 0; i < length; i++) {
-#line 365 "rygel-playbin-player.c"
+#line 364 "rygel-playbin-player.c"
 		gchar* _tmp0_ = NULL;
 #line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp0_ = g_strdup (self[i]);
 #line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		result[i] = _tmp0_;
-#line 371 "rygel-playbin-player.c"
+#line 370 "rygel-playbin-player.c"
 	}
 #line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 375 "rygel-playbin-player.c"
+#line 374 "rygel-playbin-player.c"
 }
 
 
@@ -396,13 +395,13 @@ static gchar** rygel_playbin_player_real_get_mime_types (RygelMediaPlayer* base,
 	if (result_length1) {
 #line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		*result_length1 = _tmp1__length1;
-#line 400 "rygel-playbin-player.c"
+#line 399 "rygel-playbin-player.c"
 	}
 #line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	result = _tmp1_;
 #line 338 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 406 "rygel-playbin-player.c"
+#line 405 "rygel-playbin-player.c"
 }
 
 
@@ -412,28 +411,7 @@ static inline GstCaps* _dynamic_get_caps0 (GstElement* obj) {
 	g_object_get (obj, "caps", &result, NULL);
 #line 410 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 416 "rygel-playbin-player.c"
-}
-
-
-static GstStructure* _vala_GstStructure_copy (GstStructure* self) {
-#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	return g_boxed_copy (gst_structure_get_type (), self);
-#line 423 "rygel-playbin-player.c"
-}
-
-
-static gpointer __vala_GstStructure_copy0 (gpointer self) {
-#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	return self ? _vala_GstStructure_copy (self) : NULL;
-#line 430 "rygel-playbin-player.c"
-}
-
-
-static void _vala_GstStructure_free (GstStructure* self) {
-#line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	g_boxed_free (gst_structure_get_type (), self);
-#line 437 "rygel-playbin-player.c"
+#line 415 "rygel-playbin-player.c"
 }
 
 
@@ -449,11 +427,10 @@ static gboolean rygel_playbin_player_is_rendering_image (RygelPlaybinPlayer* sel
 	GstStructure* structure = NULL;
 	GstCaps* _tmp5_ = NULL;
 	GstStructure* _tmp6_ = NULL;
-	GstStructure* _tmp7_ = NULL;
-	gboolean _tmp8_ = FALSE;
-	GstStructure* _tmp9_ = NULL;
-	const gchar* _tmp10_ = NULL;
-	gboolean _tmp13_ = FALSE;
+	gboolean _tmp7_ = FALSE;
+	GstStructure* _tmp8_ = NULL;
+	const gchar* _tmp9_ = NULL;
+	gboolean _tmp12_ = FALSE;
 #line 406 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
 #line 409 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
@@ -477,42 +454,38 @@ static gboolean rygel_playbin_player_is_rendering_image (RygelPlaybinPlayer* sel
 #line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_tmp6_ = gst_caps_get_structure (_tmp5_, (guint) 0);
 #line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	_tmp7_ = __vala_GstStructure_copy0 (_tmp6_);
-#line 411 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	structure = _tmp7_;
+	structure = _tmp6_;
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	_tmp9_ = structure;
+	_tmp8_ = structure;
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	_tmp10_ = gst_structure_get_name (_tmp9_);
+	_tmp9_ = gst_structure_get_name (_tmp8_);
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	if (g_strcmp0 (_tmp10_, "image/jpeg") == 0) {
+	if (g_strcmp0 (_tmp9_, "image/jpeg") == 0) {
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-		_tmp8_ = TRUE;
-#line 492 "rygel-playbin-player.c"
+		_tmp7_ = TRUE;
+#line 467 "rygel-playbin-player.c"
 	} else {
-		GstStructure* _tmp11_ = NULL;
-		const gchar* _tmp12_ = NULL;
+		GstStructure* _tmp10_ = NULL;
+		const gchar* _tmp11_ = NULL;
 #line 414 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-		_tmp11_ = structure;
+		_tmp10_ = structure;
 #line 414 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-		_tmp12_ = gst_structure_get_name (_tmp11_);
+		_tmp11_ = gst_structure_get_name (_tmp10_);
 #line 414 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-		_tmp8_ = g_strcmp0 (_tmp12_, "image/png") == 0;
-#line 502 "rygel-playbin-player.c"
+		_tmp7_ = g_strcmp0 (_tmp11_, "image/png") == 0;
+#line 477 "rygel-playbin-player.c"
 	}
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	_tmp13_ = _tmp8_;
+	_tmp12_ = _tmp7_;
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	result = _tmp13_;
-#line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
-	__vala_GstStructure_free0 (structure);
+	result = _tmp12_;
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_gst_mini_object_unref0 (caps);
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_g_object_unref0 (typefind);
 #line 413 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 516 "rygel-playbin-player.c"
+#line 489 "rygel-playbin-player.c"
 }
 
 
@@ -522,7 +495,7 @@ static inline gchar* _dynamic_get_current_uri1 (GstElement* obj) {
 	g_object_get (obj, "current-uri", &result, NULL);
 #line 435 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 526 "rygel-playbin-player.c"
+#line 499 "rygel-playbin-player.c"
 }
 
 
@@ -532,7 +505,7 @@ static inline gchar* _dynamic_get_uri2 (GstElement* obj) {
 	g_object_get (obj, "uri", &result, NULL);
 #line 438 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 536 "rygel-playbin-player.c"
+#line 509 "rygel-playbin-player.c"
 }
 
 
@@ -553,7 +526,7 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 	switch (_tmp1_) {
 #line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		case GST_MESSAGE_DURATION_CHANGED:
-#line 557 "rygel-playbin-player.c"
+#line 530 "rygel-playbin-player.c"
 		{
 			GstElement* _tmp2_ = NULL;
 			gboolean _tmp3_ = FALSE;
@@ -565,15 +538,15 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 			if (_tmp3_) {
 #line 422 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				g_object_notify ((GObject*) self, "duration");
-#line 569 "rygel-playbin-player.c"
+#line 542 "rygel-playbin-player.c"
 			}
 #line 424 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			break;
-#line 573 "rygel-playbin-player.c"
+#line 546 "rygel-playbin-player.c"
 		}
 #line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		case GST_MESSAGE_STATE_CHANGED:
-#line 577 "rygel-playbin-player.c"
+#line 550 "rygel-playbin-player.c"
 		{
 			GstMessage* _tmp4_ = NULL;
 			GstObject* _tmp5_ = NULL;
@@ -586,7 +559,7 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 			_tmp6_ = self->priv->_playbin;
 #line 426 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			if (_tmp5_ == G_TYPE_CHECK_INSTANCE_CAST (_tmp6_, gst_object_get_type (), GstObject)) {
-#line 590 "rygel-playbin-player.c"
+#line 563 "rygel-playbin-player.c"
 				GstState old_state = 0;
 				GstState new_state = 0;
 				GstState pending = 0;
@@ -617,29 +590,29 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 				_tmp12_ = old_state;
 #line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp12_ == GST_STATE_READY) {
-#line 621 "rygel-playbin-player.c"
+#line 594 "rygel-playbin-player.c"
 					GstState _tmp13_ = 0;
 #line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp13_ = new_state;
 #line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp11_ = _tmp13_ == GST_STATE_PAUSED;
-#line 627 "rygel-playbin-player.c"
+#line 600 "rygel-playbin-player.c"
 				} else {
 #line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp11_ = FALSE;
-#line 631 "rygel-playbin-player.c"
+#line 604 "rygel-playbin-player.c"
 				}
 #line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp14_ = _tmp11_;
 #line 432 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp14_) {
-#line 637 "rygel-playbin-player.c"
+#line 610 "rygel-playbin-player.c"
 					gboolean _tmp15_ = FALSE;
 #line 433 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp15_ = self->priv->uri_update_hint;
 #line 433 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					if (_tmp15_) {
-#line 643 "rygel-playbin-player.c"
+#line 616 "rygel-playbin-player.c"
 						gchar* uri = NULL;
 						GstElement* _tmp16_ = NULL;
 						gchar* _tmp17_ = NULL;
@@ -664,23 +637,23 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 						_tmp21_ = uri;
 #line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 						if (g_strcmp0 (_tmp20_, _tmp21_) != 0) {
-#line 668 "rygel-playbin-player.c"
+#line 641 "rygel-playbin-player.c"
 							const gchar* _tmp22_ = NULL;
 #line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							_tmp22_ = uri;
 #line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							_tmp19_ = g_strcmp0 (_tmp22_, "") != 0;
-#line 674 "rygel-playbin-player.c"
+#line 647 "rygel-playbin-player.c"
 						} else {
 #line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							_tmp19_ = FALSE;
-#line 678 "rygel-playbin-player.c"
+#line 651 "rygel-playbin-player.c"
 						}
 #line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 						_tmp23_ = _tmp19_;
 #line 436 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 						if (_tmp23_) {
-#line 684 "rygel-playbin-player.c"
+#line 657 "rygel-playbin-player.c"
 							GstElement* _tmp24_ = NULL;
 							gchar* _tmp25_ = NULL;
 							gchar* _tmp26_ = NULL;
@@ -706,34 +679,34 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 							rygel_media_player_set_metadata ((RygelMediaPlayer*) self, _tmp28_);
 #line 440 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							_g_free0 (_tmp28_);
-#line 710 "rygel-playbin-player.c"
+#line 683 "rygel-playbin-player.c"
 						}
 #line 433 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 						_g_free0 (uri);
-#line 714 "rygel-playbin-player.c"
+#line 687 "rygel-playbin-player.c"
 					}
 				}
 #line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp30_ = pending;
 #line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp30_ == GST_STATE_VOID_PENDING) {
-#line 721 "rygel-playbin-player.c"
+#line 694 "rygel-playbin-player.c"
 					gboolean _tmp31_ = FALSE;
 #line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp31_ = self->priv->buffering;
 #line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp29_ = !_tmp31_;
-#line 727 "rygel-playbin-player.c"
+#line 700 "rygel-playbin-player.c"
 				} else {
 #line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp29_ = FALSE;
-#line 731 "rygel-playbin-player.c"
+#line 704 "rygel-playbin-player.c"
 				}
 #line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp32_ = _tmp29_;
 #line 445 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp32_) {
-#line 737 "rygel-playbin-player.c"
+#line 710 "rygel-playbin-player.c"
 					GstState _tmp33_ = 0;
 #line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp33_ = new_state;
@@ -741,39 +714,39 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 					switch (_tmp33_) {
 #line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 						case GST_STATE_PAUSED:
-#line 745 "rygel-playbin-player.c"
+#line 718 "rygel-playbin-player.c"
 						{
 #line 448 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							rygel_media_player_set_playback_state ((RygelMediaPlayer*) self, "PAUSED_PLAYBACK");
 #line 449 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							break;
-#line 751 "rygel-playbin-player.c"
+#line 724 "rygel-playbin-player.c"
 						}
 #line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 						case GST_STATE_NULL:
-#line 755 "rygel-playbin-player.c"
+#line 728 "rygel-playbin-player.c"
 						{
 #line 451 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							rygel_media_player_set_playback_state ((RygelMediaPlayer*) self, "STOPPED");
 #line 452 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							break;
-#line 761 "rygel-playbin-player.c"
+#line 734 "rygel-playbin-player.c"
 						}
 #line 446 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 						case GST_STATE_PLAYING:
-#line 765 "rygel-playbin-player.c"
+#line 738 "rygel-playbin-player.c"
 						{
 #line 454 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							rygel_media_player_set_playback_state ((RygelMediaPlayer*) self, "PLAYING");
 #line 455 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							break;
-#line 771 "rygel-playbin-player.c"
+#line 744 "rygel-playbin-player.c"
 						}
 						default:
 						{
 #line 457 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 							break;
-#line 777 "rygel-playbin-player.c"
+#line 750 "rygel-playbin-player.c"
 						}
 					}
 				}
@@ -781,17 +754,17 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 				_tmp35_ = old_state;
 #line 461 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp35_ == GST_STATE_PAUSED) {
-#line 785 "rygel-playbin-player.c"
+#line 758 "rygel-playbin-player.c"
 					GstState _tmp36_ = 0;
 #line 461 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp36_ = new_state;
 #line 461 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp34_ = _tmp36_ == GST_STATE_PLAYING;
-#line 791 "rygel-playbin-player.c"
+#line 764 "rygel-playbin-player.c"
 				} else {
 #line 461 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp34_ = FALSE;
-#line 795 "rygel-playbin-player.c"
+#line 768 "rygel-playbin-player.c"
 				}
 #line 461 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp37_ = _tmp34_;
@@ -801,16 +774,16 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 					self->priv->buffering = FALSE;
 #line 463 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					rygel_media_player_set_playback_state ((RygelMediaPlayer*) self, "PLAYING");
-#line 805 "rygel-playbin-player.c"
+#line 778 "rygel-playbin-player.c"
 				}
 			}
 #line 466 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			break;
-#line 810 "rygel-playbin-player.c"
+#line 783 "rygel-playbin-player.c"
 		}
 #line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		case GST_MESSAGE_BUFFERING:
-#line 814 "rygel-playbin-player.c"
+#line 787 "rygel-playbin-player.c"
 		{
 			gboolean _tmp38_ = FALSE;
 			gboolean _tmp39_ = FALSE;
@@ -821,20 +794,20 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 			if (_tmp39_) {
 #line 469 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp38_ = TRUE;
-#line 825 "rygel-playbin-player.c"
+#line 798 "rygel-playbin-player.c"
 			} else {
 				gboolean _tmp40_ = FALSE;
 #line 469 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp40_ = self->priv->foreign;
 #line 469 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp38_ = _tmp40_;
-#line 832 "rygel-playbin-player.c"
+#line 805 "rygel-playbin-player.c"
 			}
 #line 469 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			_tmp41_ = _tmp38_;
 #line 469 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			if (!_tmp41_) {
-#line 838 "rygel-playbin-player.c"
+#line 811 "rygel-playbin-player.c"
 				gint percent = 0;
 				GstMessage* _tmp42_ = NULL;
 				gint _tmp43_ = 0;
@@ -849,7 +822,7 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 				_tmp44_ = percent;
 #line 474 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp44_ < 100) {
-#line 853 "rygel-playbin-player.c"
+#line 826 "rygel-playbin-player.c"
 					GstElement* _tmp45_ = NULL;
 #line 475 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					self->priv->buffering = TRUE;
@@ -857,30 +830,30 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 					_tmp45_ = self->priv->_playbin;
 #line 476 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					gst_element_set_state (_tmp45_, GST_STATE_PAUSED);
-#line 861 "rygel-playbin-player.c"
+#line 834 "rygel-playbin-player.c"
 				} else {
 					GstElement* _tmp46_ = NULL;
 #line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp46_ = self->priv->_playbin;
 #line 478 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					gst_element_set_state (_tmp46_, GST_STATE_PLAYING);
-#line 868 "rygel-playbin-player.c"
+#line 841 "rygel-playbin-player.c"
 				}
 			}
 #line 481 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			break;
-#line 873 "rygel-playbin-player.c"
+#line 846 "rygel-playbin-player.c"
 		}
 #line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		case GST_MESSAGE_CLOCK_LOST:
-#line 877 "rygel-playbin-player.c"
+#line 850 "rygel-playbin-player.c"
 		{
 			gboolean _tmp47_ = FALSE;
 #line 484 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			_tmp47_ = self->priv->foreign;
 #line 484 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			if (!_tmp47_) {
-#line 884 "rygel-playbin-player.c"
+#line 857 "rygel-playbin-player.c"
 				GstElement* _tmp48_ = NULL;
 				GstElement* _tmp49_ = NULL;
 #line 485 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
@@ -891,15 +864,15 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 				_tmp49_ = self->priv->_playbin;
 #line 486 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				gst_element_set_state (_tmp49_, GST_STATE_PLAYING);
-#line 895 "rygel-playbin-player.c"
+#line 868 "rygel-playbin-player.c"
 			}
 #line 488 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			break;
-#line 899 "rygel-playbin-player.c"
+#line 872 "rygel-playbin-player.c"
 		}
 #line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		case GST_MESSAGE_EOS:
-#line 903 "rygel-playbin-player.c"
+#line 876 "rygel-playbin-player.c"
 		{
 			gboolean _tmp50_ = FALSE;
 #line 490 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
@@ -910,19 +883,19 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 				g_debug ("rygel-playbin-player.vala:491: EOS");
 #line 492 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				rygel_media_player_set_playback_state ((RygelMediaPlayer*) self, "EOS");
-#line 914 "rygel-playbin-player.c"
+#line 887 "rygel-playbin-player.c"
 			} else {
 #line 494 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				g_debug ("rygel-playbin-player.vala:494: Content is image, ignoring EOS");
-#line 918 "rygel-playbin-player.c"
+#line 891 "rygel-playbin-player.c"
 			}
 #line 497 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			break;
-#line 922 "rygel-playbin-player.c"
+#line 895 "rygel-playbin-player.c"
 		}
 #line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		case GST_MESSAGE_ERROR:
-#line 926 "rygel-playbin-player.c"
+#line 899 "rygel-playbin-player.c"
 		{
 			GError* _error_ = NULL;
 			gchar* debug_message = NULL;
@@ -977,12 +950,12 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 			_g_error_free0 (_error_);
 #line 512 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			break;
-#line 980 "rygel-playbin-player.c"
+#line 953 "rygel-playbin-player.c"
 		}
 		default:
 #line 419 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		break;
-#line 985 "rygel-playbin-player.c"
+#line 958 "rygel-playbin-player.c"
 	}
 }
 
@@ -990,7 +963,14 @@ static void rygel_playbin_player_bus_handler (RygelPlaybinPlayer* self, GstBus* 
 static inline void _dynamic_set_extra_headers3 (GstElement* obj, GstStructure* value) {
 #line 524 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_set (obj, "extra-headers", value, NULL);
-#line 993 "rygel-playbin-player.c"
+#line 966 "rygel-playbin-player.c"
+}
+
+
+static void _vala_GstStructure_free (GstStructure* self) {
+#line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
+	g_boxed_free (gst_structure_get_type (), self);
+#line 973 "rygel-playbin-player.c"
 }
 
 
@@ -1014,23 +994,23 @@ static void rygel_playbin_player_on_source_setup (RygelPlaybinPlayer* self, GstE
 	_tmp3_ = g_type_name (_tmp2_);
 #line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	if (g_strcmp0 (_tmp3_, "GstSoupHTTPSrc") == 0) {
-#line 1017 "rygel-playbin-player.c"
+#line 997 "rygel-playbin-player.c"
 		const gchar* _tmp4_ = NULL;
 #line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp4_ = self->priv->transfer_mode;
 #line 518 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp0_ = _tmp4_ != NULL;
-#line 1023 "rygel-playbin-player.c"
+#line 1003 "rygel-playbin-player.c"
 	} else {
 #line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp0_ = FALSE;
-#line 1027 "rygel-playbin-player.c"
+#line 1007 "rygel-playbin-player.c"
 	}
 #line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_tmp5_ = _tmp0_;
 #line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	if (_tmp5_) {
-#line 1033 "rygel-playbin-player.c"
+#line 1013 "rygel-playbin-player.c"
 		const gchar* _tmp6_ = NULL;
 		GstStructure* structure = NULL;
 		GstStructure* _tmp7_ = NULL;
@@ -1067,7 +1047,7 @@ static void rygel_playbin_player_on_source_setup (RygelPlaybinPlayer* self, GstE
 		_dynamic_set_extra_headers3 (_tmp11_, _tmp12_);
 #line 517 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		__vala_GstStructure_free0 (structure);
-#line 1070 "rygel-playbin-player.c"
+#line 1050 "rygel-playbin-player.c"
 	}
 }
 
@@ -1079,7 +1059,7 @@ static void rygel_playbin_player_on_uri_notify (RygelPlaybinPlayer* self, GParam
 	g_return_if_fail (pspec != NULL);
 #line 529 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	self->priv->uri_update_hint = TRUE;
-#line 1082 "rygel-playbin-player.c"
+#line 1062 "rygel-playbin-player.c"
 }
 
 
@@ -1167,42 +1147,42 @@ static gchar* rygel_playbin_player_generate_basic_didl (RygelPlaybinPlayer* self
 	_g_object_unref0 (writer);
 #line 549 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1170 "rygel-playbin-player.c"
+#line 1150 "rygel-playbin-player.c"
 }
 
 
 static inline void _dynamic_set_auto_flush_bus4 (GstElement* obj, gboolean value) {
 #line 557 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_set (obj, "auto-flush-bus", value, NULL);
-#line 1177 "rygel-playbin-player.c"
+#line 1157 "rygel-playbin-player.c"
 }
 
 
 static void _rygel_playbin_player_on_source_setup_dynamic_source_setup0_ (GstElement* _sender, GstElement* source, gpointer self) {
 #line 560 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	rygel_playbin_player_on_source_setup (self, _sender, source);
-#line 1184 "rygel-playbin-player.c"
+#line 1164 "rygel-playbin-player.c"
 }
 
 
 void _dynamic_source_setup1_connect (gpointer obj, const char * signal_name, GCallback handler, gpointer data) {
 #line 560 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_signal_connect_object (obj, signal_name, handler, data, 0);
-#line 1191 "rygel-playbin-player.c"
+#line 1171 "rygel-playbin-player.c"
 }
 
 
 static void _rygel_playbin_player_on_uri_notify_g_object_notify (GObject* _sender, GParamSpec* pspec, gpointer self) {
 #line 561 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	rygel_playbin_player_on_uri_notify (self, pspec);
-#line 1198 "rygel-playbin-player.c"
+#line 1178 "rygel-playbin-player.c"
 }
 
 
 static void _rygel_playbin_player_bus_handler_gst_bus_message (GstBus* _sender, GstMessage* message, gpointer self) {
 #line 566 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	rygel_playbin_player_bus_handler (self, _sender, message);
-#line 1205 "rygel-playbin-player.c"
+#line 1185 "rygel-playbin-player.c"
 }
 
 
@@ -1246,7 +1226,7 @@ static void rygel_playbin_player_setup_playbin (RygelPlaybinPlayer* self) {
 	g_signal_connect_object (bus, "message", (GCallback) _rygel_playbin_player_bus_handler_gst_bus_message, self, 0);
 #line 552 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_g_object_unref0 (bus);
-#line 1249 "rygel-playbin-player.c"
+#line 1229 "rygel-playbin-player.c"
 }
 
 
@@ -1261,7 +1241,7 @@ GstElement* rygel_playbin_player_get_playbin (RygelPlaybinPlayer* self) {
 	result = _tmp0_;
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1264 "rygel-playbin-player.c"
+#line 1244 "rygel-playbin-player.c"
 }
 
 
@@ -1280,7 +1260,7 @@ static void rygel_playbin_player_set_playbin (RygelPlaybinPlayer* self, GstEleme
 	self->priv->_playbin = _tmp1_;
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_notify ((GObject *) self, "playbin");
-#line 1283 "rygel-playbin-player.c"
+#line 1263 "rygel-playbin-player.c"
 }
 
 
@@ -1299,7 +1279,7 @@ static gchar* rygel_playbin_player_real_get_playback_state (RygelMediaPlayer* ba
 	result = _tmp1_;
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1302 "rygel-playbin-player.c"
+#line 1282 "rygel-playbin-player.c"
 }
 
 
@@ -1346,7 +1326,7 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 	if (_tmp7_ == ((0 != _tmp6_label0) ? _tmp6_label0 : (_tmp6_label0 = g_quark_from_static_string ("STOPPED")))) {
 #line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		switch (0) {
-#line 1349 "rygel-playbin-player.c"
+#line 1329 "rygel-playbin-player.c"
 			default:
 			{
 				gboolean _tmp8_ = FALSE;
@@ -1358,20 +1338,20 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 				if (_tmp9_ != GST_STATE_NULL) {
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp8_ = TRUE;
-#line 1361 "rygel-playbin-player.c"
+#line 1341 "rygel-playbin-player.c"
 				} else {
 					GstState _tmp10_ = 0;
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp10_ = pending;
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp8_ = _tmp10_ != GST_STATE_VOID_PENDING;
-#line 1368 "rygel-playbin-player.c"
+#line 1348 "rygel-playbin-player.c"
 				}
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp11_ = _tmp8_;
 #line 108 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp11_) {
-#line 1374 "rygel-playbin-player.c"
+#line 1354 "rygel-playbin-player.c"
 					gchar* _tmp12_ = NULL;
 					GstElement* _tmp13_ = NULL;
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
@@ -1384,7 +1364,7 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 					_tmp13_ = self->priv->_playbin;
 #line 110 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					gst_element_set_state (_tmp13_, GST_STATE_NULL);
-#line 1387 "rygel-playbin-player.c"
+#line 1367 "rygel-playbin-player.c"
 				} else {
 					const gchar* _tmp14_ = NULL;
 					gchar* _tmp15_ = NULL;
@@ -1396,17 +1376,17 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 					_g_free0 (self->priv->_playback_state);
 #line 112 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					self->priv->_playback_state = _tmp15_;
-#line 1399 "rygel-playbin-player.c"
+#line 1379 "rygel-playbin-player.c"
 				}
 #line 114 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				break;
-#line 1403 "rygel-playbin-player.c"
+#line 1383 "rygel-playbin-player.c"
 			}
 		}
 	} else if (_tmp7_ == ((0 != _tmp6_label1) ? _tmp6_label1 : (_tmp6_label1 = g_quark_from_static_string ("PAUSED_PLAYBACK")))) {
 #line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		switch (0) {
-#line 1409 "rygel-playbin-player.c"
+#line 1389 "rygel-playbin-player.c"
 			default:
 			{
 				gboolean _tmp16_ = FALSE;
@@ -1418,20 +1398,20 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 				if (_tmp17_ != GST_STATE_PAUSED) {
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp16_ = TRUE;
-#line 1421 "rygel-playbin-player.c"
+#line 1401 "rygel-playbin-player.c"
 				} else {
 					GstState _tmp18_ = 0;
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp18_ = pending;
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp16_ = _tmp18_ != GST_STATE_VOID_PENDING;
-#line 1428 "rygel-playbin-player.c"
+#line 1408 "rygel-playbin-player.c"
 				}
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp19_ = _tmp16_;
 #line 116 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp19_) {
-#line 1434 "rygel-playbin-player.c"
+#line 1414 "rygel-playbin-player.c"
 					gchar* _tmp20_ = NULL;
 					GstElement* _tmp21_ = NULL;
 #line 117 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
@@ -1444,7 +1424,7 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 					_tmp21_ = self->priv->_playbin;
 #line 118 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					gst_element_set_state (_tmp21_, GST_STATE_PAUSED);
-#line 1447 "rygel-playbin-player.c"
+#line 1427 "rygel-playbin-player.c"
 				} else {
 					const gchar* _tmp22_ = NULL;
 					gchar* _tmp23_ = NULL;
@@ -1456,17 +1436,17 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 					_g_free0 (self->priv->_playback_state);
 #line 120 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					self->priv->_playback_state = _tmp23_;
-#line 1459 "rygel-playbin-player.c"
+#line 1439 "rygel-playbin-player.c"
 				}
 #line 122 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				break;
-#line 1463 "rygel-playbin-player.c"
+#line 1443 "rygel-playbin-player.c"
 			}
 		}
 	} else if (_tmp7_ == ((0 != _tmp6_label2) ? _tmp6_label2 : (_tmp6_label2 = g_quark_from_static_string ("PLAYING")))) {
 #line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		switch (0) {
-#line 1469 "rygel-playbin-player.c"
+#line 1449 "rygel-playbin-player.c"
 			default:
 			{
 				gboolean _tmp24_ = FALSE;
@@ -1478,20 +1458,20 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 				if (_tmp25_ != GST_STATE_PLAYING) {
 #line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp24_ = TRUE;
-#line 1481 "rygel-playbin-player.c"
+#line 1461 "rygel-playbin-player.c"
 				} else {
 					GstState _tmp26_ = 0;
 #line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp26_ = pending;
 #line 125 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					_tmp24_ = _tmp26_ != GST_STATE_VOID_PENDING;
-#line 1488 "rygel-playbin-player.c"
+#line 1468 "rygel-playbin-player.c"
 				}
 #line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp27_ = _tmp24_;
 #line 124 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				if (_tmp27_) {
-#line 1494 "rygel-playbin-player.c"
+#line 1474 "rygel-playbin-player.c"
 					gchar* _tmp28_ = NULL;
 					GstElement* _tmp29_ = NULL;
 					GstStateChangeReturn _tmp30_ = 0;
@@ -1507,7 +1487,7 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 					_tmp30_ = gst_element_set_state (_tmp29_, GST_STATE_PLAYING);
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					self->priv->is_live = _tmp30_ == GST_STATE_CHANGE_NO_PREROLL;
-#line 1510 "rygel-playbin-player.c"
+#line 1490 "rygel-playbin-player.c"
 				} else {
 					const gchar* _tmp31_ = NULL;
 					gchar* _tmp32_ = NULL;
@@ -1519,17 +1499,17 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 					_g_free0 (self->priv->_playback_state);
 #line 133 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					self->priv->_playback_state = _tmp32_;
-#line 1522 "rygel-playbin-player.c"
+#line 1502 "rygel-playbin-player.c"
 				}
 #line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				break;
-#line 1526 "rygel-playbin-player.c"
+#line 1506 "rygel-playbin-player.c"
 			}
 		}
 	} else if (_tmp7_ == ((0 != _tmp6_label3) ? _tmp6_label3 : (_tmp6_label3 = g_quark_from_static_string ("EOS")))) {
 #line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		switch (0) {
-#line 1532 "rygel-playbin-player.c"
+#line 1512 "rygel-playbin-player.c"
 			default:
 			{
 				const gchar* _tmp33_ = NULL;
@@ -1544,24 +1524,24 @@ static void rygel_playbin_player_real_set_playback_state (RygelMediaPlayer* base
 				self->priv->_playback_state = _tmp34_;
 #line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				break;
-#line 1547 "rygel-playbin-player.c"
+#line 1527 "rygel-playbin-player.c"
 			}
 		}
 	} else {
 #line 106 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		switch (0) {
-#line 1553 "rygel-playbin-player.c"
+#line 1533 "rygel-playbin-player.c"
 			default:
 			{
 #line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				break;
-#line 1558 "rygel-playbin-player.c"
+#line 1538 "rygel-playbin-player.c"
 			}
 		}
 	}
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_notify ((GObject *) self, "playback-state");
-#line 1564 "rygel-playbin-player.c"
+#line 1544 "rygel-playbin-player.c"
 }
 
 
@@ -1572,17 +1552,17 @@ static gchar** _vala_array_dup3 (gchar** self, int length) {
 	result = g_new0 (gchar*, length + 1);
 #line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	for (i = 0; i < length; i++) {
-#line 1575 "rygel-playbin-player.c"
+#line 1555 "rygel-playbin-player.c"
 		gchar* _tmp0_ = NULL;
 #line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp0_ = g_strdup (self[i]);
 #line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		result[i] = _tmp0_;
-#line 1581 "rygel-playbin-player.c"
+#line 1561 "rygel-playbin-player.c"
 	}
 #line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1585 "rygel-playbin-player.c"
+#line 1565 "rygel-playbin-player.c"
 }
 
 
@@ -1613,13 +1593,13 @@ static gchar** rygel_playbin_player_real_get_allowed_playback_speeds (RygelMedia
 	if (result_length1) {
 #line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		*result_length1 = _tmp2__length1;
-#line 1616 "rygel-playbin-player.c"
+#line 1596 "rygel-playbin-player.c"
 	}
 #line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	result = _tmp2_;
 #line 148 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1622 "rygel-playbin-player.c"
+#line 1602 "rygel-playbin-player.c"
 }
 
 
@@ -1638,7 +1618,7 @@ static gchar* rygel_playbin_player_real_get_playback_speed (RygelMediaPlayer* ba
 	result = _tmp1_;
 #line 155 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1641 "rygel-playbin-player.c"
+#line 1621 "rygel-playbin-player.c"
 }
 
 
@@ -1658,7 +1638,7 @@ static void rygel_playbin_player_real_set_playback_speed (RygelMediaPlayer* base
 	self->priv->_playback_speed = _tmp1_;
 #line 158 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_notify ((GObject *) self, "playback-speed");
-#line 1661 "rygel-playbin-player.c"
+#line 1641 "rygel-playbin-player.c"
 }
 
 
@@ -1677,14 +1657,14 @@ static gchar* rygel_playbin_player_real_get_uri (RygelMediaPlayer* base) {
 	result = _tmp1_;
 #line 169 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1680 "rygel-playbin-player.c"
+#line 1660 "rygel-playbin-player.c"
 }
 
 
 static inline void _dynamic_set_uri5 (GstElement* obj, const gchar* value) {
 #line 175 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_set (obj, "uri", value, NULL);
-#line 1687 "rygel-playbin-player.c"
+#line 1667 "rygel-playbin-player.c"
 }
 
 
@@ -1721,7 +1701,7 @@ static void rygel_playbin_player_real_set_uri (RygelMediaPlayer* base, const gch
 	_tmp5_ = value;
 #line 176 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	if (g_strcmp0 (_tmp5_, "") != 0) {
-#line 1724 "rygel-playbin-player.c"
+#line 1704 "rygel-playbin-player.c"
 		const gchar* _tmp6_ = NULL;
 		const gchar* _tmp7_ = NULL;
 		GQuark _tmp9_ = 0U;
@@ -1745,7 +1725,7 @@ static void rygel_playbin_player_real_set_uri (RygelMediaPlayer* base, const gch
 		if (_tmp9_ == ((0 != _tmp8_label0) ? _tmp8_label0 : (_tmp8_label0 = g_quark_from_static_string ("NO_MEDIA_PRESENT")))) {
 #line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			switch (0) {
-#line 1748 "rygel-playbin-player.c"
+#line 1728 "rygel-playbin-player.c"
 				default:
 				{
 					gchar* _tmp10_ = NULL;
@@ -1759,24 +1739,24 @@ static void rygel_playbin_player_real_set_uri (RygelMediaPlayer* base, const gch
 					g_object_notify ((GObject*) self, "playback-state");
 #line 181 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					break;
-#line 1762 "rygel-playbin-player.c"
+#line 1742 "rygel-playbin-player.c"
 				}
 			}
 		} else if (_tmp9_ == ((0 != _tmp8_label1) ? _tmp8_label1 : (_tmp8_label1 = g_quark_from_static_string ("STOPPED")))) {
 #line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			switch (0) {
-#line 1768 "rygel-playbin-player.c"
+#line 1748 "rygel-playbin-player.c"
 				default:
 				{
 #line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					break;
-#line 1773 "rygel-playbin-player.c"
+#line 1753 "rygel-playbin-player.c"
 				}
 			}
 		} else if (_tmp9_ == ((0 != _tmp8_label2) ? _tmp8_label2 : (_tmp8_label2 = g_quark_from_static_string ("PAUSED_PLAYBACK")))) {
 #line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			switch (0) {
-#line 1779 "rygel-playbin-player.c"
+#line 1759 "rygel-playbin-player.c"
 				default:
 				{
 					GstElement* _tmp11_ = NULL;
@@ -1789,13 +1769,13 @@ static void rygel_playbin_player_real_set_uri (RygelMediaPlayer* base, const gch
 					self->priv->is_live = _tmp12_ == GST_STATE_CHANGE_NO_PREROLL;
 #line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					break;
-#line 1792 "rygel-playbin-player.c"
+#line 1772 "rygel-playbin-player.c"
 				}
 			}
 		} else if ((_tmp9_ == ((0 != _tmp8_label3) ? _tmp8_label3 : (_tmp8_label3 = g_quark_from_static_string ("EOS")))) || (_tmp9_ == ((0 != _tmp8_label4) ? _tmp8_label4 : (_tmp8_label4 = g_quark_from_static_string ("PLAYING"))))) {
 #line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			switch (0) {
-#line 1798 "rygel-playbin-player.c"
+#line 1778 "rygel-playbin-player.c"
 				default:
 				{
 					GstElement* _tmp13_ = NULL;
@@ -1808,18 +1788,18 @@ static void rygel_playbin_player_real_set_uri (RygelMediaPlayer* base, const gch
 					self->priv->is_live = _tmp14_ == GST_STATE_CHANGE_NO_PREROLL;
 #line 195 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					break;
-#line 1811 "rygel-playbin-player.c"
+#line 1791 "rygel-playbin-player.c"
 				}
 			}
 		} else {
 #line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			switch (0) {
-#line 1817 "rygel-playbin-player.c"
+#line 1797 "rygel-playbin-player.c"
 				default:
 				{
 #line 197 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 					break;
-#line 1822 "rygel-playbin-player.c"
+#line 1802 "rygel-playbin-player.c"
 				}
 			}
 		}
@@ -1833,7 +1813,7 @@ static void rygel_playbin_player_real_set_uri (RygelMediaPlayer* base, const gch
 		self->priv->_playback_state = _tmp15_;
 #line 201 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		g_object_notify ((GObject*) self, "playback-state");
-#line 1836 "rygel-playbin-player.c"
+#line 1816 "rygel-playbin-player.c"
 	}
 #line 203 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_tmp16_ = value;
@@ -1841,7 +1821,7 @@ static void rygel_playbin_player_real_set_uri (RygelMediaPlayer* base, const gch
 	g_debug ("rygel-playbin-player.vala:203: URI set to %s.", _tmp16_);
 #line 172 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_notify ((GObject *) self, "uri");
-#line 1844 "rygel-playbin-player.c"
+#line 1824 "rygel-playbin-player.c"
 }
 
 
@@ -1860,7 +1840,7 @@ static gchar* rygel_playbin_player_real_get_mime_type (RygelMediaPlayer* base) {
 	result = _tmp1_;
 #line 210 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1863 "rygel-playbin-player.c"
+#line 1843 "rygel-playbin-player.c"
 }
 
 
@@ -1880,7 +1860,7 @@ static void rygel_playbin_player_real_set_mime_type (RygelMediaPlayer* base, con
 	self->priv->_mime_type = _tmp1_;
 #line 213 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_notify ((GObject *) self, "mime-type");
-#line 1883 "rygel-playbin-player.c"
+#line 1863 "rygel-playbin-player.c"
 }
 
 
@@ -1899,7 +1879,7 @@ static gchar* rygel_playbin_player_real_get_metadata (RygelMediaPlayer* base) {
 	result = _tmp1_;
 #line 221 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1902 "rygel-playbin-player.c"
+#line 1882 "rygel-playbin-player.c"
 }
 
 
@@ -1919,7 +1899,7 @@ static void rygel_playbin_player_real_set_metadata (RygelMediaPlayer* base, cons
 	self->priv->_metadata = _tmp1_;
 #line 224 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_notify ((GObject *) self, "metadata");
-#line 1922 "rygel-playbin-player.c"
+#line 1902 "rygel-playbin-player.c"
 }
 
 
@@ -1935,7 +1915,7 @@ static gboolean rygel_playbin_player_real_get_can_seek (RygelMediaPlayer* base) 
 	_tmp1_ = self->priv->transfer_mode;
 #line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	if (g_strcmp0 (_tmp1_, RYGEL_PLAYBIN_PLAYER_TRANSFER_MODE_INTERACTIVE) != 0) {
-#line 1938 "rygel-playbin-player.c"
+#line 1918 "rygel-playbin-player.c"
 		gchar* _tmp2_ = NULL;
 		gchar* _tmp3_ = NULL;
 		gchar* _tmp4_ = NULL;
@@ -1952,11 +1932,11 @@ static gboolean rygel_playbin_player_real_get_can_seek (RygelMediaPlayer* base) 
 		_tmp0_ = !_tmp5_;
 #line 232 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_g_free0 (_tmp4_);
-#line 1955 "rygel-playbin-player.c"
+#line 1935 "rygel-playbin-player.c"
 	} else {
 #line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp0_ = FALSE;
-#line 1959 "rygel-playbin-player.c"
+#line 1939 "rygel-playbin-player.c"
 	}
 #line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_tmp6_ = _tmp0_;
@@ -1964,7 +1944,7 @@ static gboolean rygel_playbin_player_real_get_can_seek (RygelMediaPlayer* base) 
 	result = _tmp6_;
 #line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1967 "rygel-playbin-player.c"
+#line 1947 "rygel-playbin-player.c"
 }
 
 
@@ -1983,7 +1963,7 @@ static gchar* rygel_playbin_player_real_get_content_features (RygelMediaPlayer* 
 	result = _tmp1_;
 #line 240 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 1986 "rygel-playbin-player.c"
+#line 1966 "rygel-playbin-player.c"
 }
 
 
@@ -2017,7 +1997,7 @@ static void rygel_playbin_player_real_set_content_features (RygelMediaPlayer* ba
 	_g_free0 (_tmp2_);
 #line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	pi_string = _tmp5_;
-#line 2020 "rygel-playbin-player.c"
+#line 2000 "rygel-playbin-player.c"
 	{
 		GUPnPProtocolInfo* _tmp6_ = NULL;
 		GUPnPProtocolInfo* _tmp7_ = NULL;
@@ -2032,7 +2012,7 @@ static void rygel_playbin_player_real_set_content_features (RygelMediaPlayer* ba
 		_tmp6_ = _tmp7_;
 #line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		if (_inner_error_ != NULL) {
-#line 2035 "rygel-playbin-player.c"
+#line 2015 "rygel-playbin-player.c"
 			goto __catch0_g_error;
 		}
 #line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
@@ -2051,7 +2031,7 @@ static void rygel_playbin_player_real_set_content_features (RygelMediaPlayer* ba
 		_tmp11_ = flags;
 #line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		if ((_tmp11_ & GUPNP_DLNA_FLAGS_INTERACTIVE_TRANSFER_MODE) == GUPNP_DLNA_FLAGS_INTERACTIVE_TRANSFER_MODE) {
-#line 2054 "rygel-playbin-player.c"
+#line 2034 "rygel-playbin-player.c"
 			gchar* _tmp12_ = NULL;
 #line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			_tmp12_ = g_strdup (RYGEL_PLAYBIN_PLAYER_TRANSFER_MODE_INTERACTIVE);
@@ -2059,14 +2039,14 @@ static void rygel_playbin_player_real_set_content_features (RygelMediaPlayer* ba
 			_g_free0 (self->priv->transfer_mode);
 #line 250 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			self->priv->transfer_mode = _tmp12_;
-#line 2062 "rygel-playbin-player.c"
+#line 2042 "rygel-playbin-player.c"
 		} else {
 			GUPnPDLNAFlags _tmp13_ = 0;
 #line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			_tmp13_ = flags;
 #line 251 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			if ((_tmp13_ & GUPNP_DLNA_FLAGS_STREAMING_TRANSFER_MODE) == GUPNP_DLNA_FLAGS_STREAMING_TRANSFER_MODE) {
-#line 2069 "rygel-playbin-player.c"
+#line 2049 "rygel-playbin-player.c"
 				gchar* _tmp14_ = NULL;
 #line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_tmp14_ = g_strdup (RYGEL_PLAYBIN_PLAYER_TRANSFER_MODE_STREAMING);
@@ -2074,13 +2054,13 @@ static void rygel_playbin_player_real_set_content_features (RygelMediaPlayer* ba
 				_g_free0 (self->priv->transfer_mode);
 #line 252 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				self->priv->transfer_mode = _tmp14_;
-#line 2077 "rygel-playbin-player.c"
+#line 2057 "rygel-playbin-player.c"
 			} else {
 #line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				_g_free0 (self->priv->transfer_mode);
 #line 254 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 				self->priv->transfer_mode = NULL;
-#line 2083 "rygel-playbin-player.c"
+#line 2063 "rygel-playbin-player.c"
 			}
 		}
 	}
@@ -2102,7 +2082,7 @@ static void rygel_playbin_player_real_set_content_features (RygelMediaPlayer* ba
 		self->priv->transfer_mode = NULL;
 #line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_g_error_free0 (_error_);
-#line 2105 "rygel-playbin-player.c"
+#line 2085 "rygel-playbin-player.c"
 	}
 	__finally0:
 #line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
@@ -2115,7 +2095,7 @@ static void rygel_playbin_player_real_set_content_features (RygelMediaPlayer* ba
 		g_clear_error (&_inner_error_);
 #line 246 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		return;
-#line 2118 "rygel-playbin-player.c"
+#line 2098 "rygel-playbin-player.c"
 	}
 #line 260 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_tmp15_ = value;
@@ -2129,7 +2109,7 @@ static void rygel_playbin_player_real_set_content_features (RygelMediaPlayer* ba
 	_g_free0 (pi_string);
 #line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_notify ((GObject *) self, "content-features");
-#line 2132 "rygel-playbin-player.c"
+#line 2112 "rygel-playbin-player.c"
 }
 
 
@@ -2139,7 +2119,7 @@ static inline gdouble _dynamic_get_volume6 (GstElement* obj) {
 	g_object_get (obj, "volume", &result, NULL);
 #line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 2142 "rygel-playbin-player.c"
+#line 2122 "rygel-playbin-player.c"
 }
 
 
@@ -2161,14 +2141,14 @@ static gdouble rygel_playbin_player_real_get_volume (RygelMediaPlayer* base) {
 	result = _tmp2_;
 #line 266 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 2164 "rygel-playbin-player.c"
+#line 2144 "rygel-playbin-player.c"
 }
 
 
 static inline void _dynamic_set_volume7 (GstElement* obj, gdouble value) {
 #line 270 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_set (obj, "volume", value, NULL);
-#line 2171 "rygel-playbin-player.c"
+#line 2151 "rygel-playbin-player.c"
 }
 
 
@@ -2191,7 +2171,7 @@ static void rygel_playbin_player_real_set_volume (RygelMediaPlayer* base, gdoubl
 	g_debug ("rygel-playbin-player.vala:271: volume set to %f.", _tmp2_);
 #line 269 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_notify ((GObject *) self, "volume");
-#line 2194 "rygel-playbin-player.c"
+#line 2174 "rygel-playbin-player.c"
 }
 
 
@@ -2212,7 +2192,7 @@ static gint64 rygel_playbin_player_real_get_duration (RygelMediaPlayer* base) {
 	dur = _tmp1_;
 #line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	if (_tmp2_) {
-#line 2215 "rygel-playbin-player.c"
+#line 2195 "rygel-playbin-player.c"
 		gint64 _tmp3_ = 0LL;
 #line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp3_ = dur;
@@ -2220,13 +2200,13 @@ static gint64 rygel_playbin_player_real_get_duration (RygelMediaPlayer* base) {
 		result = _tmp3_ / GST_USECOND;
 #line 280 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		return result;
-#line 2223 "rygel-playbin-player.c"
+#line 2203 "rygel-playbin-player.c"
 	} else {
 #line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		result = (gint64) 0;
 #line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		return result;
-#line 2229 "rygel-playbin-player.c"
+#line 2209 "rygel-playbin-player.c"
 	}
 }
 
@@ -2248,7 +2228,7 @@ static gint64 rygel_playbin_player_real_get_position (RygelMediaPlayer* base) {
 	pos = _tmp1_;
 #line 291 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	if (_tmp2_) {
-#line 2251 "rygel-playbin-player.c"
+#line 2231 "rygel-playbin-player.c"
 		gint64 _tmp3_ = 0LL;
 #line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		_tmp3_ = pos;
@@ -2256,13 +2236,13 @@ static gint64 rygel_playbin_player_real_get_position (RygelMediaPlayer* base) {
 		result = _tmp3_ / GST_USECOND;
 #line 292 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		return result;
-#line 2259 "rygel-playbin-player.c"
+#line 2239 "rygel-playbin-player.c"
 	} else {
 #line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		result = (gint64) 0;
 #line 294 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		return result;
-#line 2265 "rygel-playbin-player.c"
+#line 2245 "rygel-playbin-player.c"
 	}
 }
 
@@ -2277,7 +2257,7 @@ GList* rygel_playbin_player_get_supported_profiles (RygelPlaybinPlayer* self) {
 	_tmp0_ = self->priv->_supported_profiles;
 #line 344 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	if (_tmp0_ == NULL) {
-#line 2280 "rygel-playbin-player.c"
+#line 2260 "rygel-playbin-player.c"
 		RygelRendererDLNAProfile* _tmp1_ = NULL;
 		RygelRendererDLNAProfile* _tmp2_ = NULL;
 		RygelRendererDLNAProfile* _tmp3_ = NULL;
@@ -2377,7 +2357,7 @@ GList* rygel_playbin_player_get_supported_profiles (RygelPlaybinPlayer* self) {
 		_tmp19_ = rygel_renderer_dlna_profile_new ("AVC_MP4_BL_CIF15_AAC_520", "video/mp4");
 #line 397 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		self->priv->_supported_profiles = g_list_prepend (self->priv->_supported_profiles, _tmp19_);
-#line 2380 "rygel-playbin-player.c"
+#line 2360 "rygel-playbin-player.c"
 	}
 #line 402 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	_tmp20_ = self->priv->_supported_profiles;
@@ -2385,7 +2365,7 @@ GList* rygel_playbin_player_get_supported_profiles (RygelPlaybinPlayer* self) {
 	result = _tmp20_;
 #line 402 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	return result;
-#line 2388 "rygel-playbin-player.c"
+#line 2368 "rygel-playbin-player.c"
 }
 
 
@@ -2426,7 +2406,7 @@ static void rygel_playbin_player_class_init (RygelPlaybinPlayerClass * klass) {
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_PLAYBIN_PLAYER_POSITION, g_param_spec_int64 ("position", "position", "position", G_MININT64, G_MAXINT64, 0, G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	g_object_class_install_property (G_OBJECT_CLASS (klass), RYGEL_PLAYBIN_PLAYER_SUPPORTED_PROFILES, g_param_spec_pointer ("supported-profiles", "supported-profiles", "supported-profiles", G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
-#line 2429 "rygel-playbin-player.c"
+#line 2409 "rygel-playbin-player.c"
 }
 
 
@@ -2475,7 +2455,7 @@ static void rygel_playbin_player_rygel_media_player_interface_init (RygelMediaPl
 	iface->get_duration = rygel_playbin_player_real_get_duration;
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	iface->get_position = rygel_playbin_player_real_get_position;
-#line 2478 "rygel-playbin-player.c"
+#line 2458 "rygel-playbin-player.c"
 }
 
 
@@ -2527,7 +2507,7 @@ static void rygel_playbin_player_instance_init (RygelPlaybinPlayer * self) {
 	_tmp6_ = g_strdup ("");
 #line 236 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	self->priv->_content_features = _tmp6_;
-#line 2530 "rygel-playbin-player.c"
+#line 2510 "rygel-playbin-player.c"
 }
 
 
@@ -2559,7 +2539,7 @@ static void rygel_playbin_player_finalize (GObject* obj) {
 	__g_list_free__rygel_renderer_dlna_profile_unref0_0 (self->priv->_supported_profiles);
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 	G_OBJECT_CLASS (rygel_playbin_player_parent_class)->finalize (obj);
-#line 2562 "rygel-playbin-player.c"
+#line 2542 "rygel-playbin-player.c"
 }
 
 
@@ -2601,12 +2581,12 @@ static void _vala_rygel_playbin_player_get_property (GObject * object, guint pro
 		break;
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		case RYGEL_PLAYBIN_PLAYER_ALLOWED_PLAYBACK_SPEEDS:
-#line 2604 "rygel-playbin-player.c"
+#line 2584 "rygel-playbin-player.c"
 		{
 			int length;
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 			g_value_take_boxed (value, rygel_media_player_get_allowed_playback_speeds ((RygelMediaPlayer*) self, &length));
-#line 2609 "rygel-playbin-player.c"
+#line 2589 "rygel-playbin-player.c"
 		}
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		break;
@@ -2670,13 +2650,13 @@ static void _vala_rygel_playbin_player_get_property (GObject * object, guint pro
 		g_value_set_pointer (value, rygel_playbin_player_get_supported_profiles (self));
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		break;
-#line 2673 "rygel-playbin-player.c"
+#line 2653 "rygel-playbin-player.c"
 		default:
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		break;
-#line 2679 "rygel-playbin-player.c"
+#line 2659 "rygel-playbin-player.c"
 	}
 }
 
@@ -2734,13 +2714,13 @@ static void _vala_rygel_playbin_player_set_property (GObject * object, guint pro
 		rygel_media_player_set_volume ((RygelMediaPlayer*) self, g_value_get_double (value));
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		break;
-#line 2737 "rygel-playbin-player.c"
+#line 2717 "rygel-playbin-player.c"
 		default:
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 #line 36 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/librygel-renderer-gst/rygel-playbin-player.vala"
 		break;
-#line 2743 "rygel-playbin-player.c"
+#line 2723 "rygel-playbin-player.c"
 	}
 }
 

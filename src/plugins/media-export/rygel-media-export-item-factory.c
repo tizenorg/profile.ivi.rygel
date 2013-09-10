@@ -116,7 +116,6 @@ typedef struct _RygelMediaExportMusicItemPrivate RygelMediaExportMusicItemPrivat
 
 typedef struct _RygelMediaExportJPEGWriter RygelMediaExportJPEGWriter;
 typedef struct _RygelMediaExportJPEGWriterClass RygelMediaExportJPEGWriterClass;
-#define __vala_GstStructure_free0(var) ((var == NULL) ? NULL : (var = (_vala_GstStructure_free (var), NULL)))
 #define __vala_GstDateTime_free0(var) ((var == NULL) ? NULL : (var = (_vala_GstDateTime_free (var), NULL)))
 #define __vala_SoupDate_free0(var) ((var == NULL) ? NULL : (var = (_vala_SoupDate_free (var), NULL)))
 
@@ -163,12 +162,10 @@ void rygel_media_export_item_factory_fill_audio_item (RygelAudioItem* item, GstD
 void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFile* file, GstDiscovererInfo* info, GUPnPDLNAProfile* profile, GFileInfo* file_info);
 GType rygel_media_export_updatable_object_get_type (void) G_GNUC_CONST;
 static void _vala_GstSample_free (GstSample* self);
-static GstStructure* _vala_GstStructure_copy (GstStructure* self);
 GType rygel_media_export_jpeg_writer_get_type (void) G_GNUC_CONST;
 RygelMediaExportJPEGWriter* rygel_media_export_jpeg_writer_new (GError** error);
 RygelMediaExportJPEGWriter* rygel_media_export_jpeg_writer_construct (GType object_type, GError** error);
 void rygel_media_export_jpeg_writer_write (RygelMediaExportJPEGWriter* self, GstBuffer* buffer, GFile* file);
-static void _vala_GstStructure_free (GstStructure* self);
 static void _vala_GstDateTime_free (GstDateTime* self);
 static void _vala_SoupDate_free (SoupDate* self);
 
@@ -226,7 +223,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 	_tmp7_ = g_str_has_prefix (_tmp6_, "video/");
 #line 41 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp7_) {
-#line 230 "rygel-media-export-item-factory.c"
+#line 227 "rygel-media-export-item-factory.c"
 		GFile* _tmp8_ = NULL;
 		gchar* _tmp9_ = NULL;
 		gchar* _tmp10_ = NULL;
@@ -251,7 +248,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 		item = (RygelMediaItem*) _tmp13_;
 #line 42 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_g_free0 (_tmp10_);
-#line 255 "rygel-media-export-item-factory.c"
+#line 252 "rygel-media-export-item-factory.c"
 	} else {
 		const gchar* _tmp14_ = NULL;
 		gboolean _tmp15_ = FALSE;
@@ -261,7 +258,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 		_tmp15_ = g_str_has_prefix (_tmp14_, "image/");
 #line 43 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		if (_tmp15_) {
-#line 265 "rygel-media-export-item-factory.c"
+#line 262 "rygel-media-export-item-factory.c"
 			GFile* _tmp16_ = NULL;
 			gchar* _tmp17_ = NULL;
 			gchar* _tmp18_ = NULL;
@@ -286,7 +283,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 			item = (RygelMediaItem*) _tmp21_;
 #line 44 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_g_free0 (_tmp18_);
-#line 290 "rygel-media-export-item-factory.c"
+#line 287 "rygel-media-export-item-factory.c"
 		} else {
 			gboolean _tmp22_ = FALSE;
 			const gchar* _tmp23_ = NULL;
@@ -300,20 +297,20 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 			if (_tmp24_) {
 #line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp22_ = TRUE;
-#line 304 "rygel-media-export-item-factory.c"
+#line 301 "rygel-media-export-item-factory.c"
 			} else {
 				const gchar* _tmp25_ = NULL;
 #line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp25_ = mime;
 #line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp22_ = g_strcmp0 (_tmp25_, "application/ogg") == 0;
-#line 311 "rygel-media-export-item-factory.c"
+#line 308 "rygel-media-export-item-factory.c"
 			}
 #line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp26_ = _tmp22_;
 #line 45 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			if (_tmp26_) {
-#line 317 "rygel-media-export-item-factory.c"
+#line 314 "rygel-media-export-item-factory.c"
 				GFile* _tmp27_ = NULL;
 				gchar* _tmp28_ = NULL;
 				gchar* _tmp29_ = NULL;
@@ -338,7 +335,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 				item = (RygelMediaItem*) _tmp32_;
 #line 46 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_g_free0 (_tmp29_);
-#line 342 "rygel-media-export-item-factory.c"
+#line 339 "rygel-media-export-item-factory.c"
 			} else {
 				GFile* _tmp33_ = NULL;
 				RygelMediaContainer* _tmp34_ = NULL;
@@ -372,7 +369,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 					_g_free0 (title);
 #line 50 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 					return result;
-#line 376 "rygel-media-export-item-factory.c"
+#line 373 "rygel-media-export-item-factory.c"
 				}
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp38_ = g_strdup ("text/xml");
@@ -380,7 +377,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 				_g_free0 (mime);
 #line 53 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				mime = _tmp38_;
-#line 384 "rygel-media-export-item-factory.c"
+#line 381 "rygel-media-export-item-factory.c"
 			}
 		}
 	}
@@ -426,14 +423,14 @@ RygelMediaItem* rygel_media_export_item_factory_create_simple (RygelMediaContain
 	_g_free0 (title);
 #line 62 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	return result;
-#line 430 "rygel-media-export-item-factory.c"
+#line 427 "rygel-media-export-item-factory.c"
 }
 
 
 static void _g_object_unref0_ (gpointer var) {
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	(var == NULL) ? NULL : (var = (g_object_unref (var), NULL));
-#line 437 "rygel-media-export-item-factory.c"
+#line 434 "rygel-media-export-item-factory.c"
 }
 
 
@@ -442,7 +439,7 @@ static void _g_list_free__g_object_unref0_ (GList* self) {
 	g_list_foreach (self, (GFunc) _g_object_unref0_, NULL);
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	g_list_free (self);
-#line 446 "rygel-media-export-item-factory.c"
+#line 443 "rygel-media-export-item-factory.c"
 }
 
 
@@ -455,7 +452,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 	g_return_val_if_fail (parent != NULL, NULL);
 #line 65 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	g_return_val_if_fail (fallback_title != NULL, NULL);
-#line 459 "rygel-media-export-item-factory.c"
+#line 456 "rygel-media-export-item-factory.c"
 	{
 		guint8* contents = NULL;
 		gint contents_length1 = 0;
@@ -518,7 +515,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 		if (_inner_error_ != NULL) {
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			contents = (g_free (contents), NULL);
-#line 522 "rygel-media-export-item-factory.c"
+#line 519 "rygel-media-export-item-factory.c"
 			goto __catch67_g_error;
 		}
 #line 71 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -529,13 +526,13 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 			contents = (g_free (contents), NULL);
 #line 72 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			return result;
-#line 533 "rygel-media-export-item-factory.c"
+#line 530 "rygel-media-export-item-factory.c"
 		}
 #line 76 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		i = 0;
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		while (TRUE) {
-#line 539 "rygel-media-export-item-factory.c"
+#line 536 "rygel-media-export-item-factory.c"
 			gboolean _tmp5_ = FALSE;
 			guint8* _tmp6_ = NULL;
 			gint _tmp6__length1 = 0;
@@ -556,7 +553,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 			_tmp9_ = g_ascii_isspace ((gchar) _tmp8_);
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			if (_tmp9_) {
-#line 560 "rygel-media-export-item-factory.c"
+#line 557 "rygel-media-export-item-factory.c"
 				gint _tmp10_ = 0;
 				guint8* _tmp11_ = NULL;
 				gint _tmp11__length1 = 0;
@@ -568,11 +565,11 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 				_tmp11__length1 = contents_length1;
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp5_ = _tmp10_ < _tmp11__length1;
-#line 572 "rygel-media-export-item-factory.c"
+#line 569 "rygel-media-export-item-factory.c"
 			} else {
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp5_ = FALSE;
-#line 576 "rygel-media-export-item-factory.c"
+#line 573 "rygel-media-export-item-factory.c"
 			}
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp12_ = _tmp5_;
@@ -580,13 +577,13 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 			if (!_tmp12_) {
 #line 77 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				break;
-#line 584 "rygel-media-export-item-factory.c"
+#line 581 "rygel-media-export-item-factory.c"
 			}
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp13_ = i;
 #line 78 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			i = _tmp13_ + 1;
-#line 590 "rygel-media-export-item-factory.c"
+#line 587 "rygel-media-export-item-factory.c"
 		}
 #line 81 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp14_ = contents;
@@ -604,7 +601,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 			contents = (g_free (contents), NULL);
 #line 82 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			return result;
-#line 608 "rygel-media-export-item-factory.c"
+#line 605 "rygel-media-export-item-factory.c"
 		}
 #line 85 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp17_ = contents;
@@ -638,23 +635,23 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 		_tmp29_ = author;
 #line 89 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		if (_tmp29_ == NULL) {
-#line 642 "rygel-media-export-item-factory.c"
+#line 639 "rygel-media-export-item-factory.c"
 			const gchar* _tmp30_ = NULL;
 #line 90 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp30_ = title;
 #line 90 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp28_ = _tmp30_ == NULL;
-#line 648 "rygel-media-export-item-factory.c"
+#line 645 "rygel-media-export-item-factory.c"
 		} else {
 #line 89 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp28_ = FALSE;
-#line 652 "rygel-media-export-item-factory.c"
+#line 649 "rygel-media-export-item-factory.c"
 		}
 #line 89 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp31_ = _tmp28_;
 #line 89 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		if (_tmp31_) {
-#line 658 "rygel-media-export-item-factory.c"
+#line 655 "rygel-media-export-item-factory.c"
 			GUPnPMediaCollection* _tmp32_ = NULL;
 			GList* _tmp33_ = NULL;
 			GList* _tmp34_ = NULL;
@@ -668,11 +665,11 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 			_tmp27_ = _tmp34_ == NULL;
 #line 91 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			__g_list_free__g_object_unref0_0 (_tmp34_);
-#line 672 "rygel-media-export-item-factory.c"
+#line 669 "rygel-media-export-item-factory.c"
 		} else {
 #line 89 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp27_ = FALSE;
-#line 676 "rygel-media-export-item-factory.c"
+#line 673 "rygel-media-export-item-factory.c"
 		}
 #line 89 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp35_ = _tmp27_;
@@ -690,13 +687,13 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 			contents = (g_free (contents), NULL);
 #line 92 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			return result;
-#line 694 "rygel-media-export-item-factory.c"
+#line 691 "rygel-media-export-item-factory.c"
 		}
 #line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp36_ = title;
 #line 95 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		if (_tmp36_ == NULL) {
-#line 700 "rygel-media-export-item-factory.c"
+#line 697 "rygel-media-export-item-factory.c"
 			const gchar* _tmp37_ = NULL;
 			gchar* _tmp38_ = NULL;
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -707,7 +704,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 			_g_free0 (title);
 #line 96 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			title = _tmp38_;
-#line 711 "rygel-media-export-item-factory.c"
+#line 708 "rygel-media-export-item-factory.c"
 		}
 #line 99 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp39_ = file;
@@ -731,7 +728,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 		_tmp46_ = author;
 #line 103 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		if (_tmp46_ != NULL) {
-#line 735 "rygel-media-export-item-factory.c"
+#line 732 "rygel-media-export-item-factory.c"
 			RygelMediaExportPlaylistItem* _tmp47_ = NULL;
 			const gchar* _tmp48_ = NULL;
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -740,7 +737,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 			_tmp48_ = author;
 #line 104 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			rygel_media_item_set_creator ((RygelMediaItem*) _tmp47_, _tmp48_);
-#line 744 "rygel-media-export-item-factory.c"
+#line 741 "rygel-media-export-item-factory.c"
 		}
 #line 107 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp49_ = item;
@@ -758,7 +755,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 		contents = (g_free (contents), NULL);
 #line 109 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		return result;
-#line 762 "rygel-media-export-item-factory.c"
+#line 759 "rygel-media-export-item-factory.c"
 	}
 	goto __finally67;
 	__catch67_g_error:
@@ -774,7 +771,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 		_g_error_free0 (e);
 #line 111 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		return result;
-#line 778 "rygel-media-export-item-factory.c"
+#line 775 "rygel-media-export-item-factory.c"
 	}
 	__finally67:
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -783,14 +780,14 @@ RygelMediaItem* rygel_media_export_item_factory_create_playlist_item (GFile* fil
 	g_clear_error (&_inner_error_);
 #line 68 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	return NULL;
-#line 787 "rygel-media-export-item-factory.c"
+#line 784 "rygel-media-export-item-factory.c"
 }
 
 
 static gpointer _g_object_ref0 (gpointer self) {
 #line 149 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	return self ? g_object_ref (self) : NULL;
-#line 794 "rygel-media-export-item-factory.c"
+#line 791 "rygel-media-export-item-factory.c"
 }
 
 
@@ -846,23 +843,23 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 	_tmp7_ = audio_streams;
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp7_ == NULL) {
-#line 850 "rygel-media-export-item-factory.c"
+#line 847 "rygel-media-export-item-factory.c"
 		GList* _tmp8_ = NULL;
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp8_ = video_streams;
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp6_ = _tmp8_ == NULL;
-#line 856 "rygel-media-export-item-factory.c"
+#line 853 "rygel-media-export-item-factory.c"
 	} else {
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp6_ = FALSE;
-#line 860 "rygel-media-export-item-factory.c"
+#line 857 "rygel-media-export-item-factory.c"
 	}
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp9_ = _tmp6_;
 #line 130 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp9_) {
-#line 866 "rygel-media-export-item-factory.c"
+#line 863 "rygel-media-export-item-factory.c"
 		GFile* _tmp10_ = NULL;
 		gchar* _tmp11_ = NULL;
 		gchar* _tmp12_ = NULL;
@@ -888,13 +885,13 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 		_g_object_unref0 (item);
 #line 135 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		return result;
-#line 892 "rygel-media-export-item-factory.c"
+#line 889 "rygel-media-export-item-factory.c"
 	}
 #line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp14_ = audio_streams;
 #line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp14_ == NULL) {
-#line 898 "rygel-media-export-item-factory.c"
+#line 895 "rygel-media-export-item-factory.c"
 		GList* _tmp15_ = NULL;
 		gconstpointer _tmp16_ = NULL;
 		gboolean _tmp17_ = FALSE;
@@ -906,17 +903,17 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 		_tmp17_ = gst_discoverer_video_info_is_image ((GstDiscovererVideoInfo*) _tmp16_);
 #line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp13_ = _tmp17_;
-#line 910 "rygel-media-export-item-factory.c"
+#line 907 "rygel-media-export-item-factory.c"
 	} else {
 #line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp13_ = FALSE;
-#line 914 "rygel-media-export-item-factory.c"
+#line 911 "rygel-media-export-item-factory.c"
 	}
 #line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp18_ = _tmp13_;
 #line 138 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp18_) {
-#line 920 "rygel-media-export-item-factory.c"
+#line 917 "rygel-media-export-item-factory.c"
 		const gchar* _tmp19_ = NULL;
 		RygelMediaContainer* _tmp20_ = NULL;
 		RygelMediaExportPhotoItem* _tmp21_ = NULL;
@@ -966,14 +963,14 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 		_g_object_unref0 (item);
 #line 140 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		return result;
-#line 970 "rygel-media-export-item-factory.c"
+#line 967 "rygel-media-export-item-factory.c"
 	} else {
 		GList* _tmp30_ = NULL;
 #line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp30_ = video_streams;
 #line 146 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		if (_tmp30_ != NULL) {
-#line 977 "rygel-media-export-item-factory.c"
+#line 974 "rygel-media-export-item-factory.c"
 			const gchar* _tmp31_ = NULL;
 			RygelMediaContainer* _tmp32_ = NULL;
 			RygelMediaExportVideoItem* _tmp33_ = NULL;
@@ -1010,7 +1007,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 			_tmp36_ = audio_streams;
 #line 150 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			if (_tmp36_ != NULL) {
-#line 1014 "rygel-media-export-item-factory.c"
+#line 1011 "rygel-media-export-item-factory.c"
 				GList* _tmp37_ = NULL;
 				gconstpointer _tmp38_ = NULL;
 				GstDiscovererAudioInfo* _tmp39_ = NULL;
@@ -1024,7 +1021,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 				_g_object_unref0 (audio_info);
 #line 151 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				audio_info = _tmp39_;
-#line 1028 "rygel-media-export-item-factory.c"
+#line 1025 "rygel-media-export-item-factory.c"
 			}
 #line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp40_ = item;
@@ -1058,14 +1055,14 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 			_g_object_unref0 (item);
 #line 154 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			return result;
-#line 1062 "rygel-media-export-item-factory.c"
+#line 1059 "rygel-media-export-item-factory.c"
 		} else {
 			GList* _tmp49_ = NULL;
 #line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp49_ = audio_streams;
 #line 161 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			if (_tmp49_ != NULL) {
-#line 1069 "rygel-media-export-item-factory.c"
+#line 1066 "rygel-media-export-item-factory.c"
 				const gchar* _tmp50_ = NULL;
 				RygelMediaContainer* _tmp51_ = NULL;
 				RygelMediaExportMusicItem* _tmp52_ = NULL;
@@ -1115,7 +1112,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 				_g_object_unref0 (item);
 #line 163 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				return result;
-#line 1119 "rygel-media-export-item-factory.c"
+#line 1116 "rygel-media-export-item-factory.c"
 			} else {
 #line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				result = NULL;
@@ -1129,7 +1126,7 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 				_g_object_unref0 (item);
 #line 170 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				return result;
-#line 1133 "rygel-media-export-item-factory.c"
+#line 1130 "rygel-media-export-item-factory.c"
 			}
 		}
 	}
@@ -1141,14 +1138,14 @@ RygelMediaItem* rygel_media_export_item_factory_create_from_info (RygelMediaCont
 	_g_free0 (id);
 #line 115 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_g_object_unref0 (item);
-#line 1145 "rygel-media-export-item-factory.c"
+#line 1142 "rygel-media-export-item-factory.c"
 }
 
 
 static gpointer _gst_mini_object_ref0 (gpointer self) {
 #line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	return self ? gst_mini_object_ref (self) : NULL;
-#line 1152 "rygel-media-export-item-factory.c"
+#line 1149 "rygel-media-export-item-factory.c"
 }
 
 
@@ -1177,7 +1174,7 @@ void rygel_media_export_item_factory_fill_audio_item (RygelAudioItem* item, GstD
 	_tmp1_ = gst_discoverer_info_get_duration (_tmp0_);
 #line 177 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp1_ > ((GstClockTime) 0)) {
-#line 1181 "rygel-media-export-item-factory.c"
+#line 1178 "rygel-media-export-item-factory.c"
 		RygelAudioItem* _tmp2_ = NULL;
 		GstDiscovererInfo* _tmp3_ = NULL;
 		GstClockTime _tmp4_ = 0ULL;
@@ -1189,14 +1186,14 @@ void rygel_media_export_item_factory_fill_audio_item (RygelAudioItem* item, GstD
 		_tmp4_ = gst_discoverer_info_get_duration (_tmp3_);
 #line 178 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		rygel_audio_item_set_duration (_tmp2_, (glong) (_tmp4_ / GST_SECOND));
-#line 1193 "rygel-media-export-item-factory.c"
+#line 1190 "rygel-media-export-item-factory.c"
 	} else {
 		RygelAudioItem* _tmp5_ = NULL;
 #line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp5_ = item;
 #line 180 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		rygel_audio_item_set_duration (_tmp5_, (glong) (-1));
-#line 1200 "rygel-media-export-item-factory.c"
+#line 1197 "rygel-media-export-item-factory.c"
 	}
 #line 183 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp6_ = audio_info;
@@ -1204,7 +1201,7 @@ void rygel_media_export_item_factory_fill_audio_item (RygelAudioItem* item, GstD
 	if (_tmp6_ == NULL) {
 #line 184 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		return;
-#line 1208 "rygel-media-export-item-factory.c"
+#line 1205 "rygel-media-export-item-factory.c"
 	}
 #line 186 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp7_ = audio_info;
@@ -1218,7 +1215,7 @@ void rygel_media_export_item_factory_fill_audio_item (RygelAudioItem* item, GstD
 	_tmp10_ = tags;
 #line 187 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp10_ != NULL) {
-#line 1222 "rygel-media-export-item-factory.c"
+#line 1219 "rygel-media-export-item-factory.c"
 		guint tmp = 0U;
 		GstTagList* _tmp11_ = NULL;
 		guint _tmp12_ = 0U;
@@ -1236,7 +1233,7 @@ void rygel_media_export_item_factory_fill_audio_item (RygelAudioItem* item, GstD
 		_tmp14_ = tmp;
 #line 190 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		rygel_audio_item_set_bitrate (_tmp13_, ((gint) _tmp14_) / 8);
-#line 1240 "rygel-media-export-item-factory.c"
+#line 1237 "rygel-media-export-item-factory.c"
 	}
 #line 193 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp15_ = item;
@@ -1256,7 +1253,7 @@ void rygel_media_export_item_factory_fill_audio_item (RygelAudioItem* item, GstD
 	rygel_audio_item_set_sample_freq (_tmp18_, (gint) _tmp20_);
 #line 174 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_gst_mini_object_unref0 (tags);
-#line 1260 "rygel-media-export-item-factory.c"
+#line 1257 "rygel-media-export-item-factory.c"
 }
 
 
@@ -1343,14 +1340,14 @@ RygelMediaItem* rygel_media_export_item_factory_fill_video_item (RygelMediaExpor
 	if (_tmp17_ == 0) {
 #line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp16_ = -1;
-#line 1347 "rygel-media-export-item-factory.c"
+#line 1344 "rygel-media-export-item-factory.c"
 	} else {
 		gint _tmp18_ = 0;
 #line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp18_ = color_depth;
 #line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp16_ = _tmp18_;
-#line 1354 "rygel-media-export-item-factory.c"
+#line 1351 "rygel-media-export-item-factory.c"
 	}
 #line 212 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp19_ = item;
@@ -1366,7 +1363,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_video_item (RygelMediaExpor
 	result = _tmp22_;
 #line 214 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	return result;
-#line 1370 "rygel-media-export-item-factory.c"
+#line 1367 "rygel-media-export-item-factory.c"
 }
 
 
@@ -1442,14 +1439,14 @@ RygelMediaItem* rygel_media_export_item_factory_fill_photo_item (RygelMediaExpor
 	if (_tmp14_ == 0) {
 #line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp13_ = -1;
-#line 1446 "rygel-media-export-item-factory.c"
+#line 1443 "rygel-media-export-item-factory.c"
 	} else {
 		gint _tmp15_ = 0;
 #line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp15_ = color_depth;
 #line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp13_ = _tmp15_;
-#line 1453 "rygel-media-export-item-factory.c"
+#line 1450 "rygel-media-export-item-factory.c"
 	}
 #line 229 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp16_ = item;
@@ -1465,35 +1462,14 @@ RygelMediaItem* rygel_media_export_item_factory_fill_photo_item (RygelMediaExpor
 	result = _tmp19_;
 #line 231 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	return result;
-#line 1469 "rygel-media-export-item-factory.c"
+#line 1466 "rygel-media-export-item-factory.c"
 }
 
 
 static void _vala_GstSample_free (GstSample* self) {
 #line 272 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	g_boxed_free (gst_sample_get_type (), self);
-#line 1476 "rygel-media-export-item-factory.c"
-}
-
-
-static GstStructure* _vala_GstStructure_copy (GstStructure* self) {
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	return g_boxed_copy (gst_structure_get_type (), self);
-#line 1483 "rygel-media-export-item-factory.c"
-}
-
-
-static gpointer __vala_GstStructure_copy0 (gpointer self) {
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	return self ? _vala_GstStructure_copy (self) : NULL;
-#line 1490 "rygel-media-export-item-factory.c"
-}
-
-
-static void _vala_GstStructure_free (GstStructure* self) {
-#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	g_boxed_free (gst_structure_get_type (), self);
-#line 1497 "rygel-media-export-item-factory.c"
+#line 1473 "rygel-media-export-item-factory.c"
 }
 
 
@@ -1545,13 +1521,12 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 	GstSample* _tmp42_ = NULL;
 	GstCaps* _tmp43_ = NULL;
 	GstStructure* _tmp44_ = NULL;
-	GstStructure* _tmp45_ = NULL;
 	gint image_type = 0;
-	GstStructure* _tmp46_ = NULL;
+	GstStructure* _tmp45_ = NULL;
+	gint _tmp46_ = 0;
 	gint _tmp47_ = 0;
-	gint _tmp48_ = 0;
-	RygelMediaExportMusicItem* _tmp58_ = NULL;
-	RygelMediaItem* _tmp59_ = NULL;
+	RygelMediaExportMusicItem* _tmp57_ = NULL;
+	RygelMediaItem* _tmp58_ = NULL;
 	GError * _inner_error_ = NULL;
 #line 234 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	g_return_val_if_fail (item != NULL, NULL);
@@ -1585,7 +1560,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 	_tmp8_ = audio_info;
 #line 243 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp8_ == NULL) {
-#line 1589 "rygel-media-export-item-factory.c"
+#line 1564 "rygel-media-export-item-factory.c"
 		RygelMediaExportMusicItem* _tmp9_ = NULL;
 		RygelMediaItem* _tmp10_ = NULL;
 #line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -1596,7 +1571,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 		result = _tmp10_;
 #line 244 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		return result;
-#line 1600 "rygel-media-export-item-factory.c"
+#line 1575 "rygel-media-export-item-factory.c"
 	}
 #line 247 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp11_ = audio_info;
@@ -1610,7 +1585,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 	_tmp14_ = tags;
 #line 248 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp14_ == NULL) {
-#line 1614 "rygel-media-export-item-factory.c"
+#line 1589 "rygel-media-export-item-factory.c"
 		RygelMediaExportMusicItem* _tmp15_ = NULL;
 		RygelMediaItem* _tmp16_ = NULL;
 #line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -1623,7 +1598,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 		_gst_mini_object_unref0 (tags);
 #line 249 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		return result;
-#line 1627 "rygel-media-export-item-factory.c"
+#line 1602 "rygel-media-export-item-factory.c"
 	}
 #line 253 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp17_ = tags;
@@ -1703,7 +1678,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 	_tmp39_ = sample;
 #line 273 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp39_ == NULL) {
-#line 1707 "rygel-media-export-item-factory.c"
+#line 1682 "rygel-media-export-item-factory.c"
 		RygelMediaExportMusicItem* _tmp40_ = NULL;
 		RygelMediaItem* _tmp41_ = NULL;
 #line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -1724,7 +1699,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 		_gst_mini_object_unref0 (tags);
 #line 274 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		return result;
-#line 1728 "rygel-media-export-item-factory.c"
+#line 1703 "rygel-media-export-item-factory.c"
 	}
 #line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp42_ = sample;
@@ -1733,73 +1708,71 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 #line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp44_ = gst_caps_get_structure (_tmp43_, (guint) 0);
 #line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	_tmp45_ = __vala_GstStructure_copy0 (_tmp44_);
-#line 276 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	structure = _tmp45_;
+	structure = _tmp44_;
 #line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	_tmp46_ = structure;
+	_tmp45_ = structure;
 #line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	gst_structure_get_enum (_tmp46_, "image-type", gst_tag_image_type_get_type (), &_tmp47_);
+	gst_structure_get_enum (_tmp45_, "image-type", gst_tag_image_type_get_type (), &_tmp46_);
 #line 279 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	image_type = _tmp47_;
+	image_type = _tmp46_;
 #line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	_tmp48_ = image_type;
+	_tmp47_ = image_type;
 #line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	switch (_tmp48_) {
+	switch (_tmp47_) {
 #line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		case GST_TAG_IMAGE_TYPE_UNDEFINED:
 #line 282 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		case GST_TAG_IMAGE_TYPE_FRONT_COVER:
-#line 1754 "rygel-media-export-item-factory.c"
+#line 1727 "rygel-media-export-item-factory.c"
 		{
 			RygelMediaArtStore* store = NULL;
-			RygelMediaArtStore* _tmp49_ = NULL;
+			RygelMediaArtStore* _tmp48_ = NULL;
 			GFile* thumb = NULL;
-			RygelMediaArtStore* _tmp50_ = NULL;
-			RygelMediaExportMusicItem* _tmp51_ = NULL;
-			GFile* _tmp52_ = NULL;
+			RygelMediaArtStore* _tmp49_ = NULL;
+			RygelMediaExportMusicItem* _tmp50_ = NULL;
+			GFile* _tmp51_ = NULL;
 #line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-			_tmp49_ = rygel_media_art_store_get_default ();
+			_tmp48_ = rygel_media_art_store_get_default ();
 #line 285 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-			store = _tmp49_;
+			store = _tmp48_;
 #line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-			_tmp50_ = store;
+			_tmp49_ = store;
 #line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-			_tmp51_ = item;
+			_tmp50_ = item;
 #line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-			_tmp52_ = rygel_media_art_store_get_media_art_file (_tmp50_, "album", (RygelMusicItem*) _tmp51_, TRUE);
+			_tmp51_ = rygel_media_art_store_get_media_art_file (_tmp49_, "album", (RygelMusicItem*) _tmp50_, TRUE);
 #line 286 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-			thumb = _tmp52_;
-#line 1774 "rygel-media-export-item-factory.c"
+			thumb = _tmp51_;
+#line 1747 "rygel-media-export-item-factory.c"
 			{
 				RygelMediaExportJPEGWriter* writer = NULL;
+				RygelMediaExportJPEGWriter* _tmp52_ = NULL;
 				RygelMediaExportJPEGWriter* _tmp53_ = NULL;
-				RygelMediaExportJPEGWriter* _tmp54_ = NULL;
-				GstSample* _tmp55_ = NULL;
-				GstBuffer* _tmp56_ = NULL;
-				GFile* _tmp57_ = NULL;
+				GstSample* _tmp54_ = NULL;
+				GstBuffer* _tmp55_ = NULL;
+				GFile* _tmp56_ = NULL;
 #line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-				_tmp53_ = rygel_media_export_jpeg_writer_new (&_inner_error_);
+				_tmp52_ = rygel_media_export_jpeg_writer_new (&_inner_error_);
 #line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-				writer = _tmp53_;
+				writer = _tmp52_;
 #line 288 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				if (_inner_error_ != NULL) {
-#line 1788 "rygel-media-export-item-factory.c"
+#line 1761 "rygel-media-export-item-factory.c"
 					goto __catch68_g_error;
 				}
 #line 289 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-				_tmp54_ = writer;
+				_tmp53_ = writer;
 #line 289 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-				_tmp55_ = sample;
+				_tmp54_ = sample;
 #line 289 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-				_tmp56_ = gst_sample_get_buffer (_tmp55_);
+				_tmp55_ = gst_sample_get_buffer (_tmp54_);
 #line 289 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-				_tmp57_ = thumb;
+				_tmp56_ = thumb;
 #line 289 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-				rygel_media_export_jpeg_writer_write (_tmp54_, _tmp56_, _tmp57_);
+				rygel_media_export_jpeg_writer_write (_tmp53_, _tmp55_, _tmp56_);
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_g_object_unref0 (writer);
-#line 1803 "rygel-media-export-item-factory.c"
+#line 1776 "rygel-media-export-item-factory.c"
 			}
 			goto __finally68;
 			__catch68_g_error:
@@ -1811,7 +1784,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 				_inner_error_ = NULL;
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_g_error_free0 (_error_);
-#line 1815 "rygel-media-export-item-factory.c"
+#line 1788 "rygel-media-export-item-factory.c"
 			}
 			__finally68:
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -1820,8 +1793,6 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 				_g_object_unref0 (thumb);
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_g_object_unref0 (store);
-#line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-				__vala_GstStructure_free0 (structure);
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				__vala_GstSample_free0 (sample);
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -1838,7 +1809,7 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 				g_clear_error (&_inner_error_);
 #line 287 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				return NULL;
-#line 1842 "rygel-media-export-item-factory.c"
+#line 1813 "rygel-media-export-item-factory.c"
 			}
 #line 291 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_g_object_unref0 (thumb);
@@ -1846,23 +1817,21 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 			_g_object_unref0 (store);
 #line 291 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			break;
-#line 1850 "rygel-media-export-item-factory.c"
+#line 1821 "rygel-media-export-item-factory.c"
 		}
 		default:
 		{
 #line 293 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			break;
-#line 1856 "rygel-media-export-item-factory.c"
+#line 1827 "rygel-media-export-item-factory.c"
 		}
 	}
 #line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	_tmp58_ = item;
+	_tmp57_ = item;
 #line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	_tmp59_ = _g_object_ref0 ((RygelMediaItem*) _tmp58_);
+	_tmp58_ = _g_object_ref0 ((RygelMediaItem*) _tmp57_);
 #line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	result = _tmp59_;
-#line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
-	__vala_GstStructure_free0 (structure);
+	result = _tmp58_;
 #line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	__vala_GstSample_free0 (sample);
 #line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -1875,14 +1844,14 @@ RygelMediaItem* rygel_media_export_item_factory_fill_music_item (RygelMediaExpor
 	_gst_mini_object_unref0 (tags);
 #line 296 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	return result;
-#line 1879 "rygel-media-export-item-factory.c"
+#line 1848 "rygel-media-export-item-factory.c"
 }
 
 
 static void _vala_GstDateTime_free (GstDateTime* self) {
 #line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	g_boxed_free (gst_date_time_get_type (), self);
-#line 1886 "rygel-media-export-item-factory.c"
+#line 1855 "rygel-media-export-item-factory.c"
 }
 
 
@@ -1902,14 +1871,14 @@ static gboolean string_contains (const gchar* self, const gchar* needle) {
 	result = _tmp1_ != NULL;
 #line 1239 "/usr/local/share/vala-0.22/vapi/glib-2.0.vapi"
 	return result;
-#line 1906 "rygel-media-export-item-factory.c"
+#line 1875 "rygel-media-export-item-factory.c"
 }
 
 
 static void _vala_SoupDate_free (SoupDate* self) {
 #line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	g_boxed_free (soup_date_get_type (), self);
-#line 1913 "rygel-media-export-item-factory.c"
+#line 1882 "rygel-media-export-item-factory.c"
 }
 
 
@@ -1974,7 +1943,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 	if (_tmp4_ == NULL) {
 #line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp3_ = TRUE;
-#line 1978 "rygel-media-export-item-factory.c"
+#line 1947 "rygel-media-export-item-factory.c"
 	} else {
 		GstTagList* _tmp5_ = NULL;
 		gchar* _tmp6_ = NULL;
@@ -1989,13 +1958,13 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		title = _tmp6_;
 #line 308 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp3_ = !_tmp7_;
-#line 1993 "rygel-media-export-item-factory.c"
+#line 1962 "rygel-media-export-item-factory.c"
 	}
 #line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp8_ = _tmp3_;
 #line 307 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp8_) {
-#line 1999 "rygel-media-export-item-factory.c"
+#line 1968 "rygel-media-export-item-factory.c"
 		GFileInfo* _tmp9_ = NULL;
 		const gchar* _tmp10_ = NULL;
 		gchar* _tmp11_ = NULL;
@@ -2009,7 +1978,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		_g_free0 (title);
 #line 309 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		title = _tmp11_;
-#line 2013 "rygel-media-export-item-factory.c"
+#line 1982 "rygel-media-export-item-factory.c"
 	}
 #line 314 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	dt = NULL;
@@ -2017,7 +1986,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 	_tmp13_ = tags;
 #line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp13_ != NULL) {
-#line 2021 "rygel-media-export-item-factory.c"
+#line 1990 "rygel-media-export-item-factory.c"
 		GstTagList* _tmp14_ = NULL;
 		GstDateTime* _tmp15_ = NULL;
 		gboolean _tmp16_ = FALSE;
@@ -2031,17 +2000,17 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		dt = _tmp15_;
 #line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp12_ = _tmp16_;
-#line 2035 "rygel-media-export-item-factory.c"
+#line 2004 "rygel-media-export-item-factory.c"
 	} else {
 #line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp12_ = FALSE;
-#line 2039 "rygel-media-export-item-factory.c"
+#line 2008 "rygel-media-export-item-factory.c"
 	}
 #line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp17_ = _tmp12_;
 #line 315 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp17_) {
-#line 2045 "rygel-media-export-item-factory.c"
+#line 2014 "rygel-media-export-item-factory.c"
 		gboolean _tmp18_ = FALSE;
 		GstDateTime* _tmp19_ = NULL;
 		gboolean _tmp20_ = FALSE;
@@ -2054,7 +2023,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		if (!_tmp20_) {
 #line 318 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp18_ = TRUE;
-#line 2058 "rygel-media-export-item-factory.c"
+#line 2027 "rygel-media-export-item-factory.c"
 		} else {
 			GstDateTime* _tmp21_ = NULL;
 			gboolean _tmp22_ = FALSE;
@@ -2064,13 +2033,13 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 			_tmp22_ = gst_date_time_has_month (_tmp21_);
 #line 318 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp18_ = !_tmp22_;
-#line 2068 "rygel-media-export-item-factory.c"
+#line 2037 "rygel-media-export-item-factory.c"
 		}
 #line 318 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp23_ = _tmp18_;
 #line 318 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		if (_tmp23_) {
-#line 2074 "rygel-media-export-item-factory.c"
+#line 2043 "rygel-media-export-item-factory.c"
 			gint _tmp24_ = 0;
 			GstDateTime* _tmp25_ = NULL;
 			gboolean _tmp26_ = FALSE;
@@ -2090,7 +2059,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 			_tmp26_ = gst_date_time_has_month (_tmp25_);
 #line 320 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			if (_tmp26_) {
-#line 2094 "rygel-media-export-item-factory.c"
+#line 2063 "rygel-media-export-item-factory.c"
 				GstDateTime* _tmp27_ = NULL;
 				gint _tmp28_ = 0;
 #line 321 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -2099,11 +2068,11 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 				_tmp28_ = gst_date_time_get_month (_tmp27_);
 #line 321 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp24_ = _tmp28_;
-#line 2103 "rygel-media-export-item-factory.c"
+#line 2072 "rygel-media-export-item-factory.c"
 			} else {
 #line 321 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp24_ = 1;
-#line 2107 "rygel-media-export-item-factory.c"
+#line 2076 "rygel-media-export-item-factory.c"
 			}
 #line 322 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp30_ = dt;
@@ -2111,7 +2080,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 			_tmp31_ = gst_date_time_has_day (_tmp30_);
 #line 322 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			if (_tmp31_) {
-#line 2115 "rygel-media-export-item-factory.c"
+#line 2084 "rygel-media-export-item-factory.c"
 				GstDateTime* _tmp32_ = NULL;
 				gint _tmp33_ = 0;
 #line 323 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -2120,11 +2089,11 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 				_tmp33_ = gst_date_time_get_day (_tmp32_);
 #line 323 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp29_ = _tmp33_;
-#line 2124 "rygel-media-export-item-factory.c"
+#line 2093 "rygel-media-export-item-factory.c"
 			} else {
 #line 323 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 				_tmp29_ = 1;
-#line 2128 "rygel-media-export-item-factory.c"
+#line 2097 "rygel-media-export-item-factory.c"
 			}
 #line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_tmp34_ = item;
@@ -2144,7 +2113,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 			rygel_media_item_set_date (_tmp34_, _tmp40_);
 #line 319 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_g_free0 (_tmp40_);
-#line 2148 "rygel-media-export-item-factory.c"
+#line 2117 "rygel-media-export-item-factory.c"
 		} else {
 			RygelMediaItem* _tmp41_ = NULL;
 			GstDateTime* _tmp42_ = NULL;
@@ -2162,7 +2131,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 			rygel_media_item_set_date (_tmp41_, _tmp44_);
 #line 325 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 			_g_free0 (_tmp44_);
-#line 2166 "rygel-media-export-item-factory.c"
+#line 2135 "rygel-media-export-item-factory.c"
 		}
 	}
 #line 329 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
@@ -2185,7 +2154,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 	_tmp51_ = _tmp50_;
 #line 335 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp51_ == NULL) {
-#line 2189 "rygel-media-export-item-factory.c"
+#line 2158 "rygel-media-export-item-factory.c"
 		GTimeVal tv = {0};
 		guint64 _tmp52_ = 0ULL;
 		GTimeVal _tmp53_ = {0};
@@ -2210,7 +2179,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		rygel_media_item_set_date (_tmp54_, _tmp56_);
 #line 337 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_g_free0 (_tmp56_);
-#line 2214 "rygel-media-export-item-factory.c"
+#line 2183 "rygel-media-export-item-factory.c"
 	}
 #line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp57_ = item;
@@ -2222,7 +2191,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 	_tmp60_ = string_contains (_tmp59_, "T");
 #line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp60_) {
-#line 2226 "rygel-media-export-item-factory.c"
+#line 2195 "rygel-media-export-item-factory.c"
 		SoupDate* date = NULL;
 		RygelMediaItem* _tmp61_ = NULL;
 		const gchar* _tmp62_ = NULL;
@@ -2256,7 +2225,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		_g_free0 (_tmp68_);
 #line 342 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		__vala_SoupDate_free0 (date);
-#line 2260 "rygel-media-export-item-factory.c"
+#line 2229 "rygel-media-export-item-factory.c"
 	}
 #line 347 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp69_ = item;
@@ -2276,7 +2245,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 	_tmp75_ = profile;
 #line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp75_ != NULL) {
-#line 2280 "rygel-media-export-item-factory.c"
+#line 2249 "rygel-media-export-item-factory.c"
 		GUPnPDLNAProfile* _tmp76_ = NULL;
 		const gchar* _tmp77_ = NULL;
 		const gchar* _tmp78_ = NULL;
@@ -2288,17 +2257,17 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		_tmp78_ = _tmp77_;
 #line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp74_ = _tmp78_ != NULL;
-#line 2292 "rygel-media-export-item-factory.c"
+#line 2261 "rygel-media-export-item-factory.c"
 	} else {
 #line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_tmp74_ = FALSE;
-#line 2296 "rygel-media-export-item-factory.c"
+#line 2265 "rygel-media-export-item-factory.c"
 	}
 #line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp79_ = _tmp74_;
 #line 349 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	if (_tmp79_) {
-#line 2302 "rygel-media-export-item-factory.c"
+#line 2271 "rygel-media-export-item-factory.c"
 		RygelMediaItem* _tmp80_ = NULL;
 		GUPnPDLNAProfile* _tmp81_ = NULL;
 		const gchar* _tmp82_ = NULL;
@@ -2327,7 +2296,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		_tmp87_ = _tmp86_;
 #line 351 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		rygel_media_item_set_mime_type (_tmp84_, _tmp87_);
-#line 2331 "rygel-media-export-item-factory.c"
+#line 2300 "rygel-media-export-item-factory.c"
 	} else {
 		RygelMediaItem* _tmp88_ = NULL;
 		GFileInfo* _tmp89_ = NULL;
@@ -2348,7 +2317,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 		rygel_media_item_set_mime_type (_tmp88_, _tmp92_);
 #line 353 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 		_g_free0 (_tmp92_);
-#line 2352 "rygel-media-export-item-factory.c"
+#line 2321 "rygel-media-export-item-factory.c"
 	}
 #line 357 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_tmp93_ = item;
@@ -2368,7 +2337,7 @@ void rygel_media_export_item_factory_fill_media_item (RygelMediaItem* item, GFil
 	_gst_mini_object_unref0 (tags);
 #line 299 "/home/rmerlino/workspace/tizen/dlna/ivi/3.0/orig/rygel/src/plugins/media-export/rygel-media-export-item-factory.vala"
 	_g_free0 (title);
-#line 2372 "rygel-media-export-item-factory.c"
+#line 2341 "rygel-media-export-item-factory.c"
 }
 
 
