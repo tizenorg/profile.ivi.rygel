@@ -36,7 +36,9 @@
     <keyword type="struct" name="struct RygelPlaybinPlayer" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer-struct"/>
     <keyword type="struct" name="struct RygelPlaybinPlayerClass" link="RygelPlaybinPlayer.html#RygelPlaybinPlayerClass"/>
     <keyword type="property" name="The &quot;allowed-playback-speeds&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--allowed-playback-speeds"/>
+    <keyword type="property" name="The &quot;byte-position&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--byte-position"/>
     <keyword type="property" name="The &quot;can-seek&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--can-seek"/>
+    <keyword type="property" name="The &quot;can-seek-bytes&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--can-seek-bytes"/>
     <keyword type="property" name="The &quot;content-features&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--content-features"/>
     <keyword type="property" name="The &quot;duration&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--duration"/>
     <keyword type="property" name="The &quot;metadata&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--metadata"/>
@@ -45,6 +47,7 @@
     <keyword type="property" name="The &quot;playback-state&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-state"/>
     <keyword type="property" name="The &quot;playbin&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin"/>
     <keyword type="property" name="The &quot;position&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--position"/>
+    <keyword type="property" name="The &quot;size&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--size"/>
     <keyword type="property" name="The &quot;supported-profiles&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles"/>
     <keyword type="property" name="The &quot;uri&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--uri"/>
     <keyword type="property" name="The &quot;volume&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--volume"/>

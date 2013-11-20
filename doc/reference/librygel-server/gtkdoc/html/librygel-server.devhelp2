@@ -4,7 +4,7 @@
   <chapters>
     <sub name="Overview" link="overview.html">
       <sub name="" link="overview.html#overview">
-        <sub name="Basic Usage" link="overview.html#idp9719104"/>
+        <sub name="Basic Usage" link="overview.html#id-1.2.2.4"/>
       </sub>
     </sub>
     <sub name="Implementing Servers" link="implementing-servers.html">
@@ -206,6 +206,7 @@
     <keyword type="function" name="rygel_media_object_get_writable_finish ()" link="RygelMediaObject.html#rygel-media-object-get-writable-finish"/>
     <keyword type="function" name="rygel_media_object_get_writables ()" link="RygelMediaObject.html#rygel-media-object-get-writables"/>
     <keyword type="function" name="rygel_media_object_get_writables_finish ()" link="RygelMediaObject.html#rygel-media-object-get-writables-finish"/>
+    <keyword type="function" name="rygel_media_object_serialize ()" link="RygelMediaObject.html#rygel-media-object-serialize"/>
     <keyword type="function" name="rygel_media_object_compare_string_props ()" link="RygelMediaObject.html#rygel-media-object-compare-string-props"/>
     <keyword type="function" name="rygel_media_object_compare_int_props ()" link="RygelMediaObject.html#rygel-media-object-compare-int-props"/>
     <keyword type="function" name="rygel_media_object_get_id ()" link="RygelMediaObject.html#rygel-media-object-get-id"/>
@@ -421,5 +422,18 @@
     <keyword type="struct" name="RygelWritableContainer" link="RygelWritableContainer.html#RygelWritableContainer-struct"/>
     <keyword type="struct" name="struct RygelWritableContainerIface" link="RygelWritableContainer.html#RygelWritableContainerIface"/>
     <keyword type="property" name="The &quot;create-classes&quot; property" link="RygelWritableContainer.html#RygelWritableContainer--create-classes"/>
+    <keyword type="constant" name="RYGEL_DATA_SOURCE_ERROR_GENERAL" link="RygelDataSource.html#RYGEL-DATA-SOURCE-ERROR-GENERAL:CAPS"/>
+    <keyword type="constant" name="RYGEL_DATA_SOURCE_ERROR_SEEK_FAILED" link="RygelDataSource.html#RYGEL-DATA-SOURCE-ERROR-SEEK-FAILED:CAPS"/>
+    <keyword type="constant" name="RYGEL_HTTP_SEEK_TYPE_BYTE" link="RygelHTTPSeek.html#RYGEL-HTTP-SEEK-TYPE-BYTE:CAPS"/>
+    <keyword type="constant" name="RYGEL_HTTP_SEEK_TYPE_TIME" link="RygelHTTPSeek.html#RYGEL-HTTP-SEEK-TYPE-TIME:CAPS"/>
+    <keyword type="constant" name="RYGEL_HTTP_SEEK_ERROR_INVALID_RANGE" link="RygelHTTPSeek.html#RYGEL-HTTP-SEEK-ERROR-INVALID-RANGE:CAPS"/>
+    <keyword type="constant" name="RYGEL_HTTP_SEEK_ERROR_OUT_OF_RANGE" link="RygelHTTPSeek.html#RYGEL-HTTP-SEEK-ERROR-OUT-OF-RANGE:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOGICAL_OPERATOR_AND" link="RygelLogicalExpression.html#RYGEL-LOGICAL-OPERATOR-AND:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOGICAL_OPERATOR_OR" link="RygelLogicalExpression.html#RYGEL-LOGICAL-OPERATOR-OR:CAPS"/>
+    <keyword type="constant" name="RYGEL_OBJECT_EVENT_TYPE_ADDED" link="RygelMediaContainer.html#RYGEL-OBJECT-EVENT-TYPE-ADDED:CAPS"/>
+    <keyword type="constant" name="RYGEL_OBJECT_EVENT_TYPE_MODIFIED" link="RygelMediaContainer.html#RYGEL-OBJECT-EVENT-TYPE-MODIFIED:CAPS"/>
+    <keyword type="constant" name="RYGEL_OBJECT_EVENT_TYPE_DELETED" link="RygelMediaContainer.html#RYGEL-OBJECT-EVENT-TYPE-DELETED:CAPS"/>
+    <keyword type="constant" name="RYGEL_MEDIA_ENGINE_ERROR_NOT_FOUND" link="RygelMediaEngine.html#RYGEL-MEDIA-ENGINE-ERROR-NOT-FOUND:CAPS"/>
+    <keyword type="constant" name="RYGEL_WRITABLE_CONTAINER_ERROR_NOT_IMPLEMENTED" link="RygelWritableContainer.html#RYGEL-WRITABLE-CONTAINER-ERROR-NOT-IMPLEMENTED:CAPS"/>
   </functions>
 </book>

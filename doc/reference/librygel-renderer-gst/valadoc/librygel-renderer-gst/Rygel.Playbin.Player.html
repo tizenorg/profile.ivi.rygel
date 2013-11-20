@@ -31,7 +31,9 @@
         <hr class="navi_hr"/>
         <ul class="navi_main">
           <li class="property"><a href="Rygel.Playbin.Player.allowed_playback_speeds.html">allowed_playback_speeds</a></li>
+          <li class="property"><a href="Rygel.Playbin.Player.byte_position.html">byte_position</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.can_seek.html">can_seek</a></li>
+          <li class="property"><a href="Rygel.Playbin.Player.can_seek_bytes.html">can_seek_bytes</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.content_features.html">content_features</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.duration.html">duration</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.metadata.html">metadata</a></li>
@@ -40,6 +42,7 @@
           <li class="property"><a href="Rygel.Playbin.Player.playback_state.html">playback_state</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.playbin.html">playbin</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.position.html">position</a></li>
+          <li class="property"><a href="Rygel.Playbin.Player.size.html">size</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.supported_profiles.html">supported_profiles</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.uri.html">uri</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.volume.html">volume</a></li>
@@ -48,6 +51,7 @@
           <li class="method"><a href="Rygel.Playbin.Player.get_mime_types.html">get_mime_types</a></li>
           <li class="method"><a href="Rygel.Playbin.Player.get_protocols.html">get_protocols</a></li>
           <li class="method"><a href="Rygel.Playbin.Player.seek.html">seek</a></li>
+          <li class="method"><a href="Rygel.Playbin.Player.seek_bytes.html">seek_bytes</a></li>
         </ul>
       </div>
       <div class="site_content">
@@ -57,7 +61,7 @@
         <img class="main_diagram" usemap="#Rygel.Playbin.Player" alt="Object hierarchy for Player" src="img/Rygel.Playbin.Player.png"/>
 
       <map id="Rygel.Playbin.Player" name="Rygel.Playbin.Player">
-<area shape="rect" id="node1" href="Rygel.Playbin.Player.html" title="Rygel.Playbin.Player" alt="" coords="53,101,229,149"/>
+<area shape="rect" id="node1" href="Rygel.Playbin.Player.html" title="Rygel.Playbin.Player" alt="" coords="56,101,227,149"/>
 </map>
 
         <h2 class="main_title">Description:</h2>
@@ -106,6 +110,10 @@
             </span>
             <div class="leaf_brief_description">
             </div></li>
+          <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.Playbin.Player.can_seek_bytes.html" class="property">can_seek_bytes</a></b> { <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
           <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span>? <b><a href="Rygel.Playbin.Player.content_features.html" class="property">content_features</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">owned</span> <span class="main_keyword">get</span>; }
             </span>
             <div class="leaf_brief_description">
@@ -118,7 +126,15 @@
             </span>
             <div class="leaf_brief_description">
             </div></li>
+          <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>int64</code></span> <b><a href="Rygel.Playbin.Player.size.html" class="property">size</a></b> { <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
           <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>int64</code></span> <b><a href="Rygel.Playbin.Player.position.html" class="property">position</a></b> { <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>int64</code></span> <b><a href="Rygel.Playbin.Player.byte_position.html" class="property">byte_position</a></b> { <span class="main_keyword">get</span>; }
             </span>
             <div class="leaf_brief_description">
             </div></li>
@@ -144,6 +160,10 @@
         <h3 class="main_title">Methods:</h3>
         <ul class="navi_inline">
           <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.Playbin.Player.seek.html" class="method">seek</a></b> (<span class="main_basic_type"><code>int64</code></span> time)
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.Playbin.Player.seek_bytes.html" class="method">seek_bytes</a></b> (<span class="main_basic_type"><code>int64</code></span> bytes)
             </span>
             <div class="leaf_brief_description">
             </div></li>
@@ -224,20 +244,23 @@
                 <div class="column">
                   <ul class="navi_inline">
                     <li class="abstract_property">allowed_playback_speeds</li>
+                    <li class="abstract_property">byte_position</li>
                     <li class="abstract_property">can_seek</li>
+                    <li class="abstract_property">can_seek_bytes</li>
                     <li class="abstract_property">content_features</li>
                     <li class="abstract_property">duration</li>
                     <li class="property">duration_as_str</li>
-                    <li class="abstract_property">metadata</li>
                   </ul>
                 </div>
                 <div class="column">
                   <ul class="navi_inline">
+                    <li class="abstract_property">metadata</li>
                     <li class="abstract_property">mime_type</li>
                     <li class="abstract_property">playback_speed</li>
                     <li class="abstract_property">playback_state</li>
                     <li class="abstract_property">position</li>
                     <li class="property">position_as_str</li>
+                    <li class="abstract_property">size</li>
                   </ul>
                 </div>
                 <div class="column">
@@ -246,7 +269,9 @@
                     <li class="abstract_property">volume</li>
                     <li class="abstract_method">get_mime_types</li>
                     <li class="abstract_method">get_protocols</li>
+                    <li class="method">play_speed_to_double</li>
                     <li class="abstract_method">seek</li>
+                    <li class="abstract_method">seek_bytes</li>
                   </ul>
                 </div>
               </div>

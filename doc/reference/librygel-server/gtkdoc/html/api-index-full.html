@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>API Index</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="up" href="index.html" title="librygel-server Reference Manual">
 <link rel="prev" href="object-tree.html" title="Object Hierarchy">
 <link rel="next" href="deprecated-api-index.html" title="Index of deprecated API">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,11 +20,15 @@
 <th width="100%" align="center">librygel-server Reference Manual</th>
 <td><a accesskey="n" href="deprecated-api-index.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
-<tr><td colspan="5" class="shortcuts"><a class="shortcut" href="#idxR">R</a></td></tr>
+<tr><td colspan="5" class="shortcuts">
+<a class="shortcut" href="#idxR">R</a>
+                      | 
+                   <a class="shortcut" href="#idxS">S</a>
+</td></tr>
 </table>
 <div class="index">
-<div class="titlepage"><div><div><h2 class="title">
-<a name="api-index-full"></a>API Index</h2></div></div></div>
+<div class="titlepage"><div><div><h1 class="title">
+<a name="api-index-full"></a>API Index</h1></div></div></div>
 <a name="idx"></a><a name="idxR"></a><h3 class="title">R</h3>
 <dt>
 <a class="link" href="RygelAudioItem.html#RygelAudioItem-struct" title="struct RygelAudioItem">RygelAudioItem</a>, struct in <a class="link" href="RygelAudioItem.html" title="RygelAudioItem">RygelAudioItem</a>
@@ -52,6 +56,14 @@
 <dd></dd>
 <dt>
 <a class="link" href="RygelAudioItem.html#RygelAudioItemClass" title="struct RygelAudioItemClass">RygelAudioItemClass</a>, struct in <a class="link" href="RygelAudioItem.html" title="RygelAudioItem">RygelAudioItem</a>
+</dt>
+<dd></dd>
+<dt>
+RygelContentDirectory, struct in RygelContentDirectory
+</dt>
+<dd></dd>
+<dt>
+RygelContentDirectoryClass, struct in RygelContentDirectory
 </dt>
 <dd></dd>
 <dt>
@@ -128,6 +140,22 @@ RygelDLNAProfileClass, struct in RygelDLNAProfile
 <dd></dd>
 <dt>
 <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeekType-enum" title="enum RygelHTTPSeekType">RygelHTTPSeekType</a>, enum in <a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek">RygelHTTPSeek</a>
+</dt>
+<dd></dd>
+<dt>
+RygelHTTPServer, struct in RygelHTTPServer
+</dt>
+<dd></dd>
+<dt>
+RygelHTTPServer:cancellable, object property in RygelHTTPServer
+</dt>
+<dd></dd>
+<dt>
+RygelHTTPServer:path-root, object property in RygelHTTPServer
+</dt>
+<dd></dd>
+<dt>
+RygelHTTPServerClass, struct in RygelHTTPServer
 </dt>
 <dd></dd>
 <dt>
@@ -431,6 +459,18 @@ RygelPlaylistItemClass, struct in RygelPlaylistItem
 </dt>
 <dd></dd>
 <dt>
+RygelSerializer, struct in RygelSerializer
+</dt>
+<dd></dd>
+<dt>
+RygelSerializer:serializer-type, object property in RygelSerializer
+</dt>
+<dd></dd>
+<dt>
+RygelSerializerClass, struct in RygelSerializer
+</dt>
+<dd></dd>
+<dt>
 <a class="link" href="RygelSimpleContainer.html#RygelSimpleContainer-struct" title="struct RygelSimpleContainer">RygelSimpleContainer</a>, struct in <a class="link" href="RygelSimpleContainer.html" title="RygelSimpleContainer">RygelSimpleContainer</a>
 </dt>
 <dd></dd>
@@ -635,6 +675,30 @@ RygelUpdatableObjectIface, struct in RygelUpdatableObject
 </dt>
 <dd></dd>
 <dt>
+RYGEL_CONTENT_DIRECTORY_DESCRIPTION_PATH, macro in RygelContentDirectory
+</dt>
+<dd></dd>
+<dt>
+RYGEL_CONTENT_DIRECTORY_DESCRIPTION_PATH_NO_TRACK, macro in RygelContentDirectory
+</dt>
+<dd></dd>
+<dt>
+rygel_content_directory_new, function in RygelContentDirectory
+</dt>
+<dd></dd>
+<dt>
+RYGEL_CONTENT_DIRECTORY_UPNP_ID, macro in RygelContentDirectory
+</dt>
+<dd></dd>
+<dt>
+RYGEL_CONTENT_DIRECTORY_UPNP_TYPE, macro in RygelContentDirectory
+</dt>
+<dd></dd>
+<dt>
+RYGEL_CONTENT_DIRECTORY_UPNP_TYPE_V1, macro in RygelContentDirectory
+</dt>
+<dd></dd>
+<dt>
 <a class="link" href="RygelDataSource.html#rygel-data-source-freeze" title="rygel_data_source_freeze ()">rygel_data_source_freeze</a>, function in <a class="link" href="RygelDataSource.html" title="RygelDataSource">RygelDataSource</a>
 </dt>
 <dd></dd>
@@ -700,6 +764,18 @@ rygel_dlna_profile_unref, function in RygelDLNAProfile
 <dd></dd>
 <dt>
 <a class="link" href="RygelHTTPSeek.html#rygel-http-seek-set-seek-type" title="rygel_http_seek_set_seek_type ()">rygel_http_seek_set_seek_type</a>, function in <a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek">RygelHTTPSeek</a>
+</dt>
+<dd></dd>
+<dt>
+rygel_http_server_get_path_root, function in RygelHTTPServer
+</dt>
+<dd></dd>
+<dt>
+rygel_http_server_need_proxy, function in RygelHTTPServer
+</dt>
+<dd></dd>
+<dt>
+rygel_http_server_new, function in RygelHTTPServer
 </dt>
 <dd></dd>
 <dt>
@@ -991,6 +1067,10 @@ rygel_dlna_profile_unref, function in RygelDLNAProfile
 </dt>
 <dd></dd>
 <dt>
+<a class="link" href="RygelMediaObject.html#rygel-media-object-serialize" title="rygel_media_object_serialize ()">rygel_media_object_serialize</a>, function in <a class="link" href="RygelMediaObject.html" title="RygelMediaObject">RygelMediaObject</a>
+</dt>
+<dd></dd>
+<dt>
 <a class="link" href="RygelMediaObject.html#rygel-media-object-set-id" title="rygel_media_object_set_id ()">rygel_media_object_set_id</a>, function in <a class="link" href="RygelMediaObject.html" title="RygelMediaObject">RygelMediaObject</a>
 </dt>
 <dd></dd>
@@ -1191,6 +1271,26 @@ RYGEL_PLAYLIST_ITEM_UPNP_CLASS, macro in RygelPlaylistItem
 </dt>
 <dd></dd>
 <dt>
+rygel_serializer_add_container, function in RygelSerializer
+</dt>
+<dd></dd>
+<dt>
+rygel_serializer_add_item, function in RygelSerializer
+</dt>
+<dd></dd>
+<dt>
+rygel_serializer_filter, function in RygelSerializer
+</dt>
+<dd></dd>
+<dt>
+rygel_serializer_get_string, function in RygelSerializer
+</dt>
+<dd></dd>
+<dt>
+rygel_serializer_new, function in RygelSerializer
+</dt>
+<dd></dd>
+<dt>
 <a class="link" href="RygelSimpleContainer.html#rygel-simple-container-add-child-container" title="rygel_simple_container_add_child_container ()">rygel_simple_container_add_child_container</a>, function in <a class="link" href="RygelSimpleContainer.html" title="RygelSimpleContainer">RygelSimpleContainer</a>
 </dt>
 <dd></dd>
@@ -1343,11 +1443,19 @@ rygel_trackable_item_changed, function in RygelTrackableItem
 </dt>
 <dd></dd>
 <dt>
+RYGEL_TYPE_CONTENT_DIRECTORY, macro in RygelContentDirectory
+</dt>
+<dd></dd>
+<dt>
 RYGEL_TYPE_DLNA_PROFILE, macro in RygelDLNAProfile
 </dt>
 <dd></dd>
 <dt>
 <a class="link" href="RygelHTTPSeek.html#RYGEL-TYPE-HTTP-SEEK:CAPS" title="RYGEL_TYPE_HTTP_SEEK">RYGEL_TYPE_HTTP_SEEK</a>, macro in <a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek">RygelHTTPSeek</a>
+</dt>
+<dd></dd>
+<dt>
+RYGEL_TYPE_HTTP_SERVER, macro in RygelHTTPServer
 </dt>
 <dd></dd>
 <dt>
@@ -1408,6 +1516,10 @@ RYGEL_TYPE_PLAYLIST_ITEM, macro in RygelPlaylistItem
 <dd></dd>
 <dt>
 <a class="link" href="RygelSearchExpression.html#RYGEL-TYPE-SEARCH-EXPRESSION:CAPS" title="RYGEL_TYPE_SEARCH_EXPRESSION">RYGEL_TYPE_SEARCH_EXPRESSION</a>, macro in <a class="link" href="RygelSearchExpression.html" title="RygelSearchExpression">RygelSearchExpression</a>
+</dt>
+<dd></dd>
+<dt>
+RYGEL_TYPE_SERIALIZER, macro in RygelSerializer
 </dt>
 <dd></dd>
 <dt>
@@ -1582,9 +1694,14 @@ rygel_value_take_dlna_profile, function in RygelDLNAProfile
 <a class="link" href="RygelWritableContainer.html#RYGEL-WRITABLE-CONTAINER-WRITABLE-SCHEME:CAPS" title="RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME">RYGEL_WRITABLE_CONTAINER_WRITABLE_SCHEME</a>, macro in <a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer">RygelWritableContainer</a>
 </dt>
 <dd></dd>
+<a name="idxS"></a><h3 class="title">S</h3>
+<dt>
+SerializerType, enum in RygelSerializer
+</dt>
+<dd></dd>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

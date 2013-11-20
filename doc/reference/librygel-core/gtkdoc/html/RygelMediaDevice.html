@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelMediaDevice</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-core Reference Manual">
 <link rel="up" href="api-main-list-c.html" title="librygel-core API Reference">
 <link rel="prev" href="RygelPlugin.html" title="RygelPlugin">
 <link rel="next" href="RygelBaseConfiguration.html" title="RygelBaseConfiguration">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -43,14 +43,14 @@
 <a name="RygelMediaDevice.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">#define             <a class="link" href="RygelMediaDevice.html#RYGEL-TYPE-MEDIA-DEVICE:CAPS" title="RYGEL_TYPE_MEDIA_DEVICE">RYGEL_TYPE_MEDIA_DEVICE</a>
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaDevice.html#rygel-media-device-add-interface" title="rygel_media_device_add_interface ()">rygel_media_device_add_interface</a>    (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *iface</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *iface</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaDevice.html#rygel-media-device-remove-interface" title="rygel_media_device_remove_interface ()">rygel_media_device_remove_interface</a> (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *iface</code></em>);
-<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="RygelMediaDevice.html#rygel-media-device-get-interfaces" title="rygel_media_device_get_interfaces ()">rygel_media_device_get_interfaces</a>   (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *iface</code></em>);
+<span class="returnvalue">GList</span> *             <a class="link" href="RygelMediaDevice.html#rygel-media-device-get-interfaces" title="rygel_media_device_get_interfaces ()">rygel_media_device_get_interfaces</a>   (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);
 <a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="returnvalue">RygelPlugin</span></a> *       <a class="link" href="RygelMediaDevice.html#rygel-media-device-get-plugin" title="rygel_media_device_get_plugin ()">rygel_media_device_get_plugin</a>       (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaDevice.html#rygel-media-device-set-plugin" title="rygel_media_device_set_plugin ()">rygel_media_device_set_plugin</a>       (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="type">RygelPlugin</span></a> *value</code></em>);
-const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelMediaDevice.html#rygel-media-device-get-title" title="rygel_media_device_get_title ()">rygel_media_device_get_title</a>        (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="RygelMediaDevice.html#rygel-media-device-get-title" title="rygel_media_device_get_title ()">rygel_media_device_get_title</a>        (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);
 <a class="link" href="RygelPlugin.html#RygelPluginCapabilities"><span class="returnvalue">RygelPluginCapabilities</span></a> <a class="link" href="RygelMediaDevice.html#rygel-media-device-get-capabilities" title="rygel_media_device_get_capabilities ()">rygel_media_device_get_capabilities</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);
 struct              <a class="link" href="RygelMediaDevice.html#RygelMediaDevice-struct" title="struct RygelMediaDevice">RygelMediaDevice</a>;
@@ -60,7 +60,7 @@ struct              <a class="link" href="RygelMediaDevice.html#RygelMediaDevice
 <div class="refsect1">
 <a name="RygelMediaDevice.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+  GObject
    +----RygelMediaDevice
 </pre>
 </div>
@@ -69,7 +69,7 @@ struct              <a class="link" href="RygelMediaDevice.html#RygelMediaDevice
 <pre class="synopsis">
   "<a class="link" href="RygelMediaDevice.html#RygelMediaDevice--capabilities" title='The "capabilities" property'>capabilities</a>"             <a class="link" href="RygelPlugin.html#RygelPluginCapabilities"><span class="type">RygelPluginCapabilities</span></a>  : Read / Write / Construct Only
   "<a class="link" href="RygelMediaDevice.html#RygelMediaDevice--plugin" title='The "plugin" property'>plugin</a>"                   <a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="type">RygelPlugin</span></a>*          : Read / Write / Construct
-  "<a class="link" href="RygelMediaDevice.html#RygelMediaDevice--title" title='The "title" property'>title</a>"                    <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only
+  "<a class="link" href="RygelMediaDevice.html#RygelMediaDevice--title" title='The "title" property'>title</a>"                    <span class="type">gchar</span>*                : Read / Write / Construct Only
 </pre>
 </div>
 <div class="refsect1">
@@ -94,7 +94,7 @@ The type for <a class="link" href="RygelMediaDevice.html" title="RygelMediaDevic
 <div class="refsect2">
 <a name="rygel-media-device-add-interface"></a><h3>rygel_media_device_add_interface ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_media_device_add_interface    (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *iface</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *iface</code></em>);</pre>
 <p>
 Add a network interface the device should listen on.
 </p>
@@ -103,8 +103,11 @@ Add a network interface the device should listen on.
 <p>If the network interface is not already up, it will be used as soon as it's ready. Otherwise it's used right away.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -122,12 +125,15 @@ Add a network interface the device should listen on.
 <div class="refsect2">
 <a name="rygel-media-device-remove-interface"></a><h3>rygel_media_device_remove_interface ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_media_device_remove_interface (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *iface</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *iface</code></em>);</pre>
 <p>
 Remove a previously added network interface from the device.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -144,12 +150,15 @@ Remove a previously added network interface from the device.
 <hr>
 <div class="refsect2">
 <a name="rygel-media-device-get-interfaces"></a><h3>rygel_media_device_get_interfaces ()</h3>
-<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             rygel_media_device_get_interfaces   (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">GList</span> *             rygel_media_device_get_interfaces   (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);</pre>
 <p>
 Get a list of the network interfaces the device is currently allowed to use.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -169,8 +178,11 @@ Get a list of the network interfaces the device is currently allowed to use.
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaDevice.html#RygelMediaDevice--plugin" title='The "plugin" property'><span class="type">"plugin"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -191,8 +203,11 @@ Get and return the current value of the <a class="link" href="RygelMediaDevice.h
 <p>
 Set the value of the <a class="link" href="RygelMediaDevice.html#RygelMediaDevice--plugin" title='The "plugin" property'><span class="type">"plugin"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -208,12 +223,15 @@ Set the value of the <a class="link" href="RygelMediaDevice.html#RygelMediaDevic
 <hr>
 <div class="refsect2">
 <a name="rygel-media-device-get-title"></a><h3>rygel_media_device_get_title ()</h3>
-<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_media_device_get_title        (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);</pre>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       rygel_media_device_get_title        (<em class="parameter"><code><a class="link" href="RygelMediaDevice.html" title="RygelMediaDevice"><span class="type">RygelMediaDevice</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaDevice.html#RygelMediaDevice--title" title='The "title" property'><span class="type">"title"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -234,8 +252,11 @@ Get and return the current value of the <a class="link" href="RygelMediaDevice.h
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaDevice.html#RygelMediaDevice--capabilities" title='The "capabilities" property'><span class="type">"capabilities"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -271,10 +292,13 @@ This is a base class for implementations of UPnP devices, such as RygelMediaServ
 <p>
 The class structure for <a class="link" href="RygelMediaDevice.html#RYGEL-TYPE-MEDIA-DEVICE:CAPS" title="RYGEL_TYPE_MEDIA_DEVICE"><code class="literal">RYGEL_TYPE_MEDIA_DEVICE</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
-<td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelMediaDeviceClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GObjectClass</span> <em class="structfield"><code><a name="RygelMediaDeviceClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
 </tr></tbody>
 </table></div>
@@ -296,7 +320,7 @@ The class structure for <a class="link" href="RygelMediaDevice.html#RYGEL-TYPE-M
 <hr>
 <div class="refsect2">
 <a name="RygelMediaDevice--title"></a><h3>The <code class="literal">"title"</code> property</h3>
-<pre class="programlisting">  "title"                    <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only</pre>
+<pre class="programlisting">  "title"                    <span class="type">gchar</span>*                : Read / Write / Construct Only</pre>
 <p>title.</p>
 <p>Default value: NULL</p>
 </div>
@@ -304,6 +328,6 @@ The class structure for <a class="link" href="RygelMediaDevice.html#RYGEL-TYPE-M
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.19</div>
 </body>
 </html>

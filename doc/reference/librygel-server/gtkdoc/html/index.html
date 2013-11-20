@@ -3,10 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>librygel-server Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="next" href="overview.html" title="Overview">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,7 +22,7 @@
 </div>
 <hr>
 </div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="preface"><a href="overview.html">Overview</a></span></dt>
 <dd><dl><dt><span class="section"><a href="overview.html#overview"></a></span></dt></dl></dd>
 <dt><span class="chapter"><a href="implementing-servers.html">Implementing Servers</a></span></dt>
@@ -47,7 +47,7 @@
 <span class="refentrytitle"><a href="RygelAudioItem.html">RygelAudioItem</a></span><span class="refpurpose"> — Represents an audio item.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelDataSource.html">RygelDataSource</a></span><span class="refpurpose"> — Interface for all data streams provided by a <a class="link" href="RygelMediaEngine.html" title="RygelMediaEngine"><span class="type">RygelMediaEngine</span></a>.</span>
+<span class="refentrytitle"><a href="RygelDataSource.html">RygelDataSource</a></span><span class="refpurpose">Interface for all data streams provided by a <span class="type">RygelMediaEngine</span>.</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="RygelHTTPSeek.html">RygelHTTPSeek</a></span><span class="refpurpose"> — HTTPSeek is an abstract representation of a ranged HTTP request.</span>
@@ -59,7 +59,7 @@
 <span class="refentrytitle"><a href="RygelLogicalExpression.html">RygelLogicalExpression</a></span><span class="refpurpose"> — This is a parsed UPnP search expression consisting of two other search expressions joined by a boolean operator such as AND or OR.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelMediaArtStore.html">RygelMediaArtStore</a></span><span class="refpurpose"> — This maps RygelMusicItem objects to their cached cover art, implementing the GNOME <a class="ulink" href="https://live.gnome.org/MediaArtStorageSpec" target="_top">MediaArt storage specification</a> and the simplified version that Banshee uses.</span>
+<span class="refentrytitle"><a href="RygelMediaArtStore.html">RygelMediaArtStore</a></span><span class="refpurpose">This maps RygelMusicItem objects to their cached cover art, implementing the GNOME MediaArt storage specification and the simplified version that Banshee uses.</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="RygelMediaContainer.html">RygelMediaContainer</a></span><span class="refpurpose"> — This is a container (folder) for media items and child containers.</span>
@@ -98,7 +98,7 @@
 <span class="refentrytitle"><a href="RygelSearchableContainer.html">RygelSearchableContainer</a></span><span class="refpurpose"> — The base class for searchable containers.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelSimpleContainer.html">RygelSimpleContainer</a></span><span class="refpurpose"> — A simple implementation of RygelMediaContainer that keeps all RygelMediaObjects in memory. You should add children via <a class="link" href="RygelSimpleContainer.html#rygel-simple-container-add-child-item" title="rygel_simple_container_add_child_item ()"><code class="function">rygel_simple_container_add_child_item()</code></a>.</span>
+<span class="refentrytitle"><a href="RygelSimpleContainer.html">RygelSimpleContainer</a></span><span class="refpurpose">A simple implementation of RygelMediaContainer that keeps all RygelMediaObjects in memory. You should add children via <code class="function">rygel_simple_container_add_child_item()</code>.</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="RygelSubtitle.html">RygelSubtitle</a></span><span class="refpurpose"> — Represents a subtitle for a video.</span>
@@ -113,7 +113,7 @@
 <span class="refentrytitle"><a href="RygelTranscodeManager.html">RygelTranscodeManager</a></span><span class="refpurpose"> — Responsible for management of all transcoders: # Gets the appropriate transcoder given a transcoding target. # Provide all possible transcoding resources for items.</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="RygelTranscoder.html">RygelTranscoder</a></span><span class="refpurpose"> — The base Transcoder class. Each implementation derives from it and must implement <code class="function">create_source()</code> and <code class="function">get_distance()</code>.</span>
+<span class="refentrytitle"><a href="RygelTranscoder.html">RygelTranscoder</a></span><span class="refpurpose">The base Transcoder class. Each implementation derives from it and must implement <code class="function">create_source()</code> and <code class="function">get_distance()</code>.</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="RygelVideoItem.html">RygelVideoItem</a></span><span class="refpurpose"> — Represents a video item.</span>
@@ -133,6 +133,6 @@
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

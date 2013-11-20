@@ -32,7 +32,10 @@ enum  {
   RYGEL_EXAMPLE_PLAYER_DURATION,
   RYGEL_EXAMPLE_PLAYER_POSITION,
   RYGEL_EXAMPLE_PLAYER_PLAYBACK_SPEED,
-  RYGEL_EXAMPLE_PLAYER_ALLOWED_PLAYBACK_SPEEDS
+  RYGEL_EXAMPLE_PLAYER_ALLOWED_PLAYBACK_SPEEDS,
+  RYGEL_EXAMPLE_PLAYER_CAN_SEEK_BYTES,
+  RYGEL_EXAMPLE_PLAYER_BYTE_POSITION,
+  RYGEL_EXAMPLE_PLAYER_SIZE
 };
 
 static void rygel_example_player_rygel_media_player_interface_init (RygelMediaPlayerIface  *iface);
@@ -100,6 +103,15 @@ rygel_example_player_real_set_playback_speed (RygelMediaPlayer *base, const char
 static gchar *
 rygel_example_player_real_get_playback_speed (RygelMediaPlayer *base);
 
+static gint64
+rygel_example_player_real_get_byte_position (RygelMediaPlayer* base);
+
+static gint64
+rygel_example_player_real_get_size (RygelMediaPlayer* base);
+
+static gboolean
+rygel_example_player_real_get_can_seek_bytes (RygelMediaPlayer* base);
+
 static void
 _rygel_example_player_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec);
 
@@ -158,6 +170,9 @@ rygel_example_player_rygel_media_player_interface_init (RygelMediaPlayerIface *i
   iface->get_allowed_playback_speeds = rygel_example_player_real_get_allowed_playback_speeds;
   iface->get_playback_speed = rygel_example_player_real_get_playback_speed;
   iface->set_playback_speed = rygel_example_player_real_set_playback_speed;
+  iface->get_can_seek_bytes = rygel_example_player_real_get_can_seek_bytes;
+  iface->get_size = rygel_example_player_real_get_size;
+  iface->get_byte_position = rygel_example_player_real_get_byte_position;
 }
 
 static void
@@ -170,99 +185,61 @@ rygel_example_player_class_init (RygelExamplePlayerClass *klass) {
   gobject_class->set_property = _rygel_example_player_set_property;
   gobject_class->finalize = rygel_example_player_finalize;
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_PLAYBACK_STATE,
-    g_param_spec_string ("playback-state",
-      "playback-state",
-      "playback-state",
-      NULL,
-      G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_PLAYBACK_STATE,
+                                    "playback-state");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_URI,
-    g_param_spec_string ("uri",
-      "uri",
-      "uri",
-      NULL,
-      G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_URI,
+                                    "uri");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_MIME_TYPE,
-    g_param_spec_string ("mime-type",
-      "mime-type",
-      "mime-type",
-      NULL,
-      G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_MIME_TYPE,
+                                    "mime-type");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_METADATA,
-    g_param_spec_string ("metadata",
-      "metadata",
-      "metadata",
-      NULL,
-      G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_METADATA,
+                                    "metadata");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_CAN_SEEK,
-    g_param_spec_boolean ("can-seek",
-      "can-seek",
-      "can-seek",
-      FALSE,
-      G_PARAM_STATIC_STRINGS | G_PARAM_READABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_CAN_SEEK,
+                                    "can-seek");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_CONTENT_FEATURES,
-    g_param_spec_string ("content-features",
-      "content-features",
-      "content-features",
-      NULL,
-      G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_CONTENT_FEATURES,
+                                    "content-features");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_VOLUME,
-    g_param_spec_double ("volume",
-      "volume",
-      "volume",
-      -G_MAXDOUBLE,
-      G_MAXDOUBLE,
-      0.0,
-      G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE | G_PARAM_WRITABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_VOLUME,
+                                    "volume");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_DURATION,
-    g_param_spec_int64 ("duration",
-      "duration",
-      "duration",
-      G_MININT64,
-      G_MAXINT64,
-      0,
-      G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_DURATION,
+                                    "duration");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_POSITION,
-    g_param_spec_int64 ("position",
-      "position",
-      "position",
-      G_MININT64,
-      G_MAXINT64,
-      0,
-      G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB | G_PARAM_READABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_POSITION,
+                                    "position");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_PLAYBACK_SPEED,
-    g_param_spec_string ("playback-speed",
-      "playback-speed",
-      "playback-speed",
-      "1",
-      G_PARAM_STATIC_STRINGS | G_PARAM_READWRITE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_PLAYBACK_SPEED,
+                                    "playback-speed");
 
-  g_object_class_install_property (gobject_class,
-    RYGEL_EXAMPLE_PLAYER_ALLOWED_PLAYBACK_SPEEDS,
-    g_param_spec_boxed ("allowed-playback-speeds",
-      "allowed-playback-speeds",
-      "allowed-playback-speeds",
-      G_TYPE_STRV,
-      G_PARAM_STATIC_STRINGS | G_PARAM_READABLE));
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_ALLOWED_PLAYBACK_SPEEDS,
+                                    "allowed-playback-speeds");
+
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_CAN_SEEK_BYTES,
+                                    "can-seek-bytes");
+
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_BYTE_POSITION,
+                                    "byte-position");
+
+  g_object_class_override_property (gobject_class,
+                                    RYGEL_EXAMPLE_PLAYER_SIZE,
+                                    "size");
 }
 
 static void
@@ -481,6 +458,27 @@ rygel_example_player_real_get_playback_speed (RygelMediaPlayer *base)
   return g_strdup (self->priv->playback_speed);
 }
 
+static gint64
+rygel_example_player_real_get_byte_position (RygelMediaPlayer* base)
+{
+	RygelExamplePlayer *self = RYGEL_EXAMPLE_PLAYER (base);
+	return 0;
+}
+
+static gint64
+rygel_example_player_real_get_size (RygelMediaPlayer* base)
+{
+	RygelExamplePlayer *self = RYGEL_EXAMPLE_PLAYER (base);
+	return 0;
+}
+
+static gboolean
+rygel_example_player_real_get_can_seek_bytes (RygelMediaPlayer* base)
+{
+	RygelExamplePlayer *self = RYGEL_EXAMPLE_PLAYER (base);
+	return FALSE;
+}
+
 static void
 _rygel_example_player_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec) {
   RygelMediaPlayer *base = RYGEL_MEDIA_PLAYER (object);
@@ -522,6 +520,15 @@ _rygel_example_player_get_property (GObject *object, guint property_id, GValue *
 
         g_value_take_boxed (value, rygel_media_player_get_allowed_playback_speeds (base, &length));
       }
+      break;
+    case RYGEL_EXAMPLE_PLAYER_CAN_SEEK_BYTES:
+      g_value_set_boolean (value, rygel_media_player_get_can_seek_bytes (base));
+      break;
+    case RYGEL_EXAMPLE_PLAYER_BYTE_POSITION:
+      g_value_set_int64 (value, rygel_media_player_get_byte_position (base));
+      break;
+    case RYGEL_EXAMPLE_PLAYER_SIZE:
+      g_value_set_int64 (value, rygel_media_player_get_size (base));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

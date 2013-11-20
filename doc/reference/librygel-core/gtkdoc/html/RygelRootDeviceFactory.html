@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelRootDeviceFactory</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-core Reference Manual">
 <link rel="up" href="api-main-list-c.html" title="librygel-core API Reference">
 <link rel="prev" href="RygelBaseConfiguration.html" title="RygelBaseConfiguration">
 <link rel="next" href="RygelMetaConfig.html" title="RygelMetaConfig">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -46,9 +46,9 @@
 <pre class="synopsis">#define             <a class="link" href="RygelRootDeviceFactory.html#RYGEL-TYPE-ROOT-DEVICE-FACTORY:CAPS" title="RYGEL_TYPE_ROOT_DEVICE_FACTORY">RYGEL_TYPE_ROOT_DEVICE_FACTORY</a>
 <a class="link" href="RygelRootDevice.html" title="RygelRootDevice"><span class="returnvalue">RygelRootDevice</span></a> *   <a class="link" href="RygelRootDeviceFactory.html#rygel-root-device-factory-create" title="rygel_root_device_factory_create ()">rygel_root_device_factory_create</a>    (<em class="parameter"><code><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="type">RygelRootDeviceFactory</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="type">RygelPlugin</span></a> *plugin</code></em>,
-                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 <a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="returnvalue">RygelRootDeviceFactory</span></a> * <a class="link" href="RygelRootDeviceFactory.html#rygel-root-device-factory-new" title="rygel_root_device_factory_new ()">rygel_root_device_factory_new</a>  (<em class="parameter"><code><span class="type">GUPnPContext</span> *context</code></em>,
-                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 <span class="returnvalue">GUPnPContext</span> *      <a class="link" href="RygelRootDeviceFactory.html#rygel-root-device-factory-get-context" title="rygel_root_device_factory_get_context ()">rygel_root_device_factory_get_context</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="type">RygelRootDeviceFactory</span></a> *self</code></em>);
 struct              <a class="link" href="RygelRootDeviceFactory.html#RygelRootDeviceFactory-struct" title="struct RygelRootDeviceFactory">RygelRootDeviceFactory</a>;
@@ -59,7 +59,7 @@ enum                <a class="link" href="RygelRootDeviceFactory.html#RootDevice
 <div class="refsect1">
 <a name="RygelRootDeviceFactory.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+  GObject
    +----RygelRootDeviceFactory
 </pre>
 </div>
@@ -67,7 +67,7 @@ enum                <a class="link" href="RygelRootDeviceFactory.html#RootDevice
 <a name="RygelRootDeviceFactory.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 RygelRootDeviceFactory implements
- <a href="../gio/GInitable.html">GInitable</a>.</p>
+ GInitable.</p>
 </div>
 <div class="refsect1">
 <a name="RygelRootDeviceFactory.properties"></a><h2>Properties</h2>
@@ -98,9 +98,12 @@ The type for <a class="link" href="RygelRootDeviceFactory.html" title="RygelRoot
 <a name="rygel-root-device-factory-create"></a><h3>rygel_root_device_factory_create ()</h3>
 <pre class="programlisting"><a class="link" href="RygelRootDevice.html" title="RygelRootDevice"><span class="returnvalue">RygelRootDevice</span></a> *   rygel_root_device_factory_create    (<em class="parameter"><code><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="type">RygelRootDeviceFactory</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="type">RygelPlugin</span></a> *plugin</code></em>,
-                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
-<div class="variablelist"><table border="0">
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -112,7 +115,7 @@ The type for <a class="link" href="RygelRootDeviceFactory.html" title="RygelRoot
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
+<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore</td>
 </tr>
 </tbody>
 </table></div>
@@ -121,9 +124,12 @@ The type for <a class="link" href="RygelRootDeviceFactory.html" title="RygelRoot
 <div class="refsect2">
 <a name="rygel-root-device-factory-new"></a><h3>rygel_root_device_factory_new ()</h3>
 <pre class="programlisting"><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="returnvalue">RygelRootDeviceFactory</span></a> * rygel_root_device_factory_new  (<em class="parameter"><code><span class="type">GUPnPContext</span> *context</code></em>,
-                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
-<div class="variablelist"><table border="0">
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
@@ -131,7 +137,7 @@ The type for <a class="link" href="RygelRootDeviceFactory.html" title="RygelRoot
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
+<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore</td>
 </tr>
 </tbody>
 </table></div>
@@ -144,8 +150,11 @@ The type for <a class="link" href="RygelRootDeviceFactory.html" title="RygelRoot
 <p>
 Get and return the current value of the <a class="link" href="RygelRootDeviceFactory.html#RygelRootDeviceFactory--context" title='The "context" property'><span class="type">"context"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -181,10 +190,13 @@ This is a factory to create <a class="link" href="RygelRootDevice.html" title="R
 <p>
 The class structure for <a class="link" href="RygelRootDeviceFactory.html#RYGEL-TYPE-ROOT-DEVICE-FACTORY:CAPS" title="RYGEL_TYPE_ROOT_DEVICE_FACTORY"><code class="literal">RYGEL_TYPE_ROOT_DEVICE_FACTORY</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
-<td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelRootDeviceFactoryClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GObjectClass</span> <em class="structfield"><code><a name="RygelRootDeviceFactoryClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
 </tr></tbody>
 </table></div>
@@ -196,6 +208,16 @@ The class structure for <a class="link" href="RygelRootDeviceFactory.html#RYGEL-
 	ROOT_DEVICE_FACTORY_ERROR_XML_PARSE
 } RootDeviceFactoryError;
 </pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><a name="ROOT-DEVICE-FACTORY-ERROR-XML-PARSE:CAPS"></a><span class="term"><code class="literal">ROOT_DEVICE_FACTORY_ERROR_XML_PARSE</code></span></p></td>
+<td></td>
+</tr></tbody>
+</table></div>
 </div>
 </div>
 <div class="refsect1">
@@ -209,6 +231,6 @@ The class structure for <a class="link" href="RygelRootDeviceFactory.html#RYGEL-
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.19</div>
 </body>
 </html>

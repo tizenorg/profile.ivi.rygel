@@ -4,7 +4,7 @@
   <chapters>
     <sub name="Overview" link="overview.html">
       <sub name="" link="overview.html#overview">
-        <sub name="Basic Usage" link="overview.html#idp2710400"/>
+        <sub name="Basic Usage" link="overview.html#id-1.2.2.4"/>
       </sub>
     </sub>
     <sub name="librygel-core API Reference" link="api-main-list-c.html">
@@ -267,5 +267,36 @@
     <keyword type="function" name="ListActivatableNames ()" link="docs-org-freedesktop-DBus.html#org-freedesktop-DBus-ListActivatableNames"/>
     <keyword type="signal" name="The NameOwnerChanged signal" link="docs-org-freedesktop-DBus.html#org-freedesktop-DBus-NameOwnerChanged"/>
     <keyword type="function" name="GetAll ()" link="docs-org-freedesktop-DBus-Properties.html#org-freedesktop-DBus-Properties-GetAll"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_UPNP_ENABLED" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-UPNP-ENABLED:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_INTERFACE" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-INTERFACE:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_PORT" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-PORT:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_TRANSCODING" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-TRANSCODING:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_ALLOW_UPLOAD" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-ALLOW-UPLOAD:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_ALLOW_DELETION" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-ALLOW-DELETION:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_LOG_LEVELS" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-LOG-LEVELS:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_PLUGIN_PATH" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-PLUGIN-PATH:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_VIDEO_UPLOAD_FOLDER" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-VIDEO-UPLOAD-FOLDER:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_MUSIC_UPLOAD_FOLDER" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-MUSIC-UPLOAD-FOLDER:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ENTRY_PICTURE_UPLOAD_FOLDER" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ENTRY-PICTURE-UPLOAD-FOLDER:CAPS"/>
+    <keyword type="constant" name="RYGEL_SECTION_ENTRY_TITLE" link="RygelConfiguration.html#RYGEL-SECTION-ENTRY-TITLE:CAPS"/>
+    <keyword type="constant" name="RYGEL_SECTION_ENTRY_ENABLED" link="RygelConfiguration.html#RYGEL-SECTION-ENTRY-ENABLED:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ERROR_NO_VALUE_SET" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ERROR-NO-VALUE-SET:CAPS"/>
+    <keyword type="constant" name="RYGEL_CONFIGURATION_ERROR_VALUE_OUT_OF_RANGE" link="RygelConfiguration.html#RYGEL-CONFIGURATION-ERROR-VALUE-OUT-OF-RANGE:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOG_LEVEL_INVALID" link="RygelLogHandler.html#RYGEL-LOG-LEVEL-INVALID:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOG_LEVEL_CRITICAL" link="RygelLogHandler.html#RYGEL-LOG-LEVEL-CRITICAL:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOG_LEVEL_ERROR" link="RygelLogHandler.html#RYGEL-LOG-LEVEL-ERROR:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOG_LEVEL_WARNING" link="RygelLogHandler.html#RYGEL-LOG-LEVEL-WARNING:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOG_LEVEL_INFO" link="RygelLogHandler.html#RYGEL-LOG-LEVEL-INFO:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOG_LEVEL_DEFAULT" link="RygelLogHandler.html#RYGEL-LOG-LEVEL-DEFAULT:CAPS"/>
+    <keyword type="constant" name="RYGEL_LOG_LEVEL_DEBUG" link="RygelLogHandler.html#RYGEL-LOG-LEVEL-DEBUG:CAPS"/>
+    <keyword type="constant" name="RYGEL_PLUGIN_CAPABILITIES_NONE" link="RygelPlugin.html#RYGEL-PLUGIN-CAPABILITIES-NONE:CAPS"/>
+    <keyword type="constant" name="RYGEL_PLUGIN_CAPABILITIES_IMAGE_UPLOAD" link="RygelPlugin.html#RYGEL-PLUGIN-CAPABILITIES-IMAGE-UPLOAD:CAPS"/>
+    <keyword type="constant" name="RYGEL_PLUGIN_CAPABILITIES_VIDEO_UPLOAD" link="RygelPlugin.html#RYGEL-PLUGIN-CAPABILITIES-VIDEO-UPLOAD:CAPS"/>
+    <keyword type="constant" name="RYGEL_PLUGIN_CAPABILITIES_AUDIO_UPLOAD" link="RygelPlugin.html#RYGEL-PLUGIN-CAPABILITIES-AUDIO-UPLOAD:CAPS"/>
+    <keyword type="constant" name="RYGEL_PLUGIN_CAPABILITIES_UPLOAD" link="RygelPlugin.html#RYGEL-PLUGIN-CAPABILITIES-UPLOAD:CAPS"/>
+    <keyword type="constant" name="RYGEL_PLUGIN_CAPABILITIES_TRACK_CHANGES" link="RygelPlugin.html#RYGEL-PLUGIN-CAPABILITIES-TRACK-CHANGES:CAPS"/>
+    <keyword type="constant" name="RYGEL_PLUGIN_CAPABILITIES_CREATE_CONTAINERS" link="RygelPlugin.html#RYGEL-PLUGIN-CAPABILITIES-CREATE-CONTAINERS:CAPS"/>
+    <keyword type="constant" name="RYGEL_PLUGIN_CAPABILITIES_DIAGNOSTICS" link="RygelPlugin.html#RYGEL-PLUGIN-CAPABILITIES-DIAGNOSTICS:CAPS"/>
+    <keyword type="constant" name="ROOT_DEVICE_FACTORY_ERROR_XML_PARSE" link="RygelRootDeviceFactory.html#ROOT-DEVICE-FACTORY-ERROR-XML-PARSE:CAPS"/>
   </functions>
 </book>

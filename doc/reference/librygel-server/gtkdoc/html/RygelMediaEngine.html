@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelMediaEngine</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="up" href="api-main-list.html" title="librygel-server API Reference">
 <link rel="prev" href="RygelMediaContainer.html" title="RygelMediaContainer">
 <link rel="next" href="RygelMediaItem.html" title="RygelMediaItem">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -99,8 +99,11 @@ Get a list of the DLNA profiles that are supported by this media engine when cal
 <p>
 <span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-transcoders" title="rygel_media_engine_get_transcoders ()"><code class="function">rygel_media_engine_get_transcoders()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -121,8 +124,11 @@ Get a list of the DLNA profiles that are supported by this media engine when cal
 <p>
 Get a list of the transcoders that are provided by this media engine.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -145,8 +151,11 @@ Get a list of the transcoders that are provided by this media engine.
 <p>
 Get a data source for the URI.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -168,8 +177,11 @@ Get a data source for the URI.
 <div class="refsect2">
 <a name="rygel-media-engine-init"></a><h3>rygel_media_engine_init ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_media_engine_init             (<em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
@@ -183,8 +195,11 @@ Get a data source for the URI.
 <p>
 Get the singleton instance of the currently used media engine.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>An instance of a concrete <a class="link" href="RygelMediaEngine.html" title="RygelMediaEngine"><span class="type">RygelMediaEngine</span></a> implementation.</td>
@@ -221,8 +236,11 @@ This is the base class for media engines that contain knowledge about the stream
 <p>
 The class structure for <a class="link" href="RygelMediaEngine.html#RYGEL-TYPE-MEDIA-ENGINE:CAPS" title="RYGEL_TYPE_MEDIA_ENGINE"><code class="literal">RYGEL_TYPE_MEDIA_ENGINE</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelMediaEngineClass.parent-class"></a>parent_class</code></em>;</span></p></td>
@@ -230,17 +248,17 @@ The class structure for <a class="link" href="RygelMediaEngine.html#RYGEL-TYPE-M
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaEngineClass.get-dlna-profiles"></a>get_dlna_profiles</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-dlna-profiles" title="rygel_media_engine_get_dlna_profiles ()"><code class="function"><a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-dlna-profiles" title="rygel_media_engine_get_dlna_profiles ()"><code class="function">rygel_media_engine_get_dlna_profiles()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-dlna-profiles" title="rygel_media_engine_get_dlna_profiles ()"><code class="function">rygel_media_engine_get_dlna_profiles()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaEngineClass.get-transcoders"></a>get_transcoders</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-transcoders" title="rygel_media_engine_get_transcoders ()"><code class="function"><a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-transcoders" title="rygel_media_engine_get_transcoders ()"><code class="function">rygel_media_engine_get_transcoders()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-transcoders" title="rygel_media_engine_get_transcoders ()"><code class="function">rygel_media_engine_get_transcoders()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaEngineClass.create-data-source"></a>create_data_source</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelMediaEngine.html#rygel-media-engine-create-data-source" title="rygel_media_engine_create_data_source ()"><code class="function"><a class="link" href="RygelMediaEngine.html#rygel-media-engine-create-data-source" title="rygel_media_engine_create_data_source ()"><code class="function">rygel_media_engine_create_data_source()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelMediaEngine.html#rygel-media-engine-create-data-source" title="rygel_media_engine_create_data_source ()"><code class="function">rygel_media_engine_create_data_source()</code></a>
 </td>
 </tr>
 </tbody>
@@ -253,11 +271,21 @@ The class structure for <a class="link" href="RygelMediaEngine.html#RYGEL-TYPE-M
 	RYGEL_MEDIA_ENGINE_ERROR_NOT_FOUND
 } RygelMediaEngineError;
 </pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><a name="RYGEL-MEDIA-ENGINE-ERROR-NOT-FOUND:CAPS"></a><span class="term"><code class="literal">RYGEL_MEDIA_ENGINE_ERROR_NOT_FOUND</code></span></p></td>
+<td></td>
+</tr></tbody>
+</table></div>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

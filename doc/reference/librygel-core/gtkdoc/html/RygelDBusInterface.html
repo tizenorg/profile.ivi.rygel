@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelDBusInterface</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-core Reference Manual">
 <link rel="up" href="api-main-list-c.html" title="librygel-core API Reference">
 <link rel="prev" href="RygelResourceInfo.html" title="RygelResourceInfo">
 <link rel="next" href="RygelDescriptionFile.html" title="RygelDescriptionFile">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -42,7 +42,7 @@
 <div class="refsynopsisdiv">
 <a name="RygelDBusInterface.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis"><span class="returnvalue">void</span>                <a class="link" href="RygelDBusInterface.html#rygel-dbus-interface-shutdown" title="rygel_dbus_interface_shutdown ()">rygel_dbus_interface_shutdown</a>       (<em class="parameter"><code><a class="link" href="RygelDBusInterface.html" title="RygelDBusInterface"><span class="type">RygelDBusInterface</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 #define             <a class="link" href="RygelDBusInterface.html#RYGEL-DBUS-INTERFACE-SERVICE-NAME:CAPS" title="RYGEL_DBUS_INTERFACE_SERVICE_NAME">RYGEL_DBUS_INTERFACE_SERVICE_NAME</a>
 #define             <a class="link" href="RygelDBusInterface.html#RYGEL-DBUS-INTERFACE-OBJECT-PATH:CAPS" title="RYGEL_DBUS_INTERFACE_OBJECT_PATH">RYGEL_DBUS_INTERFACE_OBJECT_PATH</a>
                     <a class="link" href="RygelDBusInterface.html#RygelDBusInterface-struct" title="RygelDBusInterface">RygelDBusInterface</a>;
@@ -60,7 +60,7 @@ struct              <a class="link" href="RygelDBusInterface.html#RygelDBusInter
 <a name="RygelDBusInterface.prerequisites"></a><h2>Prerequisites</h2>
 <p>
 RygelDBusInterface requires
- <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
+ GObject.</p>
 </div>
 <div class="refsect1">
 <a name="RygelDBusInterface.description"></a><h2>Description</h2>
@@ -70,9 +70,12 @@ RygelDBusInterface requires
 <div class="refsect2">
 <a name="rygel-dbus-interface-shutdown"></a><h3>rygel_dbus_interface_shutdown ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_dbus_interface_shutdown       (<em class="parameter"><code><a class="link" href="RygelDBusInterface.html" title="RygelDBusInterface"><span class="type">RygelDBusInterface</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
-<div class="variablelist"><table border="0">
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -80,7 +83,7 @@ RygelDBusInterface requires
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. <span class="annotation">[<acronym title="Typed errors. Similar to throws in Java."><span class="acronym">error-domains</span></acronym> GIOErrorEnum]</span>
+<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore. <span class="annotation">[<acronym title="Typed errors. Similar to throws in Java."><span class="acronym">error-domains</span></acronym> GIOErrorEnum]</span>
 </td>
 </tr>
 </tbody>
@@ -114,16 +117,19 @@ RygelDBusInterface requires
 <p>
 Interface for creating <a class="link" href="RygelDBusInterface.html" title="RygelDBusInterface"><span class="type">RygelDBusInterface</span></a> implementations.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
-<td><p><span class="term"><a href="../gobject/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="RygelDBusInterfaceIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GTypeInterface</span> <em class="structfield"><code><a name="RygelDBusInterfaceIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
 <td>the parent interface structure</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelDBusInterfaceIface.shutdown"></a>shutdown</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelDBusInterface.html#rygel-dbus-interface-shutdown" title="rygel_dbus_interface_shutdown ()"><code class="function"><a class="link" href="RygelDBusInterface.html#rygel-dbus-interface-shutdown" title="rygel_dbus_interface_shutdown ()"><code class="function">rygel_dbus_interface_shutdown()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelDBusInterface.html#rygel-dbus-interface-shutdown" title="rygel_dbus_interface_shutdown ()"><code class="function">rygel_dbus_interface_shutdown()</code></a>
 </td>
 </tr>
 </tbody>
@@ -133,6 +139,6 @@ Interface for creating <a class="link" href="RygelDBusInterface.html" title="Ryg
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.19</div>
 </body>
 </html>

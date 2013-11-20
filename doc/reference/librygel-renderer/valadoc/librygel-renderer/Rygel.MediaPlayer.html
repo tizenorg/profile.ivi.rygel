@@ -27,7 +27,9 @@
         <hr class="navi_hr"/>
         <ul class="navi_main">
           <li class="abstract_property"><a href="Rygel.MediaPlayer.allowed_playback_speeds.html">allowed_playback_speeds</a></li>
+          <li class="abstract_property"><a href="Rygel.MediaPlayer.byte_position.html">byte_position</a></li>
           <li class="abstract_property"><a href="Rygel.MediaPlayer.can_seek.html">can_seek</a></li>
+          <li class="abstract_property"><a href="Rygel.MediaPlayer.can_seek_bytes.html">can_seek_bytes</a></li>
           <li class="abstract_property"><a href="Rygel.MediaPlayer.content_features.html">content_features</a></li>
           <li class="abstract_property"><a href="Rygel.MediaPlayer.duration.html">duration</a></li>
           <li class="property"><a href="Rygel.MediaPlayer.duration_as_str.html">duration_as_str</a></li>
@@ -37,11 +39,14 @@
           <li class="abstract_property"><a href="Rygel.MediaPlayer.playback_state.html">playback_state</a></li>
           <li class="abstract_property"><a href="Rygel.MediaPlayer.position.html">position</a></li>
           <li class="property"><a href="Rygel.MediaPlayer.position_as_str.html">position_as_str</a></li>
+          <li class="abstract_property"><a href="Rygel.MediaPlayer.size.html">size</a></li>
           <li class="abstract_property"><a href="Rygel.MediaPlayer.uri.html">uri</a></li>
           <li class="abstract_property"><a href="Rygel.MediaPlayer.volume.html">volume</a></li>
           <li class="abstract_method"><a href="Rygel.MediaPlayer.get_mime_types.html">get_mime_types</a></li>
           <li class="abstract_method"><a href="Rygel.MediaPlayer.get_protocols.html">get_protocols</a></li>
+          <li class="method"><a href="Rygel.MediaPlayer.play_speed_to_double.html">play_speed_to_double</a></li>
           <li class="abstract_method"><a href="Rygel.MediaPlayer.seek.html">seek</a></li>
+          <li class="abstract_method"><a href="Rygel.MediaPlayer.seek_bytes.html">seek_bytes</a></li>
         </ul>
       </div>
       <div class="site_content">
@@ -51,7 +56,7 @@
         <img class="main_diagram" usemap="#Rygel.MediaPlayer" alt="Object hierarchy for MediaPlayer" src="img/Rygel.MediaPlayer.png"/>
 
       <map id="Rygel.MediaPlayer" name="Rygel.MediaPlayer">
-<area shape="rect" id="node1" href="Rygel.MediaPlayer.html" title="Rygel.MediaPlayer" alt="" coords="5,101,168,149"/>
+<area shape="rect" id="node1" href="Rygel.MediaPlayer.html" title="Rygel.MediaPlayer" alt="" coords="5,101,165,149"/>
 </map>
 
         <h2 class="main_title">Description:</h2>
@@ -93,6 +98,10 @@
             </span>
             <div class="leaf_brief_description">
             </div></li>
+          <li class="abstract_property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_basic_type"><code>int64</code></span> <b><a href="Rygel.MediaPlayer.size.html" class="abstract_property">size</a></b> { <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
           <li class="abstract_property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_basic_type"><code>string</code></span>? <b><a href="Rygel.MediaPlayer.metadata.html" class="abstract_property">metadata</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">owned</span> <span class="main_keyword">get</span>; }
             </span>
             <div class="leaf_brief_description"><span class="brief_description">A DIDLLite document describing the current media URI or null. The 
@@ -103,6 +112,10 @@
             <div class="leaf_brief_description">
             </div></li>
           <li class="abstract_property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.MediaPlayer.can_seek.html" class="abstract_property">can_seek</a></b> { <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="abstract_property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.MediaPlayer.can_seek_bytes.html" class="abstract_property">can_seek_bytes</a></b> { <span class="main_keyword">get</span>; }
             </span>
             <div class="leaf_brief_description">
             </div></li>
@@ -120,6 +133,10 @@
             </span>
             <div class="leaf_brief_description">
             </div></li>
+          <li class="abstract_property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_basic_type"><code>int64</code></span> <b><a href="Rygel.MediaPlayer.byte_position.html" class="abstract_property">byte_position</a></b> { <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
           <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaPlayer.position_as_str.html" class="property">position_as_str</a></b> { <span class="main_keyword">owned</span> <span class="main_keyword">get</span>; }
             </span>
             <div class="leaf_brief_description">
@@ -132,6 +149,10 @@
             <div class="leaf_brief_description"><span class="brief_description">Seek to a point in the current media that is this many microseconds 
                 after the start.</span>
             </div></li>
+          <li class="abstract_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.MediaPlayer.seek_bytes.html" class="abstract_method">seek_bytes</a></b> (<span class="main_basic_type"><code>int64</code></span> bytes)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Seek to a byte position in the current media.</span>
+            </div></li>
           <li class="abstract_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_basic_type"><code>string</code></span>[] <b><a href="Rygel.MediaPlayer.get_protocols.html" class="abstract_method">get_protocols</a></b> ()
             </span>
             <div class="leaf_brief_description"><span class="brief_description">Return the protocols supported by this renderer, such as "http-get" 
@@ -140,6 +161,11 @@
           <li class="abstract_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_basic_type"><code>string</code></span>[] <b><a href="Rygel.MediaPlayer.get_mime_types.html" class="abstract_method">get_mime_types</a></b> ()
             </span>
             <div class="leaf_brief_description">
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">protected</span> <span class="main_basic_type"><code>double</code></span> <b><a href="Rygel.MediaPlayer.play_speed_to_double.html" class="method">play_speed_to_double</a></b> (<span class="main_basic_type"><code>string</code></span> speed)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Transform a fractional playspeed (e.g. "-1/4") to double. Input values
+                are expected to be valid rational numbers.</span>
             </div></li>
         </ul>
         <h3 class="main_title">Inherited Members:</h3>

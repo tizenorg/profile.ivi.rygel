@@ -27,22 +27,24 @@ dnl Disable generation of static libraries
 LT_PREREQ([2.2.6])
 LT_INIT([dlopen disable-static])
 
+AC_SYS_LARGEFILE
+
 dnl Required versions of library packages
 dnl Not all of these are actually used, depending on the configure options.
-GLIB_REQUIRED=2.31.13
+GLIB_REQUIRED=2.34.0
 LIBXML_REQUIRED=2.7
-VALA_REQUIRED=0.20.0
+VALA_REQUIRED=0.22.0
 VALADOC_REQUIRED=0.2
 GSSDP_REQUIRED=0.13.0
 GUPNP_REQUIRED=0.19.0
-GUPNP_AV_REQUIRED=0.11.4
+GUPNP_AV_REQUIRED=0.12.4
 GUPNP_DLNA_REQUIRED=0.9.4
 GSTREAMER_REQUIRED=1.0
 GSTPBU_REQUIRED=1.0
 GIO_REQUIRED=2.26
 GEE_REQUIRED=0.8.0
 UUID_REQUIRED=1.41.3
-LIBSOUP_REQUIRED=2.34.0
+LIBSOUP_REQUIRED=2.42.0
 GTK_REQUIRED=3.0
 
 dnl Additional requirements for media-export plugin
@@ -58,7 +60,7 @@ VALAFLAGS="--target-glib=2.32 $VALAFLAGS"
 RYGEL_BASE_MODULES="gupnp-1.0 >= $GUPNP_REQUIRED gee-0.8 >= $GEE_REQUIRED"
 PKG_CHECK_MODULES([LIBRYGEL_CORE_DEPS], [$RYGEL_BASE_MODULES uuid >= $UUID_REQUIRED gssdp-1.0 >= $GSSDP_REQUIRED gio-2.0 >= $GIO_REQUIRED gmodule-2.0 libxml-2.0 >= $LIBXML_REQUIRED])
 RYGEL_BASE_MODULES_VALAFLAGS='--pkg gupnp-1.0 --pkg gee-0.8'
-LIBRYGEL_CORE_DEPS_VALAFLAGS="$RYGEL_BASE_MODULES_VALAFLAGS --pkg gssdp-1.0 --pkg gio-2.0 --pkg gmodule-2.0"
+LIBRYGEL_CORE_DEPS_VALAFLAGS="$RYGEL_BASE_MODULES_VALAFLAGS --pkg gssdp-1.0 --pkg gio-2.0 --pkg gmodule-2.0 --pkg posix"
 AC_SUBST([LIBRYGEL_CORE_DEPS_VALAFLAGS])
 
 RYGEL_COMMON_MODULES="$RYGEL_BASE_MODULES gupnp-av-1.0 >= $GUPNP_AV_REQUIRED"
@@ -356,22 +358,27 @@ dnl documenation
 AC_PATH_PROG([XSLTPROC], [xsltproc])
 AM_CONDITIONAL([HAVE_XSLTPROC], [test x"$XSLTPROC" != x])
 
-dnl Use valadoc for API documentation:
+dnl Use valadoc and gtk-doc for API documentation:
 dnl This is on by default when using autogen.sh 
 dnl (so it is not on by default when building from a tarball with configure.)
-AC_ARG_ENABLE(valadoc,
-  AS_HELP_STRING([--enable-valadoc[=@<:@no/auto/yes@:>@]], [Enable valadoc support]),,
-    [enable_valadoc=no])
+AC_ARG_ENABLE(apidocs,
+              AS_HELP_STRING([--enable-apidocs[=@<:@no/auto/yes@:>@]],
+                             [Create API documentation using valadoc and GTK-Doc]),,
+    [enable_apidocs=auto])
 
 found_valadoc=no
-AS_IF([test "x$enable_valadoc" != "xno"], [
+AS_IF([test "x$enable_apidocs" != "xno"], [
     AC_PATH_PROG(VALADOC, valadoc, :)
     AS_IF([test -x "$VALADOC"], [
       found_valadoc=yes
       AC_SUBST(VALADOC)
-      PKG_CHECK_MODULES([GTKDOC],[gtk-doc >= 1.0])
+      PKG_CHECK_MODULES([GTKDOC],[gtk-doc >= 1.0],,
+                        AS_IF([test "x$enable_apidocs" == "xyes"],
+                              [AC_MSG_ERROR([Unable to find gtk-doc])],
+                              [found_valadoc=no])
+                        )
     ], [
-      AS_IF([test "x$enable_valadoc" == "xyes"], AC_MSG_ERROR([Unable to find valadoc]))
+      AS_IF([test "x$enable_apidocs" == "xyes"], AC_MSG_ERROR([Unable to find valadoc]))
     ])
   ])
 
@@ -451,6 +458,7 @@ echo "
         uninstalled:            ${enable_uninstalled}
         preferences ui:         ${HAVE_GTK}
         Media Engine:           ${with_media_engine}
+        API documentation:      ${found_valadoc}
     Plugins:
         examples:               ${enable_example_plugins}
         tracker:                ${enable_tracker_plugin}
