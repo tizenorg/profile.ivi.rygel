@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelRootDeviceFactory</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-core Reference Manual">
 <link rel="up" href="api-main-list-c.html" title="librygel-core API Reference">
 <link rel="prev" href="RygelBaseConfiguration.html" title="RygelBaseConfiguration">
 <link rel="next" href="RygelMetaConfig.html" title="RygelMetaConfig">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -47,9 +47,9 @@
 <a class="link" href="RygelRootDevice.html" title="RygelRootDevice"><span class="returnvalue">RygelRootDevice</span></a> *   <a class="link" href="RygelRootDeviceFactory.html#rygel-root-device-factory-create" title="rygel_root_device_factory_create ()">rygel_root_device_factory_create</a>    (<em class="parameter"><code><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="type">RygelRootDeviceFactory</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="type">RygelPlugin</span></a> *plugin</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="returnvalue">RygelRootDeviceFactory</span></a> * <a class="link" href="RygelRootDeviceFactory.html#rygel-root-device-factory-new" title="rygel_root_device_factory_new ()">rygel_root_device_factory_new</a>  (<em class="parameter"><code><span class="type">GUPnPContext</span> *context</code></em>,
+<a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="returnvalue">RygelRootDeviceFactory</span></a> * <a class="link" href="RygelRootDeviceFactory.html#rygel-root-device-factory-new" title="rygel_root_device_factory_new ()">rygel_root_device_factory_new</a>  (<em class="parameter"><code><a href="../gupnp/GUPnPContext.html"><span class="type">GUPnPContext</span></a> *context</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<span class="returnvalue">GUPnPContext</span> *      <a class="link" href="RygelRootDeviceFactory.html#rygel-root-device-factory-get-context" title="rygel_root_device_factory_get_context ()">rygel_root_device_factory_get_context</a>
+<a href="../gupnp/GUPnPContext.html"><span class="returnvalue">GUPnPContext</span></a> *      <a class="link" href="RygelRootDeviceFactory.html#rygel-root-device-factory-get-context" title="rygel_root_device_factory_get_context ()">rygel_root_device_factory_get_context</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="type">RygelRootDeviceFactory</span></a> *self</code></em>);
 struct              <a class="link" href="RygelRootDeviceFactory.html#RygelRootDeviceFactory-struct" title="struct RygelRootDeviceFactory">RygelRootDeviceFactory</a>;
 struct              <a class="link" href="RygelRootDeviceFactory.html#RygelRootDeviceFactoryClass" title="struct RygelRootDeviceFactoryClass">RygelRootDeviceFactoryClass</a>;
@@ -72,7 +72,7 @@ RygelRootDeviceFactory implements
 <div class="refsect1">
 <a name="RygelRootDeviceFactory.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="RygelRootDeviceFactory.html#RygelRootDeviceFactory--context" title='The "context" property'>context</a>"                  <span class="type">GUPnPContext</span>*         : Read / Write / Construct Only
+  "<a class="link" href="RygelRootDeviceFactory.html#RygelRootDeviceFactory--context" title='The "context" property'>context</a>"                  <a href="../gupnp/GUPnPContext.html"><span class="type">GUPnPContext</span></a>*         : Read / Write / Construct Only
 </pre>
 </div>
 <div class="refsect1">
@@ -99,8 +99,11 @@ The type for <a class="link" href="RygelRootDeviceFactory.html" title="RygelRoot
 <pre class="programlisting"><a class="link" href="RygelRootDevice.html" title="RygelRootDevice"><span class="returnvalue">RygelRootDevice</span></a> *   rygel_root_device_factory_create    (<em class="parameter"><code><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="type">RygelRootDeviceFactory</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="type">RygelPlugin</span></a> *plugin</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -120,10 +123,13 @@ The type for <a class="link" href="RygelRootDeviceFactory.html" title="RygelRoot
 <hr>
 <div class="refsect2">
 <a name="rygel-root-device-factory-new"></a><h3>rygel_root_device_factory_new ()</h3>
-<pre class="programlisting"><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="returnvalue">RygelRootDeviceFactory</span></a> * rygel_root_device_factory_new  (<em class="parameter"><code><span class="type">GUPnPContext</span> *context</code></em>,
+<pre class="programlisting"><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="returnvalue">RygelRootDeviceFactory</span></a> * rygel_root_device_factory_new  (<em class="parameter"><code><a href="../gupnp/GUPnPContext.html"><span class="type">GUPnPContext</span></a> *context</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
@@ -139,13 +145,16 @@ The type for <a class="link" href="RygelRootDeviceFactory.html" title="RygelRoot
 <hr>
 <div class="refsect2">
 <a name="rygel-root-device-factory-get-context"></a><h3>rygel_root_device_factory_get_context ()</h3>
-<pre class="programlisting"><span class="returnvalue">GUPnPContext</span> *      rygel_root_device_factory_get_context
+<pre class="programlisting"><a href="../gupnp/GUPnPContext.html"><span class="returnvalue">GUPnPContext</span></a> *      rygel_root_device_factory_get_context
                                                         (<em class="parameter"><code><a class="link" href="RygelRootDeviceFactory.html" title="RygelRootDeviceFactory"><span class="type">RygelRootDeviceFactory</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelRootDeviceFactory.html#RygelRootDeviceFactory--context" title='The "context" property'><span class="type">"context"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -181,8 +190,11 @@ This is a factory to create <a class="link" href="RygelRootDevice.html" title="R
 <p>
 The class structure for <a class="link" href="RygelRootDeviceFactory.html#RYGEL-TYPE-ROOT-DEVICE-FACTORY:CAPS" title="RYGEL_TYPE_ROOT_DEVICE_FACTORY"><code class="literal">RYGEL_TYPE_ROOT_DEVICE_FACTORY</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelRootDeviceFactoryClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
@@ -196,19 +208,29 @@ The class structure for <a class="link" href="RygelRootDeviceFactory.html#RYGEL-
 	ROOT_DEVICE_FACTORY_ERROR_XML_PARSE
 } RootDeviceFactoryError;
 </pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><a name="ROOT-DEVICE-FACTORY-ERROR-XML-PARSE:CAPS"></a><span class="term"><code class="literal">ROOT_DEVICE_FACTORY_ERROR_XML_PARSE</code></span></p></td>
+<td></td>
+</tr></tbody>
+</table></div>
 </div>
 </div>
 <div class="refsect1">
 <a name="RygelRootDeviceFactory.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="RygelRootDeviceFactory--context"></a><h3>The <code class="literal">"context"</code> property</h3>
-<pre class="programlisting">  "context"                  <span class="type">GUPnPContext</span>*         : Read / Write / Construct Only</pre>
+<pre class="programlisting">  "context"                  <a href="../gupnp/GUPnPContext.html"><span class="type">GUPnPContext</span></a>*         : Read / Write / Construct Only</pre>
 <p>context.</p>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

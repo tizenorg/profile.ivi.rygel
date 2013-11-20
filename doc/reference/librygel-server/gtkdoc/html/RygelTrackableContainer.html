@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelTrackableContainer</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="up" href="api-main-list.html" title="librygel-server API Reference">
 <link rel="prev" href="RygelThumbnail.html" title="RygelThumbnail">
 <link rel="next" href="RygelTranscodeManager.html" title="RygelTranscodeManager">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -85,7 +85,7 @@
 <span class="returnvalue">void</span>                <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-set-service-reset-token" title="rygel_trackable_container_set_service_reset_token ()">rygel_trackable_container_set_service_reset_token</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer"><span class="type">RygelTrackableContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *token</code></em>);
-<span class="returnvalue">guint32</span>             <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-get-system-update-id" title="rygel_trackable_container_get_system_update_id ()">rygel_trackable_container_get_system_update_id</a>
+<a href="../glib/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>             <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-get-system-update-id" title="rygel_trackable_container_get_system_update_id ()">rygel_trackable_container_get_system_update_id</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer"><span class="type">RygelTrackableContainer</span></a> *self</code></em>);
                     <a class="link" href="RygelTrackableContainer.html#RygelTrackableContainer-struct" title="RygelTrackableContainer">RygelTrackableContainer</a>;
 struct              <a class="link" href="RygelTrackableContainer.html#RygelTrackableContainerIface" title="struct RygelTrackableContainerIface">RygelTrackableContainerIface</a>;
@@ -128,10 +128,13 @@ RygelTrackableContainer requires
                                                          <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> _callback_</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> _user_data_</code></em>);</pre>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-clear-finish" title="rygel_trackable_container_clear_finish ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-clear-finish" title="rygel_trackable_container_clear_finish ()"><code class="function">rygel_trackable_container_clear_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-clear-finish" title="rygel_trackable_container_clear_finish ()"><code class="function">rygel_trackable_container_clear_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -157,10 +160,13 @@ RygelTrackableContainer requires
                                                         (<em class="parameter"><code><a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer"><span class="type">RygelTrackableContainer</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../gio/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *_res_</code></em>);</pre>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-clear" title="rygel_trackable_container_clear ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-clear" title="rygel_trackable_container_clear ()"><code class="function">rygel_trackable_container_clear()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-clear" title="rygel_trackable_container_clear ()"><code class="function">rygel_trackable_container_clear()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -185,10 +191,13 @@ RygelTrackableContainer requires
 Derived classes should implement this, keeping track of the child item or child container. See the <code class="function">remove_child()</code> virtual function.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-finish" title="rygel_trackable_container_add_child_finish ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-finish" title="rygel_trackable_container_add_child_finish ()"><code class="function">rygel_trackable_container_add_child_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-finish" title="rygel_trackable_container_add_child_finish ()"><code class="function">rygel_trackable_container_add_child_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -221,10 +230,13 @@ Derived classes should implement this, keeping track of the child item or child 
 Derived classes should implement this, keeping track of the child item or child container. See the <code class="function">remove_child()</code> virtual function.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child" title="rygel_trackable_container_add_child ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child" title="rygel_trackable_container_add_child ()"><code class="function">rygel_trackable_container_add_child()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child" title="rygel_trackable_container_add_child ()"><code class="function">rygel_trackable_container_add_child()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -250,10 +262,13 @@ Derived classes should implement this, keeping track of the child item or child 
 Add a child object, emitting the <span class="type">"container_updated"</span> signal with the object.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <code class="function">rygel_trackable_object_remove_child_tracked()</code>, <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-tracked-finish" title="rygel_trackable_container_add_child_tracked_finish ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-tracked-finish" title="rygel_trackable_container_add_child_tracked_finish ()"><code class="function">rygel_trackable_container_add_child_tracked_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <code class="function">rygel_trackable_object_remove_child_tracked()</code>, <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-tracked-finish" title="rygel_trackable_container_add_child_tracked_finish ()"><code class="function">rygel_trackable_container_add_child_tracked_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -287,10 +302,13 @@ Add a child object, emitting the <span class="type">"container_updated"</span> s
 Add a child object, emitting the <span class="type">"container_updated"</span> signal with the object.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <code class="function">rygel_trackable_object_remove_child_tracked()</code>, <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-tracked" title="rygel_trackable_container_add_child_tracked ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-tracked" title="rygel_trackable_container_add_child_tracked ()"><code class="function">rygel_trackable_container_add_child_tracked()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <code class="function">rygel_trackable_object_remove_child_tracked()</code>, <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-add-child-tracked" title="rygel_trackable_container_add_child_tracked ()"><code class="function">rygel_trackable_container_add_child_tracked()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -316,10 +334,13 @@ Add a child object, emitting the <span class="type">"container_updated"</span> s
 Derived classes should implement this, removing the child item or child container from its set of objects. See the <code class="function">add_child()</code> virtual function.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-finish" title="rygel_trackable_container_remove_child_finish ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-finish" title="rygel_trackable_container_remove_child_finish ()"><code class="function">rygel_trackable_container_remove_child_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-finish" title="rygel_trackable_container_remove_child_finish ()"><code class="function">rygel_trackable_container_remove_child_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -352,10 +373,13 @@ Derived classes should implement this, removing the child item or child containe
 Derived classes should implement this, removing the child item or child container from its set of objects. See the <code class="function">add_child()</code> virtual function.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child" title="rygel_trackable_container_remove_child ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child" title="rygel_trackable_container_remove_child ()"><code class="function">rygel_trackable_container_remove_child()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child" title="rygel_trackable_container_remove_child ()"><code class="function">rygel_trackable_container_remove_child()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -381,10 +405,13 @@ Derived classes should implement this, removing the child item or child containe
 Add a child object, emitting the <span class="type">"container_updated"</span> signal with the object.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <code class="function">rygel_trackable_object_add_child_tracked()</code>, <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-tracked-finish" title="rygel_trackable_container_remove_child_tracked_finish ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-tracked-finish" title="rygel_trackable_container_remove_child_tracked_finish ()"><code class="function">rygel_trackable_container_remove_child_tracked_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <code class="function">rygel_trackable_object_add_child_tracked()</code>, <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-tracked-finish" title="rygel_trackable_container_remove_child_tracked_finish ()"><code class="function">rygel_trackable_container_remove_child_tracked_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -418,10 +445,13 @@ Add a child object, emitting the <span class="type">"container_updated"</span> s
 Add a child object, emitting the <span class="type">"container_updated"</span> signal with the object.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <code class="function">rygel_trackable_object_add_child_tracked()</code>, <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-tracked" title="rygel_trackable_container_remove_child_tracked ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-tracked" title="rygel_trackable_container_remove_child_tracked ()"><code class="function">rygel_trackable_container_remove_child_tracked()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <code class="function">rygel_trackable_object_add_child_tracked()</code>, <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-remove-child-tracked" title="rygel_trackable_container_remove_child_tracked ()"><code class="function">rygel_trackable_container_remove_child_tracked()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -448,8 +478,11 @@ Used to query the (persisted) service reset token from the plug-in.
 <p>If a plugin implements PLUGIN_CAPABILITIES_TRACK_CHANGES, it should persist the ServiceResetToken. To do this override this virtual function in the root container implementation and provide the persisted version.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer"><span class="type">RygelTrackableContainer</span></a> instance</td>
@@ -470,8 +503,11 @@ Set a new service reset token.
 <p>If the service reset procedure has to be performed, the content directory service will set the new service reset token.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -488,7 +524,7 @@ Set a new service reset token.
 <hr>
 <div class="refsect2">
 <a name="rygel-trackable-container-get-system-update-id"></a><h3>rygel_trackable_container_get_system_update_id ()</h3>
-<pre class="programlisting"><span class="returnvalue">guint32</span>             rygel_trackable_container_get_system_update_id
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>             rygel_trackable_container_get_system_update_id
                                                         (<em class="parameter"><code><a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer"><span class="type">RygelTrackableContainer</span></a> *self</code></em>);</pre>
 <p>
 Query the current system update ID, used for the UPnP GetSystemUpdateID implementation.
@@ -499,8 +535,11 @@ Query the current system update ID, used for the UPnP GetSystemUpdateID implemen
 <p>Derived classes may need to delay part of their initialization until this function has been called, doing that initialization in the function override. That can prevent other parts of their implementation from changing the cached System Update ID before it has been provided.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -544,8 +583,11 @@ The base class for containers that provide automatic change tracking.
 <p>
 Interface for creating <a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer"><span class="type">RygelTrackableContainer</span></a> implementations.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><a href="../gobject/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="RygelTrackableContainerIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
@@ -569,17 +611,17 @@ Interface for creating <a class="link" href="RygelTrackableContainer.html" title
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelTrackableContainerIface.get-service-reset-token"></a>get_service_reset_token</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-get-service-reset-token" title="rygel_trackable_container_get_service_reset_token ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-get-service-reset-token" title="rygel_trackable_container_get_service_reset_token ()"><code class="function">rygel_trackable_container_get_service_reset_token()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-get-service-reset-token" title="rygel_trackable_container_get_service_reset_token ()"><code class="function">rygel_trackable_container_get_service_reset_token()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelTrackableContainerIface.set-service-reset-token"></a>set_service_reset_token</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-set-service-reset-token" title="rygel_trackable_container_set_service_reset_token ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-set-service-reset-token" title="rygel_trackable_container_set_service_reset_token ()"><code class="function">rygel_trackable_container_set_service_reset_token()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-set-service-reset-token" title="rygel_trackable_container_set_service_reset_token ()"><code class="function">rygel_trackable_container_set_service_reset_token()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelTrackableContainerIface.get-system-update-id"></a>get_system_update_id</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-get-system-update-id" title="rygel_trackable_container_get_system_update_id ()"><code class="function"><a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-get-system-update-id" title="rygel_trackable_container_get_system_update_id ()"><code class="function">rygel_trackable_container_get_system_update_id()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelTrackableContainer.html#rygel-trackable-container-get-system-update-id" title="rygel_trackable_container_get_system_update_id ()"><code class="function">rygel_trackable_container_get_system_update_id()</code></a>
 </td>
 </tr>
 </tbody>
@@ -593,8 +635,11 @@ Interface for creating <a class="link" href="RygelTrackableContainer.html" title
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer"><span class="type">RygelTrackableContainer</span></a> *trackable_container,
                                                         <a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a>        *object,
                                                         <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>                 user_data)                : <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>trackable_container</code></em> :</span></p></td>
@@ -617,8 +662,11 @@ Interface for creating <a class="link" href="RygelTrackableContainer.html" title
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer"><span class="type">RygelTrackableContainer</span></a> *trackable_container,
                                                         <a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a>        *object,
                                                         <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>                 user_data)                : <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>trackable_container</code></em> :</span></p></td>
@@ -639,6 +687,6 @@ Interface for creating <a class="link" href="RygelTrackableContainer.html" title
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

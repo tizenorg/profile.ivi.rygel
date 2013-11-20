@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelStateMachine</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-core Reference Manual">
 <link rel="up" href="api-main-list-c.html" title="librygel-core API Reference">
 <link rel="prev" href="RygelXMLUtils.html" title="RygelXMLUtils">
 <link rel="next" href="api-main-list-dbus.html" title="librygel-core D-Bus API Reference">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -93,10 +93,13 @@ RygelStateMachine requires
                                                          <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> _callback_</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> _user_data_</code></em>);</pre>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelStateMachine.html#rygel-state-machine-run-finish" title="rygel_state_machine_run_finish ()"><code class="function"><a class="link" href="RygelStateMachine.html#rygel-state-machine-run-finish" title="rygel_state_machine_run_finish ()"><code class="function">rygel_state_machine_run_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelStateMachine.html#rygel-state-machine-run-finish" title="rygel_state_machine_run_finish ()"><code class="function">rygel_state_machine_run_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -121,10 +124,13 @@ RygelStateMachine requires
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_state_machine_run_finish      (<em class="parameter"><code><a class="link" href="RygelStateMachine.html" title="RygelStateMachine"><span class="type">RygelStateMachine</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../gio/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *_res_</code></em>);</pre>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function"><a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function">rygel_state_machine_run()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function">rygel_state_machine_run()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -145,8 +151,11 @@ RygelStateMachine requires
 <p>
 Get and return the current value of the <a class="link" href="RygelStateMachine.html#RygelStateMachine--cancellable" title='The "cancellable" property'><span class="type">"cancellable"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -167,8 +176,11 @@ Get and return the current value of the <a class="link" href="RygelStateMachine.
 <p>
 Set the value of the <a class="link" href="RygelStateMachine.html#RygelStateMachine--cancellable" title='The "cancellable" property'><span class="type">"cancellable"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -203,8 +215,11 @@ StateMachine interface.
 <p>
 Interface for creating <a class="link" href="RygelStateMachine.html" title="RygelStateMachine"><span class="type">RygelStateMachine</span></a> implementations.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><a href="../gobject/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="RygelStateMachineIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
@@ -212,12 +227,12 @@ Interface for creating <a class="link" href="RygelStateMachine.html" title="Ryge
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelStateMachineIface.run"></a>run</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function"><a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function">rygel_state_machine_run()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function">rygel_state_machine_run()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelStateMachineIface.run-finish"></a>run_finish</code></em> ()</span></p></td>
-<td>asynchronous finish function for <em class="structfield"><code>run</code></em>, called by <a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function"><a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function">rygel_state_machine_run()</code></a></code></a>
+<td>asynchronous finish function for <em class="structfield"><code>run</code></em>, called by <a class="link" href="RygelStateMachine.html#rygel-state-machine-run" title="rygel_state_machine_run ()"><code class="function">rygel_state_machine_run()</code></a>
 </td>
 </tr>
 <tr>
@@ -248,8 +263,11 @@ Interface for creating <a class="link" href="RygelStateMachine.html" title="Ryge
 <a name="RygelStateMachine-completed"></a><h3>The <code class="literal">"completed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="RygelStateMachine.html" title="RygelStateMachine"><span class="type">RygelStateMachine</span></a> *state_machine,
                                                         <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>           user_data)          : <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>state_machine</code></em> :</span></p></td>
@@ -266,6 +284,6 @@ Interface for creating <a class="link" href="RygelStateMachine.html" title="Ryge
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

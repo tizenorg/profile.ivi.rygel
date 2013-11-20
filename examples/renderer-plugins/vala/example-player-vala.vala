@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 Intel Corporation
+ * Copyright (C) 2013 Cable Television Laboratories, Inc.
  *
  * This file is part of Rygel.
  *
@@ -54,6 +55,25 @@ public class Rygel.Example.PlayerVala : GLib.Object, Rygel.MediaPlayer {
 
         set {
             this._playback_state = value;
+            if (this._playback_state == "PLAYING") {
+                Idle.add (() => {
+                    uint8[] data;
+                    try {
+                        var f = File.new_for_uri (this.uri);
+                        f.load_contents (null, out data, null);
+                    } catch (Error err) {
+                        warning ("Failed: %s", err.message);
+                    }
+
+                    Timeout.add_seconds (60, () => {
+                        this.playback_state = "EOS";
+
+                        return false;
+                    });
+
+                    return false;
+                });
+            }
         }
     }
 
@@ -92,6 +112,9 @@ public class Rygel.Example.PlayerVala : GLib.Object, Rygel.MediaPlayer {
              * rygel -g 5
              */
             debug ("URI set to %s.", value);
+            if (this._playback_state == "EOS") {
+                this.playback_state = "PLAYING";
+            }
         }
     }
 
@@ -118,6 +141,7 @@ public class Rygel.Example.PlayerVala : GLib.Object, Rygel.MediaPlayer {
     }
 
     public bool can_seek { get { return false; } }
+    public bool can_seek_bytes { get { return false; } }
 
     private string _content_features = "";
     public string? content_features {
@@ -149,6 +173,12 @@ public class Rygel.Example.PlayerVala : GLib.Object, Rygel.MediaPlayer {
         }
     }
 
+    public int64 size {
+        get {
+            return 0;
+        }
+    }
+
     private int64 _position = 0;
     public int64 position {
         get {
@@ -156,7 +186,17 @@ public class Rygel.Example.PlayerVala : GLib.Object, Rygel.MediaPlayer {
         }
     }
 
+    public int64 byte_position {
+        get {
+            return 0;
+        }
+    }
+
     public bool seek (int64 time) {
+        return false;
+    }
+
+    public bool seek_bytes (int64 bytes) {
         return false;
     }
 
