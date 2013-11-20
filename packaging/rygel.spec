@@ -7,12 +7,12 @@
 
 Name:       rygel
 Summary:    GNOME UPnP/DLNA Media Server
-Version:    0.19.6
+Version:    0.21.1
 Release:    0
 Group:      Applications/Multimedia
-License:    GPLv2
+License:    LGPL-2.0+
 URL:        http://live.gnome.org/Rygel
-Source0:    http://download.gnome.org/sources/rygel/0.17/%{name}-%{version}.tar.bz2
+Source0:    http://download.gnome.org/sources/rygel/0.21/%{name}-%{version}.tar.xz
 Requires(post): /bin/touch
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gio-2.0)
@@ -83,11 +83,13 @@ install -m644 examples/service/systemd/rygel.service.tizen %{buildroot}%{_prefix
 rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 %post
+/sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor || :
 %{_bindir}/gtk-update-icon-cache \
   --quiet %{_datadir}/icons/hicolor 2> /dev/null|| :
 
 %postun
+/sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor || :
 %{_bindir}/gtk-update-icon-cache \
   --quiet %{_datadir}/icons/hicolor 2> /dev/null|| :
@@ -121,6 +123,7 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %{_datadir}/rygel/presets/avenc_wmv1.prs
 %{_datadir}/rygel/xml/ContentDirectory-NoTrack.xml
 %{_datadir}/rygel/xml/AVTransport2.xml
+%{_datadir}/rygel/xml/BasicManagement2.xml
 %{_datadir}/rygel/xml/ConnectionManager.xml
 %{_datadir}/rygel/xml/ContentDirectory.xml
 %{_datadir}/rygel/xml/MediaRenderer2.xml
