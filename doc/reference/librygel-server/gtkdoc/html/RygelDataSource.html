@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelDataSource</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="up" href="api-main-list.html" title="librygel-server API Reference">
 <link rel="prev" href="RygelAudioItem.html" title="RygelAudioItem">
 <link rel="next" href="RygelHTTPSeek.html" title="RygelHTTPSeek">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -100,6 +100,22 @@ RygelDataSource requires
 	RYGEL_DATA_SOURCE_ERROR_SEEK_FAILED
 } RygelDataSourceError;
 </pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="RYGEL-DATA-SOURCE-ERROR-GENERAL:CAPS"></a><span class="term"><code class="literal">RYGEL_DATA_SOURCE_ERROR_GENERAL</code></span></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p><a name="RYGEL-DATA-SOURCE-ERROR-SEEK-FAILED:CAPS"></a><span class="term"><code class="literal">RYGEL_DATA_SOURCE_ERROR_SEEK_FAILED</code></span></p></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
@@ -115,8 +131,11 @@ Start producing the data.
 <p><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> will be returned in <em class="parameter"><code>error</code></em> if anything goes wrong while starting the stream. Throws DataSourceError.SEEK_FAILED if a seek method is not supported or the range is not fulfillable. </p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -146,8 +165,11 @@ Temporarily stop data generation.
 <p>May be called multiple times. If the source is already frozen, the following calles to freeze are ignored. After callging <code class="function">freeze()</code>, so <code class="function">data_available()</code> signal should be emitted.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> instance</td>
@@ -166,8 +188,11 @@ Resume data generation from a previous freeze call.
 <p>May be called multiple times, will be ignored if the source is not frozen.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> instance</td>
@@ -181,8 +206,11 @@ Resume data generation from a previous freeze call.
 <p>
 Stop producing data. After calling <code class="function">stop()</code>, calling <code class="function">start()</code> should produce data from the beginning and not resume streaming.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> instance</td>
@@ -224,8 +252,11 @@ Interface for all data streams provided by a <a class="link" href="RygelMediaEng
 <p>
 Interface for creating <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> implementations.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><a href="../gobject/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="RygelDataSourceIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
@@ -233,22 +264,22 @@ Interface for creating <a class="link" href="RygelDataSource.html" title="RygelD
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelDataSourceIface.start"></a>start</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelDataSource.html#rygel-data-source-start" title="rygel_data_source_start ()"><code class="function"><a class="link" href="RygelDataSource.html#rygel-data-source-start" title="rygel_data_source_start ()"><code class="function">rygel_data_source_start()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelDataSource.html#rygel-data-source-start" title="rygel_data_source_start ()"><code class="function">rygel_data_source_start()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelDataSourceIface.freeze"></a>freeze</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelDataSource.html#rygel-data-source-freeze" title="rygel_data_source_freeze ()"><code class="function"><a class="link" href="RygelDataSource.html#rygel-data-source-freeze" title="rygel_data_source_freeze ()"><code class="function">rygel_data_source_freeze()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelDataSource.html#rygel-data-source-freeze" title="rygel_data_source_freeze ()"><code class="function">rygel_data_source_freeze()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelDataSourceIface.thaw"></a>thaw</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelDataSource.html#rygel-data-source-thaw" title="rygel_data_source_thaw ()"><code class="function"><a class="link" href="RygelDataSource.html#rygel-data-source-thaw" title="rygel_data_source_thaw ()"><code class="function">rygel_data_source_thaw()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelDataSource.html#rygel-data-source-thaw" title="rygel_data_source_thaw ()"><code class="function">rygel_data_source_thaw()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelDataSourceIface.stop"></a>stop</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelDataSource.html#rygel-data-source-stop" title="rygel_data_source_stop ()"><code class="function"><a class="link" href="RygelDataSource.html#rygel-data-source-stop" title="rygel_data_source_stop ()"><code class="function">rygel_data_source_stop()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelDataSource.html#rygel-data-source-stop" title="rygel_data_source_stop ()"><code class="function">rygel_data_source_stop()</code></a>
 </td>
 </tr>
 </tbody>
@@ -271,8 +302,11 @@ Emitted when the source has produced some data.
 <p>This signal has to be emitted in the main thread.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>data_source</code></em> :</span></p></td>
@@ -306,8 +340,11 @@ Emitted when the source does not have data anymore.
 <p>This signal has to be emitted in the main thread.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>data_source</code></em> :</span></p></td>
@@ -334,8 +371,11 @@ Emitted when the source encounters a problem during data generation.
 <p>This signal has to be emitted in the main thread.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>data_source</code></em> :</span></p></td>
@@ -356,6 +396,6 @@ Emitted when the source encounters a problem during data generation.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

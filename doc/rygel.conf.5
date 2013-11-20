@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: rygel.conf
 .\"    Author: Jens Georg <mail@jensge.org>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 09/10/2013
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 11/19/2013
 .\"    Manual: Rygel User Manual
 .\"    Source: rygel
 .\"  Language: English
 .\"
-.TH "RYGEL\&.CONF" "5" "09/10/2013" "rygel" "Rygel User Manual"
+.TH "RYGEL\&.CONF" "5" "11/19/2013" "rygel" "Rygel User Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -178,6 +178,26 @@ so we can include it into the default configuration\&.
 .sp .5v
 .RE
 .RE
+.SH "GSTREAMER MEDIA ENGINE SETTINGS"
+.PP
+The settings in the
+[GstMediaEngine]
+section are specific to the Gstreamer media engine, which is the default media engine\&. See the media\-engine setting\&. These following options are available for the
+\m[blue]\fBGStreamer\fR\m[]\&\s-2\u[2]\d\s+2
+media engine\&.
+.PP
+\fBtranscoders\fR
+.RS 4
+A semicolon\-separated list of the active transcoders\&. This setting has no effect if
+\fBenable\-transcoding\fR
+is set to
+false\&. Possible values are:
+lpcm,mp3,mp2ts,aac,avc
+or
+wmv\&. Its default value is
+lpcm;mp3;mp2ts;aac;wmv\&.
+.RE
+.SH "PLUGIN-SPECIFIC SETTINGS"
 .PP
 Sections for plugins are denoted with
 \fB[PluginName]\fR
@@ -204,24 +224,12 @@ You can individually enable or disable plugins by setting this to
 or
 \fBfalse\fR\&.
 .RE
-.SH "GSTREAMER MEDIA ENGINE SETTINGS"
 .PP
-The settings in the
-[GstMediaEngine]
-section are specific to the Gstreamer media engine, which is the default media engine\&. See the media\-engine setting\&. These following options are available for the
-\m[blue]\fBGStreamer\fR\m[]\&\s-2\u[2]\d\s+2
-media engine\&.
-.PP
-\fBtranscoders\fR
+\fBdiagnostics\fR
 .RS 4
-A semicolon\-separated list of the active transcoders\&. This setting has no effect if
-\fBenable\-transcoding\fR
-is set to
-false\&. Possible values are:
-lpcm,mp3,mp2ts,aac,avc
-or
-wmv\&. Its default value is
-lpcm;mp3;mp2ts;aac;wmv\&.
+Set to
+\fBtrue\fR
+if you would like the UPnP device to contain a BasicManagement:2 service that allows running tools like ping, nslookup and traceroute remotely\&.
 .RE
 .SH "TRACKER PLUGIN"
 .PP

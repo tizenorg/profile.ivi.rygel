@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelMediaObject</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="up" href="api-main-list.html" title="librygel-server API Reference">
 <link rel="prev" href="RygelMediaItem.html" title="RygelMediaItem">
 <link rel="next" href="RygelMediaObjects.html" title="RygelMediaObjects">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -60,6 +60,10 @@
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../gio/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *_res_</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="../gupnp-av/GUPnPDIDLLiteObject.html"><span class="returnvalue">GUPnPDIDLLiteObject</span></a> * <a class="link" href="RygelMediaObject.html#rygel-media-object-serialize" title="rygel_media_object_serialize ()">rygel_media_object_serialize</a>      (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><span class="type">RygelSerializer</span> *serializer</code></em>,
+                                                         <em class="parameter"><code><span class="type">RygelHTTPServer</span> *http_server</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelMediaObject.html#rygel-media-object-compare-string-props" title="rygel_media_object_compare_string_props ()">rygel_media_object_compare_string_props</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *prop1</code></em>,
@@ -77,9 +81,9 @@ const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gc
 const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelMediaObject.html#rygel-media-object-get-upnp-class" title="rygel_media_object_get_upnp_class ()">rygel_media_object_get_upnp_class</a>   (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaObject.html#rygel-media-object-set-upnp-class" title="rygel_media_object_set_upnp_class ()">rygel_media_object_set_upnp_class</a>   (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
-<span class="returnvalue">guint64</span>             <a class="link" href="RygelMediaObject.html#rygel-media-object-get-modified" title="rygel_media_object_get_modified ()">rygel_media_object_get_modified</a>     (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);
+<a href="../glib/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="RygelMediaObject.html#rygel-media-object-get-modified" title="rygel_media_object_get_modified ()">rygel_media_object_get_modified</a>     (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaObject.html#rygel-media-object-set-modified" title="rygel_media_object_set_modified ()">rygel_media_object_set_modified</a>     (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
 <a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="RygelMediaObject.html#rygel-media-object-get-object-update-id" title="rygel_media_object_get_object_update_id ()">rygel_media_object_get_object_update_id</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaObject.html#rygel-media-object-set-object-update-id" title="rygel_media_object_set_object_update_id ()">rygel_media_object_set_object_update_id</a>
@@ -94,7 +98,7 @@ const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gc
 const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelMediaObject.html#rygel-media-object-get-title" title="rygel_media_object_get_title ()">rygel_media_object_get_title</a>        (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMediaObject.html#rygel-media-object-set-title" title="rygel_media_object_set_title ()">rygel_media_object_set_title</a>        (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
-<span class="returnvalue">GUPnPOCMFlags</span>       <a class="link" href="RygelMediaObject.html#rygel-media-object-get-ocm-flags" title="rygel_media_object_get_ocm_flags ()">rygel_media_object_get_ocm_flags</a>    (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);
+<a href="../gupnp-av/GUPnPDIDLLiteObject.html#GUPnPOCMFlags"><span class="returnvalue">GUPnPOCMFlags</span></a>       <a class="link" href="RygelMediaObject.html#rygel-media-object-get-ocm-flags" title="rygel_media_object_get_ocm_flags ()">rygel_media_object_get_ocm_flags</a>    (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);
 struct              <a class="link" href="RygelMediaObject.html#RygelMediaObject-struct" title="struct RygelMediaObject">RygelMediaObject</a>;
 struct              <a class="link" href="RygelMediaObject.html#RygelMediaObjectClass" title="struct RygelMediaObjectClass">RygelMediaObjectClass</a>;
 </pre>
@@ -118,9 +122,9 @@ RygelMediaObject is required by
 <a name="RygelMediaObject.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="RygelMediaObject.html#RygelMediaObject--id" title='The "id" property'>id</a>"                       <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct
-  "<a class="link" href="RygelMediaObject.html#RygelMediaObject--modified" title='The "modified" property'>modified</a>"                 <span class="type">guint64</span>               : Read / Write
+  "<a class="link" href="RygelMediaObject.html#RygelMediaObject--modified" title='The "modified" property'>modified</a>"                 <a href="../glib/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write
   "<a class="link" href="RygelMediaObject.html#RygelMediaObject--object-update-id" title='The "object-update-id" property'>object-update-id</a>"         <a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
-  "<a class="link" href="RygelMediaObject.html#RygelMediaObject--ocm-flags" title='The "ocm-flags" property'>ocm-flags</a>"                <span class="type">GUPnPOCMFlags</span>         : Read
+  "<a class="link" href="RygelMediaObject.html#RygelMediaObject--ocm-flags" title='The "ocm-flags" property'>ocm-flags</a>"                <a href="../gupnp-av/GUPnPDIDLLiteObject.html#GUPnPOCMFlags"><span class="type">GUPnPOCMFlags</span></a>         : Read
   "<a class="link" href="RygelMediaObject.html#RygelMediaObject--parent" title='The "parent" property'>parent</a>"                   <a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a>*  : Read / Write / Construct
   "<a class="link" href="RygelMediaObject.html#RygelMediaObject--parent-ref" title='The "parent-ref" property'>parent-ref</a>"               <a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a>*  : Read / Write
   "<a class="link" href="RygelMediaObject.html#RygelMediaObject--ref-id" title='The "ref-id" property'>ref-id</a>"                   <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
@@ -159,10 +163,13 @@ The type for <a class="link" href="RygelMediaObject.html" title="RygelMediaObjec
 Fetches a File object for any writable URI available for this object.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaObject.html#rygel-media-object-get-writable-finish" title="rygel_media_object_get_writable_finish ()"><code class="function"><a class="link" href="RygelMediaObject.html#rygel-media-object-get-writable-finish" title="rygel_media_object_get_writable_finish ()"><code class="function">rygel_media_object_get_writable_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaObject.html#rygel-media-object-get-writable-finish" title="rygel_media_object_get_writable_finish ()"><code class="function">rygel_media_object_get_writable_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -197,10 +204,13 @@ Fetches a File object for any writable URI available for this object.
 Fetches a File object for any writable URI available for this object.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaObject.html#rygel-media-object-get-writable" title="rygel_media_object_get_writable ()"><code class="function"><a class="link" href="RygelMediaObject.html#rygel-media-object-get-writable" title="rygel_media_object_get_writable ()"><code class="function">rygel_media_object_get_writable()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaObject.html#rygel-media-object-get-writable" title="rygel_media_object_get_writable ()"><code class="function">rygel_media_object_get_writable()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -229,10 +239,13 @@ Fetches a File object for any writable URI available for this object.
 Fetches File objects for all writable URIs available for this object.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaObject.html#rygel-media-object-get-writables-finish" title="rygel_media_object_get_writables_finish ()"><code class="function"><a class="link" href="RygelMediaObject.html#rygel-media-object-get-writables-finish" title="rygel_media_object_get_writables_finish ()"><code class="function">rygel_media_object_get_writables_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaObject.html#rygel-media-object-get-writables-finish" title="rygel_media_object_get_writables_finish ()"><code class="function">rygel_media_object_get_writables_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -267,10 +280,13 @@ Fetches File objects for all writable URIs available for this object.
 Fetches File objects for all writable URIs available for this object.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaObject.html#rygel-media-object-get-writables" title="rygel_media_object_get_writables ()"><code class="function"><a class="link" href="RygelMediaObject.html#rygel-media-object-get-writables" title="rygel_media_object_get_writables ()"><code class="function">rygel_media_object_get_writables()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaObject.html#rygel-media-object-get-writables" title="rygel_media_object_get_writables ()"><code class="function">rygel_media_object_get_writables()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -290,13 +306,48 @@ Fetches File objects for all writable URIs available for this object.
 </div>
 <hr>
 <div class="refsect2">
+<a name="rygel-media-object-serialize"></a><h3>rygel_media_object_serialize ()</h3>
+<pre class="programlisting"><a href="../gupnp-av/GUPnPDIDLLiteObject.html"><span class="returnvalue">GUPnPDIDLLiteObject</span></a> * rygel_media_object_serialize      (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><span class="type">RygelSerializer</span> *serializer</code></em>,
+                                                         <em class="parameter"><code><span class="type">RygelHTTPServer</span> *http_server</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>serializer</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_server</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
 <a name="rygel-media-object-compare-string-props"></a><h3>rygel_media_object_compare_string_props ()</h3>
 <pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_media_object_compare_string_props
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *prop1</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *prop2</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -320,8 +371,11 @@ Fetches File objects for all writable URIs available for this object.
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> prop1</code></em>,
                                                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> prop2</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -345,8 +399,11 @@ Fetches File objects for all writable URIs available for this object.
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--id" title='The "id" property'><span class="type">"id"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -367,8 +424,11 @@ Get and return the current value of the <a class="link" href="RygelMediaObject.h
 <p>
 Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--id" title='The "id" property'><span class="type">"id"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -388,8 +448,11 @@ Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObjec
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--ref-id" title='The "ref-id" property'><span class="type">"ref-id"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -410,8 +473,11 @@ Get and return the current value of the <a class="link" href="RygelMediaObject.h
 <p>
 Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--ref-id" title='The "ref-id" property'><span class="type">"ref-id"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -431,8 +497,11 @@ Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObjec
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--upnp-class" title='The "upnp-class" property'><span class="type">"upnp-class"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -453,8 +522,11 @@ Get and return the current value of the <a class="link" href="RygelMediaObject.h
 <p>
 Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--upnp-class" title='The "upnp-class" property'><span class="type">"upnp-class"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -470,12 +542,15 @@ Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObjec
 <hr>
 <div class="refsect2">
 <a name="rygel-media-object-get-modified"></a><h3>rygel_media_object_get_modified ()</h3>
-<pre class="programlisting"><span class="returnvalue">guint64</span>             rygel_media_object_get_modified     (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             rygel_media_object_get_modified     (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--modified" title='The "modified" property'><span class="type">"modified"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -492,12 +567,15 @@ Get and return the current value of the <a class="link" href="RygelMediaObject.h
 <div class="refsect2">
 <a name="rygel-media-object-set-modified"></a><h3>rygel_media_object_set_modified ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_media_object_set_modified     (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--modified" title='The "modified" property'><span class="type">"modified"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -518,8 +596,11 @@ Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObjec
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--object-update-id" title='The "object-update-id" property'><span class="type">"object-update-id"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -541,8 +622,11 @@ Get and return the current value of the <a class="link" href="RygelMediaObject.h
 <p>
 Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--object-update-id" title='The "object-update-id" property'><span class="type">"object-update-id"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -562,8 +646,11 @@ Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObjec
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--parent" title='The "parent" property'><span class="type">"parent"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -584,8 +671,11 @@ Get and return the current value of the <a class="link" href="RygelMediaObject.h
 <p>
 Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--parent" title='The "parent" property'><span class="type">"parent"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -605,8 +695,11 @@ Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObjec
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--parent-ref" title='The "parent-ref" property'><span class="type">"parent-ref"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -627,8 +720,11 @@ Get and return the current value of the <a class="link" href="RygelMediaObject.h
 <p>
 Set the value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--parent-ref" title='The "parent-ref" property'><span class="type">"parent-ref"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -653,7 +749,7 @@ The human-readable title of this container or item. These variables will be subs
 </p>
 <p>
 </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="none"><li class="listitem" style="list-style-type: none">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: none; "><li class="listitem" style="list-style-type: none">
 <p>- @<em class="parameter"><code>REALNAME</code></em>@ will be substituted by the user's real name.   </p>
 <p>- @<em class="parameter"><code>USERNAME</code></em>@ will be substituted by the users's login ID.</p>
 <p>- @<em class="parameter"><code>HOSTNAME</code></em>@ will be substituted by the name of the machine.</p>
@@ -661,8 +757,11 @@ The human-readable title of this container or item. These variables will be subs
 </li></ul></div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -688,7 +787,7 @@ The human-readable title of this container or item. These variables will be subs
 </p>
 <p>
 </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="none"><li class="listitem" style="list-style-type: none">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: none; "><li class="listitem" style="list-style-type: none">
 <p>- @<em class="parameter"><code>REALNAME</code></em>@ will be substituted by the user's real name.   </p>
 <p>- @<em class="parameter"><code>USERNAME</code></em>@ will be substituted by the users's login ID.</p>
 <p>- @<em class="parameter"><code>HOSTNAME</code></em>@ will be substituted by the name of the machine.</p>
@@ -696,8 +795,11 @@ The human-readable title of this container or item. These variables will be subs
 </li></ul></div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -713,12 +815,15 @@ The human-readable title of this container or item. These variables will be subs
 <hr>
 <div class="refsect2">
 <a name="rygel-media-object-get-ocm-flags"></a><h3>rygel_media_object_get_ocm_flags ()</h3>
-<pre class="programlisting"><span class="returnvalue">GUPnPOCMFlags</span>       rygel_media_object_get_ocm_flags    (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../gupnp-av/GUPnPDIDLLiteObject.html#GUPnPOCMFlags"><span class="returnvalue">GUPnPOCMFlags</span></a>       rygel_media_object_get_ocm_flags    (<em class="parameter"><code><a class="link" href="RygelMediaObject.html" title="RygelMediaObject"><span class="type">RygelMediaObject</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaObject.html#RygelMediaObject--ocm-flags" title='The "ocm-flags" property'><span class="type">"ocm-flags"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -760,8 +865,11 @@ Represents a media object (container or item).
 <p>
 The class structure for <a class="link" href="RygelMediaObject.html#RYGEL-TYPE-MEDIA-OBJECT:CAPS" title="RYGEL_TYPE_MEDIA_OBJECT"><code class="literal">RYGEL_TYPE_MEDIA_OBJECT</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelMediaObjectClass.parent-class"></a>parent_class</code></em>;</span></p></td>
@@ -769,7 +877,8 @@ The class structure for <a class="link" href="RygelMediaObject.html#RYGEL-TYPE-M
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaObjectClass.serialize"></a>serialize</code></em> ()</span></p></td>
-<td></td>
+<td>virtual method called by <a class="link" href="RygelMediaObject.html#rygel-media-object-serialize" title="rygel_media_object_serialize ()"><code class="function">rygel_media_object_serialize()</code></a>
+</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaObjectClass.apply-didl-lite"></a>apply_didl_lite</code></em> ()</span></p></td>
@@ -803,7 +912,7 @@ The class structure for <a class="link" href="RygelMediaObject.html#RYGEL-TYPE-M
 <hr>
 <div class="refsect2">
 <a name="RygelMediaObject--modified"></a><h3>The <code class="literal">"modified"</code> property</h3>
-<pre class="programlisting">  "modified"                 <span class="type">guint64</span>               : Read / Write</pre>
+<pre class="programlisting">  "modified"                 <a href="../glib/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write</pre>
 <p>modified.</p>
 <p>Default value: 0</p>
 </div>
@@ -817,7 +926,7 @@ The class structure for <a class="link" href="RygelMediaObject.html#RYGEL-TYPE-M
 <hr>
 <div class="refsect2">
 <a name="RygelMediaObject--ocm-flags"></a><h3>The <code class="literal">"ocm-flags"</code> property</h3>
-<pre class="programlisting">  "ocm-flags"                <span class="type">GUPnPOCMFlags</span>         : Read</pre>
+<pre class="programlisting">  "ocm-flags"                <a href="../gupnp-av/GUPnPDIDLLiteObject.html#GUPnPOCMFlags"><span class="type">GUPnPOCMFlags</span></a>         : Read</pre>
 <p>ocm-flags.</p>
 </div>
 <hr>
@@ -855,7 +964,7 @@ The human-readable title of this container or item. These variables will be subs
 </p>
 <p>
 </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="none"><li class="listitem" style="list-style-type: none">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: none; "><li class="listitem" style="list-style-type: none">
 <p>- @<em class="parameter"><code>REALNAME</code></em>@ will be substituted by the user's real name.   </p>
 <p>- @<em class="parameter"><code>USERNAME</code></em>@ will be substituted by the users's login ID.</p>
 <p>- @<em class="parameter"><code>HOSTNAME</code></em>@ will be substituted by the name of the machine.</p>
@@ -876,6 +985,6 @@ The human-readable title of this container or item. These variables will be subs
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelMediaContainer</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="up" href="api-main-list.html" title="librygel-server API Reference">
 <link rel="prev" href="RygelMediaArtStore.html" title="RygelMediaArtStore">
 <link rel="next" href="RygelMediaEngine.html" title="RygelMediaEngine">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -131,7 +131,7 @@ RygelMediaContainer is required by
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--child-count" title='The "child-count" property'>child-count</a>"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write / Construct
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled" title='The "create-mode-enabled" property'>create-mode-enabled</a>"      <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--empty-child-count" title='The "empty-child-count" property'>empty-child-count</a>"        <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
-  "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--ocm-flags" title='The "ocm-flags" property'>ocm-flags</a>"                <span class="type">GUPnPOCMFlags</span>         : Read
+  "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--ocm-flags" title='The "ocm-flags" property'>ocm-flags</a>"                <a href="../gupnp-av/GUPnPDIDLLiteObject.html#GUPnPOCMFlags"><span class="type">GUPnPOCMFlags</span></a>         : Read
   "<a class="link" href="RygelMediaContainer.html#RygelMediaContainer--sort-criteria" title='The "sort-criteria" property'>sort-criteria</a>"            <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
 </pre>
 </div>
@@ -180,10 +180,13 @@ The type for <a class="link" href="RygelMediaContainer.html" title="RygelMediaCo
 Fetches the list of media objects directly under this container.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children-finish" title="rygel_media_container_get_children_finish ()"><code class="function"><a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children-finish" title="rygel_media_container_get_children_finish ()"><code class="function">rygel_media_container_get_children_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children-finish" title="rygel_media_container_get_children_finish ()"><code class="function">rygel_media_container_get_children_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -233,10 +236,13 @@ Fetches the list of media objects directly under this container.
 Fetches the list of media objects directly under this container.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function"><a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function">rygel_media_container_get_children()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function">rygel_media_container_get_children()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -270,10 +276,13 @@ Fetches the list of media objects directly under this container.
 Recursively searches this container for a media object with the given ID.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object-finish" title="rygel_media_container_find_object_finish ()"><code class="function"><a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object-finish" title="rygel_media_container_find_object_finish ()"><code class="function">rygel_media_container_find_object_finish()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object-finish" title="rygel_media_container_find_object_finish ()"><code class="function">rygel_media_container_find_object_finish()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -313,10 +322,13 @@ Recursively searches this container for a media object with the given ID.
 Recursively searches this container for a media object with the given ID.
 </p>
 <p>
-<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function"><a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function">rygel_media_container_find_object()</code></a></code></a>
+<span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function">rygel_media_container_find_object()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -356,8 +368,11 @@ This method should be called each time this container is updated.
 <p>See the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer-container-updated" title='The "container-updated" signal'><span class="type">"container_updated"</span></a> signal.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -437,8 +452,11 @@ This method should be called each time this container is updated.
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--child-count" title='The "child-count" property'><span class="type">"child-count"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -460,8 +478,11 @@ Get and return the current value of the <a class="link" href="RygelMediaContaine
 <p>
 Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--child-count" title='The "child-count" property'><span class="type">"child-count"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -482,8 +503,11 @@ Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaCo
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--empty-child-count" title='The "empty-child-count" property'><span class="type">"empty-child-count"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -505,8 +529,11 @@ Get and return the current value of the <a class="link" href="RygelMediaContaine
 <p>
 Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--empty-child-count" title='The "empty-child-count" property'><span class="type">"empty-child-count"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -527,8 +554,11 @@ Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaCo
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--all-child-count" title='The "all-child-count" property'><span class="type">"all-child-count"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -549,8 +579,11 @@ Get and return the current value of the <a class="link" href="RygelMediaContaine
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled" title='The "create-mode-enabled" property'><span class="type">"create-mode-enabled"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -572,8 +605,11 @@ Get and return the current value of the <a class="link" href="RygelMediaContaine
 <p>
 Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--create-mode-enabled" title='The "create-mode-enabled" property'><span class="type">"create-mode-enabled"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -594,8 +630,11 @@ Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaCo
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--sort-criteria" title='The "sort-criteria" property'><span class="type">"sort-criteria"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -617,8 +656,11 @@ Get and return the current value of the <a class="link" href="RygelMediaContaine
 <p>
 Set the value of the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer--sort-criteria" title='The "sort-criteria" property'><span class="type">"sort-criteria"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -664,8 +706,11 @@ This is a container (folder) for media items and child containers.
 <p>
 The class structure for <a class="link" href="RygelMediaContainer.html#RYGEL-TYPE-MEDIA-CONTAINER:CAPS" title="RYGEL_TYPE_MEDIA_CONTAINER"><code class="literal">RYGEL_TYPE_MEDIA_CONTAINER</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><a class="link" href="RygelMediaObject.html#RygelMediaObjectClass" title="struct RygelMediaObjectClass"><span class="type">RygelMediaObjectClass</span></a> <em class="structfield"><code><a name="RygelMediaContainerClass.parent-class"></a>parent_class</code></em>;</span></p></td>
@@ -673,22 +718,22 @@ The class structure for <a class="link" href="RygelMediaContainer.html#RYGEL-TYP
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaContainerClass.get-children"></a>get_children</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function"><a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function">rygel_media_container_get_children()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function">rygel_media_container_get_children()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaContainerClass.get-children-finish"></a>get_children_finish</code></em> ()</span></p></td>
-<td>asynchronous finish function for <em class="structfield"><code>get_children</code></em>, called by <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function"><a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function">rygel_media_container_get_children()</code></a></code></a>
+<td>asynchronous finish function for <em class="structfield"><code>get_children</code></em>, called by <a class="link" href="RygelMediaContainer.html#rygel-media-container-get-children" title="rygel_media_container_get_children ()"><code class="function">rygel_media_container_get_children()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaContainerClass.find-object"></a>find_object</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function"><a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function">rygel_media_container_find_object()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function">rygel_media_container_find_object()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaContainerClass.find-object-finish"></a>find_object_finish</code></em> ()</span></p></td>
-<td>asynchronous finish function for <em class="structfield"><code>find_object</code></em>, called by <a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function"><a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function">rygel_media_container_find_object()</code></a></code></a>
+<td>asynchronous finish function for <em class="structfield"><code>find_object</code></em>, called by <a class="link" href="RygelMediaContainer.html#rygel-media-container-find-object" title="rygel_media_container_find_object ()"><code class="function">rygel_media_container_find_object()</code></a>
 </td>
 </tr>
 </tbody>
@@ -703,6 +748,26 @@ The class structure for <a class="link" href="RygelMediaContainer.html#RYGEL-TYP
 	RYGEL_OBJECT_EVENT_TYPE_DELETED = 2
 } RygelObjectEventType;
 </pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="RYGEL-OBJECT-EVENT-TYPE-ADDED:CAPS"></a><span class="term"><code class="literal">RYGEL_OBJECT_EVENT_TYPE_ADDED</code></span></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p><a name="RYGEL-OBJECT-EVENT-TYPE-MODIFIED:CAPS"></a><span class="term"><code class="literal">RYGEL_OBJECT_EVENT_TYPE_MODIFIED</code></span></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p><a name="RYGEL-OBJECT-EVENT-TYPE-DELETED:CAPS"></a><span class="term"><code class="literal">RYGEL_OBJECT_EVENT_TYPE_DELETED</code></span></p></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
 </div>
 </div>
 <div class="refsect1">
@@ -737,7 +802,7 @@ The class structure for <a class="link" href="RygelMediaContainer.html#RYGEL-TYP
 <hr>
 <div class="refsect2">
 <a name="RygelMediaContainer--ocm-flags"></a><h3>The <code class="literal">"ocm-flags"</code> property</h3>
-<pre class="programlisting">  "ocm-flags"                <span class="type">GUPnPOCMFlags</span>         : Read</pre>
+<pre class="programlisting">  "ocm-flags"                <a href="../gupnp-av/GUPnPDIDLLiteObject.html#GUPnPOCMFlags"><span class="type">GUPnPOCMFlags</span></a>         : Read</pre>
 <p>ocm-flags.</p>
 </div>
 <hr>
@@ -764,8 +829,11 @@ The container_updated signal is emitted if a child container under the tree of t
 <p>
 <span class="emphasis"><em>See also</em></span>: <a class="link" href="RygelMediaContainer.html#rygel-media-container-updated" title="rygel_media_container_updated ()"><code class="function">rygel_media_container_updated()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>media_container</code></em> :</span></p></td>
@@ -807,8 +875,11 @@ The container_updated signal is emitted if a child container under the tree of t
 <p>
 The sub_tree_updates_finished signal is emitted when all of the sub-tree operations are finished. See the <a class="link" href="RygelMediaContainer.html#RygelMediaContainer-container-updated" title='The "container-updated" signal'><span class="type">"container_updated"</span></a> signal.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>media_container</code></em> :</span></p></td>
@@ -830,6 +901,6 @@ The sub_tree_updates_finished signal is emitted when all of the sub-tree operati
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

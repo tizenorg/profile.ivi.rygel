@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelPlaybinPlayer</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-renderer-gst Reference Manual">
 <link rel="up" href="api-main-list.html" title="librygel-renderer-gst API Reference">
 <link rel="prev" href="RygelPlaybinRenderer.html" title="RygelPlaybinRenderer">
 <link rel="next" href="object-tree.html" title="Object Hierarchy">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -70,15 +70,18 @@ RygelPlaybinPlayer implements
 <a name="RygelPlaybinPlayer.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--allowed-playback-speeds" title='The "allowed-playback-speeds" property'>allowed-playback-speeds</a>"  <a href="../gobject/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>                 : Read
+  "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--byte-position" title='The "byte-position" property'>byte-position</a>"            <a href="../glib/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--can-seek" title='The "can-seek" property'>can-seek</a>"                 <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read
+  "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--can-seek-bytes" title='The "can-seek-bytes" property'>can-seek-bytes</a>"           <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--content-features" title='The "content-features" property'>content-features</a>"         <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
-  "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--duration" title='The "duration" property'>duration</a>"                 <span class="type">gint64</span>                : Read
+  "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--duration" title='The "duration" property'>duration</a>"                 <a href="../glib/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--metadata" title='The "metadata" property'>metadata</a>"                 <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--mime-type" title='The "mime-type" property'>mime-type</a>"                <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-speed" title='The "playback-speed" property'>playback-speed</a>"           <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-state" title='The "playback-state" property'>playback-state</a>"           <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin" title='The "playbin" property'>playbin</a>"                  <a href="../gstreamer-1.0/GstElement.html"><span class="type">GstElement</span></a>*           : Read
-  "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--position" title='The "position" property'>position</a>"                 <span class="type">gint64</span>                : Read
+  "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--position" title='The "position" property'>position</a>"                 <a href="../glib/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read
+  "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--size" title='The "size" property'>size</a>"                     <a href="../glib/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles" title='The "supported-profiles" property'>supported-profiles</a>"       <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--uri" title='The "uri" property'>uri</a>"                      <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--volume" title='The "volume" property'>volume</a>"                   <a href="../glib/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a>               : Read / Write
@@ -106,8 +109,11 @@ The type for <a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinP
 <div class="refsect2">
 <a name="rygel-playbin-player-new-wrap"></a><h3>rygel_playbin_player_new_wrap ()</h3>
 <pre class="programlisting"><a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinPlayer"><span class="returnvalue">RygelPlaybinPlayer</span></a> * rygel_playbin_player_new_wrap      (<em class="parameter"><code><a href="../gstreamer-1.0/GstElement.html"><span class="type">GstElement</span></a> *playbin</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>playbin</code></em> :</span></p></td>
 <td> </td>
@@ -121,8 +127,11 @@ The type for <a class="link" href="RygelPlaybinPlayer.html" title="RygelPlaybinP
 <p>
 Get and return the current value of the <a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin" title='The "playbin" property'><span class="type">"playbin"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -143,8 +152,11 @@ Get and return the current value of the <a class="link" href="RygelPlaybinPlayer
 <p>
 Get and return the current value of the <a class="link" href="RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -185,8 +197,11 @@ Implementation of RygelMediaPlayer for GStreamer.
 <p>
 The class structure for <a class="link" href="RygelPlaybinPlayer.html#RYGEL-PLAYBIN-TYPE-PLAYER:CAPS" title="RYGEL_PLAYBIN_TYPE_PLAYER"><code class="literal">RYGEL_PLAYBIN_TYPE_PLAYER</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelPlaybinPlayerClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
@@ -203,9 +218,23 @@ The class structure for <a class="link" href="RygelPlaybinPlayer.html#RYGEL-PLAY
 </div>
 <hr>
 <div class="refsect2">
+<a name="RygelPlaybinPlayer--byte-position"></a><h3>The <code class="literal">"byte-position"</code> property</h3>
+<pre class="programlisting">  "byte-position"            <a href="../glib/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read</pre>
+<p>byte-position.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
 <a name="RygelPlaybinPlayer--can-seek"></a><h3>The <code class="literal">"can-seek"</code> property</h3>
 <pre class="programlisting">  "can-seek"                 <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read</pre>
 <p>can-seek.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="RygelPlaybinPlayer--can-seek-bytes"></a><h3>The <code class="literal">"can-seek-bytes"</code> property</h3>
+<pre class="programlisting">  "can-seek-bytes"           <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read</pre>
+<p>can-seek-bytes.</p>
 <p>Default value: FALSE</p>
 </div>
 <hr>
@@ -218,7 +247,7 @@ The class structure for <a class="link" href="RygelPlaybinPlayer.html#RYGEL-PLAY
 <hr>
 <div class="refsect2">
 <a name="RygelPlaybinPlayer--duration"></a><h3>The <code class="literal">"duration"</code> property</h3>
-<pre class="programlisting">  "duration"                 <span class="type">gint64</span>                : Read</pre>
+<pre class="programlisting">  "duration"                 <a href="../glib/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read</pre>
 <p>duration.</p>
 <p>Default value: 0</p>
 </div>
@@ -259,8 +288,15 @@ The class structure for <a class="link" href="RygelPlaybinPlayer.html#RYGEL-PLAY
 <hr>
 <div class="refsect2">
 <a name="RygelPlaybinPlayer--position"></a><h3>The <code class="literal">"position"</code> property</h3>
-<pre class="programlisting">  "position"                 <span class="type">gint64</span>                : Read</pre>
+<pre class="programlisting">  "position"                 <a href="../glib/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read</pre>
 <p>position.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="RygelPlaybinPlayer--size"></a><h3>The <code class="literal">"size"</code> property</h3>
+<pre class="programlisting">  "size"                     <a href="../glib/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read</pre>
+<p>size.</p>
 <p>Default value: 0</p>
 </div>
 <hr>
@@ -287,6 +323,6 @@ The class structure for <a class="link" href="RygelPlaybinPlayer.html#RYGEL-PLAY
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>
