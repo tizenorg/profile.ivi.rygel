@@ -106,21 +106,21 @@ DIST_COMMON = $(top_srcdir)/common.am $(srcdir)/Makefile.in \
 	rygel-searchable-container.c rygel-searchable-container-test.c \
 	rygel-configuration.c rygel-user-config.c \
 	rygel-user-config-test.c $(top_srcdir)/build-aux/depcomp \
-	$(srcdir)/rygel_environment_test_vala.stamp \
-	$(srcdir)/rygel_searchable_container_test_vala.stamp \
-	$(srcdir)/plugins_media_export_regression_vala.stamp \
-	$(srcdir)/rygel_user_config_test_vala.stamp \
-	$(srcdir)/rygel_http_response_test_vala.stamp \
-	$(srcdir)/rygel_http_get_test_vala.stamp \
-	$(srcdir)/rygel_playbin_renderer_test_vala.stamp \
-	$(srcdir)/rygel_album_art_spec_test_vala.stamp \
-	$(srcdir)/rygel_regression_vala.stamp \
-	$(srcdir)/rygel_http_post_test_vala.stamp \
 	$(srcdir)/rygel_object_creator_test_vala.stamp \
-	$(srcdir)/rygel_http_time_seek_test_vala.stamp \
+	$(srcdir)/rygel_regression_vala.stamp \
 	$(srcdir)/rygel_media_engine_test_vala.stamp \
 	$(srcdir)/rygel_http_item_uri_test_vala.stamp \
+	$(srcdir)/rygel_http_get_test_vala.stamp \
+	$(srcdir)/rygel_searchable_container_test_vala.stamp \
+	$(srcdir)/rygel_http_post_test_vala.stamp \
+	$(srcdir)/rygel_user_config_test_vala.stamp \
 	$(srcdir)/rygel_http_byte_seek_test_vala.stamp \
+	$(srcdir)/rygel_http_response_test_vala.stamp \
+	$(srcdir)/rygel_playbin_renderer_test_vala.stamp \
+	$(srcdir)/rygel_environment_test_vala.stamp \
+	$(srcdir)/rygel_http_time_seek_test_vala.stamp \
+	$(srcdir)/rygel_album_art_spec_test_vala.stamp \
+	$(srcdir)/plugins_media_export_regression_vala.stamp \
 	$(top_srcdir)/build-aux/test-driver
 check_PROGRAMS = rygel-http-item-uri-test$(EXEEXT) \
 	rygel-http-response-test$(EXEEXT) \
@@ -770,6 +770,9 @@ RYGEL_PLUGIN_GST_LAUNCH_DEPS_CFLAGS = @RYGEL_PLUGIN_GST_LAUNCH_DEPS_CFLAGS@
 RYGEL_PLUGIN_GST_LAUNCH_DEPS_LIBS = @RYGEL_PLUGIN_GST_LAUNCH_DEPS_LIBS@
 RYGEL_PLUGIN_GST_LAUNCH_DEPS_VALAFLAGS = @RYGEL_PLUGIN_GST_LAUNCH_DEPS_VALAFLAGS@
 RYGEL_PLUGIN_LINKER_FLAGS = @RYGEL_PLUGIN_LINKER_FLAGS@
+RYGEL_PLUGIN_LMS_DEPS_CFLAGS = @RYGEL_PLUGIN_LMS_DEPS_CFLAGS@
+RYGEL_PLUGIN_LMS_DEPS_LIBS = @RYGEL_PLUGIN_LMS_DEPS_LIBS@
+RYGEL_PLUGIN_LMS_DEPS_VALAFLAGS = @RYGEL_PLUGIN_LMS_DEPS_VALAFLAGS@
 RYGEL_PLUGIN_MEDIATHEK_DEPS_CFLAGS = @RYGEL_PLUGIN_MEDIATHEK_DEPS_CFLAGS@
 RYGEL_PLUGIN_MEDIATHEK_DEPS_LIBS = @RYGEL_PLUGIN_MEDIATHEK_DEPS_LIBS@
 RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_CFLAGS = @RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_CFLAGS@
@@ -2138,201 +2141,6 @@ rygel_user_config_test-rygel-user-config-test.obj: rygel-user-config-test.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rygel-user-config-test.c' object='rygel_user_config_test-rygel-user-config-test.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rygel_user_config_test_CFLAGS) $(CFLAGS) -c -o rygel_user_config_test-rygel-user-config-test.obj `if test -f 'rygel-user-config-test.c'; then $(CYGPATH_W) 'rygel-user-config-test.c'; else $(CYGPATH_W) '$(srcdir)/rygel-user-config-test.c'; fi`
-$(srcdir)/rygel-environment-test.c: $(srcdir)/rygel_environment_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_environment_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_environment_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_environment_test_vala.stamp: rygel-environment-test.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_environment_test_VALAFLAGS) $(VALAFLAGS) -C rygel-environment-test.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-searchable-container.c: $(srcdir)/rygel_searchable_container_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_searchable_container_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_searchable_container_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-searchable-container-test.c: $(srcdir)/rygel_searchable_container_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_searchable_container_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_searchable_container_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_searchable_container_test_vala.stamp: rygel-searchable-container.vala rygel-searchable-container-test.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_searchable_container_test_VALAFLAGS) $(VALAFLAGS) -C rygel-searchable-container.vala rygel-searchable-container-test.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/plugins/media-export/regression.c: $(srcdir)/plugins_media_export_regression_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/plugins_media_export_regression_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/plugins_media_export_regression_vala.stamp; \
-	fi
-$(srcdir)/plugins_media_export_regression_vala.stamp: $(top_srcdir)/src/librygel-core/rygel-core-2.0.vapi $(top_srcdir)/src/librygel-server/rygel-server-2.0.vapi $(top_srcdir)/src/plugins/media-export/rygel-media-export.vapi plugins/media-export/regression.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(plugins_media_export_regression_VALAFLAGS) $(VALAFLAGS) -C $(top_srcdir)/src/librygel-core/rygel-core-2.0.vapi $(top_srcdir)/src/librygel-server/rygel-server-2.0.vapi $(top_srcdir)/src/plugins/media-export/rygel-media-export.vapi plugins/media-export/regression.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-configuration.c: $(srcdir)/rygel_user_config_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_user_config_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_user_config_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-user-config.c: $(srcdir)/rygel_user_config_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_user_config_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_user_config_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-user-config-test.c: $(srcdir)/rygel_user_config_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_user_config_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_user_config_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_user_config_test_vala.stamp: rygel-configuration.vala rygel-user-config.vala rygel-user-config-test.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_user_config_test_VALAFLAGS) $(VALAFLAGS) -C rygel-configuration.vala rygel-user-config.vala rygel-user-config-test.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-http-response-test.c: $(srcdir)/rygel_http_response_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-response.c: $(srcdir)/rygel_http_response_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-state-machine_http-response.c: $(srcdir)/rygel_http_response_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-data-source_http-response.c: $(srcdir)/rygel_http_response_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-data-sink_http-response.c: $(srcdir)/rygel_http_response_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_http_response_test_vala.stamp: rygel-http-response-test.vala rygel-http-response.vala rygel-state-machine_http-response.vala rygel-data-source_http-response.vala rygel-data-sink_http-response.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_response_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-response-test.vala rygel-http-response.vala rygel-state-machine_http-response.vala rygel-data-source_http-response.vala rygel-data-sink_http-response.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-http-get-test.c: $(srcdir)/rygel_http_get_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-request_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-item-uri_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-state-machine_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-time-seek_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-byte-seek_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-seek_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_http_get_test_vala.stamp: rygel-http-get-test.vala rygel-http-get.vala rygel-http-request_http-get.vala rygel-http-item-uri_http-get.vala rygel-state-machine_http-get.vala rygel-http-time-seek_http-get.vala rygel-http-byte-seek_http-get.vala rygel-http-seek_http-get.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_get_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-get-test.vala rygel-http-get.vala rygel-http-request_http-get.vala rygel-http-item-uri_http-get.vala rygel-state-machine_http-get.vala rygel-http-time-seek_http-get.vala rygel-http-byte-seek_http-get.vala rygel-http-seek_http-get.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-playbin-renderer-test.c: $(srcdir)/rygel_playbin_renderer_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_playbin_renderer_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_playbin_renderer_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_playbin_renderer_test_vala.stamp: rygel-playbin-renderer-test.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_playbin_renderer_test_VALAFLAGS) $(VALAFLAGS) -C rygel-playbin-renderer-test.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-album-art-spec-test.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_album_art_spec_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-media-art-store.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_album_art_spec_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-thumbnail.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_album_art_spec_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-icon-info.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_album_art_spec_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_album_art_spec_test_vala.stamp: rygel-album-art-spec-test.vala rygel-media-art-store.vala rygel-thumbnail.vala rygel-icon-info.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_album_art_spec_test_VALAFLAGS) $(VALAFLAGS) -C rygel-album-art-spec-test.vala rygel-media-art-store.vala rygel-thumbnail.vala rygel-icon-info.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-regression.c: $(srcdir)/rygel_regression_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_regression_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_regression_vala.stamp; \
-	fi
-$(srcdir)/rygel_regression_vala.stamp: rygel-regression.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_regression_VALAFLAGS) $(VALAFLAGS) -C rygel-regression.vala
-	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-http-post-test.c: $(srcdir)/rygel_http_post_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-post.c: $(srcdir)/rygel_http_post_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-request_http-post.c: $(srcdir)/rygel_http_post_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-item-uri_http-post.c: $(srcdir)/rygel_http_post_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-state-machine_http-post.c: $(srcdir)/rygel_http_post_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_http_post_test_vala.stamp: rygel-http-post-test.vala rygel-http-post.vala rygel-http-request_http-post.vala rygel-http-item-uri_http-post.vala rygel-state-machine_http-post.vala
-	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_post_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-post-test.vala rygel-http-post.vala rygel-http-request_http-post.vala rygel-http-item-uri_http-post.vala rygel-state-machine_http-post.vala
-	$(AM_V_at)mv -f $@-t $@
 $(srcdir)/rygel-object-creator-test.c: $(srcdir)/rygel_object_creator_test_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/rygel_object_creator_test_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -2397,24 +2205,14 @@ $(srcdir)/rygel_object_creator_test_vala.stamp: rygel-object-creator-test.vala r
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
 	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_object_creator_test_VALAFLAGS) $(VALAFLAGS) -C rygel-object-creator-test.vala rygel-object-creator.vala rygel-data-source.vala rygel-dlna-profile.vala rygel-http-seek_object-creator.vala rygel-state-machine_object-creator.vala rygel-relational-expression.vala rygel-logical-expression.vala rygel-search-expression.vala rygel-search-criteria-parser.vala rygel-serializer_object-creator.vala rygel-m3u-playlist_object-creator.vala
 	$(AM_V_at)mv -f $@-t $@
-$(srcdir)/rygel-http-time-seek-test.c: $(srcdir)/rygel_http_time_seek_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_time_seek_test_vala.stamp; fi
+$(srcdir)/rygel-regression.c: $(srcdir)/rygel_regression_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_regression_vala.stamp; fi
 	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_time_seek_test_vala.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_regression_vala.stamp; \
 	fi
-$(srcdir)/rygel-http-time-seek.c: $(srcdir)/rygel_http_time_seek_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_time_seek_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_time_seek_test_vala.stamp; \
-	fi
-$(srcdir)/rygel-http-seek_time-seek.c: $(srcdir)/rygel_http_time_seek_test_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_time_seek_test_vala.stamp; fi
-	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_time_seek_test_vala.stamp; \
-	fi
-$(srcdir)/rygel_http_time_seek_test_vala.stamp: rygel-http-time-seek-test.vala rygel-http-time-seek.vala rygel-http-seek_time-seek.vala
+$(srcdir)/rygel_regression_vala.stamp: rygel-regression.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_time_seek_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-time-seek-test.vala rygel-http-time-seek.vala rygel-http-seek_time-seek.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_regression_VALAFLAGS) $(VALAFLAGS) -C rygel-regression.vala
 	$(AM_V_at)mv -f $@-t $@
 $(srcdir)/rygel-media-engine-test.c: $(srcdir)/rygel_media_engine_test_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/rygel_media_engine_test_vala.stamp; fi
@@ -2439,6 +2237,112 @@ $(srcdir)/rygel_http_item_uri_test_vala.stamp: rygel-http-item-uri-test.vala ryg
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
 	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_item_uri_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-item-uri-test.vala rygel-http-item-uri.vala
 	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-http-get-test.c: $(srcdir)/rygel_http_get_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-request_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-item-uri_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-state-machine_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-time-seek_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-byte-seek_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-seek_http-get.c: $(srcdir)/rygel_http_get_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_get_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_get_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_http_get_test_vala.stamp: rygel-http-get-test.vala rygel-http-get.vala rygel-http-request_http-get.vala rygel-http-item-uri_http-get.vala rygel-state-machine_http-get.vala rygel-http-time-seek_http-get.vala rygel-http-byte-seek_http-get.vala rygel-http-seek_http-get.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_get_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-get-test.vala rygel-http-get.vala rygel-http-request_http-get.vala rygel-http-item-uri_http-get.vala rygel-state-machine_http-get.vala rygel-http-time-seek_http-get.vala rygel-http-byte-seek_http-get.vala rygel-http-seek_http-get.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-searchable-container.c: $(srcdir)/rygel_searchable_container_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_searchable_container_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_searchable_container_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-searchable-container-test.c: $(srcdir)/rygel_searchable_container_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_searchable_container_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_searchable_container_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_searchable_container_test_vala.stamp: rygel-searchable-container.vala rygel-searchable-container-test.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_searchable_container_test_VALAFLAGS) $(VALAFLAGS) -C rygel-searchable-container.vala rygel-searchable-container-test.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-http-post-test.c: $(srcdir)/rygel_http_post_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-post.c: $(srcdir)/rygel_http_post_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-request_http-post.c: $(srcdir)/rygel_http_post_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-item-uri_http-post.c: $(srcdir)/rygel_http_post_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-state-machine_http-post.c: $(srcdir)/rygel_http_post_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_post_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_post_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_http_post_test_vala.stamp: rygel-http-post-test.vala rygel-http-post.vala rygel-http-request_http-post.vala rygel-http-item-uri_http-post.vala rygel-state-machine_http-post.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_post_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-post-test.vala rygel-http-post.vala rygel-http-request_http-post.vala rygel-http-item-uri_http-post.vala rygel-state-machine_http-post.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-configuration.c: $(srcdir)/rygel_user_config_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_user_config_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_user_config_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-user-config.c: $(srcdir)/rygel_user_config_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_user_config_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_user_config_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-user-config-test.c: $(srcdir)/rygel_user_config_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_user_config_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_user_config_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_user_config_test_vala.stamp: rygel-configuration.vala rygel-user-config.vala rygel-user-config-test.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_user_config_test_VALAFLAGS) $(VALAFLAGS) -C rygel-configuration.vala rygel-user-config.vala rygel-user-config-test.vala
+	$(AM_V_at)mv -f $@-t $@
 $(srcdir)/rygel-http-byte-seek-test.c: $(srcdir)/rygel_http_byte_seek_test_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_byte_seek_test_vala.stamp; fi
 	@if test -f $@; then :; else \
@@ -2457,6 +2361,105 @@ $(srcdir)/rygel-http-seek.c: $(srcdir)/rygel_http_byte_seek_test_vala.stamp
 $(srcdir)/rygel_http_byte_seek_test_vala.stamp: rygel-http-byte-seek-test.vala rygel-http-byte-seek.vala rygel-http-seek.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
 	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_byte_seek_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-byte-seek-test.vala rygel-http-byte-seek.vala rygel-http-seek.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-http-response-test.c: $(srcdir)/rygel_http_response_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-response.c: $(srcdir)/rygel_http_response_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-state-machine_http-response.c: $(srcdir)/rygel_http_response_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-data-source_http-response.c: $(srcdir)/rygel_http_response_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-data-sink_http-response.c: $(srcdir)/rygel_http_response_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_response_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_response_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_http_response_test_vala.stamp: rygel-http-response-test.vala rygel-http-response.vala rygel-state-machine_http-response.vala rygel-data-source_http-response.vala rygel-data-sink_http-response.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_response_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-response-test.vala rygel-http-response.vala rygel-state-machine_http-response.vala rygel-data-source_http-response.vala rygel-data-sink_http-response.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-playbin-renderer-test.c: $(srcdir)/rygel_playbin_renderer_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_playbin_renderer_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_playbin_renderer_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_playbin_renderer_test_vala.stamp: rygel-playbin-renderer-test.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_playbin_renderer_test_VALAFLAGS) $(VALAFLAGS) -C rygel-playbin-renderer-test.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-environment-test.c: $(srcdir)/rygel_environment_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_environment_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_environment_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_environment_test_vala.stamp: rygel-environment-test.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_environment_test_VALAFLAGS) $(VALAFLAGS) -C rygel-environment-test.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-http-time-seek-test.c: $(srcdir)/rygel_http_time_seek_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_time_seek_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_time_seek_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-time-seek.c: $(srcdir)/rygel_http_time_seek_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_time_seek_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_time_seek_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-http-seek_time-seek.c: $(srcdir)/rygel_http_time_seek_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_http_time_seek_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_http_time_seek_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_http_time_seek_test_vala.stamp: rygel-http-time-seek-test.vala rygel-http-time-seek.vala rygel-http-seek_time-seek.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_http_time_seek_test_VALAFLAGS) $(VALAFLAGS) -C rygel-http-time-seek-test.vala rygel-http-time-seek.vala rygel-http-seek_time-seek.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/rygel-album-art-spec-test.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_album_art_spec_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-media-art-store.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_album_art_spec_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-thumbnail.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_album_art_spec_test_vala.stamp; \
+	fi
+$(srcdir)/rygel-icon-info.c: $(srcdir)/rygel_album_art_spec_test_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/rygel_album_art_spec_test_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/rygel_album_art_spec_test_vala.stamp; \
+	fi
+$(srcdir)/rygel_album_art_spec_test_vala.stamp: rygel-album-art-spec-test.vala rygel-media-art-store.vala rygel-thumbnail.vala rygel-icon-info.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(rygel_album_art_spec_test_VALAFLAGS) $(VALAFLAGS) -C rygel-album-art-spec-test.vala rygel-media-art-store.vala rygel-thumbnail.vala rygel-icon-info.vala
+	$(AM_V_at)mv -f $@-t $@
+$(srcdir)/plugins/media-export/regression.c: $(srcdir)/plugins_media_export_regression_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/plugins_media_export_regression_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/plugins_media_export_regression_vala.stamp; \
+	fi
+$(srcdir)/plugins_media_export_regression_vala.stamp: $(top_srcdir)/src/librygel-core/rygel-core-2.0.vapi $(top_srcdir)/src/librygel-server/rygel-server-2.0.vapi $(top_srcdir)/src/plugins/media-export/rygel-media-export.vapi plugins/media-export/regression.vala
+	$(AM_V_at)rm -f $@ && echo stamp > $@-t
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(plugins_media_export_regression_VALAFLAGS) $(VALAFLAGS) -C $(top_srcdir)/src/librygel-core/rygel-core-2.0.vapi $(top_srcdir)/src/librygel-server/rygel-server-2.0.vapi $(top_srcdir)/src/plugins/media-export/rygel-media-export.vapi plugins/media-export/regression.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
