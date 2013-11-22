@@ -1,0 +1,24 @@
+* TUE Sep 10 2013 Regis Merlino <regis.merlino@intel.com>
+- Update rygel to 0.19.6 (d650f4e)
+
+* Wed Aug 21 2013 Regis Merlino <regis.merlino@intel.com>
+- Update rygel to 0.19.5 (540620c)
+
+* Fri Aug 02 2013 Regis Merlino <regis.merlino@intel.com>
+- Add systemd service script
+- Update to Rygel v0.19.4
+
+* Tue Jun 11 2013 Regis Merlino <regis.merlino@intel.com>
+- Update rygel to 0.19.2 (23df8bb)
+
+* Fri Mar 22 2013 Regis Merlino <regis.merlino@intel.com>
+- Update rygel.conf to make use of gstreamer 0.10 plugins
+- Updated Rygel version to 0.17.9 (27192b6)
+
+* Mon Jan 07 2013 Mark Ryan <mark.d.ryan@intel.com> submit/2.0alpha/20130107.105654@d804939
+- Updated rygel.conf with Tizen IVI values
+- Remove unused dekstop files from rpm
+- These two submits should fix TIVI-411
+
+* Wed Nov 28 21:51:06 CET 2012 - Mark Ryan <mark.d.ryan@intel.com>
+- Submit version 0.17.1 ( b85e727 ) of Rygel 
