@@ -27,12 +27,15 @@ using GUPnP;
 using Gee;
 
 /**
- * Responsible for plugin loading. Probes for shared library files in a specific
- * directry and tries to grab a function with a specific name and signature,
- * calls it. The loaded module can then add plugins to Rygel by calling the
- * add_plugin method. NOTE: The module SHOULD make sure that plugin is not
- * disabled by user using plugin_disabled method before creating the plugin
- * instance and resources related to that instance.
+ * This class is responsible for plugin loading.
+ *
+ * It probes for shared library files in a specific directory, tries to 
+ * find a module_init() function with this signature:
+ * ``void module_init (RygelPluginLoader* loader);``
+ *
+ * It then calls that function, passing a pointer to itself. The loaded
+ * module can then add plugins to Rygel by calling the
+ * rygel_plugin_loader_add_plugin() function.
  */
 public class Rygel.PluginLoader : RecursiveModuleLoader {
     private delegate void ModuleInitFunc (PluginLoader loader);
@@ -44,20 +47,21 @@ public class Rygel.PluginLoader : RecursiveModuleLoader {
     public signal void plugin_available (Plugin plugin);
 
     public PluginLoader () {
-        var path = BuildConfig.PLUGIN_DIR;
-        try {
-            var config = MetaConfig.get_default ();
-            path = config.get_plugin_path ();
-        } catch (Error error) { }
+        Object (base_path: get_config_path ());
+    }
 
-        base (path);
+    public override void constructed () {
+        base.constructed ();
 
-        this.plugin_hash = new HashMap<string,Plugin> (str_hash, str_equal);
+        if (this.base_path == null) {
+            this.base_path = get_config_path ();
+        }
+        this.plugin_hash = new HashMap<string,Plugin> ();
         this.loaded_modules = new HashSet<string> ();
     }
 
     /**
-     * Checks if a plugin is disabled by user
+     * Checks if a plugin is disabled by the user
      *
      * @param name the name of plugin to check for.
      *
@@ -128,5 +132,28 @@ public class Rygel.PluginLoader : RecursiveModuleLoader {
         debug ("Loaded module source: '%s'", module.name());
 
         return true;
+    }
+
+    protected override bool load_module_from_info (PluginInformation info) {
+        if (this.plugin_disabled (info.name)) {
+            debug ("Module '%s' disabled by user. Ignoring…",
+                   info.name);
+
+            return true;
+        }
+
+        var module_file = File.new_for_path (info.module_path);
+
+        return this.load_module_from_file (module_file);
+    }
+
+    private static string get_config_path () {
+        var path = BuildConfig.PLUGIN_DIR;
+        try {
+            var config = MetaConfig.get_default ();
+            path = config.get_plugin_path ();
+        } catch (Error error) { }
+
+        return path;
     }
 }

@@ -2,18 +2,19 @@
 <!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
 <book xmlns="http://www.devhelp.net/book" title="librygel-renderer-gst Reference Manual" link="index.html" author="" name="librygel-renderer-gst" version="2" language="c">
   <chapters>
-    <sub name="Overview" link="pr01.html">
-      <sub name="" link="pr01.html#overview">
-        <sub name="Basic Usage" link="pr01.html#basic-usage"/>
+    <sub name="Overview" link="overview.html">
+      <sub name="" link="overview.html#overview">
+        <sub name="Basic Usage" link="overview.html#basic-usage"/>
       </sub>
     </sub>
-    <sub name="Example" link="ch01.html">
-      <sub name="" link="ch01.html#example"/>
+    <sub name="Implementing GStreamer-based Renderers" link="implementing-renderers-gst.html">
+      <sub name="Implementing GStreamer-based Renderers: Overview" link="implementing-renderers-gst.html#implementing-renderers-gst-overview"/>
+      <sub name="Implementing GStreamer-based Renderers: Simple Example" link="implementing-renderers-gst-simple-example.html"/>
+      <sub name="Implementing GStreamer-based Renderers: X Window Example" link="implementing-renderers-gst-x-window-example.html"/>
     </sub>
-    <sub name="librygel-renderer-gst API Reference" link="ch02.html">
+    <sub name="librygel-renderer-gst API Reference" link="api-main-list.html">
       <sub name="RygelPlaybinRenderer" link="RygelPlaybinRenderer.html"/>
       <sub name="RygelPlaybinPlayer" link="RygelPlaybinPlayer.html"/>
-      <sub name="RygelPlaybinPlugin" link="RygelPlaybinPlugin.html"/>
     </sub>
     <sub name="Object Hierarchy" link="object-tree.html"/>
     <sub name="API Index" link="api-index-full.html"/>
@@ -30,22 +31,22 @@
     <keyword type="macro" name="RYGEL_PLAYBIN_TYPE_PLAYER" link="RygelPlaybinPlayer.html#RYGEL-PLAYBIN-TYPE-PLAYER:CAPS"/>
     <keyword type="function" name="rygel_playbin_player_new_wrap ()" link="RygelPlaybinPlayer.html#rygel-playbin-player-new-wrap"/>
     <keyword type="function" name="rygel_playbin_player_get_playbin ()" link="RygelPlaybinPlayer.html#rygel-playbin-player-get-playbin"/>
+    <keyword type="function" name="rygel_playbin_player_get_supported_profiles ()" link="RygelPlaybinPlayer.html#rygel-playbin-player-get-supported-profiles"/>
     <keyword type="function" name="rygel_playbin_player_get_default ()" link="RygelPlaybinPlayer.html#rygel-playbin-player-get-default"/>
     <keyword type="struct" name="struct RygelPlaybinPlayer" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer-struct"/>
     <keyword type="struct" name="struct RygelPlaybinPlayerClass" link="RygelPlaybinPlayer.html#RygelPlaybinPlayerClass"/>
+    <keyword type="property" name="The &quot;allowed-playback-speeds&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--allowed-playback-speeds"/>
+    <keyword type="property" name="The &quot;can-seek&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--can-seek"/>
     <keyword type="property" name="The &quot;content-features&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--content-features"/>
     <keyword type="property" name="The &quot;duration&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--duration"/>
     <keyword type="property" name="The &quot;metadata&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--metadata"/>
     <keyword type="property" name="The &quot;mime-type&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--mime-type"/>
+    <keyword type="property" name="The &quot;playback-speed&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-speed"/>
     <keyword type="property" name="The &quot;playback-state&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-state"/>
     <keyword type="property" name="The &quot;playbin&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin"/>
     <keyword type="property" name="The &quot;position&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--position"/>
+    <keyword type="property" name="The &quot;supported-profiles&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles"/>
     <keyword type="property" name="The &quot;uri&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--uri"/>
     <keyword type="property" name="The &quot;volume&quot; property" link="RygelPlaybinPlayer.html#RygelPlaybinPlayer--volume"/>
-    <keyword type="macro" name="RYGEL_PLAYBIN_TYPE_PLUGIN" link="RygelPlaybinPlugin.html#RYGEL-PLAYBIN-TYPE-PLUGIN:CAPS"/>
-    <keyword type="macro" name="RYGEL_PLAYBIN_PLUGIN_NAME" link="RygelPlaybinPlugin.html#RYGEL-PLAYBIN-PLUGIN-NAME:CAPS"/>
-    <keyword type="function" name="rygel_playbin_plugin_new ()" link="RygelPlaybinPlugin.html#rygel-playbin-plugin-new"/>
-    <keyword type="struct" name="struct RygelPlaybinPlugin" link="RygelPlaybinPlugin.html#RygelPlaybinPlugin-struct"/>
-    <keyword type="struct" name="struct RygelPlaybinPluginClass" link="RygelPlaybinPlugin.html#RygelPlaybinPluginClass"/>
   </functions>
 </book>

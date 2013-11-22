@@ -21,6 +21,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+using Gee;
 using Soup;
 using GUPnP;
 
@@ -30,6 +31,8 @@ internal errordomain Rygel.ClientHacksError {
 
 internal abstract class Rygel.ClientHacks : GLib.Object {
     private const string CORRECT_OBJECT_ID = "ObjectID";
+
+    private static HashMap<string, string> client_agent_cache;
 
     public unowned string object_id { get;
                                       protected set;
@@ -50,7 +53,7 @@ internal abstract class Rygel.ClientHacks : GLib.Object {
         }
 
         if (message != null) {
-            this.check_headers (message.request_headers);
+            this.check_headers (message);
         }
     }
 
@@ -68,15 +71,26 @@ internal abstract class Rygel.ClientHacks : GLib.Object {
             return new WMPHacks (message);
         } catch (Error error) { }
 
+        try {
+            return new SamsungTVHacks (message);
+        } catch (Error error) { }
+
+        try {
+            return new SeekHacks (message);
+        } catch (Error error) { }
+
+
         return new XBMCHacks (message);
     }
 
     public virtual void translate_container_id (MediaQueryAction action,
                                                 ref string       container_id) {}
 
-    public virtual void apply (MediaItem item) {}
+    public virtual void apply (MediaObject object) {}
 
     public virtual void filter_sort_criteria (ref string sort_criteria) {}
+
+    public virtual bool force_seek () { return false; }
 
     public virtual async MediaObjects? search
                                         (SearchableContainer container,
@@ -95,9 +109,24 @@ internal abstract class Rygel.ClientHacks : GLib.Object {
                                        cancellable);
     }
 
-    private void check_headers (MessageHeaders headers)
+    private void check_headers (Message message)
                                           throws ClientHacksError {
+        var headers = message.request_headers;
+
         var agent = headers.get_one ("User-Agent");
+        if (agent == null && client_agent_cache != null) {
+            var address = message.get_address ();
+            agent = client_agent_cache.get (address.get_physical ());
+        }
+
+        if (agent != null) {
+            var address = message.get_address ();
+            if (client_agent_cache == null) {
+                client_agent_cache = new HashMap<string, string>();
+            }
+            client_agent_cache.set (address.get_physical (), agent);
+        }
+
         if (agent == null || !(this.agent_regex.match (agent))) {
             throw new ClientHacksError.NA (_("Not Applicable"));
         }

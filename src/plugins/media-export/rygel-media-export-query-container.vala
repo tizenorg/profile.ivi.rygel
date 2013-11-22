@@ -24,24 +24,20 @@ using GUPnP;
 internal abstract class Rygel.MediaExport.QueryContainer : DBContainer {
     // public static members
     public static const string PREFIX = "virtual-container:";
+    public static const string ITEM_PREFIX = "virtual-id:";
 
-    // protected members
-    protected SearchExpression expression;
+    // public members
+    public SearchExpression expression { get; construct set; }
 
     // constructors
-    public QueryContainer (MediaCache       cache,
-                           SearchExpression expression,
+    public QueryContainer (SearchExpression expression,
                            string           id,
                            string           name) {
-        base (cache, id, name);
-
-        this.expression = expression;
-
-        try {
-            this.child_count = this.count_children ();
-        } catch (Error error) {
-            this.child_count = 0;
-        }
+        Object (id : id,
+                parent : null,
+                title : name,
+                child_count : 0,
+                expression : expression);
     }
 
     // public methods
@@ -52,39 +48,16 @@ internal abstract class Rygel.MediaExport.QueryContainer : DBContainer {
                                                 string            sort_criteria,
                                                 Cancellable?      cancellable)
                                                 throws GLib.Error {
-        MediaObjects children = null;
-
-        SearchExpression combined_expression;
-
-        if (expression == null) {
-            combined_expression = this.expression;
-        } else {
-            var local_expression = new LogicalExpression ();
-            local_expression.operand1 = this.expression;
-            local_expression.op = LogicalOperator.AND;
-            local_expression.operand2 = expression;
-            combined_expression = local_expression;
-        }
-
-        try {
-            children = this.media_db.get_objects_by_search_expression
-                                        (combined_expression,
-                                         null,
-                                         sort_criteria,
+        debug ("Running search %s on query container %s",
+               expression == null ? "null" : expression.to_string (),
+               this.id);
+        // Override DBContainer search to always use fall-back search.
+        return yield this.simple_search (expression,
                                          offset,
                                          max_count,
-                                         out total_matches);
-        } catch (MediaCacheError error) {
-            if (error is MediaCacheError.UNSUPPORTED_SEARCH) {
-                children = new MediaObjects ();
-                total_matches = 0;
-            } else {
-                throw error;
-            }
-        }
-
-        return children;
+                                         out total_matches,
+                                         sort_criteria,
+                                         cancellable);
     }
 
-    protected abstract int count_children () throws Error;
 }

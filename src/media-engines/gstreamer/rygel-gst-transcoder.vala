@@ -24,7 +24,12 @@
  */
 
 using Gst;
+using Gst.PbUtils;
 using GUPnP;
+
+public errordomain Rygel.GstTranscoderError {
+    CANT_TRANSCODE
+}
 
 /**
  * The base Transcoder class. Each implementation derives from it and must
@@ -35,7 +40,7 @@ internal abstract class Rygel.GstTranscoder : Rygel.Transcoder {
                            protected set;
                            default =  DEFAULT_ENCODING_PRESET; }
 
-    private const string DECODE_BIN = "decodebin2";
+    private const string DECODE_BIN = "decodebin";
     private const string ENCODE_BIN = "encodebin";
     private const string DEFAULT_ENCODING_PRESET = "Rygel DLNA preset";
 
@@ -46,12 +51,16 @@ internal abstract class Rygel.GstTranscoder : Rygel.Transcoder {
 
     public GstTranscoder (string mime_type,
                           string dlna_profile,
-                          string upnp_class,
                           string extension) {
-        this.mime_type = mime_type;
-        this.dlna_profile = dlna_profile;
+        GLib.Object (mime_type : mime_type,
+                     dlna_profile : dlna_profile,
+                     extension : extension);
+    }
+
+    public override void constructed () {
+        base.constructed ();
+
         this.link_failed = true;
-        this.extension = extension;
     }
 
     /**
@@ -75,6 +84,12 @@ internal abstract class Rygel.GstTranscoder : Rygel.Transcoder {
                                                 ENCODE_BIN);
 
         encoder.profile = this.get_encoding_profile ();
+        if (encoder.profile == null) {
+            var message = _("Could not create a transcoder configuration. Your GStreamer installation might be missing a plug-in");
+
+            throw new GstTranscoderError.CANT_TRANSCODE (message);
+        }
+
         debug ("%s using the following encoding profile:",
                this.get_class ().get_type ().name ());
         GstUtils.dump_encoding_profile (encoder.profile);
@@ -121,7 +136,7 @@ internal abstract class Rygel.GstTranscoder : Rygel.Transcoder {
         sinkpad = this.encoder.get_compatible_pad (new_pad, null);
 
         if (sinkpad == null) {
-            var caps = new_pad.get_caps_reffed ();
+            var caps = new_pad.query_caps (null);
             Signal.emit_by_name (this.encoder, "request-pad", caps, out sinkpad);
         }
 

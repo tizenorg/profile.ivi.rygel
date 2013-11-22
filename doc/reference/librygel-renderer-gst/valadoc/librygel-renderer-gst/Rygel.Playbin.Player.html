@@ -30,13 +30,17 @@
         </ul>
         <hr class="navi_hr"/>
         <ul class="navi_main">
+          <li class="property"><a href="Rygel.Playbin.Player.allowed_playback_speeds.html">allowed_playback_speeds</a></li>
+          <li class="property"><a href="Rygel.Playbin.Player.can_seek.html">can_seek</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.content_features.html">content_features</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.duration.html">duration</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.metadata.html">metadata</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.mime_type.html">mime_type</a></li>
+          <li class="property"><a href="Rygel.Playbin.Player.playback_speed.html">playback_speed</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.playback_state.html">playback_state</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.playbin.html">playbin</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.position.html">position</a></li>
+          <li class="property"><a href="Rygel.Playbin.Player.supported_profiles.html">supported_profiles</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.uri.html">uri</a></li>
           <li class="property"><a href="Rygel.Playbin.Player.volume.html">volume</a></li>
           <li class="static_method"><a href="Rygel.Playbin.Player.get_default.html">get_default</a></li>
@@ -78,6 +82,14 @@
             </span>
             <div class="leaf_brief_description">
             </div></li>
+          <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span>[] <b><a href="Rygel.Playbin.Player.allowed_playback_speeds.html" class="property">allowed_playback_speeds</a></b> { <span class="main_keyword">owned</span> <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.Playbin.Player.playback_speed.html" class="property">playback_speed</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">owned</span> <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
           <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span>? <b><a href="Rygel.Playbin.Player.uri.html" class="property">uri</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">owned</span> <span class="main_keyword">get</span>; }
             </span>
             <div class="leaf_brief_description">
@@ -87,6 +99,10 @@
             <div class="leaf_brief_description">
             </div></li>
           <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span>? <b><a href="Rygel.Playbin.Player.metadata.html" class="property">metadata</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">owned</span> <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>bool</code></span> <b><a href="Rygel.Playbin.Player.can_seek.html" class="property">can_seek</a></b> { <span class="main_keyword">get</span>; }
             </span>
             <div class="leaf_brief_description">
             </div></li>
@@ -103,6 +119,10 @@
             <div class="leaf_brief_description">
             </div></li>
           <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>int64</code></span> <b><a href="Rygel.Playbin.Player.position.html" class="property">position</a></b> { <span class="main_keyword">get</span>; }
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">unowned</span> <span class="main_type"><code>List</code></span>&lt;<span class="main_type"><code>DLNAProfile</code></span>&gt; <b><a href="Rygel.Playbin.Player.supported_profiles.html" class="property">supported_profiles</a></b> { <span class="main_keyword">get</span>; }
             </span>
             <div class="leaf_brief_description">
             </div></li>
@@ -203,23 +223,26 @@
               <div class="content" id="box-content-1">
                 <div class="column">
                   <ul class="navi_inline">
+                    <li class="abstract_property">allowed_playback_speeds</li>
+                    <li class="abstract_property">can_seek</li>
                     <li class="abstract_property">content_features</li>
                     <li class="abstract_property">duration</li>
                     <li class="property">duration_as_str</li>
                     <li class="abstract_property">metadata</li>
-                    <li class="abstract_property">mime_type</li>
                   </ul>
                 </div>
                 <div class="column">
                   <ul class="navi_inline">
+                    <li class="abstract_property">mime_type</li>
+                    <li class="abstract_property">playback_speed</li>
                     <li class="abstract_property">playback_state</li>
                     <li class="abstract_property">position</li>
                     <li class="property">position_as_str</li>
-                    <li class="abstract_property">uri</li>
                   </ul>
                 </div>
                 <div class="column">
                   <ul class="navi_inline">
+                    <li class="abstract_property">uri</li>
                     <li class="abstract_property">volume</li>
                     <li class="abstract_method">get_mime_types</li>
                     <li class="abstract_method">get_protocols</li>

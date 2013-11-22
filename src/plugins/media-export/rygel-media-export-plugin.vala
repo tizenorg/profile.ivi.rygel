@@ -28,44 +28,41 @@ private const string TRACKER_PLUGIN = "Tracker";
  *
  */
 public void module_init (PluginLoader loader) {
-    if (loader.plugin_disabled (MediaExport.Plugin.NAME)) {
-        message ("Plugin '%s' disabled by user, ignoring..",
-                 MediaExport.Plugin.NAME);
-
-        return;
-    }
-
-    MediaExport.Plugin plugin;
-
     try {
-        plugin = new MediaExport.Plugin ();
+        // Instantiate the plugin object (it may fail if loading
+        // database did not succeed):
+        var plugin = new MediaExport.Plugin ();
+
+        // Check what other plugins are loaded,
+        // and check when other plugins are loaded later:
+        Idle.add (() => {
+           foreach (var loaded_plugin in loader.list_plugins ()) {
+                on_plugin_available (loaded_plugin, plugin);
+           }
+
+           loader.plugin_available.connect ((new_plugin) => {
+               on_plugin_available (new_plugin, plugin);
+           });
+
+           return false;
+        });
+
+        loader.add_plugin (plugin);
     } catch (Error error) {
-        warning ("Failed to initialize plugin '%s': %s. Ignoring..",
+        warning ("Failed to load %s: %s",
                  MediaExport.Plugin.NAME,
                  error.message);
-
-        return;
     }
-
-    Idle.add (() => {
-       foreach (var loaded_plugin in loader.list_plugins ()) {
-            on_plugin_available (loaded_plugin, plugin);
-       }
-
-       loader.plugin_available.connect ((new_plugin) => {
-           on_plugin_available (new_plugin, plugin);
-       });
-
-       return false;
-    });
-
-    loader.add_plugin (plugin);
 }
 
 public void on_plugin_available (Plugin plugin, Plugin our_plugin) {
+    // Do not allow this plugin and the tracker plugin to both be
+    // active at the same time,
+    // because they serve the same purpose.
     if (plugin.name == TRACKER_PLUGIN) {
         if (our_plugin.active && !plugin.active) {
-            // Tracker plugin might be activated later
+            // The Tracker plugin might be activated later,
+            // so shut this plugin down if that happens.
             plugin.notify["active"].connect (() => {
                 if (plugin.active) {
                     shutdown_media_export ();
@@ -74,8 +71,12 @@ public void on_plugin_available (Plugin plugin, Plugin our_plugin) {
             });
         } else if (our_plugin.active == plugin.active) {
             if (plugin.active) {
+                // The Tracker plugin is already active,
+                // so shut this plugin down immediately.
                 shutdown_media_export ();
             } else {
+                // Log that we are starting this plugin
+                // because the Tracker plugin is not active instead.
                 message ("Plugin '%s' inactivate, activating '%s' plugin",
                          TRACKER_PLUGIN,
                          MediaExport.Plugin.NAME);
@@ -93,8 +94,7 @@ private void shutdown_media_export () {
         var config = MetaConfig.get_default ();
         var enabled = config.get_bool ("MediaExport", "enabled");
         if (enabled) {
-            var root = Rygel.MediaExport.RootContainer.get_instance ()
-                                        as Rygel.MediaExport.RootContainer;
+            var root = Rygel.MediaExport.RootContainer.get_instance ();
 
             root.shutdown ();
         }
@@ -104,10 +104,19 @@ private void shutdown_media_export () {
 public class Rygel.MediaExport.Plugin : Rygel.MediaServerPlugin {
     public const string NAME = "MediaExport";
 
+    /**
+     * Instantiate the plugin.
+     */
     public Plugin () throws Error {
+        // Ensure that root container could be created and thus
+        // database could be opened:
+        RootContainer.ensure_exists ();
+        // Call the base constructor,
+        // passing the instance of our root container.
         base (RootContainer.get_instance (),
               NAME,
               null,
-              PluginCapabilities.UPLOAD);
+              PluginCapabilities.UPLOAD |
+              PluginCapabilities.TRACK_CHANGES);
     }
 }

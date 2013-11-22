@@ -35,11 +35,13 @@ private errordomain Rygel.MediaItemError {
  * These objects correspond to items in the UPnP ContentDirectory's DIDL-Lite XML.
  */
 public abstract class Rygel.MediaItem : MediaObject {
-    public string date;
+    public string date { get; set; }
+
+    public string creator { get; set; }
 
     // Resource info
-    public string mime_type;
-    public string dlna_profile;
+    public string mime_type { get; set; }
+    public string dlna_profile { get; set; }
 
     // Size in bytes
     private int64 _size = -1;
@@ -61,7 +63,7 @@ public abstract class Rygel.MediaItem : MediaObject {
 
     public string description { get; set; default = null; }
 
-    internal override OCMFlags ocm_flags {
+    public override OCMFlags ocm_flags {
         get {
             var flags = OCMFlags.NONE;
 
@@ -89,19 +91,21 @@ public abstract class Rygel.MediaItem : MediaObject {
         }
     }
 
-    protected Regex address_regex;
+    protected static Regex address_regex;
 
     public MediaItem (string         id,
                       MediaContainer parent,
                       string         title,
                       string         upnp_class) {
-        this.id = id;
-        this.parent = parent;
-        this.title = title;
-        this.upnp_class = upnp_class;
+        Object (id : id,
+                parent : parent,
+                title : title,
+                upnp_class : upnp_class);
+    }
 
+    static construct {
         try {
-            this.address_regex = new Regex (Regex.escape_string ("@ADDRESS@"));
+            address_regex = new Regex (Regex.escape_string ("@ADDRESS@"));
         } catch (GLib.RegexError err) {
             assert_not_reached ();
         }
@@ -117,7 +121,7 @@ public abstract class Rygel.MediaItem : MediaObject {
         string translated_uri = this.uris.get (0);
         if (host_ip != null) {
             try {
-                translated_uri = this.address_regex.replace_literal
+                translated_uri = MediaItem.address_regex.replace_literal
                     (this.uris.get (0), -1, 0, host_ip);
             } catch (Error error) {
                 assert_not_reached ();
@@ -143,13 +147,16 @@ public abstract class Rygel.MediaItem : MediaObject {
                (int) transcoder2.get_distance (this);
     }
 
-    internal virtual DIDLLiteResource add_resource
-                                        (DIDLLiteItem didl_item,
-                                         string?      uri,
-                                         string       protocol,
-                                         string?      import_uri = null)
+    internal override DIDLLiteResource add_resource
+                                        (DIDLLiteObject didl_object,
+                                         string?        uri,
+                                         string         protocol,
+                                         string?        import_uri = null)
                                          throws Error {
-        var res = didl_item.add_resource ();
+        var res = base.add_resource (didl_object,
+                                     uri,
+                                     protocol,
+                                     import_uri);
 
         if (uri != null && !this.place_holder) {
             res.uri = uri;
@@ -188,6 +195,8 @@ public abstract class Rygel.MediaItem : MediaObject {
         var item = media_object as MediaItem;
 
         switch (property) {
+        case "dc:creator":
+            return this.compare_string_props (this.creator, item.creator);
         case "dc:date":
             return this.compare_by_date (item);
         default:
@@ -198,14 +207,15 @@ public abstract class Rygel.MediaItem : MediaObject {
     internal override void apply_didl_lite (DIDLLiteObject didl_object) {
         base.apply_didl_lite (didl_object);
 
+        this.creator = didl_object.get_creator ();
         this.date = didl_object.date;
         this.description = didl_object.description;
     }
 
-    internal override DIDLLiteObject serialize (DIDLLiteWriter writer,
-                                                HTTPServer     http_server)
-                                                throws Error {
-        var didl_item = writer.add_item ();
+    internal override DIDLLiteObject? serialize (Serializer serializer,
+                                                 HTTPServer http_server)
+                                                 throws Error {
+        var didl_item = serializer.add_item ();
 
         didl_item.id = this.id;
 
@@ -233,6 +243,11 @@ public abstract class Rygel.MediaItem : MediaObject {
             didl_item.date = this.date;
         }
 
+        if (this.creator != null && this.creator != "") {
+            var creator = didl_item.add_creator ();
+            creator.name = this.creator;
+        }
+
         if (this.description != null) {
             didl_item.description = this.description;
         }
@@ -257,7 +272,10 @@ public abstract class Rygel.MediaItem : MediaObject {
             this.add_resources (didl_item, internal_allowed);
 
             foreach (var res in didl_item.get_resources ()) {
-                res.uri = this.address_regex.replace_literal (res.uri, -1, 0, host_ip);
+                res.uri = MediaItem.address_regex.replace_literal (res.uri,
+                                                                   -1,
+                                                                   0,
+                                                                   host_ip);
             }
         }
 

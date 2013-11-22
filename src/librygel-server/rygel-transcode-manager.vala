@@ -33,12 +33,10 @@ using Gee;
  */
 public abstract class Rygel.TranscodeManager : GLib.Object {
 
-    private static bool protocol_equal_func (void *a, void *b) {
-        var protocol_a = a as ProtocolInfo;
-        var protocol_b = b as ProtocolInfo;
-
-        return protocol_a.dlna_profile == protocol_b.dlna_profile &&
-               protocol_a.mime_type == protocol_b.mime_type;
+    private static bool protocol_equal_func (GUPnP.ProtocolInfo a,
+                                             GUPnP.ProtocolInfo b) {
+        return a.dlna_profile == b.dlna_profile &&
+               a.mime_type == b.mime_type;
     }
 
     public TranscodeManager () { }
@@ -46,7 +44,8 @@ public abstract class Rygel.TranscodeManager : GLib.Object {
     public abstract string create_uri_for_item (MediaItem  item,
                                                 int        thumbnail_index,
                                                 int        subtitle_index,
-                                                string?    transcode_target);
+                                                string?    transcode_target,
+                                                string?    playlist_target);
 
     public void add_resources (DIDLLiteItem didl_item, MediaItem item)
                                throws Error {

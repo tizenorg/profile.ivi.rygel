@@ -153,6 +153,18 @@ public class Rygel.UserConfig : GLib.Object, Configuration {
         return this.get_bool (GENERAL_SECTION, UPNP_ENABLED_KEY);
     }
 
+    [CCode (array_length=false, array_null_terminated = true)]
+    public string[] get_interfaces () throws GLib.Error {
+        var interfaces = this.get_string_list (GENERAL_SECTION,
+                                               IFACE_KEY).to_array ();
+        // to_array () is not null-terminated
+        if (interfaces != null) {
+            interfaces += null;
+        }
+
+        return interfaces;
+    }
+
     public string get_interface () throws GLib.Error {
         return this.get_string (GENERAL_SECTION, IFACE_KEY);
     }
@@ -236,7 +248,8 @@ public class Rygel.UserConfig : GLib.Object, Configuration {
 
             debug ("Loaded user configuration from file '%s'", local_path);
         } catch (Error error) {
-            debug ("Failed to load user configuration from file '%s': %s",
+            // TRANSLATORS: First %s is the file's path, second is the error message
+            warning (_("Failed to load user configuration from file '%s': %s"),
                    local_path,
                    error.message);
             this.key_file = new KeyFile ();

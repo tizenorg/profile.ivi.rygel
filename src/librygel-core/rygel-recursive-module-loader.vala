@@ -21,7 +21,7 @@
  */
 
 /**
- * Recursivly walk a folder looking for shared libraries.
+ * Recursively walk a folder looking for shared libraries.
  *
  * The folder can either be walked synchronously or asynchronously.
  * Implementing classes need to implement the abstract method
@@ -36,8 +36,9 @@ public abstract class Rygel.RecursiveModuleLoader : Object {
                             FileAttribute.STANDARD_CONTENT_TYPE;
     private delegate void FolderHandler (File folder);
 
-    private string base_path;
     private bool done;
+
+    public string base_path { construct set; get; }
 
     /**
      * Create a recursive module loader for a given path.
@@ -48,7 +49,11 @@ public abstract class Rygel.RecursiveModuleLoader : Object {
      * @param path base path of the loader.
      */
     public RecursiveModuleLoader (string path) {
-        this.base_path = path;
+        Object (base_path : path);
+    }
+
+    public override void constructed () {
+        base.constructed ();
         this.done = false;
     }
 
@@ -109,6 +114,8 @@ public abstract class Rygel.RecursiveModuleLoader : Object {
      */
     protected abstract bool load_module_from_file (File file);
 
+    protected abstract bool load_module_from_info (PluginInformation info);
+
     /**
      * Process children of a folder.
      *
@@ -167,15 +174,19 @@ public abstract class Rygel.RecursiveModuleLoader : Object {
                                    FileInfo      info,
                                    FolderHandler handler) {
             var file = folder.get_child (info.get_name ());
-            string content_type = info.get_content_type ();
-            string mime = ContentType.get_mime_type (content_type);
 
             if (this.is_folder_eligible (info)) {
                 handler (file);
-            } else if (mime == "application/x-sharedlib") {
-                // Seems like we found a module
-                if (!this.load_module_from_file (file)) {
-                    this.done = true;
+            } else if (info.get_name ().has_suffix (".plugin")) {
+                try {
+                    var plugin_info = PluginInformation.new_from_file (file);
+
+                    if (!this.load_module_from_info (plugin_info)) {
+                        this.done = true;
+                    }
+                } catch (Error error) {
+                    warning (_("Could not load plugin: %s"),
+                             error.message);
                 }
             }
 

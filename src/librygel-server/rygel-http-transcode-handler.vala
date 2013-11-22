@@ -51,7 +51,7 @@ internal class Rygel.HTTPTranscodeHandler : HTTPGetHandler {
 
     public override HTTPResponse render_body (HTTPGet request)
                                               throws HTTPRequestError {
-        var item = request.item;
+        var item = request.object as MediaItem;
         var src = item.create_stream_source
                                         (request.http_server.context.host_ip);
         if (src == null) {
@@ -67,11 +67,12 @@ internal class Rygel.HTTPTranscodeHandler : HTTPGetHandler {
         }
     }
 
-    protected override DIDLLiteResource add_resource (DIDLLiteItem didl_item,
-                                                      HTTPGet      request)
-                                                      throws Error {
-        return this.transcoder.add_resource (didl_item,
-                                             request.item,
+    protected override DIDLLiteResource add_resource
+                                        (DIDLLiteObject didl_object,
+                                         HTTPGet      request)
+                                        throws Error {
+        return this.transcoder.add_resource (didl_object as DIDLLiteItem,
+                                             request.object as MediaItem,
                                              request.http_server);
     }
 }

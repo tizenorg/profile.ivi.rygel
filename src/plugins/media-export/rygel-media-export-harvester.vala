@@ -28,7 +28,6 @@ internal class Rygel.MediaExport.Harvester : GLib.Object {
 
     private HashMap<File, HarvestingTask> tasks;
     private HashMap<File, uint> extraction_grace_timers;
-    private MetadataExtractor extractor;
     private RecursiveFileMonitor monitor;
     private Cancellable cancellable;
 
@@ -43,22 +42,49 @@ internal class Rygel.MediaExport.Harvester : GLib.Object {
     public Harvester (Cancellable     cancellable,
                       ArrayList<File> locations) {
         this.cancellable = cancellable;
-        this.locations = new ArrayList<File> ((EqualFunc) File.equal);
+        this.locations = new ArrayList<File> ((EqualDataFunc<File>) File.equal);
         foreach (var file in locations) {
             if (file.query_exists ()) {
                 this.locations.add (file);
             }
         }
 
-        this.extractor = new MetadataExtractor ();
-
         this.monitor = new RecursiveFileMonitor (cancellable);
         this.monitor.changed.connect (this.on_file_changed);
 
-        this.tasks = new HashMap<File, HarvestingTask> (File.hash,
-                                                        (EqualFunc) File.equal);
-        this.extraction_grace_timers = new HashMap<File, uint> (File.hash,
-                                                                (EqualFunc)File.equal);
+        this.tasks = new HashMap<File, HarvestingTask>
+                                        ((HashDataFunc<File>) File.hash,
+                                         (EqualDataFunc<File>) File.equal);
+        this.extraction_grace_timers = new HashMap<File, uint>
+                                        ((HashDataFunc<File>) File.hash,
+                                         (EqualDataFunc<File>) File.equal);
+    }
+
+    /**
+     * Check if a FileInfo is considered for extraction
+     *
+     * @param info a FileInfo
+     * @return true if file should be extracted, false otherwise
+     */
+    public static bool is_eligible (FileInfo info) {
+        return info.get_content_type ().has_prefix ("image/") ||
+               info.get_content_type ().has_prefix ("video/") ||
+               info.get_content_type ().has_prefix ("audio/") ||
+               info.get_content_type () == "application/ogg" ||
+               info.get_content_type () == "application/xml" ||
+               info.get_content_type () == "text/xml" ||
+               info.get_content_type () == "text/plain";
+    }
+
+    /**
+     * Schedule rescan of all top-level locations known to the harvester.
+     *
+     * @param parent top-level container of the files
+     */
+    public void schedule_locations (MediaContainer parent) {
+        foreach (var file in this.locations) {
+            this.schedule (file, parent);
+        }
     }
 
     /**
@@ -66,26 +92,17 @@ internal class Rygel.MediaExport.Harvester : GLib.Object {
      *
      * @param file the file to investigate
      * @param parent container of the filer to be harvested
-     * @param flag optional flag for the container to set in the database
      */
     public void schedule (File           file,
-                          MediaContainer parent,
-                          string?        flag = null) {
+                          MediaContainer parent) {
         this.extraction_grace_timers.unset (file);
-        if (this.extractor == null) {
-            warning (_("No metadata extractor available. Will not crawl."));
-
-            return;
-        }
 
         // Cancel a probably running harvester
         this.cancel (file);
 
-        var task = new HarvestingTask (new MetadataExtractor (),
-                                       this.monitor,
+        var task = new HarvestingTask (this.monitor,
                                        file,
-                                       parent,
-                                       flag);
+                                       parent);
         task.cancellable = this.cancellable;
         task.completed.connect (this.on_file_harvested);
         this.tasks[file] = task;
@@ -151,35 +168,12 @@ internal class Rygel.MediaExport.Harvester : GLib.Object {
                                         FileQueryInfoFlags.NONE,
                                         this.cancellable);
             if (info.get_file_type () == FileType.DIRECTORY ||
-                info.get_content_type ().has_prefix ("image/") ||
-                info.get_content_type ().has_prefix ("video/") ||
-                info.get_content_type ().has_prefix ("audio/") ||
-                info.get_content_type () == "application/ogg") {
-                string id;
+                Harvester.is_eligible (info)) {
+                var id = MediaCache.get_id (file.get_parent ());
                 try {
-                    MediaContainer parent_container = null;
-                    var current = file;
-                    do {
-                        var parent = current.get_parent ();
-                        id = MediaCache.get_id (parent);
-                        parent_container = cache.get_object (id)
+                    var parent_container = cache.get_object (id)
                                         as MediaContainer;
-
-                        if (parent_container == null) {
-                            current = parent;
-                        }
-
-                        if (current in this.locations) {
-                            // We have reached the top
-                            parent_container = cache.get_object
-                                        (RootContainer.FILESYSTEM_FOLDER_ID)
-                                        as MediaContainer;
-
-                            break;
-                        }
-                    } while (parent_container == null);
-
-                    this.schedule (current, parent_container);
+                    this.schedule (file, parent_container);
                 } catch (DatabaseError error) {
                     warning (_("Error fetching object '%s' from database: %s"),
                             id,
@@ -189,11 +183,13 @@ internal class Rygel.MediaExport.Harvester : GLib.Object {
                 debug ("%s is not eligible for extraction", file.get_uri ());
             }
         } catch (Error error) {
-            warning (_("Failed to access media cache: %s"), error.message);
+            warning (_("Failed to query info of a file %s: %s"),
+                     file.get_uri (),
+                     error.message);
         }
     }
 
-    private void on_file_removed (File file) throws Error {
+    private void on_file_removed (File file) {
         var cache = MediaCache.get_default ();
         if (this.extraction_grace_timers.has_key (file)) {
             Source.remove (this.extraction_grace_timers[file]);
@@ -203,29 +199,18 @@ internal class Rygel.MediaExport.Harvester : GLib.Object {
         this.cancel (file);
         try {
             // the full object is fetched instead of simply calling
-            // exists because we need the parent to signalize the
+            // exists because we need the parent to signal the
             // change
             var id = MediaCache.get_id (file);
             var object = cache.get_object (id);
             var parent = null as MediaContainer;
 
-            while (object != null) {
+            if (object != null) {
                 parent = object.parent;
-                cache.remove_object (object);
-                if (parent == null) {
-                    break;
+                if (parent is TrackableContainer) {
+                    var container = parent as TrackableContainer;
+                    container.remove_child_tracked.begin (object);
                 }
-
-                parent.child_count--;
-                if (parent.child_count != 0) {
-                    break;
-                }
-
-                object = parent;
-            }
-
-            if (parent != null) {
-                parent.updated ();
             }
         } catch (Error error) {
             warning (_("Error removing object from database: %s"),
@@ -234,6 +219,10 @@ internal class Rygel.MediaExport.Harvester : GLib.Object {
     }
 
     private void on_changes_done (File file) throws Error {
+        if (file.get_basename ().has_prefix (".")) {
+            return;
+        }
+
         if (this.extraction_grace_timers.has_key (file)) {
             Source.remove (this.extraction_grace_timers[file]);
         } else {

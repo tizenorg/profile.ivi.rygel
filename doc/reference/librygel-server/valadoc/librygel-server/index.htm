@@ -33,13 +33,14 @@
           <ul class="navi_inline">
             <li class="interface"><a href="Rygel.SearchableContainer.html">SearchableContainer</a> - <span class="brief_description">The base class 
                 for searchable containers.</span></li>
-            <li class="interface"><a href="Rygel.TrackableContainer.html">TrackableContainer</a> - </li>
+            <li class="interface"><a href="Rygel.TrackableContainer.html">TrackableContainer</a> - <span class="brief_description">The base class for 
+                containers that provide automatic change tracking.</span></li>
             <li class="interface"><a href="Rygel.TrackableItem.html">TrackableItem</a> - </li>
             <li class="interface"><a href="Rygel.VisualItem.html">VisualItem</a> - <span class="brief_description">An interface that visual (video and
                 image) items must implement.</span></li>
             <li class="interface"><a href="Rygel.WritableContainer.html">WritableContainer</a> - <span class="brief_description">This interface should
-                be implemented by 'writable' containers - ones that allow adding, removal and editing of items directly under them. Currently, only 
-                addition and removal is supported.</span></li>
+                be implemented by 'writable' containers - ones that allow adding (via upload), removal and editing of items directly under them. 
+                Currently, only addition and removal are supported.</span></li>
             <li class="interface"><a href="Rygel.DataSource.html">DataSource</a> - <span class="brief_description">Interface for all data streams 
                 provided by a #RygelMediaEngine.</span></li>
             <li class="interface"><a href="Rygel.UpdatableObject.html">UpdatableObject</a> - <span class="brief_description">This interface should be 
@@ -48,6 +49,8 @@
           <h3 class="main_title">Classes:</h3>
           <ul class="navi_inline">
             <li class="class"><a href="Rygel.AudioItem.html">AudioItem</a> - <span class="brief_description">Represents an audio item.</span></li>
+            <li class="class"><a href="Rygel.DLNAProfile.html">DLNAProfile</a> - <span class="brief_description">Data class representing a DLNA 
+                profile. It contains the name and the corresponding DLNA mime type.</span></li>
             <li class="class"><a href="Rygel.ImageItem.html">ImageItem</a> - <span class="brief_description">Represents an image item.</span></li>
             <li class="class"><a href="Rygel.LogicalExpression.html">LogicalExpression</a> - <span class="brief_description">This is a parsed UPnP 
                 search expression consisting of two other search expressions joined by a boolean operator such as AND or OR.</span></li>
@@ -84,15 +87,17 @@
                 management of all transcoders: # Gets the appropriate transcoder given a transcoding target. # Provide all possible transcoding 
                 resources for items.</span></li>
             <li class="abstract_class"><a href="Rygel.Transcoder.html">Transcoder</a> - <span class="brief_description">The base Transcoder class. 
-                Each implementation derives from it and must implement get_distance.</span></li>
+                Each implementation derives from it and must implement create_source() and get_distance().</span></li>
             <li class="class"><a href="Rygel.MediaServer.html">MediaServer</a> - <span class="brief_description">This class may be used to implement 
                 in-process UPnP-AV media servers.</span></li>
-            <li class="class"><a href="Rygel.DLNAProfile.html">DLNAProfile</a> - <span class="brief_description">Data class representing a DLNA 
-                profile. It contains the name and the corresponding DLNA mime type.</span></li>
             <li class="abstract_class"><a href="Rygel.MediaEngine.html">MediaEngine</a> - <span class="brief_description">This is the base class for 
-                media engines that contain knowledge about streaming and transcoding capabilites of the media library in use.</span></li>
+                media engines that contain knowledge about the streaming and (optionally) the transcoding and seeking capabilites of the media library
+                in use. Derived classes also instantiate any transcoding objects supported by the media engine and specify the list of media formats 
+                the engine is capable of playing.</span></li>
             <li class="abstract_class"><a href="Rygel.HTTPSeek.html">HTTPSeek</a> - <span class="brief_description">HTTPSeek is an abstract 
                 representation of a ranged HTTP request.</span></li>
+            <li class="class"><a href="Rygel.PlaylistItem.html">PlaylistItem</a> - <span class="brief_description">Represents a playlist item.</span>
+            </li>
           </ul>
           <h3 class="main_title">Enums:</h3>
           <ul class="navi_inline">
@@ -102,6 +107,7 @@
           </ul>
           <h3 class="main_title">Error domains:</h3>
           <ul class="navi_inline">
+            <li class="errordomain"><a href="Rygel.WritableContainerError.html">WritableContainerError</a> - </li>
             <li class="errordomain"><a href="Rygel.MediaEngineError.html">MediaEngineError</a> - </li>
             <li class="errordomain"><a href="Rygel.HTTPSeekError.html">HTTPSeekError</a> - </li>
             <li class="errordomain"><a href="Rygel.DataSourceError.html">DataSourceError</a> - </li>

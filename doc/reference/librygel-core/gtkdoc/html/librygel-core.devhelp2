@@ -2,12 +2,12 @@
 <!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
 <book xmlns="http://www.devhelp.net/book" title="librygel-core Reference Manual" link="index.html" author="" name="librygel-core" version="2" language="c">
   <chapters>
-    <sub name="Overview" link="pr01.html">
-      <sub name="" link="pr01.html#overview">
-        <sub name="Basic Usage" link="pr01.html#idp5414744"/>
+    <sub name="Overview" link="overview.html">
+      <sub name="" link="overview.html#overview">
+        <sub name="Basic Usage" link="overview.html#idp2710400"/>
       </sub>
     </sub>
-    <sub name="librygel-core API Reference" link="ch01.html">
+    <sub name="librygel-core API Reference" link="api-main-list-c.html">
       <sub name="RygelConnectionManager" link="RygelConnectionManager.html"/>
       <sub name="RygelConfiguration" link="RygelConfiguration.html"/>
       <sub name="RygelLogHandler" link="RygelLogHandler.html"/>
@@ -27,7 +27,7 @@
       <sub name="RygelXMLUtils" link="RygelXMLUtils.html"/>
       <sub name="RygelStateMachine" link="RygelStateMachine.html"/>
     </sub>
-    <sub name="librygel-core D-Bus API Reference" link="ch02.html">
+    <sub name="librygel-core D-Bus API Reference" link="api-main-list-dbus.html">
       <sub name="org.gnome.Rygel1" link="docs-org-gnome-Rygel1.html"/>
       <sub name="org.freedesktop.DBus" link="docs-org-freedesktop-DBus.html"/>
       <sub name="org.freedesktop.DBus.Properties" link="docs-org-freedesktop-DBus-Properties.html"/>
@@ -49,7 +49,8 @@
     <keyword type="enum" name="enum RygelSectionEntry" link="RygelConfiguration.html#RygelSectionEntry-enum"/>
     <keyword type="enum" name="enum RygelConfigurationError" link="RygelConfiguration.html#RygelConfigurationError"/>
     <keyword type="function" name="rygel_configuration_get_upnp_enabled ()" link="RygelConfiguration.html#rygel-configuration-get-upnp-enabled"/>
-    <keyword type="function" name="rygel_configuration_get_interface ()" link="RygelConfiguration.html#rygel-configuration-get-interface"/>
+    <keyword type="function" name="rygel_configuration_get_interface ()" link="RygelConfiguration.html#rygel-configuration-get-interface" deprecated="0.19.2: Replaced by rygel_configuration_get_interfaces ()."/>
+    <keyword type="function" name="rygel_configuration_get_interfaces ()" link="RygelConfiguration.html#rygel-configuration-get-interfaces"/>
     <keyword type="function" name="rygel_configuration_get_port ()" link="RygelConfiguration.html#rygel-configuration-get-port"/>
     <keyword type="function" name="rygel_configuration_get_transcoding ()" link="RygelConfiguration.html#rygel-configuration-get-transcoding"/>
     <keyword type="function" name="rygel_configuration_get_allow_upload ()" link="RygelConfiguration.html#rygel-configuration-get-allow-upload"/>
@@ -95,11 +96,18 @@
     <keyword type="struct" name="struct RygelDBusInterfaceIface" link="RygelDBusInterface.html#RygelDBusInterfaceIface"/>
     <keyword type="macro" name="RYGEL_TYPE_DESCRIPTION_FILE" link="RygelDescriptionFile.html#RYGEL-TYPE-DESCRIPTION-FILE:CAPS"/>
     <keyword type="function" name="rygel_description_file_set_device_type ()" link="RygelDescriptionFile.html#rygel-description-file-set-device-type"/>
+    <keyword type="function" name="rygel_description_file_set_model_description ()" link="RygelDescriptionFile.html#rygel-description-file-set-model-description"/>
     <keyword type="function" name="rygel_description_file_set_model_name ()" link="RygelDescriptionFile.html#rygel-description-file-set-model-name"/>
     <keyword type="function" name="rygel_description_file_set_model_number ()" link="RygelDescriptionFile.html#rygel-description-file-set-model-number"/>
     <keyword type="function" name="rygel_description_file_set_friendly_name ()" link="RygelDescriptionFile.html#rygel-description-file-set-friendly-name"/>
     <keyword type="function" name="rygel_description_file_get_friendly_name ()" link="RygelDescriptionFile.html#rygel-description-file-get-friendly-name"/>
+    <keyword type="function" name="rygel_description_file_set_udn ()" link="RygelDescriptionFile.html#rygel-description-file-set-udn"/>
+    <keyword type="function" name="rygel_description_file_get_udn ()" link="RygelDescriptionFile.html#rygel-description-file-get-udn"/>
     <keyword type="function" name="rygel_description_file_set_dlna_caps ()" link="RygelDescriptionFile.html#rygel-description-file-set-dlna-caps"/>
+    <keyword type="function" name="rygel_description_file_clear_service_list ()" link="RygelDescriptionFile.html#rygel-description-file-clear-service-list"/>
+    <keyword type="function" name="rygel_description_file_add_service ()" link="RygelDescriptionFile.html#rygel-description-file-add-service"/>
+    <keyword type="function" name="rygel_description_file_clear_icon_list ()" link="RygelDescriptionFile.html#rygel-description-file-clear-icon-list"/>
+    <keyword type="function" name="rygel_description_file_add_icon ()" link="RygelDescriptionFile.html#rygel-description-file-add-icon"/>
     <keyword type="function" name="rygel_description_file_modify_service_type ()" link="RygelDescriptionFile.html#rygel-description-file-modify-service-type"/>
     <keyword type="function" name="rygel_description_file_save ()" link="RygelDescriptionFile.html#rygel-description-file-save"/>
     <keyword type="function" name="rygel_description_file_new ()" link="RygelDescriptionFile.html#rygel-description-file-new"/>
@@ -127,9 +135,6 @@
     <keyword type="struct" name="struct RygelIconInfoClass" link="RygelIconInfo.html#RygelIconInfoClass"/>
     <keyword type="macro" name="FREE_DESKTOP_DBUS_SERVICE" link="FreeDesktopDBusObject.html#FREE-DESKTOP-DBUS-SERVICE:CAPS"/>
     <keyword type="macro" name="FREE_DESKTOP_DBUS_OBJECT_PATH" link="FreeDesktopDBusObject.html#FREE-DESKTOP-DBUS-OBJECT-PATH:CAPS"/>
-    <keyword type="enum" name="enum FreeDesktopDBusRequestNameReply" link="FreeDesktopDBusObject.html#FreeDesktopDBusRequestNameReply-enum"/>
-    <keyword type="function" name="free_desktop_dbus_object_request_name ()" link="FreeDesktopDBusObject.html#free-desktop-dbus-object-request-name"/>
-    <keyword type="function" name="free_desktop_dbus_object_start_service_by_name ()" link="FreeDesktopDBusObject.html#free-desktop-dbus-object-start-service-by-name"/>
     <keyword type="function" name="free_desktop_dbus_object_list_names ()" link="FreeDesktopDBusObject.html#free-desktop-dbus-object-list-names"/>
     <keyword type="function" name="free_desktop_dbus_object_list_names_finish ()" link="FreeDesktopDBusObject.html#free-desktop-dbus-object-list-names-finish"/>
     <keyword type="function" name="free_desktop_dbus_object_list_activatable_names ()" link="FreeDesktopDBusObject.html#free-desktop-dbus-object-list-activatable-names"/>
@@ -145,8 +150,12 @@
     <keyword type="function" name="rygel_recursive_module_loader_load_modules ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-modules"/>
     <keyword type="function" name="rygel_recursive_module_loader_load_modules_sync ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-modules-sync"/>
     <keyword type="function" name="rygel_recursive_module_loader_load_module_from_file ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-file"/>
+    <keyword type="function" name="rygel_recursive_module_loader_load_module_from_info ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-info"/>
+    <keyword type="function" name="rygel_recursive_module_loader_get_base_path ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-get-base-path"/>
+    <keyword type="function" name="rygel_recursive_module_loader_set_base_path ()" link="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-set-base-path"/>
     <keyword type="struct" name="struct RygelRecursiveModuleLoader" link="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader-struct"/>
     <keyword type="struct" name="struct RygelRecursiveModuleLoaderClass" link="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoaderClass"/>
+    <keyword type="property" name="The &quot;base-path&quot; property" link="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader--base-path"/>
     <keyword type="macro" name="RYGEL_TYPE_ROOT_DEVICE" link="RygelRootDevice.html#RYGEL-TYPE-ROOT-DEVICE:CAPS"/>
     <keyword type="function" name="rygel_root_device_new ()" link="RygelRootDevice.html#rygel-root-device-new"/>
     <keyword type="function" name="rygel_root_device_get_services ()" link="RygelRootDevice.html#rygel-root-device-get-services"/>
@@ -188,12 +197,17 @@
     <keyword type="function" name="rygel_media_device_get_interfaces ()" link="RygelMediaDevice.html#rygel-media-device-get-interfaces"/>
     <keyword type="function" name="rygel_media_device_get_plugin ()" link="RygelMediaDevice.html#rygel-media-device-get-plugin"/>
     <keyword type="function" name="rygel_media_device_set_plugin ()" link="RygelMediaDevice.html#rygel-media-device-set-plugin"/>
+    <keyword type="function" name="rygel_media_device_get_title ()" link="RygelMediaDevice.html#rygel-media-device-get-title"/>
+    <keyword type="function" name="rygel_media_device_get_capabilities ()" link="RygelMediaDevice.html#rygel-media-device-get-capabilities"/>
     <keyword type="struct" name="struct RygelMediaDevice" link="RygelMediaDevice.html#RygelMediaDevice-struct"/>
     <keyword type="struct" name="struct RygelMediaDeviceClass" link="RygelMediaDevice.html#RygelMediaDeviceClass"/>
+    <keyword type="property" name="The &quot;capabilities&quot; property" link="RygelMediaDevice.html#RygelMediaDevice--capabilities"/>
     <keyword type="property" name="The &quot;plugin&quot; property" link="RygelMediaDevice.html#RygelMediaDevice--plugin"/>
+    <keyword type="property" name="The &quot;title&quot; property" link="RygelMediaDevice.html#RygelMediaDevice--title"/>
     <keyword type="macro" name="RYGEL_TYPE_BASE_CONFIGURATION" link="RygelBaseConfiguration.html#RYGEL-TYPE-BASE-CONFIGURATION:CAPS"/>
     <keyword type="function" name="rygel_base_configuration_get_upnp_enabled ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-upnp-enabled"/>
     <keyword type="function" name="rygel_base_configuration_get_interface ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-interface"/>
+    <keyword type="function" name="rygel_base_configuration_get_interfaces ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-interfaces"/>
     <keyword type="function" name="rygel_base_configuration_get_port ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-port"/>
     <keyword type="function" name="rygel_base_configuration_get_transcoding ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-transcoding"/>
     <keyword type="function" name="rygel_base_configuration_get_allow_upload ()" link="RygelBaseConfiguration.html#rygel-base-configuration-get-allow-upload"/>
@@ -220,14 +234,9 @@
     <keyword type="function" name="rygel_root_device_factory_new ()" link="RygelRootDeviceFactory.html#rygel-root-device-factory-new"/>
     <keyword type="function" name="rygel_root_device_factory_get_context ()" link="RygelRootDeviceFactory.html#rygel-root-device-factory-get-context"/>
     <keyword type="struct" name="struct RygelRootDeviceFactory" link="RygelRootDeviceFactory.html#RygelRootDeviceFactory-struct"/>
-    <keyword type="function" name="rygel_root_device_factory_ref ()" link="RygelRootDeviceFactory.html#rygel-root-device-factory-ref"/>
-    <keyword type="function" name="rygel_root_device_factory_unref ()" link="RygelRootDeviceFactory.html#rygel-root-device-factory-unref"/>
-    <keyword type="function" name="rygel_param_spec_root_device_factory ()" link="RygelRootDeviceFactory.html#rygel-param-spec-root-device-factory"/>
-    <keyword type="function" name="rygel_value_set_root_device_factory ()" link="RygelRootDeviceFactory.html#rygel-value-set-root-device-factory"/>
-    <keyword type="function" name="rygel_value_get_root_device_factory ()" link="RygelRootDeviceFactory.html#rygel-value-get-root-device-factory"/>
-    <keyword type="function" name="rygel_value_take_root_device_factory ()" link="RygelRootDeviceFactory.html#rygel-value-take-root-device-factory"/>
     <keyword type="struct" name="struct RygelRootDeviceFactoryClass" link="RygelRootDeviceFactory.html#RygelRootDeviceFactoryClass"/>
     <keyword type="enum" name="enum RootDeviceFactoryError" link="RygelRootDeviceFactory.html#RootDeviceFactoryError"/>
+    <keyword type="property" name="The &quot;context&quot; property" link="RygelRootDeviceFactory.html#RygelRootDeviceFactory--context"/>
     <keyword type="macro" name="RYGEL_TYPE_META_CONFIG" link="RygelMetaConfig.html#RYGEL-TYPE-META-CONFIG:CAPS"/>
     <keyword type="function" name="rygel_meta_config_new ()" link="RygelMetaConfig.html#rygel-meta-config-new"/>
     <keyword type="function" name="rygel_meta_config_get_default ()" link="RygelMetaConfig.html#rygel-meta-config-get-default"/>
@@ -254,8 +263,6 @@
     <keyword type="property" name="The &quot;cancellable&quot; property" link="RygelStateMachine.html#RygelStateMachine--cancellable"/>
     <keyword type="signal" name="The &quot;completed&quot; signal" link="RygelStateMachine.html#RygelStateMachine-completed"/>
     <keyword type="function" name="Shutdown ()" link="docs-org-gnome-Rygel1.html#org-gnome-Rygel1-Shutdown"/>
-    <keyword type="function" name="RequestName ()" link="docs-org-freedesktop-DBus.html#org-freedesktop-DBus-RequestName"/>
-    <keyword type="function" name="StartServiceByName ()" link="docs-org-freedesktop-DBus.html#org-freedesktop-DBus-StartServiceByName"/>
     <keyword type="function" name="ListNames ()" link="docs-org-freedesktop-DBus.html#org-freedesktop-DBus-ListNames"/>
     <keyword type="function" name="ListActivatableNames ()" link="docs-org-freedesktop-DBus.html#org-freedesktop-DBus-ListActivatableNames"/>
     <keyword type="signal" name="The NameOwnerChanged signal" link="docs-org-freedesktop-DBus.html#org-freedesktop-DBus-NameOwnerChanged"/>

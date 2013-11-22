@@ -20,6 +20,19 @@
 
 using GLib;
 using Gee;
+using Gst.PbUtils;
+
+internal class FileQueueEntry {
+    public File file;
+    public bool known;
+    public string content_type;
+
+    public FileQueueEntry (File file, bool known, string content_type) {
+        this.file = file;
+        this.known = known;
+        this.content_type = content_type;
+    }
+}
 
 public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
                                                 GLib.Object {
@@ -27,9 +40,8 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
     private MetadataExtractor extractor;
     private MediaCache cache;
     private GLib.Queue<MediaContainer> containers;
-    private Gee.Queue<File> files;
+    private Gee.Queue<FileQueueEntry> files;
     private RecursiveFileMonitor monitor;
-    private string flag;
     private MediaContainer parent;
     private const int BATCH_SIZE = 256;
 
@@ -40,33 +52,23 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
                                         FileAttribute.STANDARD_TYPE + "," +
                                         FileAttribute.TIME_MODIFIED + "," +
                                         FileAttribute.STANDARD_CONTENT_TYPE + "," +
-                                        FileAttribute.STANDARD_SIZE;
+                                        FileAttribute.STANDARD_SIZE + "," +
+                                        FileAttribute.STANDARD_IS_HIDDEN;
 
-    public HarvestingTask (MetadataExtractor    extractor,
-                           RecursiveFileMonitor monitor,
+    public HarvestingTask (RecursiveFileMonitor monitor,
                            File                 file,
-                           MediaContainer       parent,
-                           string?              flag = null) {
-        this.extractor = extractor;
+                           MediaContainer       parent) {
+        this.extractor = new MetadataExtractor ();
         this.origin = file;
         this.parent = parent;
-
-        try {
-            this.cache = MediaCache.get_default ();
-        } catch (Error error) {
-            // This should not happen. As the harvesting tasks are created
-            // long after the first call to get_default which - if fails -
-            // will make the whole root-container creation fail
-            assert_not_reached ();
-        }
+        this.cache = MediaCache.get_default ();
 
         this.extractor.extraction_done.connect (on_extracted_cb);
         this.extractor.error.connect (on_extractor_error_cb);
 
-        this.files = new LinkedList<File> ();
+        this.files = new LinkedList<FileQueueEntry> ();
         this.containers = new GLib.Queue<MediaContainer> ();
         this.monitor = monitor;
-        this.flag = flag;
     }
 
     public void cancel () {
@@ -143,12 +145,18 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
 
                 if (mtime > timestamp ||
                     info.get_size () != size) {
-                    this.files.offer (file);
+                    var entry = new FileQueueEntry (file,
+                                                    true,
+                                                    info.get_content_type ());
+                    this.files.offer (entry);
 
                     return true;
                 }
             } else {
-                this.files.offer (file);
+                var entry = new FileQueueEntry (file,
+                                                false,
+                                                info.get_content_type ());
+                this.files.offer (entry);
 
                 return true;
             }
@@ -162,7 +170,7 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
     private bool process_file (File           file,
                                FileInfo       info,
                                MediaContainer parent) {
-        if (info.get_name ()[0] == '.') {
+        if (info.get_is_hidden ()) {
             return false;
         }
 
@@ -172,22 +180,20 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
 
             var container = new DummyContainer (file, parent);
             this.containers.push_tail (container);
-            try {
-                this.cache.save_container (container);
-            } catch (Error err) {
-                warning (_("Failed to update database: %s"), err.message);
 
-                return false;
+            // Only add new containers. There's not much about a container so
+            // we skip the updated signal
+            var dummy_parent = parent as DummyContainer;
+            if (dummy_parent == null ||
+                !dummy_parent.children.contains (MediaCache.get_id (file))) {
+                (parent as TrackableContainer).add_child_tracked.begin (container);
             }
 
             return true;
         } else {
             // Check if the file needs to be harvested at all either because
             // it is denied by filter or it hasn't updated
-            if (info.get_content_type ().has_prefix ("image/") ||
-                info.get_content_type ().has_prefix ("video/") ||
-                info.get_content_type ().has_prefix ("audio/") ||
-                info.get_content_type () == "application/ogg") {
+            if (Harvester.is_eligible (info)) {
                 return this.push_if_changed_or_unknown (file, info);
             }
 
@@ -205,8 +211,8 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
         foreach (var info in list) {
             var file = container.file.get_child (info.get_name ());
 
-            container.seen (file);
             this.process_file (file, info, container);
+            container.seen (file);
         }
 
         return true;
@@ -259,40 +265,27 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
             return false;
         }
 
-        if (this.files.size > 0) {
+        if (!this.files.is_empty) {
             debug ("Scheduling file %s for meta-data extraction…",
-                   this.files.peek ().get_uri ());
-            this.extractor.extract (this.files.peek ());
-        } else if (this.containers.get_length () > 0) {
+                   this.files.peek ().file.get_uri ());
+            this.extractor.extract (this.files.peek ().file,
+                                    this.files.peek ().content_type);
+        } else if (!this.containers.is_empty ()) {
             this.enumerate_directory.begin ();
         } else {
             // nothing to do
-            if (this.flag != null) {
-                try {
-                    this.cache.flag_object (this.origin,
-                                            this.flag);
-                } catch (Error error) {};
-            }
-            parent.updated (parent);
-
             this.completed ();
         }
 
         return false;
     }
 
-    private void on_extracted_cb (File                   file,
-                                  GUPnP.DLNAInformation? dlna,
-                                  FileInfo               file_info) {
+    private void on_extracted_cb (File               file,
+                                  DiscovererInfo?    dlna,
+                                  GUPnPDLNA.Profile? profile,
+                                  FileInfo           file_info) {
         if (this.cancellable.is_cancelled ()) {
             this.completed ();
-        }
-
-        var entry = this.files.peek ();
-        if (entry == null || file != entry) {
-            // this event may be triggered by another instance
-            // just ignore it
-           return;
         }
 
         MediaItem item;
@@ -304,15 +297,19 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
             item = ItemFactory.create_from_info (this.containers.peek_head (),
                                                  file,
                                                  dlna,
+                                                 profile,
                                                  file_info);
         }
 
         if (item != null) {
             item.parent_ref = this.containers.peek_head ();
-            try {
-                this.cache.save_item (item);
-            } catch (Error error) {
-                // Ignore it for now
+            // This is only necessary to generate the proper <objAdd LastChange
+            // entry
+            if (this.files.peek ().known) {
+                (item as UpdatableObject).non_overriding_commit.begin ();
+            } else {
+                var container = item.parent as TrackableContainer;
+                container.add_child_tracked.begin (item) ;
             }
         }
 
@@ -321,13 +318,6 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
     }
 
     private void on_extractor_error_cb (File file, Error error) {
-        var entry = this.files.peek ();
-        if (entry == null || file != entry) {
-            // this event may be triggered by another instance
-            // just ignore it
-            return;
-        }
-
         // error is only emitted if even the basic information extraction
         // failed; there's not much to do here, just print the information and
         // go to the next file
@@ -346,18 +336,8 @@ public class Rygel.MediaExport.HarvestingTask : Rygel.StateMachine,
      * Reschedule the iteration and extraction
      */
     private void do_update () {
-        if (this.files.size == 0 &&
-            this.containers.get_length () != 0) {
-            var container = this.containers.peek_head ();
-            try {
-                var cache = MediaCache.get_default ();
-                if (cache.get_child_count (container.id) > 0) {
-                    var head = this.containers.peek_head ();
-                    head.updated (head);
-                } else {
-                    cache.remove_by_id (container.id);
-                }
-            } catch (Error error) { }
+        if (this.files.is_empty &&
+            !this.containers.is_empty ()) {
             this.containers.pop_head ();
         }
 

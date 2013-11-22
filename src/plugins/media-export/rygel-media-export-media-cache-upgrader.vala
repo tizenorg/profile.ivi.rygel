@@ -84,39 +84,56 @@ internal class Rygel.MediaExport.MediaCacheUpgrader {
         debug ("Older schema detected. Upgrading...");
         int current_version = int.parse (SQLFactory.SCHEMA_VERSION);
         while (old_version < current_version) {
-            if (this.database != null) {
-                switch (old_version) {
-                    case 3:
-                        update_v3_v4 ();
-                        break;
-                    case 4:
-                        update_v4_v5 ();
-                        break;
-                    case 5:
-                        update_v5_v6 ();
-                        break;
-                    case 6:
-                        update_v6_v7 ();
-                        break;
-                    case 7:
-                        update_v7_v8 ();
-                        break;
-                    case 8:
-                        update_v8_v9 ();
-                        break;
-                    case 9:
-                        update_v9_v10 ();
-                        break;
-                    case 10:
-                        update_v10_v11 ();
-                        break;
-                    default:
-                        warning ("Cannot upgrade");
-                        database = null;
-                        break;
-                }
-                old_version++;
+            if (this.database == null) {
+                break;
             }
+
+            switch (old_version) {
+                case 3:
+                    update_v3_v4 ();
+                    break;
+                case 4:
+                    update_v4_v5 ();
+                    break;
+                case 5:
+                    update_v5_v6 ();
+                    break;
+                case 6:
+                    update_v6_v7 ();
+                    break;
+                case 7:
+                    update_v7_v8 ();
+                    break;
+                case 8:
+                    update_v8_v9 ();
+                    break;
+                case 9:
+                    update_v9_v10 ();
+                    break;
+                case 10:
+                    update_v10_v11 ();
+                    break;
+                case 11:
+                    update_v11_v12 ();
+                    break;
+                case 12:
+                    update_v12_v13 ();
+                    break;
+                case 13:
+                    this.update_v13_v14 ();
+                    break;
+                case 14:
+                    this.update_v14_v15 ();
+                    break;
+                case 15:
+                    this.update_v15_v16 ();
+                    break;
+                default:
+                    warning ("Cannot upgrade");
+                    database = null;
+                    break;
+            }
+            old_version++;
         }
     }
 
@@ -356,6 +373,166 @@ internal class Rygel.MediaExport.MediaCacheUpgrader {
                                 "SELECT object_fk FROM Meta_Data WHERE " +
                                 "  class LIKE 'object.item.audioItem.%')");
             this.database.exec ("UPDATE schema_info SET version = '11'");
+            database.commit ();
+            database.exec ("VACUUM");
+            database.analyze ();
+        } catch (DatabaseError error) {
+            database.rollback ();
+            warning ("Database upgrade failed: %s", error.message);
+            database = null;
+        }
+    }
+
+    private void update_v11_v12 () {
+        try {
+            this.database.begin ();
+            this.database.exec ("ALTER TABLE schema_info " +
+                                "ADD COLUMN reset_token TEXT");
+            this.database.exec ("UPDATE schema_info SET reset_token = '" +
+                                UUID.get () + "'");
+            this.database.exec ("UPDATE schema_info SET version = '12'");
+            this.database.exec ("ALTER TABLE object " +
+                                "ADD COLUMN object_update_id INTEGER");
+            this.database.exec ("ALTER TABLE object " +
+                                "ADD COLUMN deleted_child_count INTEGER");
+            this.database.exec ("ALTER TABLE object " +
+                                "ADD COLUMN container_update_id INTEGER");
+            var ids = new ArrayList<string> ();
+            var cursor = this.database.exec_cursor
+                                        ("SELECT upnp_id FROM object");
+            foreach (var statement in cursor) {
+                ids.add (statement.column_text (0));
+            }
+
+            uint32 count = 1;
+            foreach (var id in ids) {
+                GLib.Value[] args = { count, count, id };
+                count++;
+                this.database.exec ("UPDATE object SET " +
+                                    "container_update_id = ?, " +
+                                    "object_update_id = ?, " +
+                                    "deleted_child_count = 0 " +
+                                    "WHERE upnp_id = ?",
+                                    args);
+            }
+
+            database.commit ();
+            database.exec ("VACUUM");
+            database.analyze ();
+        } catch (DatabaseError error) {
+            database.rollback ();
+            warning ("Database upgrade failed: %s", error.message);
+            database = null;
+        }
+    }
+
+    private void update_v12_v13 () {
+        try {
+            this.database.begin ();
+            this.database.exec ("CREATE TEMPORARY TABLE object_backup(parent TEXT CONSTRAINT parent_fk_id " +
+                                "REFERENCES Object(upnp_id), " +
+                                "upnp_id TEXT PRIMARY KEY, " +
+                                "type_fk INTEGER, " +
+                                "title TEXT NOT NULL, " +
+                                "timestamp INTEGER NOT NULL, " +
+                                "uri TEXT, " +
+                                "object_update_id INTEGER, " +
+                                "deleted_child_count INTEGER, " +
+                                "container_update_id INTEGER)");
+            this.database.exec ("INSERT INTO object_backup SELECT " +
+                                "parent, upnp_id, type_fk, title, " +
+                                "timestamp, uri, object_update_id, " +
+                                "deleted_child_count, container_update_id " +
+                                "FROM object");
+            this.database.exec ("DROP TRIGGER IF EXISTS trgr_update_closure");
+            this.database.exec ("DROP TRIGGER IF EXISTS trgr_delete_closure");
+            this.database.exec ("DROP TRIGGER IF EXISTS trgr_delete_metadata");
+            this.database.exec ("DROP INDEX IF EXISTS idx_parent");
+            this.database.exec ("DROP INDEX IF EXISTS idx_object_upnp_id");
+            this.database.exec ("DROP INDEX IF EXISTS idx_uri");
+            this.database.exec ("DROP TABLE object");
+            this.database.exec ("CREATE TABLE object " +
+                                "(parent TEXT CONSTRAINT parent_fk_id " +
+                                "REFERENCES Object(upnp_id), " +
+                                "upnp_id TEXT PRIMARY KEY, " +
+                                "type_fk INTEGER, " +
+                                "title TEXT NOT NULL, " +
+                                "timestamp INTEGER NOT NULL, " +
+                                "uri TEXT, " +
+                                "object_update_id INTEGER, " +
+                                "deleted_child_count INTEGER, " +
+                                "container_update_id INTEGER)");
+            this.database.exec ("INSERT INTO object SELECT parent, " +
+                                "upnp_id, type_fk, title, timestamp, " +
+                                "uri, object_update_id, " +
+                                "deleted_child_count, container_update_id " +
+                                "FROM object_backup");
+            this.database.exec ("DROP TABLE object_backup");
+            this.database.exec ("ALTER TABLE object " +
+                                "ADD COLUMN is_guarded INTEGER");
+            /* This intentionally sets all rows in is_guarded column
+             * to zero.
+             */
+            this.database.exec ("UPDATE object SET is_guarded = 0");
+            this.database.exec ("UPDATE schema_info SET version = '13'");
+            this.database.exec (this.sql.make (SQLString.TRIGGER_COMMON));
+            this.database.exec (this.sql.make (SQLString.TRIGGER_CLOSURE));
+            this.database.exec (this.sql.make (SQLString.INDEX_COMMON));
+
+            this.database.commit ();
+            this.database.exec ("VACUUM");
+            this.database.analyze ();
+        } catch (DatabaseError error) {
+            this.database.rollback ();
+            warning ("Database upgrade failed: %s", error.message);
+            this.database = null;
+        }
+    }
+
+    private void update_v13_v14 () {
+        try {
+            this.database.begin ();
+
+            this.database.exec ("ALTER TABLE Object ADD COLUMN reference_id " +
+                                "DEFAULT NULL");
+            this.database.exec (this.sql.make (SQLString.TRIGGER_REFERENCE));
+
+            this.database.exec ("UPDATE schema_info SET version = '14'");
+            this.database.commit ();
+            this.database.exec ("VACUUM");
+            this.database.analyze ();
+        } catch (DatabaseError error) {
+            this.database.rollback ();
+            warning ("Database upgrade failed: %s", error.message);
+            this.database = null;
+        }
+    }
+
+    private void update_v14_v15 () {
+        try {
+            this.database.begin ();
+            this.database.exec ("ALTER TABLE Meta_Data " +
+                                "   ADD COLUMN creator TEXT");
+            this.database.exec ("UPDATE schema_info SET version = '15'");
+            database.commit ();
+            database.exec ("VACUUM");
+            database.analyze ();
+        } catch (DatabaseError error) {
+            database.rollback ();
+            warning ("Database upgrade failed: %s", error.message);
+            database = null;
+        }
+    }
+
+    private void update_v15_v16 () {
+        try {
+            this.database.begin ();
+            this.database.exec ("INSERT INTO meta_data (size, mime_type, " +
+                                "class, object_fk) SELECT 0, " +
+                                "'inode/directory', 'object.container', " +
+                                "o.upnp_id FROM object AS o WHERE " +
+                                "o.type_fk=0;");
+            this.database.exec ("UPDATE schema_info SET version = '16'");
             database.commit ();
             database.exec ("VACUUM");
             database.analyze ();

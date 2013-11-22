@@ -29,15 +29,18 @@ internal class Rygel.EngineLoader : RecursiveModuleLoader {
     private string engine_name;
 
     public EngineLoader () {
-        var path = BuildConfig.ENGINE_DIR;
-        var config = MetaConfig.get_default ();
-        try {
-            path = config.get_engine_path ();
-        } catch (Error error) { }
+        Object (base_path : get_config ());
+    }
 
-        base (path);
+    public override void constructed () {
+        base.constructed ();
+
+        if (this.base_path == null) {
+            this.base_path = get_config ();
+        }
 
         try {
+            var config = MetaConfig.get_default ();
             this.engine_name = config.get_media_engine ();
             debug ("Looking for specific engine named '%s",
                    this.engine_name);
@@ -60,7 +63,7 @@ internal class Rygel.EngineLoader : RecursiveModuleLoader {
             }
         }
 
-        var module = Module.open (file.get_path (), 0);
+        var module = Module.open (file.get_path (), ModuleFlags.BIND_LOCAL);
         if (module == null) {
             debug ("Failed to load engine %s: %s",
                    file.get_path (),
@@ -93,5 +96,19 @@ internal class Rygel.EngineLoader : RecursiveModuleLoader {
         this.instance = get_instance ();
 
         return false;
+    }
+
+    protected override bool load_module_from_info (PluginInformation info) {
+        return load_module_from_file (File.new_for_path (info.module_path));
+    }
+
+    private static string get_config () {
+        var path = BuildConfig.ENGINE_DIR;
+        var config = MetaConfig.get_default ();
+        try {
+            path = config.get_engine_path ();
+        } catch (Error error) { }
+
+        return path;
     }
 }

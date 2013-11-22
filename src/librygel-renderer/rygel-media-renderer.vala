@@ -22,9 +22,10 @@
 internal class Plugin : Rygel.MediaRendererPlugin {
     private Rygel.MediaPlayer player;
 
-    public Plugin (Rygel.MediaPlayer root_container,
+    public Plugin (Rygel.MediaPlayer        player,
                    Rygel.PluginCapabilities capabilities) {
-        base ("LibRygelRenderer", _("LibRygelRenderer"), null, capabilities);
+        base ("LibRygelRenderer", "LibRygelRenderer", null, capabilities);
+        this.player = player;
     }
 
     public override Rygel.MediaPlayer? get_player () {
@@ -38,9 +39,11 @@ internal class Plugin : Rygel.MediaRendererPlugin {
  * Call rygel_media_device_add_interface() on the RygelMediaRenderer to allow it
  * to render media from that network interface.
  *
- * See the standalone-renderer.c example.
+ * See the
+ * <link linkend="implementing-renderers">Implementing Renderers</link> section.
  */
 public class Rygel.MediaRenderer : MediaDevice {
+    public unowned MediaPlayer player { construct; private get; }
 
     /**
      * Create a RygelMediaRenderer to render content via a RygelMediaPlayer.
@@ -49,8 +52,17 @@ public class Rygel.MediaRenderer : MediaDevice {
                           MediaPlayer player,
                           PluginCapabilities capabilities =
                                         PluginCapabilities.NONE) {
-        base ();
-        this.plugin = new global::Plugin (player, capabilities);
-        this.plugin.title = title;
+        Object (title: title,
+                player: player,
+                capabilities: capabilities);
+    }
+
+    public override void constructed () {
+        base.constructed ();
+
+        if (this.plugin == null) {
+            this.plugin = new global::Plugin (this.player, this.capabilities);
+        }
+        this.plugin.title = this.title;
     }
 }

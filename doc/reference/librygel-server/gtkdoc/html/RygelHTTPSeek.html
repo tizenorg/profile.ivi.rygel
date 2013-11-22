@@ -5,20 +5,20 @@
 <title>RygelHTTPSeek</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
-<link rel="prev" href="RygelMediaServer.html" title="RygelMediaServer">
-<link rel="next" href="RygelMediaArtStore.html" title="RygelMediaArtStore">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
+<link rel="prev" href="RygelDataSource.html" title="RygelDataSource">
+<link rel="next" href="RygelImageItem.html" title="RygelImageItem">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="RygelMediaServer.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="RygelDataSource.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
-<td><a accesskey="n" href="RygelMediaArtStore.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="RygelImageItem.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#RygelHTTPSeek.synopsis" class="shortcut">Top</a>
@@ -47,7 +47,7 @@
 <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeekType"><span class="returnvalue">RygelHTTPSeekType</span></a>   <a class="link" href="RygelHTTPSeek.html#rygel-http-seek-get-seek-type" title="rygel_http_seek_get_seek_type ()">rygel_http_seek_get_seek_type</a>       (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelHTTPSeek.html#rygel-http-seek-set-seek-type" title="rygel_http_seek_set_seek_type ()">rygel_http_seek_set_seek_type</a>       (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelHTTPSeek.html#RygelHTTPSeekType"><span class="type">RygelHTTPSeekType</span></a> value</code></em>);
-<span class="returnvalue">SoupMessage</span> *       <a class="link" href="RygelHTTPSeek.html#rygel-http-seek-get-msg" title="rygel_http_seek_get_msg ()">rygel_http_seek_get_msg</a>             (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);
+<a href="../libsoup-2.4/SoupMessage.html"><span class="returnvalue">SoupMessage</span></a> *       <a class="link" href="RygelHTTPSeek.html#rygel-http-seek-get-msg" title="rygel_http_seek_get_msg ()">rygel_http_seek_get_msg</a>             (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);
 <span class="returnvalue">gint64</span>              <a class="link" href="RygelHTTPSeek.html#rygel-http-seek-get-start" title="rygel_http_seek_get_start ()">rygel_http_seek_get_start</a>           (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);
 <span class="returnvalue">gint64</span>              <a class="link" href="RygelHTTPSeek.html#rygel-http-seek-get-stop" title="rygel_http_seek_get_stop ()">rygel_http_seek_get_stop</a>            (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);
 <span class="returnvalue">gint64</span>              <a class="link" href="RygelHTTPSeek.html#rygel-http-seek-get-step" title="rygel_http_seek_get_step ()">rygel_http_seek_get_step</a>            (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);
@@ -62,7 +62,7 @@ enum                <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeekError"
 <div class="refsect1">
 <a name="RygelHTTPSeek.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----RygelHTTPSeek
 </pre>
 <pre class="synopsis">
@@ -74,7 +74,7 @@ enum                <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeekError"
 <a name="RygelHTTPSeek.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--length" title='The "length" property'>length</a>"                   <span class="type">gint64</span>                : Read
-  "<a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--msg" title='The "msg" property'>msg</a>"                      <span class="type">SoupMessage</span>*          : Read
+  "<a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--msg" title='The "msg" property'>msg</a>"                      <a href="../libsoup-2.4/SoupMessage.html"><span class="type">SoupMessage</span></a>*          : Read
   "<a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--seek-type" title='The "seek-type" property'>seek-type</a>"                <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeekType"><span class="type">RygelHTTPSeekType</span></a>     : Read / Write
   "<a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--start" title='The "start" property'>start</a>"                    <span class="type">gint64</span>                : Read
   "<a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--step" title='The "step" property'>step</a>"                     <span class="type">gint64</span>                : Read
@@ -124,6 +124,9 @@ The type for <a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><sp
 <p>
 Get and return the current value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--seek-type" title='The "seek-type" property'><span class="type">"seek-type"</span></a> property.
 </p>
+<p>
+Identifies whether this is a class Range request or a DLNA-specific "TimeSeekRange.dlna.org" request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -146,6 +149,9 @@ Get and return the current value of the <a class="link" href="RygelHTTPSeek.html
 <p>
 Set the value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--seek-type" title='The "seek-type" property'><span class="type">"seek-type"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
+<p>
+Identifies whether this is a class Range request or a DLNA-specific "TimeSeekRange.dlna.org" request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -163,7 +169,7 @@ Set the value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--see
 <hr>
 <div class="refsect2">
 <a name="rygel-http-seek-get-msg"></a><h3>rygel_http_seek_get_msg ()</h3>
-<pre class="programlisting"><span class="returnvalue">SoupMessage</span> *       rygel_http_seek_get_msg             (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../libsoup-2.4/SoupMessage.html"><span class="returnvalue">SoupMessage</span></a> *       rygel_http_seek_get_msg             (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--msg" title='The "msg" property'><span class="type">"msg"</span></a> property.
 </p>
@@ -188,6 +194,9 @@ Get and return the current value of the <a class="link" href="RygelHTTPSeek.html
 <p>
 Get and return the current value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--start" title='The "start" property'><span class="type">"start"</span></a> property.
 </p>
+<p>
+The start of the range as a number of bytes (classic) or as microseconds (DLNA-specific). See seek_type.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -208,6 +217,9 @@ Get and return the current value of the <a class="link" href="RygelHTTPSeek.html
 <pre class="programlisting"><span class="returnvalue">gint64</span>              rygel_http_seek_get_stop            (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--stop" title='The "stop" property'><span class="type">"stop"</span></a> property.
+</p>
+<p>
+The end of the range as a number of bytes (classic) or as microseconds (DLNA-specific). See seek_type.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -230,6 +242,9 @@ Get and return the current value of the <a class="link" href="RygelHTTPSeek.html
 <p>
 Get and return the current value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--step" title='The "step" property'><span class="type">"step"</span></a> property.
 </p>
+<p>
+Either 1 byte (classic) or as 1000 G_TIME_SPAN_MILLISECOND microseconds (DLNA-specific). See seek_type.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -251,6 +266,9 @@ Get and return the current value of the <a class="link" href="RygelHTTPSeek.html
 <p>
 Get and return the current value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--length" title='The "length" property'><span class="type">"length"</span></a> property.
 </p>
+<p>
+The length of the range as a number of bytes (classic) or as microseconds (DLNA-specific). See seek_type.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -271,6 +289,9 @@ Get and return the current value of the <a class="link" href="RygelHTTPSeek.html
 <pre class="programlisting"><span class="returnvalue">gint64</span>              rygel_http_seek_get_total_length    (<em class="parameter"><code><a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek"><span class="type">RygelHTTPSeek</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeek--total-length" title='The "total-length" property'><span class="type">"total-length"</span></a> property.
+</p>
+<p>
+The length of the media file as a number of bytes (classic) or as microseconds (DLNA-specific). See seek_type.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -318,7 +339,7 @@ The class structure for <a class="link" href="RygelHTTPSeek.html#RYGEL-TYPE-HTTP
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><span class="type">GObjectClass</span> <em class="structfield"><code><a name="RygelHTTPSeekClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelHTTPSeekClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
 </tr>
 <tr>
@@ -361,7 +382,7 @@ The length of the range as a number of bytes (classic) or as microseconds (DLNA-
 <hr>
 <div class="refsect2">
 <a name="RygelHTTPSeek--msg"></a><h3>The <code class="literal">"msg"</code> property</h3>
-<pre class="programlisting">  "msg"                      <span class="type">SoupMessage</span>*          : Read</pre>
+<pre class="programlisting">  "msg"                      <a href="../libsoup-2.4/SoupMessage.html"><span class="type">SoupMessage</span></a>*          : Read</pre>
 <p>msg.</p>
 </div>
 <hr>

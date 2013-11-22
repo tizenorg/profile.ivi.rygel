@@ -20,6 +20,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 using Gst;
+using Gst.PbUtils;
 using GUPnP;
 
 /**
@@ -42,7 +43,6 @@ internal class Rygel.VideoTranscoder : Rygel.AudioTranscoder {
 
         base.with_class (content_type,
                          dlna_profile,
-                         VideoItem.UPNP_CLASS,
                          audio_bitrate,
                          container_caps,
                          audio_codec_caps,

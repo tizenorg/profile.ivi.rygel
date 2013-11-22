@@ -78,6 +78,12 @@ internal class Rygel.Main : Object {
     }
 
     private int run () {
+        try {
+            if (!this.config.get_upnp_enabled ()) {
+                message (_("Rygel is running in streaming-only mode."));
+            }
+        } catch (Error error) { }
+
         this.main_loop.run ();
 
         return this.exit_code;
@@ -98,8 +104,8 @@ internal class Rygel.Main : Object {
 
         Timeout.add_seconds (timeout, () => {
             if (this.plugin_loader.list_plugins ().size == 0) {
-                warning (ngettext ("No plugins found in %d second; giving up..",
-                                   "No plugins found in %d seconds; giving up..",
+                warning (ngettext ("No plugins found in %d second; giving up...",
+                                   "No plugins found in %d seconds; giving up...",
                                    PLUGIN_TIMEOUT),
                          PLUGIN_TIMEOUT);
 
@@ -136,7 +142,7 @@ internal class Rygel.Main : Object {
 
     private void on_context_available (GUPnP.ContextManager manager,
                                        GUPnP.Context        context) {
-        string iface = null;
+        string[] ifaces = null;
 
         debug ("New network %s (%s) context available. IP: %s",
                context.network,
@@ -144,12 +150,12 @@ internal class Rygel.Main : Object {
                context.host_ip);
 
         try {
-            iface = this.config.get_interface ();
+            ifaces = this.config.get_interfaces ();
         } catch (GLib.Error err) {}
 
-        if (iface == null ||
-            iface == context.interface ||
-            iface == context.network) {
+        if (ifaces == null ||
+            context.interface in ifaces||
+            context.network in ifaces) {
             try {
                 var factory = new RootDeviceFactory (context);
                 this.factories.add (factory);

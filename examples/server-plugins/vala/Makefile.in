@@ -15,6 +15,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 am__make_dryrun = \
   { \
@@ -52,9 +53,10 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(top_srcdir)/common.am example-root-container.c \
-	example-server-plugin.c \
-	librygel_example_server_plugin_la_vala.stamp
+	$(srcdir)/example-server-vala.plugin.in \
+	$(top_srcdir)/common.am example-root-container-vala.c \
+	example-server-plugin-vala.c \
+	librygel_example_server_plugin_vala_la_vala.stamp
 subdir = examples/server-plugins/vala
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/intltool.m4 \
@@ -64,9 +66,9 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/intltool.m4 \
 	$(top_srcdir)/m4/vala.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-mkinstalldirs = $(SHELL) $(top_srcdir)/build-aux/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = example-server-vala.plugin
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -95,29 +97,23 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(plugindir)"
+am__installdirs = "$(DESTDIR)$(plugindir)" "$(DESTDIR)$(plugindir)"
 LTLIBRARIES = $(plugin_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
-am__DEPENDENCIES_3 = $(am__DEPENDENCIES_2) $(am__DEPENDENCIES_1) \
-	$(top_builddir)/src/librygel-core/librygel-core-2.0.la
-am__DEPENDENCIES_4 =  \
-	$(top_builddir)/src/librygel-server/librygel-server-2.0.la \
-	$(am__DEPENDENCIES_3)
-librygel_example_server_plugin_la_DEPENDENCIES =  \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_4)
-am_librygel_example_server_plugin_la_OBJECTS =  \
-	example-server-plugin.lo example-root-container.lo
-librygel_example_server_plugin_la_OBJECTS =  \
-	$(am_librygel_example_server_plugin_la_OBJECTS)
+librygel_example_server_plugin_vala_la_DEPENDENCIES =  \
+	$(am__DEPENDENCIES_1) $(RYGEL_COMMON_LIBRYGEL_SERVER_LIBS)
+am_librygel_example_server_plugin_vala_la_OBJECTS = librygel_example_server_plugin_vala_la-example-server-plugin-vala.lo \
+	librygel_example_server_plugin_vala_la-example-root-container-vala.lo
+librygel_example_server_plugin_vala_la_OBJECTS =  \
+	$(am_librygel_example_server_plugin_vala_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
-librygel_example_server_plugin_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+librygel_example_server_plugin_vala_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
-	$(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(librygel_example_server_plugin_la_LDFLAGS) $(LDFLAGS) -o $@
+	$(CCLD) $(librygel_example_server_plugin_vala_la_CFLAGS) \
+	$(CFLAGS) $(librygel_example_server_plugin_vala_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -151,13 +147,14 @@ am__v_VALAC_0 = @echo "  VALAC " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(librygel_example_server_plugin_la_SOURCES)
-DIST_SOURCES = $(librygel_example_server_plugin_la_SOURCES)
+SOURCES = $(librygel_example_server_plugin_vala_la_SOURCES)
+DIST_SOURCES = $(librygel_example_server_plugin_vala_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+DATA = $(plugin_DATA)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -176,8 +173,6 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-COLLATION_CFLAGS = @COLLATION_CFLAGS@
-COLLATION_LIBS = @COLLATION_LIBS@
 COVERAGE_CFLAGS = @COVERAGE_CFLAGS@
 COVERAGE_LIBS = @COVERAGE_LIBS@
 COVERAGE_VALAFLAGS = @COVERAGE_VALAFLAGS@
@@ -194,27 +189,19 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
+EXAMPLE_DEPS_CFLAGS = @EXAMPLE_DEPS_CFLAGS@
+EXAMPLE_DEPS_LIBS = @EXAMPLE_DEPS_LIBS@
+EXAMPLE_UI_DEPS_CFLAGS = @EXAMPLE_UI_DEPS_CFLAGS@
+EXAMPLE_UI_DEPS_LIBS = @EXAMPLE_UI_DEPS_LIBS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
-GEE_CFLAGS = @GEE_CFLAGS@
-GEE_LIBS = @GEE_LIBS@
 GENHTML = @GENHTML@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GMOFILES = @GMOFILES@
 GMSGFMT = @GMSGFMT@
 GREP = @GREP@
-GSTREAMER_APP_CFLAGS = @GSTREAMER_APP_CFLAGS@
-GSTREAMER_APP_LIBS = @GSTREAMER_APP_LIBS@
-GSTREAMER_BASE_CFLAGS = @GSTREAMER_BASE_CFLAGS@
-GSTREAMER_BASE_LIBS = @GSTREAMER_BASE_LIBS@
-GSTREAMER_TAG_CFLAGS = @GSTREAMER_TAG_CFLAGS@
-GSTREAMER_TAG_LIBS = @GSTREAMER_TAG_LIBS@
-GST_PBU_CFLAGS = @GST_PBU_CFLAGS@
-GST_PBU_LIBS = @GST_PBU_LIBS@
 GTKDOC_CFLAGS = @GTKDOC_CFLAGS@
 GTKDOC_LIBS = @GTKDOC_LIBS@
-GTK_CFLAGS = @GTK_CFLAGS@
-GTK_LIBS = @GTK_LIBS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -233,26 +220,20 @@ INTLTOOL__v_MERGE_0 = @INTLTOOL__v_MERGE_0@
 LCOV = @LCOV@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LIBGIO_CFLAGS = @LIBGIO_CFLAGS@
-LIBGIO_LIBS = @LIBGIO_LIBS@
-LIBGLIB_CFLAGS = @LIBGLIB_CFLAGS@
-LIBGLIB_LIBS = @LIBGLIB_LIBS@
-LIBGSSDP_CFLAGS = @LIBGSSDP_CFLAGS@
-LIBGSSDP_LIBS = @LIBGSSDP_LIBS@
-LIBGSTREAMER_CFLAGS = @LIBGSTREAMER_CFLAGS@
-LIBGSTREAMER_LIBS = @LIBGSTREAMER_LIBS@
-LIBGUPNP_AV_CFLAGS = @LIBGUPNP_AV_CFLAGS@
-LIBGUPNP_AV_LIBS = @LIBGUPNP_AV_LIBS@
-LIBGUPNP_CFLAGS = @LIBGUPNP_CFLAGS@
-LIBGUPNP_DLNA_CFLAGS = @LIBGUPNP_DLNA_CFLAGS@
-LIBGUPNP_DLNA_LIBS = @LIBGUPNP_DLNA_LIBS@
-LIBGUPNP_LIBS = @LIBGUPNP_LIBS@
 LIBOBJS = @LIBOBJS@
+LIBRYGEL_CORE_DEPS_CFLAGS = @LIBRYGEL_CORE_DEPS_CFLAGS@
+LIBRYGEL_CORE_DEPS_LIBS = @LIBRYGEL_CORE_DEPS_LIBS@
+LIBRYGEL_CORE_DEPS_VALAFLAGS = @LIBRYGEL_CORE_DEPS_VALAFLAGS@
+LIBRYGEL_RENDERER_DEPS_CFLAGS = @LIBRYGEL_RENDERER_DEPS_CFLAGS@
+LIBRYGEL_RENDERER_DEPS_LIBS = @LIBRYGEL_RENDERER_DEPS_LIBS@
+LIBRYGEL_RENDERER_DEPS_VALAFLAGS = @LIBRYGEL_RENDERER_DEPS_VALAFLAGS@
+LIBRYGEL_RENDERER_GST_DEPS_CFLAGS = @LIBRYGEL_RENDERER_GST_DEPS_CFLAGS@
+LIBRYGEL_RENDERER_GST_DEPS_LIBS = @LIBRYGEL_RENDERER_GST_DEPS_LIBS@
+LIBRYGEL_RENDERER_GST_DEPS_VALAFLAGS = @LIBRYGEL_RENDERER_GST_DEPS_VALAFLAGS@
+LIBRYGEL_SERVER_DEPS_CFLAGS = @LIBRYGEL_SERVER_DEPS_CFLAGS@
+LIBRYGEL_SERVER_DEPS_LIBS = @LIBRYGEL_SERVER_DEPS_LIBS@
+LIBRYGEL_SERVER_DEPS_VALAFLAGS = @LIBRYGEL_SERVER_DEPS_VALAFLAGS@
 LIBS = @LIBS@
-LIBSOUP_CFLAGS = @LIBSOUP_CFLAGS@
-LIBSOUP_LIBS = @LIBSOUP_LIBS@
-LIBSQLITE3_CFLAGS = @LIBSQLITE3_CFLAGS@
-LIBSQLITE3_LIBS = @LIBSQLITE3_LIBS@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
@@ -288,15 +269,44 @@ PO_IN_DATADIR_FALSE = @PO_IN_DATADIR_FALSE@
 PO_IN_DATADIR_TRUE = @PO_IN_DATADIR_TRUE@
 RANLIB = @RANLIB@
 RYGEL_DEBUG_VALAFLAGS = @RYGEL_DEBUG_VALAFLAGS@
+RYGEL_DEPS_CFLAGS = @RYGEL_DEPS_CFLAGS@
+RYGEL_DEPS_LIBS = @RYGEL_DEPS_LIBS@
+RYGEL_MEDIA_ENGINE_DIR = @RYGEL_MEDIA_ENGINE_DIR@
+RYGEL_MEDIA_ENGINE_GSTREAMER_DEPS_CFLAGS = @RYGEL_MEDIA_ENGINE_GSTREAMER_DEPS_CFLAGS@
+RYGEL_MEDIA_ENGINE_GSTREAMER_DEPS_LIBS = @RYGEL_MEDIA_ENGINE_GSTREAMER_DEPS_LIBS@
+RYGEL_MEDIA_ENGINE_GSTREAMER_DEPS_VALAFLAGS = @RYGEL_MEDIA_ENGINE_GSTREAMER_DEPS_VALAFLAGS@
+RYGEL_PLUGIN_DIR = @RYGEL_PLUGIN_DIR@
+RYGEL_PLUGIN_EXTERNAL_DEPS_CFLAGS = @RYGEL_PLUGIN_EXTERNAL_DEPS_CFLAGS@
+RYGEL_PLUGIN_EXTERNAL_DEPS_LIBS = @RYGEL_PLUGIN_EXTERNAL_DEPS_LIBS@
+RYGEL_PLUGIN_GST_LAUNCH_DEPS_CFLAGS = @RYGEL_PLUGIN_GST_LAUNCH_DEPS_CFLAGS@
+RYGEL_PLUGIN_GST_LAUNCH_DEPS_LIBS = @RYGEL_PLUGIN_GST_LAUNCH_DEPS_LIBS@
+RYGEL_PLUGIN_GST_LAUNCH_DEPS_VALAFLAGS = @RYGEL_PLUGIN_GST_LAUNCH_DEPS_VALAFLAGS@
+RYGEL_PLUGIN_LINKER_FLAGS = @RYGEL_PLUGIN_LINKER_FLAGS@
+RYGEL_PLUGIN_MEDIATHEK_DEPS_CFLAGS = @RYGEL_PLUGIN_MEDIATHEK_DEPS_CFLAGS@
+RYGEL_PLUGIN_MEDIATHEK_DEPS_LIBS = @RYGEL_PLUGIN_MEDIATHEK_DEPS_LIBS@
+RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_CFLAGS = @RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_CFLAGS@
+RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_LIBS = @RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_LIBS@
+RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_VALAFLAGS = @RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_VALAFLAGS@
+RYGEL_PLUGIN_MPRIS_DEPS_CFLAGS = @RYGEL_PLUGIN_MPRIS_DEPS_CFLAGS@
+RYGEL_PLUGIN_MPRIS_DEPS_LIBS = @RYGEL_PLUGIN_MPRIS_DEPS_LIBS@
+RYGEL_PLUGIN_PLAYBIN_DEPS_CFLAGS = @RYGEL_PLUGIN_PLAYBIN_DEPS_CFLAGS@
+RYGEL_PLUGIN_PLAYBIN_DEPS_LIBS = @RYGEL_PLUGIN_PLAYBIN_DEPS_LIBS@
+RYGEL_PLUGIN_TRACKER_DEPS_CFLAGS = @RYGEL_PLUGIN_TRACKER_DEPS_CFLAGS@
+RYGEL_PLUGIN_TRACKER_DEPS_LIBS = @RYGEL_PLUGIN_TRACKER_DEPS_LIBS@
+RYGEL_PLUGIN_TRACKER_DEPS_VALAFLAGS = @RYGEL_PLUGIN_TRACKER_DEPS_VALAFLAGS@
+RYGEL_UI_DEPS_CFLAGS = @RYGEL_UI_DEPS_CFLAGS@
+RYGEL_UI_DEPS_LIBS = @RYGEL_UI_DEPS_LIBS@
+RYGEL_UI_DEPS_VALAFLAGS = @RYGEL_UI_DEPS_VALAFLAGS@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+TEST_DEPS_CFLAGS = @TEST_DEPS_CFLAGS@
+TEST_DEPS_LIBS = @TEST_DEPS_LIBS@
+TEST_DEPS_VALAFLAGS = @TEST_DEPS_VALAFLAGS@
 TRACKER_SPARQL_CFLAGS = @TRACKER_SPARQL_CFLAGS@
 TRACKER_SPARQL_LIBS = @TRACKER_SPARQL_LIBS@
 USE_NLS = @USE_NLS@
-UUID_CFLAGS = @UUID_CFLAGS@
-UUID_LIBS = @UUID_LIBS@
 VALAC = @VALAC@
 VALADOC = @VALADOC@
 VALAFLAGS = @VALAFLAGS@
@@ -364,9 +374,9 @@ top_srcdir = @top_srcdir@
 @UNINSTALLED_TRUE@sysconfigdir = $(shareddir)
 @UNINSTALLED_FALSE@desktopdir = $(datadir)/applications
 @UNINSTALLED_TRUE@desktopdir = $(shareddir)
-@UNINSTALLED_FALSE@plugindir = $(libdir)/rygel-2.0/plugins
+@UNINSTALLED_FALSE@plugindir = @RYGEL_PLUGIN_DIR@
 @UNINSTALLED_TRUE@plugindir = $(abs_top_builddir)/src/plugins
-@UNINSTALLED_FALSE@enginedir = $(libdir)/rygel-2.0/engines
+@UNINSTALLED_FALSE@enginedir = @RYGEL_MEDIA_ENGINE_DIR@
 @UNINSTALLED_TRUE@enginedir = $(abs_top_builddir)/src/media-engines
 @UNINSTALLED_FALSE@icondir = $(datadir)/icons/hicolor/32x32/apps
 @UNINSTALLED_TRUE@icondir = $(shareddir)/icons/32x32
@@ -374,79 +384,109 @@ top_srcdir = @top_srcdir@
 @UNINSTALLED_TRUE@presetdir = $(shareddir)/presets
 smallicondir = $(shareddir)/icons/48x48
 bigicondir = $(shareddir)/icons/120x120
-rygeldir = $(top_srcdir)/src/rygel
 librygelcoredir = $(top_srcdir)/src/librygel-core
 librygelserverdir = $(top_srcdir)/src/librygel-server
 librygelrendererdir = $(top_srcdir)/src/librygel-renderer
 MAINTAINERCLEANFILES = Makefile.in
-AM_CFLAGS = $(LIBGUPNP_CFLAGS) $(LIBGUPNP_AV_CFLAGS) $(GEE_CFLAGS) \
-	$(UUID_CFLAGS) $(COVERAGE_CFLAGS) -I$(rygeldir) \
-	-I$(librygelcoredir) -I$(librygelserverdir) \
-	-I$(librygelrendererdir) -DDATA_DIR='"$(shareddir)"' \
-	-DSYS_CONFIG_DIR='"$(sysconfigdir)"' \
-	-DPLUGIN_DIR='"$(plugindir)"' -DDESKTOP_DIR='"$(desktopdir)"' \
-	-DPRESET_DIR='"$(presetdir)"' -DENGINE_DIR='"$(enginedir)"' \
-	-include config.h -DG_LOG_DOMAIN='"ExampleServerPlugin"'
-RYGEL_BASE_LIBS = \
-	$(LIBGUPNP_LIBS) \
-	$(GEE_LIBS) \
-	$(COVERAGE_LIBS)
+RYGEL_COMMON_DEFINES_CFLAGS = \
+	-DDATA_DIR='"$(shareddir)"' \
+	-include config.h
 
-RYGEL_COMMON_LIBS = \
-	$(RYGEL_BASE_LIBS) \
-	$(LIBGUPNP_AV_LIBS) \
+RYGEL_COMMON_LIBRYGEL_CORE_VALAFLAGS = \
+	--vapidir=$(librygelcoredir) \
+	--pkg rygel-core-2.0 \
+	--pkg uuid
+
+RYGEL_COMMON_LIBRYGEL_CORE_CFLAGS = \
+	$(RYGEL_COMMON_DEFINES_CFLAGS) \
+	-I$(top_builddir)/src/librygel-core \
+	-I$(top_srcdir)/src/librygel-core
+
+RYGEL_COMMON_LIBRYGEL_CORE_LIBS = \
 	$(top_builddir)/src/librygel-core/librygel-core-2.0.la
 
-RYGEL_COMMON_SERVER_LIBS = \
-	$(top_builddir)/src/librygel-server/librygel-server-2.0.la \
-	$(RYGEL_COMMON_LIBS)
+RYGEL_COMMON_LIBRYGEL_RENDERER_VALAFLAGS = \
+	--vapidir=$(top_builddir)/src/librygel-renderer \
+	--pkg rygel-renderer-2.0 \
+	$(RYGEL_COMMON_LIBRYGEL_CORE_VALAFLAGS)
 
-RYGEL_COMMON_RENDERER_LIBS = \
-	$(top_builddir)/src/librygel-renderer/librygel-renderer-2.0.la \
-	$(RYGEL_COMMON_LIBS)
+RYGEL_COMMON_LIBRYGEL_RENDERER_CFLAGS = \
+	$(RYGEL_COMMON_LIBRYGEL_CORE_CFLAGS) \
+	-I$(top_builddir)/src/librygel-renderer \
+	-I$(top_srcdir)/src/librygel-renderer
+
+RYGEL_COMMON_LIBRYGEL_RENDERER_LIBS = \
+	$(RYGEL_COMMON_LIBRYGEL_CORE_LIBS) \
+	$(top_builddir)/src/librygel-renderer/librygel-renderer-2.0.la
+
+RYGEL_COMMON_LIBRYGEL_RENDERER_GST_VALAFLAGS = \
+	--vapidir=$(top_builddir)/src/librygel-renderer-gst \
+	--pkg rygel-renderer-gst-2.0 \
+	$(RYGEL_COMMON_LIBRYGEL_RENDERER_VALAFLAGS)
+
+RYGEL_COMMON_LIBRYGEL_RENDERER_GST_CFLAGS = \
+	$(RYGEL_COMMON_LIBRYGEL_RENDERER_CFLAGS) \
+	-I$(top_builddir)/src/librygel-renderer-gst \
+	-I$(top_srcdir)/src/librygel-renderer-gst
+
+RYGEL_COMMON_LIBRYGEL_RENDERER_GST_LIBS = \
+	$(RYGEL_COMMON_LIBRYGEL_RENDERER_LIBS) \
+	$(top_builddir)/src/librygel-renderer-gst/librygel-renderer-gst-2.0.la
+
+RYGEL_COMMON_LIBRYGEL_SERVER_VALAFLAGS = \
+	--vapidir=$(top_builddir)/src/librygel-server \
+	--pkg rygel-server-2.0 \
+	$(RYGEL_COMMON_LIBRYGEL_CORE_VALAFLAGS)
+
+RYGEL_COMMON_LIBRYGEL_SERVER_CFLAGS = \
+	$(RYGEL_COMMON_LIBRYGEL_CORE_CFLAGS) \
+	-I$(top_builddir)/src/librygel-server \
+	-I$(top_srcdir)/src/librygel-server
+
+RYGEL_COMMON_LIBRYGEL_SERVER_LIBS = \
+	$(RYGEL_COMMON_LIBRYGEL_CORE_LIBS) \
+	$(top_builddir)/src/librygel-server/librygel-server-2.0.la
+
+RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS = \
+	--vapidir=$(librygelcoredir) \
+	--pkg rygel-build-config
 
 
-# Note: the -g needs to be at the end of VALAFLAGS to not break make dist
-RYGEL_COMMON_PLUGIN_VALAFLAGS = \
-	--pkg rygel-core-2.0 \
+# Note: This must always be the last one in *_VALAFLAGS,
+# because the -g needs to be at the end of VALAFLAGS to not break make dist.
+RYGEL_COMMON_VALAFLAGS = \
+	$(RYGEL_COMMON_BUILD_CONFIG_VALAFLAGS) \
+	$(RYGEL_COMMON_VALAFLAGS_PKG) \
+	$(COVERAGE_VALAFLAGS) \
+	$(RYGEL_DEBUG_VALAFLAGS)
+
+plugin_LTLIBRARIES = librygel-example-server-plugin-vala.la
+plugin_DATA = example-server-vala.plugin
+
+# Note that we must have these Vala prefixes on the
+# class names (and therefore on the file names)
+# to avoid conflicts with other plugins.
+librygel_example_server_plugin_vala_la_SOURCES = \
+	example-server-plugin-vala.vala \
+	example-root-container-vala.vala
+
+librygel_example_server_plugin_vala_la_VALAFLAGS = \
+	$(RYGEL_COMMON_LIBRYGEL_SERVER_VALAFLAGS) \
 	$(RYGEL_COMMON_VALAFLAGS)
 
-RYGEL_COMMON_SERVER_PLUGIN_VALAFLAGS = \
-	--pkg rygel-server-2.0 \
-	--vapidir=$(top_builddir)/src/librygel-server \
-	$(RYGEL_COMMON_PLUGIN_VALAFLAGS)
+librygel_example_server_plugin_vala_la_CFLAGS = \
+	$(EXAMPLE_DEPS_CFLAGS) \
+	$(RYGEL_COMMON_LIBRYGEL_SERVER_CFLAGS) \
+	-DG_LOG_DOMAIN='"ExampleServerPluginVala"'
 
-RYGEL_COMMON_RENDERER_PLUGIN_VALAFLAGS = \
-	--pkg rygel-renderer-2.0 \
-	--vapidir=$(top_builddir)/src/librygel-renderer \
-	$(RYGEL_COMMON_PLUGIN_VALAFLAGS)
+librygel_example_server_plugin_vala_la_LIBADD = \
+	$(EXAMPLE_DEPS_LIBS) \
+	$(RYGEL_COMMON_LIBRYGEL_SERVER_LIBS)
 
-RYGEL_COMMON_VALAFLAGS_PKG = --pkg gupnp-1.0 --pkg gupnp-av-1.0 --pkg gee-1.0
-RYGEL_COMMON_VALAFLAGS = \
-	--pkg rygel-build-config \
-	--vapidir=$(rygeldir) \
-	--vapidir=$(librygelcoredir) \
-	$(RYGEL_COMMON_VALAFLAGS_PKG) \
-	$(RYGEL_DEBUG_VALAFLAGS) \
-	$(COVERAGE_VALAFLAGS)
-
-RYGEL_PLUGIN_LINKER_FLAGS = -shared -fPIC -module -avoid-version
-plugin_LTLIBRARIES = librygel-example-server-plugin.la
-librygel_example_server_plugin_la_SOURCES = \
-	example-server-plugin.vala \
-	example-root-container.vala
-
-librygel_example_server_plugin_la_VALAFLAGS = \
-	--pkg gstreamer-0.10 \
-	$(RYGEL_COMMON_SERVER_PLUGIN_VALAFLAGS)
-
-librygel_example_server_plugin_la_LIBADD = \
-	$(LIBGSTREAMER_LIBS) \
-	$(RYGEL_COMMON_SERVER_LIBS)
-
-librygel_example_server_plugin_la_LDFLAGS = \
+librygel_example_server_plugin_vala_la_LDFLAGS = \
   $(RYGEL_PLUGIN_LINKER_FLAGS)
 
+EXTRA_DIST = example-server-vala.plugin.in
 all: all-am
 
 .SUFFIXES:
@@ -482,6 +522,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+example-server-vala.plugin: $(top_builddir)/config.status $(srcdir)/example-server-vala.plugin.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-pluginLTLIBRARIES: $(plugin_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	@list='$(plugin_LTLIBRARIES)'; test -n "$(plugindir)" || list=; \
@@ -514,8 +556,8 @@ clean-pluginLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-librygel-example-server-plugin.la: $(librygel_example_server_plugin_la_OBJECTS) $(librygel_example_server_plugin_la_DEPENDENCIES) $(EXTRA_librygel_example_server_plugin_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(librygel_example_server_plugin_la_LINK) -rpath $(plugindir) $(librygel_example_server_plugin_la_OBJECTS) $(librygel_example_server_plugin_la_LIBADD) $(LIBS)
+librygel-example-server-plugin-vala.la: $(librygel_example_server_plugin_vala_la_OBJECTS) $(librygel_example_server_plugin_vala_la_DEPENDENCIES) $(EXTRA_librygel_example_server_plugin_vala_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(librygel_example_server_plugin_vala_la_LINK) -rpath $(plugindir) $(librygel_example_server_plugin_vala_la_OBJECTS) $(librygel_example_server_plugin_vala_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -523,8 +565,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example-root-container.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example-server-plugin.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_example_server_plugin_vala_la-example-root-container-vala.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/librygel_example_server_plugin_vala_la-example-server-plugin-vala.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -546,19 +588,33 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
-$(srcdir)/example-server-plugin.c: $(srcdir)/librygel_example_server_plugin_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/librygel_example_server_plugin_la_vala.stamp; fi
+
+librygel_example_server_plugin_vala_la-example-server-plugin-vala.lo: example-server-plugin-vala.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_example_server_plugin_vala_la_CFLAGS) $(CFLAGS) -MT librygel_example_server_plugin_vala_la-example-server-plugin-vala.lo -MD -MP -MF $(DEPDIR)/librygel_example_server_plugin_vala_la-example-server-plugin-vala.Tpo -c -o librygel_example_server_plugin_vala_la-example-server-plugin-vala.lo `test -f 'example-server-plugin-vala.c' || echo '$(srcdir)/'`example-server-plugin-vala.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_example_server_plugin_vala_la-example-server-plugin-vala.Tpo $(DEPDIR)/librygel_example_server_plugin_vala_la-example-server-plugin-vala.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='example-server-plugin-vala.c' object='librygel_example_server_plugin_vala_la-example-server-plugin-vala.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_example_server_plugin_vala_la_CFLAGS) $(CFLAGS) -c -o librygel_example_server_plugin_vala_la-example-server-plugin-vala.lo `test -f 'example-server-plugin-vala.c' || echo '$(srcdir)/'`example-server-plugin-vala.c
+
+librygel_example_server_plugin_vala_la-example-root-container-vala.lo: example-root-container-vala.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_example_server_plugin_vala_la_CFLAGS) $(CFLAGS) -MT librygel_example_server_plugin_vala_la-example-root-container-vala.lo -MD -MP -MF $(DEPDIR)/librygel_example_server_plugin_vala_la-example-root-container-vala.Tpo -c -o librygel_example_server_plugin_vala_la-example-root-container-vala.lo `test -f 'example-root-container-vala.c' || echo '$(srcdir)/'`example-root-container-vala.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/librygel_example_server_plugin_vala_la-example-root-container-vala.Tpo $(DEPDIR)/librygel_example_server_plugin_vala_la-example-root-container-vala.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='example-root-container-vala.c' object='librygel_example_server_plugin_vala_la-example-root-container-vala.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(librygel_example_server_plugin_vala_la_CFLAGS) $(CFLAGS) -c -o librygel_example_server_plugin_vala_la-example-root-container-vala.lo `test -f 'example-root-container-vala.c' || echo '$(srcdir)/'`example-root-container-vala.c
+$(srcdir)/example-server-plugin-vala.c: $(srcdir)/librygel_example_server_plugin_vala_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/librygel_example_server_plugin_vala_la_vala.stamp; fi
 	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_example_server_plugin_la_vala.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_example_server_plugin_vala_la_vala.stamp; \
 	fi
-$(srcdir)/example-root-container.c: $(srcdir)/librygel_example_server_plugin_la_vala.stamp
-	@if test -f $@; then :; else rm -f $(srcdir)/librygel_example_server_plugin_la_vala.stamp; fi
+$(srcdir)/example-root-container-vala.c: $(srcdir)/librygel_example_server_plugin_vala_la_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/librygel_example_server_plugin_vala_la_vala.stamp; fi
 	@if test -f $@; then :; else \
-	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_example_server_plugin_la_vala.stamp; \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/librygel_example_server_plugin_vala_la_vala.stamp; \
 	fi
-$(srcdir)/librygel_example_server_plugin_la_vala.stamp: example-server-plugin.vala example-root-container.vala
+$(srcdir)/librygel_example_server_plugin_vala_la_vala.stamp: example-server-plugin-vala.vala example-root-container-vala.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_example_server_plugin_la_VALAFLAGS) $(VALAFLAGS) -C example-server-plugin.vala example-root-container.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(librygel_example_server_plugin_vala_la_VALAFLAGS) $(VALAFLAGS) -C example-server-plugin-vala.vala example-root-container-vala.vala
 	$(AM_V_at)mv -f $@-t $@
 
 mostlyclean-libtool:
@@ -566,6 +622,27 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-pluginDATA: $(plugin_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(plugin_DATA)'; test -n "$(plugindir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(plugindir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(plugindir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(plugindir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(plugindir)" || exit $$?; \
+	done
+
+uninstall-pluginDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(plugin_DATA)'; test -n "$(plugindir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(plugindir)'; $(am__uninstall_files_from_dir)
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -651,9 +728,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(plugindir)"; do \
+	for dir in "$(DESTDIR)$(plugindir)" "$(DESTDIR)$(plugindir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 @UNINSTALLED_FALSE@install: install-am
@@ -686,9 +763,9 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-	-rm -f example-root-container.c
-	-rm -f example-server-plugin.c
-	-rm -f librygel_example_server_plugin_la_vala.stamp
+	-rm -f example-root-container-vala.c
+	-rm -f example-server-plugin-vala.c
+	-rm -f librygel_example_server_plugin_vala_la_vala.stamp
 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 clean: clean-am
 
@@ -713,7 +790,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-pluginLTLIBRARIES
+install-data-am: install-pluginDATA install-pluginLTLIBRARIES
 
 install-dvi: install-dvi-am
 
@@ -759,7 +836,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-pluginLTLIBRARIES
+uninstall-am: uninstall-pluginDATA uninstall-pluginLTLIBRARIES
 
 .MAKE: install-am install-strip
 
@@ -770,12 +847,13 @@ uninstall-am: uninstall-pluginLTLIBRARIES
 	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-pluginLTLIBRARIES \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-pluginLTLIBRARIES
+	install-pdf install-pdf-am install-pluginDATA \
+	install-pluginLTLIBRARIES install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-pluginDATA uninstall-pluginLTLIBRARIES
 
 
 @UNINSTALLED_TRUE@install: all-am

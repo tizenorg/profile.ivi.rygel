@@ -26,9 +26,13 @@
         </ul>
         <hr class="navi_hr"/>
         <ul class="navi_main">
+          <li class="constant"><a href="Rygel.WritableContainer.WRITABLE_SCHEME.html">WRITABLE_SCHEME</a></li>
           <li class="abstract_property"><a href="Rygel.WritableContainer.create_classes.html">create_classes</a></li>
+          <li class="abstract_method"><a href="Rygel.WritableContainer.add_container.html">add_container</a></li>
           <li class="abstract_method">add_item</li>
+          <li class="virtual_method"><a href="Rygel.WritableContainer.add_reference.html">add_reference</a></li>
           <li class="method"><a href="Rygel.WritableContainer.can_create.html">can_create</a></li>
+          <li class="abstract_method"><a href="Rygel.WritableContainer.remove_container.html">remove_container</a></li>
           <li class="abstract_method"><a href="Rygel.WritableContainer.remove_item.html">remove_item</a></li>
         </ul>
       </div>
@@ -41,7 +45,7 @@
         <div class="description">
           <p>Add a new item directly under this container.</p>
           <p>The caller should not first create the file(s) pointed to by the item's URI(s). That is handled by the container class.</p>
-          <p>This method corresponds to the UPnP ContentDirectory's CreateObject action. Currently there is no way to add child containers.</p>
+          <p>This method corresponds to the UPnP ContentDirectory's CreateObject action.</p>
           <h2 class="main_title">Parameters:</h2>
           <table class="main_parameter_table">
             <tr>

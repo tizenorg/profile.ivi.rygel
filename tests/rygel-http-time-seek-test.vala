@@ -27,9 +27,14 @@ private errordomain Rygel.TestError {
 
 private class Rygel.HTTPTranscodeHandler : GLib.Object {}
 
-private abstract class Rygel.MediaItem : GLib.Object {
+public class Rygel.MediaObject : GLib.Object {
     public int64 size = -1;
+}
 
+public class Rygel.MediaContainer : MediaObject {
+}
+
+private abstract class Rygel.MediaItem : MediaObject {
     public bool is_live_stream () {
         return true;
     }
@@ -39,6 +44,16 @@ private class Rygel.AudioItem : MediaItem {
     public int64 duration = 2048;
 }
 
+public class Rygel.ClientHacks : GLib.Object {
+    public static ClientHacks create (Soup.Message msg) throws Error {
+        return new ClientHacks ();
+    }
+
+    public bool force_seek () {
+        return false;
+    }
+}
+
 private class Rygel.Thumbnail : GLib.Object {}
 private class Rygel.Subtitle : GLib.Object {}
 
@@ -46,7 +61,7 @@ private class Rygel.HTTPGet : GLib.Object {
     public const string ITEM_URI = "http://DoesntMatterWhatThisIs";
 
     public Soup.Message msg;
-    public MediaItem item;
+    public MediaObject object;
     public Thumbnail thumbnail;
     public Subtitle subtitle;
 
@@ -54,7 +69,7 @@ private class Rygel.HTTPGet : GLib.Object {
 
     public HTTPGet (Thumbnail? thumbnail, Subtitle? subtitle) {
         this.msg = new Soup.Message ("HTTP", ITEM_URI);
-        this.item = new AudioItem ();
+        this.object = new AudioItem ();
         this.handler = new HTTPTranscodeHandler ();
         this.thumbnail = thumbnail;
         this.subtitle = subtitle;
@@ -121,8 +136,10 @@ private class Rygel.HTTPTimeSeekTest : GLib.Object {
             var test = new HTTPTimeSeekTest ();
 
             test.run ();
+        /* TODO: Nothing throws this exception. Should it?
         } catch (TestError.SKIP error) {
             return 77;
+        */
         } catch (Error error) {
             critical ("%s", error.message);
 
@@ -158,13 +175,18 @@ private class Rygel.HTTPTimeSeekTest : GLib.Object {
                          "[0-9]+\\.[0-9][0-9][0-9]/" +
                          "[0-9]+\\.[0-9][0-9][0-9]";
 
-        this.range_regex = new Regex (expression, RegexCompileFlags.CASELESS);
+        try {
+            this.range_regex = new Regex (expression, RegexCompileFlags.CASELESS);
+        } catch (RegexError error) {
+            // This means that it is not a regular expression
+            assert_not_reached ();
+        }
     }
 
     private void test_no_seek (Thumbnail? thumbnail,
                                Subtitle?  subtitle) throws HTTPSeekError {
         var request = new HTTPGet (thumbnail, subtitle);
-        var audio_item = request.item as AudioItem;
+        var audio_item = request.object as AudioItem;
         this.test_seek (request,
                         0,
                         audio_item.duration * TimeSpan.SECOND - TimeSpan.MILLISECOND);
@@ -187,7 +209,7 @@ private class Rygel.HTTPTimeSeekTest : GLib.Object {
             break;
         }
 
-        var audio_item = request.item as AudioItem;
+        var audio_item = request.object as AudioItem;
         this.test_seek (request,
                         128 * TimeSpan.SECOND,
                         audio_item.duration * TimeSpan.SECOND - TimeSpan.MILLISECOND);
@@ -261,15 +283,22 @@ private class Rygel.HTTPTimeSeekTest : GLib.Object {
 
         assert (seek != null);
         assert (seek.start == start);
-        assert (seek.stop == stop);
+        assert (seek.stop == stop - 1);
         assert (seek.length == seek.stop + TimeSpan.MILLISECOND - seek.start);
 
-        var audio_item = request.item as AudioItem;
+        var audio_item = request.object as AudioItem;
         assert (seek.total_length == audio_item.duration * TimeSpan.SECOND);
 
         var header = request.msg.response_headers.get_one
                                         ("TimeSeekRange.dlna.org");
         assert (header != null);
         assert (this.range_regex.match (header));
+
+        /* TODO: This is just here to avoid a warning about
+         * requested() not being used.
+         * How should this really be tested?
+         * Sometimes the result here is true, and sometimes it is false.
+         */
+        /* bool result = */ HTTPTimeSeek.requested(request);
     }
 }

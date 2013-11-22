@@ -78,6 +78,8 @@ internal class Rygel.RenderingControl : Service {
     private MediaPlayer player;
 
     public override void constructed () {
+        base.constructed ();
+
         this.changelog = new ChangeLog (this, LAST_CHANGE_NS);
         this.player = this.get_player ();
 
@@ -101,6 +103,9 @@ internal class Rygel.RenderingControl : Service {
 
         log.log_with_channel ("Mute", this.mute ? "1" : "0", "Master");
         log.log_with_channel ("Volume", this.volume.to_string (), "Master");
+        log.log_with_channel ("PresetNameList",
+                              this.preset_name_list,
+                              "Master");
 
         value.init (typeof (string));
         value.set_string (log.finish ());

@@ -5,20 +5,20 @@
 <title>RygelMediaArtStore</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
-<link rel="prev" href="RygelHTTPSeek.html" title="RygelHTTPSeek">
-<link rel="next" href="RygelSimpleContainer.html" title="RygelSimpleContainer">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
+<link rel="prev" href="RygelLogicalExpression.html" title="RygelLogicalExpression">
+<link rel="next" href="RygelMediaContainer.html" title="RygelMediaContainer">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="RygelHTTPSeek.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="RygelLogicalExpression.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
-<td><a accesskey="n" href="RygelSimpleContainer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="RygelMediaContainer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#RygelMediaArtStore.synopsis" class="shortcut">Top</a>
@@ -43,17 +43,17 @@
 <a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    <a class="link" href="RygelMediaArtStore.html#rygel-media-art-store-find-media-art" title="rygel_media_art_store_find_media_art ()">rygel_media_art_store_find_media_art</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> simple</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> simple</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    <a class="link" href="RygelMediaArtStore.html#rygel-media-art-store-find-media-art-any" title="rygel_media_art_store_find_media_art_any ()">rygel_media_art_store_find_media_art_any</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
-<span class="returnvalue">GFile</span> *             <a class="link" href="RygelMediaArtStore.html#rygel-media-art-store-get-media-art-file" title="rygel_media_art_store_get_media_art_file ()">rygel_media_art_store_get_media_art_file</a>
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="../gio/GFile.html"><span class="returnvalue">GFile</span></a> *             <a class="link" href="RygelMediaArtStore.html#rygel-media-art-store-get-media-art-file" title="rygel_media_art_store_get_media_art_file ()">rygel_media_art_store_get_media_art_file</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *type</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *type</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> simple</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> simple</code></em>);
 <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="returnvalue">RygelMediaArtStore</span></a> * <a class="link" href="RygelMediaArtStore.html#rygel-media-art-store-get-default" title="rygel_media_art_store_get_default ()">rygel_media_art_store_get_default</a>  (<em class="parameter"><code><span class="type">void</span></code></em>);
 struct              <a class="link" href="RygelMediaArtStore.html#RygelMediaArtStore-struct" title="struct RygelMediaArtStore">RygelMediaArtStore</a>;
 struct              <a class="link" href="RygelMediaArtStore.html#RygelMediaArtStoreClass" title="struct RygelMediaArtStoreClass">RygelMediaArtStoreClass</a>;
@@ -62,7 +62,7 @@ struct              <a class="link" href="RygelMediaArtStore.html#RygelMediaArtS
 <div class="refsect1">
 <a name="RygelMediaArtStore.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----RygelMediaArtStore
 </pre>
 </div>
@@ -85,8 +85,8 @@ The type for <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArt
 <pre class="programlisting"><a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    rygel_media_art_store_find_media_art
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> simple</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> simple</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -95,8 +95,16 @@ The type for <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArt
 <td>the <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> instance</td>
 </tr>
 <tr>
+<td><p><span class="term"><em class="parameter"><code>item</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>simple</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore</td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
 </tr>
 </tbody>
 </table></div>
@@ -107,7 +115,7 @@ The type for <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArt
 <pre class="programlisting"><a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    rygel_media_art_store_find_media_art_any
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -116,8 +124,12 @@ The type for <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArt
 <td>the <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> instance</td>
 </tr>
 <tr>
+<td><p><span class="term"><em class="parameter"><code>item</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore</td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
 </tr>
 </tbody>
 </table></div>
@@ -125,17 +137,31 @@ The type for <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArt
 <hr>
 <div class="refsect2">
 <a name="rygel-media-art-store-get-media-art-file"></a><h3>rygel_media_art_store_get_media_art_file ()</h3>
-<pre class="programlisting"><span class="returnvalue">GFile</span> *             rygel_media_art_store_get_media_art_file
+<pre class="programlisting"><a href="../gio/GFile.html"><span class="returnvalue">GFile</span></a> *             rygel_media_art_store_get_media_art_file
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *type</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *type</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> simple</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> simple</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore"><span class="type">RygelMediaArtStore</span></a> instance</td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>item</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>simple</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>
@@ -164,7 +190,7 @@ The class structure for <a class="link" href="RygelMediaArtStore.html#RYGEL-TYPE
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
-<td><p><span class="term"><span class="type">GObjectClass</span> <em class="structfield"><code><a name="RygelMediaArtStoreClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelMediaArtStoreClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
 </tr></tbody>
 </table></div>

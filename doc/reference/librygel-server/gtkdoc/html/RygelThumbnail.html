@@ -5,9 +5,9 @@
 <title>RygelThumbnail</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
 <link rel="prev" href="RygelSubtitle.html" title="RygelSubtitle">
-<link rel="next" href="RygelDLNAProfile.html" title="RygelDLNAProfile">
+<link rel="next" href="RygelTrackableContainer.html" title="RygelTrackableContainer">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
@@ -15,10 +15,10 @@
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
 <td><a accesskey="p" href="RygelSubtitle.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
-<td><a accesskey="n" href="RygelDLNAProfile.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="RygelTrackableContainer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#RygelThumbnail.synopsis" class="shortcut">Top</a>
@@ -40,9 +40,9 @@
 <div class="refsynopsisdiv">
 <a name="RygelThumbnail.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">#define             <a class="link" href="RygelThumbnail.html#RYGEL-TYPE-THUMBNAIL:CAPS" title="RYGEL_TYPE_THUMBNAIL">RYGEL_TYPE_THUMBNAIL</a>
-<a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    <a class="link" href="RygelThumbnail.html#rygel-thumbnail-new" title="rygel_thumbnail_new ()">rygel_thumbnail_new</a>                 (<em class="parameter"><code>const <span class="type">gchar</span> *mime_type</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dlna_profile</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *file_extension</code></em>);
+<a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    <a class="link" href="RygelThumbnail.html#rygel-thumbnail-new" title="rygel_thumbnail_new ()">rygel_thumbnail_new</a>                 (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mime_type</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dlna_profile</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *file_extension</code></em>);
 struct              <a class="link" href="RygelThumbnail.html#RygelThumbnail-struct" title="struct RygelThumbnail">RygelThumbnail</a>;
 struct              <a class="link" href="RygelThumbnail.html#RygelThumbnailClass" title="struct RygelThumbnailClass">RygelThumbnailClass</a>;
 </pre>
@@ -70,9 +70,26 @@ The type for <a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><
 <hr>
 <div class="refsect2">
 <a name="rygel-thumbnail-new"></a><h3>rygel_thumbnail_new ()</h3>
-<pre class="programlisting"><a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    rygel_thumbnail_new                 (<em class="parameter"><code>const <span class="type">gchar</span> *mime_type</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dlna_profile</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *file_extension</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    rygel_thumbnail_new                 (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mime_type</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dlna_profile</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *file_extension</code></em>);</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mime_type</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dlna_profile</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>file_extension</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">

@@ -42,7 +42,11 @@ public class MediaObject : Object {
 
 public class MediaContainer : MediaObject {
     public string sort_criteria = "+dc:title";
-    public uint child_count = 10;
+    public int child_count = 10;
+    public bool create_mode_enabled = false;
+    public int all_child_count {
+        get { return this.child_count; }
+    }
     public async MediaObjects? get_children (
                                             uint offset,
                                             uint max_count,
@@ -59,6 +63,8 @@ public class MediaContainer : MediaObject {
 
         return result;
     }
+
+    internal void check_search_expression (SearchExpression? expression) {}
 }
 
 public class TestContainer : MediaContainer, Rygel.SearchableContainer {
@@ -67,21 +73,33 @@ public class TestContainer : MediaContainer, Rygel.SearchableContainer {
         Gee.ArrayList<string> ();}
 
     public async void test_search_no_limit () {
-        uint total_matches;
+        uint total_matches = 0;
 
         // check corners
-        var result = yield search (null, 0, 0, out total_matches, "", null);
-        assert (total_matches == 10);
-        assert (result.size == 10);
+        try {
+            var result = yield search (null, 0, 0, out total_matches, "", null);
+            assert (total_matches == 10);
+            assert (result.size == 10);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
 
-        result = yield search (null, 10, 0, out total_matches, "",  null);
-        assert (total_matches == 10);
-        assert (result.size == 0);
+        try {
+            var result = yield search (null, 10, 0, out total_matches, "",  null);
+            assert (total_matches == 10);
+            assert (result.size == 0);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
 
         for (int i = 1; i < 10; ++i) {
-            result = yield search (null, i, 0, out total_matches, "", null);
-            assert (total_matches == 10);
-            assert (result.size == 10 - i);
+            try {
+                var result = yield search (null, i, 0, out total_matches, "", null);
+                assert (total_matches == 10);
+                assert (result.size == 10 - i);
+            } catch (GLib.Error error) {
+                assert_not_reached ();
+            }
         }
 
         this.loop.quit ();
@@ -91,23 +109,45 @@ public class TestContainer : MediaContainer, Rygel.SearchableContainer {
         uint total_matches;
 
         // check corners
-        var result = yield search (null, 0, 4, out total_matches, "", null);
-        assert (total_matches == 0);
-        assert (result.size == 4);
+        try {
+            var result = yield search (null, 0, 4, out total_matches, "", null);
+            assert (total_matches == 0);
+            assert (result.size == 4);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
 
-        result = yield search (null, 10, 4, out total_matches, "", null);
-        assert (total_matches == 0);
-        assert (result.size == 0);
+        try
+        {
+            var result = yield search (null, 10, 4, out total_matches, "", null);
+            assert (total_matches == 0);
+            assert (result.size == 0);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
 
         for (int i = 1; i < 10; ++i) {
-            result = yield search (null, i, 3, out total_matches, "", null);
-            assert (total_matches == 0);
-            assert (result.size == int.min (10 - i, 3));
+            try {
+                var result = yield search (null, i, 3, out total_matches, "", null);
+                assert (total_matches == 0);
+                assert (result.size == int.min (10 - i, 3));
+            } catch (GLib.Error error) {
+                assert_not_reached ();
+            }
         }
 
         this.loop.quit ();
     }
 
+    /* TODO: This is just here to avoid a warning about
+     * serialize_search_parameters() not being used.
+     * How should this really be tested?
+     */
+    public void test_serialization() {
+         var writer = new GUPnP.DIDLLiteWriter(null);
+         var didl_container = writer.add_container();
+         serialize_search_parameters(didl_container);
+    }
 
     public async MediaObjects? search (SearchExpression? expression,
                                        uint              offset,
@@ -139,7 +179,6 @@ public class MediaObjects : Gee.ArrayList<MediaObject> {
 
 int main ()
 {
-    var loop = new MainLoop ();
     var c = new TestContainer ();
     c.loop = new MainLoop ();
     c.test_search_no_limit.begin ();

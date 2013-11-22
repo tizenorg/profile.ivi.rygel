@@ -28,6 +28,7 @@ internal enum Rygel.MediaExport.DetailColumn {
     WIDTH,
     HEIGHT,
     CLASS,
+    CREATOR,
     AUTHOR,
     ALBUM,
     DATE,
@@ -44,7 +45,11 @@ internal enum Rygel.MediaExport.DetailColumn {
     URI,
     DLNA_PROFILE,
     GENRE,
-    DISC
+    DISC,
+    OBJECT_UPDATE_ID,
+    DELETED_CHILD_COUNT,
+    CONTAINER_UPDATE_ID,
+    REFERENCE_ID
 }
 
 internal enum Rygel.MediaExport.SQLString {
@@ -69,6 +74,12 @@ internal enum Rygel.MediaExport.SQLString {
     SCHEMA,
     EXISTS_CACHE,
     STATISTICS,
+    RESET_TOKEN,
+    MAX_UPDATE_ID,
+    MAKE_GUARDED,
+    IS_GUARDED,
+    UPDATE_GUARDED_OBJECT,
+    TRIGGER_REFERENCE
 }
 
 internal class Rygel.MediaExport.SQLFactory : Object {
@@ -77,12 +88,27 @@ internal class Rygel.MediaExport.SQLFactory : Object {
         "(size, mime_type, width, height, class, " +
          "author, album, date, bitrate, " +
          "sample_freq, bits_per_sample, channels, " +
-         "track, color_depth, duration, object_fk, dlna_profile, genre, disc) VALUES " +
-         "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+         "track, color_depth, duration, object_fk, " +
+         "dlna_profile, genre, disc, creator) VALUES " +
+         "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private const string INSERT_OBJECT_STRING =
-    "INSERT OR REPLACE INTO Object (upnp_id, title, type_fk, parent, timestamp, uri) " +
-        "VALUES (?,?,?,?,?,?)";
+    "INSERT OR REPLACE INTO Object " +
+        "(upnp_id, title, type_fk, parent, timestamp, uri, " +
+         "object_update_id, deleted_child_count, container_update_id, " +
+         "is_guarded, reference_id) VALUES " +
+        "(?,?,?,?,?,?,?,?,?,?,?)";
+
+    private const string UPDATE_GUARDED_OBJECT_STRING =
+    "UPDATE Object SET " +
+        "type_fk = ?, " +
+        "parent = ?, " +
+        "timestamp = ?, " +
+        "uri = ?, " +
+        "object_update_id = ?, " +
+        "deleted_child_count = ?, " +
+        "container_update_id = ? " +
+        "where upnp_id = ?";
 
     private const string DELETE_BY_ID_STRING =
     "DELETE FROM Object WHERE upnp_id IN " +
@@ -90,10 +116,11 @@ internal class Rygel.MediaExport.SQLFactory : Object {
 
     private const string ALL_DETAILS_STRING =
     "o.type_fk, o.title, m.size, m.mime_type, m.width, " +
-    "m.height, m.class, m.author, m.album, m.date, m.bitrate, " +
+    "m.height, m.class, m.creator, m.author, m.album, m.date, m.bitrate, " +
     "m.sample_freq, m.bits_per_sample, m.channels, m.track, " +
     "m.color_depth, m.duration, o.upnp_id, o.parent, o.timestamp, " +
-    "o.uri, m.dlna_profile, m.genre, m.disc ";
+    "o.uri, m.dlna_profile, m.genre, m.disc, o.object_update_id, " +
+    "o.deleted_child_count, o.container_update_id, o.reference_id ";
 
     private const string GET_OBJECT_WITH_PATH =
     "SELECT DISTINCT " + ALL_DETAILS_STRING +
@@ -157,11 +184,11 @@ internal class Rygel.MediaExport.SQLFactory : Object {
     "SELECT upnp_id FROM OBJECT WHERE parent = ?";
 
     private const string GET_META_DATA_COLUMN_STRING =
-    "SELECT DISTINCT %s AS _column FROM meta_data AS m " +
-        "WHERE _column IS NOT NULL %s ORDER BY _column COLLATE CASEFOLD " +
+    "SELECT DISTINCT %s AS _column %s FROM meta_data AS m " +
+        "WHERE _column IS NOT NULL %s %s" +
     "LIMIT ?,?";
 
-    internal const string SCHEMA_VERSION = "11";
+    internal const string SCHEMA_VERSION = "16";
     internal const string CREATE_META_DATA_TABLE_STRING =
     "CREATE TABLE meta_data (size INTEGER NOT NULL, " +
                             "mime_type TEXT NOT NULL, " +
@@ -170,6 +197,7 @@ internal class Rygel.MediaExport.SQLFactory : Object {
                             "width INTEGER, " +
                             "height INTEGER, " +
                             "class TEXT NOT NULL, " +
+                            "creator TEXT, " +
                             "author TEXT, " +
                             "album TEXT, " +
                             "genre TEXT, " +
@@ -186,7 +214,8 @@ internal class Rygel.MediaExport.SQLFactory : Object {
                                     "ON DELETE CASCADE);";
 
     private const string SCHEMA_STRING =
-    "CREATE TABLE schema_info (version TEXT NOT NULL); " +
+    "CREATE TABLE schema_info (version TEXT NOT NULL, " +
+                              "reset_token TEXT); " +
     CREATE_META_DATA_TABLE_STRING +
     "CREATE TABLE object (parent TEXT CONSTRAINT parent_fk_id " +
                                 "REFERENCES Object(upnp_id), " +
@@ -195,7 +224,11 @@ internal class Rygel.MediaExport.SQLFactory : Object {
                           "title TEXT NOT NULL, " +
                           "timestamp INTEGER NOT NULL, " +
                           "uri TEXT, " +
-                          "flags TEXT);" +
+                          "object_update_id INTEGER, " +
+                          "deleted_child_count INTEGER, " +
+                          "container_update_id INTEGER, " +
+                          "is_guarded INTEGER, " +
+                          "reference_id TEXT DEFAULT NULL);" +
     "INSERT INTO schema_info (version) VALUES ('" +
     SQLFactory.SCHEMA_VERSION + "'); ";
 
@@ -231,6 +264,13 @@ internal class Rygel.MediaExport.SQLFactory : Object {
         "DELETE FROM meta_data WHERE meta_data.object_fk = OLD.upnp_id; "+
     "END;";
 
+    private const string DELETE_REFERENCE_TRIGGER_STRING =
+    "CREATE TRIGGER trgr_delete_references " +
+    "BEFORE DELETE ON Object " +
+    "FOR EACH ROW BEGIN " +
+        "DELETE FROM Object WHERE OLD.upnp_id = Object.reference_id; " +
+    "END;";
+
     private const string CREATE_INDICES_STRING =
     "CREATE INDEX IF NOT EXISTS idx_parent on Object(parent);" +
     "CREATE INDEX IF NOT EXISTS idx_object_upnp_id on Object(upnp_id);" +
@@ -253,6 +293,18 @@ internal class Rygel.MediaExport.SQLFactory : Object {
 
     private const string STATISTICS_STRING =
     "SELECT class, count(1) FROM meta_data GROUP BY class";
+
+    private const string RESET_TOKEN_STRING =
+    "SELECT reset_token FROM schema_info";
+
+    private const string MAX_UPDATE_ID_STRING =
+    "SELECT MAX(MAX(object_update_id), MAX(container_update_id)) FROM Object";
+
+    private const string MAKE_GUARDED_STRING =
+    "UPDATE Object SET is_guarded = ? WHERE Object.upnp_id = ?";
+
+    private const string IS_GUARDED_STRING =
+    "SELECT is_guarded FROM Object WHERE Object.upnp_id = ?";
 
     public unowned string make (SQLString query) {
         switch (query) {
@@ -298,6 +350,18 @@ internal class Rygel.MediaExport.SQLFactory : Object {
                 return CREATE_CLOSURE_TABLE;
             case SQLString.STATISTICS:
                 return STATISTICS_STRING;
+            case SQLString.RESET_TOKEN:
+                return RESET_TOKEN_STRING;
+            case SQLString.MAX_UPDATE_ID:
+                return MAX_UPDATE_ID_STRING;
+            case SQLString.MAKE_GUARDED:
+                return MAKE_GUARDED_STRING;
+            case SQLString.IS_GUARDED:
+                return IS_GUARDED_STRING;
+            case SQLString.UPDATE_GUARDED_OBJECT:
+                return UPDATE_GUARDED_OBJECT_STRING;
+            case SQLString.TRIGGER_REFERENCE:
+                return DELETE_REFERENCE_TRIGGER_STRING;
             default:
                 assert_not_reached ();
         }

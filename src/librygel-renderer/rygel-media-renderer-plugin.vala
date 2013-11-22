@@ -22,6 +22,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+using Rygel.Renderer;
+
 /**
  * This is the base class for every Rygel UPnP renderer plugin.
  *
@@ -34,6 +36,33 @@ public class Rygel.MediaRendererPlugin : Rygel.Plugin {
     private static const string MEDIA_RENDERER_DESC_PATH =
                                 BuildConfig.DATA_DIR +
                                 "/xml/MediaRenderer2.xml";
+    private static const string DMR = "urn:schemas-upnp-org:device:MediaRenderer";
+
+    private string sink_protocol_info;
+    private PlayerController controller;
+
+    private GLib.List<DLNAProfile> _supported_profiles;
+
+    /// A list of DLNA profiles the MediaRenderer in this plug-in will accept
+    /// for rendering.
+    public unowned GLib.List<unowned DLNAProfile> supported_profiles {
+        get {
+            return _supported_profiles;
+        }
+
+        construct set {
+            _supported_profiles = null;
+            if (value != null) {
+                foreach (var profile in value) {
+                    _supported_profiles.prepend (profile);
+                }
+
+                _supported_profiles.prepend (new DLNAProfile ("DIDL_S",
+                                                              "text/xml"));
+                _supported_profiles.reverse ();
+            }
+        }
+    }
 
     /**
      * Create an instance of the plugin.
@@ -47,7 +76,15 @@ public class Rygel.MediaRendererPlugin : Rygel.Plugin {
                                 string? description = null,
                                 PluginCapabilities capabilities =
                                         PluginCapabilities.NONE) {
-        base (MEDIA_RENDERER_DESC_PATH, name, title, description, capabilities);
+        Object (desc_path : MEDIA_RENDERER_DESC_PATH,
+                name : name,
+                title : title,
+                description : description,
+                capabilities : capabilities);
+    }
+
+    public override void constructed () {
+        base.constructed ();
 
         var resource = new ResourceInfo (ConnectionManager.UPNP_ID,
                                          ConnectionManager.UPNP_TYPE,
@@ -70,5 +107,71 @@ public class Rygel.MediaRendererPlugin : Rygel.Plugin {
 
     public virtual MediaPlayer? get_player () {
         return null;
+    }
+
+    internal PlayerController get_controller () {
+        if (this.controller == null) {
+            this.controller = new PlayerController (this.get_player (),
+                                                    this.get_protocol_info ());
+        }
+
+        return this.controller;
+    }
+
+    public override void apply_hacks (RootDevice device,
+                                      string     description_path)
+                                      throws Error {
+        string[] services = { AVTransport.UPNP_TYPE,
+                              RenderingControl.UPNP_TYPE,
+                              ConnectionManager.UPNP_TYPE };
+        var v1_hacks = new V1Hacks (DMR, services);
+        v1_hacks.apply_on_device (device, description_path);
+    }
+
+
+    public string get_protocol_info () {
+        var player = this.get_player ();
+        if (player == null) {
+            return "";
+        }
+
+        if (this.sink_protocol_info == null) {
+            this.sink_protocol_info = "";
+
+            var protocols = player.get_protocols ();
+
+            foreach (var protocol in protocols) {
+                if (protocols[0] != protocol) {
+                    this.sink_protocol_info += ",";
+                }
+
+                foreach (var profile in this.supported_profiles) {
+                    if (supported_profiles.data.name != profile.name) {
+                        this.sink_protocol_info += ",";
+                    }
+                    this.sink_protocol_info += protocol + ":*:" +
+                                               profile.mime +
+                                               ":DLNA.ORG_PN=" + profile.name;
+                }
+            }
+
+            var mime_types = player.get_mime_types ();
+
+            foreach (var protocol in protocols) {
+                if (protocols[0] != protocol) {
+                    this.sink_protocol_info += ",";
+                }
+
+                foreach (var mime_type in mime_types) {
+                    if (mime_types[0] != mime_type) {
+                        this.sink_protocol_info += ",";
+                    }
+
+                    this.sink_protocol_info += protocol + ":*:" + mime_type + ":*";
+                }
+            }
+        }
+
+        return this.sink_protocol_info;
     }
 }

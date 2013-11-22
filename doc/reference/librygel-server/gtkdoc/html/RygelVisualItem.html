@@ -5,20 +5,20 @@
 <title>RygelVisualItem</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
-<link rel="prev" href="RygelSearchExpression.html" title="RygelSearchExpression">
-<link rel="next" href="RygelTranscodeManager.html" title="RygelTranscodeManager">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
+<link rel="prev" href="RygelVideoItem.html" title="RygelVideoItem">
+<link rel="next" href="RygelWritableContainer.html" title="RygelWritableContainer">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="RygelSearchExpression.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="RygelVideoItem.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
-<td><a accesskey="n" href="RygelTranscodeManager.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="RygelWritableContainer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#RygelVisualItem.synopsis" class="shortcut">Top</a>
@@ -45,15 +45,15 @@
 </tr></table></div>
 <div class="refsynopsisdiv">
 <a name="RygelVisualItem.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis"><span class="returnvalue">gint</span>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-get-width" title="rygel_visual_item_get_width ()">rygel_visual_item_get_width</a>         (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);
+<pre class="synopsis"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-get-width" title="rygel_visual_item_get_width ()">rygel_visual_item_get_width</a>         (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-set-width" title="rygel_visual_item_set_width ()">rygel_visual_item_set_width</a>         (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);
-<span class="returnvalue">gint</span>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-get-height" title="rygel_visual_item_get_height ()">rygel_visual_item_get_height</a>        (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-get-height" title="rygel_visual_item_get_height ()">rygel_visual_item_get_height</a>        (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-set-height" title="rygel_visual_item_set_height ()">rygel_visual_item_set_height</a>        (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);
-<span class="returnvalue">gint</span>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-get-color-depth" title="rygel_visual_item_get_color_depth ()">rygel_visual_item_get_color_depth</a>   (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-get-color-depth" title="rygel_visual_item_get_color_depth ()">rygel_visual_item_get_color_depth</a>   (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-set-color-depth" title="rygel_visual_item_set_color_depth ()">rygel_visual_item_set_color_depth</a>   (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
 <span class="returnvalue">GeeArrayList</span> *      <a class="link" href="RygelVisualItem.html#rygel-visual-item-get-thumbnails" title="rygel_visual_item_get_thumbnails ()">rygel_visual_item_get_thumbnails</a>    (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelVisualItem.html#rygel-visual-item-set-thumbnails" title="rygel_visual_item_set_thumbnails ()">rygel_visual_item_set_thumbnails</a>    (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>,
                                                          <em class="parameter"><code><span class="type">GeeArrayList</span> *value</code></em>);
@@ -83,10 +83,10 @@ RygelVisualItem is implemented by
 <div class="refsect1">
 <a name="RygelVisualItem.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="RygelVisualItem.html#RygelVisualItem--color-depth" title='The "color-depth" property'>color-depth</a>"              <span class="type">gint</span>                  : Read / Write
-  "<a class="link" href="RygelVisualItem.html#RygelVisualItem--height" title='The "height" property'>height</a>"                   <span class="type">gint</span>                  : Read / Write
+  "<a class="link" href="RygelVisualItem.html#RygelVisualItem--color-depth" title='The "color-depth" property'>color-depth</a>"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="RygelVisualItem.html#RygelVisualItem--height" title='The "height" property'>height</a>"                   <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
   "<a class="link" href="RygelVisualItem.html#RygelVisualItem--thumbnails" title='The "thumbnails" property'>thumbnails</a>"               <span class="type">GeeArrayList</span>*         : Read / Write
-  "<a class="link" href="RygelVisualItem.html#RygelVisualItem--width" title='The "width" property'>width</a>"                    <span class="type">gint</span>                  : Read / Write
+  "<a class="link" href="RygelVisualItem.html#RygelVisualItem--width" title='The "width" property'>width</a>"                    <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
 </pre>
 </div>
 <div class="refsect1">
@@ -96,9 +96,12 @@ RygelVisualItem is implemented by
 <a name="RygelVisualItem.details"></a><h2>Details</h2>
 <div class="refsect2">
 <a name="rygel-visual-item-get-width"></a><h3>rygel_visual_item_get_width ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                rygel_visual_item_get_width         (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_visual_item_get_width         (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem--width" title='The "width" property'><span class="type">"width"</span></a> property.
+</p>
+<p>
+The width of the item in pixels. A value of -1 means that the width is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -118,9 +121,12 @@ Get and return the current value of the <a class="link" href="RygelVisualItem.ht
 <div class="refsect2">
 <a name="rygel-visual-item-set-width"></a><h3>rygel_visual_item_set_width ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_visual_item_set_width         (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem--width" title='The "width" property'><span class="type">"width"</span></a> property to <em class="parameter"><code>value</code></em>.
+</p>
+<p>
+The width of the item in pixels. A value of -1 means that the width is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -139,9 +145,12 @@ Set the value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem-
 <hr>
 <div class="refsect2">
 <a name="rygel-visual-item-get-height"></a><h3>rygel_visual_item_get_height ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                rygel_visual_item_get_height        (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_visual_item_get_height        (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem--height" title='The "height" property'><span class="type">"height"</span></a> property.
+</p>
+<p>
+The height of the item in pixels. A value of -1 means that the height is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -161,9 +170,12 @@ Get and return the current value of the <a class="link" href="RygelVisualItem.ht
 <div class="refsect2">
 <a name="rygel-visual-item-set-height"></a><h3>rygel_visual_item_set_height ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_visual_item_set_height        (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem--height" title='The "height" property'><span class="type">"height"</span></a> property to <em class="parameter"><code>value</code></em>.
+</p>
+<p>
+The height of the item in pixels. A value of -1 means that the height is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -182,9 +194,12 @@ Set the value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem-
 <hr>
 <div class="refsect2">
 <a name="rygel-visual-item-get-color-depth"></a><h3>rygel_visual_item_get_color_depth ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                rygel_visual_item_get_color_depth   (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_visual_item_get_color_depth   (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem--color-depth" title='The "color-depth" property'><span class="type">"color-depth"</span></a> property.
+</p>
+<p>
+The number of bits per pixel used to represent the video or image resource. A value of -1 means that the color depth is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -204,9 +219,12 @@ Get and return the current value of the <a class="link" href="RygelVisualItem.ht
 <div class="refsect2">
 <a name="rygel-visual-item-set-color-depth"></a><h3>rygel_visual_item_set_color_depth ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_visual_item_set_color_depth   (<em class="parameter"><code><a class="link" href="RygelVisualItem.html" title="RygelVisualItem"><span class="type">RygelVisualItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem--color-depth" title='The "color-depth" property'><span class="type">"color-depth"</span></a> property to <em class="parameter"><code>value</code></em>.
+</p>
+<p>
+The number of bits per pixel used to represent the video or image resource. A value of -1 means that the color depth is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -229,6 +247,9 @@ Set the value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem-
 <p>
 Get and return the current value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem--thumbnails" title='The "thumbnails" property'><span class="type">"thumbnails"</span></a> property.
 </p>
+<p>
+Thumbnail pictures to represent the video or image resource.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -250,6 +271,9 @@ Get and return the current value of the <a class="link" href="RygelVisualItem.ht
                                                          <em class="parameter"><code><span class="type">GeeArrayList</span> *value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelVisualItem.html#RygelVisualItem--thumbnails" title='The "thumbnails" property'><span class="type">"thumbnails"</span></a> property to <em class="parameter"><code>value</code></em>.
+</p>
+<p>
+Thumbnail pictures to represent the video or image resource.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -295,7 +319,7 @@ Interface for creating <a class="link" href="RygelVisualItem.html" title="RygelV
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><span class="type">GTypeInterface</span> <em class="structfield"><code><a name="RygelVisualItemIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
+<td><p><span class="term"><a href="../gobject/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="RygelVisualItemIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
 <td>the parent interface structure</td>
 </tr>
 <tr>
@@ -346,7 +370,7 @@ Interface for creating <a class="link" href="RygelVisualItem.html" title="RygelV
 <a name="RygelVisualItem.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="RygelVisualItem--color-depth"></a><h3>The <code class="literal">"color-depth"</code> property</h3>
-<pre class="programlisting">  "color-depth"              <span class="type">gint</span>                  : Read / Write</pre>
+<pre class="programlisting">  "color-depth"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
 <p>
 The number of bits per pixel used to represent the video or image resource. A value of -1 means that the color depth is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>
@@ -355,7 +379,7 @@ The number of bits per pixel used to represent the video or image resource. A va
 <hr>
 <div class="refsect2">
 <a name="RygelVisualItem--height"></a><h3>The <code class="literal">"height"</code> property</h3>
-<pre class="programlisting">  "height"                   <span class="type">gint</span>                  : Read / Write</pre>
+<pre class="programlisting">  "height"                   <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
 <p>
 The height of the item in pixels. A value of -1 means that the height is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>
@@ -372,7 +396,7 @@ Thumbnail pictures to represent the video or image resource.
 <hr>
 <div class="refsect2">
 <a name="RygelVisualItem--width"></a><h3>The <code class="literal">"width"</code> property</h3>
-<pre class="programlisting">  "width"                    <span class="type">gint</span>                  : Read / Write</pre>
+<pre class="programlisting">  "width"                    <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
 <p>
 The width of the item in pixels. A value of -1 means that the width is unknown and will not, or did not, appear in DIDL-Lite XML.
 </p>

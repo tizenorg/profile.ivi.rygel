@@ -32,6 +32,7 @@
           <li class="method"><a href="Rygel.SimpleContainer.add_child_container.html">add_child_container</a></li>
           <li class="method"><a href="Rygel.SimpleContainer.add_child_item.html">add_child_item</a></li>
           <li class="method"><a href="Rygel.SimpleContainer.clear.html">clear</a></li>
+          <li class="virtual_method"><a href="Rygel.SimpleContainer.constructed.html">constructed</a></li>
           <li class="virtual_method"><a href="Rygel.SimpleContainer.find_object.html">find_object</a></li>
           <li class="method"><a href="Rygel.SimpleContainer.get_all_children.html">get_all_children</a></li>
           <li class="virtual_method"><a href="Rygel.SimpleContainer.get_children.html">get_children</a></li>
@@ -86,6 +87,10 @@
         </ul>
         <h3 class="main_title">Methods:</h3>
         <ul class="navi_inline">
+          <li class="virtual_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">override</span> <span class="main_keyword">void</span> <b><a href="Rygel.SimpleContainer.constructed.html" class="virtual_method">constructed</a></b> ()
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
           <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.SimpleContainer.add_child_item.html" class="method">add_child_item</a></b> (<span class="main_type"><a href="Rygel.MediaItem.html" class="abstract_class">MediaItem</a></span> child)
             </span>
             <div class="leaf_brief_description"><span class="brief_description">Adds an item to the container.</span>
@@ -136,32 +141,39 @@
           <div class="headline">
             <div class="text">All known members inherited from class Rygel.MediaContainer</div>
             <div class="toggle">
-              <img onclick="toggle_box  (this, 'box-content-28')" src="../coll_open.png">&nbsp;</div>
+              <img onclick="toggle_box  (this, 'box-content-31')" src="../coll_open.png">&nbsp;</div>
             </div>
-            <div class="content" id="box-content-28">
+            <div class="content" id="box-content-31">
               <div class="column">
                 <ul class="navi_inline">
+                  <li class="constant"><a href="Rygel.MediaContainer.ANY.html">ANY</a></li>
                   <li class="constant"><a href="Rygel.MediaContainer.UPNP_CLASS.html">UPNP_CLASS</a></li>
                   <li class="constant"><a href="Rygel.MediaContainer.STORAGE_FOLDER.html">STORAGE_FOLDER</a></li>
                   <li class="constant"><a href="Rygel.MediaContainer.MUSIC_ALBUM.html">MUSIC_ALBUM</a></li>
                   <li class="constant"><a href="Rygel.MediaContainer.MUSIC_ARTIST.html">MUSIC_ARTIST</a></li>
                   <li class="constant"><a href="Rygel.MediaContainer.MUSIC_GENRE.html">MUSIC_GENRE</a></li>
+                  <li class="constant"><a href="Rygel.MediaContainer.PLAYLIST.html">PLAYLIST</a></li>
                   <li class="constant"><a href="Rygel.MediaContainer.ALBUM_SORT_CRITERIA.html">ALBUM_SORT_CRITERIA</a></li>
                 </ul>
               </div>
               <div class="column">
                 <ul class="navi_inline">
+                  <li class="property"><a href="Rygel.MediaContainer.child_count.html">child_count</a></li>
+                  <li class="property"><a href="Rygel.MediaContainer.empty_child_count.html">empty_child_count</a></li>
+                  <li class="property"><a href="Rygel.MediaContainer.all_child_count.html">all_child_count</a></li>
+                  <li class="property"><a href="Rygel.MediaContainer.create_mode_enabled.html">create_mode_enabled</a></li>
                   <li class="property"><a href="Rygel.MediaContainer.sort_criteria.html">sort_criteria</a></li>
+                  <li class="virtual_property"><a href="Rygel.MediaContainer.ocm_flags.html">ocm_flags</a></li>
+                  <li class="virtual_method"><a href="Rygel.MediaContainer.constructed.html">constructed</a></li>
                   <li class="abstract_method"><a href="Rygel.MediaContainer.get_children.html">get_children</a></li>
-                  <li class="abstract_method"><a href="Rygel.MediaContainer.find_object.html">find_object</a></li>
-                  <li class="method"><a href="Rygel.MediaContainer.updated.html">updated</a></li>
-                  <li class="signal"><a href="Rygel.MediaContainer.container_updated.html">container_updated</a></li>
                 </ul>
               </div>
               <div class="column">
                 <ul class="navi_inline">
+                  <li class="abstract_method"><a href="Rygel.MediaContainer.find_object.html">find_object</a></li>
+                  <li class="method"><a href="Rygel.MediaContainer.updated.html">updated</a></li>
+                  <li class="signal"><a href="Rygel.MediaContainer.container_updated.html">container_updated</a></li>
                   <li class="signal"><a href="Rygel.MediaContainer.sub_tree_updates_finished.html">sub_tree_updates_finished</a></li>
-                  <li class="field"><a href="Rygel.MediaContainer.child_count.html">child_count</a></li>
                   <li class="field"><a href="Rygel.MediaContainer.update_id.html">update_id</a></li>
                   <li class="field"><a href="Rygel.MediaContainer.storage_used.html">storage_used</a></li>
                   <li class="field"><a href="Rygel.MediaContainer.total_deleted_child_count.html">total_deleted_child_count</a></li>
@@ -173,32 +185,35 @@
             <div class="headline">
               <div class="text">All known members inherited from class Rygel.MediaObject</div>
               <div class="toggle">
-                <img onclick="toggle_box  (this, 'box-content-29')" src="../coll_open.png">&nbsp;</div>
+                <img onclick="toggle_box  (this, 'box-content-32')" src="../coll_open.png">&nbsp;</div>
               </div>
-              <div class="content" id="box-content-29">
+              <div class="content" id="box-content-32">
+                <div class="column">
+                  <ul class="navi_inline">
+                    <li class="property"><a href="Rygel.MediaObject.id.html">id</a></li>
+                    <li class="property"><a href="Rygel.MediaObject.ref_id.html">ref_id</a></li>
+                    <li class="property"><a href="Rygel.MediaObject.upnp_class.html">upnp_class</a></li>
+                    <li class="property"><a href="Rygel.MediaObject.modified.html">modified</a></li>
+                    <li class="property"><a href="Rygel.MediaObject.object_update_id.html">object_update_id</a></li>
+                    <li class="property"><a href="Rygel.MediaObject.parent.html">parent</a></li>
+                  </ul>
+                </div>
                 <div class="column">
                   <ul class="navi_inline">
                     <li class="property"><a href="Rygel.MediaObject.parent_ref.html">parent_ref</a></li>
                     <li class="property"><a href="Rygel.MediaObject.title.html">title</a></li>
+                    <li class="virtual_property"><a href="Rygel.MediaObject.ocm_flags.html">ocm_flags</a></li>
+                    <li class="virtual_method"><a href="Rygel.MediaObject.constructed.html">constructed</a></li>
                     <li class="method"><a href="Rygel.MediaObject.get_writable.html">get_writable</a></li>
+                  </ul>
+                </div>
+                <div class="column">
+                  <ul class="navi_inline">
                     <li class="method"><a href="Rygel.MediaObject.get_writables.html">get_writables</a></li>
                     <li class="method"><a href="Rygel.MediaObject.compare_string_props.html">compare_string_props</a></li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="navi_inline">
                     <li class="method"><a href="Rygel.MediaObject.compare_int_props.html">compare_int_props</a></li>
-                    <li class="field"><a href="Rygel.MediaObject.id.html">id</a></li>
-                    <li class="field"><a href="Rygel.MediaObject.ref_id.html">ref_id</a></li>
-                    <li class="field"><a href="Rygel.MediaObject.upnp_class.html">upnp_class</a></li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="navi_inline">
-                    <li class="field"><a href="Rygel.MediaObject.modified.html">modified</a></li>
-                    <li class="field"><a href="Rygel.MediaObject.object_update_id.html">object_update_id</a></li>
                     <li class="field"><a href="Rygel.MediaObject.uris.html">uris</a></li>
-                    <li class="field"><a href="Rygel.MediaObject.parent.html">parent</a></li>
+                    <li class="field"><a href="Rygel.MediaObject.parent_ptr.html">parent_ptr</a></li>
                   </ul>
                 </div>
               </div>
@@ -207,9 +222,9 @@
               <div class="headline">
                 <div class="text">All known members inherited from class GLib.Object</div>
                 <div class="toggle">
-                  <img onclick="toggle_box  (this, 'box-content-30')" src="../coll_open.png">&nbsp;</div>
+                  <img onclick="toggle_box  (this, 'box-content-33')" src="../coll_open.png">&nbsp;</div>
                 </div>
-                <div class="content" id="box-content-30">
+                <div class="content" id="box-content-33">
                   <div class="column">
                     <ul class="navi_inline">
                       <li class="static_method">@new</li>
@@ -264,9 +279,9 @@
                 <div class="headline">
                   <div class="text">All known members inherited from interface Rygel.SearchableContainer</div>
                   <div class="toggle">
-                    <img onclick="toggle_box  (this, 'box-content-31')" src="../coll_open.png">&nbsp;</div>
+                    <img onclick="toggle_box  (this, 'box-content-34')" src="../coll_open.png">&nbsp;</div>
                   </div>
-                  <div class="content" id="box-content-31">
+                  <div class="content" id="box-content-34">
                     <div class="column">
                       <ul class="navi_inline">
                         <li class="abstract_property"><a href="Rygel.SearchableContainer.search_classes.html">search_classes</a></li>

@@ -20,6 +20,9 @@
 using Gee;
 using GUPnP;
 
+/**
+ * A helper class to create QueryContainer instances based on IDs.
+ */
 internal class Rygel.MediaExport.QueryContainerFactory : Object {
     // private static members
     private static QueryContainerFactory instance;
@@ -80,22 +83,20 @@ internal class Rygel.MediaExport.QueryContainerFactory : Object {
      *
      * Create a QueryContainer directly from MD5 hashed id.
      *
-     * @param cache An instance of the meta-data cache
      * @param id    The hashed id of the container
      * @param name  An the title of the container. If not supplied, it will
      *              be derived from the plain-text description of the
      *              container
      * @return A new instance of QueryContainer or null if id does not exist
      */
-    public QueryContainer? create_from_id (MediaCache cache,
-                                          string     id,
-                                          string     name = "") {
-        var definition = this.get_virtual_container_definition (id);
-        if (definition == null) {
+    public QueryContainer? create_from_hashed_id (string id,
+                                                  string name = "") {
+        var definition_id = this.get_virtual_container_definition (id);
+        if (definition_id == null) {
             return null;
         }
 
-        return this.create_from_description (cache, definition, name);
+        return this.create_from_description_id (definition_id, name);
     }
 
     /**
@@ -103,39 +104,38 @@ internal class Rygel.MediaExport.QueryContainerFactory : Object {
      *
      * Create a QueryContainer from a plain-text description string.
      *
-     * @param cache      An instance of the meta-data cache
      * @param definition Plain-text defintion of the query-container
      * @param name       The title of the container. If not supplied, it
      *                   will be derived from the plain-text description of
      *                   the container
      * @return A new instance of QueryContainer
      */
-    public QueryContainer create_from_description (MediaCache cache,
-                                                   string     definition,
-                                                   string     name = "") {
+    public QueryContainer create_from_description_id (string definition_id,
+                                                      string name = "") {
         var title = name;
         string attribute = null;
         string pattern = null;
         string upnp_class = null;
-        var id = definition;
         QueryContainer container;
 
+        var id = definition_id;
         this.register_id (ref id);
 
-        var expression = this.parse_description (definition,
-                                                 out pattern,
-                                                 out attribute,
-                                                 out upnp_class,
-                                                 ref title);
+        var expression = QueryContainerFactory.parse_description
+                                        (definition_id,
+                                         out pattern,
+                                         out attribute,
+                                         out upnp_class,
+                                         ref title);
 
+        // Create a node or leaf container,
+        // depending on whether the definition specifies a pattern.
         if (pattern == null || pattern == "") {
-            container =  new LeafQueryContainer (cache,
-                                                 expression,
+            container =  new LeafQueryContainer (expression,
                                                  id,
                                                  title);
         } else {
-            container = new NodeQueryContainer (cache,
-                                                expression,
+            container = new NodeQueryContainer (expression,
                                                 id,
                                                 title,
                                                 pattern,
@@ -160,7 +160,7 @@ internal class Rygel.MediaExport.QueryContainerFactory : Object {
      * @return A matching UPnP class for the attribute or null if it can't be
      *         mapped.
      */
-    private string? map_upnp_class (string attribute) {
+    private static string? map_upnp_class (string attribute) {
         switch (attribute) {
             case "upnp:album":
                 return MediaContainer.MUSIC_ALBUM;
@@ -189,11 +189,11 @@ internal class Rygel.MediaExport.QueryContainerFactory : Object {
      * @return A SearchExpression corresponding to the non-variable part of
      *         the description.
      */
-    private SearchExpression parse_description (string     description,
-                                                out string pattern,
-                                                out string attribute,
-                                                out string upnp_class,
-                                                ref string name) {
+    private static SearchExpression parse_description (string     description,
+                                                       out string pattern,
+                                                       out string attribute,
+                                                       out string upnp_class,
+                                                       ref string name) {
         var args = description.split (",");
         var expression = null as SearchExpression;
         pattern = null;
@@ -208,13 +208,14 @@ internal class Rygel.MediaExport.QueryContainerFactory : Object {
             attribute = Uri.unescape_string (attribute);
 
             if (args[i + 1] != "?") {
-                this.update_search_expression (ref expression,
-                                               args[i],
-                                               args[i + 1]);
+                QueryContainerFactory.update_search_expression (ref expression,
+                                                                args[i],
+                                                                args[i + 1]);
 
                 // We're on the end of the list, map UPnP class
                 if (i + 2 == args.length) {
-                    upnp_class = this.map_upnp_class (attribute);
+                    upnp_class = QueryContainerFactory.map_upnp_class
+                                        (attribute);
                 }
             } else {
                 args[i + 1] = "%s";
@@ -222,7 +223,8 @@ internal class Rygel.MediaExport.QueryContainerFactory : Object {
 
                 // This container has the previouss attribute's content, so
                 // use that to map the UPnP class.
-                upnp_class = this.map_upnp_class (previous_attribute);
+                upnp_class = QueryContainerFactory.map_upnp_class
+                                        (previous_attribute);
 
                 if (name == "" && i > 0) {
                     name = Uri.unescape_string (args[i - 1]);
@@ -246,9 +248,10 @@ internal class Rygel.MediaExport.QueryContainerFactory : Object {
      * @param key        Key of the key/value condition
      * @param value      Value of the key/value condition
      */
-    private void update_search_expression (ref SearchExpression? expression,
-                                           string                key,
-                                           string                @value) {
+    private static void update_search_expression
+                                        (ref SearchExpression? expression,
+                                         string                key,
+                                         string                @value) {
         var subexpression = new RelationalExpression ();
         var clean_key = key.replace (QueryContainer.PREFIX, "");
         subexpression.operand1 = Uri.unescape_string (clean_key);

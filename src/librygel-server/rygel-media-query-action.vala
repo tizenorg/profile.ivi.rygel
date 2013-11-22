@@ -46,7 +46,7 @@ internal abstract class Rygel.MediaQueryAction : GLib.Object, StateMachine {
     protected HTTPServer http_server;
     protected uint32 system_update_id;
     protected ServiceAction action;
-    protected DIDLLiteWriter didl_writer;
+    protected Serializer serializer;
     protected ClientHacks hacks;
     protected string object_id_arg;
 
@@ -58,7 +58,7 @@ internal abstract class Rygel.MediaQueryAction : GLib.Object, StateMachine {
         this.cancellable = content_dir.cancellable;
         this.action = (owned) action;
 
-        this.didl_writer = new DIDLLiteWriter (null);
+        this.serializer = new Serializer (SerializerType.GENERIC_DIDL);
 
         try {
             this.hacks = ClientHacks.create (this.action.get_message ());
@@ -80,7 +80,7 @@ internal abstract class Rygel.MediaQueryAction : GLib.Object, StateMachine {
             }
 
 
-            results.serialize (this.didl_writer,
+            results.serialize (this.serializer,
                                this.http_server,
                                this.hacks);
 
@@ -93,6 +93,13 @@ internal abstract class Rygel.MediaQueryAction : GLib.Object, StateMachine {
 
     protected virtual void parse_args () throws Error {
         int64 index, requested_count;
+
+        // Browse and Search action must have 6 mandatory arguments
+        if (action.get_argument_count () != 6) {
+            throw new ContentDirectoryError.INVALID_ARGS
+                                        (_("Invalid number of arguments"));
+        }
+
         this.action.get (this.object_id_arg,
                              typeof (string),
                              out this.object_id,
@@ -111,13 +118,17 @@ internal abstract class Rygel.MediaQueryAction : GLib.Object, StateMachine {
 
         if (this.object_id == null) {
             // Sorry we can't do anything without ObjectID
-            throw new ContentDirectoryError.NO_SUCH_OBJECT
-                                        (_("No such object"));
+            throw new ContentDirectoryError.INVALID_ARGS
+                                        (_("ObjectID argument missing"));
         }
 
         if (index < 0 || requested_count < 0) {
             throw new ContentDirectoryError.INVALID_ARGS
                                         (_("Invalid range"));
+        }
+
+        if (this.filter == null) {
+            throw new ContentDirectoryError.INVALID_ARGS (_("Missing filter"));
         }
 
         this.index = (uint) index;
@@ -178,8 +189,13 @@ internal abstract class Rygel.MediaQueryAction : GLib.Object, StateMachine {
             var media_object = yield this.root_container.find_object
                                         (this.object_id, this.cancellable);
             if (media_object == null) {
-                throw new ContentDirectoryError.NO_SUCH_OBJECT
-                                        (_("No such object"));
+                if (this.object_id_arg == "ObjectID") {
+                    throw new ContentDirectoryError.NO_SUCH_OBJECT
+                                            (_("No such object"));
+                } else {
+                    throw new ContentDirectoryError.NO_SUCH_CONTAINER
+                                            (_("No such container"));
+                }
             }
             debug ("object '%s' found.", this.object_id);
 
@@ -189,10 +205,10 @@ internal abstract class Rygel.MediaQueryAction : GLib.Object, StateMachine {
 
     private void conclude () {
         // Apply the filter from the client
-        this.didl_writer.filter (this.filter);
+        this.serializer.filter (this.filter);
 
         /* Retrieve generated string */
-        string didl = this.didl_writer.get_string ();
+        string didl = this.serializer.get_string ();
 
         if (this.update_id == uint32.MAX) {
             this.update_id = this.system_update_id;

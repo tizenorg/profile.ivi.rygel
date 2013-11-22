@@ -34,7 +34,9 @@ public errordomain Rygel.CmdlineConfigError {
  * Manages configuration from Commandline arguments.
  */
 public class Rygel.CmdlineConfig : GLib.Object, Configuration {
-    private static string iface;
+    [CCode (array_length = false, array_null_terminated = true)]
+    [NoArrayLength]
+    private static string[] ifaces;
     private static int port;
 
     private static bool no_upnp;
@@ -52,6 +54,8 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
 
     private static string config_file;
 
+    private static bool shutdown;
+
     [CCode (array_length = false, array_null_terminated = true)]
     [NoArrayLength]
     private static string[] disabled_plugins;
@@ -66,43 +70,40 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
     private static CmdlineConfig config;
 
     // Command-line options
-	const OptionEntry[] OPTIONS = {
+    const OptionEntry[] OPTIONS = {
         { "version", 0, 0, OptionArg.NONE, ref version,
           "Display version number", null },
-        { "network-interface", 'n', 0, OptionArg.STRING, ref iface,
-          "Network Interface", "INTERFACE" },
+        { "network-interface", 'n', 0, OptionArg.STRING_ARRAY, ref ifaces,
+          N_("Network Interfaces"), "INTERFACE" },
         { "port", 'p', 0, OptionArg.INT, ref port,
           "Port", "PORT" },
         { "disable-transcoding", 't', 0, OptionArg.NONE, ref no_transcoding,
-          "Disable transcoding", null },
+          N_("Disable transcoding"), null },
         { "disallow-upload", 'U', 0, OptionArg.NONE,
-          ref disallow_upload, "Disallow upload", null },
+          ref disallow_upload, N_("Disallow upload"), null },
         { "disallow-deletion", 'D', 0, OptionArg.NONE,
-          ref disallow_deletion, "Disallow deletion", null },
+          ref disallow_deletion, N_ ("Disallow deletion"), null },
         { "log-level", 'g', 0, OptionArg.STRING, ref log_levels,
-          "Comma-separated list of domain:level pairs to specify log level " +
-          "thresholds for individual domains. domain could be either " +
-          "'rygel', name of a plugin or '*' for all domains. " +
-          " Allowed levels are: " +
-          "0=critical,2=error,3=warning,4=message/info,5=debug.",
-          "DOMAIN1:LEVEL1[,DOMAIN2:LEVEL2,..]" },
+          N_ ("Comma-separated list of domain:level pairs. See rygel(1) for details") },
         { "plugin-path", 'u', 0, OptionArg.STRING, ref plugin_path,
-          "Plugin Path", "PLUGIN_PATH" },
+          N_ ("Plugin Path"), "PLUGIN_PATH" },
         { "engine-path", 'e', 0, OptionArg.STRING, ref engine_path,
-          "Engine Path", "ENGINE_PATH" },
+          N_ ("Engine Path"), "ENGINE_PATH" },
         { "disable-plugin", 'd', 0, OptionArg.STRING_ARRAY,
           ref disabled_plugins,
-          "Disable plugin", "PluginName" },
+          N_ ("Disable plugin"), "PluginName" },
         { "title", 'i', 0, OptionArg.STRING_ARRAY, ref plugin_titles,
-          "Set plugin titles", "PluginName:TITLE" },
+          N_ ("Set plugin titles"), "PluginName:TITLE" },
         { "plugin-option", 'o', 0, OptionArg.STRING_ARRAY, ref plugin_options,
-          "Set plugin options", "PluginName:OPTION:VALUE1[,VALUE2,..]" },
+          N_ ("Set plugin options"), "PluginName:OPTION:VALUE1[,VALUE2,..]" },
         { "disable-upnp", 'P', 0, OptionArg.NONE, ref no_upnp,
-          "Disable UPnP (streaming-only)", null },
+          N_ ("Disable UPnP (streaming-only)"), null },
         { "config", 'c', 0, OptionArg.FILENAME, ref config_file,
-          "Use configuration file instead of user configuration", null },
+          N_ ("Use configuration file instead of user configuration"), "FILE" },
+        { "shutdown", 's', 0, OptionArg.NONE, ref shutdown,
+          N_ ("Shutdown remote Rygel reference"), null },
         { null }
-	};
+    };
 
     public static CmdlineConfig get_default () {
         if (config == null) {
@@ -134,6 +135,23 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
 
             throw new CmdlineConfigError.VERSION_ONLY ("");
         }
+
+        if (shutdown) {
+            try {
+                print (_("Shutting down remote Rygel instance\n"));
+                DBusInterface rygel = Bus.get_proxy_sync
+                                        (BusType.SESSION,
+                                         DBusInterface.SERVICE_NAME,
+                                         DBusInterface.OBJECT_PATH,
+                                         DBusProxyFlags.DO_NOT_LOAD_PROPERTIES);
+                rygel.shutdown ();
+            } catch (Error error) {
+                warning (_("Failed to shut-down other rygel instance: %s"),
+                         error.message);
+
+            }
+            throw new CmdlineConfigError.VERSION_ONLY ("");
+        }
     }
 
     public bool get_upnp_enabled () throws GLib.Error {
@@ -145,11 +163,20 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
     }
 
     public string get_interface () throws GLib.Error {
-        if (iface == null) {
+        if (ifaces == null) {
             throw new ConfigurationError.NO_VALUE_SET (_("No value available"));
         }
 
-        return iface;
+        return ifaces[0];
+    }
+
+    [CCode (array_length=false, array_null_terminated = true)]
+    public string[] get_interfaces () throws GLib.Error {
+        if (ifaces == null) {
+            throw new ConfigurationError.NO_VALUE_SET (_("No value available"));
+        }
+
+        return ifaces;
     }
 
     public int get_port () throws GLib.Error {

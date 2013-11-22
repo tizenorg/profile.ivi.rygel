@@ -5,7 +5,7 @@
 <title>RygelRecursiveModuleLoader</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-core Reference Manual">
-<link rel="up" href="ch01.html" title="librygel-core API Reference">
+<link rel="up" href="api-main-list-c.html" title="librygel-core API Reference">
 <link rel="prev" href="FreeDesktopDBusObject.html" title="FreeDesktopDBusObject">
 <link rel="next" href="RygelRootDevice.html" title="RygelRootDevice">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
@@ -15,7 +15,7 @@
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
 <td><a accesskey="p" href="FreeDesktopDBusObject.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="u" href="api-main-list-c.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-core Reference Manual</th>
 <td><a accesskey="n" href="RygelRootDevice.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
@@ -26,6 +26,8 @@
                   <a href="#RygelRecursiveModuleLoader.description" class="shortcut">Description</a>
                    | 
                   <a href="#RygelRecursiveModuleLoader.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#RygelRecursiveModuleLoader.properties" class="shortcut">Properties</a>
 </td></tr>
 </table>
 <div class="refentry">
@@ -33,7 +35,7 @@
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
 <h2><span class="refentrytitle"><a name="RygelRecursiveModuleLoader.top_of_page"></a>RygelRecursiveModuleLoader</span></h2>
-<p>RygelRecursiveModuleLoader — Recursivly walk a folder looking for shared libraries.</p>
+<p>RygelRecursiveModuleLoader — Recursively walk a folder looking for shared libraries.</p>
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
@@ -44,10 +46,18 @@
                                                         (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-modules-sync" title="rygel_recursive_module_loader_load_modules_sync ()">rygel_recursive_module_loader_load_modules_sync</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-file" title="rygel_recursive_module_loader_load_module_from_file ()">rygel_recursive_module_loader_load_module_from_file</a>
+                                                         <em class="parameter"><code><a href="../gio/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>);
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-file" title="rygel_recursive_module_loader_load_module_from_file ()">rygel_recursive_module_loader_load_module_from_file</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">GFile</span> *file</code></em>);
+                                                         <em class="parameter"><code><a href="../gio/GFile.html"><span class="type">GFile</span></a> *file</code></em>);
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-load-module-from-info" title="rygel_recursive_module_loader_load_module_from_info ()">rygel_recursive_module_loader_load_module_from_info</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><span class="type">RygelPluginInformation</span> *info</code></em>);
+const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-get-base-path" title="rygel_recursive_module_loader_get_base_path ()">rygel_recursive_module_loader_get_base_path</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="RygelRecursiveModuleLoader.html#rygel-recursive-module-loader-set-base-path" title="rygel_recursive_module_loader_set_base_path ()">rygel_recursive_module_loader_set_base_path</a>
+                                                        (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 struct              <a class="link" href="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader-struct" title="struct RygelRecursiveModuleLoader">RygelRecursiveModuleLoader</a>;
 struct              <a class="link" href="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoaderClass" title="struct RygelRecursiveModuleLoaderClass">RygelRecursiveModuleLoaderClass</a>;
 </pre>
@@ -55,9 +65,15 @@ struct              <a class="link" href="RygelRecursiveModuleLoader.html#RygelR
 <div class="refsect1">
 <a name="RygelRecursiveModuleLoader.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----RygelRecursiveModuleLoader
          +----<a class="link" href="RygelPluginLoader.html" title="RygelPluginLoader">RygelPluginLoader</a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="RygelRecursiveModuleLoader.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader--base-path" title='The "base-path" property'>base-path</a>"                <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct
 </pre>
 </div>
 <div class="refsect1">
@@ -99,24 +115,30 @@ Walk asynchronously through the tree and load modules.
 <a name="rygel-recursive-module-loader-load-modules-sync"></a><h3>rygel_recursive_module_loader_load_modules_sync ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_recursive_module_loader_load_modules_sync
                                                         (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../gio/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>);</pre>
 <p>
 Walk synchronously through the tree and load modules.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> instance</td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="rygel-recursive-module-loader-load-module-from-file"></a><h3>rygel_recursive_module_loader_load_module_from_file ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            rygel_recursive_module_loader_load_module_from_file
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_recursive_module_loader_load_module_from_file
                                                         (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">GFile</span> *file</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../gio/GFile.html"><span class="type">GFile</span></a> *file</code></em>);</pre>
 <p>
 Load module from file.
 </p>
@@ -129,7 +151,7 @@ Load module from file.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>file</code></em> :</span></p></td>
-<td>File to load the module from. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  File to load the module from. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -141,10 +163,75 @@ Load module from file.
 </div>
 <hr>
 <div class="refsect2">
+<a name="rygel-recursive-module-loader-load-module-from-info"></a><h3>rygel_recursive_module_loader_load_module_from_info ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_recursive_module_loader_load_module_from_info
+                                                        (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><span class="type">RygelPluginInformation</span> *info</code></em>);</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-recursive-module-loader-get-base-path"></a><h3>rygel_recursive_module_loader_get_base_path ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_recursive_module_loader_get_base_path
+                                                        (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>);</pre>
+<p>
+Get and return the current value of the <a class="link" href="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader--base-path" title='The "base-path" property'><span class="type">"base-path"</span></a> property.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> instance to query</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the value of the <a class="link" href="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader--base-path" title='The "base-path" property'><span class="type">"base-path"</span></a> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="rygel-recursive-module-loader-set-base-path"></a><h3>rygel_recursive_module_loader_set_base_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                rygel_recursive_module_loader_set_base_path
+                                                        (<em class="parameter"><code><a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+<p>
+Set the value of the <a class="link" href="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader--base-path" title='The "base-path" property'><span class="type">"base-path"</span></a> property to <em class="parameter"><code>value</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>the <a class="link" href="RygelRecursiveModuleLoader.html" title="RygelRecursiveModuleLoader"><span class="type">RygelRecursiveModuleLoader</span></a> instance to modify</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>the new value of the <a class="link" href="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoader--base-path" title='The "base-path" property'><span class="type">"base-path"</span></a> property</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
 <a name="RygelRecursiveModuleLoader-struct"></a><h3>struct RygelRecursiveModuleLoader</h3>
 <pre class="programlisting">struct RygelRecursiveModuleLoader;</pre>
 <p>
-Recursivly walk a folder looking for shared libraries.
+Recursively walk a folder looking for shared libraries.
 </p>
 <p>
 </p>
@@ -158,6 +245,7 @@ Recursivly walk a folder looking for shared libraries.
 <pre class="programlisting">struct RygelRecursiveModuleLoaderClass {
 	GObjectClass parent_class;
 	gboolean (*load_module_from_file) (RygelRecursiveModuleLoader* self, GFile* file);
+	gboolean (*load_module_from_info) (RygelRecursiveModuleLoader* self, RygelPluginInformation* info);
 };
 </pre>
 <p>
@@ -167,15 +255,28 @@ The class structure for <a class="link" href="RygelRecursiveModuleLoader.html#RY
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><span class="type">GObjectClass</span> <em class="structfield"><code><a name="RygelRecursiveModuleLoaderClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelRecursiveModuleLoaderClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelRecursiveModuleLoaderClass.load-module-from-file"></a>load_module_from_file</code></em> ()</span></p></td>
 <td>virtual method used internally</td>
 </tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="RygelRecursiveModuleLoaderClass.load-module-from-info"></a>load_module_from_info</code></em> ()</span></p></td>
+<td>virtual method used internally</td>
+</tr>
 </tbody>
 </table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="RygelRecursiveModuleLoader.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="RygelRecursiveModuleLoader--base-path"></a><h3>The <code class="literal">"base-path"</code> property</h3>
+<pre class="programlisting">  "base-path"                <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct</pre>
+<p>base-path.</p>
+<p>Default value: NULL</p>
 </div>
 </div>
 </div>

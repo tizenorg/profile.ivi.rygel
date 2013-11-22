@@ -46,7 +46,10 @@ public enum Rygel.PluginCapabilities {
     UPLOAD = IMAGE_UPLOAD | VIDEO_UPLOAD | AUDIO_UPLOAD,
 
     /// Server supports tracking changes
-    TRACK_CHANGES
+    TRACK_CHANGES,
+
+    /// Server supports container creation
+    CREATE_CONTAINERS
 
     /* Renderer caps */
 }
@@ -83,7 +86,7 @@ public class Rygel.Plugin : GUPnP.ResourceFactory {
     private static const string ICON_PNG_MIME = "image/png";
     private static const string ICON_JPG_MIME = "image/jpeg";
 
-    private static const int ICON_PNG_DEPTH = 32;
+    private static const int ICON_PNG_DEPTH = 24;
     private static const int ICON_JPG_DEPTH = 24;
 
     private static const int ICON_BIG_WIDTH = 120;
@@ -91,14 +94,14 @@ public class Rygel.Plugin : GUPnP.ResourceFactory {
     private static const int ICON_SMALL_WIDTH = 48;
     private static const int ICON_SMALL_HEIGHT = 48;
 
-    public PluginCapabilities capabilities { get; protected set; }
+    public PluginCapabilities capabilities { get; construct set; }
 
-    public string name { get; private set; }
-    public string title { get; set; }
-    public string description { get; private set; }
+    public string name { get; construct; }
+    public string title { get; construct set; }
+    public string description { get; construct; }
 
     // Path to description document
-    public string desc_path { get; private set; }
+    public string desc_path { get; construct; }
 
     public bool active { get; set; }
 
@@ -126,16 +129,20 @@ public class Rygel.Plugin : GUPnP.ResourceFactory {
                    string? title,
                    string? description = null,
                    PluginCapabilities capabilities = PluginCapabilities.NONE) {
-        this.desc_path = desc_path;
-        this.name = name;
-        this.title = title;
-        this.description = description;
-        this.capabilities = capabilities;
+        Object (desc_path : desc_path,
+                name : name,
+                title : title,
+                description : description,
+                capabilities : capabilities);
+    }
+
+    public override void constructed () {
+        base.constructed ();
 
         this.active = true;
 
-        if (title == null) {
-            this.title = name;
+        if (this.title == null) {
+            this.title = this.name;
         }
 
         this.resource_infos = new ArrayList<ResourceInfo> ();

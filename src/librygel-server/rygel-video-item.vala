@@ -67,7 +67,14 @@ public class Rygel.VideoItem : AudioItem, VisualItem {
                       MediaContainer parent,
                       string         title,
                       string         upnp_class = VideoItem.UPNP_CLASS) {
-        base (id, parent, title, upnp_class);
+        Object (id : id,
+                parent : parent,
+                title : title,
+                upnp_class : upnp_class);
+    }
+
+    public override void constructed () {
+        base.constructed ();
 
         this.thumbnails = new ArrayList<Thumbnail> ();
         this.subtitles = new ArrayList<Subtitle> ();
@@ -86,8 +93,8 @@ public class Rygel.VideoItem : AudioItem, VisualItem {
 
         if (subtitle_manager != null) {
             try {
-                var subtitle = subtitle_manager.get_subtitle (uri);
-                this.subtitles.add (subtitle);
+                var subtitles = subtitle_manager.get_subtitles (uri);
+                this.subtitles.add_all (subtitles);
             } catch (Error err) {}
         }
     }
@@ -109,12 +116,12 @@ public class Rygel.VideoItem : AudioItem, VisualItem {
     }
 
     internal override DIDLLiteResource add_resource
-                                        (DIDLLiteItem didl_item,
-                                         string?      uri,
-                                         string       protocol,
-                                         string?      import_uri = null)
+                                        (DIDLLiteObject didl_object,
+                                         string?        uri,
+                                         string         protocol,
+                                         string?        import_uri = null)
                                          throws Error {
-        var res = base.add_resource (didl_item, uri, protocol, import_uri);
+        var res = base.add_resource (didl_object, uri, protocol, import_uri);
 
         this.add_visual_props (res);
 
@@ -130,7 +137,7 @@ public class Rygel.VideoItem : AudioItem, VisualItem {
         var item = media_object as VideoItem;
 
         switch (property) {
-        case "dc:author":
+        case "upnp:author":
             return this.compare_string_props (this.author, item.author);
         default:
             return base.compare_by_property (item, property);
@@ -151,10 +158,10 @@ public class Rygel.VideoItem : AudioItem, VisualItem {
         this.author = get_first (didl_object.get_authors ());
     }
 
-    internal override DIDLLiteObject serialize (DIDLLiteWriter writer,
-                                                HTTPServer     http_server)
-                                                throws Error {
-        var didl_item = base.serialize (writer, http_server);
+    internal override DIDLLiteObject? serialize (Serializer serializer,
+                                                 HTTPServer  http_server)
+                                                 throws Error {
+        var didl_item = base.serialize (serializer, http_server);
 
         if (this.author != null && this.author != "") {
             var contributor = didl_item.add_author ();
@@ -180,6 +187,7 @@ public class Rygel.VideoItem : AudioItem, VisualItem {
                 subtitle.uri = server.create_uri_for_item (this,
                                                            -1,
                                                            index,
+                                                           null,
                                                            null);
                 subtitle.add_didl_node (didl_item);
 

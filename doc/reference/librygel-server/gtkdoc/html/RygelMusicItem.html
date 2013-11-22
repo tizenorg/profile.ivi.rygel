@@ -5,20 +5,20 @@
 <title>RygelMusicItem</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
-<link rel="prev" href="RygelLogicalExpression.html" title="RygelLogicalExpression">
-<link rel="next" href="RygelMediaServerPlugin.html" title="RygelMediaServerPlugin">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
+<link rel="prev" href="RygelMediaServerPlugin.html" title="RygelMediaServerPlugin">
+<link rel="next" href="RygelPhotoItem.html" title="RygelPhotoItem">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="RygelLogicalExpression.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="RygelMediaServerPlugin.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
-<td><a accesskey="n" href="RygelMediaServerPlugin.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="RygelPhotoItem.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#RygelMusicItem.synopsis" class="shortcut">Top</a>
@@ -44,22 +44,22 @@
 <pre class="synopsis">#define             <a class="link" href="RygelMusicItem.html#RYGEL-TYPE-MUSIC-ITEM:CAPS" title="RYGEL_TYPE_MUSIC_ITEM">RYGEL_TYPE_MUSIC_ITEM</a>
 <span class="returnvalue">void</span>                <a class="link" href="RygelMusicItem.html#rygel-music-item-lookup-album-art" title="rygel_music_item_lookup_album_art ()">rygel_music_item_lookup_album_art</a>   (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
 #define             <a class="link" href="RygelMusicItem.html#RYGEL-MUSIC-ITEM-UPNP-CLASS:CAPS" title="RYGEL_MUSIC_ITEM_UPNP_CLASS">RYGEL_MUSIC_ITEM_UPNP_CLASS</a>
-<a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="returnvalue">RygelMusicItem</span></a> *    <a class="link" href="RygelMusicItem.html#rygel-music-item-new" title="rygel_music_item_new ()">rygel_music_item_new</a>                (<em class="parameter"><code>const <span class="type">gchar</span> *id</code></em>,
+<a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="returnvalue">RygelMusicItem</span></a> *    <a class="link" href="RygelMusicItem.html#rygel-music-item-new" title="rygel_music_item_new ()">rygel_music_item_new</a>                (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *id</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *parent</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *title</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *upnp_class</code></em>);
-const <span class="returnvalue">gchar</span> *       <a class="link" href="RygelMusicItem.html#rygel-music-item-get-artist" title="rygel_music_item_get_artist ()">rygel_music_item_get_artist</a>         (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *title</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *upnp_class</code></em>);
+const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelMusicItem.html#rygel-music-item-get-artist" title="rygel_music_item_get_artist ()">rygel_music_item_get_artist</a>         (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMusicItem.html#rygel-music-item-set-artist" title="rygel_music_item_set_artist ()">rygel_music_item_set_artist</a>         (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);
-const <span class="returnvalue">gchar</span> *       <a class="link" href="RygelMusicItem.html#rygel-music-item-get-album" title="rygel_music_item_get_album ()">rygel_music_item_get_album</a>          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelMusicItem.html#rygel-music-item-get-album" title="rygel_music_item_get_album ()">rygel_music_item_get_album</a>          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMusicItem.html#rygel-music-item-set-album" title="rygel_music_item_set_album ()">rygel_music_item_set_album</a>          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);
-const <span class="returnvalue">gchar</span> *       <a class="link" href="RygelMusicItem.html#rygel-music-item-get-genre" title="rygel_music_item_get_genre ()">rygel_music_item_get_genre</a>          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelMusicItem.html#rygel-music-item-get-genre" title="rygel_music_item_get_genre ()">rygel_music_item_get_genre</a>          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMusicItem.html#rygel-music-item-set-genre" title="rygel_music_item_set_genre ()">rygel_music_item_set_genre</a>          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);
-<span class="returnvalue">gint</span>                <a class="link" href="RygelMusicItem.html#rygel-music-item-get-track-number" title="rygel_music_item_get_track_number ()">rygel_music_item_get_track_number</a>   (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelMusicItem.html#rygel-music-item-get-track-number" title="rygel_music_item_get_track_number ()">rygel_music_item_get_track_number</a>   (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMusicItem.html#rygel-music-item-set-track-number" title="rygel_music_item_set_track_number ()">rygel_music_item_set_track_number</a>   (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
 <a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="returnvalue">RygelThumbnail</span></a> *    <a class="link" href="RygelMusicItem.html#rygel-music-item-get-album-art" title="rygel_music_item_get_album_art ()">rygel_music_item_get_album_art</a>      (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelMusicItem.html#rygel-music-item-set-album-art" title="rygel_music_item_set_album_art ()">rygel_music_item_set_album_art</a>      (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="type">RygelThumbnail</span></a> *value</code></em>);
@@ -70,7 +70,7 @@ struct              <a class="link" href="RygelMusicItem.html#RygelMusicItemClas
 <div class="refsect1">
 <a name="RygelMusicItem.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----<a class="link" href="RygelMediaObject.html" title="RygelMediaObject">RygelMediaObject</a>
          +----<a class="link" href="RygelMediaItem.html" title="RygelMediaItem">RygelMediaItem</a>
                +----<a class="link" href="RygelAudioItem.html" title="RygelAudioItem">RygelAudioItem</a>
@@ -80,11 +80,11 @@ struct              <a class="link" href="RygelMusicItem.html#RygelMusicItemClas
 <div class="refsect1">
 <a name="RygelMusicItem.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="RygelMusicItem.html#RygelMusicItem--album" title='The "album" property'>album</a>"                    <span class="type">gchar</span>*                : Read / Write
+  "<a class="link" href="RygelMusicItem.html#RygelMusicItem--album" title='The "album" property'>album</a>"                    <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="RygelMusicItem.html#RygelMusicItem--album-art" title='The "album-art" property'>album-art</a>"                <a class="link" href="RygelThumbnail.html" title="RygelThumbnail"><span class="type">RygelThumbnail</span></a>*       : Read / Write
-  "<a class="link" href="RygelMusicItem.html#RygelMusicItem--artist" title='The "artist" property'>artist</a>"                   <span class="type">gchar</span>*                : Read / Write
-  "<a class="link" href="RygelMusicItem.html#RygelMusicItem--genre" title='The "genre" property'>genre</a>"                    <span class="type">gchar</span>*                : Read / Write
-  "<a class="link" href="RygelMusicItem.html#RygelMusicItem--track-number" title='The "track-number" property'>track-number</a>"             <span class="type">gint</span>                  : Read / Write
+  "<a class="link" href="RygelMusicItem.html#RygelMusicItem--artist" title='The "artist" property'>artist</a>"                   <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="RygelMusicItem.html#RygelMusicItem--genre" title='The "genre" property'>genre</a>"                    <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="RygelMusicItem.html#RygelMusicItem--track-number" title='The "track-number" property'>track-number</a>"             <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
 </pre>
 </div>
 <div class="refsect1">
@@ -121,15 +121,36 @@ The type for <a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><
 <hr>
 <div class="refsect2">
 <a name="rygel-music-item-new"></a><h3>rygel_music_item_new ()</h3>
-<pre class="programlisting"><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="returnvalue">RygelMusicItem</span></a> *    rygel_music_item_new                (<em class="parameter"><code>const <span class="type">gchar</span> *id</code></em>,
+<pre class="programlisting"><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="returnvalue">RygelMusicItem</span></a> *    rygel_music_item_new                (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *id</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *parent</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *title</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *upnp_class</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *title</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *upnp_class</code></em>);</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>id</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>title</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>upnp_class</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="rygel-music-item-get-artist"></a><h3>rygel_music_item_get_artist ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *       rygel_music_item_get_artist         (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_music_item_get_artist         (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--artist" title='The "artist" property'><span class="type">"artist"</span></a> property.
 </p>
@@ -151,7 +172,7 @@ Get and return the current value of the <a class="link" href="RygelMusicItem.htm
 <div class="refsect2">
 <a name="rygel-music-item-set-artist"></a><h3>rygel_music_item_set_artist ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_music_item_set_artist         (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--artist" title='The "artist" property'><span class="type">"artist"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -172,7 +193,7 @@ Set the value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--a
 <hr>
 <div class="refsect2">
 <a name="rygel-music-item-get-album"></a><h3>rygel_music_item_get_album ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *       rygel_music_item_get_album          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_music_item_get_album          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--album" title='The "album" property'><span class="type">"album"</span></a> property.
 </p>
@@ -194,7 +215,7 @@ Get and return the current value of the <a class="link" href="RygelMusicItem.htm
 <div class="refsect2">
 <a name="rygel-music-item-set-album"></a><h3>rygel_music_item_set_album ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_music_item_set_album          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--album" title='The "album" property'><span class="type">"album"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -215,7 +236,7 @@ Set the value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--a
 <hr>
 <div class="refsect2">
 <a name="rygel-music-item-get-genre"></a><h3>rygel_music_item_get_genre ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *       rygel_music_item_get_genre          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_music_item_get_genre          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--genre" title='The "genre" property'><span class="type">"genre"</span></a> property.
 </p>
@@ -237,7 +258,7 @@ Get and return the current value of the <a class="link" href="RygelMusicItem.htm
 <div class="refsect2">
 <a name="rygel-music-item-set-genre"></a><h3>rygel_music_item_set_genre ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_music_item_set_genre          (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--genre" title='The "genre" property'><span class="type">"genre"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -258,7 +279,7 @@ Set the value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--g
 <hr>
 <div class="refsect2">
 <a name="rygel-music-item-get-track-number"></a><h3>rygel_music_item_get_track_number ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                rygel_music_item_get_track_number   (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_music_item_get_track_number   (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--track-number" title='The "track-number" property'><span class="type">"track-number"</span></a> property.
 </p>
@@ -280,7 +301,7 @@ Get and return the current value of the <a class="link" href="RygelMusicItem.htm
 <div class="refsect2">
 <a name="rygel-music-item-set-track-number"></a><h3>rygel_music_item_set_track_number ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_music_item_set_track_number   (<em class="parameter"><code><a class="link" href="RygelMusicItem.html" title="RygelMusicItem"><span class="type">RygelMusicItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelMusicItem.html#RygelMusicItem--track-number" title='The "track-number" property'><span class="type">"track-number"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -372,7 +393,7 @@ The class structure for <a class="link" href="RygelMusicItem.html#RYGEL-TYPE-MUS
 <a name="RygelMusicItem.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="RygelMusicItem--album"></a><h3>The <code class="literal">"album"</code> property</h3>
-<pre class="programlisting">  "album"                    <span class="type">gchar</span>*                : Read / Write</pre>
+<pre class="programlisting">  "album"                    <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
 <p>album.</p>
 <p>Default value: NULL</p>
 </div>
@@ -385,21 +406,21 @@ The class structure for <a class="link" href="RygelMusicItem.html#RYGEL-TYPE-MUS
 <hr>
 <div class="refsect2">
 <a name="RygelMusicItem--artist"></a><h3>The <code class="literal">"artist"</code> property</h3>
-<pre class="programlisting">  "artist"                   <span class="type">gchar</span>*                : Read / Write</pre>
+<pre class="programlisting">  "artist"                   <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
 <p>artist.</p>
 <p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="RygelMusicItem--genre"></a><h3>The <code class="literal">"genre"</code> property</h3>
-<pre class="programlisting">  "genre"                    <span class="type">gchar</span>*                : Read / Write</pre>
+<pre class="programlisting">  "genre"                    <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
 <p>genre.</p>
 <p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="RygelMusicItem--track-number"></a><h3>The <code class="literal">"track-number"</code> property</h3>
-<pre class="programlisting">  "track-number"             <span class="type">gint</span>                  : Read / Write</pre>
+<pre class="programlisting">  "track-number"             <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
 <p>track-number.</p>
 <p>Default value: -1</p>
 </div>

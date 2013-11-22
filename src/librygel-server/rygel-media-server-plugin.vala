@@ -26,12 +26,73 @@
  * This is the base class for every Rygel implementation of a UPnP media
  * server. It should be used either for a real plug-in for the Rygel process or used
  * in-process via the librygel-server API.
+ *
+ * The plugin instance should have a #RygelMediaContainer instance as its
+ * root container, which may be provided to the constructor.
+ *
+ * See the
+ * <link linkend="implementing-server-plugins">Implementing Server Plugins</link> section.
  */
 public abstract class Rygel.MediaServerPlugin : Rygel.Plugin {
+    private static const string DMS = "urn:schemas-upnp-org:device:MediaServer";
     private static const string MEDIA_SERVER_DESC_PATH =
                                 BuildConfig.DATA_DIR + "/xml/MediaServer3.xml";
 
-    public MediaContainer root_container { get; private set; }
+    public MediaContainer root_container { get; construct; }
+
+    private GLib.List<DLNAProfile> _upload_profiles;
+
+    /**
+     * The list of DLNA profiles the MediaServer in this plugin will accept
+     * files as upload.
+     *
+     * Can be a subset of :supported_profiles. If set to %NULL, it will be
+     * reset to :supported_profiles.
+     */
+    public unowned GLib.List<DLNAProfile> upload_profiles {
+        get {
+            if (_upload_profiles == null) {
+                return supported_profiles;
+            }
+
+            return _upload_profiles;
+        }
+
+        construct set {
+            _upload_profiles = null;
+            foreach (var profile in value) {
+                _upload_profiles.append (profile);
+            }
+        }
+    }
+
+    private GLib.List<DLNAProfile> _supported_profiles;
+
+    /**
+     * The list of DLNA profiles the MediaServer in this plugin will be able
+     * to serve.
+     *
+     * If it does not accept all formats it can serve for uploading,
+     * :upload_profiles needs to be set to the supported subset.
+     *
+     * By default it will be the supported profiles of the #RygelMediaEngine.
+     */
+    public unowned GLib.List<DLNAProfile> supported_profiles {
+        get {
+            if (_supported_profiles == null) {
+                return MediaEngine.get_default ().get_dlna_profiles ();
+            }
+
+            return _supported_profiles;
+        }
+
+        construct set {
+            _supported_profiles = null;
+            foreach (var profile in value) {
+                _supported_profiles.append (profile);
+            }
+        }
+    }
 
     /**
      * Create an instance of the plugin.
@@ -46,13 +107,17 @@ public abstract class Rygel.MediaServerPlugin : Rygel.Plugin {
                               string?        description = null,
                               PluginCapabilities capabilities =
                                         PluginCapabilities.NONE) {
-        base (MEDIA_SERVER_DESC_PATH,
-              name,
-              root_container.title,
-              description,
-              capabilities);
+        Object (desc_path : MEDIA_SERVER_DESC_PATH,
+                name : name,
+                title : root_container.title,
+                description : description,
+                capabilities : capabilities,
+                root_container : root_container);
+    }
 
-        this.root_container = root_container;
+    public override void constructed () {
+        base.constructed ();
+
         var path = ContentDirectory.DESCRIPTION_PATH_NO_TRACK;
 
         // MediaServer implementations must implement ContentDirectory service
@@ -90,11 +155,14 @@ public abstract class Rygel.MediaServerPlugin : Rygel.Plugin {
         }
     }
 
+    // TODO: Document this, or make it unnecessary.
     public override void apply_hacks (RootDevice device,
                                      string     description_path)
                                      throws Error {
         // Apply V1 downgrades
-        var v1_hacks = new V1Hacks ();
+        string[] services = { ContentDirectory.UPNP_TYPE,
+                              ConnectionManager.UPNP_TYPE };
+        var v1_hacks = new V1Hacks (DMS, services);
         v1_hacks.apply_on_device (device, description_path);
 
         // Apply XBox hacks on top of that

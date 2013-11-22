@@ -77,7 +77,13 @@ internal class Rygel.DataSourceTestConfig : Rygel.BaseConfiguration {
 internal class Rygel.ByteSeek : Rygel.HTTPSeek {
     public ByteSeek (int64 first, int64 last, int64 length) {
         var msg = new Soup.Message ("GET", "http://example.com/");
-        base (msg, first, last, 1, length);
+
+        try {
+            base (msg, first, last, 1, length);
+        } catch (HTTPSeekError error) {
+            assert_not_reached ();
+        }
+
         this.seek_type = HTTPSeekType.BYTE;
     }
 
@@ -166,7 +172,17 @@ public class Rygel.DataSourceTest : Object {
         source.done.connect ( (data) => {
             loop.quit ();
         });
-        Idle.add ( () => { source.start (null); return false; });
+
+        
+        Idle.add ( () => {
+            try {
+                source.start (null);
+                return false;
+            } catch (GLib.Error error) {
+                assert_not_reached ();
+            }
+        });
+
         loop.run ();
         assert (received_bytes == this.test_data_mapped.get_length ());
         source.stop ();
@@ -281,10 +297,29 @@ public class Rygel.DataSourceTest : Object {
         source.done.connect ( (data) => {
             loop.quit ();
         });
-        Idle.add ( () => { source.start (null); return false; });
+
+        Idle.add ( () => {
+            try {
+                source.start (null);
+                return false;
+            } catch (GLib.Error error) {
+                assert_not_reached ();
+            }
+        });
+
+
         loop.run ();
         pool.clear ();
-        Idle.add ( () => { source.start (null); return false; });
+
+        Idle.add ( () => {
+            try {
+                source.start (null);
+                return false;
+            } catch (GLib.Error error) {
+                assert_not_reached ();
+            }
+        });
+
         loop.run ();
         Memory.cmp (this.test_data_mapped.get_contents (),
                     pool.flatten (),
@@ -292,46 +327,6 @@ public class Rygel.DataSourceTest : Object {
 
         source.stop ();
         source = null;
-    }
-
-    // Check that calling freeze multiple times only needs one thaw to get the
-    // data again
-    private void test_multiple_freeze () {
-        debug ("test_multiple_freeze");
-        var source = MediaEngine.get_default ().create_data_source
-                                        (this.test_data_file.get_uri ());
-        // Sources should support file:// urls
-        assert (source != null);
-        var available_id = source.data_available.connect ( () => {
-            assert_not_reached ();
-        });
-        source.start (null);
-        source.freeze ();
-        source.freeze ();
-        var loop = new MainLoop (null, false);
-
-        Timeout.add_seconds (5, () => {
-            loop.quit ();
-
-            return false;
-        });
-
-        loop.run ();
-        source.disconnect (available_id);
-        source.data_available.connect ( () => {
-            loop.quit ();
-        });
-
-        var timeout_id = Timeout.add_seconds (5, () => {
-            assert_not_reached ();
-
-            return false;
-        });
-
-        source.thaw ();
-        loop.run ();
-        Source.remove (timeout_id);
-        source.stop ();
     }
 
     // Check that it is possible to call stop() when the source is frozen and
@@ -343,7 +338,12 @@ public class Rygel.DataSourceTest : Object {
         // Sources should support file:// urls
         assert (source != null);
 
-        source.start (null);
+        try {
+            source.start (null);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
+
         source.freeze ();
         var loop = new MainLoop (null, false);
         source.done.connect ( () => {
@@ -370,13 +370,23 @@ public class Rygel.DataSourceTest : Object {
                                         (this.test_data_file.get_uri ());
         assert (source2 != null);
 
-        source1.start (null);
+        try {
+            source1.start (null);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
 
         var seek = new ByteSeek (0,
                                  (this.test_data_mapped.get_length () / 2),
                                  this.test_data_mapped.get_length ());
+        assert (seek != null);
 
-        source2.start (seek);
+        try {
+            source2.start (null);
+        } catch (GLib.Error error) {
+            assert_not_reached ();
+        }
+
         var loop = new MainLoop (null, false);
         var quit = false;
         source1.done.connect ( () => {
@@ -401,7 +411,6 @@ public class Rygel.DataSourceTest : Object {
         this.test_simple_streaming ();
         this.test_byte_range_request ();
         this.test_stop_start ();
-        this.test_multiple_freeze ();
         this.test_freeze_stop ();
         this.test_parallel_streaming ();
 
@@ -409,8 +418,6 @@ public class Rygel.DataSourceTest : Object {
     }
 
     public static int main (string[] args) {
-        string[] engines;
-
         var configs = new Gee.ArrayList<DataSourceTestConfig> ();
 
         if (args.length > 1) {

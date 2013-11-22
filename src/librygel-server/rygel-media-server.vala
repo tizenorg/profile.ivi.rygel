@@ -22,7 +22,7 @@
 internal class Plugin : Rygel.MediaServerPlugin {
     public Plugin (Rygel.MediaContainer root_container,
                    Rygel.PluginCapabilities capabilities) {
-        base (root_container, _("LibRygelServer"), null, capabilities);
+        base (root_container, "LibRygelServer", null, capabilities);
     }
 }
 
@@ -32,10 +32,11 @@ internal class Plugin : Rygel.MediaServerPlugin {
  * Call rygel_media_device_add_interface() on the RygelMediaServer to allow it
  * to serve media via that network interface.
  *
- * See the example code in the 
+ * See the
  * <link linkend="implementing-servers">Implementing Servers</link> section.
  */
 public class Rygel.MediaServer : MediaDevice {
+    public unowned MediaContainer root_container { construct; private get; }
 
     /**
      * Create a MediaServer to serve the media in the RygelMediaContainer.
@@ -50,8 +51,18 @@ public class Rygel.MediaServer : MediaDevice {
                         MediaContainer root_container,
                         PluginCapabilities capabilities =
                                         PluginCapabilities.NONE) {
-        base ();
-        this.plugin = new global::Plugin (root_container, capabilities);
-        this.plugin.title = title;
+        Object (title: title,
+                root_container : root_container,
+                capabilities: capabilities);
+    }
+
+    public override void constructed () {
+        base.constructed ();
+
+        if (this.plugin == null) {
+            this.plugin = new global::Plugin (this.root_container,
+                                              this.capabilities);
+        }
+        this.plugin.title = this.title;
     }
 }

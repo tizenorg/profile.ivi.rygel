@@ -66,6 +66,8 @@ internal class Rygel.MediaExport.DatabaseCursor : SqliteWrapper {
                 statement.bind_int64 (i, (int64) current_value.get_uint64 ());
             } else if (current_value.holds (typeof (long))) {
                 statement.bind_int64 (i, current_value.get_long ());
+            } else if (current_value.holds (typeof (uint))) {
+                statement.bind_int64 (i, current_value.get_uint ());
             } else if (current_value.holds (typeof (string))) {
                 statement.bind_text (i, current_value.get_string ());
             } else if (current_value.holds (typeof (void *))) {
@@ -89,11 +91,13 @@ internal class Rygel.MediaExport.DatabaseCursor : SqliteWrapper {
      *
      * @return true if more rows left, false otherwise
      */
-    public bool has_next () {
+    public bool has_next () throws DatabaseError {
         if (this.dirty) {
             this.current_state = this.statement.step ();
             this.dirty = false;
         }
+
+        this.throw_if_code_is_error (this.current_state);
 
         return this.current_state == Sqlite.ROW || this.current_state == -1;
     }
@@ -117,7 +121,7 @@ internal class Rygel.MediaExport.DatabaseCursor : SqliteWrapper {
     // convenience functions for "foreach"
 
     /**
-     * Return a iterator to the cursor to use with foreach
+     * Return an iterator to the cursor to use with foreach
      *
      * @return an iterator wrapping the cursor
      */
@@ -132,7 +136,7 @@ internal class Rygel.MediaExport.DatabaseCursor : SqliteWrapper {
             this.cursor = cursor;
         }
 
-        public bool next () {
+        public bool next () throws DatabaseError {
             return this.cursor.has_next ();
         }
 

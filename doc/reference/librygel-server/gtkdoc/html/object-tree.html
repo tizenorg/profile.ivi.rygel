@@ -6,14 +6,14 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="up" href="index.html" title="librygel-server Reference Manual">
-<link rel="prev" href="RygelSearchableContainer.html" title="RygelSearchableContainer">
+<link rel="prev" href="RygelWritableContainer.html" title="RygelWritableContainer">
 <link rel="next" href="api-index-full.html" title="API Index">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
-<td><a accesskey="p" href="RygelSearchableContainer.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="p" href="RygelWritableContainer.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
 <td> </td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
@@ -23,7 +23,7 @@
 <div class="titlepage"><div><div><h2 class="title">
 <a name="object-tree"></a>Object Hierarchy</h2></div></div></div>
 <pre class="screen">
-    GObject
+    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
         <a class="link" href="RygelMediaObject.html" title="RygelMediaObject">RygelMediaObject</a>
             <a class="link" href="RygelMediaItem.html" title="RygelMediaItem">RygelMediaItem</a>
                 <a class="link" href="RygelAudioItem.html" title="RygelAudioItem">RygelAudioItem</a>
@@ -31,16 +31,18 @@
                     <a class="link" href="RygelVideoItem.html" title="RygelVideoItem">RygelVideoItem</a>
                 <a class="link" href="RygelImageItem.html" title="RygelImageItem">RygelImageItem</a>
                     <a class="link" href="RygelPhotoItem.html" title="RygelPhotoItem">RygelPhotoItem</a>
+                RygelPlaylistItem
             <a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer">RygelMediaContainer</a>
                 <a class="link" href="RygelSimpleContainer.html" title="RygelSimpleContainer">RygelSimpleContainer</a>
         <a class="link" href="RygelHTTPSeek.html" title="RygelHTTPSeek">RygelHTTPSeek</a>
         <a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager">RygelTranscodeManager</a>
         <a class="link" href="RygelMediaArtStore.html" title="RygelMediaArtStore">RygelMediaArtStore</a>
-        <a class="link" href="RygelDLNAProfile.html#RygelMediaEngine">RygelMediaEngine</a>
+        <a class="link" href="RygelMediaEngine.html" title="RygelMediaEngine">RygelMediaEngine</a>
         GeeAbstractCollection
             GeeAbstractList
-                GeeArrayList
-                    <a class="link" href="RygelMediaObjects.html" title="RygelMediaObjects">RygelMediaObjects</a>
+                GeeAbstractBidirList
+                    GeeArrayList
+                        <a class="link" href="RygelMediaObjects.html" title="RygelMediaObjects">RygelMediaObjects</a>
         RygelMediaDevice
             <a class="link" href="RygelMediaServer.html" title="RygelMediaServer">RygelMediaServer</a>
         GUPnPResourceFactory
@@ -51,11 +53,11 @@
         <a class="link" href="RygelDataSource.html" title="RygelDataSource">RygelDataSource</a>
         <a class="link" href="RygelVisualItem.html" title="RygelVisualItem">RygelVisualItem</a>
         <a class="link" href="RygelSearchableContainer.html" title="RygelSearchableContainer">RygelSearchableContainer</a>
-        RygelTrackableContainer
+        <a class="link" href="RygelTrackableContainer.html" title="RygelTrackableContainer">RygelTrackableContainer</a>
         RygelTrackableItem
         RygelUpdatableObject
         <a class="link" href="RygelWritableContainer.html" title="RygelWritableContainer">RygelWritableContainer</a>
-    <a class="link" href="RygelDLNAProfile.html" title="RygelDLNAProfile">RygelDLNAProfile</a>
+    RygelDLNAProfile
     GEnum
         <a class="link" href="RygelHTTPSeek.html#RygelHTTPSeekType">RygelHTTPSeekType</a>
         <a class="link" href="RygelLogicalExpression.html#RygelLogicalOperator">RygelLogicalOperator</a>

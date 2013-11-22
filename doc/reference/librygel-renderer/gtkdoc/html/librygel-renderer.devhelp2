@@ -2,12 +2,20 @@
 <!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
 <book xmlns="http://www.devhelp.net/book" title="librygel-renderer Reference Manual" link="index.html" author="" name="librygel-renderer" version="2" language="c">
   <chapters>
-    <sub name="Overview" link="pr01.html">
-      <sub name="" link="pr01.html#overview">
-        <sub name="Basic Usage" link="pr01.html#idp5312064"/>
+    <sub name="Overview" link="overview.html">
+      <sub name="" link="overview.html#overview">
+        <sub name="Basic Usage" link="overview.html#idp10165024"/>
       </sub>
     </sub>
-    <sub name="librygel-renderer API Reference" link="ch01.html">
+    <sub name="Implementing Renderers" link="implementing-renderers.html">
+      <sub name="Implementing Renderers: Overview" link="implementing-renderers.html#implementing-renderers-overview"/>
+      <sub name="Implementing Renderers: Full Example" link="implementing-renderers-full-example.html"/>
+    </sub>
+    <sub name="Implementing Rygel Renderer Plugins" link="implementing-renderer-plugins.html">
+      <sub name="Implementing Renderer Plugins: Overview" link="implementing-renderer-plugins.html#implementing-renderer-plugins-overview"/>
+      <sub name="Implementing Renderer Plugins: Simple Example" link="implementing-renderer-plugins-simple-example.html"/>
+    </sub>
+    <sub name="librygel-renderer API Reference" link="api-main-list.html">
       <sub name="RygelMediaRendererPlugin" link="RygelMediaRendererPlugin.html"/>
       <sub name="RygelMediaRenderer" link="RygelMediaRenderer.html"/>
       <sub name="RygelMediaPlayer" link="RygelMediaPlayer.html"/>
@@ -20,18 +28,26 @@
   <functions>
     <keyword type="macro" name="RYGEL_TYPE_MEDIA_RENDERER_PLUGIN" link="RygelMediaRendererPlugin.html#RYGEL-TYPE-MEDIA-RENDERER-PLUGIN:CAPS"/>
     <keyword type="function" name="rygel_media_renderer_plugin_get_player ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-player"/>
+    <keyword type="function" name="rygel_media_renderer_plugin_get_protocol_info ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-protocol-info"/>
     <keyword type="function" name="rygel_media_renderer_plugin_new ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-new"/>
+    <keyword type="function" name="rygel_media_renderer_plugin_get_supported_profiles ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-supported-profiles"/>
+    <keyword type="function" name="rygel_media_renderer_plugin_set_supported_profiles ()" link="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-set-supported-profiles"/>
     <keyword type="struct" name="struct RygelMediaRendererPlugin" link="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin-struct"/>
     <keyword type="struct" name="struct RygelMediaRendererPluginClass" link="RygelMediaRendererPlugin.html#RygelMediaRendererPluginClass"/>
+    <keyword type="property" name="The &quot;supported-profiles&quot; property" link="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles"/>
     <keyword type="macro" name="RYGEL_TYPE_MEDIA_RENDERER" link="RygelMediaRenderer.html#RYGEL-TYPE-MEDIA-RENDERER:CAPS"/>
     <keyword type="function" name="rygel_media_renderer_new ()" link="RygelMediaRenderer.html#rygel-media-renderer-new"/>
     <keyword type="struct" name="struct RygelMediaRenderer" link="RygelMediaRenderer.html#RygelMediaRenderer-struct"/>
     <keyword type="struct" name="struct RygelMediaRendererClass" link="RygelMediaRenderer.html#RygelMediaRendererClass"/>
+    <keyword type="property" name="The &quot;player&quot; property" link="RygelMediaRenderer.html#RygelMediaRenderer--player"/>
     <keyword type="function" name="rygel_media_player_seek ()" link="RygelMediaPlayer.html#rygel-media-player-seek"/>
     <keyword type="function" name="rygel_media_player_get_protocols ()" link="RygelMediaPlayer.html#rygel-media-player-get-protocols"/>
     <keyword type="function" name="rygel_media_player_get_mime_types ()" link="RygelMediaPlayer.html#rygel-media-player-get-mime-types"/>
     <keyword type="function" name="rygel_media_player_get_playback_state ()" link="RygelMediaPlayer.html#rygel-media-player-get-playback-state"/>
     <keyword type="function" name="rygel_media_player_set_playback_state ()" link="RygelMediaPlayer.html#rygel-media-player-set-playback-state"/>
+    <keyword type="function" name="rygel_media_player_get_allowed_playback_speeds ()" link="RygelMediaPlayer.html#rygel-media-player-get-allowed-playback-speeds"/>
+    <keyword type="function" name="rygel_media_player_get_playback_speed ()" link="RygelMediaPlayer.html#rygel-media-player-get-playback-speed"/>
+    <keyword type="function" name="rygel_media_player_set_playback_speed ()" link="RygelMediaPlayer.html#rygel-media-player-set-playback-speed"/>
     <keyword type="function" name="rygel_media_player_get_uri ()" link="RygelMediaPlayer.html#rygel-media-player-get-uri"/>
     <keyword type="function" name="rygel_media_player_set_uri ()" link="RygelMediaPlayer.html#rygel-media-player-set-uri"/>
     <keyword type="function" name="rygel_media_player_get_volume ()" link="RygelMediaPlayer.html#rygel-media-player-get-volume"/>
@@ -41,6 +57,7 @@
     <keyword type="function" name="rygel_media_player_set_metadata ()" link="RygelMediaPlayer.html#rygel-media-player-set-metadata"/>
     <keyword type="function" name="rygel_media_player_get_mime_type ()" link="RygelMediaPlayer.html#rygel-media-player-get-mime-type"/>
     <keyword type="function" name="rygel_media_player_set_mime_type ()" link="RygelMediaPlayer.html#rygel-media-player-set-mime-type"/>
+    <keyword type="function" name="rygel_media_player_get_can_seek ()" link="RygelMediaPlayer.html#rygel-media-player-get-can-seek"/>
     <keyword type="function" name="rygel_media_player_get_content_features ()" link="RygelMediaPlayer.html#rygel-media-player-get-content-features"/>
     <keyword type="function" name="rygel_media_player_set_content_features ()" link="RygelMediaPlayer.html#rygel-media-player-set-content-features"/>
     <keyword type="function" name="rygel_media_player_get_duration_as_str ()" link="RygelMediaPlayer.html#rygel-media-player-get-duration-as-str"/>
@@ -48,10 +65,13 @@
     <keyword type="function" name="rygel_media_player_get_position_as_str ()" link="RygelMediaPlayer.html#rygel-media-player-get-position-as-str"/>
     <keyword type="struct" name="RygelMediaPlayer" link="RygelMediaPlayer.html#RygelMediaPlayer-struct"/>
     <keyword type="struct" name="struct RygelMediaPlayerIface" link="RygelMediaPlayer.html#RygelMediaPlayerIface"/>
+    <keyword type="property" name="The &quot;allowed-playback-speeds&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--allowed-playback-speeds"/>
+    <keyword type="property" name="The &quot;can-seek&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--can-seek"/>
     <keyword type="property" name="The &quot;content-features&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--content-features"/>
     <keyword type="property" name="The &quot;duration&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--duration"/>
     <keyword type="property" name="The &quot;metadata&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--metadata"/>
     <keyword type="property" name="The &quot;mime-type&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--mime-type"/>
+    <keyword type="property" name="The &quot;playback-speed&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--playback-speed"/>
     <keyword type="property" name="The &quot;playback-state&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--playback-state"/>
     <keyword type="property" name="The &quot;position&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--position"/>
     <keyword type="property" name="The &quot;uri&quot; property" link="RygelMediaPlayer.html#RygelMediaPlayer--uri"/>

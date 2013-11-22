@@ -39,7 +39,7 @@
         <img class="main_diagram" usemap="#Rygel.MediaObjects" alt="Object hierarchy for MediaObjects" src="img/Rygel.MediaObjects.png"/>
 
       <map id="Rygel.MediaObjects" name="Rygel.MediaObjects">
-<area shape="rect" id="node1" href="Rygel.MediaObjects.html" title="Rygel.MediaObjects" alt="" coords="191,389,361,437"/>
+<area shape="rect" id="node1" href="Rygel.MediaObjects.html" title="Rygel.MediaObjects" alt="" coords="359,485,529,533"/>
 </map>
 
         <h2 class="main_title">Description:</h2>
@@ -89,36 +89,38 @@
               <div class="column">
                 <ul class="navi_inline">
                   <li class="property">equal_func</li>
+                  <li class="virtual_property">read_only</li>
                   <li class="virtual_property">size</li>
                   <li class="virtual_method">add</li>
-                  <li class="virtual_method">add_all</li>
-                  <li class="virtual_method">clear</li>
-                  <li class="virtual_method">contains</li>
+                  <li class="method">add_all</li>
+                  <li class="virtual_method">bidir_list_iterator</li>
                 </ul>
               </div>
               <div class="column">
                 <ul class="navi_inline">
+                  <li class="virtual_method">clear</li>
+                  <li class="virtual_method">contains</li>
+                  <li class="virtual_method">@foreach</li>
                   <li class="virtual_method">@get</li>
                   <li class="virtual_method">index_of</li>
                   <li class="virtual_method">insert</li>
-                  <li class="virtual_method">iterator</li>
-                  <li class="virtual_method">list_iterator</li>
                 </ul>
               </div>
               <div class="column">
                 <ul class="navi_inline">
+                  <li class="virtual_method">iterator</li>
+                  <li class="virtual_method">list_iterator</li>
                   <li class="virtual_method">remove</li>
                   <li class="virtual_method">remove_at</li>
                   <li class="virtual_method">@set</li>
                   <li class="virtual_method">slice</li>
-                  <li class="method">sort_with_data</li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="box">
             <div class="headline">
-              <div class="text">All known members inherited from class Gee.AbstractList</div>
+              <div class="text">All known members inherited from class Gee.AbstractBidirList</div>
               <div class="toggle">
                 <img onclick="toggle_box  (this, 'box-content-12')" src="../coll_open.png">&nbsp;</div>
               </div>
@@ -126,168 +128,150 @@
                 <div class="column">
                   <ul class="navi_inline">
                     <li class="virtual_property">read_only_view</li>
-                    <li class="virtual_method">first</li>
-                    <li class="abstract_method">@get</li>
-                    <li class="abstract_method">index_of</li>
                   </ul>
                 </div>
                 <div class="column">
                   <ul class="navi_inline">
-                    <li class="abstract_method">insert</li>
-                    <li class="virtual_method">insert_all</li>
-                    <li class="virtual_method">last</li>
-                    <li class="abstract_method">list_iterator</li>
+                    <li class="abstract_method">bidir_list_iterator</li>
                   </ul>
                 </div>
                 <div class="column">
                   <ul class="navi_inline">
-                    <li class="abstract_method">remove_at</li>
-                    <li class="abstract_method">@set</li>
-                    <li class="abstract_method">slice</li>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="box">
               <div class="headline">
-                <div class="text">All known members inherited from class Gee.AbstractCollection</div>
+                <div class="text">All known members inherited from class Gee.AbstractList</div>
                 <div class="toggle">
                   <img onclick="toggle_box  (this, 'box-content-13')" src="../coll_open.png">&nbsp;</div>
                 </div>
                 <div class="content" id="box-content-13">
                   <div class="column">
                     <ul class="navi_inline">
-                      <li class="virtual_property">is_empty</li>
                       <li class="virtual_property">read_only_view</li>
-                      <li class="abstract_property">size</li>
-                      <li class="abstract_method">add</li>
-                      <li class="virtual_method">add_all</li>
+                      <li class="abstract_method">@get</li>
+                      <li class="abstract_method">index_of</li>
                     </ul>
                   </div>
                   <div class="column">
                     <ul class="navi_inline">
-                      <li class="abstract_method">clear</li>
-                      <li class="abstract_method">contains</li>
-                      <li class="virtual_method">contains_all</li>
-                      <li class="abstract_method">iterator</li>
+                      <li class="abstract_method">insert</li>
+                      <li class="abstract_method">list_iterator</li>
+                      <li class="abstract_method">remove_at</li>
                     </ul>
                   </div>
                   <div class="column">
                     <ul class="navi_inline">
-                      <li class="abstract_method">remove</li>
-                      <li class="virtual_method">remove_all</li>
-                      <li class="virtual_method">retain_all</li>
-                      <li class="virtual_method">to_array</li>
+                      <li class="abstract_method">@set</li>
+                      <li class="abstract_method">slice</li>
                     </ul>
                   </div>
                 </div>
               </div>
               <div class="box">
                 <div class="headline">
-                  <div class="text">All known members inherited from class GLib.Object</div>
+                  <div class="text">All known members inherited from class Gee.AbstractCollection</div>
                   <div class="toggle">
                     <img onclick="toggle_box  (this, 'box-content-14')" src="../coll_open.png">&nbsp;</div>
                   </div>
                   <div class="content" id="box-content-14">
                     <div class="column">
                       <ul class="navi_inline">
-                        <li class="static_method">@new</li>
-                        <li class="static_method">newv</li>
-                        <li class="static_method">new_valist</li>
-                        <li class="method">get_type</li>
-                        <li class="method">get_class</li>
-                        <li class="method">@ref</li>
-                        <li class="method">unref</li>
-                        <li class="method">ref_sink</li>
-                        <li class="method">weak_ref</li>
-                        <li class="method">weak_unref</li>
-                        <li class="method">add_weak_pointer</li>
-                        <li class="method">remove_weak_pointer</li>
+                        <li class="abstract_property">read_only</li>
+                        <li class="virtual_property">read_only_view</li>
+                        <li class="abstract_property">size</li>
                       </ul>
                     </div>
                     <div class="column">
                       <ul class="navi_inline">
-                        <li class="method">@get</li>
-                        <li class="method">@set</li>
-                        <li class="method">get_property</li>
-                        <li class="method">set_property</li>
-                        <li class="method">get_data</li>
-                        <li class="method">set_data</li>
-                        <li class="method">set_data_full</li>
-                        <li class="method">steal_data</li>
-                        <li class="method">get_qdata</li>
-                        <li class="method">set_qdata</li>
-                        <li class="method">set_qdata_full</li>
-                        <li class="method">steal_qdata</li>
+                        <li class="abstract_method">add</li>
+                        <li class="abstract_method">clear</li>
+                        <li class="abstract_method">contains</li>
                       </ul>
                     </div>
                     <div class="column">
                       <ul class="navi_inline">
-                        <li class="method">freeze_notify</li>
-                        <li class="method">thaw_notify</li>
-                        <li class="virtual_method">dispose</li>
-                        <li class="virtual_method">constructed</li>
-                        <li class="method">notify_property</li>
-                        <li class="method">connect</li>
-                        <li class="method">disconnect</li>
-                        <li class="method">add_toggle_ref</li>
-                        <li class="method">remove_toggle_ref</li>
-                        <li class="method">bind_property</li>
-                        <li class="signal">notify</li>
-                        <li class="field">ref_count</li>
+                        <li class="virtual_method">@foreach</li>
+                        <li class="abstract_method">iterator</li>
+                        <li class="abstract_method">remove</li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <div class="box">
                   <div class="headline">
-                    <div class="text">All known members inherited from interface Gee.List</div>
+                    <div class="text">All known members inherited from class GLib.Object</div>
                     <div class="toggle">
                       <img onclick="toggle_box  (this, 'box-content-15')" src="../coll_open.png">&nbsp;</div>
                     </div>
                     <div class="content" id="box-content-15">
                       <div class="column">
                         <ul class="navi_inline">
-                          <li class="abstract_property">read_only_view</li>
-                          <li class="static_method">empty</li>
-                          <li class="abstract_method">first</li>
-                          <li class="abstract_method">@get</li>
-                          <li class="abstract_method">index_of</li>
+                          <li class="static_method">@new</li>
+                          <li class="static_method">newv</li>
+                          <li class="static_method">new_valist</li>
+                          <li class="method">get_type</li>
+                          <li class="method">get_class</li>
+                          <li class="method">@ref</li>
+                          <li class="method">unref</li>
+                          <li class="method">ref_sink</li>
+                          <li class="method">weak_ref</li>
+                          <li class="method">weak_unref</li>
+                          <li class="method">add_weak_pointer</li>
+                          <li class="method">remove_weak_pointer</li>
                         </ul>
                       </div>
                       <div class="column">
                         <ul class="navi_inline">
-                          <li class="abstract_method">insert</li>
-                          <li class="abstract_method">insert_all</li>
-                          <li class="abstract_method">last</li>
-                          <li class="abstract_method">list_iterator</li>
+                          <li class="method">@get</li>
+                          <li class="method">@set</li>
+                          <li class="method">get_property</li>
+                          <li class="method">set_property</li>
+                          <li class="method">get_data</li>
+                          <li class="method">set_data</li>
+                          <li class="method">set_data_full</li>
+                          <li class="method">steal_data</li>
+                          <li class="method">get_qdata</li>
+                          <li class="method">set_qdata</li>
+                          <li class="method">set_qdata_full</li>
+                          <li class="method">steal_qdata</li>
                         </ul>
                       </div>
                       <div class="column">
                         <ul class="navi_inline">
-                          <li class="abstract_method">remove_at</li>
-                          <li class="abstract_method">@set</li>
-                          <li class="abstract_method">slice</li>
-                          <li class="abstract_method">sort</li>
+                          <li class="method">freeze_notify</li>
+                          <li class="method">thaw_notify</li>
+                          <li class="virtual_method">dispose</li>
+                          <li class="virtual_method">constructed</li>
+                          <li class="method">notify_property</li>
+                          <li class="method">connect</li>
+                          <li class="method">disconnect</li>
+                          <li class="method">add_toggle_ref</li>
+                          <li class="method">remove_toggle_ref</li>
+                          <li class="method">bind_property</li>
+                          <li class="signal">notify</li>
+                          <li class="field">ref_count</li>
                         </ul>
                       </div>
                     </div>
                   </div>
                   <div class="box">
                     <div class="headline">
-                      <div class="text">All known members inherited from interface Gee.Iterable</div>
+                      <div class="text">All known members inherited from interface Gee.BidirList</div>
                       <div class="toggle">
                         <img onclick="toggle_box  (this, 'box-content-16')" src="../coll_open.png">&nbsp;</div>
                       </div>
                       <div class="content" id="box-content-16">
                         <div class="column">
                           <ul class="navi_inline">
-                            <li class="abstract_property">element_type</li>
+                            <li class="abstract_property">read_only_view</li>
                           </ul>
                         </div>
                         <div class="column">
                           <ul class="navi_inline">
-                            <li class="abstract_method">iterator</li>
+                            <li class="abstract_method">bidir_list_iterator</li>
                           </ul>
                         </div>
                         <div class="column">
@@ -298,41 +282,127 @@
                     </div>
                     <div class="box">
                       <div class="headline">
-                        <div class="text">All known members inherited from interface Gee.Collection</div>
+                        <div class="text">All known members inherited from interface Gee.List</div>
                         <div class="toggle">
                           <img onclick="toggle_box  (this, 'box-content-17')" src="../coll_open.png">&nbsp;</div>
                         </div>
                         <div class="content" id="box-content-17">
                           <div class="column">
                             <ul class="navi_inline">
-                              <li class="abstract_property">is_empty</li>
                               <li class="abstract_property">read_only_view</li>
-                              <li class="abstract_property">size</li>
                               <li class="static_method">empty</li>
-                              <li class="abstract_method">add</li>
+                              <li class="virtual_method">first</li>
+                              <li class="abstract_method">@get</li>
+                              <li class="abstract_method">index_of</li>
                             </ul>
                           </div>
                           <div class="column">
                             <ul class="navi_inline">
-                              <li class="abstract_method">add_all</li>
-                              <li class="abstract_method">clear</li>
-                              <li class="abstract_method">contains</li>
-                              <li class="abstract_method">contains_all</li>
+                              <li class="abstract_method">insert</li>
+                              <li class="virtual_method">insert_all</li>
+                              <li class="virtual_method">last</li>
+                              <li class="abstract_method">list_iterator</li>
                             </ul>
                           </div>
                           <div class="column">
                             <ul class="navi_inline">
-                              <li class="abstract_method">remove</li>
-                              <li class="abstract_method">remove_all</li>
-                              <li class="abstract_method">retain_all</li>
-                              <li class="abstract_method">to_array</li>
+                              <li class="abstract_method">remove_at</li>
+                              <li class="abstract_method">@set</li>
+                              <li class="abstract_method">slice</li>
+                              <li class="virtual_method">sort</li>
                             </ul>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div><br/>
-                  <div class="site_footer">Generated by <a href="http://www.valadoc.org/">Valadoc</a>
-                  </div>
-                </body>
-              </html>
+                      <div class="box">
+                        <div class="headline">
+                          <div class="text">All known members inherited from interface Gee.Traversable</div>
+                          <div class="toggle">
+                            <img onclick="toggle_box  (this, 'box-content-18')" src="../coll_open.png">&nbsp;</div>
+                          </div>
+                          <div class="content" id="box-content-18">
+                            <div class="column">
+                              <ul class="navi_inline">
+                                <li class="virtual_property">element_type</li>
+                                <li class="virtual_method">chop</li>
+                                <li class="virtual_method">filter</li>
+                              </ul>
+                            </div>
+                            <div class="column">
+                              <ul class="navi_inline">
+                                <li class="virtual_method">fold</li>
+                                <li class="abstract_method">@foreach</li>
+                                <li class="virtual_method">map</li>
+                              </ul>
+                            </div>
+                            <div class="column">
+                              <ul class="navi_inline">
+                                <li class="virtual_method">scan</li>
+                                <li class="virtual_method">stream</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="box">
+                          <div class="headline">
+                            <div class="text">All known members inherited from interface Gee.Iterable</div>
+                            <div class="toggle">
+                              <img onclick="toggle_box  (this, 'box-content-19')" src="../coll_open.png">&nbsp;</div>
+                            </div>
+                            <div class="content" id="box-content-19">
+                              <div class="column">
+                                <ul class="navi_inline">
+                                  <li class="abstract_method">iterator</li>
+                                </ul>
+                              </div>
+                              <div class="column">
+                                <ul class="navi_inline">
+                                </ul>
+                              </div>
+                              <div class="column">
+                                <ul class="navi_inline">
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="box">
+                            <div class="headline">
+                              <div class="text">All known members inherited from interface Gee.Collection</div>
+                              <div class="toggle">
+                                <img onclick="toggle_box  (this, 'box-content-20')" src="../coll_open.png">&nbsp;</div>
+                              </div>
+                              <div class="content" id="box-content-20">
+                                <div class="column">
+                                  <ul class="navi_inline">
+                                    <li class="virtual_property">is_empty</li>
+                                    <li class="abstract_property">read_only</li>
+                                    <li class="abstract_property">read_only_view</li>
+                                    <li class="abstract_property">size</li>
+                                    <li class="static_method">empty</li>
+                                  </ul>
+                                </div>
+                                <div class="column">
+                                  <ul class="navi_inline">
+                                    <li class="abstract_method">add</li>
+                                    <li class="virtual_method">add_all</li>
+                                    <li class="abstract_method">clear</li>
+                                    <li class="abstract_method">contains</li>
+                                    <li class="virtual_method">contains_all</li>
+                                  </ul>
+                                </div>
+                                <div class="column">
+                                  <ul class="navi_inline">
+                                    <li class="abstract_method">remove</li>
+                                    <li class="virtual_method">remove_all</li>
+                                    <li class="virtual_method">retain_all</li>
+                                    <li class="virtual_method">to_array</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div><br/>
+                        <div class="site_footer">Generated by <a href="http://www.valadoc.org/">Valadoc</a>
+                        </div>
+                      </body>
+                    </html>

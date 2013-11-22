@@ -5,9 +5,9 @@
 <title>RygelTranscoder</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
 <link rel="prev" href="RygelTranscodeManager.html" title="RygelTranscodeManager">
-<link rel="next" href="RygelLogicalExpression.html" title="RygelLogicalExpression">
+<link rel="next" href="RygelVideoItem.html" title="RygelVideoItem">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
@@ -15,10 +15,10 @@
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
 <td><a accesskey="p" href="RygelTranscodeManager.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
-<td><a accesskey="n" href="RygelLogicalExpression.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="RygelVideoItem.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#RygelTranscoder.synopsis" class="shortcut">Top</a>
@@ -35,7 +35,7 @@
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
 <h2><span class="refentrytitle"><a name="RygelTranscoder.top_of_page"></a>RygelTranscoder</span></h2>
-<p>RygelTranscoder — The base Transcoder class. Each implementation derives from it and must implement get_distance.</p>
+<p>RygelTranscoder — The base Transcoder class. Each implementation derives from it and must implement <code class="function">create_source()</code> and <code class="function">get_distance()</code>.</p>
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
@@ -45,28 +45,22 @@
 <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="returnvalue">RygelDataSource</span></a> *   <a class="link" href="RygelTranscoder.html#rygel-transcoder-create-source" title="rygel_transcoder_create_source ()">rygel_transcoder_create_source</a>      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <span class="returnvalue">GUPnPDIDLLiteResource</span> * <a class="link" href="RygelTranscoder.html#rygel-transcoder-add-resource" title="rygel_transcoder_add_resource ()">rygel_transcoder_add_resource</a>   (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
                                                          <em class="parameter"><code><span class="type">GUPnPDIDLLiteItem</span> *didl_item</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> *manager</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="RygelTranscoder.html#rygel-transcoder-can-handle" title="rygel_transcoder_can_handle ()">rygel_transcoder_can_handle</a>         (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *target</code></em>);
-<span class="returnvalue">guint</span>               <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-distance" title="rygel_transcoder_get_distance ()">rygel_transcoder_get_distance</a>       (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelTranscoder.html#rygel-transcoder-can-handle" title="rygel_transcoder_can_handle ()">rygel_transcoder_can_handle</a>         (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *target</code></em>);
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-distance" title="rygel_transcoder_get_distance ()">rygel_transcoder_get_distance</a>       (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="RygelTranscoder.html#rygel-transcoder-mime-type-is-a" title="rygel_transcoder_mime_type_is_a ()">rygel_transcoder_mime_type_is_a</a>     (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *mime_type1</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *mime_type2</code></em>);
-const <span class="returnvalue">gchar</span> *       <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-mime-type" title="rygel_transcoder_get_mime_type ()">rygel_transcoder_get_mime_type</a>      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="RygelTranscoder.html#rygel-transcoder-set-mime-type" title="rygel_transcoder_set_mime_type ()">rygel_transcoder_set_mime_type</a>      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);
-const <span class="returnvalue">gchar</span> *       <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-dlna-profile" title="rygel_transcoder_get_dlna_profile ()">rygel_transcoder_get_dlna_profile</a>   (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="RygelTranscoder.html#rygel-transcoder-set-dlna-profile" title="rygel_transcoder_set_dlna_profile ()">rygel_transcoder_set_dlna_profile</a>   (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);
-const <span class="returnvalue">gchar</span> *       <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-extension" title="rygel_transcoder_get_extension ()">rygel_transcoder_get_extension</a>      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="RygelTranscoder.html#rygel-transcoder-set-extension" title="rygel_transcoder_set_extension ()">rygel_transcoder_set_extension</a>      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelTranscoder.html#rygel-transcoder-mime-type-is-a" title="rygel_transcoder_mime_type_is_a ()">rygel_transcoder_mime_type_is_a</a>     (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mime_type1</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mime_type2</code></em>);
+const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-mime-type" title="rygel_transcoder_get_mime_type ()">rygel_transcoder_get_mime_type</a>      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);
+const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-dlna-profile" title="rygel_transcoder_get_dlna_profile ()">rygel_transcoder_get_dlna_profile</a>   (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);
+const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-extension" title="rygel_transcoder_get_extension ()">rygel_transcoder_get_extension</a>      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);
 struct              <a class="link" href="RygelTranscoder.html#RygelTranscoder-struct" title="struct RygelTranscoder">RygelTranscoder</a>;
 struct              <a class="link" href="RygelTranscoder.html#RygelTranscoderClass" title="struct RygelTranscoderClass">RygelTranscoderClass</a>;
 </pre>
@@ -74,20 +68,25 @@ struct              <a class="link" href="RygelTranscoder.html#RygelTranscoderCl
 <div class="refsect1">
 <a name="RygelTranscoder.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----RygelTranscoder
 </pre>
 </div>
 <div class="refsect1">
 <a name="RygelTranscoder.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="RygelTranscoder.html#RygelTranscoder--dlna-profile" title='The "dlna-profile" property'>dlna-profile</a>"             <span class="type">gchar</span>*                : Read / Write
-  "<a class="link" href="RygelTranscoder.html#RygelTranscoder--extension" title='The "extension" property'>extension</a>"                <span class="type">gchar</span>*                : Read / Write
-  "<a class="link" href="RygelTranscoder.html#RygelTranscoder--mime-type" title='The "mime-type" property'>mime-type</a>"                <span class="type">gchar</span>*                : Read / Write
+  "<a class="link" href="RygelTranscoder.html#RygelTranscoder--dlna-profile" title='The "dlna-profile" property'>dlna-profile</a>"             <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only
+  "<a class="link" href="RygelTranscoder.html#RygelTranscoder--extension" title='The "extension" property'>extension</a>"                <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only
+  "<a class="link" href="RygelTranscoder.html#RygelTranscoder--mime-type" title='The "mime-type" property'>mime-type</a>"                <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only
 </pre>
 </div>
 <div class="refsect1">
 <a name="RygelTranscoder.description"></a><h2>Description</h2>
+<p>
+</p>
+<p>Transcoders are obtained from <a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-transcoders" title="rygel_media_engine_get_transcoders ()"><code class="function">rygel_media_engine_get_transcoders()</code></a> and are only expected to support the derived <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> types provided by the same media engine.</p>
+<p>
+</p>
 </div>
 <div class="refsect1">
 <a name="RygelTranscoder.details"></a><h2>Details</h2>
@@ -105,9 +104,14 @@ The type for <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"
 <pre class="programlisting"><a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="returnvalue">RygelDataSource</span></a> *   rygel_transcoder_create_source      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> *src</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
 Creates a transcoding source.
+</p>
+<p>
+</p>
+<p>The provided original <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> will have been implemented by the same media engine that provided the <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a>, allowing the <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> to access specific resources of the underlying multimedia backend used by the media engine.</p>
+<p>
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -118,17 +122,21 @@ Creates a transcoding source.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the media item to create the transcoding source for. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  the media item to create the transcoding source for. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
-<td>the original (non-transcoding) source. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  the original (non-transcoding) source. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
+<td><p><span class="term"><em class="parameter"><code>item</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore</td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -144,7 +152,10 @@ Creates a transcoding source.
                                                          <em class="parameter"><code><span class="type">GUPnPDIDLLiteItem</span> *didl_item</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> *manager</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Derived classes should implement this function to fill a GUPnPDIDLLiteResource, representing the transcoded content, with parameters specific to the transcoder, such as bitrate or resolution. The GUPnPDIDLLiteResource should be instantiated by calling this base class implementation, passing the provided didl_item, item and manager parameters.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -153,8 +164,27 @@ Creates a transcoding source.
 <td>the <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> instance</td>
 </tr>
 <tr>
+<td><p><span class="term"><em class="parameter"><code>didl_item</code></em> :</span></p></td>
+<td> .  The DIDLLite item for which to create the resource, by calling the base class implementation. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>item</code></em> :</span></p></td>
+<td> .  The media item for which to create the DIDLiteResource, by calling the base class implementation. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
+<td> .  The transcoder manager to pass to the base class implemenetation. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+</td>
+</tr>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore</td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The new resource.</td>
 </tr>
 </tbody>
 </table></div>
@@ -162,23 +192,37 @@ Creates a transcoding source.
 <hr>
 <div class="refsect2">
 <a name="rygel-transcoder-can-handle"></a><h3>rygel_transcoder_can_handle ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            rygel_transcoder_can_handle         (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *target</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_transcoder_can_handle         (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *target</code></em>);</pre>
+<p>
+Returns whether this trancoder can handle the specified DLNA profile. This is determined by the <a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a>, which checks the suitability of each <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> by calling <a class="link" href="RygelTranscoder.html#rygel-transcoder-get-distance" title="rygel_transcoder_get_distance ()"><code class="function">rygel_transcoder_get_distance()</code></a> with each <a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a>, choosing one DLNA profile for each transcoder to handle.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> instance</td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>target</code></em> :</span></p></td>
+<td> .  A DLNA profile name as obtained from <a class="link" href="RygelMediaItem.html#rygel-media-item-get-dlna-profile" title="rygel_media_item_get_dlna_profile ()"><code class="function">rygel_media_item_get_dlna_profile()</code></a>. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>True if the transcoder can handle the specified DLNA profile.</td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="rygel-transcoder-get-distance"></a><h3>rygel_transcoder_get_distance ()</h3>
-<pre class="programlisting"><span class="returnvalue">guint</span>               rygel_transcoder_get_distance       (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               rygel_transcoder_get_distance       (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>);</pre>
 <p>
-Gets the numeric value that gives an gives an estimate of how hard would it be to trancode <em class="parameter"><code>item</code></em> to target profile of this transcoder.
+Gets a numeric value that gives an gives an estimate of how hard it would be for this transcoder to trancode <em class="parameter"><code>item</code></em> to the target profile of this transcoder.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -189,7 +233,7 @@ Gets the numeric value that gives an gives an estimate of how hard would it be t
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>item</code></em> :</span></p></td>
-<td>the media item to calculate the distance for. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+<td> .  the media item to calculate the distance for. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -203,21 +247,31 @@ Gets the numeric value that gives an gives an estimate of how hard would it be t
 <hr>
 <div class="refsect2">
 <a name="rygel-transcoder-mime-type-is-a"></a><h3>rygel_transcoder_mime_type_is_a ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            rygel_transcoder_mime_type_is_a     (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *mime_type1</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *mime_type2</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_transcoder_mime_type_is_a     (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mime_type1</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mime_type2</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> instance</td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mime_type1</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mime_type2</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="rygel-transcoder-get-mime-type"></a><h3>rygel_transcoder_get_mime_type ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *       rygel_transcoder_get_mime_type      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);</pre>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_transcoder_get_mime_type      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--mime-type" title='The "mime-type" property'><span class="type">"mime-type"</span></a> property.
 </p>
@@ -237,30 +291,8 @@ Get and return the current value of the <a class="link" href="RygelTranscoder.ht
 </div>
 <hr>
 <div class="refsect2">
-<a name="rygel-transcoder-set-mime-type"></a><h3>rygel_transcoder_set_mime_type ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                rygel_transcoder_set_mime_type      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);</pre>
-<p>
-Set the value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--mime-type" title='The "mime-type" property'><span class="type">"mime-type"</span></a> property to <em class="parameter"><code>value</code></em>.
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>the <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> instance to modify</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>the new value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--mime-type" title='The "mime-type" property'><span class="type">"mime-type"</span></a> property</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
 <a name="rygel-transcoder-get-dlna-profile"></a><h3>rygel_transcoder_get_dlna_profile ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *       rygel_transcoder_get_dlna_profile   (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);</pre>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_transcoder_get_dlna_profile   (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--dlna-profile" title='The "dlna-profile" property'><span class="type">"dlna-profile"</span></a> property.
 </p>
@@ -280,30 +312,8 @@ Get and return the current value of the <a class="link" href="RygelTranscoder.ht
 </div>
 <hr>
 <div class="refsect2">
-<a name="rygel-transcoder-set-dlna-profile"></a><h3>rygel_transcoder_set_dlna_profile ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                rygel_transcoder_set_dlna_profile   (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);</pre>
-<p>
-Set the value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--dlna-profile" title='The "dlna-profile" property'><span class="type">"dlna-profile"</span></a> property to <em class="parameter"><code>value</code></em>.
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>the <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> instance to modify</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>the new value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--dlna-profile" title='The "dlna-profile" property'><span class="type">"dlna-profile"</span></a> property</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
 <a name="rygel-transcoder-get-extension"></a><h3>rygel_transcoder_get_extension ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *       rygel_transcoder_get_extension      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);</pre>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       rygel_transcoder_get_extension      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--extension" title='The "extension" property'><span class="type">"extension"</span></a> property.
 </p>
@@ -323,32 +333,15 @@ Get and return the current value of the <a class="link" href="RygelTranscoder.ht
 </div>
 <hr>
 <div class="refsect2">
-<a name="rygel-transcoder-set-extension"></a><h3>rygel_transcoder_set_extension ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                rygel_transcoder_set_extension      (<em class="parameter"><code><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);</pre>
-<p>
-Set the value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--extension" title='The "extension" property'><span class="type">"extension"</span></a> property to <em class="parameter"><code>value</code></em>.
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>the <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="type">RygelTranscoder</span></a> instance to modify</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>the new value of the <a class="link" href="RygelTranscoder.html#RygelTranscoder--extension" title='The "extension" property'><span class="type">"extension"</span></a> property</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
 <a name="RygelTranscoder-struct"></a><h3>struct RygelTranscoder</h3>
 <pre class="programlisting">struct RygelTranscoder;</pre>
 <p>
-The base Transcoder class. Each implementation derives from it and must implement get_distance.
+The base Transcoder class. Each implementation derives from it and must implement <code class="function">create_source()</code> and <code class="function">get_distance()</code>.
+</p>
+<p>
+</p>
+<p>Transcoders are obtained from <a class="link" href="RygelMediaEngine.html#rygel-media-engine-get-transcoders" title="rygel_media_engine_get_transcoders ()"><code class="function">rygel_media_engine_get_transcoders()</code></a> and are only expected to support the derived <a class="link" href="RygelDataSource.html" title="RygelDataSource"><span class="type">RygelDataSource</span></a> types provided by the same media engine.</p>
+<p>
 </p>
 </div>
 <hr>
@@ -368,7 +361,7 @@ The class structure for <a class="link" href="RygelTranscoder.html#RYGEL-TYPE-TR
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><span class="type">GObjectClass</span> <em class="structfield"><code><a name="RygelTranscoderClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelTranscoderClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
 </tr>
 <tr>
@@ -394,21 +387,21 @@ The class structure for <a class="link" href="RygelTranscoder.html#RYGEL-TYPE-TR
 <a name="RygelTranscoder.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="RygelTranscoder--dlna-profile"></a><h3>The <code class="literal">"dlna-profile"</code> property</h3>
-<pre class="programlisting">  "dlna-profile"             <span class="type">gchar</span>*                : Read / Write</pre>
+<pre class="programlisting">  "dlna-profile"             <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only</pre>
 <p>dlna-profile.</p>
 <p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="RygelTranscoder--extension"></a><h3>The <code class="literal">"extension"</code> property</h3>
-<pre class="programlisting">  "extension"                <span class="type">gchar</span>*                : Read / Write</pre>
+<pre class="programlisting">  "extension"                <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only</pre>
 <p>extension.</p>
 <p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="RygelTranscoder--mime-type"></a><h3>The <code class="literal">"mime-type"</code> property</h3>
-<pre class="programlisting">  "mime-type"                <span class="type">gchar</span>*                : Read / Write</pre>
+<pre class="programlisting">  "mime-type"                <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only</pre>
 <p>mime-type.</p>
 <p>Default value: NULL</p>
 </div>

@@ -20,45 +20,42 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-/**
- * Data class representing a DLNA profile.
- * It contains the name and the corresponding DLNA mime type.
- *
- * Note: The mime type can deviate from mime types typically used elsewhere.
- */
-public class Rygel.DLNAProfile {
-    public string mime;
-    public string name;
-
-    public DLNAProfile (string name, string mime) {
-        this.mime = mime;
-        this.name = name;
-    }
-
-    /**
-     * Compare two DLNA profiles by name
-     */
-    public static int compare_by_name (DLNAProfile a, DLNAProfile b) {
-        return a.name.ascii_casecmp (b.name);
-    }
-}
-
 public errordomain Rygel.MediaEngineError {
     NOT_FOUND
 }
 
 /**
  * This is the base class for media engines that contain knowledge about 
- * streaming and transcoding capabilites of the media library in use.
+ * the streaming and (optionally) the transcoding and seeking capabilites
+ * of the media library in use. Derived classes also instantiate any
+ * transcoding objects supported by the media engine and specify the list
+ * of media formats the engine is capable of playing.
  *
- * See, for instance, Rygel's "gstreamer" and "simple" media engines.
+ * See, for instance, Rygel's built-in "gstreamer" and "simple" media engines,
+ * or the external rygel-gst-0-10-media-engine module.
+ *
  * The actual media engine used by Rygel at runtime is specified
- * by the media-engine configuration key/
+ * by the media-engine configuration key.
  * For instance, in rygel.conf:
  * media-engine=librygel-media-engine-gst.so
  *
- * Media engines should also derive their own Rygel.DataSource,
+ * Media engines should also derive their own #RygelDataSource,
  * returning an instance of it from create_data_source().
+ *
+ * If this media engine supports transcoding then it will typically
+ * implement a set of transcoding classes, typically with one 
+ * base class and a number of sub-classes - one for each transcoding
+ * format you want to support. These should be returned by the
+ * get_transcoders() virtual function. The base transcoder class could
+ * provide a generic way to create a #RygelDataSource capable of
+ * providing Rygel with a transcoded version of a file using the
+ * underlying media framework. The sub-classes could contain the
+ * various media-framework-specific parameters required to 
+ * transcode to a given format and implement a heuristic that
+ * can be used to order an item's transcoded resources.
+ *
+ * See the
+ * <link linkend="implementing-media-engines">Implementing Media Engines</link> section.
  */
 public abstract class Rygel.MediaEngine : GLib.Object {
     private static MediaEngine instance;
@@ -76,7 +73,7 @@ public abstract class Rygel.MediaEngine : GLib.Object {
     /**
      * Get the singleton instance of the currently used media engine.
      *
-     * @return An instance of a concrete #MediaEngine implementation.
+     * @return An instance of a concrete #RygelMediaEngine implementation.
      */
     public static MediaEngine get_default () {
         if (instance == null) {
@@ -88,16 +85,23 @@ public abstract class Rygel.MediaEngine : GLib.Object {
 
     /**
      * Get a list of the DLNA profiles that are supported by this media
-     * engine.
+     * engine when calling rygel_media_engine_create_data_source().
      *
-     * @return A list of #DLNAProfile<!-- -->s
+     * Other DLNA profiles may be supported as transcoding targets -
+     *
+     * This information is needed to implement DLNA's
+     * ConnectionManager.GetProtocolInfo call and to determine whether Rygel
+     * can accept an uploaded file.
+     *
+     * @return A list of #RygelDLNAProfile<!-- -->s
+     * @see rygel_media_engine_get_transcoders().
      */
     public abstract unowned List<DLNAProfile> get_dlna_profiles ();
 
     /**
-     * Get a list of the Transcoders that are supported by this media engine.
+     * Get a list of the transcoders that are provided by this media engine.
      *
-     * @return A list of #Transcoder<!-- -->s or null if not supported.
+     * @return A list of #RygelTranscoder<!-- -->s or null if not supported.
      */
     public abstract unowned List<Transcoder>? get_transcoders ();
 

@@ -28,6 +28,14 @@ public errordomain Rygel.DataSourceError {
 /**
  * Interface for all data streams provided by a #RygelMediaEngine.
  *
+ * When Rygel receives a HTTP request to stream a given file, it creates a
+ * RygelDataSource object for this new file and instructs the RygelDataSource
+ * to begin streaming. The RygelDataSource object will duly pass this request
+ * on to the underlying media framework, which will in turn pass streamed bytes
+ * back to the RygelDataSource object. The RygelDataSource passes these bytes
+ * to Rygel which adds them to the response it sends to the original HTTP
+ * request received from the client.
+ *
  * The data source is responsible for providing the streamable byte-stream
  * via its data_available signal. End-of-stream is signalled by the 
  * done signal, while errors are signalled by the error signal.
@@ -36,6 +44,17 @@ public errordomain Rygel.DataSourceError {
  *
  *  # It should support at least the file:/''''/ URI scheme.
  *  # It should be able to stream any kind of binary data, regardless of the format.
+ *
+ * RygelDataSource instances are provided by
+ * rygel_media_engine_create_data_source() which will return a derived #RygelDataSource
+ * that uses a specific IO backend and/or multimedia backend to stream the
+ * multimedia data at the URI.
+ *
+ * The derived RygelDataSource may provide additional API for use by
+ * the derived media engine. For instance, rygel_media_engine_get_transcoders()
+ * may return derived #RygelTranscoder instances, and these may use that
+ * additional API in their create_source() implementations, for instance
+ * to access resources or data structures of the specific multimedia backend.
  */
 public interface Rygel.DataSource : GLib.Object {
     /**
@@ -74,16 +93,22 @@ public interface Rygel.DataSource : GLib.Object {
 
     /**
      * Emitted when the source has produced some data.
+     *
+     * This signal has to be emitted in the main thread.
      */
     public signal void data_available (uint8[] data);
 
     /**
      * Emitted when the source does not have data anymore.
+     *
+     * This signal has to be emitted in the main thread.
      */
     public signal void done ();
 
     /**
      * Emitted when the source encounters a problem during data generation.
+     *
+     * This signal has to be emitted in the main thread.
      */
     public signal void error (Error error);
 }

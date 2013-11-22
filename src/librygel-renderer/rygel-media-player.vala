@@ -35,6 +35,12 @@ public interface Rygel.MediaPlayer : GLib.Object {
     /// The state as a UPnP playback state string such as PAUSED_PLAYBACK, "STOPPED" or "PLAYING"
     public abstract string playback_state { owned get; set; }
 
+    /// The allowed playback speeds as UPnP playback speeds such as "-4","-2","-1","-1/2","1/2","1","2","4"
+    public abstract string[] allowed_playback_speeds { owned get; }
+
+    /// The current media playback speed as UPnP playback speed
+    public abstract string playback_speed { owned get; set; }
+
     /// The URI of the current media.
     public abstract string? uri { owned get; set; }
 
@@ -53,6 +59,9 @@ public interface Rygel.MediaPlayer : GLib.Object {
 
     /// The mime-type of the currently-playing media
     public abstract string? mime_type { owned get; set; }
+
+    /// The current media supports time-based seeking
+    public abstract bool can_seek { get; }
 
     /**
      * The contents of the contentFeatures.dlna.org HTTP header,
@@ -92,5 +101,6 @@ public interface Rygel.MediaPlayer : GLib.Object {
     public abstract string[] get_protocols ();
 
     /// Return the MIME types supported by this renderer.
+    /// The mime types in this list should be all lowercase.
     public abstract string[] get_mime_types ();
 }

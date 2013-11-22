@@ -33,13 +33,14 @@ using Gee;
 public class Rygel.PhotoItem : ImageItem {
     public new const string UPNP_CLASS = "object.item.imageItem.photo";
 
-    public string creator { get; set; }
-
     public PhotoItem (string         id,
                       MediaContainer parent,
                       string         title,
                       string         upnp_class = PhotoItem.UPNP_CLASS) {
-        base (id, parent, title, upnp_class);
+        Object (id : id,
+                parent : parent,
+                title : title,
+                upnp_class : upnp_class);
     }
 
     internal override int compare_by_property (MediaObject media_object,
@@ -51,8 +52,6 @@ public class Rygel.PhotoItem : ImageItem {
         var item = media_object as PhotoItem;
 
         switch (property) {
-        case "dc:creator":
-            return this.compare_string_props (this.creator, item.creator);
         default:
             return base.compare_by_property (item, property);
         }
@@ -72,15 +71,10 @@ public class Rygel.PhotoItem : ImageItem {
         this.creator = get_first (didl_object.get_creators ());
     }
 
-    internal override DIDLLiteObject serialize (DIDLLiteWriter writer,
-                                                HTTPServer     http_server)
+    internal override DIDLLiteObject? serialize (Serializer serializer,
+                                                HTTPServer  http_server)
                                                 throws Error {
-        var didl_item = base.serialize (writer, http_server);
-
-        if (this.creator != null && this.creator != "") {
-            var contributor = didl_item.add_creator ();
-            contributor.name = this.creator;
-        }
+        var didl_item = base.serialize (serializer, http_server);
 
         return didl_item;
     }

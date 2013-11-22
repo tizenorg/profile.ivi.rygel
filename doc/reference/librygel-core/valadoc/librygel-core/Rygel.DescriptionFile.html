@@ -29,14 +29,21 @@
           <li class="creation_method"><a href="Rygel.DescriptionFile.DescriptionFile.html">DescriptionFile</a></li>
           <li class="creation_method"><a href="Rygel.DescriptionFile.DescriptionFile.from_xml_document.html">DescriptionFile.from_xml_document</a>
           </li>
+          <li class="method"><a href="Rygel.DescriptionFile.add_icon.html">add_icon</a></li>
+          <li class="method"><a href="Rygel.DescriptionFile.add_service.html">add_service</a></li>
+          <li class="method"><a href="Rygel.DescriptionFile.clear_icon_list.html">clear_icon_list</a></li>
+          <li class="method"><a href="Rygel.DescriptionFile.clear_service_list.html">clear_service_list</a></li>
           <li class="method"><a href="Rygel.DescriptionFile.get_friendly_name.html">get_friendly_name</a></li>
+          <li class="method"><a href="Rygel.DescriptionFile.get_udn.html">get_udn</a></li>
           <li class="method"><a href="Rygel.DescriptionFile.modify_service_type.html">modify_service_type</a></li>
           <li class="method"><a href="Rygel.DescriptionFile.save.html">save</a></li>
           <li class="method"><a href="Rygel.DescriptionFile.set_device_type.html">set_device_type</a></li>
           <li class="method"><a href="Rygel.DescriptionFile.set_dlna_caps.html">set_dlna_caps</a></li>
           <li class="method"><a href="Rygel.DescriptionFile.set_friendly_name.html">set_friendly_name</a></li>
+          <li class="method"><a href="Rygel.DescriptionFile.set_model_description.html">set_model_description</a></li>
           <li class="method"><a href="Rygel.DescriptionFile.set_model_name.html">set_model_name</a></li>
           <li class="method"><a href="Rygel.DescriptionFile.set_model_number.html">set_model_number</a></li>
+          <li class="method"><a href="Rygel.DescriptionFile.set_udn.html">set_udn</a></li>
         </ul>
       </div>
       <div class="site_content">
@@ -62,7 +69,7 @@
         <h2 class="main_title">Content:</h2>
         <h3 class="main_title">Creation methods:</h3>
         <ul class="navi_inline">
-          <li class="creation_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <b><a href="Rygel.DescriptionFile.DescriptionFile.html" class="creation_method">DescriptionFile</a></b> (<span class="main_basic_type"><code>string</code></span> template) <span class="main_keyword">throws</span> <span class="main_type"><code>Error</code></span>
+          <li class="creation_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <b><a href="Rygel.DescriptionFile.DescriptionFile.html" class="creation_method">DescriptionFile</a></b> (<span class="main_basic_type"><code>string</code></span> template_file) <span class="main_keyword">throws</span> <span class="main_type"><code>Error</code></span>
             </span>
             <div class="leaf_brief_description"><span class="brief_description">Constructor to load a description file from disk</span>
             </div></li>
@@ -77,6 +84,10 @@
           <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.set_device_type.html" class="method">set_device_type</a></b> (<span class="main_basic_type"><code>string</code></span> device_type)
             </span>
             <div class="leaf_brief_description"><span class="brief_description">Change the type of a service.</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.set_model_description.html" class="method">set_model_description</a></b> (<span class="main_basic_type"><code>string</code></span> model_description)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Modify the model description.</span>
             </div></li>
           <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.set_model_name.html" class="method">set_model_name</a></b> (<span class="main_basic_type"><code>string</code></span> model_name)
             </span>
@@ -94,10 +105,34 @@
             </span>
             <div class="leaf_brief_description"><span class="brief_description">Get the current friendly name of the device.</span>
             </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.set_udn.html" class="method">set_udn</a></b> (<span class="main_basic_type"><code>string</code></span> udn)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Set the Unique Device Name of the device.</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span>? <b><a href="Rygel.DescriptionFile.get_udn.html" class="method">get_udn</a></b> ()
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Get the current UDN of the device.</span>
+            </div></li>
           <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.set_dlna_caps.html" class="method">set_dlna_caps</a></b> (<span class="main_type"><a href="Rygel.PluginCapabilities.html" class="enum">PluginCapabilities</a></span> capabilities)
             </span>
             <div class="leaf_brief_description"><span class="brief_description">Set the DLNA caps of this root device and while taking the 
                 capabilities of the plugin into account.</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.clear_service_list.html" class="method">clear_service_list</a></b> ()
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.add_service.html" class="method">add_service</a></b> (<span class="main_basic_type"><code>string</code></span> device_name, <span class="main_type"><a href="Rygel.ResourceInfo.html" class="class">ResourceInfo</a></span> resource_info)
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.clear_icon_list.html" class="method">clear_icon_list</a></b> ()
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.add_icon.html" class="method">add_icon</a></b> (<span class="main_basic_type"><code>string</code></span> device_name, <span class="main_type"><a href="Rygel.IconInfo.html" class="class">IconInfo</a></span> icon_info, <span class="main_basic_type"><code>string</code></span> url)
+            </span>
+            <div class="leaf_brief_description">
             </div></li>
           <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Rygel.DescriptionFile.modify_service_type.html" class="method">modify_service_type</a></b> (<span class="main_basic_type"><code>string</code></span> old_type, <span class="main_basic_type"><code>string</code></span> new_type)
             </span>

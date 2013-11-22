@@ -2,7 +2,7 @@
  * Copyright (C) 2008 OpenedHand Ltd.
  * Copyright (C) 2009,2010,2011,2012 Nokia Corporation.
  * Copyright (C) 2012 Openismus GmbH
- * Copyright (C) 2012 Intel Corporation.
+ * Copyright (C) 2012,2013 Intel Corporation.
  *
  * Author: Jorn Baayen <jorn@openedhand.com>
  *         Zeeshan Ali (Khattak) <zeeshanak@gnome.org>
@@ -26,6 +26,7 @@
 
 using Gst;
 using GUPnP;
+using Rygel.Renderer;
 
 /**
  * Implementation of RygelMediaPlayer for GStreamer.
@@ -50,16 +51,17 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                                         "audio/x-flac+ogg",
                                         "audio/flac",
                                         "audio/mp4",
+                                        "audio/3gpp",
                                         "audio/vnd.dlna.adts",
                                         "audio/x-mod",
                                         "audio/x-wav",
                                         "audio/x-ac3",
                                         "audio/x-m4a",
-                                        "audio/L16;rate=44100;channels=2",
-                                        "audio/L16;rate=44100;channels=1",
-                                        "audio/L16;channels=2;rate=44100",
-                                        "audio/L16;channels=1;rate=44100",
-                                        "audio/L16;rate=44100",
+                                        "audio/l16;rate=44100;channels=2",
+                                        "audio/l16;rate=44100;channels=1",
+                                        "audio/l16;channels=2;rate=44100",
+                                        "audio/l16;channels=1;rate=44100",
+                                        "audio/l16;rate=44100",
                                         "image/jpeg",
                                         "image/png",
                                         "video/x-theora",
@@ -76,11 +78,11 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                                         "video/x-mkv",
                                         "video/mpeg",
                                         "video/mp4",
+                                        "application/x-shockwave-flash",
                                         "video/x-ms-asf",
                                         "video/x-xvid",
                                         "video/x-ms-wmv" };
     private static Player player;
-    bool duration_hint;
 
     private bool is_live;
     private bool foreign;
@@ -131,9 +133,30 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                         this._playback_state = value;
                     }
                 break;
+                case "EOS":
+                    this._playback_state = value;
+                break;
                 default:
                 break;
             }
+        }
+    }
+
+    private string[] _allowed_playback_speeds = {"1"};
+    public string[] allowed_playback_speeds {
+        owned get {
+            return this._allowed_playback_speeds;
+        }
+    }
+
+    private string _playback_speed = "1";
+    public string playback_speed {
+        owned get {
+            return this._playback_speed;
+        }
+
+        set {
+            this._playback_speed = value;
         }
     }
 
@@ -162,6 +185,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                         this.is_live = this.playbin.set_state (State.PAUSED)
                                         == StateChangeReturn.NO_PREROLL;
                         break;
+                    case "EOS":
                     case "PLAYING":
                         // This needs a check if GStreamer and DLNA agree on
                         // the "liveness" of the source (s0/sn increase in
@@ -199,6 +223,13 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
 
         set {
             this._metadata = value;
+        }
+    }
+
+    public bool can_seek {
+        get {
+            return this.transfer_mode != TRANSFER_MODE_INTERACTIVE &&
+                   ! this.mime_type.has_prefix ("image/");
         }
     }
 
@@ -243,10 +274,9 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
 
     public int64 duration {
         get {
-            var format = Format.TIME;
             int64 dur;
 
-            if (this.playbin.query_duration (ref format, out dur)) {
+            if (this.playbin.query_duration (Format.TIME, out dur)) {
                 return dur / Gst.USECOND;
             } else {
                 return 0;
@@ -256,10 +286,9 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
 
     public int64 position {
         get {
-            var format = Format.TIME;
             int64 pos;
 
-            if (this.playbin.query_position (ref format, out pos)) {
+            if (this.playbin.query_position (Format.TIME, out pos)) {
                 return pos / Gst.USECOND;
             } else {
                 return 0;
@@ -268,7 +297,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
     }
 
     private Player () {
-        this.playbin = ElementFactory.make ("playbin2", null);
+        this.playbin = ElementFactory.make ("playbin", null);
         this.foreign = false;
         this.setup_playbin ();
     }
@@ -276,7 +305,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
     public Player.wrap (Gst.Element playbin) {
 
         return_if_fail (playbin != null);
-        return_if_fail (playbin.get_type ().name() == "GstPlayBin2");
+        return_if_fail (playbin.get_type ().name() == "GstPlayBin");
 
         this.playbin = playbin;
         this.foreign = true;
@@ -309,12 +338,77 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
         return mime_types;
     }
 
+    private GLib.List<DLNAProfile> _supported_profiles;
+    public unowned GLib.List<DLNAProfile> supported_profiles {
+        get {
+            if (_supported_profiles == null) {
+                // FIXME: Check available decoders in registry and register
+                // profiles after that
+                _supported_profiles = new GLib.List<DLNAProfile> ();
+
+                // Image
+                _supported_profiles.prepend (new DLNAProfile ("JPEG_SM",
+                                                              "image/jpeg"));
+                _supported_profiles.prepend (new DLNAProfile ("JPEG_MED",
+                                                              "image/jpeg"));
+                _supported_profiles.prepend (new DLNAProfile ("JPEG_LRG",
+                                                              "image/jpeg"));
+                _supported_profiles.prepend (new DLNAProfile ("PNG_LRG",
+                                                              "image/png"));
+
+                // Audio
+                _supported_profiles.prepend (new DLNAProfile ("MP3",
+                                                              "audio/mpeg"));
+                _supported_profiles.prepend (new DLNAProfile ("MP3X",
+                                                              "audio/mpeg"));
+                _supported_profiles.prepend (new DLNAProfile
+                                        ("AAC_ADTS_320",
+                                         "audio/vnd.dlna.adts"));
+                _supported_profiles.prepend (new DLNAProfile ("AAC_ISO_320",
+                                                              "audio/mp4"));
+                _supported_profiles.prepend (new DLNAProfile ("AAC_ISO_320",
+                                                              "audio/3gpp"));
+                _supported_profiles.prepend (new DLNAProfile
+                                        ("LPCM",
+                                         "audio/l16;rate=44100;channels=2"));
+                _supported_profiles.prepend (new DLNAProfile
+                                        ("LPCM",
+                                         "audio/l16;rate=44100;channels=1"));
+                _supported_profiles.prepend (new DLNAProfile ("WMABASE",
+                                                              "audio/x-ms-wma"));
+                _supported_profiles.prepend (new DLNAProfile ("WMAFULL",
+                                                              "audio/x-ms-wma"));
+                _supported_profiles.prepend (new DLNAProfile ("WMAPRO",
+                                                              "audio/x-ms-wma"));
+
+                // Video
+                _supported_profiles.prepend (new DLNAProfile
+                                        ("MPEG_TS_SD_EU_ISO",
+                                         "video/mpeg"));
+                _supported_profiles.prepend (new DLNAProfile
+                                        ("MPEG_TS_HD_EU_ISO",
+                                         "video/mpeg"));
+                _supported_profiles.prepend (new DLNAProfile
+                                        ("MPEG_TS_SD_NA_ISO",
+                                         "video/mpeg"));
+                _supported_profiles.prepend (new DLNAProfile
+                                        ("MPEG_TS_HD_NA_ISO",
+                                         "video/mpeg"));
+                _supported_profiles.prepend (new DLNAProfile
+                                        ("AVC_MP4_BL_CIF15_AAC_520",
+                                         "video/mp4"));
+            }
+
+            return _supported_profiles;
+        }
+    }
+
     private bool is_rendering_image () {
         dynamic Element typefind;
 
         typefind = (this.playbin as Gst.Bin).get_by_name ("typefind");
         Caps caps = typefind.caps;
-        var structure = caps.get_structure (0);
+        unowned Structure structure = caps.get_structure (0);
 
         return structure.get_name () == "image/jpeg" ||
                structure.get_name () == "image/png";
@@ -323,8 +417,10 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
     private void bus_handler (Gst.Bus bus,
                               Message message) {
         switch (message.type) {
-        case MessageType.DURATION:
-            this.duration_hint = true;
+        case MessageType.DURATION_CHANGED:
+            if (this.playbin.query_duration (Format.TIME, null)) {
+                this.notify_property ("duration");
+            }
         break;
         case MessageType.STATE_CHANGED:
             if (message.src == this.playbin) {
@@ -334,15 +430,10 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
                                              out new_state,
                                              out pending);
                 if (old_state == State.READY && new_state == State.PAUSED) {
-                    if (this.duration_hint) {
-                        this.notify_property ("duration");
-                        this.duration_hint = false;
-                    }
-
                     if (this.uri_update_hint) {
                         this.uri_update_hint = false;
-                        string uri = this.playbin.uri;
-                        if (this._uri != uri) {
+                        string uri = this.playbin.current_uri;
+                        if (this._uri != uri && uri != "") {
                             // uri changed externally
                             this._uri = this.playbin.uri;
                             this.notify_property ("uri");
@@ -398,7 +489,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
         case MessageType.EOS:
             if (!this.is_rendering_image ()) {
                 debug ("EOS");
-                this.playback_state = "STOPPED";
+                this.playback_state = "EOS";
             } else {
                 debug ("Content is image, ignoring EOS");
             }
@@ -406,13 +497,14 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
             break;
         case MessageType.ERROR:
             Error error;
-            string error_message;
+            string debug_message;
 
-            message.parse_error (out error, out error_message);
+            message.parse_error (out error, out debug_message);
 
-            warning ("Error from GStreamer element %s: %s",
+            warning ("Error from GStreamer element %s: %s (%s)",
                      this.playbin.name,
-                     error_message);
+                     error.message,
+                     debug_message);
             warning ("Going to STOPPED state");
 
             this.playback_state = "STOPPED";
@@ -426,7 +518,7 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
             this.transfer_mode != null) {
             debug ("Setting transfer mode to %s", this.transfer_mode);
 
-            var structure = new Structure.empty ("Extra Headers");
+            var structure = new Structure.empty ("HTTPHeaders");
             structure.set_value ("transferMode.dlna.org", this.transfer_mode);
 
             source.extra_headers = structure;
@@ -458,7 +550,6 @@ public class Rygel.Playbin.Player : GLib.Object, Rygel.MediaPlayer {
     }
 
     private void setup_playbin () {
-        this.duration_hint = false;
         // Needed to get "Stop" events from the playbin.
         // We can do this because we have a bus watch
         this.is_live = false;

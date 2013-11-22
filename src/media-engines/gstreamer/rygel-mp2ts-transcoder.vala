@@ -24,8 +24,9 @@ using Gst;
 using GUPnP;
 
 internal enum Rygel.MP2TSProfile {
-    SD = 0,
-    HD
+    SD_EU = 0,
+    SD_NA,
+    HD_NA,
 }
 
 /**
@@ -36,10 +37,12 @@ internal class Rygel.MP2TSTranscoder : Rygel.VideoTranscoder {
     private const int AUDIO_BITRATE = 192;
 
     // HD
-    private const int[] WIDTH = {720, 1280};
-    private const int[] HEIGHT = {576, 720};
-    private const int[] FRAME_RATE = {25, 30};
-    private const string[] PROFILES = {"MPEG_TS_SD_EU_ISO", "MPEG_TS_HD_NA_ISO"};
+    private const int[] WIDTH = {720, 720, 1280};
+    private const int[] HEIGHT = {576, 480, 720};
+    private const int[] FRAME_RATE = {25, 30, 30};
+    private const string[] PROFILES = {"MPEG_TS_SD_EU_ISO",
+                                       "MPEG_TS_SD_NA_ISO",
+                                       "MPEG_TS_HD_NA_ISO"};
 
     private const string CONTAINER =
         "video/mpegts,systemstream=true,packetsize=188";
@@ -51,7 +54,7 @@ internal class Rygel.MP2TSTranscoder : Rygel.VideoTranscoder {
         "video/mpeg,mpegversion=2,systemstream=false";
 
     private const string RESTRICTION_TEMPLATE =
-        "video/x-raw-yuv,framerate=(fraction)%d/1,width=%d,height=%d";
+        "video/x-raw,framerate=(fraction)%d/1,width=%d,height=%d";
 
     private MP2TSProfile profile;
 

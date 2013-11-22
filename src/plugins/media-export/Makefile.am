@@ -1,13 +1,7 @@
-include ../../../common.am
+include $(top_srcdir)/common.am
 
 plugin_LTLIBRARIES = librygel-media-export.la
-
-AM_CFLAGS += \
-	$(LIBGUPNP_DLNA_CFLAGS) \
-	$(LIBSQLITE3_CFLAGS) \
-	$(GSTREAMER_TAG_CFLAGS) \
-	$(GSTREAMER_APP_CFLAGS) \
-	-DG_LOG_DOMAIN='"MediaExport"'
+plugin_DATA = media-export.plugin
 
 librygel_media_export_la_SOURCES = \
 	rygel-media-export-plugin.vala \
@@ -28,34 +22,41 @@ librygel_media_export_la_SOURCES = \
 	rygel-media-export-query-container-factory.vala \
 	rygel-media-export-node-query-container.vala \
 	rygel-media-export-leaf-query-container.vala \
-	rygel-media-export-dbus-service.vala \
 	rygel-media-export-recursive-file-monitor.vala \
 	rygel-media-export-harvester.vala \
 	rygel-media-export-harvesting-task.vala \
-	rygel-media-export-item.vala \
+	rygel-media-export-item-factory.vala \
 	rygel-media-export-jpeg-writer.vala \
 	rygel-media-export-object-factory.vala \
 	rygel-media-export-writable-db-container.vala \
+	rygel-media-export-playlist-root-container.vala \
+	rygel-media-export-playlist-container.vala \
 	rygel-media-export-music-item.vala \
 	rygel-media-export-video-item.vala \
 	rygel-media-export-photo-item.vala \
+	rygel-media-export-playlist-item.vala \
+	rygel-media-export-trackable-db-container.vala \
+	rygel-media-export-updatable-object.vala \
 	rygel-media-export-collate.c
 
 librygel_media_export_la_VALAFLAGS = \
-	--pkg gupnp-dlna-1.0 \
-	--pkg gstreamer-tag-0.10 \
-	--pkg gstreamer-app-0.10 \
-	--pkg sqlite3 \
-	$(RYGEL_COMMON_SERVER_PLUGIN_VALAFLAGS)
+	--enable-experimental \
+	--internal-vapi rygel-media-export.vapi \
+	--internal-header rygel-media-export-internal.h \
+	--header rygel-media-export.h \
+	$(RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_VALAFLAGS) \
+	$(RYGEL_COMMON_LIBRYGEL_SERVER_VALAFLAGS) \
+	$(RYGEL_COMMON_VALAFLAGS)
 
+librygel_media_export_la_CFLAGS = \
+	$(RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_CFLAGS) \
+	$(RYGEL_COMMON_LIBRYGEL_SERVER_CFLAGS) \
+	-DG_LOG_DOMAIN='"MediaExport"'
 librygel_media_export_la_LIBADD = \
-	$(RYGEL_COMMON_SERVER_LIBS) \
-	$(LIBGIO_LIBS) \
-	$(LIBGUPNP_DLNA_LIBS) \
-	$(GSTREAMER_TAG_LIBS) \
-	$(GSTREAMER_APP_LIBS) \
-	$(LIBSQLITE3_LIBS) \
-	$(COLLATION_LIBS)
+	$(RYGEL_PLUGIN_MEDIA_EXPORT_DEPS_LIBS) \
+	$(RYGEL_COMMON_LIBRYGEL_SERVER_LIBS)
 
-librygel_media_export_la_LDFLAGS = $(RYGEL_PLUGIN_LINKER_FLAGS)
+librygel_media_export_la_LDFLAGS = \
+	$(RYGEL_PLUGIN_LINKER_FLAGS)
 
+EXTRA_DIST = media-export.plugin.in

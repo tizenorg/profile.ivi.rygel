@@ -27,8 +27,11 @@ private errordomain Rygel.TestError {
 
 private class Rygel.HTTPIdentityHandler : GLib.Object {}
 
-private class Rygel.MediaItem : GLib.Object {
+public class Rygel.MediaObject : GLib.Object {
     public int64 size = 2048;
+}
+
+private class Rygel.MediaItem : MediaObject {
 }
 
 private class Rygel.Thumbnail : GLib.Object {
@@ -39,11 +42,24 @@ private class Rygel.Subtitle : GLib.Object {
     public int64 size = 512;
 }
 
+public class Rygel.MediaContainer : MediaObject {
+}
+
+public class Rygel.ClientHacks : GLib.Object {
+    public static ClientHacks create (Soup.Message msg) throws Error {
+        return new ClientHacks ();
+    }
+
+    public bool force_seek () {
+        return false;
+    }
+}
+
 private class Rygel.HTTPGet : GLib.Object {
     public const string ITEM_URI = "http://DoesntMatterWhatThisIs";
 
     public Soup.Message msg;
-    public MediaItem item;
+    public MediaObject object;
     public Thumbnail thumbnail;
     public Subtitle subtitle;
 
@@ -51,7 +67,7 @@ private class Rygel.HTTPGet : GLib.Object {
 
     public HTTPGet (Thumbnail? thumbnail, Subtitle? subtitle) {
         this.msg = new Soup.Message ("HTTP", ITEM_URI);
-        this.item = new MediaItem ();
+        this.object = new MediaItem ();
         this.handler = new HTTPIdentityHandler ();
         this.thumbnail = thumbnail;
         this.subtitle = subtitle;
@@ -105,8 +121,10 @@ private class Rygel.HTTPByteSeekTest : GLib.Object {
             var test = new HTTPByteSeekTest ();
 
             test.run ();
+	/* TODO: Nothing throws this exception. Should it?
         } catch (TestError.SKIP error) {
             return 77;
+        */
         } catch (Error error) {
             critical ("%s", error.message);
 
@@ -141,8 +159,13 @@ private class Rygel.HTTPByteSeekTest : GLib.Object {
     }
 
     private HTTPByteSeekTest () {
-        this.range_regex = new Regex ("bytes +[0-9]+-[0-9]+/[0-9]+",
-                                      RegexCompileFlags.CASELESS);
+        try {
+            this.range_regex = new Regex ("bytes +[0-9]+-[0-9]+/[0-9]+",
+                                          RegexCompileFlags.CASELESS);
+        } catch (RegexError error) {
+            // This means that it is not a regular expression
+            assert_not_reached ();
+        }
     }
 
     private void test_no_seek (Thumbnail? thumbnail,
@@ -155,7 +178,7 @@ private class Rygel.HTTPByteSeekTest : GLib.Object {
         } else if (request.subtitle != null) {
             size = request.subtitle.size;
         } else {
-            size = request.item.size;
+            size = request.object.size;
         }
 
         this.test_seek (request, 0, size - 1);
@@ -172,7 +195,7 @@ private class Rygel.HTTPByteSeekTest : GLib.Object {
         } else if (request.subtitle != null) {
             size = request.subtitle.size;
         } else {
-            size = request.item.size;
+            size = request.object.size;
         }
 
         this.test_seek (request, 128, size - 1);
@@ -214,7 +237,7 @@ private class Rygel.HTTPByteSeekTest : GLib.Object {
         } else if (request.subtitle != null) {
             assert (seek.total_length == request.subtitle.size);
         } else {
-            assert (seek.total_length == request.item.size);
+            assert (seek.total_length == request.object.size);
         }
 
         if (request.msg.request_headers.get_one ("Range") != null) {
@@ -227,5 +250,12 @@ private class Rygel.HTTPByteSeekTest : GLib.Object {
 
         assert (request.msg.response_headers.get_content_length () ==
                 seek.length);
+
+        /* TODO: This is just here to avoid a warning about
+         * requested() not being used.
+         * How should this really be tested?
+         * Sometimes the result here is true, and sometimes it is false.
+         */
+        /* bool result = */ HTTPByteSeek.requested(request);
     }
 }

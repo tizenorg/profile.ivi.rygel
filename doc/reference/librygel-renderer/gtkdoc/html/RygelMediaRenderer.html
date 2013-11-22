@@ -5,7 +5,7 @@
 <title>RygelMediaRenderer</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-renderer Reference Manual">
-<link rel="up" href="ch01.html" title="librygel-renderer API Reference">
+<link rel="up" href="api-main-list.html" title="librygel-renderer API Reference">
 <link rel="prev" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin">
 <link rel="next" href="RygelMediaPlayer.html" title="RygelMediaPlayer">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
@@ -15,7 +15,7 @@
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
 <td><a accesskey="p" href="RygelMediaRendererPlugin.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-renderer Reference Manual</th>
 <td><a accesskey="n" href="RygelMediaPlayer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
@@ -26,6 +26,8 @@
                   <a href="#RygelMediaRenderer.description" class="shortcut">Description</a>
                    | 
                   <a href="#RygelMediaRenderer.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#RygelMediaRenderer.properties" class="shortcut">Properties</a>
 </td></tr>
 </table>
 <div class="refentry">
@@ -40,7 +42,7 @@
 <div class="refsynopsisdiv">
 <a name="RygelMediaRenderer.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">#define             <a class="link" href="RygelMediaRenderer.html#RYGEL-TYPE-MEDIA-RENDERER:CAPS" title="RYGEL_TYPE_MEDIA_RENDERER">RYGEL_TYPE_MEDIA_RENDERER</a>
-<a class="link" href="RygelMediaRenderer.html" title="RygelMediaRenderer"><span class="returnvalue">RygelMediaRenderer</span></a> * <a class="link" href="RygelMediaRenderer.html#rygel-media-renderer-new" title="rygel_media_renderer_new ()">rygel_media_renderer_new</a>           (<em class="parameter"><code>const <span class="type">gchar</span> *title</code></em>,
+<a class="link" href="RygelMediaRenderer.html" title="RygelMediaRenderer"><span class="returnvalue">RygelMediaRenderer</span></a> * <a class="link" href="RygelMediaRenderer.html#rygel-media-renderer-new" title="rygel_media_renderer_new ()">rygel_media_renderer_new</a>           (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *title</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaPlayer.html" title="RygelMediaPlayer"><span class="type">RygelMediaPlayer</span></a> *player</code></em>,
                                                          <em class="parameter"><code><span class="type">RygelPluginCapabilities</span> capabilities</code></em>);
 struct              <a class="link" href="RygelMediaRenderer.html#RygelMediaRenderer-struct" title="struct RygelMediaRenderer">RygelMediaRenderer</a>;
@@ -50,9 +52,15 @@ struct              <a class="link" href="RygelMediaRenderer.html#RygelMediaRend
 <div class="refsect1">
 <a name="RygelMediaRenderer.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----RygelMediaDevice
          +----RygelMediaRenderer
+</pre>
+</div>
+<div class="refsect1">
+<a name="RygelMediaRenderer.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="RygelMediaRenderer.html#RygelMediaRenderer--player" title='The "player" property'>player</a>"                   <a class="link" href="RygelMediaPlayer.html" title="RygelMediaPlayer"><span class="type">RygelMediaPlayer</span></a>*     : Write / Construct Only
 </pre>
 </div>
 <div class="refsect1">
@@ -60,7 +68,7 @@ struct              <a class="link" href="RygelMediaRenderer.html#RygelMediaRend
 <p>
 </p>
 <p>Call <code class="function">rygel_media_device_add_interface()</code> on the RygelMediaRenderer to allow it to render media from that network interface.</p>
-<p>See the standalone-renderer.c example.</p>
+<p>See the &lt;link linkend="implementing-renderers"&gt;Implementing Renderers&lt;/link&gt; section.</p>
 <p>
 </p>
 </div>
@@ -77,12 +85,29 @@ The type for <a class="link" href="RygelMediaRenderer.html" title="RygelMediaRen
 <hr>
 <div class="refsect2">
 <a name="rygel-media-renderer-new"></a><h3>rygel_media_renderer_new ()</h3>
-<pre class="programlisting"><a class="link" href="RygelMediaRenderer.html" title="RygelMediaRenderer"><span class="returnvalue">RygelMediaRenderer</span></a> * rygel_media_renderer_new           (<em class="parameter"><code>const <span class="type">gchar</span> *title</code></em>,
+<pre class="programlisting"><a class="link" href="RygelMediaRenderer.html" title="RygelMediaRenderer"><span class="returnvalue">RygelMediaRenderer</span></a> * rygel_media_renderer_new           (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *title</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaPlayer.html" title="RygelMediaPlayer"><span class="type">RygelMediaPlayer</span></a> *player</code></em>,
                                                          <em class="parameter"><code><span class="type">RygelPluginCapabilities</span> capabilities</code></em>);</pre>
 <p>
 Create a RygelMediaRenderer to render content via a RygelMediaPlayer.
 </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>title</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>player</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>capabilities</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
@@ -94,7 +119,7 @@ This class may be used to implement in-process UPnP-AV media renderers.
 <p>
 </p>
 <p>Call <code class="function">rygel_media_device_add_interface()</code> on the RygelMediaRenderer to allow it to render media from that network interface.</p>
-<p>See the standalone-renderer.c example.</p>
+<p>See the &lt;link linkend="implementing-renderers"&gt;Implementing Renderers&lt;/link&gt; section.</p>
 <p>
 </p>
 </div>
@@ -115,6 +140,14 @@ The class structure for <a class="link" href="RygelMediaRenderer.html#RYGEL-TYPE
 <td>the parent class structure</td>
 </tr></tbody>
 </table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="RygelMediaRenderer.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="RygelMediaRenderer--player"></a><h3>The <code class="literal">"player"</code> property</h3>
+<pre class="programlisting">  "player"                   <a class="link" href="RygelMediaPlayer.html" title="RygelMediaPlayer"><span class="type">RygelMediaPlayer</span></a>*     : Write / Construct Only</pre>
+<p>player.</p>
 </div>
 </div>
 </div>

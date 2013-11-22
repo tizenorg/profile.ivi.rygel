@@ -34,7 +34,7 @@ internal class Rygel.HTTPByteSeek : Rygel.HTTPSeek {
         } else if (request.subtitle != null) {
             total_length = request.subtitle.size;
         } else {
-            total_length = request.item.size;
+            total_length = (request.object as MediaItem).size;
         }
         var stop = total_length - 1;
 
@@ -61,13 +61,18 @@ internal class Rygel.HTTPByteSeek : Rygel.HTTPSeek {
     }
 
     public static bool needed (HTTPGet request) {
-        return (request.item.size > 0 &&
+        bool force_seek = false;
+
+        try {
+            var hack = ClientHacks.create (request.msg);
+            force_seek = hack.force_seek ();
+        } catch (Error error) { }
+
+        return force_seek || (!(request.object is MediaContainer) && ((request.object as MediaItem).size > 0 &&
                 request.handler is HTTPIdentityHandler) ||
                (request.thumbnail != null &&
                 request.thumbnail.size > 0) ||
-               (request.subtitle != null && request.subtitle.size > 0) ||
-               request.msg.request_headers.get_one ("User-Agent") ==
-               "PLAYSTATION 3";
+               (request.subtitle != null && request.subtitle.size > 0));
     }
 
     public static bool requested (HTTPGet request) {

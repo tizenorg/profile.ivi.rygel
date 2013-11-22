@@ -26,19 +26,22 @@
         </ul>
         <hr class="navi_hr"/>
         <ul class="navi_main">
+          <li class="property"><a href="Rygel.MediaObject.id.html">id</a></li>
+          <li class="property"><a href="Rygel.MediaObject.modified.html">modified</a></li>
+          <li class="property"><a href="Rygel.MediaObject.object_update_id.html">object_update_id</a></li>
+          <li class="virtual_property"><a href="Rygel.MediaObject.ocm_flags.html">ocm_flags</a></li>
+          <li class="property"><a href="Rygel.MediaObject.parent.html">parent</a></li>
           <li class="property"><a href="Rygel.MediaObject.parent_ref.html">parent_ref</a></li>
+          <li class="property"><a href="Rygel.MediaObject.ref_id.html">ref_id</a></li>
           <li class="property"><a href="Rygel.MediaObject.title.html">title</a></li>
+          <li class="property"><a href="Rygel.MediaObject.upnp_class.html">upnp_class</a></li>
           <li class="creation_method"><a href="Rygel.MediaObject.MediaObject.html">MediaObject</a></li>
           <li class="method"><a href="Rygel.MediaObject.compare_int_props.html">compare_int_props</a></li>
           <li class="method"><a href="Rygel.MediaObject.compare_string_props.html">compare_string_props</a></li>
+          <li class="virtual_method"><a href="Rygel.MediaObject.constructed.html">constructed</a></li>
           <li class="method"><a href="Rygel.MediaObject.get_writable.html">get_writable</a></li>
           <li class="method"><a href="Rygel.MediaObject.get_writables.html">get_writables</a></li>
-          <li class="field"><a href="Rygel.MediaObject.id.html">id</a></li>
-          <li class="field"><a href="Rygel.MediaObject.modified.html">modified</a></li>
-          <li class="field"><a href="Rygel.MediaObject.object_update_id.html">object_update_id</a></li>
-          <li class="field"><a href="Rygel.MediaObject.parent.html">parent</a></li>
-          <li class="field"><a href="Rygel.MediaObject.ref_id.html">ref_id</a></li>
-          <li class="field"><a href="Rygel.MediaObject.upnp_class.html">upnp_class</a></li>
+          <li class="field"><a href="Rygel.MediaObject.parent_ptr.html">parent_ptr</a></li>
           <li class="field"><a href="Rygel.MediaObject.uris.html">uris</a></li>
         </ul>
       </div>
@@ -65,9 +68,9 @@
           <div class="headline">
             <div class="text">All known sub-classes:</div>
             <div class="toggle">
-              <img onclick="toggle_box  (this, 'box-content-46')" src="../coll_open.png">&nbsp;</div>
+              <img onclick="toggle_box  (this, 'box-content-49')" src="../coll_open.png">&nbsp;</div>
             </div>
-            <div class="content" id="box-content-46">
+            <div class="content" id="box-content-49">
               <div class="column">
                 <ul class="navi_inline">
                   <li class="class"><a href="Rygel.AudioItem.html">AudioItem</a></li>
@@ -84,6 +87,7 @@
               </div>
               <div class="column">
                 <ul class="navi_inline">
+                  <li class="class"><a href="Rygel.PlaylistItem.html">PlaylistItem</a></li>
                   <li class="class"><a href="Rygel.SimpleContainer.html">SimpleContainer</a></li>
                   <li class="class"><a href="Rygel.VideoItem.html">VideoItem</a></li>
                 </ul>
@@ -94,9 +98,9 @@
             <div class="headline">
               <div class="text">Required by:</div>
               <div class="toggle">
-                <img onclick="toggle_box  (this, 'box-content-47')" src="../coll_open.png">&nbsp;</div>
+                <img onclick="toggle_box  (this, 'box-content-50')" src="../coll_open.png">&nbsp;</div>
               </div>
-              <div class="content" id="box-content-47">
+              <div class="content" id="box-content-50">
                 <div class="column">
                   <ul class="navi_inline">
                     <li class="interface"><a href="Rygel.UpdatableObject.html">UpdatableObject</a></li>
@@ -119,11 +123,40 @@
             <h2 class="main_title">Content:</h2>
             <h3 class="main_title">Properties:</h3>
             <ul class="navi_inline">
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaObject.id.html" class="property">id</a></b> { <span class="main_keyword">construct</span> <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaObject.ref_id.html" class="property">ref_id</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaObject.upnp_class.html" class="property">upnp_class</a></b> { <span class="main_keyword">construct</span> <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>uint64</code></span> <b><a href="Rygel.MediaObject.modified.html" class="property">modified</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>uint</code></span> <b><a href="Rygel.MediaObject.object_update_id.html" class="property">object_update_id</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">weak</span> <span class="main_type"><a href="Rygel.MediaContainer.html" class="abstract_class">MediaContainer</a></span> <b><a href="Rygel.MediaObject.parent.html" class="property">parent</a></b> { <span class="main_keyword">construct</span> <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
               <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><a href="Rygel.MediaContainer.html" class="abstract_class">MediaContainer</a></span> <b><a href="Rygel.MediaObject.parent_ref.html" class="property">parent_ref</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
-              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaObject.title.html" class="property">title</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+              <li class="property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaObject.title.html" class="property">title</a></b> { <span class="main_keyword">construct</span> <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+                </span>
+                <div class="leaf_brief_description"><span class="brief_description">The human-readable title of this container or item. These 
+                    variables will be substituted:</span>
+                </div></li>
+              <li class="virtual_property"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">virtual</span> <span class="main_type"><code>OCMFlags</code></span> <b><a href="Rygel.MediaObject.ocm_flags.html" class="virtual_property">ocm_flags</a></b> { <span class="main_keyword">get</span>; }
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
@@ -137,6 +170,10 @@
             </ul>
             <h3 class="main_title">Methods:</h3>
             <ul class="navi_inline">
+              <li class="virtual_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">override</span> <span class="main_keyword">void</span> <b><a href="Rygel.MediaObject.constructed.html" class="virtual_method">constructed</a></b> ()
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
               <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">async</span> <span class="main_type"><code>File</code></span>? <b><a href="Rygel.MediaObject.get_writable.html" class="method">get_writable</a></b> (<span class="main_type"><code>Cancellable</code></span>? cancellable) <span class="main_keyword">throws</span> <span class="main_type"><code>Error</code></span>
                 </span>
                 <div class="leaf_brief_description"><span class="brief_description">Fetches a File object for any writable URI available for this 
@@ -158,31 +195,11 @@
             </ul>
             <h3 class="main_title">Fields:</h3>
             <ul class="navi_inline">
-              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaObject.id.html" class="field">id</a></b>
-                </span>
-                <div class="leaf_brief_description">
-                </div></li>
-              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaObject.ref_id.html" class="field">ref_id</a></b>
-                </span>
-                <div class="leaf_brief_description">
-                </div></li>
-              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Rygel.MediaObject.upnp_class.html" class="field">upnp_class</a></b>
-                </span>
-                <div class="leaf_brief_description">
-                </div></li>
-              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>uint64</code></span> <b><a href="Rygel.MediaObject.modified.html" class="field">modified</a></b>
-                </span>
-                <div class="leaf_brief_description">
-                </div></li>
-              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>uint</code></span> <b><a href="Rygel.MediaObject.object_update_id.html" class="field">object_update_id</a></b>
-                </span>
-                <div class="leaf_brief_description">
-                </div></li>
               <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><code>ArrayList</code></span>&lt;<span class="main_basic_type"><code>string</code></span>&gt; <b><a href="Rygel.MediaObject.uris.html" class="field">uris</a></b>
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
-              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">weak</span> <span class="main_type"><a href="Rygel.MediaContainer.html" class="abstract_class">MediaContainer</a></span> <b><a href="Rygel.MediaObject.parent.html" class="field">parent</a></b>
+              <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">weak</span> <span class="main_type"><a href="Rygel.MediaContainer.html" class="abstract_class">MediaContainer</a></span> <b><a href="Rygel.MediaObject.parent_ptr.html" class="field">parent_ptr</a></b>
                 </span>
                 <div class="leaf_brief_description">
                 </div></li>
@@ -192,9 +209,9 @@
               <div class="headline">
                 <div class="text">All known members inherited from class GLib.Object</div>
                 <div class="toggle">
-                  <img onclick="toggle_box  (this, 'box-content-48')" src="../coll_open.png">&nbsp;</div>
+                  <img onclick="toggle_box  (this, 'box-content-51')" src="../coll_open.png">&nbsp;</div>
                 </div>
-                <div class="content" id="box-content-48">
+                <div class="content" id="box-content-51">
                   <div class="column">
                     <ul class="navi_inline">
                       <li class="static_method">@new</li>

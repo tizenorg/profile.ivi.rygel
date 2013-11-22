@@ -41,13 +41,18 @@
         <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_keyword">unowned</span> <span class="main_type"><code>List</code></span>&lt;<span class="main_type"><a href="Rygel.DLNAProfile.html" class="class">DLNAProfile</a></span>&gt; <b><span css="abstract_method">get_dlna_profiles</span></b> ()
         </div>
         <div class="description">
-          <p>Get a list of the DLNA profiles that are supported by this media engine.</p>
+          <p>Get a list of the DLNA profiles that are supported by this media engine when calling rygel_media_engine_create_data_source().</p>
+          <p>Other DLNA profiles may be supported as transcoding targets -</p>
+          <p>This information is needed to implement DLNA's ConnectionManager.GetProtocolInfo call and to determine whether Rygel can accept an 
+            uploaded file.</p>
           <h2 class="main_title">Returns:</h2>
           <table class="main_parameter_table">
             <tr>
-              <td>A list of #DLNAProfile&lt;!-- --&gt;s </td>
+              <td>A list of #RygelDLNAProfile&lt;!-- --&gt;s </td>
             </tr>
           </table>
+          <h2 class="main_title">See also:</h2>
+          <p><code>rygel_media_engine_get_transcoders().</code></p>
         </div>
       </div>
     </div><br/>

@@ -5,20 +5,20 @@
 <title>RygelRelationalExpression</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
-<link rel="prev" href="RygelAudioItem.html" title="RygelAudioItem">
-<link rel="next" href="RygelMediaServer.html" title="RygelMediaServer">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
+<link rel="prev" href="RygelPhotoItem.html" title="RygelPhotoItem">
+<link rel="next" href="RygelSearchExpression.html" title="RygelSearchExpression">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="RygelAudioItem.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="RygelPhotoItem.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
-<td><a accesskey="n" href="RygelMediaServer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="RygelSearchExpression.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#RygelRelationalExpression.synopsis" class="shortcut">Top</a>
@@ -40,15 +40,15 @@
 <div class="refsynopsisdiv">
 <a name="RygelRelationalExpression.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">#define             <a class="link" href="RygelRelationalExpression.html#RYGEL-TYPE-RELATIONAL-EXPRESSION:CAPS" title="RYGEL_TYPE_RELATIONAL_EXPRESSION">RYGEL_TYPE_RELATIONAL_EXPRESSION</a>
-<span class="returnvalue">gboolean</span>            <a class="link" href="RygelRelationalExpression.html#rygel-relational-expression-compare-string" title="rygel_relational_expression_compare_string ()">rygel_relational_expression_compare_string</a>
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelRelationalExpression.html#rygel-relational-expression-compare-string" title="rygel_relational_expression_compare_string ()">rygel_relational_expression_compare_string</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *str</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="RygelRelationalExpression.html#rygel-relational-expression-compare-int" title="rygel_relational_expression_compare_int ()">rygel_relational_expression_compare_int</a>
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *str</code></em>);
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelRelationalExpression.html#rygel-relational-expression-compare-int" title="rygel_relational_expression_compare_int ()">rygel_relational_expression_compare_int</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> integer</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="RygelRelationalExpression.html#rygel-relational-expression-compare-uint" title="rygel_relational_expression_compare_uint ()">rygel_relational_expression_compare_uint</a>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> integer</code></em>);
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="RygelRelationalExpression.html#rygel-relational-expression-compare-uint" title="rygel_relational_expression_compare_uint ()">rygel_relational_expression_compare_uint</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint</span> integer</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> integer</code></em>);
 <a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="returnvalue">RygelRelationalExpression</span></a> * <a class="link" href="RygelRelationalExpression.html#rygel-relational-expression-new" title="rygel_relational_expression_new ()">rygel_relational_expression_new</a>
                                                         (<em class="parameter"><code><span class="type">void</span></code></em>);
 struct              <a class="link" href="RygelRelationalExpression.html#RygelRelationalExpression-struct" title="struct RygelRelationalExpression">RygelRelationalExpression</a>;
@@ -78,43 +78,61 @@ The type for <a class="link" href="RygelRelationalExpression.html" title="RygelR
 <hr>
 <div class="refsect2">
 <a name="rygel-relational-expression-compare-string"></a><h3>rygel_relational_expression_compare_string ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            rygel_relational_expression_compare_string
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_relational_expression_compare_string
                                                         (<em class="parameter"><code><a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *str</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *str</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> instance</td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="rygel-relational-expression-compare-int"></a><h3>rygel_relational_expression_compare_int ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            rygel_relational_expression_compare_int
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_relational_expression_compare_int
                                                         (<em class="parameter"><code><a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> integer</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> integer</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> instance</td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>integer</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="rygel-relational-expression-compare-uint"></a><h3>rygel_relational_expression_compare_uint ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            rygel_relational_expression_compare_uint
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            rygel_relational_expression_compare_uint
                                                         (<em class="parameter"><code><a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint</span> integer</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> integer</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelRelationalExpression.html" title="RygelRelationalExpression"><span class="type">RygelRelationalExpression</span></a> instance</td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>integer</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>

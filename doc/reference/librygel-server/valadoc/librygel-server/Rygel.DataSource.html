@@ -50,6 +50,10 @@
         </div>
         <div class="description">
           <p>Interface for all data streams provided by a #RygelMediaEngine.</p>
+          <p>When Rygel receives a HTTP request to stream a given file, it creates a RygelDataSource object for this new file and instructs the 
+            RygelDataSource to begin streaming. The RygelDataSource object will duly pass this request on to the underlying media framework, which 
+            will in turn pass streamed bytes back to the RygelDataSource object. The RygelDataSource passes these bytes to Rygel which adds them to 
+            the response it sends to the original HTTP request received from the client.</p>
           <p>The data source is responsible for providing the streamable byte-stream via its data_available signal. End-of-stream is signalled by the 
             done signal, while errors are signalled by the error signal.</p>
           <p>Implementations should fulfil at least these requirements:</p>
@@ -57,6 +61,11 @@
             <li>It should support at least the file:/<b></b>/ URI scheme.</li>
             <li>It should be able to stream any kind of binary data, regardless of the format.</li>
           </ol>
+          <p>RygelDataSource instances are provided by rygel_media_engine_create_data_source() which will return a derived #RygelDataSource that uses 
+            a specific IO backend and/or multimedia backend to stream the multimedia data at the URI.</p>
+          <p>The derived RygelDataSource may provide additional API for use by the derived media engine. For instance, 
+            rygel_media_engine_get_transcoders() may return derived #RygelTranscoder instances, and these may use that additional API in their 
+            create_source() implementations, for instance to access resources or data structures of the specific multimedia backend.</p>
         </div><br/>
         <div class="namespace_note"><b>Namespace:</b> <a href="Rygel.html">Rygel</a>
         </div>
@@ -104,9 +113,9 @@
           <div class="headline">
             <div class="text">All known members inherited from class GLib.Object</div>
             <div class="toggle">
-              <img onclick="toggle_box  (this, 'box-content-76')" src="../coll_open.png">&nbsp;</div>
+              <img onclick="toggle_box  (this, 'box-content-82')" src="../coll_open.png">&nbsp;</div>
             </div>
-            <div class="content" id="box-content-76">
+            <div class="content" id="box-content-82">
               <div class="column">
                 <ul class="navi_inline">
                   <li class="static_method">@new</li>

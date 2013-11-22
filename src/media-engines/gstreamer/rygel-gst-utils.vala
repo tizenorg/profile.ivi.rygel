@@ -22,6 +22,7 @@
  */
 
 using Gst;
+using Gst.PbUtils;
 
 internal errordomain Rygel.GstError {
     MISSING_PLUGIN,
@@ -43,10 +44,15 @@ internal abstract class Rygel.GstUtils {
     }
 
     public static Element? create_source_for_uri (string uri) {
-        dynamic Element src = Element.make_from_uri (URIType.SRC, uri, null);
-        if (src != null) {
-            if (src.is_floating ()) {
-                src.ref_sink ();
+        try {
+            dynamic Element src;
+
+            if (uri.has_prefix ("gst-launch://")) {
+                var description = uri.replace ("gst-launch://", "");
+
+                src = Gst.parse_bin_from_description (description, true);
+            } else {
+                src = Element.make_from_uri (URIType.SRC, uri, null);
             }
 
             if (src.get_class ().find_property ("blocksize") != null) {
@@ -60,9 +66,11 @@ internal abstract class Rygel.GstUtils {
                 // transmitting
                 src.tcp_timeout = (int64) 60000000;
             }
-        }
 
-        return src;
+            return src;
+        } catch (Error error) {
+            return null;
+        }
     }
 
     public static void dump_encoding_profile (EncodingProfile profile,
@@ -89,12 +97,15 @@ internal abstract class Rygel.GstUtils {
         }
 
         var features = ElementFactory.list_get_elements
-                                        (ELEMENT_FACTORY_TYPE_DEPAYLOADER,
+                                        (ElementFactoryType.DEPAYLOADER,
                                          Rank.NONE);
         features = ElementFactory.list_filter (features,
                                                caps,
                                                PadDirection.SINK,
                                                false);
+        if (features == null) {
+            return null;
+        }
 
         // If most "fitting" depayloader was rtpdepay skip it because it is
         // just some kind of proxy.
@@ -110,7 +121,7 @@ internal abstract class Rygel.GstUtils {
     }
 
     private static bool need_rtp_depayloader (Caps caps) {
-        var structure = caps.get_structure (0);
+        unowned Structure structure = caps.get_structure (0);
 
         return structure.get_name () == "application/x-rtp";
     }

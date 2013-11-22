@@ -37,11 +37,13 @@
           <li class="abstract_class"><a href="Rygel.MediaDevice.html">MediaDevice</a></li>
           <li class="class"><a href="Rygel.MetaConfig.html">MetaConfig</a></li>
           <li class="class"><a href="Rygel.Plugin.html">Plugin</a></li>
+          <li class="class"><a href="Rygel.PluginInformation.html">PluginInformation</a></li>
           <li class="class"><a href="Rygel.PluginLoader.html">PluginLoader</a></li>
           <li class="abstract_class"><a href="Rygel.RecursiveModuleLoader.html">RecursiveModuleLoader</a></li>
           <li class="class"><a href="Rygel.ResourceInfo.html">ResourceInfo</a></li>
           <li class="class"><a href="Rygel.RootDevice.html">RootDevice</a></li>
           <li class="class"><a href="Rygel.RootDeviceFactory.html">RootDeviceFactory</a></li>
+          <li class="class"><a href="Rygel.V1Hacks.html">V1Hacks</a></li>
           <li class="class"><a href="Rygel.XMLUtils.html">XMLUtils</a></li>
         </ul>
       </div>
@@ -71,20 +73,23 @@
           <li class="class"><a href="Rygel.LogHandler.html">LogHandler</a> - </li>
           <li class="class"><a href="Rygel.MetaConfig.html">MetaConfig</a> - <span class="brief_description">Manages all the configuration sources for
               Rygel.</span></li>
-          <li class="class"><a href="Rygel.PluginLoader.html">PluginLoader</a> - <span class="brief_description">Responsible for plugin loading. 
-              Probes for shared library files in a specific directry and tries to grab a function with a specific name and signature, calls it. The 
-              loaded module can then add plugins to Rygel by calling the add_plugin method. NOTE: The module SHOULD make sure that plugin is not 
-              disabled by user using plugin_disabled method before creating the plugin instance and resources related to that instance.</span></li>
-          <li class="abstract_class"><a href="Rygel.RecursiveModuleLoader.html">RecursiveModuleLoader</a> - <span class="brief_description">Recursivly
-              walk a folder looking for shared libraries.</span></li>
+          <li class="class"><a href="Rygel.PluginLoader.html">PluginLoader</a> - <span class="brief_description">This class is responsible for plugin 
+              loading.</span></li>
+          <li class="abstract_class"><a href="Rygel.RecursiveModuleLoader.html">RecursiveModuleLoader</a> - <span class="brief_description">
+              Recursively walk a folder looking for shared libraries.</span></li>
           <li class="class"><a href="Rygel.Plugin.html">Plugin</a> - <span class="brief_description">This represents a Rygel plugin.</span></li>
           <li class="class"><a href="Rygel.ResourceInfo.html">ResourceInfo</a> - <span class="brief_description">Holds information about a particular 
               resource (device and service) implementation.</span></li>
-          <li class="abstract_class"><a href="Rygel.MediaDevice.html">MediaDevice</a> - </li>
+          <li class="abstract_class"><a href="Rygel.MediaDevice.html">MediaDevice</a> - <span class="brief_description">This is a base class for 
+              implementations of UPnP devices, such as RygelMediaServer and RygelMediaRenderer.</span></li>
           <li class="class"><a href="Rygel.BaseConfiguration.html">BaseConfiguration</a> - <span class="brief_description">Base class that can be used
               for configuration implementations.</span></li>
+          <li class="class"><a href="Rygel.V1Hacks.html">V1Hacks</a> - <span class="brief_description">Various devices that need a downgrade to 
+              MediaServer:1 and ContentDirectory:1 because they ignore that higher versions are required to be backwards-compatible.</span></li>
           <li class="class"><a href="Rygel.IconInfo.html">IconInfo</a> - <span class="brief_description">Holds information about an icon.</span></li>
           <li class="class"><a href="Rygel.XMLUtils.html">XMLUtils</a> - <span class="brief_description">XML utility API.</span></li>
+          <li class="class"><a href="Rygel.PluginInformation.html">PluginInformation</a> - <span class="brief_description">Parse plugin sidecar file 
+              and provide path to the module.</span></li>
         </ul>
         <h3 class="main_title">Enums:</h3>
         <ul class="navi_inline">

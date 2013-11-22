@@ -5,20 +5,20 @@
 <title>RygelAudioItem</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
-<link rel="prev" href="RygelWritableContainer.html" title="RygelWritableContainer">
-<link rel="next" href="RygelRelationalExpression.html" title="RygelRelationalExpression">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
+<link rel="prev" href="api-main-list.html" title="librygel-server API Reference">
+<link rel="next" href="RygelDataSource.html" title="RygelDataSource">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="RygelWritableContainer.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="api-main-list.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
-<td><a accesskey="n" href="RygelRelationalExpression.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="RygelDataSource.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#RygelAudioItem.synopsis" class="shortcut">Top</a>
@@ -43,27 +43,27 @@
 <a name="RygelAudioItem.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">#define             <a class="link" href="RygelAudioItem.html#RYGEL-TYPE-AUDIO-ITEM:CAPS" title="RYGEL_TYPE_AUDIO_ITEM">RYGEL_TYPE_AUDIO_ITEM</a>
 #define             <a class="link" href="RygelAudioItem.html#RYGEL-AUDIO-ITEM-UPNP-CLASS:CAPS" title="RYGEL_AUDIO_ITEM_UPNP_CLASS">RYGEL_AUDIO_ITEM_UPNP_CLASS</a>
-<a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="returnvalue">RygelAudioItem</span></a> *    <a class="link" href="RygelAudioItem.html#rygel-audio-item-new" title="rygel_audio_item_new ()">rygel_audio_item_new</a>                (<em class="parameter"><code>const <span class="type">gchar</span> *id</code></em>,
+<a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="returnvalue">RygelAudioItem</span></a> *    <a class="link" href="RygelAudioItem.html#rygel-audio-item-new" title="rygel_audio_item_new ()">rygel_audio_item_new</a>                (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *id</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *parent</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *title</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *upnp_class</code></em>);
-<span class="returnvalue">glong</span>               <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-duration" title="rygel_audio_item_get_duration ()">rygel_audio_item_get_duration</a>       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *title</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *upnp_class</code></em>);
+<a href="../glib/glib-Basic-Types.html#glong"><span class="returnvalue">glong</span></a>               <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-duration" title="rygel_audio_item_get_duration ()">rygel_audio_item_get_duration</a>       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-set-duration" title="rygel_audio_item_set_duration ()">rygel_audio_item_set_duration</a>       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">glong</span> value</code></em>);
-<span class="returnvalue">gint</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-bitrate" title="rygel_audio_item_get_bitrate ()">rygel_audio_item_get_bitrate</a>        (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#glong"><span class="type">glong</span></a> value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-bitrate" title="rygel_audio_item_get_bitrate ()">rygel_audio_item_get_bitrate</a>        (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-set-bitrate" title="rygel_audio_item_set_bitrate ()">rygel_audio_item_set_bitrate</a>        (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);
-<span class="returnvalue">gint</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-sample-freq" title="rygel_audio_item_get_sample_freq ()">rygel_audio_item_get_sample_freq</a>    (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-sample-freq" title="rygel_audio_item_get_sample_freq ()">rygel_audio_item_get_sample_freq</a>    (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-set-sample-freq" title="rygel_audio_item_set_sample_freq ()">rygel_audio_item_set_sample_freq</a>    (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);
-<span class="returnvalue">gint</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-bits-per-sample" title="rygel_audio_item_get_bits_per_sample ()">rygel_audio_item_get_bits_per_sample</a>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-bits-per-sample" title="rygel_audio_item_get_bits_per_sample ()">rygel_audio_item_get_bits_per_sample</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-set-bits-per-sample" title="rygel_audio_item_set_bits_per_sample ()">rygel_audio_item_set_bits_per_sample</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);
-<span class="returnvalue">gint</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-channels" title="rygel_audio_item_get_channels ()">rygel_audio_item_get_channels</a>       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
+<a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-get-channels" title="rygel_audio_item_get_channels ()">rygel_audio_item_get_channels</a>       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelAudioItem.html#rygel-audio-item-set-channels" title="rygel_audio_item_set_channels ()">rygel_audio_item_set_channels</a>       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);
 struct              <a class="link" href="RygelAudioItem.html#RygelAudioItem-struct" title="struct RygelAudioItem">RygelAudioItem</a>;
 struct              <a class="link" href="RygelAudioItem.html#RygelAudioItemClass" title="struct RygelAudioItemClass">RygelAudioItemClass</a>;
 </pre>
@@ -71,7 +71,7 @@ struct              <a class="link" href="RygelAudioItem.html#RygelAudioItemClas
 <div class="refsect1">
 <a name="RygelAudioItem.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----<a class="link" href="RygelMediaObject.html" title="RygelMediaObject">RygelMediaObject</a>
          +----<a class="link" href="RygelMediaItem.html" title="RygelMediaItem">RygelMediaItem</a>
                +----RygelAudioItem
@@ -82,11 +82,11 @@ struct              <a class="link" href="RygelAudioItem.html#RygelAudioItemClas
 <div class="refsect1">
 <a name="RygelAudioItem.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--bitrate" title='The "bitrate" property'>bitrate</a>"                  <span class="type">gint</span>                  : Read / Write
-  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--bits-per-sample" title='The "bits-per-sample" property'>bits-per-sample</a>"          <span class="type">gint</span>                  : Read / Write
-  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--channels" title='The "channels" property'>channels</a>"                 <span class="type">gint</span>                  : Read / Write
-  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--duration" title='The "duration" property'>duration</a>"                 <span class="type">glong</span>                 : Read / Write
-  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--sample-freq" title='The "sample-freq" property'>sample-freq</a>"              <span class="type">gint</span>                  : Read / Write
+  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--bitrate" title='The "bitrate" property'>bitrate</a>"                  <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--bits-per-sample" title='The "bits-per-sample" property'>bits-per-sample</a>"          <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--channels" title='The "channels" property'>channels</a>"                 <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--duration" title='The "duration" property'>duration</a>"                 <a href="../glib/glib-Basic-Types.html#glong"><span class="type">glong</span></a>                 : Read / Write
+  "<a class="link" href="RygelAudioItem.html#RygelAudioItem--sample-freq" title='The "sample-freq" property'>sample-freq</a>"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
 </pre>
 </div>
 <div class="refsect1">
@@ -111,15 +111,36 @@ The type for <a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><
 <hr>
 <div class="refsect2">
 <a name="rygel-audio-item-new"></a><h3>rygel_audio_item_new ()</h3>
-<pre class="programlisting"><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="returnvalue">RygelAudioItem</span></a> *    rygel_audio_item_new                (<em class="parameter"><code>const <span class="type">gchar</span> *id</code></em>,
+<pre class="programlisting"><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="returnvalue">RygelAudioItem</span></a> *    rygel_audio_item_new                (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *id</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaContainer.html" title="RygelMediaContainer"><span class="type">RygelMediaContainer</span></a> *parent</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *title</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *upnp_class</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *title</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *upnp_class</code></em>);</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>id</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>title</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>upnp_class</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="rygel-audio-item-get-duration"></a><h3>rygel_audio_item_get_duration ()</h3>
-<pre class="programlisting"><span class="returnvalue">glong</span>               rygel_audio_item_get_duration       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#glong"><span class="returnvalue">glong</span></a>               rygel_audio_item_get_duration       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--duration" title='The "duration" property'><span class="type">"duration"</span></a> property.
 </p>
@@ -141,7 +162,7 @@ Get and return the current value of the <a class="link" href="RygelAudioItem.htm
 <div class="refsect2">
 <a name="rygel-audio-item-set-duration"></a><h3>rygel_audio_item_set_duration ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_audio_item_set_duration       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">glong</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#glong"><span class="type">glong</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--duration" title='The "duration" property'><span class="type">"duration"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -162,7 +183,7 @@ Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--d
 <hr>
 <div class="refsect2">
 <a name="rygel-audio-item-get-bitrate"></a><h3>rygel_audio_item_get_bitrate ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                rygel_audio_item_get_bitrate        (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_audio_item_get_bitrate        (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--bitrate" title='The "bitrate" property'><span class="type">"bitrate"</span></a> property.
 </p>
@@ -184,7 +205,7 @@ Get and return the current value of the <a class="link" href="RygelAudioItem.htm
 <div class="refsect2">
 <a name="rygel-audio-item-set-bitrate"></a><h3>rygel_audio_item_set_bitrate ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_audio_item_set_bitrate        (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--bitrate" title='The "bitrate" property'><span class="type">"bitrate"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -205,7 +226,7 @@ Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--b
 <hr>
 <div class="refsect2">
 <a name="rygel-audio-item-get-sample-freq"></a><h3>rygel_audio_item_get_sample_freq ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                rygel_audio_item_get_sample_freq    (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_audio_item_get_sample_freq    (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--sample-freq" title='The "sample-freq" property'><span class="type">"sample-freq"</span></a> property.
 </p>
@@ -227,7 +248,7 @@ Get and return the current value of the <a class="link" href="RygelAudioItem.htm
 <div class="refsect2">
 <a name="rygel-audio-item-set-sample-freq"></a><h3>rygel_audio_item_set_sample_freq ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_audio_item_set_sample_freq    (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--sample-freq" title='The "sample-freq" property'><span class="type">"sample-freq"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -248,7 +269,7 @@ Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--s
 <hr>
 <div class="refsect2">
 <a name="rygel-audio-item-get-bits-per-sample"></a><h3>rygel_audio_item_get_bits_per_sample ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                rygel_audio_item_get_bits_per_sample
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_audio_item_get_bits_per_sample
                                                         (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--bits-per-sample" title='The "bits-per-sample" property'><span class="type">"bits-per-sample"</span></a> property.
@@ -272,7 +293,7 @@ Get and return the current value of the <a class="link" href="RygelAudioItem.htm
 <a name="rygel-audio-item-set-bits-per-sample"></a><h3>rygel_audio_item_set_bits_per_sample ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_audio_item_set_bits_per_sample
                                                         (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--bits-per-sample" title='The "bits-per-sample" property'><span class="type">"bits-per-sample"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -293,7 +314,7 @@ Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--b
 <hr>
 <div class="refsect2">
 <a name="rygel-audio-item-get-channels"></a><h3>rygel_audio_item_get_channels ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                rygel_audio_item_get_channels       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                rygel_audio_item_get_channels       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>);</pre>
 <p>
 Get and return the current value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--channels" title='The "channels" property'><span class="type">"channels"</span></a> property.
 </p>
@@ -315,7 +336,7 @@ Get and return the current value of the <a class="link" href="RygelAudioItem.htm
 <div class="refsect2">
 <a name="rygel-audio-item-set-channels"></a><h3>rygel_audio_item_set_channels ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_audio_item_set_channels       (<em class="parameter"><code><a class="link" href="RygelAudioItem.html" title="RygelAudioItem"><span class="type">RygelAudioItem</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>);</pre>
 <p>
 Set the value of the <a class="link" href="RygelAudioItem.html#RygelAudioItem--channels" title='The "channels" property'><span class="type">"channels"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -364,35 +385,35 @@ The class structure for <a class="link" href="RygelAudioItem.html#RYGEL-TYPE-AUD
 <a name="RygelAudioItem.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="RygelAudioItem--bitrate"></a><h3>The <code class="literal">"bitrate"</code> property</h3>
-<pre class="programlisting">  "bitrate"                  <span class="type">gint</span>                  : Read / Write</pre>
+<pre class="programlisting">  "bitrate"                  <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
 <p>bitrate.</p>
 <p>Default value: -1</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="RygelAudioItem--bits-per-sample"></a><h3>The <code class="literal">"bits-per-sample"</code> property</h3>
-<pre class="programlisting">  "bits-per-sample"          <span class="type">gint</span>                  : Read / Write</pre>
+<pre class="programlisting">  "bits-per-sample"          <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
 <p>bits-per-sample.</p>
 <p>Default value: -1</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="RygelAudioItem--channels"></a><h3>The <code class="literal">"channels"</code> property</h3>
-<pre class="programlisting">  "channels"                 <span class="type">gint</span>                  : Read / Write</pre>
+<pre class="programlisting">  "channels"                 <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
 <p>channels.</p>
 <p>Default value: -1</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="RygelAudioItem--duration"></a><h3>The <code class="literal">"duration"</code> property</h3>
-<pre class="programlisting">  "duration"                 <span class="type">glong</span>                 : Read / Write</pre>
+<pre class="programlisting">  "duration"                 <a href="../glib/glib-Basic-Types.html#glong"><span class="type">glong</span></a>                 : Read / Write</pre>
 <p>duration.</p>
 <p>Default value: -1</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="RygelAudioItem--sample-freq"></a><h3>The <code class="literal">"sample-freq"</code> property</h3>
-<pre class="programlisting">  "sample-freq"              <span class="type">gint</span>                  : Read / Write</pre>
+<pre class="programlisting">  "sample-freq"              <a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
 <p>sample-freq.</p>
 <p>Default value: -1</p>
 </div>

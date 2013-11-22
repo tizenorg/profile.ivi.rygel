@@ -1,3 +1,974 @@
+0.19.6
+======
+
+A new unstable release of Rygel.
+
+Changes compared to 0.19.5:
+
+- Improve Android compatiblity.
+
+Server:
+ - Fix upload of files.
+ - Fix CreateReference call.
+
+GStreamer Renderer:
+ - Fix warning with newer valac about copying unowned structs.
+
+MediaExport:
+ - Fix warning with newer valac about copying unowned structs.
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=706525
+ - https://bugzilla.gnome.org/show_bug.cgi?id=706797
+ - https://bugzilla.gnome.org/show_bug.cgi?id=707065
+ - https://bugzilla.gnome.org/show_bug.cgi?id=707146
+
+All contributors to this release:
+ - Jens Georg <jensg@openismus.com>
+ - Alexandre Franke <alexandre.franke@gmail.com>
+ - Reynaldo H. Verdejo Pinochet <reynaldo@collabora.com>
+ - Regis Merlino <regis.merlino@intel.com>
+ - Rafael Ferreira <rafael.f.f1@gmail.com>
+ - Piotr Drąg <piotrdrag@gmail.com>
+ - Matej Urbančič <mateju@svn.gnome.org>
+ - Maciej Piechotka <uzytkownik2@gmail.com>
+ - Kjartan Maraas <kmaraas@gnome.org>
+ - Funda Wang <fundawang@gmail.com>
+ - Fran Diéguez <fran.dieguez@mabishu.com>
+ - Aurimas Černius <aurisc4@gmail.com>
+
+Added/updated translations
+ - fr, courtesy of Alain Lojewski
+ - gl, courtesy of Fran Dieguez
+ - lt, courtesy of Aurimas Černius
+ - nb, courtesy of Kjartan Maraas
+ - pl, courtesy of Piotr Drąg
+ - pt_BR, courtesy of Rafael Ferreira
+ - sl, courtesy of Matej Urbančič
+ - zh_CN, courtesy of 甘露(Gan  Lu)
+
+0.19.5
+======
+
+A new unstable release of Rygel.
+
+Changes compared to 0.19.4:
+
+Core:
+ - Use proper PNG depth value of 24 bit.
+ - Fix several error codes.
+
+Server:
+ - Validate <createClass> nodes during object creation.
+ - Fix recursive item removal and notification thereof.
+ - Fix several error codes.
+ - Remove manually removed items from the ItemRemovalQueue.
+ - Report missing "Filter" argument in browse call.
+ - Use searchClasses to find a compatible container in DLNA.ORG_AnyContainer
+   container creation scenario.
+ - Add X_GetDLNAUploadProfiles call.
+ - Move the knowledge about supported DLNA profiles from the MediaEngine to the
+   MediaServerPlugin.
+
+Renderer:
+ - Add possibility to define a set of supported DLNA profiles and not only mime
+   types to the renderer.
+ - Add missing <X_DLNADOC> node and content.
+ - Remove unused state variables.
+
+Playbin plugin:
+ - Make it work with simple engine.
+
+MediaExport plugin:
+ - Fix invalid browse response in "Artist" folder that broke compatibility with
+   certain Samsung TV sets.
+ - Actually use the sort criteria when browsing/searching in virtual folders.
+ - Fix a critical/crash on automatic item removal.
+ - Implement container removal.
+ - Emit containerUpdateID signals when a playlist container changes.
+ - Add several messages when database operations fail.
+ - Fix memory corruption in SQLite string collation functions.
+ - Use fall-back search when client searches for @refID to capture the virtual
+   container as well as manually created references.
+ - Use correct OCM flags for playlist containers.
+ - Remove hack for searching UPnP containers.
+ - Fix recursion in virtual containers on certain search requests.
+ - Fix a critical in the custom SQLite "CONTAINS" keyword implementation.
+
+External plugin:
+ - Fix an untranslatable message.
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=699698
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702228
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702253
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702452
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702633
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702741
+ - https://bugzilla.gnome.org/show_bug.cgi?id=703135
+ - https://bugzilla.gnome.org/show_bug.cgi?id=704146
+ - https://bugzilla.gnome.org/show_bug.cgi?id=705084
+ - https://bugzilla.gnome.org/show_bug.cgi?id=705576
+ - https://bugzilla.gnome.org/show_bug.cgi?id=705587
+ - https://bugzilla.gnome.org/show_bug.cgi?id=705899
+ - https://bugzilla.gnome.org/show_bug.cgi?id=706058
+ - https://bugzilla.gnome.org/show_bug.cgi?id=706059
+ - https://bugzilla.gnome.org/show_bug.cgi?id=706142
+ - https://bugzilla.gnome.org/show_bug.cgi?id=706143
+ - https://bugzilla.gnome.org/show_bug.cgi?id=706182
+
+All contributors to this release:
+ - Jens Georg <jensg@openismus.com>
+ - Marek Černocký <marek@manet.cz>
+ - Parthiban Balasubramanian <p.balasubramanian@cablelabs.com>
+ - Daniel Mustieles <daniel.mustieles@gmail.com>
+ - Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>
+ - Piotr Drąg <piotrdrag@gmail.com>
+ - Kjartan Maraas <kmaraas@gnome.org>
+ - 甘露(Gan  Lu) <rhythm.gan@gmail.com>
+ - Yuri Myasoedov <omerta13@yandex.ru>
+ - Yaron Shahrabani <sh.yaron@gmail.com>
+ - Rafael Ferreira <rafael.f.f1@gmail.com>
+ - Fran Diéguez <fran.dieguez@mabishu.com>
+ - Dušan Kazik <prescott66@gmail.com>
+ - Craig Pratt <craig@ecaspia.com>
+ - Christian Kirbach <christian.kirbach@gmail.com>
+ - Aurimas Černius <aurisc4@gmail.com>
+
+Added/updated translations
+ - cs, courtesy of Marek Černocký
+ - de, courtesy of Christian Kirbach
+ - es, courtesy of Daniel Mustieles
+ - gl, courtesy of Fran Dieguez
+ - he, courtesy of Yaron Shahrabani
+ - lt, courtesy of Aurimas Černius
+ - nb, courtesy of Kjartan Maraas
+ - pl, courtesy of Piotr Drąg
+ - pt_BR, courtesy of Rafael Ferreira
+ - ru, courtesy of Yuri Myasoedov
+ - sk, courtesy of Dušan Kazik
+ - zh_CN, courtesy of 甘露(Gan  Lu)
+ - zh_HK, courtesy of Chao-Hsiung Liao
+ - zh_TW, courtesy of Chao-Hsiung Liao
+
+0.19.4
+======
+
+A new unstable release of Rygel.
+
+Changes compared to 0.19.3:
+
+- Fix building with --enable-debug.
+- Fix device templates to have "correct" element order.
+- Add a target to generate the HTML versions of manpages; they are available
+  at http://rygel-project.org/doc/latest/rygel.html and
+  http://rygel-project.org/doc/latest/rygel.conf.html
+
+Core:
+ - Fix DescriptionFile.set_dlna_caps to properly create missing nodes.
+ - Keep order of elements when manipulating the device description in
+   DescriptionClass.
+ - Refactor code to only manipulate the device description from one place.
+
+Server:
+ - Fix seeking with full-range seeks on time-based seek requests.
+ - Fix a rare issue with item creation returning the wrong meta-data.
+ - Fix UpdateObject UPnP call to actually work.
+ - Use object.container by default and fall-back to
+   object.container.storageFolder for XBox 360.
+ - Fix error codes for serveral SOAP calls.
+ - Add support for dc:creator.
+ - Fix an accidental C ABI break.
+ - Always add a user agent to the agent cache even if it doesn't match the
+   current hack.
+ - Force HTTP 1.1 as recommended by DLNA.
+ - Fix upload of DIDL_S playlist items.
+ - Make it possible to override OCM flags in children of MediaObject.
+
+MediaExport:
+ - Use proper (full) iso8601 date format as required by DLNA.
+ - Use object.container by default and fall-back to
+   object.container.storageFolder for XBox 360.
+ - Use DLNA-compliant create-classes.
+ - Allow reference creation everywhere.
+ - Use dc:creator.
+ - Don't leak file descriptors in the JPEG writer.
+ - Set proper OCM flags on the playlist root container.
+ - Set proper <upnp:searchClass> on containers.
+
+Changes in dependencies:
+  Vala >= 0.20 is now required.
+
+All bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=701637
+ - https://bugzilla.gnome.org/show_bug.cgi?id=701948
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702083
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702231
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702254
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702255
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702256
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702258
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702262
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702451
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702555
+ - https://bugzilla.gnome.org/show_bug.cgi?id=702743
+ - https://bugzilla.gnome.org/show_bug.cgi?id=703044
+ - https://bugzilla.gnome.org/show_bug.cgi?id=703140
+ - https://bugzilla.gnome.org/show_bug.cgi?id=703241
+ - https://bugzilla.gnome.org/show_bug.cgi?id=704066
+
+All contributors to this release:
+  Jens Georg <jensg@openismus.com>
+  Jussi Kukkonen <jussi.kukkonen@intel.com>
+  Daniel Mustieles <daniel.mustieles@gmail.com>
+  Parthiban Balasubramanian <p.balasubramanian@cablelabs.com>
+  Piotr Drąg <piotrdrag@gmail.com>
+  Kjartan Maraas <kmaraas@gnome.org>
+  Fran Diéguez <fran.dieguez@mabishu.com>
+  Victor Ibragimov <victor.ibragimov@gmail.com>
+  Marek Černocký <marek@manet.cz>
+  Enrico Nicoletto <liverig@gmail.com>
+  Edson Silva <edsonlead@gmail.com>
+  Dimitris Spingos <dmtrs32@gmail.com>
+  Christian Kirbach <christian.kirbach@gmail.com>
+  Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>
+  Benjamin Steinwender <b@stbe.at>
+  Andika Triwidada <andika@gmail.com>
+
+Added/updated translations
+ - cs, courtesy of Marek Černocký
+ - de, courtesy of Christian Kirbach
+ - el, courtesy of Dimitris Spingos (Δημήτρης Σπίγγος)
+ - es, courtesy of Daniel Mustieles
+ - gl, courtesy of Fran Dieguez
+ - id, courtesy of Andika Triwidada
+ - nb, courtesy of Kjartan Maraas
+ - pl, courtesy of Piotr Drąg
+ - pt_BR, courtesy of Edson Silva
+ - tg, courtesy of Victor Ibragimov
+ - zh_HK, courtesy of Chao-Hsiung Liao
+ - zh_TW, courtesy of Chao-Hsiung Liao
+
+0.19.3
+======
+
+A new unstable release of Rygel.
+
+Changes compared to 0.19.2:
+
+Server:
+ - Add container serialisation to EXTM3U.
+ - Fix DLNA transfer modes for generated playlists.
+
+Rygel:
+ - Add -s,--shutdown options to shut down a running instance without using
+   d-feet or dbus-send.
+
+GStreamer media engine:
+ - Some string fixes.
+ - Fix a typo in the avenc_aac preset.
+ - Issue a proper warning when we fail to setup a data source.
+ - Don't crash if there's no RTP depayloader available.
+
+MediaExport:
+ - Make it possible to remove playlists.
+ - Expose the playlists for XBox 360.
+
+Preferences UI:
+ - Some glade file clean-ups.
+ - Move toolbar style from code to glade file.
+ - Support setting of multiple network interfaces as introduced in 0.19.2.
+
+All contributors to this release:
+  Jens Georg <jensg@openismus.com>
+  Piotr Drąg <piotrdrag@gmail.com>
+  Marek Černocký <marek@manet.cz>
+  Fran Diéguez <fran.dieguez@mabishu.com>
+  Daniel Mustieles <daniel.mustieles@gmail.com>
+  Aurimas Černius <aurisc4@gmail.com>
+
+Added/updated translations
+ - cs, courtesy of Marek Černocký
+ - es, courtesy of Daniel Mustieles
+ - gl, courtesy of Fran Dieguez
+ - lt, courtesy of Aurimas Černius
+
+0.19.2
+======
+
+A new unstable release for Rygel.
+
+Changes compared to 0.19.1:
+
+- Minor build fixes and clean-up.
+- Documentation updates and typos fixed.
+
+Core:
+ - Make the interface= configuration multi-valued.
+
+Rygel:
+ - Make the commandline options translatable.
+ - Show a message when we run in streaming-only mode.
+
+Server:
+ - Some coding style fixes.
+
+Renderer:
+ - Provide a proper fall-back to GET if peer does not support HEAD.
+
+Preferences:
+ - Don't lose the current network interface.
+
+MediaExport:
+ - Don't lose child containers when we add the parent container.
+ - Fix sorting by date.
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=648003
+ - https://bugzilla.gnome.org/show_bug.cgi?id=694357
+ - https://bugzilla.gnome.org/show_bug.cgi?id=700570
+
+All contributors to this release:
+  Jens Georg <jensg@openismus.com>
+  Daniel Mustieles <daniel.mustieles@gmail.com>
+  Yuri Myasoedov <omerta13@yandex.ru>
+  Yaron Shahrabani <sh.yaron@gmail.com>
+  Mihai Moldovan <ionic@ionic.de>
+  Matej Urbančič <mateju@svn.gnome.org>
+  Kjartan Maraas <kmaraas@gnome.org>
+  Fran Diéguez <fran.dieguez@mabishu.com>
+  Dušan Kazik <prescott66@gmail.com>
+  Aurimas Černius <aurisc4@gmail.com>
+  Andreas Henriksson <andreas@fatal.se>
+
+Added/updated translations
+ - es, courtesy of Daniel Mustieles
+ - gl, courtesy of Fran Dieguez
+ - he, courtesy of Yaron Shahrabani
+ - lt, courtesy of Aurimas Černius
+ - nb, courtesy of Kjartan Maraas
+ - ru, courtesy of Yuri Myasoedov
+ - sk, courtesy of Dušan Kazik
+ - sl, courtesy of Matej Urbančič
+
+0.19.1
+======
+
+A new unstable series for Rygel.
+
+Changes compared to 0.18.1:
+
+- Some build simplifications.
+- Fix translation comments.
+- Update the architecture diagram.
+- Stop blindly loading every dynamic library we can find in the plug-in
+  folder.
+
+Rygel:
+ - Show a warning if the user configuration could not be found.
+
+Core:
+ - Fix a memory leak in Rygel.DescriptionFile.
+ - Rename a variable called "template" to avoid issues when using Rygel from
+   C++.
+
+Server:
+ - Don't add DIDL_S <res> nodes on childless containers.
+
+Renderer:
+ - Treat MALFORMED requests as BAD_REQUESTS.
+
+MediaExport:
+ - Add infrastructure for testing the plug-in.
+ - Add two regression tests for bgo#689326.
+ - Unbreak synchronization use-cases.
+ - Support server-side playlists.
+
+Tracker:
+ - Make it possible to upload to DLNA.ORG_AnyContainer even if there's nothing
+   of that type of media shared yet.
+
+GStreamer media engine:
+ - Some clean-up.
+ - Work around a vala bug causing issues on non-Intel architectures.
+
+Preferences:
+ - Only set "enable" checkmark if the user's config file and the autostart file
+   exist and enable-upnp is set in the configuration.
+ - Fix issue with newly created user configuration being mostly empty on first
+   start.
+ - Use a GtkSwitch for enabling/disabling sharing.
+ - Fix starting Rygel after enabling it in the dialog.
+
+Changes in dependencies:
+ - Require GTK+ 3.0 instead of 2.90.x (optional)
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=660885
+ - https://bugzilla.gnome.org/show_bug.cgi?id=695593
+ - https://bugzilla.gnome.org/show_bug.cgi?id=698260
+ - https://bugzilla.gnome.org/show_bug.cgi?id=698572
+ - http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=703281
+ - https://bugs.launchpad.net/ubuntu/+source/rygel/+bug/827030
+ - https://bugzilla.gnome.org/show_bug.cgi?id=697793
+ - https://bugzilla.gnome.org/show_bug.cgi?id=697949
+
+All contributors to this release:
+  Jens Georg <jensg@openismus.com>
+  Piotr Drąg <piotrdrag@gmail.com>
+  Enrico Nicoletto <liverig@gmail.com>
+  Chandan Kumar <Chandankumar.093047@gmail.com>
+  Balázs Úr <urbalazs@src.gnome.org>
+  Ville-Pekka Vainio <vpvainio@iki.fi>
+  Rūdolfs Mazurs <rudolfsm@src.gnome.org>
+  os_ <syriatalks@hotmail.com>
+  Nirbheek Chauhan <nirbheek.chauhan@collabora.co.uk>
+  Nilamdyuti Goswami <ngoswami@redhat.com>
+  Murray Cumming <murrayc@murrayc.com>
+  Milo Casagrande <milo@ubuntu.com>
+  Mattias Põldaru <mahfiaz@gmail.com>
+  Martin Srebotnjak <miles@filmsi.net>
+  Mario Blättermann <mariobl@gnome.org>
+  Marek Černocký <marek@manet.cz>
+  Marcin Kazmierczak <marcin.kazmierczak@live.com>
+  Joe Hansen <joedalton2@yahoo.dk>
+  Joan Duran <jodufi@gmail.com>
+  Jens Georg <mail@jensge.org>
+  Jasper Lievisse Adriaanse <jasper@humppa.nl>
+  Inaki Larranaga Murgoitio <dooteo@zundan.com>
+  Fran Diéguez <fran.dieguez@mabishu.com>
+  Duarte Loreto <happyguy_pt@hotmail.com>
+  Dr.T.Vasudevan <drtvasudevan@gmail.com>
+  Dimitris Spingos <dmtrs32@gmail.com>
+  Daniel Mustieles <daniel.mustieles@gmail.com>
+  Choe Hwanjin <choe.hwanjin@gmail.com>
+  Changwoo Ryu <cwryu@debian.org>
+  Carles Ferrando <carles.ferrando@gmail.com>
+  Bruce Cowan <bruce@bcowan.me.uk>
+  Andika Triwidada <andika@gmail.com>
+  Alexandre Franke <alexandre.franke@gmail.com>
+  Akom Chotiphantawanon <knight2000@gmail.com>
+
+Added/updated translations
+ - ar, courtesy of os_
+ - as, courtesy of Nilamdyuti Goswami
+ - ca, courtesy of Joan Duran
+ - ca@valencia, courtesy of Joan Duran
+ - cs, courtesy of Marek Černocký
+ - da, courtesy of Joe Hansen
+ - de, courtesy of Mario Blättermann
+ - el, courtesy of Dimitris Spingos (Δημήτρης Σπίγγος)
+ - en_GB, courtesy of Bruce Cowan
+ - es, courtesy of Daniel Mustieles
+ - et, courtesy of Mattias Põldaru
+ - eu, courtesy of Iñaki Larrañaga Murgoitio
+ - fi, courtesy of Jiri Grönroos
+ - fr, courtesy of Alain Lojewski
+ - gl, courtesy of Fran Dieguez
+ - hi, courtesy of chandankumar
+ - hu, courtesy of Balázs Úr
+ - id, courtesy of Andika Triwidada
+ - it, courtesy of Milo Casagrande
+ - ko, courtesy of Changwoo Ryu
+ - lv, courtesy of Rūdolfs Mazurs
+ - pt_BR, courtesy of Enrico Nicoletto
+ - pt, courtesy of Duarte Loreto
+ - sl, courtesy of Matej Urbančič
+ - ta, courtesy of Dr.T.Vasudevan
+ - th, courtesy of Akom Chotiphantawanon
+
+0.17.9
+======
+
+A new unstable release for Rygel.
+
+Changes compared to 0.17.8:
+
+- Fixed NEWS file from last release, adding missing translation credits and
+  bugs.
+- Fix ContainerUpdateIDs variable.
+- Add DLNA "create-child-container" capabilities.
+- Add possibility to create containers in addition to items.
+- Always downgrade each service to V1 for device quirks.
+- Downgrade to V1 for libupnp-based devices.
+- Downgrade to V1 for iOS clients using system libraries for HTTP.
+- Some spelling fixes.
+- Implement CreateReference UPnP call.
+
+MediaExport:
+ - Allow to create containers.
+ - Use title set by CreateObject or UpdateObject instead of the one detected
+   from meta-data extraction.
+ - Some code clean-up.
+ - Drop unused database column.
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=694019
+ - https://bugzilla.gnome.org/show_bug.cgi?id=694155
+ - https://bugzilla.gnome.org/show_bug.cgi?id=683926
+ - https://bugzilla.gnome.org/show_bug.cgi?id=694270
+ - https://bugzilla.gnome.org/show_bug.cgi?id=694179
+ - https://bugzilla.gnome.org/show_bug.cgi?id=694926
+
+All contributors to this release:
+  Jens Georg <jensg@openismus.com>
+  Krzesimir Nowak <krnowak@openismus.com>
+  Gheyret Kenji <gheyret@gmail.com>
+  Yaron Shahrabani <sh.yaron@gmail.com>
+  Stas Solovey <whats_up@tut.by>
+  Matej Urbančič <mateju@svn.gnome.org>
+  Kjartan Maraas <kmaraas@gnome.org>
+  Dimitris Spingos <dmtrs32@gmail.com>
+  Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>
+  Aurimas Černius <aurisc4@gmail.com>
+  A S Alam <aalam@users.sf.net>
+
+Added/updated translations
+ - el, courtesy of Dimitris Spingos (Δημήτρης Σπίγγος)
+ - he, courtesy of Yaron Shahrabani
+ - lt, courtesy of Aurimas Černius
+ - nb, courtesy of Kjartan Maraas
+ - pa, courtesy of A S Alam
+ - ru, courtesy of Yuri Myasoedov
+ - sl, courtesy of Matej Urbančič
+ - ug, courtesy of Gheyret Kenji
+ - zh_HK, courtesy of Chao-Hsiung Liao
+ - zh_TW, courtesy of Chao-Hsiung Liao
+
+0.17.8
+======
+
+A new unstable release for Rygel
+
+Changes compared to 0.17.7:
+
+- Various documentation fixes.
+- Fix an issue with using DLNA.ORG_AnyContainer on upload.
+- Linker fixes.
+- Some minor nullable fixes.
+- Modify .pc files to include useful information for external media engines
+  and plug-ins.
+- Hide rygel-preferences in GNOME environment since it's handled by system
+  settings.
+
+MediaExport:
+ - Various clean-ups.
+ - Fix comparing GFiles properly.
+ - Properly check for hidden files instead of using .has_prefix (".").
+ - Don't emit multiple extraction errors.
+ - Fix some unnecessary sting copying.
+ - Fix plug-in start-up on on database error.
+ - Fix harvesting of dates from media files.
+ - More LastChange event emitting fixes.
+ - React if configuration of uris changes.
+ - Add an option to disable the virtual container hierarchy.
+ - Also extract basic file information if no GstDiscoverer can be created.
+
+GStreamer Renderer:
+ - Support flash videos as announced by grl-ms2 and its youtube plug-in.
+ - Honor http_proxy environment variable and desktop proxy settings.
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=692362
+ - https://bugzilla.gnome.org/show_bug.cgi?id=693577
+ - https://bugzilla.gnome.org/show_bug.cgi?id=692696
+
+All contributors to this release:
+  Krzesimir Nowak <krnowak@openismus.com>
+  Murray Cumming <murrayc@murrayc.com>
+  Jens Georg <jensg@openismus.com>
+  Murray Cumming <murrayc@openismus.com>
+  Мирослав Николић <miroslavnikolic@rocketmail.com>
+  Piotr Drąg <piotrdrag@gmail.com>
+  Jens Georg <mail@jensge.org>
+  Fran Diéguez <fran.dieguez@mabishu.com>
+  Daniel Mustieles <daniel.mustieles@gmail.com>
+  Anish A <aneesh.nl@gmail.com>
+  Yaron Shahrabani <sh.yaron@gmail.com>
+  Nathaniel McCallum <nathaniel@themccallums.org>
+  Milo Casagrande <milo@ubuntu.com>
+  Matej Urbančič <mateju@svn.gnome.org>
+  Marek Černocký <marek@manet.cz>
+  Kjartan Maraas <kmaraas@gnome.org>
+  Gheyret Kenji <gheyret@gmail.com>
+  Christian Kirbach <Christian.Kirbach@googlemail.com>
+  Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>
+
+Added/updated translations
+ - cs, courtesy of Marek Černocký
+ - de, courtesy of Christian Kirbach
+ - es, courtesy of Daniel Mustieles
+ - gl, courtesy of Fran Dieguez
+ - he, courtesy of Yaron Shahrabani
+ - it, courtesy of Milo Casagrande
+ - ml, courtesy of Razee Marikar
+ - nb, courtesy of Kjartan Maraas
+ - pl, courtesy of Piotr Drąg
+ - sl, courtesy of Matej Urbančič
+ - sr, courtesy of Мирослав Николић
+ - sr@latin, courtesy of Miroslav Nikolić
+ - ug, courtesy of Gheyret Kenji
+ - zh_HK, courtesy of Chao-Hsiung Liao
+ - zh_TW, courtesy of Chao-Hsiung Liao
+
+0.17.7
+======
+
+A new unstable release for Rygel
+
+Changes compared to 0.17.6:
+
+- Add keywords to .desktop file.
+- Documentation updates.
+- Fix documentation installation when building from tarball.
+- Convert all public classes to use GObject-style construction.
+- Add hack for Windows 7 system SSDP to show up in network neighbourhood as
+  media device and not as a generic UPnP device.
+- Support .smi subtitles.
+- Also apply device downgrade hacks to the media renderer.
+- Fix an issue with translation strings being split.
+
+MediaExport:
+ - Drop unused DBus service. Same result will be achievable via manipulating
+   the settings in the next release.
+ - Some internal refactoring.
+ - Correctly use @refID on items in the virtual folders.
+ - Use proper container class for virtual folders.
+ - Don't loop endlessly when database upgrade fails.
+ - Port to new GUPnP-DLNA API.
+ - Fix an issue when the XDG_ variables are not properly defined.
+
+GStreamer Renderer:
+ - Fix LPCM mime type to be case-insensitive.
+
+GStreamer Media Engine:
+ - Port to new GUPnP-DLNA API.
+
+Changes in dependencies:
+ - GUPnP-DLNA >= 0.9.4.
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=690770
+ - https://bugzilla.gnome.org/show_bug.cgi?id=690360
+ - https://github.com/01org/media-service-upnp/issues/117
+ - https://bugzilla.gnome.org/show_bug.cgi?id=690533
+ - https://bugzilla.gnome.org/show_bug.cgi?id=675186
+ - https://bugzilla.gnome.org/show_bug.cgi?id=692189
+ - https://bugzilla.gnome.org/show_bug.cgi?id=691595
+
+All contributors to this release:
+  Murray Cumming <murrayc@murrayc.com>
+  Jens Georg <jensg@openismus.com>
+  Krzesimir Nowak <krnowak@openismus.com>
+  Daniel Mustieles <daniel.mustieles@gmail.com>
+  Мирослав Николић <miroslavnikolic@rocketmail.com>
+  Regis Merlino <regis.merlino@intel.com>
+  Milo Casagrande <milo@ubuntu.com>
+  Kjartan Maraas <kmaraas@gnome.org>
+  Javier Jardón <javier.jardon@codethink.co.uk>
+  Gheyret Kenji <gheyret@gmail.com>
+  Dušan Kazik <prescott66@gmail.com>
+  Dominique Leuenberger <dimstar@opensuse.org>
+  Choe Hwanjin <choe.hwanjin@gmail.com>
+  Alexander Shopov <ash@kambanaria.org>
+  Akom Chotiphantawanon <knight2000@gmail.com>
+
+Added/updated translations
+ - bg, courtesy of Alexander Shopov
+ - es, courtesy of Daniel Mustieles
+ - it, courtesy of Milo Casagrande
+ - nb, courtesy of Kjartan Maraas
+ - sk, courtesy of Dušan Kazik
+ - sr, courtesy of Мирослав Николић
+ - sr@latin, courtesy of Miroslav Nikolić
+ - th, courtesy of Akom Chotiphantawanon
+ - ug, courtesy of Gheyret Kenji
+
+0.17.6
+======
+
+A new unstable release for Rygel
+
+Changes compared to 0.17.5.1:
+
+- Fix parsing of configuration from environment variables.
+- Remove an ugly hack using leaking symbols in GStreamer media engines.
+- Documentation updates.
+- Example code updates.
+- Silence uncaught error from Thumbnailer when there's no DBus session bus.
+- Add a SD_NA MPEG2 transcoding profile for north american SD-only
+  televisions.
+- Fix bitrates for the AVC_MP4_BL_CIF15_AAC_520 DLNA profile.
+
+GStreamer Renderer:
+ - Fix pc file install and dependencies.
+
+GStreamer Media Engine:
+ - Clean-ups.
+ - Print a proper warning if the transcoding profile is empty instead of
+   showing a critical.
+
+MediaExport:
+ - Add "All" container below each artist.
+ - Make some settings changeable at runtime: "extract-metadata" and
+   "monitor-changes" can now be changed and they will be picked up without the
+   need to restart or kill -HUP rygel.
+ - Fix missing objAdd event in change tracking.
+ - Suppress objMod events from containers that are not tracked.
+ - Remove some triple update events for one update.
+
+MPRIS:
+ - Show a less scary message when no DBus session bus is available.
+
+External:
+ - Show a less scary message when no DBus session bus is available.
+
+Examples:
+ - Various updates and enhancements.
+ - Update fullscreen rendenderer to be closable by keyboard and hide the mouse
+   cursor.
+ - Add a high-quality MPEG2 transcoding preset.
+
+Docs:
+ - Many improvements.
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=676136
+ - https://bugzilla.gnome.org/show_bug.cgi?id=679262
+ - https://bugzilla.gnome.org/show_bug.cgi?id=686676
+
+Bugs addresses in this release, but not fixed completely:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=690772
+
+All contributors to this release:
+  Jens Georg <jensg@openismus.com>
+  Murray Cumming <murrayc@murrayc.com>
+  Yaron Shahrabani <sh.yaron@gmail.com>
+  Piotr Drąg <piotrdrag@gmail.com>
+  Mattias Põldaru <mahfiaz@gmail.com>
+  Kjartan Maraas <kmaraas@gnome.org>
+  Fran Diéguez <fran.dieguez@mabishu.com>
+  Aurimas Černius <aurisc4@gmail.com>
+
+Added/updated translations
+ - et, courtesy of Mattias Põldaru
+ - gl, courtesy of Fran Dieguez
+ - he, courtesy of Yaron Shahrabani
+ - lt, courtesy of Aurimas Černius
+ - nb, courtesy of Kjartan Maraas
+ - pl, courtesy of Piotr Drąg
+
+0.17.5.1
+========
+
+A paperbag release for Rygel
+
+Changes compared to 0.17.5:
+
+- Fix underlinking of some plug-ins.
+
+MediaExport:
+ - Fix database upgrade from schema version 11 to 12
+
+All contributors to this release:
+   Jens Georg <mail@jensge.org>
+
+0.17.5
+======
+
+A new unstable release for Rygel
+
+Changes compared to 0.17.4:
+
+- Correctly announce "content-synchronization" DLNA capability if supported.
+- Move some public classes to GObject-style construction.
+- Drop some obsolete code.
+- Large refactoring and clean-up of the build setup.
+
+Renderer:
+ - Fix issue with internal plug-in in librygel-renderer.
+ - Delay creation of the PlayerController. This fixes a critical in the
+   wrapping GStreamer renderer.
+ - Fix an issue with X_DLNA_SeekTime being always available, even for images.
+ - Fix a typo in the initial state variable notify.
+ - Add renderer-side PlaySpeed support.
+
+Server:
+ - Fix issue with ServiceResetToken being regenerated at each start.
+ - Fix issue with missing search capabilities when the plug-in supports change
+   tracking.
+ - Fix schema location in generated LastChange XML.
+ - Fix issue where only the most recent LastChange event was added to the
+   LastChange XML.
+ - Fix an issue with default parameter set to "this" being ambigous.
+ - Get the SystemUpdateID from the back-end when it supports change tracking.
+
+GStreamer renderer:
+ - Base RygelPlaybinRenderer on RygelMediaRenderer instead of directly
+   extending RygelMediaDevice.
+ - Move the plugin class back into the Playbin plugin.
+
+Examples:
+ - Add a fullscreen renderer.
+ - Fix C renderer plugin example to actually work.
+
+Tests:
+ - Massive overall improvements to drop deprecated Vala constructs, unused and
+   unreachable code to make it possible to compile them with strict valac.
+ - Disable one test for GStreamer media engine.
+
+MediaExport:
+ - Implement tracking of changes.
+ - Persist ServiceResetToken.
+ - Persist systemUpdateID, containerUpdateID and totalDeletedChildCount.
+ - Some file renaming to match coding style.
+ - Don't try to parse each and every text file.
+ - Don't run gst-discoverer on text files.
+
+Docs:
+ - Various updates.
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=689603
+ - https://bugzilla.gnome.org/show_bug.cgi?id=689134
+ - https://bugzilla.gnome.org/show_bug.cgi?id=689135
+ - https://bugzilla.gnome.org/show_bug.cgi?id=689960
+ - https://bugzilla.gnome.org/show_bug.cgi?id=690056
+
+All contributors to this release:
+  Jens Georg <jensg@openismus.com>
+  Murray Cumming <murrayc@murrayc.com>
+  Regis Merlino <regis.merlino@intel.com>
+  Dr.T.Vasudevan <drtvasudevan@gmail.com>
+  Christophe Guiraud <christophe.guiraud@intel.com>
+
+Added/updated translations
+ - ta, courtesy of Dr.T.Vasudevan
+
+0.17.4
+======
+
+A new unstable release for Rygel
+
+Changes compared to 0.17.3:
+
+- Various documentation fixes.
+- Fix .pc file to point to correct version of libgee.
+- Hopefully final fix for building with --disable-valadoc.
+- Change --with-media-engine=none to =simple.
+
+MediaExport:
+ - Add DLNA profile for playlists.
+ - Ignore files starting with ".".
+ - Handle text/plain to accomodate issues with shared-mime-info and missing
+   file extensions.
+
+All contributors to this release:
+  Murray Cumming <murrayc@murrayc.com>
+  Jens Georg <jensg@openismus.com>
+
+Bugs fixed in this release:
+ - https://bugzilla.gnome.org/show_bug.cgi?id=689517
+
+0.17.3
+======
+
+A new unstable release for Rygel
+
+Changes compared to 0.17.2:
+
+- Really bump Vala requirement as announced in previous version.
+- Remove obsolete --enable-test-plugin configure option.
+- Don't run tests by default.
+
+Server:
+ - Add serialisation of containers to DIDL_S playlist format.
+ - Generate thumbnails for native files only.
+ - Add support for playlist items.
+ - Support DIDL_S DLNA profile.
+
+Doc:
+ - Update "Implementing server plugins" docs.
+ - Add "Implementing renderer" docs.
+ - Some general improvements.
+
+Tracker:
+ - Fix building against recent tracker releases.
+
+Renderer:
+ - Mark some strings for translation.
+ - Add PresetNameList to initial notify.
+ - Set correct track numbers.
+ - Support DIDL_S playlists.
+ - Some state notification fixes.
+ - Add GetCurrentTransportActions UPnP call.
+
+Playbin:
+ - Add 3GPP mime-type.
+ - Properly query duration using DURATION_CHANGED message and really check if
+   the pipeline knows its TIME and not just its size.
+
+Examples:
+ - C version of the example renderer.
+
+Media-Export:
+ - Reenable media art extraction.
+ - Fix a critical on harvesting.
+ - Fix an upload issue with the method to mark an item as a place-holder.
+ - Support playlist items.
+
+All contributors to this release:
+  Jens Georg <jensg@openismus.com>
+  Murray Cumming <murrayc@murrayc.com>
+  Krzesimir Nowak <krnowak@openismus.com>
+  Mark Ryan <mark.d.ryan@intel.com>
+
+Bugs fixed in this release
+  - https://bugzilla.gnome.org/show_bug.cgi?id=686638
+
+Known issues:
+ - Transcoding to WMV is not working properly, streams are audio-only.
+
+Changes in dependencies
+  - Vala 0.18
+
+0.17.2
+======
+
+A new unstable release for Rygel
+
+Changes compared to 0.17.1:
+
+- Fix , unescaping and CSV parsing in UpdateObject call.
+- Fix thumbnails for XBox 360.
+- Look for the proper device description XML.
+- Fix regression that caused missing Content-Length headers.
+- More GObject API changes.
+- Fix pkg-config files to not include GStreamer dependency.
+- Port to libgee-0.8 API
+- Remove unneccessary GStreamer dependencies.
+
+MediaExport:
+ - Fix regression introduced in 0.17.2 causing empty containers.
+
+Playbin:
+ - Only report duration of a file if it's really known.
+
+Examples:
+ - C version of the server plug-in.
+
+Media-Engine GStreamer:
+ - Port to GStreamer 1.0 API.
+
+Known issues:
+ - Transcoding to WMV is not working properly, streams are audio-only.
+ - Media art extraction is disabled as it caused crashes/lock-ups.
+
+Changes in dependencies:
+ - GUPnP-DLNA 0.7.0 for GStreamer 1.0 support.
+ - Necessary versions of GStreamer libs have been bumped to 1.0.
+ - Vala version 0.18 for included GStreamer vapis.
+
 0.17.1
 ======
 

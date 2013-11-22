@@ -29,8 +29,13 @@
           <li class="abstract_method"><a href="Rygel.TrackableContainer.add_child.html">add_child</a></li>
           <li class="method">add_child_tracked</li>
           <li class="method"><a href="Rygel.TrackableContainer.clear.html">clear</a></li>
+          <li class="virtual_method"><a href="Rygel.TrackableContainer.get_service_reset_token.html">get_service_reset_token</a></li>
+          <li class="virtual_method"><a href="Rygel.TrackableContainer.get_system_update_id.html">get_system_update_id</a></li>
           <li class="abstract_method"><a href="Rygel.TrackableContainer.remove_child.html">remove_child</a></li>
           <li class="method"><a href="Rygel.TrackableContainer.remove_child_tracked.html">remove_child_tracked</a></li>
+          <li class="virtual_method"><a href="Rygel.TrackableContainer.set_service_reset_token.html">set_service_reset_token</a></li>
+          <li class="signal"><a href="Rygel.TrackableContainer.child_added.html">child_added</a></li>
+          <li class="signal"><a href="Rygel.TrackableContainer.child_removed.html">child_removed</a></li>
         </ul>
       </div>
       <div class="site_content">
@@ -38,6 +43,18 @@
         <hr class="main_hr"/>
         <h2 class="main_title">Description:</h2>
         <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">async</span> <span class="main_keyword">void</span> <b><span css="method">add_child_tracked</span></b> (<span class="main_type"><a href="Rygel.MediaObject.html" class="abstract_class">MediaObject</a></span> object)
+        </div>
+        <div class="description">
+          <p>Add a child object, emitting the #RygelContainer::container_updated signal with the object.</p>
+          <h2 class="main_title">Parameters:</h2>
+          <table class="main_parameter_table">
+            <tr>
+              <td class="main_parameter_table_name">object</td>
+              <td>The child item or child container to be added. </td>
+            </tr>
+          </table>
+          <h2 class="main_title">See also:</h2>
+          <p><code>rygel_trackable_object_remove_child_tracked()</code></p>
         </div>
       </div>
     </div><br/>

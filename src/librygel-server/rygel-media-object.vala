@@ -38,22 +38,37 @@ public abstract class Rygel.MediaObject : GLib.Object {
     private static Regex user_name_regex;
     private static Regex host_name_regex;
 
-    public string id;
-    public string ref_id;
-    public string upnp_class;
-    public uint64 modified;
-    public uint object_update_id;
+    public string id { get; set construct; }
+    public string ref_id { get; set; }
+    public string upnp_class { get; construct set; }
+    public uint64 modified { get; set; }
+    public uint object_update_id { get; set; }
+
+    //TODO: { get; private set; } or, even better,
+    // add virtual set_uri in Object and make add_uri() in Item into set_uri()
+    // and make the uri property single-value.
     public Gee.ArrayList<string> uris;
 
-    // You can keep both a unowned and owned ref to parent of this MediaObject.
+    // You can keep both an unowned and owned ref to parent of this MediaObject.
     // In most cases, one will only need to keep an unowned ref to avoid cyclic
-    // references since usually parent container will keep refs to child items.
-    // However in some cases, one only wants the parent to exist as long as the
-    // child exists and it is in those cases, you will want to use 'parent_ref'.
+    // references since usually the parent container will keep refs to child items.
+    // However, in some cases, one only wants the parent to exist as long as the
+    // child exists and it is in those cases that you will want to use 'parent_ref'.
     //
     // You must set 'parent' if you set 'parent_ref' but the opposite is not
     // mandatory.
-    public unowned MediaContainer parent;
+    public unowned MediaContainer parent {
+        get {
+            return this.parent_ptr;
+        }
+
+        set construct {
+            this.parent_ptr = value;
+        }
+    }
+    // This one is needed only because external plugin needs to access
+    // the address of the parent to add weak pointer.
+    public unowned MediaContainer parent_ptr;
     private MediaContainer _parent_ref;
     public MediaContainer parent_ref {
         get {
@@ -67,12 +82,27 @@ public abstract class Rygel.MediaObject : GLib.Object {
     }
 
     private string _title;
+
+    /* Note that the @@ in the doc comment here is a way of escaping @ in valadoc,
+     * so the real syntax is, for instance, @REALNAME@, which is what appears in
+     * the generated HTML.
+     */
+
+    /**
+     * The human-readable title of this container or item.
+     * These variables will be substituted:
+     *
+     *  - @@REALNAME@ will be substituted by the user's real name.
+     *  - @@USERNAME@ will be substituted by the users's login ID.
+     *  - @@HOSTNAME@ will be substituted by the name of the machine.
+     *  - @@ADDRESS@ will be substituted by the IP address of network interface used for the UpNP communication.
+     */
     public string title {
         get {
             return _title;
         }
 
-        set {
+        set construct {
             try {
                 this._title = real_name_regex.replace_literal
                                         (value,
@@ -95,7 +125,7 @@ public abstract class Rygel.MediaObject : GLib.Object {
         }
     }
 
-    internal abstract OCMFlags ocm_flags { get; }
+    public virtual OCMFlags ocm_flags { get { return OCMFlags.NONE; }}
 
     internal bool restricted {
         get {
@@ -113,7 +143,9 @@ public abstract class Rygel.MediaObject : GLib.Object {
         }
     }
 
-    construct {
+    public override void constructed () {
+        base.constructed ();
+
         uris = new ArrayList<string> ();
     }
 
@@ -154,12 +186,35 @@ public abstract class Rygel.MediaObject : GLib.Object {
         return writables;
     }
 
-    internal abstract DIDLLiteObject serialize (DIDLLiteWriter writer,
-                                                HTTPServer     http_server)
-                                                throws Error;
+    internal abstract DIDLLiteObject? serialize (Serializer serializer,
+                                                 HTTPServer http_server)
+                                                 throws Error;
 
     internal virtual void apply_didl_lite (DIDLLiteObject didl_object) {
         this.title = didl_object.title;
+    }
+
+    // Recursively drop attributes of a certain namespace from a node.
+    private void clean_node (Xml.Node* node, Xml.Ns *ns) {
+        var list = new ArrayList<string> ();
+        var attr = node->properties;
+        while (attr != null) {
+            if (attr->ns == ns) {
+                list.add (attr->name);
+            }
+
+            attr = attr->next;
+        }
+
+        foreach (var name in list) {
+            node->unset_ns_prop (ns, name);
+        }
+
+        var child = node->children;
+        while (child != null) {
+            this.clean_node (child, ns);
+            child = child->next;
+        }
     }
 
     internal async DIDLLiteFragmentResult apply_fragments
@@ -169,8 +224,13 @@ public abstract class Rygel.MediaObject : GLib.Object {
         var result = DIDLLiteFragmentResult.UNKNOWN_ERROR;
 
         try {
-            var writer = new DIDLLiteWriter (null);
+            var writer = new Serializer (SerializerType.GENERIC_DIDL);
             var didl_object = this.serialize (writer, http_server);
+
+            // Drop dlna:* attribute since it fails XSD validation
+            // in gupnp-av. bgo#701637
+            this.clean_node (didl_object.xml_node,
+                             didl_object.dlna_namespace);
 
             result = didl_object.apply_fragments
                                         (current_fragments.to_array (),
@@ -216,12 +276,30 @@ public abstract class Rygel.MediaObject : GLib.Object {
         }
     }
 
+    internal virtual DIDLLiteResource add_resource
+                                        (DIDLLiteObject object,
+                                         string?        uri,
+                                         string         protocol,
+                                         string?        import_uri = null)
+                                         throws Error {
+        var res = object.add_resource ();
+
+        return res;
+    }
+
     protected int compare_int_props (int prop1, int prop2) {
         return (prop1 - prop2).clamp (-1, 1);
     }
 
     private async bool check_writable (File file, Cancellable? cancellable)
                                        throws Error {
+        // Special URI scheme to indicate that this is a writable container
+        // but doesn't have any real filesystem backing
+        if (WritableContainer.WRITABLE_SCHEME.has_prefix
+                                        (file.get_uri_scheme())) {
+            return true;
+        }
+
         if (!file.is_native ()) {
             return false;
         }

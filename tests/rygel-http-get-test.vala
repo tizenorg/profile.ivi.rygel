@@ -43,7 +43,11 @@ public class Rygel.ClientHacks {
         }
     }
 
-    public void apply (MediaItem? item) {
+    public void apply (MediaObject? item) {
+    }
+
+    public bool force_seek () {
+        return false;
     }
 }
 
@@ -93,6 +97,11 @@ public class Rygel.HTTPGetTest : GLib.Object {
 
             return -1;
         }
+
+        /* Avoid some warnings about unused methods: */
+        var item = new VideoItem();
+        assert (!item.is_live_stream());
+        assert (!item.streamable());
 
         return 0;
     }
@@ -217,7 +226,7 @@ public class Rygel.HTTPGetTest : GLib.Object {
 
             yield request.run ();
 
-            assert ((request as HTTPGet).item != null);
+            assert ((request as HTTPGet).object != null);
 
             debug ("status.code: %d", (int) msg.status_code);
             assert (msg.status_code == this.current_request.expected_code);
@@ -373,10 +382,14 @@ internal class Rygel.HTTPIdentityHandler : Rygel.HTTPGetHandler {
     public HTTPIdentityHandler (Cancellable cancellable) {}
 }
 
+internal class Rygel.HTTPPlaylistHandler : Rygel.HTTPGetHandler {
+    public HTTPPlaylistHandler (string? arg, Cancellable cancellable) {}
+
+    public static bool is_supported (string? arg) { return true; }
+}
+
 public abstract class Rygel.MediaItem : Rygel.MediaObject {
     public long size = 1024;
-    public ArrayList<Subtitle> subtitles = new ArrayList<Subtitle> ();
-    public ArrayList<Thumbnail> thumbnails = new ArrayList<Thumbnail> ();
     public ArrayList<string> uris = new ArrayList<string> ();
 
     public bool place_holder = false;
@@ -438,7 +451,7 @@ private class Rygel.VideoItem : AudioItem, VisualItem {
         protected set {}
     }
 
-    public ArrayList<Subtitle> subtitles;
+    public ArrayList<Subtitle> subtitles = new ArrayList<Subtitle> ();
 }
 
 private class Rygel.MusicItem : AudioItem {

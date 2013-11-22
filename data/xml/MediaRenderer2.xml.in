@@ -10,10 +10,11 @@
     <manufacturer>Rygel Developers</manufacturer>
     <manufacturerURL>http://live.gnome.org/Rygel</manufacturerURL>
     <modelName>Rygel</modelName>
-    <modelNumber>0.17.1.10-b85e</modelNumber>
+    <modelNumber>0.19.6</modelNumber>
     <modelURL>http://live.gnome.org/Rygel</modelURL>
     <UDN></UDN>
     <serviceList>
     </serviceList>
+    <dlna:X_DLNADOC>DMR-1.50</dlna:X_DLNADOC>
   </device>
 </root>

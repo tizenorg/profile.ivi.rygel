@@ -5,8 +5,8 @@
 <title>RygelTranscodeManager</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
-<link rel="up" href="ch04.html" title="librygel-server API Reference">
-<link rel="prev" href="RygelVisualItem.html" title="RygelVisualItem">
+<link rel="up" href="api-main-list.html" title="librygel-server API Reference">
+<link rel="prev" href="RygelTrackableContainer.html" title="RygelTrackableContainer">
 <link rel="next" href="RygelTranscoder.html" title="RygelTranscoder">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
@@ -14,8 +14,8 @@
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="RygelVisualItem.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="RygelTrackableContainer.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="api-main-list.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">librygel-server Reference Manual</th>
 <td><a accesskey="n" href="RygelTranscoder.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
@@ -40,21 +40,22 @@
 <div class="refsynopsisdiv">
 <a name="RygelTranscodeManager.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">#define             <a class="link" href="RygelTranscodeManager.html#RYGEL-TYPE-TRANSCODE-MANAGER:CAPS" title="RYGEL_TYPE_TRANSCODE_MANAGER">RYGEL_TYPE_TRANSCODE_MANAGER</a>
-<span class="returnvalue">gchar</span> *             <a class="link" href="RygelTranscodeManager.html#rygel-transcode-manager-create-uri-for-item" title="rygel_transcode_manager_create_uri_for_item ()">rygel_transcode_manager_create_uri_for_item</a>
+<a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="RygelTranscodeManager.html#rygel-transcode-manager-create-uri-for-item" title="rygel_transcode_manager_create_uri_for_item ()">rygel_transcode_manager_create_uri_for_item</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> thumbnail_index</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> subtitle_index</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *transcode_target</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> thumbnail_index</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> subtitle_index</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *transcode_target</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *playlist_target</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="RygelTranscodeManager.html#rygel-transcode-manager-add-resources" title="rygel_transcode_manager_add_resources ()">rygel_transcode_manager_add_resources</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> *self</code></em>,
                                                          <em class="parameter"><code><span class="type">GUPnPDIDLLiteItem</span> *didl_item</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="returnvalue">RygelTranscoder</span></a> *   <a class="link" href="RygelTranscodeManager.html#rygel-transcode-manager-get-transcoder" title="rygel_transcode_manager_get_transcoder ()">rygel_transcode_manager_get_transcoder</a>
                                                         (<em class="parameter"><code><a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *target</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *target</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 struct              <a class="link" href="RygelTranscodeManager.html#RygelTranscodeManager-struct" title="struct RygelTranscodeManager">RygelTranscodeManager</a>;
 struct              <a class="link" href="RygelTranscodeManager.html#RygelTranscodeManagerClass" title="struct RygelTranscodeManagerClass">RygelTranscodeManagerClass</a>;
 </pre>
@@ -62,7 +63,7 @@ struct              <a class="link" href="RygelTranscodeManager.html#RygelTransc
 <div class="refsect1">
 <a name="RygelTranscodeManager.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----RygelTranscodeManager
 </pre>
 </div>
@@ -82,18 +83,41 @@ The type for <a class="link" href="RygelTranscodeManager.html" title="RygelTrans
 <hr>
 <div class="refsect2">
 <a name="rygel-transcode-manager-create-uri-for-item"></a><h3>rygel_transcode_manager_create_uri_for_item ()</h3>
-<pre class="programlisting"><span class="returnvalue">gchar</span> *             rygel_transcode_manager_create_uri_for_item
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             rygel_transcode_manager_create_uri_for_item
                                                         (<em class="parameter"><code><a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> thumbnail_index</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> subtitle_index</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *transcode_target</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> thumbnail_index</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> subtitle_index</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *transcode_target</code></em>,
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *playlist_target</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> instance</td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>item</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>thumbnail_index</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>subtitle_index</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transcode_target</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>playlist_target</code></em> :</span></p></td>
+<td> </td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>
@@ -103,7 +127,7 @@ The type for <a class="link" href="RygelTranscodeManager.html" title="RygelTrans
                                                         (<em class="parameter"><code><a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> *self</code></em>,
                                                          <em class="parameter"><code><span class="type">GUPnPDIDLLiteItem</span> *didl_item</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelMediaItem.html" title="RygelMediaItem"><span class="type">RygelMediaItem</span></a> *item</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -112,8 +136,16 @@ The type for <a class="link" href="RygelTranscodeManager.html" title="RygelTrans
 <td>the <a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> instance</td>
 </tr>
 <tr>
+<td><p><span class="term"><em class="parameter"><code>didl_item</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>item</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore</td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
 </tr>
 </tbody>
 </table></div>
@@ -123,8 +155,8 @@ The type for <a class="link" href="RygelTranscodeManager.html" title="RygelTrans
 <a name="rygel-transcode-manager-get-transcoder"></a><h3>rygel_transcode_manager_get_transcoder ()</h3>
 <pre class="programlisting"><a class="link" href="RygelTranscoder.html" title="RygelTranscoder"><span class="returnvalue">RygelTranscoder</span></a> *   rygel_transcode_manager_get_transcoder
                                                         (<em class="parameter"><code><a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> *self</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *target</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *target</code></em>,
+                                                         <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -133,8 +165,12 @@ The type for <a class="link" href="RygelTranscodeManager.html" title="RygelTrans
 <td>the <a class="link" href="RygelTranscodeManager.html" title="RygelTranscodeManager"><span class="type">RygelTranscodeManager</span></a> instance</td>
 </tr>
 <tr>
+<td><p><span class="term"><em class="parameter"><code>target</code></em> :</span></p></td>
+<td> </td>
+</tr>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>location to store the error occuring, or <code class="literal">NULL</code> to ignore</td>
+<td>location to store the error occuring, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</td>
 </tr>
 </tbody>
 </table></div>
@@ -152,7 +188,7 @@ Responsible for management of all transcoders: # Gets the appropriate transcoder
 <a name="RygelTranscodeManagerClass"></a><h3>struct RygelTranscodeManagerClass</h3>
 <pre class="programlisting">struct RygelTranscodeManagerClass {
 	GObjectClass parent_class;
-	gchar* (*create_uri_for_item) (RygelTranscodeManager* self, RygelMediaItem* item, gint thumbnail_index, gint subtitle_index, const gchar* transcode_target);
+	gchar* (*create_uri_for_item) (RygelTranscodeManager* self, RygelMediaItem* item, gint thumbnail_index, gint subtitle_index, const gchar* transcode_target, const gchar* playlist_target);
 	gchar* (*get_protocol) (RygelTranscodeManager* self);
 	GeeArrayList* (*get_protocol_info) (RygelTranscodeManager* self);
 };
@@ -164,7 +200,7 @@ The class structure for <a class="link" href="RygelTranscodeManager.html#RYGEL-T
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><span class="type">GObjectClass</span> <em class="structfield"><code><a name="RygelTranscodeManagerClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><a href="../gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="RygelTranscodeManagerClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
 </tr>
 <tr>

@@ -2,12 +2,12 @@
 .\"     Title: rygel.conf
 .\"    Author: Jens Georg <mail@jensge.org>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 11/15/2012
+.\"      Date: 09/10/2013
 .\"    Manual: Rygel User Manual
 .\"    Source: rygel
 .\"  Language: English
 .\"
-.TH "RYGEL\&.CONF" "5" "11/15/2012" "rygel" "Rygel User Manual"
+.TH "RYGEL\&.CONF" "5" "09/10/2013" "rygel" "Rygel User Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -64,9 +64,9 @@ will still offer HTTP proxy URLs for its media files but not actively advertise 
 .PP
 \fBinterface=\fR\fB\fIINTERFACE\fR\fR
 .RS 4
-Set the network\-interface
+A list of the network interfaces
 rygel
-listens on\&.
+listens on\&. May be an IP, an interface name or on Linux even the ESSID of a wireless network\&.
 .RE
 .PP
 \fBport=\fR\fB\fIPORT\fR\fR
@@ -88,7 +88,11 @@ Comma\-separated list of
 pairs, allowing to set the log level individually for each domain, where
 \fIDOMAIN\fR
 is eiher
-\fB"*"\fR, "\fBrygel\fR" or the name of a plugin\&. Allowed log levels are 1=critical, 2=error, 3=warning, 4=message/info, 5=debug\&.
+\fB"*"\fR, "\fBrygel\fR" or the name of a plugin\&. Allowed log levels are 1=critical, 2=error, 3=warning, 4=message/info, 5=debug\&. Note that on recent versions of GLib (>= 2\&.36) it is required to set the environment variable
+\fBG_MESSAGES_DEBUG\fR
+to
+\fBall\fR
+to get any debug output\&.
 .RE
 .PP
 \fBplugin\-path=\fR\fB\fIPATH\fR\fR
@@ -200,11 +204,11 @@ You can individually enable or disable plugins by setting this to
 or
 \fBfalse\fR\&.
 .RE
-.SH "MEDIA ENGINE SETTINGS"
+.SH "GSTREAMER MEDIA ENGINE SETTINGS"
 .PP
-The settings in this
-[MediaEngine]
-section are specific to the media engine used\&. This document lists the options available for the
+The settings in the
+[GstMediaEngine]
+section are specific to the Gstreamer media engine, which is the default media engine\&. See the media\-engine setting\&. These following options are available for the
 \m[blue]\fBGStreamer\fR\m[]\&\s-2\u[2]\d\s+2
 media engine\&.
 .PP
@@ -307,6 +311,13 @@ if you do not care about duration or any other meta\-data like artist\&. This sp
 Set to
 \fBfalse\fR
 if you don\*(Aqt want to have new files picked up automatically by rygel\&.
+.RE
+.PP
+\fBvirtual\-folders\fR
+.RS 4
+Set to
+\fBfalse\fR
+if you don\*(Aqt need the virtual folder hierarchy\&.
 .RE
 .SH "PLAYBIN PLUGIN"
 .PP
