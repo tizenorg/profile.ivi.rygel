@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelMediaRendererPlugin</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-renderer Reference Manual">
 <link rel="up" href="api-main-list.html" title="librygel-renderer API Reference">
 <link rel="prev" href="api-main-list.html" title="librygel-renderer API Reference">
 <link rel="next" href="RygelMediaRenderer.html" title="RygelMediaRenderer">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -64,7 +64,7 @@ struct              <a class="link" href="RygelMediaRendererPlugin.html#RygelMed
 <a name="RygelMediaRendererPlugin.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----GUPnPResourceFactory
+   +----<a href="../gupnp/GUPnPResourceFactory.html">GUPnPResourceFactory</a>
          +----RygelPlugin
                +----RygelMediaRendererPlugin
 </pre>
@@ -99,8 +99,11 @@ The type for <a class="link" href="RygelMediaRendererPlugin.html" title="RygelMe
 <a name="rygel-media-renderer-plugin-get-player"></a><h3>rygel_media_renderer_plugin_get_player ()</h3>
 <pre class="programlisting"><a class="link" href="RygelMediaPlayer.html" title="RygelMediaPlayer"><span class="returnvalue">RygelMediaPlayer</span></a> *  rygel_media_renderer_plugin_get_player
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> *self</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> instance</td>
@@ -112,8 +115,11 @@ The type for <a class="link" href="RygelMediaRendererPlugin.html" title="RygelMe
 <a name="rygel-media-renderer-plugin-get-protocol-info"></a><h3>rygel_media_renderer_plugin_get_protocol_info ()</h3>
 <pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             rygel_media_renderer_plugin_get_protocol_info
                                                         (<em class="parameter"><code><a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> *self</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelMediaRendererPlugin.html" title="RygelMediaRendererPlugin"><span class="type">RygelMediaRendererPlugin</span></a> instance</td>
@@ -131,8 +137,11 @@ The type for <a class="link" href="RygelMediaRendererPlugin.html" title="RygelMe
 <p>
 Create an instance of the plugin.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
@@ -164,8 +173,11 @@ Create an instance of the plugin.
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -187,8 +199,11 @@ Get and return the current value of the <a class="link" href="RygelMediaRenderer
 <p>
 Set the value of the <a class="link" href="RygelMediaRendererPlugin.html#RygelMediaRendererPlugin--supported-profiles" title='The "supported-profiles" property'><span class="type">"supported-profiles"</span></a> property to <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -226,8 +241,11 @@ This is the base class for every Rygel UPnP renderer plugin.
 <p>
 The class structure for <a class="link" href="RygelMediaRendererPlugin.html#RYGEL-TYPE-MEDIA-RENDERER-PLUGIN:CAPS" title="RYGEL_TYPE_MEDIA_RENDERER_PLUGIN"><code class="literal">RYGEL_TYPE_MEDIA_RENDERER_PLUGIN</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><span class="type">RygelPluginClass</span> <em class="structfield"><code><a name="RygelMediaRendererPluginClass.parent-class"></a>parent_class</code></em>;</span></p></td>
@@ -235,7 +253,7 @@ The class structure for <a class="link" href="RygelMediaRendererPlugin.html#RYGE
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="RygelMediaRendererPluginClass.get-player"></a>get_player</code></em> ()</span></p></td>
-<td>virtual method called by <a class="link" href="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-player" title="rygel_media_renderer_plugin_get_player ()"><code class="function"><a class="link" href="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-player" title="rygel_media_renderer_plugin_get_player ()"><code class="function">rygel_media_renderer_plugin_get_player()</code></a></code></a>
+<td>virtual method called by <a class="link" href="RygelMediaRendererPlugin.html#rygel-media-renderer-plugin-get-player" title="rygel_media_renderer_plugin_get_player ()"><code class="function">rygel_media_renderer_plugin_get_player()</code></a>
 </td>
 </tr>
 </tbody>
@@ -253,6 +271,6 @@ The class structure for <a class="link" href="RygelMediaRendererPlugin.html#RYGE
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

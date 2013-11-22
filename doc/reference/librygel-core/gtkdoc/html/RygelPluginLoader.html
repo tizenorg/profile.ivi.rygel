@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelPluginLoader</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-core Reference Manual">
 <link rel="up" href="api-main-list-c.html" title="librygel-core API Reference">
 <link rel="prev" href="RygelDescriptionFile.html" title="RygelDescriptionFile">
 <link rel="next" href="RygelIconInfo.html" title="RygelIconInfo">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -96,8 +96,11 @@ The type for <a class="link" href="RygelPluginLoader.html" title="RygelPluginLoa
 <p>
 Checks if a plugin is disabled by the user
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -120,8 +123,11 @@ Checks if a plugin is disabled by the user
 <a name="rygel-plugin-loader-add-plugin"></a><h3>rygel_plugin_loader_add_plugin ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                rygel_plugin_loader_add_plugin      (<em class="parameter"><code><a class="link" href="RygelPluginLoader.html" title="RygelPluginLoader"><span class="type">RygelPluginLoader</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="type">RygelPlugin</span></a> *plugin</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -140,8 +146,11 @@ Checks if a plugin is disabled by the user
 <pre class="programlisting"><a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="returnvalue">RygelPlugin</span></a> *       rygel_plugin_loader_get_plugin_by_name
                                                         (<em class="parameter"><code><a class="link" href="RygelPluginLoader.html" title="RygelPluginLoader"><span class="type">RygelPluginLoader</span></a> *self</code></em>,
                                                          <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -158,8 +167,11 @@ Checks if a plugin is disabled by the user
 <div class="refsect2">
 <a name="rygel-plugin-loader-list-plugins"></a><h3>rygel_plugin_loader_list_plugins ()</h3>
 <pre class="programlisting"><span class="returnvalue">GeeCollection</span> *     rygel_plugin_loader_list_plugins    (<em class="parameter"><code><a class="link" href="RygelPluginLoader.html" title="RygelPluginLoader"><span class="type">RygelPluginLoader</span></a> *self</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
 <td>the <a class="link" href="RygelPluginLoader.html" title="RygelPluginLoader"><span class="type">RygelPluginLoader</span></a> instance</td>
@@ -195,8 +207,11 @@ This class is responsible for plugin loading.
 <p>
 The class structure for <a class="link" href="RygelPluginLoader.html#RYGEL-TYPE-PLUGIN-LOADER:CAPS" title="RYGEL_TYPE_PLUGIN_LOADER"><code class="literal">RYGEL_TYPE_PLUGIN_LOADER</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><a class="link" href="RygelRecursiveModuleLoader.html#RygelRecursiveModuleLoaderClass" title="struct RygelRecursiveModuleLoaderClass"><span class="type">RygelRecursiveModuleLoaderClass</span></a> <em class="structfield"><code><a name="RygelPluginLoaderClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
@@ -211,8 +226,11 @@ The class structure for <a class="link" href="RygelPluginLoader.html#RYGEL-TYPE-
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="RygelPluginLoader.html" title="RygelPluginLoader"><span class="type">RygelPluginLoader</span></a> *plugin_loader,
                                                         <a class="link" href="RygelPlugin.html" title="RygelPlugin"><span class="type">RygelPlugin</span></a>       *plugin,
                                                         <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>           user_data)          : <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>plugin_loader</code></em> :</span></p></td>
@@ -233,6 +251,6 @@ The class structure for <a class="link" href="RygelPluginLoader.html#RYGEL-TYPE-
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

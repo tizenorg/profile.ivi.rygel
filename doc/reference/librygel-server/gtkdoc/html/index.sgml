@@ -34,6 +34,8 @@
 <ANCHOR id="RygelDataSource.description" href="librygel-server/RygelDataSource.html#RygelDataSource.description">
 <ANCHOR id="RygelDataSource.details" href="librygel-server/RygelDataSource.html#RygelDataSource.details">
 <ANCHOR id="RygelDataSourceError" href="librygel-server/RygelDataSource.html#RygelDataSourceError">
+<ANCHOR id="RYGEL-DATA-SOURCE-ERROR-GENERAL:CAPS" href="librygel-server/RygelDataSource.html#RYGEL-DATA-SOURCE-ERROR-GENERAL:CAPS">
+<ANCHOR id="RYGEL-DATA-SOURCE-ERROR-SEEK-FAILED:CAPS" href="librygel-server/RygelDataSource.html#RYGEL-DATA-SOURCE-ERROR-SEEK-FAILED:CAPS">
 <ANCHOR id="rygel-data-source-start" href="librygel-server/RygelDataSource.html#rygel-data-source-start">
 <ANCHOR id="rygel-data-source-freeze" href="librygel-server/RygelDataSource.html#rygel-data-source-freeze">
 <ANCHOR id="rygel-data-source-thaw" href="librygel-server/RygelDataSource.html#rygel-data-source-thaw">
@@ -64,7 +66,11 @@
 <ANCHOR id="RygelHTTPSeek-struct" href="librygel-server/RygelHTTPSeek.html#RygelHTTPSeek-struct">
 <ANCHOR id="RygelHTTPSeekClass" href="librygel-server/RygelHTTPSeek.html#RygelHTTPSeekClass">
 <ANCHOR id="RygelHTTPSeekType-enum" href="librygel-server/RygelHTTPSeek.html#RygelHTTPSeekType-enum">
+<ANCHOR id="RYGEL-HTTP-SEEK-TYPE-BYTE:CAPS" href="librygel-server/RygelHTTPSeek.html#RYGEL-HTTP-SEEK-TYPE-BYTE:CAPS">
+<ANCHOR id="RYGEL-HTTP-SEEK-TYPE-TIME:CAPS" href="librygel-server/RygelHTTPSeek.html#RYGEL-HTTP-SEEK-TYPE-TIME:CAPS">
 <ANCHOR id="RygelHTTPSeekError" href="librygel-server/RygelHTTPSeek.html#RygelHTTPSeekError">
+<ANCHOR id="RYGEL-HTTP-SEEK-ERROR-INVALID-RANGE:CAPS" href="librygel-server/RygelHTTPSeek.html#RYGEL-HTTP-SEEK-ERROR-INVALID-RANGE:CAPS">
+<ANCHOR id="RYGEL-HTTP-SEEK-ERROR-OUT-OF-RANGE:CAPS" href="librygel-server/RygelHTTPSeek.html#RYGEL-HTTP-SEEK-ERROR-OUT-OF-RANGE:CAPS">
 <ANCHOR id="RygelHTTPSeek.property-details" href="librygel-server/RygelHTTPSeek.html#RygelHTTPSeek.property-details">
 <ANCHOR id="RygelHTTPSeek--length" href="librygel-server/RygelHTTPSeek.html#RygelHTTPSeek--length">
 <ANCHOR id="RygelHTTPSeek--msg" href="librygel-server/RygelHTTPSeek.html#RygelHTTPSeek--msg">
@@ -101,6 +107,8 @@
 <ANCHOR id="RygelLogicalExpression-struct" href="librygel-server/RygelLogicalExpression.html#RygelLogicalExpression-struct">
 <ANCHOR id="RygelLogicalExpressionClass" href="librygel-server/RygelLogicalExpression.html#RygelLogicalExpressionClass">
 <ANCHOR id="RygelLogicalOperator-enum" href="librygel-server/RygelLogicalExpression.html#RygelLogicalOperator-enum">
+<ANCHOR id="RYGEL-LOGICAL-OPERATOR-AND:CAPS" href="librygel-server/RygelLogicalExpression.html#RYGEL-LOGICAL-OPERATOR-AND:CAPS">
+<ANCHOR id="RYGEL-LOGICAL-OPERATOR-OR:CAPS" href="librygel-server/RygelLogicalExpression.html#RYGEL-LOGICAL-OPERATOR-OR:CAPS">
 <ANCHOR id="RygelMediaArtStore" href="librygel-server/RygelMediaArtStore.html">
 <ANCHOR id="RygelMediaArtStore.synopsis" href="librygel-server/RygelMediaArtStore.html#RygelMediaArtStore.synopsis">
 <ANCHOR id="RygelMediaArtStore.object-hierarchy" href="librygel-server/RygelMediaArtStore.html#RygelMediaArtStore.object-hierarchy">
@@ -148,6 +156,9 @@
 <ANCHOR id="RygelMediaContainer-struct" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer-struct">
 <ANCHOR id="RygelMediaContainerClass" href="librygel-server/RygelMediaContainer.html#RygelMediaContainerClass">
 <ANCHOR id="RygelObjectEventType-enum" href="librygel-server/RygelMediaContainer.html#RygelObjectEventType-enum">
+<ANCHOR id="RYGEL-OBJECT-EVENT-TYPE-ADDED:CAPS" href="librygel-server/RygelMediaContainer.html#RYGEL-OBJECT-EVENT-TYPE-ADDED:CAPS">
+<ANCHOR id="RYGEL-OBJECT-EVENT-TYPE-MODIFIED:CAPS" href="librygel-server/RygelMediaContainer.html#RYGEL-OBJECT-EVENT-TYPE-MODIFIED:CAPS">
+<ANCHOR id="RYGEL-OBJECT-EVENT-TYPE-DELETED:CAPS" href="librygel-server/RygelMediaContainer.html#RYGEL-OBJECT-EVENT-TYPE-DELETED:CAPS">
 <ANCHOR id="RygelMediaContainer.property-details" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer.property-details">
 <ANCHOR id="RygelMediaContainer--all-child-count" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--all-child-count">
 <ANCHOR id="RygelMediaContainer--child-count" href="librygel-server/RygelMediaContainer.html#RygelMediaContainer--child-count">
@@ -172,6 +183,7 @@
 <ANCHOR id="RygelMediaEngine-struct" href="librygel-server/RygelMediaEngine.html#RygelMediaEngine-struct">
 <ANCHOR id="RygelMediaEngineClass" href="librygel-server/RygelMediaEngine.html#RygelMediaEngineClass">
 <ANCHOR id="RygelMediaEngineError" href="librygel-server/RygelMediaEngine.html#RygelMediaEngineError">
+<ANCHOR id="RYGEL-MEDIA-ENGINE-ERROR-NOT-FOUND:CAPS" href="librygel-server/RygelMediaEngine.html#RYGEL-MEDIA-ENGINE-ERROR-NOT-FOUND:CAPS">
 <ANCHOR id="RygelMediaItem" href="librygel-server/RygelMediaItem.html">
 <ANCHOR id="RygelMediaItem.synopsis" href="librygel-server/RygelMediaItem.html#RygelMediaItem.synopsis">
 <ANCHOR id="RygelMediaItem.object-hierarchy" href="librygel-server/RygelMediaItem.html#RygelMediaItem.object-hierarchy">
@@ -223,6 +235,7 @@
 <ANCHOR id="rygel-media-object-get-writable-finish" href="librygel-server/RygelMediaObject.html#rygel-media-object-get-writable-finish">
 <ANCHOR id="rygel-media-object-get-writables" href="librygel-server/RygelMediaObject.html#rygel-media-object-get-writables">
 <ANCHOR id="rygel-media-object-get-writables-finish" href="librygel-server/RygelMediaObject.html#rygel-media-object-get-writables-finish">
+<ANCHOR id="rygel-media-object-serialize" href="librygel-server/RygelMediaObject.html#rygel-media-object-serialize">
 <ANCHOR id="rygel-media-object-compare-string-props" href="librygel-server/RygelMediaObject.html#rygel-media-object-compare-string-props">
 <ANCHOR id="rygel-media-object-compare-int-props" href="librygel-server/RygelMediaObject.html#rygel-media-object-compare-int-props">
 <ANCHOR id="rygel-media-object-get-id" href="librygel-server/RygelMediaObject.html#rygel-media-object-get-id">
@@ -536,6 +549,7 @@
 <ANCHOR id="RygelWritableContainer.description" href="librygel-server/RygelWritableContainer.html#RygelWritableContainer.description">
 <ANCHOR id="RygelWritableContainer.details" href="librygel-server/RygelWritableContainer.html#RygelWritableContainer.details">
 <ANCHOR id="RygelWritableContainerError" href="librygel-server/RygelWritableContainer.html#RygelWritableContainerError">
+<ANCHOR id="RYGEL-WRITABLE-CONTAINER-ERROR-NOT-IMPLEMENTED:CAPS" href="librygel-server/RygelWritableContainer.html#RYGEL-WRITABLE-CONTAINER-ERROR-NOT-IMPLEMENTED:CAPS">
 <ANCHOR id="rygel-writable-container-can-create" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-can-create">
 <ANCHOR id="rygel-writable-container-add-item" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-add-item">
 <ANCHOR id="rygel-writable-container-add-item-finish" href="librygel-server/RygelWritableContainer.html#rygel-writable-container-add-item-finish">

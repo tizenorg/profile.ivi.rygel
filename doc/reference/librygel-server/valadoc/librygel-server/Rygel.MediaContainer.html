@@ -45,6 +45,7 @@
           <li class="virtual_method"><a href="Rygel.MediaContainer.constructed.html">constructed</a></li>
           <li class="abstract_method"><a href="Rygel.MediaContainer.find_object.html">find_object</a></li>
           <li class="abstract_method"><a href="Rygel.MediaContainer.get_children.html">get_children</a></li>
+          <li class="virtual_method"><a href="Rygel.MediaContainer.serialize.html">serialize</a></li>
           <li class="method"><a href="Rygel.MediaContainer.updated.html">updated</a></li>
           <li class="signal"><a href="Rygel.MediaContainer.container_updated.html">container_updated</a></li>
           <li class="signal"><a href="Rygel.MediaContainer.sub_tree_updates_finished.html">sub_tree_updates_finished</a></li>
@@ -60,8 +61,8 @@
         <img class="main_diagram" usemap="#Rygel.MediaContainer" alt="Object hierarchy for MediaContainer" src="img/Rygel.MediaContainer.png"/>
 
       <map id="Rygel.MediaContainer" name="Rygel.MediaContainer">
-<area shape="rect" id="node1" href="Rygel.MediaContainer.html" title="Rygel.MediaContainer" alt="" coords="5,197,192,245"/>
-<area shape="rect" id="node2" href="Rygel.MediaObject.html" title="Rygel.MediaObject" alt="" coords="16,101,181,149"/>
+<area shape="rect" id="node1" href="Rygel.MediaContainer.html" title="Rygel.MediaContainer" alt="" coords="5,197,189,245"/>
+<area shape="rect" id="node2" href="Rygel.MediaObject.html" title="Rygel.MediaObject" alt="" coords="16,101,179,149"/>
 </map>
 
         <h2 class="main_title">Description:</h2>
@@ -227,6 +228,10 @@
                 <div class="leaf_brief_description"><span class="brief_description">This method should be called each time this container is updated.
                   </span>
                 </div></li>
+              <li class="virtual_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">override</span> <span class="main_type"><code>DIDLLiteObject</code></span>? <b><a href="Rygel.MediaContainer.serialize.html" class="virtual_method">serialize</a></b> (<span class="main_type"><a href="Rygel.Serializer.html" class="class">Serializer</a></span> serializer, <span class="main_type"><a href="Rygel.HTTPServer.html" class="class">HTTPServer</a></span> http_server) <span class="main_keyword">throws</span> <span class="main_type"><code>Error</code></span>
+                </span>
+                <div class="leaf_brief_description">
+                </div></li>
             </ul>
             <h3 class="main_title">Signals:</h3>
             <ul class="navi_inline">
@@ -282,11 +287,12 @@
                       <li class="virtual_property"><a href="Rygel.MediaObject.ocm_flags.html">ocm_flags</a></li>
                       <li class="virtual_method"><a href="Rygel.MediaObject.constructed.html">constructed</a></li>
                       <li class="method"><a href="Rygel.MediaObject.get_writable.html">get_writable</a></li>
+                      <li class="method"><a href="Rygel.MediaObject.get_writables.html">get_writables</a></li>
                     </ul>
                   </div>
                   <div class="column">
                     <ul class="navi_inline">
-                      <li class="method"><a href="Rygel.MediaObject.get_writables.html">get_writables</a></li>
+                      <li class="abstract_method"><a href="Rygel.MediaObject.serialize.html">serialize</a></li>
                       <li class="method"><a href="Rygel.MediaObject.compare_string_props.html">compare_string_props</a></li>
                       <li class="method"><a href="Rygel.MediaObject.compare_int_props.html">compare_int_props</a></li>
                       <li class="field"><a href="Rygel.MediaObject.uris.html">uris</a></li>

@@ -26,7 +26,9 @@
 <ANCHOR id="RygelPlaybinPlayerClass" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayerClass">
 <ANCHOR id="RygelPlaybinPlayer.property-details" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer.property-details">
 <ANCHOR id="RygelPlaybinPlayer--allowed-playback-speeds" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--allowed-playback-speeds">
+<ANCHOR id="RygelPlaybinPlayer--byte-position" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--byte-position">
 <ANCHOR id="RygelPlaybinPlayer--can-seek" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--can-seek">
+<ANCHOR id="RygelPlaybinPlayer--can-seek-bytes" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--can-seek-bytes">
 <ANCHOR id="RygelPlaybinPlayer--content-features" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--content-features">
 <ANCHOR id="RygelPlaybinPlayer--duration" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--duration">
 <ANCHOR id="RygelPlaybinPlayer--metadata" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--metadata">
@@ -35,6 +37,7 @@
 <ANCHOR id="RygelPlaybinPlayer--playback-state" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--playback-state">
 <ANCHOR id="RygelPlaybinPlayer--playbin" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--playbin">
 <ANCHOR id="RygelPlaybinPlayer--position" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--position">
+<ANCHOR id="RygelPlaybinPlayer--size" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--size">
 <ANCHOR id="RygelPlaybinPlayer--supported-profiles" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--supported-profiles">
 <ANCHOR id="RygelPlaybinPlayer--uri" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--uri">
 <ANCHOR id="RygelPlaybinPlayer--volume" href="librygel-renderer-gst/RygelPlaybinPlayer.html#RygelPlaybinPlayer--volume">

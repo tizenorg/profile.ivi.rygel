@@ -2,11 +2,14 @@
  * Copyright (C) 2008 OpenedHand Ltd.
  * Copyright (C) 2009,2010 Nokia Corporation.
  * Copyright (C) 2012 Openismus GmbH.
+ * Copyright (C) 2013  Cable Television Laboratories, Inc.
  *
  * Author: Jorn Baayen <jorn@openedhand.com>
  *         Zeeshan Ali (Khattak) <zeeshanak@gnome.org>
  *                               <zeeshan.ali@nokia.com>
  *         Jens Georg <jensg@openismus.com>
+ *         Neha Shanbhag <N.Shanbhag@cablelabs.com>
+ *         Sivakumar Mani <siva@orexel.com>
  *
  * Rygel is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -78,6 +81,16 @@ internal class Rygel.AVTransport : Service {
         }
     }
 
+    public string playback_medium {
+        get {
+            if (this.controller.uri == "") {
+                return "None";
+            } else {
+                return "Network";
+            }
+        }
+    }
+
     public string speed {
         owned get {
             return this.player.playback_speed;
@@ -135,6 +148,8 @@ internal class Rygel.AVTransport : Service {
         action_invoked["Seek"].connect (this.seek_cb);
         action_invoked["Next"].connect (this.next_cb);
         action_invoked["Previous"].connect (this.previous_cb);
+        action_invoked["X_DLNA_GetBytePositionInfo"].connect
+                                        (this.x_dlna_get_byte_position_info_cb);
 
         this.controller.notify["playback-state"].connect (this.notify_state_cb);
         this.controller.notify["n-tracks"].connect (this.notify_n_tracks_cb);
@@ -152,12 +167,11 @@ internal class Rygel.AVTransport : Service {
                 !proxy.has_prefix ("https://")) {
                 proxy = "http://" + proxy;
             }
-            this.session = new SessionAsync.with_options (Soup.SESSION_PROXY_URI,
-                                                          new Soup.URI (proxy));
+            this.session = new Session.with_options (Soup.SESSION_PROXY_URI,
+                                                     new Soup.URI (proxy));
         } else {
-            this.session = new SessionAsync ();
+            this.session = new Session ();
         }
-        this.session.add_feature_by_type (typeof (Soup.ProxyResolverDefault));
         this.protocol_info = plugin.get_protocol_info ();
     }
 
@@ -177,9 +191,9 @@ internal class Rygel.AVTransport : Service {
         log.log ("CurrentTransportActions",
                  this.controller.current_transport_actions);
         log.log ("TransportStatus",              this.status);
-        log.log ("PlaybackStorageMedium",        "NOT_IMPLEMENTED");
+        log.log ("PlaybackStorageMedium",        this.playback_medium);
         log.log ("RecordStorageMedium",          "NOT_IMPLEMENTED");
-        log.log ("PossiblePlaybackStorageMedia", "NOT_IMPLEMENTED");
+        log.log ("PossiblePlaybackStorageMedia", "None,Network");
         log.log ("PossibleRecordStorageMedia",   "NOT_IMPLEMENTED");
         log.log ("CurrentPlayMode",              this.mode);
         log.log ("TransportPlaySpeed",           this.player.playback_speed);
@@ -247,10 +261,10 @@ internal class Rygel.AVTransport : Service {
             message.request_headers.append ("getContentFeatures.dlna.org",
                                             "1");
             message.finished.connect ((msg) => {
-                if ((msg.status_code == KnownStatusCode.MALFORMED ||
-                     msg.status_code == KnownStatusCode.BAD_REQUEST ||
-                     msg.status_code == KnownStatusCode.METHOD_NOT_ALLOWED ||
-                     msg.status_code == KnownStatusCode.NOT_IMPLEMENTED) &&
+                if ((msg.status_code == Status.MALFORMED ||
+                     msg.status_code == Status.BAD_REQUEST ||
+                     msg.status_code == Status.METHOD_NOT_ALLOWED ||
+                     msg.status_code == Status.NOT_IMPLEMENTED) &&
                     msg.method == "HEAD") {
                     debug ("Peer does not support HEAD, trying GET");
                     msg.method = "GET";
@@ -263,7 +277,7 @@ internal class Rygel.AVTransport : Service {
                     return;
                 }
 
-                if (msg.status_code != KnownStatusCode.OK) {
+                if (msg.status_code != Status.OK) {
                     warning ("Failed to access %s: %s",
                              _uri,
                              msg.reason_phrase);
@@ -312,6 +326,10 @@ internal class Rygel.AVTransport : Service {
         } else {
             this.controller.metadata = _metadata;
             this.controller.uri = _uri;
+
+            this.track_metadata = _metadata;
+            this.track_uri = _uri;
+
             if (_uri == "") {
                 this.controller.n_tracks = 0;
                 this.controller.track = 0;
@@ -369,7 +387,7 @@ internal class Rygel.AVTransport : Service {
                         "NOT_IMPLEMENTED",
                     "PlayMedium",
                         typeof (string),
-                        "NOT_IMPLEMENTED",
+                        this.playback_medium,
                     "RecordMedium",
                         typeof (string),
                         "NOT_IMPLEMENTED",
@@ -418,7 +436,7 @@ internal class Rygel.AVTransport : Service {
                         "NOT_IMPLEMENTED",
                     "PlayMedium",
                         typeof (string),
-                        "NOT_IMPLEMENTED",
+                        this.playback_medium,
                     "RecordMedium",
                         typeof (string),
                         "NOT_IMPLEMENTED",
@@ -504,7 +522,7 @@ internal class Rygel.AVTransport : Service {
 
         action.set ("PlayMedia",
                         typeof (string),
-                        "NOT_IMPLEMENTED",
+                        "None,Network",
                     "RecMedia",
                         typeof (string),
                         "NOT_IMPLEMENTED",
@@ -555,8 +573,9 @@ internal class Rygel.AVTransport : Service {
             return;
         }
 
-        this.player.playback_state = "PLAYING";
+        // Speed change will take effect when playback state is changed
         this.player.playback_speed = speed;
+        this.player.playback_state = "PLAYING";
 
         action.return ();
     }
@@ -593,10 +612,45 @@ internal class Rygel.AVTransport : Service {
         switch (unit) {
         case "ABS_TIME":
         case "REL_TIME":
-            debug ("Seeking to %s.", target);
+            var seek_target = TimeUtils.time_from_string (target);
+            if (unit != "ABS_TIME") {
+                seek_target += this.player.position;
+            }
+            debug ("Seeking to %lld sec", seek_target / TimeSpan.SECOND);
 
-            if (!this.player.seek (TimeUtils.time_from_string (target))) {
+            if (!this.player.can_seek) {
                 action.return_error (710, _("Seek mode not supported"));
+
+                return;
+            }
+
+            if (!this.player.seek (seek_target)) {
+                action.return_error (711, _("Illegal seek target"));
+
+                return;
+            }
+
+            action.return ();
+
+            return;
+        case "REL_COUNT":
+        case "X_DLNA_REL_BYTE":
+        case "ABS_COUNT":
+            var seek_target = int64.parse (target);
+
+            if (unit != "ABS_COUNT") {
+                seek_target += this.player.byte_position;
+            }
+            debug ("Seeking to %lld bytes.", seek_target);
+
+            if (!this.player.can_seek_bytes) {
+                action.return_error (710, _("Seek mode not supported"));
+
+                return;
+            }
+
+            if (!this.player.seek_bytes (seek_target)) {
+                action.return_error (711, _("Illegal seek target"));
 
                 return;
             }
@@ -640,6 +694,38 @@ internal class Rygel.AVTransport : Service {
         } else {
             action.return_error (711, _("Illegal seek target"));
         }
+    }
+
+    private void x_dlna_get_byte_position_info_cb (Service       service,
+                                                   ServiceAction action) {
+        if (!this.check_instance_id (action)) {
+            return;
+        }
+
+        if (this.controller.uri == "") {
+            action.set ("TrackSize",
+                            typeof (string),
+                            "",
+                        "RelByte",
+                            typeof (string),
+                            "",
+                        "AbsByte",
+                            typeof (string),
+                            "");
+        } else {
+            var position = this.player.byte_position.to_string ();
+            action.set ("TrackSize",
+                            typeof (string),
+                            this.player.size.to_string (),
+                        "RelByte",
+                            typeof (string),
+                            position,
+                        "AbsByte",
+                            typeof (string),
+                            position);
+        }
+
+        action.return ();
     }
 
     private void notify_state_cb (Object player, ParamSpec p) {
@@ -722,7 +808,7 @@ internal class Rygel.AVTransport : Service {
         return result;
     }
 
-    private bool is_playlist (string mime, string? features) {
+    private bool is_playlist (string? mime, string? features) {
         return mime == "text/xml" && features != null &&
                features.has_prefix ("DLNA.ORG_PN=DIDL_S");
     }

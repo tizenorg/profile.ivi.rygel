@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelMediaServerPlugin</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-server Reference Manual">
 <link rel="up" href="api-main-list.html" title="librygel-server API Reference">
 <link rel="prev" href="RygelMediaServer.html" title="RygelMediaServer">
 <link rel="next" href="RygelMusicItem.html" title="RygelMusicItem">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -62,7 +62,7 @@ struct              <a class="link" href="RygelMediaServerPlugin.html#RygelMedia
 <a name="RygelMediaServerPlugin.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   <a href="../gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----GUPnPResourceFactory
+   +----<a href="../gupnp/GUPnPResourceFactory.html">GUPnPResourceFactory</a>
          +----RygelPlugin
                +----RygelMediaServerPlugin
 </pre>
@@ -102,8 +102,11 @@ The type for <a class="link" href="RygelMediaServerPlugin.html" title="RygelMedi
 <p>
 Get and return the current value of the <a class="link" href="RygelMediaServerPlugin.html#RygelMediaServerPlugin--root-container" title='The "root-container" property'><span class="type">"root-container"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -132,8 +135,11 @@ The list of DLNA profiles the MediaServer in this plugin will accept files as up
 <p>Can be a subset of :supported_profiles. If set to <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, it will be reset to :supported_profiles.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -163,8 +169,11 @@ The list of DLNA profiles the MediaServer in this plugin will accept files as up
 <p>Can be a subset of :supported_profiles. If set to <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, it will be reset to :supported_profiles.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -194,8 +203,11 @@ The list of DLNA profiles the MediaServer in this plugin will be able to serve.
 <p>By default it will be the supported profiles of the <a class="link" href="RygelMediaEngine.html" title="RygelMediaEngine"><span class="type">RygelMediaEngine</span></a>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -226,8 +238,11 @@ The list of DLNA profiles the MediaServer in this plugin will be able to serve.
 <p>By default it will be the supported profiles of the <a class="link" href="RygelMediaEngine.html" title="RygelMediaEngine"><span class="type">RygelMediaEngine</span></a>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
@@ -264,8 +279,11 @@ This is the base class for every Rygel implementation of a UPnP media server. It
 <p>
 The class structure for <a class="link" href="RygelMediaServerPlugin.html#RYGEL-TYPE-MEDIA-SERVER-PLUGIN:CAPS" title="RYGEL_TYPE_MEDIA_SERVER_PLUGIN"><code class="literal">RYGEL_TYPE_MEDIA_SERVER_PLUGIN</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="type">RygelPluginClass</span> <em class="structfield"><code><a name="RygelMediaServerPluginClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>the parent class structure</td>
@@ -311,6 +329,6 @@ The list of DLNA profiles the MediaServer in this plugin will accept files as up
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>

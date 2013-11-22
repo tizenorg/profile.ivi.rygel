@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RygelXMLUtils</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="librygel-core Reference Manual">
 <link rel="up" href="api-main-list-c.html" title="librygel-core API Reference">
 <link rel="prev" href="RygelMetaConfig.html" title="RygelMetaConfig">
 <link rel="next" href="RygelStateMachine.html" title="RygelStateMachine">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -88,8 +88,11 @@ The type for <a class="link" href="RygelXMLUtils.html" title="RygelXMLUtils"><sp
 <a name="rygel-xml-utils-get-element"></a><h3>rygel_xml_utils_get_element ()</h3>
 <pre class="programlisting"><span class="returnvalue">xmlNode</span> *           rygel_xml_utils_get_element         (<em class="parameter"><code><span class="type">xmlNode</span> *node</code></em>,
                                                          <em class="parameter"><code>...</code></em>);</pre>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
@@ -117,8 +120,11 @@ XML utility API.
 <p>
 Increases the reference count of <em class="parameter"><code>object</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>instance</code></em> :</span></p></td>
@@ -139,8 +145,11 @@ Increases the reference count of <em class="parameter"><code>object</code></em>.
 <p>
 Decreases the reference count of <em class="parameter"><code>object</code></em>. When its reference count drops to 0, the object is finalized (i.e. its memory is freed).
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>instance</code></em> :</span></p></td>
 <td>a <a class="link" href="RygelXMLUtils.html" title="RygelXMLUtils"><span class="type">RygelXMLUtils</span></a>.</td>
@@ -161,8 +170,11 @@ Creates a new <a href="../gobject/gobject-Standard-Parameter-and-Value-Types.htm
 <p>
 See <a href="../gobject/gobject-GParamSpec.html#g-param-spec-internal"><code class="function"><GTKDOCLINK HREF="g-param-spec-internal"><code class="function">g_param_spec_internal()</code></a></code></GTKDOCLINK> for details on property names.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
@@ -197,13 +209,16 @@ See <a href="../gobject/gobject-GParamSpec.html#g-param-spec-internal"><code cla
 Set the contents of a <a class="link" href="RygelXMLUtils.html#RYGEL-TYPE-XML-UTILS:CAPS" title="RYGEL_TYPE_XML_UTILS"><code class="literal">RYGEL_TYPE_XML_UTILS</code></a> derived <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> to <em class="parameter"><code>v_object</code></em>.
 </p>
 <p>
-<a class="link" href="RygelXMLUtils.html#rygel-value-set-xml-utils" title="rygel_value_set_xml_utils ()"><code class="function"><a class="link" href="RygelXMLUtils.html#rygel-value-set-xml-utils" title="rygel_value_set_xml_utils ()"><code class="function">rygel_value_set_xml_utils()</code></a></code></a> increases the reference count of <em class="parameter"><code>v_object</code></em> (the <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> holds a reference to <em class="parameter"><code>v_object</code></em>). If you do not wish to increase the reference count of the object (i.e. you wish to pass your current reference to the <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> because you no longer need it), use <a class="link" href="RygelXMLUtils.html#rygel-value-take-xml-utils" title="rygel_value_take_xml_utils ()"><code class="function"><a class="link" href="RygelXMLUtils.html#rygel-value-take-xml-utils" title="rygel_value_take_xml_utils ()"><code class="function">rygel_value_take_xml_utils()</code></a></code></a> instead.
+<a class="link" href="RygelXMLUtils.html#rygel-value-set-xml-utils" title="rygel_value_set_xml_utils ()"><code class="function">rygel_value_set_xml_utils()</code></a> increases the reference count of <em class="parameter"><code>v_object</code></em> (the <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> holds a reference to <em class="parameter"><code>v_object</code></em>). If you do not wish to increase the reference count of the object (i.e. you wish to pass your current reference to the <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> because you no longer need it), use <a class="link" href="RygelXMLUtils.html#rygel-value-take-xml-utils" title="rygel_value_take_xml_utils ()"><code class="function">rygel_value_take_xml_utils()</code></a> instead.
 </p>
 <p>
 It is important that your <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> holds a reference to <em class="parameter"><code>v_object</code></em> (either its own, or one it has taken) to ensure that the object won't be destroyed while the <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> still exists).
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
@@ -223,8 +238,11 @@ It is important that your <a href="../gobject/gobject-Generic-values.html#GValue
 <p>
 Get the contents of a <a class="link" href="RygelXMLUtils.html#RYGEL-TYPE-XML-UTILS:CAPS" title="RYGEL_TYPE_XML_UTILS"><code class="literal">RYGEL_TYPE_XML_UTILS</code></a> derived <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
@@ -247,10 +265,13 @@ Get the contents of a <a class="link" href="RygelXMLUtils.html#RYGEL-TYPE-XML-UT
 Sets the contents of a <a class="link" href="RygelXMLUtils.html#RYGEL-TYPE-XML-UTILS:CAPS" title="RYGEL_TYPE_XML_UTILS"><code class="literal">RYGEL_TYPE_XML_UTILS</code></a> derived <a href="../gobject/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> to <em class="parameter"><code>v_object</code></em> and takes over the ownership of the callers reference to <em class="parameter"><code>v_object</code></em>; the caller doesn't have to unref it any more (i.e. the reference count of the object is not increased).
 </p>
 <p>
-If you want the GValue to hold its own reference to <em class="parameter"><code>v_object</code></em>, use <a class="link" href="RygelXMLUtils.html#rygel-value-set-xml-utils" title="rygel_value_set_xml_utils ()"><code class="function"><a class="link" href="RygelXMLUtils.html#rygel-value-set-xml-utils" title="rygel_value_set_xml_utils ()"><code class="function">rygel_value_set_xml_utils()</code></a></code></a> instead.
+If you want the GValue to hold its own reference to <em class="parameter"><code>v_object</code></em>, use <a class="link" href="RygelXMLUtils.html#rygel-value-set-xml-utils" title="rygel_value_set_xml_utils ()"><code class="function">rygel_value_set_xml_utils()</code></a> instead.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
@@ -274,8 +295,11 @@ If you want the GValue to hold its own reference to <em class="parameter"><code>
 <p>
 The class structure for <a class="link" href="RygelXMLUtils.html#RYGEL-TYPE-XML-UTILS:CAPS" title="RYGEL_TYPE_XML_UTILS"><code class="literal">RYGEL_TYPE_XML_UTILS</code></a>. All the fields in this structure are private and should never be accessed directly.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><a href="../gobject/gobject-Type-Information.html#GTypeClass"><span class="type">GTypeClass</span></a> <em class="structfield"><code><a name="RygelXMLUtilsClass.parent-class"></a>parent_class</code></em>;</span></p></td>
@@ -292,6 +316,6 @@ The class structure for <a class="link" href="RygelXMLUtils.html#RYGEL-TYPE-XML-
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.18.1</div>
 </body>
 </html>
