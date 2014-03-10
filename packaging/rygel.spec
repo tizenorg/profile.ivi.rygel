@@ -7,13 +7,15 @@
 
 Name:       rygel
 Summary:    GNOME UPnP/DLNA Media Server
-Version:    0.21.1
+Version:    0_22_0
 Release:    0
 Group:      Applications/Multimedia
 License:    LGPL-2.0+
 URL:        http://live.gnome.org/Rygel
-Source0:    http://download.gnome.org/sources/rygel/0.21/%{name}-%{version}.tar.xz
+Source0:    http://download.gnome.org/sources/rygel/0.22/%{name}-%{version}.tar.xz
 Requires(post): /bin/touch
+BuildRequires:  vala >= 0.22.0
+BuildRequires:  gnome-common
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gupnp-1.0)
@@ -27,7 +29,8 @@ BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(uuid)
 BuildRequires:  intltool
-
+BuildRequires:  libxslt-tools
+BuildRequires:  docbook-xsl-stylesheets
 
 %description
 Rygel is a collection of DLNA (UPnP AV) devices, implemented through a plug-in mechanism.
@@ -53,7 +56,7 @@ developing software on top of Rygel.
 %build
 # >> build pre
 # << build pre
-
+NOCONFIGURE=y ./autogen.sh
 %configure --disable-static \
     --disable-external-plugin \
     --disable-mpris-plugin \
@@ -61,7 +64,6 @@ developing software on top of Rygel.
     --disable-tracker-plugin \
     --disable-gst-launch-plugin \
     --disable-example-plugins \
-    --disable-vala \
     --disable-tests \
     --enable-valadoc=no
 
@@ -77,8 +79,11 @@ rm -rf %{buildroot}
 # << install post
 %find_lang rygel
 
-install -d %{buildroot}%{_prefix}/lib/systemd/system
-install -m644 examples/service/systemd/rygel.service.tizen %{buildroot}%{_prefix}/lib/systemd/system/rygel.service
+# Systemd service file
+install -d %{buildroot}%{_libdir}/systemd/system/
+install -m 644 examples/service/systemd/rygel.service.tizen %{buildroot}%{_libdir}/systemd/system/rygel.service
+install -d %{buildroot}%{_libdir}/systemd/system/network.target.wants/
+ln -s ../rygel.service %{buildroot}%{_libdir}/systemd/system/network.target.wants/rygel.service
 
 rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
@@ -87,19 +92,26 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 /bin/touch --no-create %{_datadir}/icons/hicolor || :
 %{_bindir}/gtk-update-icon-cache \
   --quiet %{_datadir}/icons/hicolor 2> /dev/null|| :
+systemctl daemon-reload
+systemctl restart rygel.service
+
+%preun
+systemctl stop rygel.service
+
 
 %postun
 /sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor || :
 %{_bindir}/gtk-update-icon-cache \
   --quiet %{_datadir}/icons/hicolor 2> /dev/null|| :
-
+systemctl daemon-reload
 
 %files -f rygel.lang
 %defattr(-,root,root,-)
 # >> files
 %config /etc/rygel.conf
 %{_unitdir}/rygel.service
+%{_unitdir}/network.target.wants/rygel.service
 %{_bindir}/rygel
 %{_datadir}/dbus-1/services/org.gnome.Rygel1.service
 %{_datadir}/icons/hicolor/128x128/apps/rygel.png
@@ -135,25 +147,21 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 # Rygel core libs
 %{_libdir}/librygel-*.so.*
 # Rygel plugins
-%{_libdir}/rygel-2.0/plugins/*.so
-%{_libdir}/rygel-2.0/plugins/*.plugin
+%{_libdir}/rygel-2.2/plugins/*.so
+%{_libdir}/rygel-2.2/plugins/*.plugin
 # Rygel MediaEngines
-%{_libdir}/rygel-2.0/engines/*.so
-%{_libdir}/rygel-2.0/engines/*.plugin
+%{_libdir}/rygel-2.2/engines/*.so
+%{_libdir}/rygel-2.2/engines/*.plugin
 # << files
 
 
 %files devel
 %defattr(-,root,root,-)
 # >> files devel
-%doc %{_datadir}/gtk-doc/html/librygel-core
-%doc %{_datadir}/gtk-doc/html/librygel-renderer
-%doc %{_datadir}/gtk-doc/html/librygel-renderer-gst
-%doc %{_datadir}/gtk-doc/html/librygel-server
-%{_includedir}/rygel-2.0/*
+%{_includedir}/rygel-2.2/*
 %{_libdir}/*.so
-%{_libdir}/pkgconfig/rygel-*-2.0.pc
-%{_datadir}/vala/vapi/rygel-*-2.0.deps
-%{_datadir}/vala/vapi/rygel-*-2.0.vapi
+%{_libdir}/pkgconfig/rygel-*-2.2.pc
+%{_datadir}/vala/vapi/rygel-*-2.2.deps
+%{_datadir}/vala/vapi/rygel-*-2.2.vapi
 # << files devel
 
