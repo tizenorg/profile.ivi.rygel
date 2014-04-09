@@ -80,11 +80,8 @@ rm -rf %{buildroot}
 %find_lang rygel
 
 # Systemd service file
-install -d %{buildroot}%{_libdir}/systemd/system/
-install -m 644 examples/service/systemd/rygel.service.tizen %{buildroot}%{_libdir}/systemd/system/rygel.service
-install -d %{buildroot}%{_libdir}/systemd/system/network.target.wants/
-ln -s ../rygel.service %{buildroot}%{_libdir}/systemd/system/network.target.wants/rygel.service
-
+install -D -m 644 examples/service/systemd/rygel.service.tizen %{buildroot}%{_unitdir}/rygel.service
+# %install_service network.target.wants rygel.service
 rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 %post
@@ -92,8 +89,8 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 /bin/touch --no-create %{_datadir}/icons/hicolor || :
 %{_bindir}/gtk-update-icon-cache \
   --quiet %{_datadir}/icons/hicolor 2> /dev/null|| :
-systemctl daemon-reload
-systemctl restart rygel.service
+# systemctl daemon-reload
+# systemctl restart rygel.service
 
 %preun
 systemctl stop rygel.service
