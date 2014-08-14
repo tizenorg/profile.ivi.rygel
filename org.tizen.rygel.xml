@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.rygel" version="0.22.0" install-location="internal-only">
+	<label>Rygel</label>
+	<description>Rygel</description>
+	<ui-application appid="org.tizen.rygel" exec="/usr/bin/rygel" nodisplay="true" multiple="false" type="capp" taskmanage="true">
+		<label>Rygel</label>
+	</ui-application>
+</manifest>

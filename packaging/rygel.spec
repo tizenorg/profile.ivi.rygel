@@ -31,6 +31,7 @@ BuildRequires:  pkgconfig(uuid)
 BuildRequires:  intltool
 BuildRequires:  libxslt-tools
 BuildRequires:  docbook-xsl-stylesheets
+Requires(post): /usr/bin/pkg_initdb
 
 %description
 Rygel is a collection of DLNA (UPnP AV) devices, implemented through a plug-in mechanism.
@@ -71,6 +72,9 @@ NOCONFIGURE=y ./autogen.sh
 # << build post
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}%{_datadir}/packages/
+install -m 0644 org.tizen.rygel.xml %{buildroot}%{_datadir}/packages/
+
 # >> install pre
 # << install pre
 %make_install
@@ -89,6 +93,8 @@ rm -rf  $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 /bin/touch --no-create %{_datadir}/icons/hicolor || :
 %{_bindir}/gtk-update-icon-cache \
   --quiet %{_datadir}/icons/hicolor 2> /dev/null|| :
+/usr/bin/pkg_initdb
+
 # systemctl daemon-reload
 # systemctl restart rygel.service
 
@@ -141,6 +147,7 @@ systemctl daemon-reload
 %{_datadir}/rygel/xml/X_MS_MediaReceiverRegistrar1.xml
 %{_datadir}/man/man1/rygel.1.gz
 %{_datadir}/man/man5/rygel.conf.5.gz
+%{_datadir}/packages/org.tizen.rygel.xml
 # Rygel core libs
 %{_libdir}/librygel-*.so.*
 # Rygel plugins
